@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25B0DC433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 23 Nov 2021 13:52:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F880C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 23 Nov 2021 16:26:14 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 9f1ff814;
-	Tue, 23 Nov 2021 13:52:53 +0000 (UTC)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id b833c97d;
+	Tue, 23 Nov 2021 16:26:12 +0000 (UTC)
 Received: from mail.onetrix.net (eleanor.onetrix.net [86.59.13.171])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 8023c7c4
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 94f0a7eb
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 23 Nov 2021 13:52:50 +0000 (UTC)
+ Tue, 23 Nov 2021 16:26:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=chil.at;
  s=default; 
- h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:References:To:Subject:MIME-Version:Date:Message-ID;
- bh=p3x1cl0eFaZzgp1Qc8sCTcdG+hEl/WRImCChkdiRHyY=; 
- b=4Ppj6Tfz/RSgSluhsx+6MeLl6yMJbAcgjmzEJH5gXhfiRUzTutC6LDmA+weyqzzjtl4Y2zbmKu+MRhrziDyHTDoHfoDCkufg/M/ziH/TKsClst5WI3v7HnUxAEtKD57ZLivP/FkH/x9Mfz25J6MRJiPMs5X6Fg9jOWaSUBCHGls=;
-Received: from [10.5.44.225] (port=38838 helo=mail.onetrix.net)
+ h=Content-Transfer-Encoding:Content-Type:In-Reply-To:Subject:CC:From:References:To:MIME-Version:Date:Message-ID;
+ bh=8+Dj9lqv9Y+o7pk0zibeU7GLZe0AVsM6r1vSf3PKs2s=; 
+ b=ydEhzjLs3joD9AH+HRHLXyQhj7DJ8IQksWTFJlBWV9pce/sZwcnnaFhLskMhJ0KjPw6PuhmES3OMNP5hMR3tQZMBQYwzTovrLzvFdh7uEvXyNsJCECFb5BjNycQ/YbAVb7LpsFIWzCjssxHYxNZpxQR1Cp3tgmuOKwuyHRckfns=;
+Received: from [10.5.44.225] (port=17970 helo=mail.onetrix.net)
  by mail.onetrix.net with esmtps (TLSv1:DHE-RSA-AES256-SHA:256)
  (Exim 4.82_1-5b7a7c0-XX) (envelope-from <mail@chil.at>)
- id 1mpWDv-0000So-0E
- for wireguard@lists.zx2c4.com; Tue, 23 Nov 2021 14:52:39 +0100
-Received: from [172.22.0.123] (193.238.156.229) by mail.onetrix.net
- (10.5.44.225) with Microsoft SMTP Server (TLS) id 14.1.438.0; Tue, 23 Nov
- 2021 14:52:38 +0100
-X-CTCH-RefID: str=0001.0A682F15.619CF227.0017, ss=1, re=0.000, recu=0.000,
+ id 1mpYcP-0003pf-2s; Tue, 23 Nov 2021 17:26:06 +0100
+Received: from [172.27.0.88] (10.5.44.244) by mail.onetrix.net (10.5.44.225)
+ with Microsoft SMTP Server (TLS) id 14.1.438.0; Tue, 23 Nov 2021 17:26:05
+ +0100
+X-CTCH-RefID: str=0001.0A682F1A.619D161E.001A, ss=1, re=0.000, recu=0.000,
  reip=0.000, cl=1, cld=1, fgs=0
-Message-ID: <60b5d439-e117-f3c7-3a6b-8ce46bc48fc2@chil.at>
-Date: Tue, 23 Nov 2021 14:52:37 +0100
+Message-ID: <c93393bb-eda1-2588-c52e-14d5cd219364@chil.at>
+Date: Tue, 23 Nov 2021 17:26:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.3.2
-Subject: Re: Wireguard source ip selection issue with multi interfaces
 Content-Language: de-AT
 To: <wireguard@lists.zx2c4.com>
-References: <CACu-5+0Z1JPCttbZpM13870N9Wce8K3V2ZRdhV6XFmVk4FJKxQ@mail.gmail.com>
+References: <d60ce240-5bb3-eed7-85a0-31d05cb0133e@chil.at>
+ <744d7291-e43b-4e8c-76be-c78c11204e17@chil.at>
 From: Christoph Loesch <wireguard-mail@chil.at>
-In-Reply-To: <CACu-5+0Z1JPCttbZpM13870N9Wce8K3V2ZRdhV6XFmVk4FJKxQ@mail.gmail.com>
+CC: =?UTF-8?B?5pu554Wc?= <cao88yu@gmail.com>
+Subject: Re: client uses wrong source ip for outgoing connections
+In-Reply-To: <744d7291-e43b-4e8c-76be-c78c11204e17@chil.at>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [193.238.156.229]
+X-Originating-IP: [10.5.44.244]
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -59,208 +60,142 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 Hi,
 
-Is this related to my issue with using wrong source ip on outgoing connections?
-(https://lists.zx2c4.com/pipermail/wireguard/2021-November/007307.html)
+I could at least (temporary) fix this issue by adding the correct src IP to the routes like shown in the following example.
+Now I just don't fully understand, what causes wireguard to select the IP from the wrong interface. Or based on what it selects the IP in the first place.
+Even ping gives the warning: "ping: Warning: source address might be selected on device other than wg0."
+That warning goes away when the routes have the correct IP set as src.
+-> But I can definitely say that wireguard somehow selects the wrong IP for outgoing packets.
+Just that I don't know why this happens only on 5 out of over 20 devices with same configuration..
 
-Which bug would that be? Would be interesting in more detail to understand the issue.
-I'm having a hard time to reproduce (or somehow "fix") the issue I am facing, since this issue is on only 5 devices from over 20 devices where all are configured same.
+ip route del <NET>
+ip route add <NET> dev <ALIAS_DEV> src <SRC_IP>
 
-The configuration or better all routes do not even have any metric defined so I am unsure what to add/remove to change the behaviour.
-Also in my configuration there are multiple interfaces (br0,br1,eth0,eth1,etc..) as it is a router but there are no multiple default routes.
-Comparing perfectly fine working devices to one of those five devices which have this issue I am not able to find a difference in IP-config or routes.
-Even kernel and firmware versions are all same.
+information about interfaces:
+root@zi1-router:~# ip a sh wg0
+18: wg0: <POINTOPOINT,NOARP,UP,LOWER_UP> mtu 1420 qdisc noqueue state UNKNOWN group default qlen 1000
+     link/none
+root@zi1-router:~# ip -4 a sh br0
+11: br0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+     inet 78.41.x.y/32 scope global br0
+        valid_lft forever preferred_lft forever
+root@zi1-router:~# ip -4 a sh br1
+12: br1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+     inet 10.34.0.100/24 brd 10.34.0.255 scope global br1
+        valid_lft forever preferred_lft forever
 
-The only difference I see is while looking at tcpdump where a simple ping to the wireguard server's internal IP (172.27.0.1/24 in my case) originates with the public IP of the device.
+root@zi1-router:~# ip r sh dev wg0
+10.5.44.0/24 scope link
+172.27.0.0/24 scope link
+root@zi1-router:~# ip r d 172.27.0.0/24
+root@zi1-router:~# ip r d 10.5.44.0/24
+root@zi1-router:~# ip r a 172.27.0.0/24 dev wg0 src 10.34.0.100
+root@zi1-router:~# ip r a 10.5.44.0/24 dev wg0 src 10.34.0.100
+root@zi1-router:~# ip r sh dev wg0
+10.5.44.0/24 scope link src 10.34.0.100
+172.27.0.0/24 scope link src 10.34.0.100
 
-If it is a known bug, it would be nice to know what (and if) I could try to fix and possibly confirm the bug. Or even better beeing able to reproduce the issue.
+root@zi1-router:~# ping 172.27.0.1
+PING 172.27.0.1 (172.27.0.1) 56(84) bytes of data.
+64 bytes from 172.27.0.1: icmp_seq=1 ttl=64 time=13.1 ms
 
-Thanks and kind regards,
+Kind regards,
 Christoph
 
-Am 19.11.2021 um 14:10 schrieb 曹煜:
-> Hi,
-> As Jason said in mailing list
-> (https://lists.zx2c4.com/pipermail/wireguard/2017-November/002018.html)
-> years ago, if wireguard reply the client with wrong src ip, then it is
-> a bug. And now I'm trying to set up a minimal configuration.
+Am 19.11.2021 um 01:11 schrieb Christoph Loesch:
+> if relevant, some more details about interface and routes from good and bad example to compare:
 >
-> Server info:
+> root@eng196-router:~# ip a sh wg0
+> 46: wg0: <POINTOPOINT,NOARP,UP,LOWER_UP> mtu 1420 qdisc noqueue state UNKNOWN group default qlen 1000
+>     link/none
+> root@eng196-router:~# ip r sh dev wg0
+> 10.5.44.0/24 scope link
+> 172.27.0.0/24 scope link
+> root@eng196-router:~# ip a sh br1
+> 11: br1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+>     link/ether 44:d9:e7:x:y:z brd ff:ff:ff:ff:ff:ff
+>     inet 10.29.85.100/24 brd 10.29.85.255 scope global br1
+>        valid_lft forever preferred_lft forever
+>     inet6 fe80::7c4c:1dff:fe84:fece/64 scope link
+>        valid_lft forever preferred_lft forever
 >
-> Ubuntu 20.04 in VMware with two Host-only network adapters:
+> root@zi1-router:~# ip a sh wg0
+> 18: wg0: <POINTOPOINT,NOARP,UP,LOWER_UP> mtu 1420 qdisc noqueue state UNKNOWN group default qlen 1000
+>     link/none
+> root@zi1-router:~# ip r sh dev wg0
+> 10.5.44.0/24 scope link
+> 172.27.0.0/24 scope link
+> root@zi1-router:~# ip a sh br1
+> 12: br1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+>     link/ether 74:83:c2:x:y:z brd ff:ff:ff:ff:ff:ff
+>     inet 10.34.0.100/24 brd 10.34.0.255 scope global br1
+>        valid_lft forever preferred_lft forever
+>     inet6 fe80::2c2e:76ff:fedc:d8e/64 scope link
+>        valid_lft forever preferred_lft forever
 >
-> wacke@Ubuntu:/etc$ lsb_release -a
-> No LSB modules are available.
-> Distributor ID: Ubuntu
-> Description: Ubuntu 20.04.3 LTS
-> Release: 20.04
-> Codename: focal
->
-> wacke@Ubuntu:/etc$ uname -a
-> Linux Ubuntu 5.14.8-051408-generic #202109280455 SMP Tue Sep 28
-> 04:57:31 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux
->
-> wacke@Ubuntu:/etc$ sudo ip route show
-> 169.254.0.0/16 dev ens33 scope link metric 1000
-> 172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 linkdown
-> 192.168.187.0/24 dev ens33 proto kernel scope link src 192.168.187.129
-> metric 100
-> 192.168.187.0/24 dev ens35 proto kernel scope link src 192.168.187.128
-> metric 101
-> 192.168.199.0/24 dev wg0 proto kernel scope link src 192.168.199.1
->
-> wacke@Ubuntu:/etc$ sudo cat /etc/wireguard/wg0.conf
-> [Interface]
-> PrivateKey = oLLeTlvwWsfGoyQpDwZo0k7AsMf0LkkfycGPwFjamEA=
-> ListenPort = 5999
->
-> [Peer]
-> PublicKey = JYvK2/FBbbSrDbkH29ejWejkBJS3ch/SFtyZwNf5O1c=
-> AllowedIPs = 192.168.199.2/32
-> PersistentKeepalive = 25
->
-> [Peer]
-> PublicKey = keIPXZFgvB79biV74kGc5R9vAHpzyVyQHci8KBSDIUw=
-> AllowedIPs = 192.168.199.3/32
-> PersistentKeepalive = 25
->
-> wacke@Ubuntu:/etc$ sudo wg setconf wg0 /etc/wireguard/wg0.conf
-> wacke@Ubuntu:/etc$ sudo ip address add dev wg0 192.168.199.1/24
-> wacke@Ubuntu:/etc$ sudo ip link set up dev wg0
-> wacke@Ubuntu:/etc$ sudo wg show
-> interface: wg0
->    public key: Vkdx0MhQkc9anLaUehR/Df1zuKjxceflxMCAeAaCWCo=
->    private key: (hidden)
->    listening port: 5999
->
-> peer: JYvK2/FBbbSrDbkH29ejWejkBJS3ch/SFtyZwNf5O1c=
->    endpoint: 192.168.187.1:35560
->    allowed ips: 192.168.199.2/32
->    transfer: 2.89 KiB received, 1.80 KiB sent
->    persistent keepalive: every 25 seconds
->
-> peer: keIPXZFgvB79biV74kGc5R9vAHpzyVyQHci8KBSDIUw=
->    allowed ips: 192.168.199.3/32
->    persistent keepalive: every 25 seconds
->
-> Client info:
->
-> HOME-Server:/NAS/Software/Software # uname -a
-> Linux HOME-Server 5.14.14-2-default #1 SMP Thu Oct 21 05:05:03 UTC
-> 2021 (2b5383f) x86_64 x86_64 x86_64 GNU/Linux
->
-> HOME-Server:/NAS/Software/Software # cat wg0.conf
-> [Interface]
-> PrivateKey = 4Pw1cetxd9TdfH3TSab+9UcRBlHwZ1o/vmrUgkerZls=
->
-> [Peer]
-> PublicKey = Vkdx0MhQkc9anLaUehR/Df1zuKjxceflxMCAeAaCWCo=
-> Endpoint = 192.168.187.128:5999
-> AllowedIPs = 192.168.199.0/24
-> PersistentKeepalive = 25
->
-> HOME-Server:/NAS/Software/Software # ip link add wg0 type wireguard
-> HOME-Server:/NAS/Software/Software # ip address add dev wg0 192.168.199.2/24
-> HOME-Server:/NAS/Software/Software # wg setconf wg0 wg0.conf
-> HOME-Server:/NAS/Software/Software # ip link set wg0 up
-> HOME-Server:/NAS/Software/Software # wg show
-> interface: wg0
->    public key: JYvK2/FBbbSrDbkH29ejWejkBJS3ch/SFtyZwNf5O1c=
->    private key: (hidden)
->    listening port: 53058
->
-> peer: Vkdx0MhQkc9anLaUehR/Df1zuKjxceflxMCAeAaCWCo=
->    endpoint: 192.168.187.128:5999
->    allowed ips: 192.168.199.0/24
->    transfer: 0 B received, 59.26 KiB sent
->    persistent keepalive: every 25 seconds
->
->
-> tcpdump of client side:
->
-> HOME-Server:/NAS/Software/Software # tcpdump -i any -vn "(dst port 5999)"
-> tcpdump: data link type LINUX_SLL2
-> tcpdump: listening on any, link-type LINUX_SLL2 (Linux cooked v2),
-> snapshot length 262144 bytes
-> 22:10:37.794301 vmnet1 Out IP (tos 0x88, ttl 64, id 54724, offset 0,
-> flags [none], proto UDP (17), length 176)
->      192.168.187.1.53058 > 192.168.187.128.5999: UDP, length 148
-> 22:10:43.170306 vmnet1 Out IP (tos 0x88, ttl 64, id 55327, offset 0,
-> flags [none], proto UDP (17), length 176)
->      192.168.187.1.53058 > 192.168.187.128.5999: UDP, length 148
-> 22:10:48.546281 vmnet1 Out IP (tos 0x88, ttl 64, id 56142, offset 0,
-> flags [none], proto UDP (17), length 176)
->      192.168.187.1.53058 > 192.168.187.128.5999: UDP, length 148
-> 22:10:53.670343 vmnet1 Out IP (tos 0x88, ttl 64, id 57053, offset 0,
-> flags [none], proto UDP (17), length 176)
->      192.168.187.1.53058 > 192.168.187.128.5999: UDP, length 148
-> 22:11:18.754308 vmnet1 Out IP (tos 0x88, ttl 64, id 58505, offset 0,
-> flags [none], proto UDP (17), length 176)
->      192.168.187.1.53058 > 192.168.187.128.5999: UDP, length 148
-> 22:11:24.130286 vmnet1 Out IP (tos 0x88, ttl 64, id 58621, offset 0,
-> flags [none], proto UDP (17), length 176)
->      192.168.187.1.53058 > 192.168.187.128.5999: UDP, length 148
-> 22:11:29.506305 vmnet1 Out IP (tos 0x88, ttl 64, id 58810, offset 0,
-> flags [none], proto UDP (17), length 176)
->      192.168.187.1.53058 > 192.168.187.128.5999: UDP, length 148
-> 22:11:34.882326 vmnet1 Out IP (tos 0x88, ttl 64, id 59444, offset 0,
-> flags [none], proto UDP (17), length 176)
->      192.168.187.1.53058 > 192.168.187.128.5999: UDP, length 148
-> ^C
-> 8 packets captured
-> 8 packets received by filter
-> 0 packets dropped by kernel
->
-> tcpdump of server side:
->
-> wacke@Ubuntu:~$ sudo tcpdump -i any -vn "(src port 5999)"
-> tcpdump: listening on any, link-type LINUX_SLL (Linux cooked v1),
-> capture size 262144 bytes
-> 22:10:11.754862 IP (tos 0x88, ttl 64, id 22024, offset 0, flags
-> [none], proto UDP (17), length 120)
->      192.168.187.129.5999 > 192.168.187.1.53058: UDP, length 92
-> 22:10:16.874400 IP (tos 0x88, ttl 64, id 22399, offset 0, flags
-> [none], proto UDP (17), length 120)
->      192.168.187.129.5999 > 192.168.187.1.53058: UDP, length 92
-> 22:10:21.994433 IP (tos 0x88, ttl 64, id 23057, offset 0, flags
-> [none], proto UDP (17), length 120)
->      192.168.187.129.5999 > 192.168.187.1.53058: UDP, length 92
-> 22:10:27.370558 IP (tos 0x88, ttl 64, id 23912, offset 0, flags
-> [none], proto UDP (17), length 120)
->      192.168.187.129.5999 > 192.168.187.1.53058: UDP, length 92
-> 22:10:32.494605 IP (tos 0x88, ttl 64, id 24944, offset 0, flags
-> [none], proto UDP (17), length 120)
->      192.168.187.129.5999 > 192.168.187.1.53058: UDP, length 92
-> 22:10:37.610779 IP (tos 0x88, ttl 64, id 25327, offset 0, flags
-> [none], proto UDP (17), length 120)
->      192.168.187.129.5999 > 192.168.187.1.53058: UDP, length 92
-> 22:10:42.986834 IP (tos 0x88, ttl 64, id 25498, offset 0, flags
-> [none], proto UDP (17), length 120)
->      192.168.187.129.5999 > 192.168.187.1.53058: UDP, length 92
-> 22:10:48.362908 IP (tos 0x88, ttl 64, id 26521, offset 0, flags
-> [none], proto UDP (17), length 120)
->      192.168.187.129.5999 > 192.168.187.1.53058: UDP, length 92
-> 22:10:53.486942 IP (tos 0x88, ttl 64, id 27214, offset 0, flags
-> [none], proto UDP (17), length 120)
->      192.168.187.129.5999 > 192.168.187.1.53058: UDP, length 92
-> 22:11:18.571437 IP (tos 0x88, ttl 64, id 31112, offset 0, flags
-> [none], proto UDP (17), length 120)
->      192.168.187.129.5999 > 192.168.187.1.53058: UDP, length 92
-> 22:11:23.947460 IP (tos 0x88, ttl 64, id 31897, offset 0, flags
-> [none], proto UDP (17), length 120)
->      192.168.187.129.5999 > 192.168.187.1.53058: UDP, length 92
-> 22:11:29.323608 IP (tos 0x88, ttl 64, id 32715, offset 0, flags
-> [none], proto UDP (17), length 120)
->      192.168.187.129.5999 > 192.168.187.1.53058: UDP, length 92
-> 22:11:34.699676 IP (tos 0x88, ttl 64, id 33840, offset 0, flags
-> [none], proto UDP (17), length 120)
->      192.168.187.129.5999 > 192.168.187.1.53058: UDP, length 92
-> ^C
-> 13 packets captured
-> 13 packets received by filter
-> 0 packets dropped by kernel
->
-> As the tcpdump log showed, the wireguard server always chose the ip
-> with lowest metric as source ip (192.168.187.129) to reply to the
-> client (while the client tried to connect 192.168.187.128).
->
-> Hope the info above can help to debug. Many thanks.
+> Am 19.11.2021 um 00:40 schrieb Christoph Loesch:
+>> Hi,
+>>
+>> I am using wireguard on about 20 EdgeRouters (based on Debian stretch).
+>> Each router has exact same configuration (apart from router ip addresses and wireguard keys/passphrases).
+>> Works very well on most of them but on five routers wireguard uses the wrong ip address for outgoing connections over the tunnel.
+>> All routers use kernel 4.14.54-UBNT and wireguard-tools v1.0.20210914
+>> Wireguard debian package is from github/WireGuard/wireguard-vyatta-ubnt
+>>
+>> On the problematic routers the public ip address is used for the tunnel instead the private ip address.
+>> Interestingly even in the bad example the wg tunnel is running and the server can reach the routers(=wg clients), but not the other way round.
+>>
+>> In the following examples 172.27.0.1 is the wireguard server internal ip address.
+>> Routers use ip addresses in the 10.0.0.0/8 range for the wg tunnel which are allowed on the server.
+>> I already even debugged this with tcpdump where I found out it uses the wrong ip.
+>> But looking at a simple ping you also notice the wrong ip after the word "from".
+>>
+>> Good example:
+>> eng196-router:~$ \ping -I wg0 -c1 172.27.0.1
+>> ping: Warning: source address might be selected on device other than wg0.
+>> PING 172.27.0.1 (172.27.0.1) from 10.29.85.100 wg0: 56(84) bytes of data.
+>> 64 bytes from 172.27.0.1: icmp_seq=1 ttl=64 time=6.82 ms
+>> --- 172.27.0.1 ping statistics ---
+>> 1 packets transmitted, 1 received, 0% packet loss, time 0ms
+>> rtt min/avg/max/mdev = 6.826/6.826/6.826/0.000 ms
+>>
+>> Bad example:
+>> zi1-router:~$ \ping -I wg0 -c1 172.27.0.1
+>> ping: Warning: source address might be selected on device other than wg0.
+>> PING 172.27.0.1 (172.27.0.1) from 78.41.x.y wg0: 56(84) bytes of data.
+>> --- 172.27.0.1 ping statistics ---
+>> 1 packets transmitted, 0 received, 100% packet loss, time 0ms
+>>
+>> Configurations:
+>> eng196-router:~# wg
+>> interface: wg0
+>>   public key: SoV2obcH0qWfCRY3gZbkLNeMa1QRcnhNDCeiI9weszA=
+>>   private key: (hidden)
+>>   listening port: 58205
+>> peer: 1syRMYD1jIVFMUMm5hF/j0MzjMQmuC5mlcT1VVugIkU=
+>>   preshared key: (hidden)
+>>   endpoint: 86.59.x.y:1024
+>>   allowed ips: 172.27.0.0/24, 10.5.44.0/24
+>>   latest handshake: 53 seconds ago
+>>   transfer: 24.57 MiB received, 26.48 MiB sent
+>>   persistent keepalive: every 25 seconds
+>>
+>> zi1-router:~# wg
+>> interface: wg0
+>>   public key: aYtVhblpR0XSsAb/dXF3zM9Hu+LxlvrR5RWFU2psF3M=
+>>   private key: (hidden)
+>>   listening port: 45514
+>> peer: 1syRMYD1jIVFMUMm5hF/j0MzjMQmuC5mlcT1VVugIkU=
+>>   preshared key: (hidden)
+>>   endpoint: 86.59.x.y:51820
+>>   allowed ips: 172.27.0.0/24, 10.5.44.0/24
+>>   latest handshake: 13 seconds ago
+>>   transfer: 1.79 MiB received, 6.26 MiB sent
+>>   persistent keepalive: every 25 seconds
+>>
+>> What could cause the wrong selection?
+>> Why does that work for most routers but for some not? There must be some difference or something gets confused up by specific ip addresses I guess?
+>> How could I debug this further to find the difference and/or cause for this problem?
+>>
+>> Thanks for any hints and kind regards,
+>> Christoph
+>>
