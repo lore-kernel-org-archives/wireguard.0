@@ -4,65 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49D40C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 23 Nov 2021 22:40:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC373C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 23 Nov 2021 23:05:07 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 01b53e46;
-	Tue, 23 Nov 2021 22:40:14 +0000 (UTC)
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com
- [2a00:1450:4864:20::431])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id f7d07f5b
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 917b972c;
+	Tue, 23 Nov 2021 23:03:04 +0000 (UTC)
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 06a4074f
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 23 Nov 2021 22:40:12 +0000 (UTC)
-Received: by mail-wr1-x431.google.com with SMTP id l16so537772wrp.11
- for <wireguard@lists.zx2c4.com>; Tue, 23 Nov 2021 14:40:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=york.ac.uk; s=20160523.google;
- h=message-id:date:mime-version:user-agent:subject:content-language:to
- :references:from:in-reply-to;
- bh=ZGziUA1Ld0mbK43iMKNHlU/pe3sGJ8SF4EpTwKjeSeM=;
- b=evnRxmMBh5Qn+4kj/1N+f0H9o61xce9LoaBN91dIKgRZu8Hakjp8XTrMEG32mqgPl2
- RLMaBN29KRsVvJXb3oMHC31/Nu8i/czus1kUcx1g6bN9o7jlyjYNUs6nG9nOYYV7Syx3
- Mvh562STiNgaZeNxbg+DplB5ckSPI2uTVzYT/cDPWCBP1drLq7GO3Te3YzhONAmMhRTM
- RSxh0FH90SSCzRvlFAyBtae8qVbLO1EvxFpu6ihx56tsRbwWBGWtg1BGTabUjUWKMRn/
- /aDmKgmQGrDkRi9QFHccRX+FfNDsenl1mKXXOTovUGFYP6HBxq6JtximFnxAC1HDoXPH
- dI6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
- :content-language:to:references:from:in-reply-to;
- bh=ZGziUA1Ld0mbK43iMKNHlU/pe3sGJ8SF4EpTwKjeSeM=;
- b=VpIhkUyCC5XJVizQb/c/8nqyt5Fwe/bnPpkhJY7jGKcUn4/WkQh/t1svNgdgpXcIoa
- RHy4PGIRVINVASurBbIcCaXNRxbUvR+x8TptaXty0JpS7HGHeW1tfwpunZ7n3iqzwjoD
- ozQYCg/Qawcl97lrvClcXpNieiSTyaeqTqUFcXjgAfZNlL52AF0s1dcnu7Rwlxp17dhz
- i7MmubS1VKtt5A1ZsGxp/R3pxVaDuF59lVu3a4OjTcqkP+6Qu4GU9uYJ6ziqqa8Jthpj
- CMcpKVHM+GSwnEEqYWND7wgjrryyjlak6jTMR3pFa74uTql/bn9DqVQ63zAoJKYLyazz
- xS9g==
-X-Gm-Message-State: AOAM5304oSwZL50S32kcG0QHlinU4CVxgYwKhW0+jmmeLk8sCK09r17r
- E3B8u3omDTs0gYrRY/eTwOXCalhwsXMeenlj
-X-Google-Smtp-Source: ABdhPJyCuY1IcJPEr1vqlXrR2wTNBPX8A0Ui08dut73ffxz0HSRuJZbVleF4WXgJabXYXM4898cyuw==
-X-Received: by 2002:adf:e2c5:: with SMTP id d5mr12109992wrj.338.1637707212303; 
- Tue, 23 Nov 2021 14:40:12 -0800 (PST)
-Received: from [192.168.0.230] (uk.webcrumb.net. [176.126.241.16])
- by smtp.gmail.com with ESMTPSA id u23sm14193880wru.21.2021.11.23.14.40.10
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Nov 2021 14:40:10 -0800 (PST)
-Message-ID: <edfa128e-7c6d-c329-5d63-4a3b32c2517c@york.ac.uk>
-Date: Tue, 23 Nov 2021 22:40:06 +0000
+ Tue, 23 Nov 2021 23:03:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+ s=badeba3b8450; t=1637708582;
+ bh=EF+SU6fdzyQUPvj+yMEHP0ZXMf0lvNYuW8FjRp63liY=;
+ h=X-UI-Sender-Class:Date:Subject:To:References:From:In-Reply-To;
+ b=lkHDxhal36BqSsDHJpzE4nEB+irx5TpjTR0zipCXAuwg1DSp48IuX49a+Pih2COBM
+ Af9c85Uv6SfHZcY+Qb33UKhVSKhmK1bJPEh9qM3ULsTfUsztJXWMuwR7NaX1y6Tnon
+ XxRHid+GdBldid96bgj35UqIrNtSR5H2ehvdNFGg=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.1.3] ([93.198.60.174]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MYvY2-1nBXHS3GLo-00Uo46; Wed, 24
+ Nov 2021 00:03:02 +0100
+Message-ID: <3b6549b1-7ed0-00fc-2951-fc77049faf13@gmx.net>
+Date: Wed, 24 Nov 2021 00:03:02 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.3.2
 Subject: Re: Dynamic routes
-Content-Language: en-GB
-To: wireguard@lists.zx2c4.com
+Content-Language: en-US
+To: Jonathon Fernyhough <jonathon.fernyhough@york.ac.uk>,
+ wireguard@lists.zx2c4.com
 References: <3c70475b-64e5-acf7-819c-94f721fed8b6@gmx.net>
-From: Jonathon Fernyhough <jonathon.fernyhough@york.ac.uk>
-In-Reply-To: <3c70475b-64e5-acf7-819c-94f721fed8b6@gmx.net>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------Rgsjla5CUjy5zDrPyb29y0gz"
+ <edfa128e-7c6d-c329-5d63-4a3b32c2517c@york.ac.uk>
+From: Robert Dahlem <Robert.Dahlem@gmx.net>
+In-Reply-To: <edfa128e-7c6d-c329-5d63-4a3b32c2517c@york.ac.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:lJMniz0klx9gY/RTgfGc4/07ewtqzwYn2WWzQGPCNQa+H7kRkLv
+ +ct3YWPrhRSHva5/nhibx3IjhZ7Jpf61cn8beIxBMlsml4kjFRgWwvQIkfnYI5bl//7aTDm
+ tLcPyONs7gbtruEtBzepaP9QniRW2PlK8l8Zh5yZ/I3ddGL4QH4rioH1kaJFFTCp7GhsSjs
+ yuBoKPCXk1galvkHgBrBw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:mXr9GgBNANA=:GyjWxf58LGJnSy3TsDZooz
+ fb/oYEtb12Z3n6Kdymw2PxxGMonY6P77hoOk+Z2a+yFEuiyRHA2Fjs0yseX+cXg8i60zgoyD6
+ GsG48kahtytlUaQx2VwKGsaMMm9FfE8grXrZxX3OmJWhJeQV2fSfCJ5IFJoNO0RAm17iORwR/
+ f0lJ9W0bdSYOijsvv4lCVI9W96DlA3TUj6W8eemeKd7RiSawxMT0eK+amPvJptWud6aes+ggb
+ t3jQMkaBDnWkyDbuxwhvdizyoVxPAFuBVfKNzNmci/8MDmr2rEGpSE5gYOQWzxa/r+F6sCaxF
+ T+9FhgUEkdmni3whHNxL5Wyfz1Lva2Vr8otxJ9EhBcdNr/mI/ehEBERlEjTcf/TL0nBOTDXB/
+ rp/wTifc0u/IKVdYXiaowX0jzud/tstVh2f/B1cwyvh17nG5FJkUriRRcbpirx/zuw21p1m6X
+ xO8/gvgQc/l6nJWcRbw/NGeXW2sVhVjdiGUTeHzeWCj0eSwz8tyUH04Rv5VnZTjysSx1+0XpR
+ EKomqmhv8JM0S5CtBPqg+P+rQL4jLpoXq6WfM/HO3HkYVYE2vblR/sdpZyvv3SP9aei+U/ze7
+ 92ORORJCx3lybTVTY7fI3QVUV4i87r18mgddtqvSCvUWZXHOe/minca7QD8J+NqKPdbwGwEFS
+ v4yRXN/qAHZ0Ur9h4tdS7SSVZkwm9tTFEW4wLJq1x7P6qq4L0GJCUnDludtO9az/45MAyMCeI
+ JtCu/xANbKem5XPhV4RuLtM2LBRp330qsCTfWHoWvgbNJ0cFTQSAnc71e1ZDkm3BSHJa9JwrS
+ lNaSDCvzXSWhmFb/ndHde6/Df7HqX8ReTXp447c5KeoZJSHBpFTdArfE9/rJI2NRA5GdCCGf3
+ CmaeuUlGcL/tL3J1OQE2RC+y2lNfn/RnonX/nJTd38EpuDqICefOM2wxqKiZ26ba35n5ELow8
+ KBwHpiEtRzvrhVpWzWiuu8luU3BPBFcBmtkaR+beNWHA+HlpeqUQ+IxGqXwfHgfeFSczKPK4H
+ 1Tx/uex9FIHlilPYWD0EpOrvmzhPJGFlL+3LwYuF7TMG5z2yVcp15GwWv6bfr/Cj4dKtiyy2X
+ k1O5gXqnVZQlSA=
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -77,51 +75,42 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------Rgsjla5CUjy5zDrPyb29y0gz
-Content-Type: multipart/mixed; boundary="------------k1rkqas0saLR0Z2IfMcBsX4o";
- protected-headers="v1"
-From: Jonathon Fernyhough <jonathon.fernyhough@york.ac.uk>
-To: wireguard@lists.zx2c4.com
-Message-ID: <edfa128e-7c6d-c329-5d63-4a3b32c2517c@york.ac.uk>
-Subject: Re: Dynamic routes
-References: <3c70475b-64e5-acf7-819c-94f721fed8b6@gmx.net>
-In-Reply-To: <3c70475b-64e5-acf7-819c-94f721fed8b6@gmx.net>
+Hi,
 
---------------k1rkqas0saLR0Z2IfMcBsX4o
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+On 23.11.2021 23:40, Jonathon Fernyhough wrote:
 
-T24gMjIvMTEvMjAyMSAxNzoyMCwgUm9iZXJ0IERhaGxlbSB3cm90ZToNCj4gVGhlIGlkZWEg
-YmVoaW5kIHRoaXMgaXMgdG8gaGF2ZSByZWR1bmRhbnQgdHVubmVscy4gTGV0J3Mgc2F5IGEg
-V2lyZWd1YXJkDQo+IGNsaWVudCBoYXMgYSBwcmVmZXJyZWQgc2VydmVyIGFuZCBhIHNlY29u
-ZGFyeSBzZXJ2ZXIuIFBhY2tldHMgc2hvdWxkIGJlDQo+IHJvdXRlZCB0aHJvdWdoIHRoZSBw
-cmVmZXJyZWQgcm91dGVyIHdoaWxlIHRoYXQgdHVubmVsIGlzIGVzdGFibGlzaGVkIGFuZA0K
-PiB0aHJvdWdoIHRoZSBzZWNvbmRhcnkgc2VydmVyIHdoZW4gdGhlIHByZWZlcnJlZCBzZXJ2
-ZXIgaXMgbm90IGF2YWlsYWJsZQ0KPiBmb3Igc29tZSByZWFzb24uDQoNCldvdWxkIHJvdXRl
-IG1ldHJpY3Mgd29yayBmb3IgdGhpcz8NCg==
+>> The idea behind this is to have redundant tunnels. Let's say a Wireguar=
+d
+>> client has a preferred server and a secondary server. Packets should be
+>> routed through the preferred router while that tunnel is established an=
+d
+>> through the secondary server when the preferred server is not available
+>> for some reason.
 
---------------k1rkqas0saLR0Z2IfMcBsX4o--
+> Would route metrics work for this?
 
---------------Rgsjla5CUjy5zDrPyb29y0gz
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
+Yes and no.
 
------BEGIN PGP SIGNATURE-----
+Metrics do useful things when there are identical prefixes with
+different metrics over *working* paths. So when both tunnels are up
+metrics can choose the preferred path.
 
-wsF5BAABCAAjFiEEUzSNjhumunvu6bYD4DBDgow/9LsFAmGdbcYFAwAAAAAACgkQ4DBDgow/9LtH
-gg//RMe07o7Tp0ImbLSSanv5aSiDHYVDbpKKiZPFenZbBGj7wboNDgWr/Y1ekrTn45YoGkZWPeTC
-mtzksG8Z0oTdlrRQvymG+N1EZj8XYtdnM4XqDSTowL8NUdus8rmZJtceN3+c7lI4wqZw4bW5djrL
-t2xSHOFM7cd8YnRg5ANtau9EbtnosPVBwLItBEKQBZcK6a30Bo0dIW3hZIsShSRuBKtuz7hzAiwx
-lfm8h9VFfwPxCbwNOprSrZ3CkYor5yIboAMSvQugc9gy3CpRX99OA8qWKh3izKk0QHc4XPBTy/p2
-MV6eS1uNCi7LgMWR2F6rHmc2ZbNGEGRNVdcyj2VfZN0n67/ljpnYSn+kKXP72aMPEDTQvyXW9wd/
-qoW/KB5dPEokxzpBDCmUpgSXmkx2IjTdq+o7mHs0tg6ItCvcVOIgwvgej/85Q433aVpxGiCibm0u
-Lf76QtmD4nBZ5tm6rDqIB/dMkZbbSoDHgEmsD2bWzVdkqxzm7yt/lqojlS3tZ40LeE9WVkafLW5z
-KBlUFk4k1Vw56ONLrO4JxxQRA56QjOejEkiAjxD/V+tHGXodlz/ehh2kvyN2ULG4x4kddHfBvemQ
-Zce56yQXs5YW0Du/GqRhWFFtlRfgJwqnVO34exO65LA0UKVrRBzdPL2Lwh36c5EOdnMi/6IiWgqa
-Tbk=
-=JXEn
------END PGP SIGNATURE-----
+With Wireguard (as far as I understand it) routes exist independently
+from tunnel state. If the path through the preferred server has a better
+metric, but doesn't work, the system does not fall back to the path
+through the secondary server.
 
---------------Rgsjla5CUjy5zDrPyb29y0gz--
+Metrics work fine when routes are installed/uninstalled dynamically. Say
+you have a system with LAN connectivity (best metric), Wifi connectivity
+(medium metric) and mobile (UMTS/LTE) connectivity (worst metric). All
+of them give you a default route. If all of them are actually connected,
+the system would use the route through the LAN. As soon as you unplug
+the LAN cable, the LAN routes disappear and the Wifi routes are
+selected. Plug the cable back in, the LAN routes reappear and the system
+uses the LAN route.
+
+Yes, metrics would work for this. But only if the routes don't appear
+before a tunnel comes up and disappear when the tunnel goes down.
+
+Regards,
+Robert
