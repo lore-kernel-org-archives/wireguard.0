@@ -4,44 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9707C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 23 Nov 2021 23:23:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5BC6C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 24 Nov 2021 11:19:32 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 02d0cc03;
-	Tue, 23 Nov 2021 23:23:12 +0000 (UTC)
-Received: from zeus.servers.mnus.de (zeus.servers.mnus.de [78.47.191.162])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 2b29b42c
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id cddc97bd;
+	Wed, 24 Nov 2021 11:19:30 +0000 (UTC)
+Received: from mail-relay.contabo.net (mail-relay.contabo.net [161.97.176.84])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 5f697fda
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 23 Nov 2021 23:23:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mnus.de;
- s=mnus.de-helios; t=1637709790;
- bh=CoM5YhBRISg2lFgdDuCfVCujkpufW1t6lOkydJ6Fsnc=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=NrK+vCEHgW+Gw8RjigRP8xSQKx8K05cmYIOu5Iimqn9mGl2rOMXmbFrSpBoStJj4H
- CaisxdnmzY+PY5bYMfyiJaG0WmE5NsR3Mhcd2jsF0DedqmaPsEzjYmaukgPphkNvIf
- rDc/EU3bzeD5mRwBG/IsuScCESxUhhCOzD+JJaos8kVw0NouXJS+0tIVhJDRwd0pvw
- uKez4PGJwSrycUmhJxu6lzU5TkaXOihf9MCU1n31qRwnBZ+ydpZvGbW8jFj8U8NE/I
- Gfh2UOXyTHN/H2m8uLGSrZM6fa4uYznWJbhVo+ScU8yU09esb3tX1bvc1mXnn0ApLu
- +uGmCt2Z10fj+JzDYCrOPFxLVeY+dezd/BmvqHDtv+5Xh31LEXFD0XZjdFrkWY3yLy
- 3QPEAfZGmAuzRYkNeN8pT7OU6l3chvIJ4A4gLBrNsE4iQpsHH5/aLHifk1/cNMOx0G
- HzifsNWuNS+cCm2reiqscmQvZRU6zWgvvd3CvsQyghN6eRdUGEZVjbOwDhNvVljww1
- e2zsQZuHxDMI875Njg0hTPTJ9yxJK/M01/QJJSrZyPpYaID9XPOvCjcCFvxWf6IuqZ
- Hy4C5LnrA7MnYqwXU8jAoA3n/rz4m16ZycTNhcvmTO7/pbjH3EglakUOMYMpE501sG
- ADYbnqBT5eSiZIWIOgapPUx8=
-Message-ID: <fef7daf2-adf7-e042-4977-46fda04aa07d@mnus.de>
-Date: Wed, 24 Nov 2021 00:23:10 +0100
+ Wed, 24 Nov 2021 11:19:28 +0000 (UTC)
+Received: from pxmg2.contabo.net (localhost.localdomain [127.0.0.1])
+ by mail-relay.contabo.net (Proxmox) with ESMTP id E3F00102418
+ for <wireguard@lists.zx2c4.com>; Wed, 24 Nov 2021 12:19:27 +0100 (CET)
+Received: from m14060.contaboserver.net (m14060.contabo.net [213.136.93.170])
+ by mail-relay.contabo.net (Proxmox) with ESMTPS id 4652B10230C
+ for <wireguard@lists.zx2c4.com>; Wed, 24 Nov 2021 12:19:27 +0100 (CET)
+Received: from mail-qv1-f53.google.com ([209.85.219.53]:35626)
+ by m14060.contaboserver.net with esmtpsa (TLS1.2) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
+ (envelope-from <ch@ntrv.dk>) id 1mpqJD-0003cx-E8
+ for wireguard@lists.zx2c4.com; Wed, 24 Nov 2021 12:19:27 +0100
+Received: by mail-qv1-f53.google.com with SMTP id g1so1506652qvd.2
+ for <wireguard@lists.zx2c4.com>; Wed, 24 Nov 2021 03:19:25 -0800 (PST)
+X-Gm-Message-State: AOAM531a98aztxCde1zYnMnXdYLNrbIFe2RPQAtGOAYvtd66aEVq7iLz
+ YIxzhcgMV5XSUV+nNA488zO5O/V7U8uNgHGuOS8=
+X-Google-Smtp-Source: ABdhPJxnfPn9N+nF80P7Izb9tgO0HrfT7anmLIy7K2skhSyvoaUYG6PWBiavJAjRZBaebu4c/u8Ktn178ZkS5m/dwbY=
+X-Received: by 2002:ad4:5bc6:: with SMTP id t6mr6332190qvt.15.1637752765112;
+ Wed, 24 Nov 2021 03:19:25 -0800 (PST)
 MIME-Version: 1.0
-Subject: Re: [PATCH wireguard-go] conn: linux: fix incorrect endpoint address
-Content-Language: en-US
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-References: <20211123190331.101346-1-minus@mnus.de>
- <CAHmME9pEf9=6C3eAXfanftBt4LJ4viRszQc5oG3Jt9H7Fxd68A@mail.gmail.com>
-From: minus <minus@mnus.de>
-In-Reply-To: <CAHmME9pEf9=6C3eAXfanftBt4LJ4viRszQc5oG3Jt9H7Fxd68A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <3c70475b-64e5-acf7-819c-94f721fed8b6@gmx.net>
+In-Reply-To: <3c70475b-64e5-acf7-819c-94f721fed8b6@gmx.net>
+From: Chriztoffer Hansen <ch@ntrv.dk>
+Date: Wed, 24 Nov 2021 12:18:46 +0100
+X-Gmail-Original-Message-ID: <CA+cYV6s2jMh4z5eUz-AAY5MO9CBpszWZtiUbkWY8XeFw7pLaFg@mail.gmail.com>
+Message-ID: <CA+cYV6s2jMh4z5eUz-AAY5MO9CBpszWZtiUbkWY8XeFw7pLaFg@mail.gmail.com>
+Subject: Re: Dynamic routes
+To: Robert.Dahlem@gmx.net
+Cc: "WireGuard List (wireguard@lists.zx2c4.com)" <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
+X-AntiAbuse: This header was added to track abuse,
+ please include it with any abuse report
+X-AntiAbuse: Primary Hostname - m14060.contaboserver.net
+X-AntiAbuse: Original Domain - lists.zx2c4.com
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - ntrv.dk
+X-Get-Message-Sender-Via: m14060.contaboserver.net: authenticated_id:
+ ch@ntrv.dk
+X-Authenticated-Sender: m14060.contaboserver.net: ch@ntrv.dk
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -56,11 +69,12 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 23/11/2021 22.01, Jason A. Donenfeld wrote:
-> Thank you for catching this regression!You're welcome. Unfortunately, I found another one: On an old Debian 8 
-system, wireguard-go does not receive or send packets anymore, nor does 
-`wg show` show any sent/received stats. On a current Arch system it 
-works fine. git bisect points to e3134bf (device: defer state machine 
-transitions until configuration is complete) as first bad commit. I 
-haven't further tried reproducing it, hoping that it's something obvious 
-to you.
+On Mon, 22 Nov 2021 at 18:20, Robert Dahlem <Robert.Dahlem@gmx.net> wrote:
+> I could always install Quagga or Bird and use OSPF. But that might be a
+> bit of an overkill for a simple active/passive failover.
+
+RIP, OSPF, BGP, EIGRP. Either can work. And would IMO be sufficiently
+simple to set up and maintain. Either way, you will need a daemon to
+maintain monitoring of the packets being able to flow over the tunnel.
+If you select a routing demon or another daemon. ... take a pick.
+
