@@ -4,65 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B13DC433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 25 Nov 2021 12:35:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFD22C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 25 Nov 2021 14:27:31 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id d4e8af3f;
-	Thu, 25 Nov 2021 12:34:38 +0000 (UTC)
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com
- [2607:f8b0:4864:20::42a])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 87c743af
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 4bc88c28;
+	Thu, 25 Nov 2021 14:25:19 +0000 (UTC)
+Received: from sendmail.purelymail.com (sendmail.purelymail.com
+ [34.202.193.197])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id a227ede0
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 25 Nov 2021 12:34:36 +0000 (UTC)
-Received: by mail-pf1-x42a.google.com with SMTP id b68so5782006pfg.11
- for <wireguard@lists.zx2c4.com>; Thu, 25 Nov 2021 04:34:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=0eAV0QCSYY59EfhYYGwBRd+u8b18m2Ztdaw86lrALGo=;
- b=LbIS6sfQbR7fqoUkZOLPzKEM4vW/6AVOeUj6EtJCuvOGCkevZx04B0ZK5wHKeN5+EO
- jNQ2xJsCyzfwE6iYGIeypC9+6edPYMpDvF1ty1u13S8lgV1HAmPRLWt62UTJyEMr2TPt
- dRwMyHNQwkT6FiEADnEd3k2q13CS7l4MLg+17ZaoargK+4QB8DBvtBHR2j3th/INXGrC
- zhuiWiRkFb6NgeaKCrHfleTOk4LEQuI1jFO4gdU5K3J38H3BM3xZVlQw2AuaDtL9dbjY
- 8bqWDCG0AkUDXu2UMsee5uKh1XwQuHZgFlXA5qgBofn7aNe4oHiglbVAzW5mqJSSxT69
- Xq+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=0eAV0QCSYY59EfhYYGwBRd+u8b18m2Ztdaw86lrALGo=;
- b=VAFvwBsmFUbDgvDwS8SInNXz/a7MEurRBvctbpd55qkf6tZaFmSwBzrGBcbHA5zQAC
- uni1kYHKJjyiupBpZb3JdLyzt7x8UMhmiL+zfEOicu3edNkogU1uM3B/Zw51g7HWTIVr
- VnZledm+t2NmLwCJELKQbOKnZb+WHJwDHLcQOebfVxoy2gD4dhcTlI32O/QfrRkTytBA
- Iy5HBAC0Z2/h2QRPiAmW8D9uI7mbd5IUynmPEeGB7+44owl/DWd8xqWsdebhiIfX6zJC
- P5l5Y49pckMmUrkYbLbRs0Fcu2PPL3xotjSB393PQx4xWlYMZr4gBY6j93BBdUVz1Lrb
- rY5g==
-X-Gm-Message-State: AOAM531P+dHhy1FhQ8QylUiOys5XZYji6V6YEvT2xzmAjWyyXHkHx27e
- pH0MbgLYHA1UIx3X8Goohfk=
-X-Google-Smtp-Source: ABdhPJwJjoRLjGJFIoyzqBMwPXueRu0hLtMHlkWRVw7D9yc9QIuLxqm8pMij0y6F3VMyns6g1SUmQQ==
-X-Received: by 2002:a05:6a00:8c6:b0:4a2:d762:8b42 with SMTP id
- s6-20020a056a0008c600b004a2d7628b42mr13732350pfu.28.1637843674170; 
- Thu, 25 Nov 2021 04:34:34 -0800 (PST)
-Received: from Laptop-X1 ([209.132.188.80])
- by smtp.gmail.com with ESMTPSA id h13sm2373135pgg.16.2021.11.25.04.34.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Nov 2021 04:34:33 -0800 (PST)
-Date: Thu, 25 Nov 2021 20:34:28 +0800
-From: Hangbin Liu <liuhangbin@gmail.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: Shuah Khan <shuah@kernel.org>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Netdev <netdev@vger.kernel.org>, linux-kselftest@vger.kernel.org
-Subject: Re: [PATCH wireguard] wireguard: selftests: refactor the test
- structure
-Message-ID: <YZ+C1MWdWQvd66ic@Laptop-X1>
-References: <20211116081359.975655-1-liuhangbin@gmail.com>
- <CAHmME9pNFe7grqhW7=YQgRq10g4K5bqVuJrq0HonEVNbQSRuYg@mail.gmail.com>
+ Thu, 25 Nov 2021 14:23:31 +0000 (UTC)
+DKIM-Signature: a=rsa-sha256;
+ b=XX+GDGtV21YEq2MOy0izB2E2wwiLXtnZA/tBq76v59O0Re0Uqndmu16iyedZ75Re8oorhfS9q5v51K5fXiEBsNSenVMZbyhmYd0DLnwYbYf4VcDmUcUggdy3U2DKJ+9MfyZ5Yym90+fJ1M7yaqLG00SSrUHQx2Hctyzp9llQhbidSMb1cuwzgoAvegsrB/nC9RDJqA5NWYMuXVJ7AZUkKGzQy7QsKj+b00isrGZFYR2bEkHP4kbAnSeyKHL181F8NzbVbM+y3SmaHlNk49PXQQMbSUwD8jHKbR1zEVy1Dze3lWbTtii6d4+SWl1jdqpKOjlV41zyJgE7m3zHLZrwTw==;
+ s=purelymail1; d=thezest.dev; v=1;
+ bh=z03DEffnyc5LwJ84Fa0zvm2o2DewehJrM+rGKA64hLc=; h=Received:From:To; 
+DKIM-Signature: a=rsa-sha256;
+ b=GSAv2tNCAixpuy28No+MZ0e6/6NMIqzoVjNTm1ctGW+xmaD1sR1lU+gTGot94YEAjD36CDlAnmUf3zzaHEZpRmttSzs28vkOelTVI8KclNdZIdIwmK5q/p+ugG5jytIe3AI/V5WOaRb9rdeAFZkcINa8JRmjTpa6hB3DyzO+9b0+fcBOw70fiFe/idYK0Zpby7zdkwY5Kk9h7fmwqKXm2A0mF2cr17illNzo2R/CODxe8r4EBd3EnYYD9h+ucyFKIW0DjM9+DZfCaYt/ZjxrTYTpvLvLF3sE2Tzg8aUCt1gRklheexhjb5+cqVw3tZLItnJWpstWoPd30u972/f9Hw==;
+ s=purelymail1; d=purelymail.com; v=1;
+ bh=z03DEffnyc5LwJ84Fa0zvm2o2DewehJrM+rGKA64hLc=;
+ h=Feedback-ID:Received:From:To; 
+Feedback-ID: 1188:367:null:purelymail
+X-Pm-Original-To: wireguard@lists.zx2c4.com
+Received: by ip-172-30-0-141.ec2.internal (JAMES SMTP Server ) with ESMTPA ID
+ 1317434231; Thu, 25 Nov 2021 14:23:12 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHmME9pNFe7grqhW7=YQgRq10g4K5bqVuJrq0HonEVNbQSRuYg@mail.gmail.com>
+Date: Thu, 25 Nov 2021 14:23:12 +0000
+From: lazerl0rd@thezest.dev
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: Bruno UT1 <bandry@ut1.org>, wireguard@lists.zx2c4.com
+Subject: Re: [Windows Client] Out of date Title scare my users
+In-Reply-To: <CAHmME9oqvV9E9cVXeF5nVpumE0fJgdASaBqG6aCPyS-NLq9rXQ@mail.gmail.com>
+References: <1da227e6-5b12-40ca-a6de-3117835a2f16@ut1.org>
+ <CAHmME9oqvV9E9cVXeF5nVpumE0fJgdASaBqG6aCPyS-NLq9rXQ@mail.gmail.com>
+User-Agent: Purely Mail via Roundcube/1.5.0
+Message-ID: <ccf4971633fdd62807ff51ddf7de1299@purelymail.com>
+X-Sender: lazerl0rd@thezest.dev
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+X-Mailman-Approved-At: Thu, 25 Nov 2021 14:25:17 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -77,49 +58,92 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Tue, Nov 16, 2021 at 03:35:40PM +0100, Jason A. Donenfeld wrote:
-> Hi Hangbin,
+Dear Bruno,
+
+Whilst I understand the frustration that having hundreds of users can 
+cause, I don't believe simply reverting the change [as proposed by 
+Jason] is the correct solution. I've come up with a few alternative 
+solutions, but before I present them I'd just like to give a brief 
+introduction into why I requested that change in the first place.
+
+WireGuard on Windows exclusively provides a GUI to users of the 
+Administrators group, as well as a limited GUI to users of the Network 
+Configuration Operators group when the `LimitedOperatorUI` DWORD is set. 
+The latter is helpful for users who wish to separate their personal and 
+administrator accounts (to protect themselves against the plethora of 
+UAC exploits, amongst other security issues) where otherwise the user 
+would have to switch accounts to switch tunnels. However, the GUI shown 
+to Network Configuration Operators lacked any information about updates. 
+This lead to users in such setups to not be informed about any updates 
+unless they switched out to the Administrator account and or kept an eye 
+on the releases online. This is quite a problem as users could be 
+running ancient versions of WireGuard for relatively long periods of 
+time without the knowledge that they are doing so (some users may even 
+assume WireGuard automatically updates). As such, I asked Jason if he 
+could add the ability for non-admins to at least be informed of an 
+update which lead to where we are today.
+
+After speaking to Jason "off the mailing list", he stated he wouldn't 
+like to add any more configuration options (via the Registry or within 
+the GUI) nor any metadata to updates so bearing that in mind I came up 
+with a few alternatives:
+
+1) Rewording the update prompt for non-admins to appear less 
+"aggressive". Currently, the prompt is "Please ask the system 
+administrator to update." but this could be changed to something along 
+the lines of "There is an update available. The system administrator 
+will update when necessary." which should reduce most, if not all, users 
+from contacting you unnecessarily. I can throw up a patch for this if 
+Jason agrees.
+
+2) Avoiding users seeing the UI at all, where unnecessary. If your users 
+do not need *control* of the WireGuard configuration, then avoiding 
+showing them the UI altogether could be an option. I don't know your 
+system as well as you do, of course, so I can't assure that this 
+solution is valid. However, having hundreds of users as Network 
+Configuration Operators sounds a little "worrying" to me.
+
+3) Showing an even more limited UI for unprivileged users. If the users 
+still need some form of UI, then an even more limited UI could be 
+presented to users not part of the Administrators nor the Network 
+Configuration Operators groups. This would lack any form of control, and 
+could still be under the same `LimitedOperatorUI` Registry DWORD, or not 
+if is deemed "safe enough for the masses". If it is, you could say the 
+semantics refer to "Limited [User or Network] Operator UI".
+
+4) Updates could be hidden from the UI for N days after an update or N 
+updates (preferably two in this case, so that it doesn't pile up) for 
+Network Configuration Operators. This provides you [and any other 
+sysadmins] with a "buffer zone" to apply the updates before users 
+contact you about them. This could also be teamed up with 1) to further 
+reduce the likelihood of users contacting you. I'm not a large fan of 
+this "solution", however, since WireGuard for Windows lacks any metadata 
+to differentiate important and optional updates which can lead to a 
+security patch or critical bug-fix being ignored for some time.
+
+5) Creating a separate group which are able to switch tunnels. For users 
+who just need the GUI to switch tunnels, having a group specific to such 
+behavior named something along the lines of "WireGuard Operators" could 
+be helpful.
+
+Hopefully at least one of these suffices for you so that we can meet a 
+mid-point of sorts that matches both your criteria as well as my own.
+
+Thank for your time,
+Diab Neiroukh
+
+PS: Whilst it may seem a pain, I believe that a balance should be 
+achieved between the sysadmins and users where if the former forgets to 
+apply an update "for too long" then the users contact them as a 
+reminder. After all, we're all humans and we do forget sometimes. The 
+solutions 1) - with a prompt such as "There is an update available. The 
+system administrator should update soon." - and 4) match up to this 
+quite nicely.
+
+On 2021-11-24 15:42, Jason A. Donenfeld wrote:
+> I agree the situation is a bit ridiculous. I'll revert the change that
+> added this:
+> https://git.zx2c4.com/wireguard-windows/commit/?id=82129ba288f7561c89bb80e04841ffb46bc29889
 > 
-> I don't know how interested in this I am. Splitting things into two
-> files means more confusing maintenance, and categorizing sections
-> strictly into functions means there's more overhead when adding tests
-> (e.g. "where do they fit?"), because the categories you've chosen are
-> fairly broad, rather than being functions for each specific test. I'd
-> be more amenable to something _entirely_ granular, because that'd be
-> consistent, or what we have now, which is just linear. Full
-> granularity, though, has its own downsides, of increased clutter.
-> Alternatively, if you'd like to add some comments around the different
-> areas to better document what's happening, perhaps that'd accomplish
-> the same thing as this patch.
-> 
-
-Hi Jason,
-
-May be my timezone is not very fit for yours. So I will copy my IRC replies
-in the mail to moving on our kselftest topic.
-
-The reason I did this patch is because I want to make the test more clear
-and able to run each test case separately. My though is to make the
-wireguard test looks like tools/testing/selftests/net/fib_tests.sh.(Of course
-this could be discussed).
-
-Because the linear structure makes reader hard to find out what test it does.
-The function name in my current patch is also a little broad to look, which
-could to be updated. After updating, I'd like to make the test has 2 parts,
-functional tests and regression test. Functional tests for big part of function
-tests and regression test for small specific issues.
-
-BTW, one downside about current linear structure I think is that when someone
-want to add a new test, he need to read through the whole test to know that
-kind of topology at last. But with function structure, when we want to add a
-new test. We can just do like:
-1. set up basic topology
-2. configure to specific topo for testing, or just skip the first step and
-   configure to specific topo directly.
-3. Do test
-4. Clean up environment or reset to basic topology
-
-I think this would make adding new test case easier. What do you think?
-
-Thanks
-Hangbin
+> I'm CCing Diab, who originally requested the change, in case he wants
+> to argue with you about it. But in the absence of that, I'll revert.
