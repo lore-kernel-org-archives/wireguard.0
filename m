@@ -4,57 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 543DBC433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 26 Nov 2021 08:51:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B329FC433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 26 Nov 2021 09:18:05 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id de56afc6;
-	Fri, 26 Nov 2021 08:48:10 +0000 (UTC)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 89151ac4
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Fri, 26 Nov 2021 08:48:08 +0000 (UTC)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 5C17C610A7
- for <wireguard@lists.zx2c4.com>; Fri, 26 Nov 2021 08:48:06 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="WnSI+Atg"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1637916484;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=DWRWUHZq+UPxTJ8L062K0l1URxqW9rA4tQExpvbiHt4=;
- b=WnSI+AtgJJEs8HxD506yCjc0bHsjSVFVWkTGufJOoo0Dmq69dklwOEVZrvoYdkFQrie8/r
- lsYxZAfttOu7m7SqllMW7Sw1uKc07yHekIG3Xp24Rcy4K8GIoU1lDBwxUV3dQCD5wI4jnq
- Y3uCmo9mOMdMIcUUD0B5n9o4ZENi+d8=
-Received: by mail.zx2c4.com (OpenSMTPD) with ESMTPSA id 402646a1
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 8dd6c73a;
+	Fri, 26 Nov 2021 09:18:03 +0000 (UTC)
+Received: from sendmail.purelymail.com (sendmail.purelymail.com
+ [34.202.193.197])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 5bba1655
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 26 Nov 2021 08:48:04 +0000 (UTC)
-Received: by mail-yb1-f182.google.com with SMTP id e136so18298523ybc.4
- for <wireguard@lists.zx2c4.com>; Fri, 26 Nov 2021 00:48:04 -0800 (PST)
-X-Gm-Message-State: AOAM531KlXCRMRwfe253u1itr+1hg1R5clpqGkQc8wJoAYD4nGuN+Txs
- 93aZBtjU0wHESQKFScJlAKvVxk75NMTkAxMzwno=
-X-Google-Smtp-Source: ABdhPJysIUfe9lTLc4IHlDL2Y1S2AZo4ljjohyOnYyhkvA93ntSW23jEXCRG6aXlPbfGunA6PGicRC0+zbdpabYv/h8=
-X-Received: by 2002:a25:a2cd:: with SMTP id c13mr13626764ybn.95.1637916483385; 
- Fri, 26 Nov 2021 00:48:03 -0800 (PST)
+ Fri, 26 Nov 2021 09:18:01 +0000 (UTC)
+DKIM-Signature: a=rsa-sha256;
+ b=OhpFHPuK0zvzhtlQsS1vFlQufUWHmUP+q+Thg5MWZaJIbLViNzwrBcU6KXEHBCUtljfhNoN3FTzVnbAy0mwaFc5GdHigrnbqMEae5C5cPaxWL3g9AKfJa+mAkIIGMr3P1up4u+JGuaKGpoxJA7dx3O7/gCa+Hj1KYKBLSgw2k6w2AQX6hi2wrFv4iglhz/ybRmOw7yhzZChejgJJn5Fwd8piZz+oe7QQj0AH8HrxUByPHzK4Ms3mci422M46TevbPfmpJfdRDGoi/XIvWeuCjr5fGtdcTi2jCf5liFzHOWp1KRQ2A6lzr4WF0QKbD4g66yEoDFqr12Rex9VLbsGKvQ==;
+ s=purelymail1; d=thezest.dev; v=1;
+ bh=kjlq6stxaV8n1xYIckRe8J4dP6V7Japnowfkz290MGw=; h=Received:From:To; 
+DKIM-Signature: a=rsa-sha256;
+ b=k0zGt/fRB/h7WgSfsj6YjikBPaxlxWDjeulCH6ozd+A4vtYDH0TxNwTaEUJtakueTHE54Vt0znDiJzQeH3Myq0RLPV3WCXGkbpzr8FO0JvQYV2rCCFsLgfQKmV7bMMA3jmwPQbmi8xCvzWe03DWMmW0g2CFi6pfBFZqPMxO8ngqHMjLHEBPE7e0a7WqGJDUW90449oEI4znX7xEFXjSaOfgSDVqZj+rekH7obtgyjR+D1bFU4Srd0dXCLT0WobWP+1LAI48lwNKf2nEnQDvzYqHS2VfajVwyfDNe9Dq4KX3rBmJcKqe4XqgcoqWbPBcx9KIXve2Im6cCVsqDcxxcaQ==;
+ s=purelymail1; d=purelymail.com; v=1;
+ bh=kjlq6stxaV8n1xYIckRe8J4dP6V7Japnowfkz290MGw=;
+ h=Feedback-ID:Received:From:To; 
+Feedback-ID: 1188:367:null:purelymail
+X-Pm-Original-To: wireguard@lists.zx2c4.com
+Received: by ip-172-30-0-12.ec2.internal (JAMES SMTP Server ) with ESMTPA ID
+ -1382316362; Fri, 26 Nov 2021 09:17:38 +0000 (UTC)
 MIME-Version: 1.0
+Date: Fri, 26 Nov 2021 09:17:38 +0000
+From: lazerl0rd@thezest.dev
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: Bruno UT1 <bandry@ut1.org>, WireGuard mailing list
+ <wireguard@lists.zx2c4.com>
+Subject: Re: [Windows Client] Out of date Title scare my users
+In-Reply-To: <CAHmME9rwFyJ4W3nnbTWq0e0X_P_FOQx6Z3kcuUhcYuYjkc0atQ@mail.gmail.com>
 References: <1da227e6-5b12-40ca-a6de-3117835a2f16@ut1.org>
  <CAHmME9oqvV9E9cVXeF5nVpumE0fJgdASaBqG6aCPyS-NLq9rXQ@mail.gmail.com>
  <ccf4971633fdd62807ff51ddf7de1299@purelymail.com>
  <406a9568-8f70-b222-4e08-23fc5884847e@ut1.org>
  <CAHmME9roq+Qp7TFA4h3KZDuTd6DYJ68y2j9__MrX3+FDdtwVbA@mail.gmail.com>
-In-Reply-To: <CAHmME9roq+Qp7TFA4h3KZDuTd6DYJ68y2j9__MrX3+FDdtwVbA@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 26 Nov 2021 09:47:52 +0100
-X-Gmail-Original-Message-ID: <CAHmME9rwFyJ4W3nnbTWq0e0X_P_FOQx6Z3kcuUhcYuYjkc0atQ@mail.gmail.com>
-Message-ID: <CAHmME9rwFyJ4W3nnbTWq0e0X_P_FOQx6Z3kcuUhcYuYjkc0atQ@mail.gmail.com>
-Subject: Re: [Windows Client] Out of date Title scare my users
-To: Bruno UT1 <bandry@ut1.org>
-Cc: Diab Neiroukh <lazerl0rd@thezest.dev>, 
- WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+ <CAHmME9rwFyJ4W3nnbTWq0e0X_P_FOQx6Z3kcuUhcYuYjkc0atQ@mail.gmail.com>
+User-Agent: Purely Mail via Roundcube/1.5.0
+Message-ID: <2b0136d9581406195d542696db53d8cd@purelymail.com>
+X-Sender: lazerl0rd@thezest.dev
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -69,6 +62,76 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-https://git.zx2c4.com/wireguard-windows/commit/?id=8120d07dd5fc9a5e545419fe13490086ce920f31
+I assume you've chosen the "reword" route instead of any larger changes, 
+for the better or worse (though as Bruno said, it would be great if 5) 
+is considered somewhere down the line).
 
-Is this okay with both of you?
+Since this route was chosen, I suggest that we also reword the update 
+prompt itself as I feel that is equally responsible for users "freaking 
+out". After all, it is literally telling users to contact their sysadmin 
+instantly for each update. I propose something along the lines of the 
+following patch (though I guess il8n will be a bit of a pain):
+
+```
+ From 76ea8a81cf327527089bfea8209bf4f2faa1b6cf Mon Sep 17 00:00:00 2001
+ From: Diab Neiroukh <lazerl0rd@thezest.dev>
+Date: Fri, 26 Nov 2021 09:12:15 +0000
+Subject: [PATCH] ui: Don't explicitly tell users to contact their 
+sysadmin for
+  updates.
+
+The wording used here practically told users to instantly contact their
+system administrators for every update. We can reword it to instead to
+implicitly suggest that they contact their system administrator if
+the update has not been applied for "a relatively long time".
+
+Signed-off-by: Diab Neiroukh <lazerl0rd@thezest.dev>
+---
+  ui/updatepage.go | 2 +-
+  zgotext.go       | 2 +-
+  2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/ui/updatepage.go b/ui/updatepage.go
+index 96fc87f3..76a8dced 100644
+--- a/ui/updatepage.go
++++ b/ui/updatepage.go
+@@ -65,7 +65,7 @@ func NewUpdatePage() (*UpdatePage, error) {
+  	button.SetText(l18n.Sprintf("Update Now"))
+
+  	if !IsAdmin {
+-		button.SetText(l18n.Sprintf("Please ask the system administrator to 
+update."))
++		button.SetText(l18n.Sprintf("There is an update available. The system 
+administrator should update soon."))
+  		button.SetEnabled(false)
+  		status.SetText(l18n.Sprintf("Status: Waiting for administrator"))
+  	}
+diff --git a/zgotext.go b/zgotext.go
+index efbb9a80..e35974aa 100644
+--- a/zgotext.go
++++ b/zgotext.go
+@@ -235,7 +235,7 @@ var messageKeyToIndex = map[string]int{
+  	"Packet with invalid IP version from %v":                              
+  215,
+  	"Peer":                                                                
+  100,
+  	"Persistent keepalive:":                                               
+  54,
+-	"Please ask the system administrator to update.":                      
+  275,
++	"There is an update available. The system administrator should update 
+soon.":                         275,
+  	"Preshared key:":                                                      
+  51,
+  	"Protocol version must be 1":                                          
+  85,
+  	"Public key:":                                                         
+  46,
+-- 
+2.34.0
+```
+
+On 2021-11-26 08:47, Jason A. Donenfeld wrote:
+> https://git.zx2c4.com/wireguard-windows/commit/?id=8120d07dd5fc9a5e545419fe13490086ce920f31
+> 
+> Is this okay with both of you?
