@@ -4,59 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23B5FC433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 29 Nov 2021 17:34:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8C5AC433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 30 Nov 2021 09:22:44 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 6a415c2e;
-	Mon, 29 Nov 2021 17:34:52 +0000 (UTC)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id b4b97a0f
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 29 Nov 2021 17:34:50 +0000 (UTC)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id 13EB6B81260
- for <wireguard@lists.zx2c4.com>; Mon, 29 Nov 2021 17:34:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B293C53FAD
- for <wireguard@lists.zx2c4.com>; Mon, 29 Nov 2021 17:34:48 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="AkARxMYs"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1638207286;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=6RuvzvvG9LO5U4JnEl4pA3pCNYbm5GcnQaJFe6u59GU=;
- b=AkARxMYswcUa4KUAXMoCOzyGtpuFgzu3Z6lAJs15MA9qNPVJi/CSQdeNOA78dBxhd86gkh
- 6FVabzZA/Bnu4Qm4XiVnipPQSitSMmStTr4NR9bvF1kf87cLWDixBOSxPfq/XHWFW8aI7Z
- 6mZSRgEcu7vHcbhIS6CgIZeV+hZ5FEU=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 94c8c5ae
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 7725daa0;
+	Tue, 30 Nov 2021 09:22:42 +0000 (UTC)
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com
+ [2a00:1450:4864:20::52b])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id b0204e0b
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 29 Nov 2021 17:34:46 +0000 (UTC)
-Received: by mail-yb1-f181.google.com with SMTP id f9so44526313ybq.10
- for <wireguard@lists.zx2c4.com>; Mon, 29 Nov 2021 09:34:46 -0800 (PST)
-X-Gm-Message-State: AOAM532tnWTx2mOIKQItmGDApNq83Ts/f/qzCCYEfIViGjzleqlTupoF
- hcQ67IWCzCRVrvKackr8lcv7p3XSqVL2Ytobyzo=
-X-Google-Smtp-Source: ABdhPJwPtUIxTo3gZT3VrNo37/XshSDesrIz2rzcKtUz8dHgRjd131kVA2jqli76H6V+rl4iQLh4MyDQc24EOe3MiWo=
-X-Received: by 2002:a25:9781:: with SMTP id i1mr8257792ybo.638.1638207285973; 
- Mon, 29 Nov 2021 09:34:45 -0800 (PST)
+ Tue, 30 Nov 2021 09:22:41 +0000 (UTC)
+Received: by mail-ed1-x52b.google.com with SMTP id o20so83542302eds.10
+ for <wireguard@lists.zx2c4.com>; Tue, 30 Nov 2021 01:22:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=freebox-fr.20210112.gappssmtp.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=BjybnMadbLpri/v8WdQiCFUE9CUKXguyzU80wy2j2oU=;
+ b=nyzUrKSdc7WYmsXAQ6/iM301N+FDrgFNwmo+7Wmj1pz5xiRfXNAR6O0eD2u6VtjGxM
+ 6Z9xa08d2R9d/rjaucjvAYXwhrhisQb9sGbSFKfAxDJykVbDa9RWMmD0CXPVEMqHoemY
+ 4DEc5wihH7wQfCZrPNbEKz3q50rKuUDlUpdQ1iifB6qGd6Mnby/sZgvUqVmvEN7Y6mcQ
+ EtRk2MYBakc57CJ+kR1DhMzIu6Mek3IA4+gFUwQycdf1IV88uxCFzgxi1FmtYp2wLT+B
+ AnMzVsGOZifYHiJresYapDqvphToRnIH7kn+W3oaTtp9scXjAN/eS+5pXWH7gdKAyiYU
+ mrUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=BjybnMadbLpri/v8WdQiCFUE9CUKXguyzU80wy2j2oU=;
+ b=pxg9VATA+6sC1wEUtW/GpCmmCZA3D/PDNdbZkWBYxIlQJVcdY1daIbW5RlxRXtoEWb
+ w1U1yvYx1L/jFZ4zzfrjUofWgaBzsBOeYLDBmOQZuRmYHZ+P+lxAvWhsfWS7b+jpfmx+
+ 1XcPaJC+9Qg/V6Cdu5zgGk6aM/Z1JdotaLeV6LDXVpZ891TAd6u93JpEZ2PWjCznyPou
+ oMQi0irlk6AHUmf01HWAEwoK0bSN33zKRIPdWnAvAjfSWkStYTcEFQu1wC5881hCF9uD
+ JEZL2hbEs0GX5t9lWIVYDq1eNa+BaqPLfBplF/MCYcYILnol4zZt/OMmzMd9xGK6Wpz3
+ ZcFA==
+X-Gm-Message-State: AOAM533IYTVjRnAgg6+LDzPN5rZWPNAIa2w7CWrkv5ufB8rLXy/mlkGD
+ kZXEph/9jY/GrgLSp2L8c99QfZX4IC6FMdHegInsXPZFYB0=
+X-Google-Smtp-Source: ABdhPJz25jGU13bsu6kDkfAG3zVsi1+gBzyrLLSUifxQEUPTTm00NCiC92az23+ToKRF9Gm5hWuNB7OeWEeXHiqdhQM=
+X-Received: by 2002:a17:906:730f:: with SMTP id
+ di15mr65780902ejc.22.1638264160773; 
+ Tue, 30 Nov 2021 01:22:40 -0800 (PST)
 MIME-Version: 1.0
-References: <20211123190331.101346-1-minus@mnus.de>
- <CAHmME9pEf9=6C3eAXfanftBt4LJ4viRszQc5oG3Jt9H7Fxd68A@mail.gmail.com>
- <fef7daf2-adf7-e042-4977-46fda04aa07d@mnus.de>
- <CAHmME9qMLM=HedzvADriiWLZXbo0yLoxt=Nk9B=PGcwY9kn0eg@mail.gmail.com>
- <d3d1d445-128e-9acb-b483-53b675fd9591@mnus.de>
-In-Reply-To: <d3d1d445-128e-9acb-b483-53b675fd9591@mnus.de>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 29 Nov 2021 12:34:34 -0500
-X-Gmail-Original-Message-ID: <CAHmME9pAvi3P82yKnpfNXtOdTUxYoZasPGkeLpo3angnh7wFfw@mail.gmail.com>
-Message-ID: <CAHmME9pAvi3P82yKnpfNXtOdTUxYoZasPGkeLpo3angnh7wFfw@mail.gmail.com>
-Subject: Re: wireguard-go fails to send/receive data
-To: minus <minus+lists@mnus.de>
+References: <d83162a4-05bf-22f1-f8de-7ec183ed9173@ceidem.com>
+In-Reply-To: <d83162a4-05bf-22f1-f8de-7ec183ed9173@ceidem.com>
+From: Marios Makassikis <mmakassikis@freebox.fr>
+Date: Tue, 30 Nov 2021 10:22:29 +0100
+Message-ID: <CAF6XXKWbYasBFCp5-Fyqp_g-13sXbZvRmVfvve7nKwi7vH60Ng@mail.gmail.com>
+Subject: Re: Ubuntu client OpenBSD server
+To: Chris Eidem <ceidem@ceidem.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -73,5 +68,35 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Thanks for the script and the report
-https://git.zx2c4.com/wireguard-go/commit/?id=2dd424e2d808703339688ff78e32ed30cd0dfe87
+On Mon, Nov 29, 2021 at 4:45 PM Chris Eidem <ceidem@ceidem.com> wrote:
+>
+> I have a Wireguard server set up on an OpenBSD 6.9 server with OpenBSD,
+> Android, iOS and Ubuntu clients. All clients are connecting, although
+> the Ubuntu clients only work when the PSK is not enabled in the wg0.conf
+> file. Has anyone else seen this behavior? Is there any information I
+> could provide to help figure out why the PSK isn't working on my Linux
+> clients?
+>
+> I don't know if wg uses the system's TLS libraries, but if so, I suspect
+> that the fact gnutls and libressl don't play well together may have
+> something to do with it. But, that is a guess pulled from my fundament...
+>
+>    - chris
+>
+
+wg doesn't use TLS libraries at all, so the issue is somewhere else.
+Have you checked that the PSK is the same on both ends ?
+
+Which kernel version are you using ?
+
+Enabling debug logs on both ends may shed some light on what is
+going on. On OpenBSD, enable using the command:
+  ifconfig wgX debug
+To disable:
+  ifconfig wgX -debug
+
+On Ubuntu, enable using:
+  echo 'module wireguard +p' > /sys/kernel/debug/dynamic_debug/control
+
+and disable with:
+  echo 'module wireguard -p' > /sys/kernel/debug/dynamic_debug/control
