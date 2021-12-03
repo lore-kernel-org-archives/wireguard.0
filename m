@@ -4,42 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77F4EC433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 30 Nov 2021 10:12:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 184BAC433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  3 Dec 2021 22:22:36 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 80f8cb9b;
-	Tue, 30 Nov 2021 10:12:16 +0000 (UTC)
-Received: from vidar.ut-capitole.fr (vidar-alt-1.ut-capitole.fr
- [193.49.48.246])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 7cb9c8a7
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id c32916c2;
+	Fri, 3 Dec 2021 22:20:29 +0000 (UTC)
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 6aa6090d
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 30 Nov 2021 10:12:14 +0000 (UTC)
-Received: from [10.172.1.6] (wg-a19600.ut-capitole.fr [10.172.1.6])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested) (Authenticated sender: bandry)
- by vidar.ut-capitole.fr (Postfix) with ESMTPSA id 02FEC40C5342;
- Tue, 30 Nov 2021 11:12:14 +0100 (CET)
-Message-ID: <091c01e5-30bb-71d1-a863-999d6dbae7dd@ut1.org>
-Date: Tue, 30 Nov 2021 11:12:09 +0100
+ for <wireguard@lists.zx2c4.com>; Fri, 3 Dec 2021 22:20:27 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by ams.source.kernel.org (Postfix) with ESMTPS id 284B1B82972
+ for <wireguard@lists.zx2c4.com>; Fri,  3 Dec 2021 22:20:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FB3EC53FCB
+ for <wireguard@lists.zx2c4.com>; Fri,  3 Dec 2021 22:20:25 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="nGfldUdn"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1638570023;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=B83XfmHsPJE5Tcjo66pWCJl2zJIfQnoVchUzigi51UU=;
+ b=nGfldUdnsgJfxEFf6ww3UITZ3jUcuY7byVfYOOiu3isZSIbCWl7hg0N1h8AhQzw4qNr+BX
+ QRrNZD9/oPIiW4il1MnpXzResDBnSTSH66sAZg5aKg1VUbF2dKnSx90+01ZSwlhhoN9WBI
+ WAd0SUN8DkJequWMc7wadbm3qRJad8Y=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 626e7f26
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Fri, 3 Dec 2021 22:20:23 +0000 (UTC)
+Received: by mail-yb1-f170.google.com with SMTP id v203so13358214ybe.6
+ for <wireguard@lists.zx2c4.com>; Fri, 03 Dec 2021 14:20:23 -0800 (PST)
+X-Gm-Message-State: AOAM530yqPSNKNrT+2u1sFAZNqBGyRGPqwKesfN2E9WkgsvFwoZrOOyB
+ wzB/PYyC+aLaW4k+Ct4ktv9DX3Xqd6SrY7Q/kLE=
+X-Google-Smtp-Source: ABdhPJzx+LR8ZnhXpNCYkEJy5IG92p1PJ2kz5qUUb6oIqyKBFuA6BHzzfPZxrtgwWyGGGtUHBCFb+wkH5vGnx1j5JoE=
+X-Received: by 2002:a25:9781:: with SMTP id i1mr26379197ybo.638.1638570022494; 
+ Fri, 03 Dec 2021 14:20:22 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [Windows Client] Out of date Title scare my users
-Content-Language: en-US
-To: lazerl0rd@thezest.dev, "Jason A. Donenfeld" <Jason@zx2c4.com>
+References: <20210706132714.8220-1-minipli@grsecurity.net>
+ <CAHmME9o38fA4_nDVyS9FvO1EL-Z4fS+a2eCo6Xq7VzMSrPYNKQ@mail.gmail.com>
+ <c772d6c2-dac7-8c11-7c41-aaa6435a0bd6@grsecurity.net>
+In-Reply-To: <c772d6c2-dac7-8c11-7c41-aaa6435a0bd6@grsecurity.net>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Fri, 3 Dec 2021 23:20:11 +0100
+X-Gmail-Original-Message-ID: <CAHmME9oyopU8euSuVy7su91fia6xG5V+9i+QodCBdTGdR_rD5Q@mail.gmail.com>
+Message-ID: <CAHmME9oyopU8euSuVy7su91fia6xG5V+9i+QodCBdTGdR_rD5Q@mail.gmail.com>
+Subject: Re: [PATCH 0/2] wireguard-linux-compat: grsecurity compat patches
+To: Mathias Krause <minipli@grsecurity.net>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-References: <1da227e6-5b12-40ca-a6de-3117835a2f16@ut1.org>
- <CAHmME9oqvV9E9cVXeF5nVpumE0fJgdASaBqG6aCPyS-NLq9rXQ@mail.gmail.com>
- <ccf4971633fdd62807ff51ddf7de1299@purelymail.com>
- <406a9568-8f70-b222-4e08-23fc5884847e@ut1.org>
- <CAHmME9roq+Qp7TFA4h3KZDuTd6DYJ68y2j9__MrX3+FDdtwVbA@mail.gmail.com>
- <CAHmME9rwFyJ4W3nnbTWq0e0X_P_FOQx6Z3kcuUhcYuYjkc0atQ@mail.gmail.com>
- <2b0136d9581406195d542696db53d8cd@purelymail.com>
-From: Bruno UT1 <bandry@ut1.org>
-In-Reply-To: <2b0136d9581406195d542696db53d8cd@purelymail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -54,78 +69,35 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+Hey Mathias,
 
-I validate what Diab said. It's a good start, hoping option 5 will be 
-possible later.
+This resulted in kind of an interesting regression with old compilers
+on old kernel versions when I backported this to
+wireguard-linux-compat:
+https://git.zx2c4.com/wireguard-linux-compat/commit/?id=8118c247a75ae95169f0a9a539dfc661ffda8bc5
 
-Thank you for changes.
+The 25519 tests fail for 4.8.17, 4.7.10, 4.6.7, 4.5.7 with gcc 6:
 
-Have a good day.
+https://build.wireguard.com/wireguard-linux-compat/e8db181d62467da6c476cf4ac21e13dd477612c8/4.8.17-x86_64.log
+https://build.wireguard.com/wireguard-linux-compat/e8db181d62467da6c476cf4ac21e13dd477612c8/4.7.10-x86_64.log
+https://build.wireguard.com/wireguard-linux-compat/e8db181d62467da6c476cf4ac21e13dd477612c8/4.6.7-x86_64.log
+https://build.wireguard.com/wireguard-linux-compat/e8db181d62467da6c476cf4ac21e13dd477612c8/4.5.7-x86_64.log
 
-Le 26/11/2021 à 10:17, lazerl0rd@thezest.dev a écrit :
-> I assume you've chosen the "reword" route instead of any larger 
-> changes, for the better or worse (though as Bruno said, it would be 
-> great if 5) is considered somewhere down the line).
->
-> Since this route was chosen, I suggest that we also reword the update 
-> prompt itself as I feel that is equally responsible for users 
-> "freaking out". After all, it is literally telling users to contact 
-> their sysadmin instantly for each update. I propose something along 
-> the lines of the following patch (though I guess il8n will be a bit of 
-> a pain):
->
-> ```
-> From 76ea8a81cf327527089bfea8209bf4f2faa1b6cf Mon Sep 17 00:00:00 2001
-> From: Diab Neiroukh <lazerl0rd@thezest.dev>
-> Date: Fri, 26 Nov 2021 09:12:15 +0000
-> Subject: [PATCH] ui: Don't explicitly tell users to contact their 
-> sysadmin for
->  updates.
->
-> The wording used here practically told users to instantly contact their
-> system administrators for every update. We can reword it to instead to
-> implicitly suggest that they contact their system administrator if
-> the update has not been applied for "a relatively long time".
->
-> Signed-off-by: Diab Neiroukh <lazerl0rd@thezest.dev>
-> ---
->  ui/updatepage.go | 2 +-
->  zgotext.go       | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/ui/updatepage.go b/ui/updatepage.go
-> index 96fc87f3..76a8dced 100644
-> --- a/ui/updatepage.go
-> +++ b/ui/updatepage.go
-> @@ -65,7 +65,7 @@ func NewUpdatePage() (*UpdatePage, error) {
->      button.SetText(l18n.Sprintf("Update Now"))
->
->      if !IsAdmin {
-> -        button.SetText(l18n.Sprintf("Please ask the system 
-> administrator to update."))
-> +        button.SetText(l18n.Sprintf("There is an update available. 
-> The system administrator should update soon."))
->          button.SetEnabled(false)
->          status.SetText(l18n.Sprintf("Status: Waiting for 
-> administrator"))
->      }
-> diff --git a/zgotext.go b/zgotext.go
-> index efbb9a80..e35974aa 100644
-> --- a/zgotext.go
-> +++ b/zgotext.go
-> @@ -235,7 +235,7 @@ var messageKeyToIndex = map[string]int{
->      "Packet with invalid IP version from 
-> %v":                               215,
-> "Peer":  100,
->      "Persistent 
-> keepalive:":                                                54,
-> -    "Please ask the system administrator to 
-> update.":                       275,
-> +    "There is an update available. The system administrator should 
-> update soon.":                         275,
->      "Preshared 
-> key:":                                                       51,
->      "Protocol version must be 
-> 1":                                           85,
->      "Public key:":  46,
+But then they crash for 4.0.9, 3.19.8, 3.17.8 with gcc 5:
+
+https://build.wireguard.com/wireguard-linux-compat/e8db181d62467da6c476cf4ac21e13dd477612c8/4.0.9-x86_64.log
+https://build.wireguard.com/wireguard-linux-compat/e8db181d62467da6c476cf4ac21e13dd477612c8/3.19.8-x86_64.log
+https://build.wireguard.com/wireguard-linux-compat/e8db181d62467da6c476cf4ac21e13dd477612c8/3.17.8-x86_64.log
+
+And also crash with 3.16.85, 3.15.10, 3.14.79, 3.12.74, 3.11.10 with gcc 4:
+
+https://build.wireguard.com/wireguard-linux-compat/e8db181d62467da6c476cf4ac21e13dd477612c8/3.16.85-x86_64.log
+https://build.wireguard.com/wireguard-linux-compat/e8db181d62467da6c476cf4ac21e13dd477612c8/3.15.10-x86_64.log
+https://build.wireguard.com/wireguard-linux-compat/e8db181d62467da6c476cf4ac21e13dd477612c8/3.14.79-x86_64.log
+https://build.wireguard.com/wireguard-linux-compat/e8db181d62467da6c476cf4ac21e13dd477612c8/3.13.11-x86_64.log
+https://build.wireguard.com/wireguard-linux-compat/e8db181d62467da6c476cf4ac21e13dd477612c8/3.12.74-x86_64.log
+https://build.wireguard.com/wireguard-linux-compat/e8db181d62467da6c476cf4ac21e13dd477612c8/3.11.10-x86_64.log
+
+Any intuition about what might have happened?
+
+Jason
