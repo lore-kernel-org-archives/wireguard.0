@@ -4,75 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B19B2C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  6 Dec 2021 21:02:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 158CCC433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  7 Dec 2021 02:54:36 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 1e8746dd;
-	Mon, 6 Dec 2021 21:00:18 +0000 (UTC)
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com
- [2a00:1450:4864:20::336])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 15dd5f81
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 699d91ce;
+	Tue, 7 Dec 2021 02:54:34 +0000 (UTC)
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com
+ [2607:f8b0:4864:20::42a])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 7108af8d
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 6 Dec 2021 21:00:17 +0000 (UTC)
-Received: by mail-wm1-x336.google.com with SMTP id o29so9162031wms.2
- for <wireguard@lists.zx2c4.com>; Mon, 06 Dec 2021 13:00:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=grsecurity.net; s=grsec;
- h=to:cc:references:from:subject:message-id:date:user-agent
- :mime-version:in-reply-to:content-language:content-transfer-encoding;
- bh=EnJ5KzlpYRVQIaGr1g4IIcth4x0F3qa0q6CUmPt7UXM=;
- b=IR7lx7jICMMxp5xg0lgbP7LnN+6X5eftQxT7/zSPC0fwnprd81pXxEi8hmEfM9hMH8
- dLD11c3ZrtV4kzgTI0Er1Ky8/7lzDbAY3CLnzMrBcsWFHhtj9UCqkyjDemsBDWeCblO6
- QDI8knCNbEkTVgCOBmsxGGPOt4fB+IyhJL2DCIENfVC6HWqCxuJcz3tQg+RIHWG6VHyM
- yvGguLJJC3Vqkit54oHxY9Y5S/tp7NccnHU/ycVSILmxqOQEAaTxLYKwiRZhDFkzC5Ik
- tC2QuOLfHuNywVjYF5pEQQXlLl1uz3Xipmv7k3IQVQiBlR/WZix3ZgPdbtCWB4gPu8ze
- iBVQ==
+ for <wireguard@lists.zx2c4.com>; Tue, 7 Dec 2021 02:54:33 +0000 (UTC)
+Received: by mail-pf1-x42a.google.com with SMTP id g18so12022960pfk.5
+ for <wireguard@lists.zx2c4.com>; Mon, 06 Dec 2021 18:54:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=gnyvU6aQ6cmCKxvU8HYEIJ+gYj3b+e+4xn0kCc3JbyQ=;
+ b=Y61mHEre39uukCq3k5ck7FoZ58bVuOu1h2gezHbztizXgKxe4suicjcdnZrq1mdQgc
+ 7JDzF6hE2Bjq/UyqRscml09/jP8OQYMI1Dvz5r5yYwXxLMy5wwC/e8E+1JBQJsbnP7w3
+ Kfbb3Yd12iy6jeDLW3un4mkyv9kXFNfyMALEuIYTT6khXLeIqAN5pYUKTOVtG/z1g3Qn
+ kmYuq954bmSwtzI3JVegNBNJ3LNCjUqXRAnlK7HM9GSS42Ow4CXJ7+3zPg5kqZw1UCzY
+ f/zf5Y1wg2H0PuBOvO6f6B/QRZ8MnzAKvasiCZexs6XmApDj9FiO0UX3OK3BhHT/ibDe
+ Ku6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:to:cc:references:from:subject:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
  :content-transfer-encoding;
- bh=EnJ5KzlpYRVQIaGr1g4IIcth4x0F3qa0q6CUmPt7UXM=;
- b=H/JDDq55mt9/tsskme59yezJmGAF63h/fOHIpfjiklQDewmFfGviiLP0fTH57z9bNH
- c+28eY3VI35KE3/UJO99pAsiKJnj3wdad0y/EBBKpzQSWdxA3xngTQfl+/pnURdY00ct
- htaoLS2ib8Y2OVUKc6nEXT0wVfKHhzoeT8O3JaOHRECdy5qCoxmaJyEgvsBvy76nawKt
- 2+WBXIjG7XRY72LDdnMo4F4falLvqDI4U8kfHfT68TpPAawH8Ex8o+0Gbxo5+PCu+eEz
- VlN7vWEfG/umDgYdPx3MchkyZCF0qIRUbS9yCYpM0cu8vHjyYhqa+nOqyPlohguMhkLu
- QwBA==
-X-Gm-Message-State: AOAM531SbSDAuKkQNXE6h9isMDA943TdAO1Hbxag01lNHUWrI/ZfFW+9
- XzvWQXAlZE1wflTZxgf8H0g1FOt5OPPVig==
-X-Google-Smtp-Source: ABdhPJxKF3WZ5CcrkFEuP/fIX/nxZHZR0J9ilUWeYYdRrSydgxhiGcSwGr2YGOZotm89yeWVSP8JRA==
-X-Received: by 2002:a05:600c:4f92:: with SMTP id
- n18mr1183622wmq.123.1638824416563; 
- Mon, 06 Dec 2021 13:00:16 -0800 (PST)
-Received: from ?IPv6:2003:f6:af03:cb00:aa51:ac04:48b6:3372?
- (p200300f6af03cb00aa51ac0448b63372.dip0.t-ipconnect.de.
- [2003:f6:af03:cb00:aa51:ac04:48b6:3372])
- by smtp.gmail.com with ESMTPSA id l26sm505164wms.15.2021.12.06.13.00.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Dec 2021 13:00:16 -0800 (PST)
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-References: <20210706132714.8220-1-minipli@grsecurity.net>
- <CAHmME9o38fA4_nDVyS9FvO1EL-Z4fS+a2eCo6Xq7VzMSrPYNKQ@mail.gmail.com>
- <c772d6c2-dac7-8c11-7c41-aaa6435a0bd6@grsecurity.net>
- <CAHmME9oyopU8euSuVy7su91fia6xG5V+9i+QodCBdTGdR_rD5Q@mail.gmail.com>
- <3a2d41dc-effb-158c-4a52-d7eb282ecb7e@grsecurity.net>
- <CAHmME9r4gspVnZGhgHhB1nR6FvOaryLoZvAJwpRU=-=rrbdoqQ@mail.gmail.com>
- <5bcdecdb-fbc0-4714-895d-1b1e6a87287a@grsecurity.net>
- <CAHmME9opYoaoSTHud9sF4BOFBPS=NVYPJSGQr37bxNai26MGFg@mail.gmail.com>
- <1ef9bbf4-b8f8-18df-3c80-3181c2b5b9c5@grsecurity.net>
- <CAHmME9odv1V9wUrLsX16J68wVD3rq+op0VvaNxtsLGG8Rrz4tQ@mail.gmail.com>
-From: Mathias Krause <minipli@grsecurity.net>
-Subject: Re: [PATCH 0/2] wireguard-linux-compat: grsecurity compat patches
-Message-ID: <3ed9270f-00da-5c88-cadd-59b4419b9a98@grsecurity.net>
-Date: Mon, 6 Dec 2021 22:00:16 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+ bh=gnyvU6aQ6cmCKxvU8HYEIJ+gYj3b+e+4xn0kCc3JbyQ=;
+ b=2Nv+uoQuS/O7cQnoM4tDUEz7u2ajGaqxxKiXiMZCarUu0vxOoJEz8rR2LCh7GH0VAy
+ WqyFg/azWmfr29IaOxCD5bdLHPPSH+VxG4Ba9zP1ht9KyqPWgZTYPAp3H++svQ6Ag3OD
+ HQgg4dUSZCp7G7UtWxXnGME0PhN0l1ualw4BiJ22HSgoT7XIryekRwR/z4jDDeqOVpBq
+ Owf28jDoYtEH3aiOwIZzB0+AETivdSvVfdaKxU2c24zU9zKagLJmtk1ntmYGdtWW7wM4
+ u2JuVyNzIYECf4mJMEBa8mvk3yyiTTpZPwHzfu/nN7OhFGg1igwi7M2XXnAEmx2gOnIw
+ 6/uw==
+X-Gm-Message-State: AOAM533NLwWmlpcKjIegGJqGTrYFjspHttVbEVJ9Ym0Tse+FhJ7QL9wV
+ /2IHMvXlvunSjnHwDMl+1GGPW1/e9YE=
+X-Google-Smtp-Source: ABdhPJyQPGeJzo1slV1gU6cbWx35uO5G2CAk30fZySXEUS9I412ZlzIGGtjV37NHOuX7RrwFyeW2xA==
+X-Received: by 2002:aa7:9dcd:0:b0:494:658c:3943 with SMTP id
+ g13-20020aa79dcd000000b00494658c3943mr40073696pfq.19.1638845671882; 
+ Mon, 06 Dec 2021 18:54:31 -0800 (PST)
+Received: from Laptop-X1.redhat.com ([209.132.188.80])
+ by smtp.gmail.com with ESMTPSA id d17sm13323990pfj.124.2021.12.06.18.54.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 06 Dec 2021 18:54:31 -0800 (PST)
+From: Hangbin Liu <liuhangbin@gmail.com>
+To: wireguard@lists.zx2c4.com
+Cc: netdev@vger.kernel.org, "Jason A . Donenfeld" <Jason@zx2c4.com>,
+ =?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+ Hangbin Liu <liuhangbin@gmail.com>
+Subject: [PATCH wireguard] wireguard: remove redundancy include files
+Date: Tue,  7 Dec 2021 10:54:21 +0800
+Message-Id: <20211207025421.1903782-1-liuhangbin@gmail.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9odv1V9wUrLsX16J68wVD3rq+op0VvaNxtsLGG8Rrz4tQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -88,24 +72,155 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Am 06.12.21 um 19:55 schrieb Jason A. Donenfeld:
-> Nice detective work! I just loaded this up on the CI, so we'll see if
-> this does work across the board.
+Remove redundancy include files based on tool include-what-you-use
+result. The tool will suggest using direct include headers and removing
+some big headers. e.g. it will suggests to use linux/spinlock_types.h
+for spinlock_t. But actually, we only need to include linux/spinlock.h
+directly. So I just take the result as a reference and remove the include
+files I do not find related structure/functions.
 
-Thanks.
+Tested with gcc-8.5.0 and the compilation passed.
 
-> It sounds like the original code also had this bug -- the "r"(out)
-> should be in the output constraints, not in the input constraints,
-> right? Sounds like something I should report to the EverCrypt authors
-> and also fix upstream too then.
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+---
+ drivers/net/wireguard/device.c   | 1 -
+ drivers/net/wireguard/device.h   | 1 -
+ drivers/net/wireguard/noise.c    | 4 ----
+ drivers/net/wireguard/noise.h    | 1 -
+ drivers/net/wireguard/peer.h     | 1 -
+ drivers/net/wireguard/queueing.h | 2 --
+ drivers/net/wireguard/send.c     | 5 -----
+ drivers/net/wireguard/socket.c   | 2 --
+ drivers/net/wireguard/socket.h   | 5 -----
+ 9 files changed, 22 deletions(-)
 
-Yes, probably, but you're mixing up the two. "r"(out) should be an input
-operand as it's only read in the inline asm. The other two ('tmp' and
-'f') are read and written, so need to be output operands (as they
-already are!) but also marked as earlyclobber ("&") as they're modified
-before all input operands are read ('out', in this case). It's just a
-hint to the compiler to not make the register allocation overlap with
-any (other) input operand register.
+diff --git a/drivers/net/wireguard/device.c b/drivers/net/wireguard/device.c
+index a46067c38bf5..06b74da2133f 100644
+--- a/drivers/net/wireguard/device.c
++++ b/drivers/net/wireguard/device.c
+@@ -11,7 +11,6 @@
+ #include "peer.h"
+ #include "messages.h"
+ 
+-#include <linux/module.h>
+ #include <linux/rtnetlink.h>
+ #include <linux/inet.h>
+ #include <linux/netdevice.h>
+diff --git a/drivers/net/wireguard/device.h b/drivers/net/wireguard/device.h
+index 43c7cebbf50b..0782dcef9fc1 100644
+--- a/drivers/net/wireguard/device.h
++++ b/drivers/net/wireguard/device.h
+@@ -8,7 +8,6 @@
+ 
+ #include "noise.h"
+ #include "allowedips.h"
+-#include "peerlookup.h"
+ #include "cookie.h"
+ 
+ #include <linux/types.h>
+diff --git a/drivers/net/wireguard/noise.c b/drivers/net/wireguard/noise.c
+index c0cfd9b36c0b..59be94077767 100644
+--- a/drivers/net/wireguard/noise.c
++++ b/drivers/net/wireguard/noise.c
+@@ -7,14 +7,10 @@
+ #include "device.h"
+ #include "peer.h"
+ #include "messages.h"
+-#include "queueing.h"
+ #include "peerlookup.h"
+ 
+ #include <linux/rcupdate.h>
+ #include <linux/slab.h>
+-#include <linux/bitmap.h>
+-#include <linux/scatterlist.h>
+-#include <linux/highmem.h>
+ #include <crypto/algapi.h>
+ 
+ /* This implements Noise_IKpsk2:
+diff --git a/drivers/net/wireguard/noise.h b/drivers/net/wireguard/noise.h
+index c527253dba80..75b8f0d50084 100644
+--- a/drivers/net/wireguard/noise.h
++++ b/drivers/net/wireguard/noise.h
+@@ -12,7 +12,6 @@
+ #include <linux/spinlock.h>
+ #include <linux/atomic.h>
+ #include <linux/rwsem.h>
+-#include <linux/mutex.h>
+ #include <linux/kref.h>
+ 
+ struct noise_replay_counter {
+diff --git a/drivers/net/wireguard/peer.h b/drivers/net/wireguard/peer.h
+index 76e4d3128ad4..05af76b62583 100644
+--- a/drivers/net/wireguard/peer.h
++++ b/drivers/net/wireguard/peer.h
+@@ -11,7 +11,6 @@
+ #include "cookie.h"
+ 
+ #include <linux/types.h>
+-#include <linux/netfilter.h>
+ #include <linux/spinlock.h>
+ #include <linux/kref.h>
+ #include <net/dst_cache.h>
+diff --git a/drivers/net/wireguard/queueing.h b/drivers/net/wireguard/queueing.h
+index e2388107f7fd..bd54373b4485 100644
+--- a/drivers/net/wireguard/queueing.h
++++ b/drivers/net/wireguard/queueing.h
+@@ -9,8 +9,6 @@
+ #include "peer.h"
+ #include <linux/types.h>
+ #include <linux/skbuff.h>
+-#include <linux/ip.h>
+-#include <linux/ipv6.h>
+ #include <net/ip_tunnels.h>
+ 
+ struct wg_device;
+diff --git a/drivers/net/wireguard/send.c b/drivers/net/wireguard/send.c
+index 5368f7c35b4b..f5b25f6fc55b 100644
+--- a/drivers/net/wireguard/send.c
++++ b/drivers/net/wireguard/send.c
+@@ -11,12 +11,7 @@
+ #include "messages.h"
+ #include "cookie.h"
+ 
+-#include <linux/uio.h>
+-#include <linux/inetdevice.h>
+-#include <linux/socket.h>
+ #include <net/ip_tunnels.h>
+-#include <net/udp.h>
+-#include <net/sock.h>
+ 
+ static void wg_packet_send_handshake_initiation(struct wg_peer *peer)
+ {
+diff --git a/drivers/net/wireguard/socket.c b/drivers/net/wireguard/socket.c
+index 6f07b949cb81..0d645613349a 100644
+--- a/drivers/net/wireguard/socket.c
++++ b/drivers/net/wireguard/socket.c
+@@ -9,9 +9,7 @@
+ #include "queueing.h"
+ #include "messages.h"
+ 
+-#include <linux/ctype.h>
+ #include <linux/net.h>
+-#include <linux/if_vlan.h>
+ #include <linux/if_ether.h>
+ #include <linux/inetdevice.h>
+ #include <net/udp_tunnel.h>
+diff --git a/drivers/net/wireguard/socket.h b/drivers/net/wireguard/socket.h
+index bab5848efbcd..d69c84f12e66 100644
+--- a/drivers/net/wireguard/socket.h
++++ b/drivers/net/wireguard/socket.h
+@@ -6,11 +6,6 @@
+ #ifndef _WG_SOCKET_H
+ #define _WG_SOCKET_H
+ 
+-#include <linux/netdevice.h>
+-#include <linux/udp.h>
+-#include <linux/if_vlan.h>
+-#include <linux/if_ether.h>
+-
+ int wg_socket_init(struct wg_device *wg, u16 port);
+ void wg_socket_reinit(struct wg_device *wg, struct sock *new4,
+ 		      struct sock *new6);
+-- 
+2.31.1
 
-Thanks,
-Mathias
