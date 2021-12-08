@@ -4,70 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B42A0C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 10 Dec 2021 23:01:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E38CC433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 10 Dec 2021 23:01:11 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id c1f34358;
-	Fri, 10 Dec 2021 22:58:22 +0000 (UTC)
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id a87bd55c
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Fri, 10 Dec 2021 22:58:20 +0000 (UTC)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by sin.source.kernel.org (Postfix) with ESMTPS id 0E9C8CE2D89
- for <wireguard@lists.zx2c4.com>; Fri, 10 Dec 2021 22:58:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23EBFC341C8
- for <wireguard@lists.zx2c4.com>; Fri, 10 Dec 2021 22:58:15 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="kJDixTZs"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1639177093;
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id dbdf8c95;
+	Fri, 10 Dec 2021 22:58:29 +0000 (UTC)
+Received: from galois.linutronix.de (Galois.linutronix.de
+ [2a0a:51c0:0:12e:550::1])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id fe621b78
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Wed, 8 Dec 2021 17:32:06 +0000 (UTC)
+Date: Wed, 8 Dec 2021 18:32:05 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+ s=2020; t=1638984726;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=80TuZSBR3pgAQ4KzwOXtG7jEgl+ygU68FONJA93NQlE=;
- b=kJDixTZsdsgnysqiYzcr2AqHEAXGtb5V/bRwYfPB7c141qhWphkj2jnapWCVj5Cuwqf8KN
- nYdZZ691wSD6YohmeptP1amVTrusSP+dmFsCtDPFrijGyGcvLHIatsa3446gixxqlwAUN9
- ZDUhmZ+CfHwK1IT8GzzQTuBBrCeseXc=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3416eadb
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Fri, 10 Dec 2021 22:58:13 +0000 (UTC)
-Received: by mail-yb1-f171.google.com with SMTP id j2so24571860ybg.9
- for <wireguard@lists.zx2c4.com>; Fri, 10 Dec 2021 14:58:12 -0800 (PST)
-X-Gm-Message-State: AOAM530nWf8HCCaDEM9ybifN/5stUatQiLHUQfz9pPY53FEKwduglrDs
- 4w8AA7HLnLoK1JH9f+WfmM5W+4Rq8rcgCkWg8L4=
-X-Google-Smtp-Source: ABdhPJzboetutmYxFbebgYXODvYK0O8mLjcu79NGLH7y3oWjzfltaDbAtsFdx8w+P8w4Zrtc4dlcSxVQSSeCASd+HLM=
-X-Received: by 2002:a25:d393:: with SMTP id
- e141mr18750628ybf.255.1639177092117; 
- Fri, 10 Dec 2021 14:58:12 -0800 (PST)
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Sgdw76mLJ/C9D4V2Z4FYhwTVSAeEIaaCr7wyLEI5WYY=;
+ b=FARBTHaAW8hUlsYvLpSqXsg0WMBHZ1w26HYGu9OAl++8fXyHwsQ/j5bs3el4fl3JS/EI80
+ PPPZJ7r5l55ZpB+tP+0yTm6tPaDlPFLZvbMuXopPvn3gIaSCWOxrmOxYCk7IWoJ5YmeNjD
+ YFAe3bJ+r/SGVnJS+t2u1PDptpnBXKrcyxjHjWezL6dkvmxiG0tlJT2lIDFLhSGp40gwDs
+ MZIMyq9KwvrNnfJijJXEpYl2SvkW0lxbmzEDf9zb1ntfdii84IhnHhJehpYTGm6yknQJu1
+ kIbeZZwpOfram1HXdk0s/+9ifMh4koq03LoJsoben/7H8I1KwzBHlQJ/Sn1FdQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+ s=2020e; t=1638984726;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Sgdw76mLJ/C9D4V2Z4FYhwTVSAeEIaaCr7wyLEI5WYY=;
+ b=vgFDGk8KBBc3mra1P+5/P3GpSuveIHRvPCaD3wLoj04M8R56Div5ruMQ/pWxGZJbVA+kRy
+ SqBGlU+TkSm7UFCA==
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+To: wireguard@lists.zx2c4.com, netdev@vger.kernel.org
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>,
+ Thomas Gleixner <tglx@linutronix.de>, Peter Zijlstra <peterz@infradead.org>
+Subject: [RFC] wiregard RX packet processing.
+Message-ID: <20211208173205.zajfvg6zvi4g5kln@linutronix.de>
 MIME-Version: 1.0
-References: <20210706132714.8220-1-minipli@grsecurity.net>
- <CAHmME9o38fA4_nDVyS9FvO1EL-Z4fS+a2eCo6Xq7VzMSrPYNKQ@mail.gmail.com>
- <c772d6c2-dac7-8c11-7c41-aaa6435a0bd6@grsecurity.net>
- <CAHmME9oyopU8euSuVy7su91fia6xG5V+9i+QodCBdTGdR_rD5Q@mail.gmail.com>
- <3a2d41dc-effb-158c-4a52-d7eb282ecb7e@grsecurity.net>
- <CAHmME9r4gspVnZGhgHhB1nR6FvOaryLoZvAJwpRU=-=rrbdoqQ@mail.gmail.com>
- <5bcdecdb-fbc0-4714-895d-1b1e6a87287a@grsecurity.net>
- <CAHmME9opYoaoSTHud9sF4BOFBPS=NVYPJSGQr37bxNai26MGFg@mail.gmail.com>
- <1ef9bbf4-b8f8-18df-3c80-3181c2b5b9c5@grsecurity.net>
- <CAHmME9odv1V9wUrLsX16J68wVD3rq+op0VvaNxtsLGG8Rrz4tQ@mail.gmail.com>
- <3ed9270f-00da-5c88-cadd-59b4419b9a98@grsecurity.net>
- <CAHmME9rFHkydmrYcS83PEf=MJP8brwsdis+7TQ=oLkO4RNTX9g@mail.gmail.com>
- <30231bb2-50e0-3880-b705-942b263eafe8@grsecurity.net>
-In-Reply-To: <30231bb2-50e0-3880-b705-942b263eafe8@grsecurity.net>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 10 Dec 2021 23:58:01 +0100
-X-Gmail-Original-Message-ID: <CAHmME9rT+aR-FJKFxVaW+tsACKX0kH-2T6cw7xbjjaeVsJbybw@mail.gmail.com>
-Message-ID: <CAHmME9rT+aR-FJKFxVaW+tsACKX0kH-2T6cw7xbjjaeVsJbybw@mail.gmail.com>
-Subject: Re: [PATCH 0/2] wireguard-linux-compat: grsecurity compat patches
-To: Mathias Krause <minipli@grsecurity.net>, aymeric.fromherz@inria.fr
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+X-Mailman-Approved-At: Fri, 10 Dec 2021 22:58:27 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -82,20 +60,60 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-CC'ing in Aymeric, who's working on Vale's codegen.
+I didn't understand everything, I just stumbled upon this while looking
+for something else and don't have the time to figure everything out.
+Also I might haven taken a wrong turn somewhere=E2=80=A6
 
-On Thu, Dec 9, 2021 at 8:59 AM Mathias Krause <minipli@grsecurity.net> wrote:
->
-> Am 08.12.21 um 15:56 schrieb Jason A. Donenfeld:
-> > On Mon, Dec 6, 2021 at 10:00 PM Mathias Krause <minipli@grsecurity.net> wrote:
-> >> Yes, probably, but you're mixing up the two.
-> >
-> > Oh, thanks, right.
-> >
-> > I'll talk to EverCrypt upstream and see.
->
-> FWIW, 'out' is also wrongly flagged as output operand in fmul() and
-> fmul2(). But making it an input operand needs more surgery, as the
-> operand order changes and this requires some code churn.
->
-> Mathias
+need_resched() is something you want avoid unless you write core code.
+On a PREEMPT kernel you never observe true here and cond_resched() is a
+nop. On non-PREEMPT kernels need_resched() can return true/ false _and_
+should_resched() (which is part of cond_resched()) returns only true if
+the same bit is true. This means invoking only cond_resched() saves one
+read access. Bonus points: On x86 that bit is folded into the preemption
+counter so you avoid reading that bit entirely plus the whole thing is
+optimized away on a PREEMPT kernel.
+
+wg_queue_enqueue_per_peer_rx() enqueues somehow skb for NAPI processing
+(this bit I haven't figured out yet but it has to) and then invokes
+napi_schedule(). This napi_schedule() wasn't meant to be invoked from
+preemptible context, only from an actual IRQ handler:
+- if NAPI is already active (which can only happen if it is running on a
+  remote CPU) then nothing happens. Good.
+
+- if NAPI is idle then __napi_schedule() will "schedule" it. Here is
+  the thing: You are in process context (kworker) so nothing happens
+  right away: NET_RX_SOFTIRQ is set for the local CPU and NAPI struct is
+  added to the list. Now you need to wait until a random interrupt
+  appears which will notice that a softirq bit is set and will process
+  it. So it will happen eventually=E2=80=A6
+
+I would suggest to either:
+- add a comment that this is know and it doesn't not matter because
+  $REASON. I would imagine you might want to batch multiple skbs but=E2=80=
+=A6
+
+- add a BH disable section around wg_queue_enqueue_per_peer_rx() (see
+  below). That bh-enable() will invoke pending softirqs which in your
+  case should invoke wg_packet_rx_poll() where you see only one skb.
+
+diff --git a/drivers/net/wireguard/receive.c b/drivers/net/wireguard/receiv=
+e.c
+index 7b8df406c7737..64e4ca1ded108 100644
+--- a/drivers/net/wireguard/receive.c
++++ b/drivers/net/wireguard/receive.c
+@@ -507,9 +507,11 @@ void wg_packet_decrypt_worker(struct work_struct *work)
+ 		enum packet_state state =3D
+ 			likely(decrypt_packet(skb, PACKET_CB(skb)->keypair)) ?
+ 				PACKET_STATE_CRYPTED : PACKET_STATE_DEAD;
++		local_bh_disable();
+ 		wg_queue_enqueue_per_peer_rx(skb, state);
+-		if (need_resched())
+-			cond_resched();
++		local_bh_enable();
++
++		cond_resched();
+ 	}
+ }
+=20
+
+Sebastian
