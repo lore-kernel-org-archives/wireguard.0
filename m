@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BC32C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 10 Dec 2021 22:36:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B42A0C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 10 Dec 2021 23:01:10 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 2fd68e13;
-	Fri, 10 Dec 2021 22:36:39 +0000 (UTC)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id f2318875
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id c1f34358;
+	Fri, 10 Dec 2021 22:58:22 +0000 (UTC)
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id a87bd55c
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 10 Dec 2021 22:36:38 +0000 (UTC)
+ Fri, 10 Dec 2021 22:58:20 +0000 (UTC)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id A9136B829DF
- for <wireguard@lists.zx2c4.com>; Fri, 10 Dec 2021 22:36:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31A70C341C8
- for <wireguard@lists.zx2c4.com>; Fri, 10 Dec 2021 22:36:36 +0000 (UTC)
+ by sin.source.kernel.org (Postfix) with ESMTPS id 0E9C8CE2D89
+ for <wireguard@lists.zx2c4.com>; Fri, 10 Dec 2021 22:58:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23EBFC341C8
+ for <wireguard@lists.zx2c4.com>; Fri, 10 Dec 2021 22:58:15 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
  dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="drOxtqY4"
+ header.b="kJDixTZs"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1639175794;
+ t=1639177093;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
  bh=80TuZSBR3pgAQ4KzwOXtG7jEgl+ygU68FONJA93NQlE=;
- b=drOxtqY49zTjTu5+nJTTF+G9MpbD7sJos05JDt/9VpmgAI1JccDeOPM9KhVOWjGgBblrSR
- ewvW7GDqmJA+qIahJhTZ01DeT5TIOBcEsapgxq6j+VCIBfUHUsXH0TwsT174JG/hOA1LF7
- QufuGhzCQskGCkgUq/xN3u3SG/qaFZU=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id d23a0e73
+ b=kJDixTZsdsgnysqiYzcr2AqHEAXGtb5V/bRwYfPB7c141qhWphkj2jnapWCVj5Cuwqf8KN
+ nYdZZ691wSD6YohmeptP1amVTrusSP+dmFsCtDPFrijGyGcvLHIatsa3446gixxqlwAUN9
+ ZDUhmZ+CfHwK1IT8GzzQTuBBrCeseXc=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3416eadb
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 10 Dec 2021 22:36:34 +0000 (UTC)
-Received: by mail-yb1-f170.google.com with SMTP id f186so24573447ybg.2
- for <wireguard@lists.zx2c4.com>; Fri, 10 Dec 2021 14:36:34 -0800 (PST)
-X-Gm-Message-State: AOAM532t2GbY4R09Sk8oQdwv2xLw984BO5IFEJDj9gTTFhdBxOitRGRi
- No3E/QQzjmg94KVPfxz9yKBYJsq+rB3AJIF5rBo=
-X-Google-Smtp-Source: ABdhPJw9WF75DiCuEB6WhsmjV6C4VZtUmO+ToZrTyLCxOFK8ajyYtEosVmq7SP+h+HnWEHNyVtZR/8kjdTWAE1QodY0=
-X-Received: by 2002:a5b:c81:: with SMTP id i1mr17654487ybq.115.1639175793078; 
- Fri, 10 Dec 2021 14:36:33 -0800 (PST)
+ Fri, 10 Dec 2021 22:58:13 +0000 (UTC)
+Received: by mail-yb1-f171.google.com with SMTP id j2so24571860ybg.9
+ for <wireguard@lists.zx2c4.com>; Fri, 10 Dec 2021 14:58:12 -0800 (PST)
+X-Gm-Message-State: AOAM530nWf8HCCaDEM9ybifN/5stUatQiLHUQfz9pPY53FEKwduglrDs
+ 4w8AA7HLnLoK1JH9f+WfmM5W+4Rq8rcgCkWg8L4=
+X-Google-Smtp-Source: ABdhPJzboetutmYxFbebgYXODvYK0O8mLjcu79NGLH7y3oWjzfltaDbAtsFdx8w+P8w4Zrtc4dlcSxVQSSeCASd+HLM=
+X-Received: by 2002:a25:d393:: with SMTP id
+ e141mr18750628ybf.255.1639177092117; 
+ Fri, 10 Dec 2021 14:58:12 -0800 (PST)
 MIME-Version: 1.0
 References: <20210706132714.8220-1-minipli@grsecurity.net>
  <CAHmME9o38fA4_nDVyS9FvO1EL-Z4fS+a2eCo6Xq7VzMSrPYNKQ@mail.gmail.com>
@@ -60,12 +61,11 @@ References: <20210706132714.8220-1-minipli@grsecurity.net>
  <30231bb2-50e0-3880-b705-942b263eafe8@grsecurity.net>
 In-Reply-To: <30231bb2-50e0-3880-b705-942b263eafe8@grsecurity.net>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 10 Dec 2021 23:36:22 +0100
-X-Gmail-Original-Message-ID: <CAHmME9pYPXm8xTZkWYS8_ir1j0Dq7QcbtNKM2tn4uO51HTbr4Q@mail.gmail.com>
-Message-ID: <CAHmME9pYPXm8xTZkWYS8_ir1j0Dq7QcbtNKM2tn4uO51HTbr4Q@mail.gmail.com>
+Date: Fri, 10 Dec 2021 23:58:01 +0100
+X-Gmail-Original-Message-ID: <CAHmME9rT+aR-FJKFxVaW+tsACKX0kH-2T6cw7xbjjaeVsJbybw@mail.gmail.com>
+Message-ID: <CAHmME9rT+aR-FJKFxVaW+tsACKX0kH-2T6cw7xbjjaeVsJbybw@mail.gmail.com>
 Subject: Re: [PATCH 0/2] wireguard-linux-compat: grsecurity compat patches
-To: Mathias Krause <minipli@grsecurity.net>,
- Aymeric Fromherz <afromher@andrew.cmu.edu>
+To: Mathias Krause <minipli@grsecurity.net>, aymeric.fromherz@inria.fr
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
