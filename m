@@ -4,54 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7092C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 10 Dec 2021 23:30:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECC18C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 10 Dec 2021 23:37:13 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 0bbfaac2;
-	Fri, 10 Dec 2021 23:30:38 +0000 (UTC)
-Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com
- [2607:f8b0:4864:20::b2f])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 766ccf71
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 974d6f09;
+	Fri, 10 Dec 2021 23:33:50 +0000 (UTC)
+Received: from quad.pendre.co.uk (quad.pendre.co.uk [92.27.241.245])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id e413de41
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 10 Dec 2021 23:30:37 +0000 (UTC)
-Received: by mail-yb1-xb2f.google.com with SMTP id j2so24709738ybg.9
- for <wireguard@lists.zx2c4.com>; Fri, 10 Dec 2021 15:30:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=2PtNVC0qNUsnpWyOD6nLmxcmoHXvttC4gSujzgBms6k=;
- b=XLzn7xVB8PMmInGbIZ666sLrvINYuZIdA0YWVVMps9KD2m9kwJsF+vTJDeGcRAGLKg
- bfp/rmV1ZlRkglidU6fTQGXhizTqtFUctM3oFsS+IhVsiA3kt7uFyiMTKtu1kCOhIeii
- S0tGnn5/p1wvWPLgg0rXwN2NOXfgwXVzVA/Wph3jk1916U9S/URPkssCq31LhqVqG1DR
- 5VhgzVKOU2LFjIUo1WZ8ajqwrG/Lp5GmGHkgSIrphqMyQGs0/TBjn0XYWM6AX9puZXEz
- pdaiQVLnmfIHjDNlx3/OpP49jbj8Nw5ffLYTuQy/sjea1xWX4FtnmMb8u1FtVE26bFzA
- ebcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=2PtNVC0qNUsnpWyOD6nLmxcmoHXvttC4gSujzgBms6k=;
- b=LUopn1Moo763wr7tl1ypAZXUpzvSv26+r6QPhE8vArse2GAfEOv+W0Gy1r0GPApkBq
- xvsa7cLfv6U/+muAYmk3sEmyEojVefbkyPm19dVWlI2N0dLd3/ok2EL8DBel9xtD2XWI
- /bzXATRFIhVE0l1/2RhGGkjFI1AZEt3n0rP5IxEi92XV4Eob3rdLHuZ2qPtrR/1iz3nT
- nunuWFJQnaYQGcM5FDzzDvRnqZdPMAfSXtSYr+t6iW0w7ayoWj6jnX1D1kSW1du1M/gd
- 49XJYPK2sIUgJSSADwiWhsHMGGB+orbNtHrwYbNeb4gRaG7g+TswE6V7Wxnp5UYyL/fX
- zrQA==
-X-Gm-Message-State: AOAM5336IRbQSESVP4JVnTkREDBGIAG1Zn6y0EK7bMXsvegD45OIyWuP
- 51oShwq1TNkDoJ8BCHGZ3uWWEufr93GUURZIldpbSlQSDnruqg==
-X-Google-Smtp-Source: ABdhPJyHig6nc3Qe5js/x2/pa8m4Or6lbQpqjMR+UYkwEPkuasmDNF1o/OzZaXwIsWKewuDVxvovt1n7hS7xmkFvJJA=
-X-Received: by 2002:a25:f621:: with SMTP id t33mr18482801ybd.576.1639179036011; 
- Fri, 10 Dec 2021 15:30:36 -0800 (PST)
+ Fri, 10 Dec 2021 23:33:49 +0000 (UTC)
+Received: from localhost (localhost [127.0.0.1])
+ by quad.pendre.co.uk (Postfix) with ESMTP id BC5D69600F8
+ for <wireguard@lists.zx2c4.com>; Fri, 10 Dec 2021 23:33:48 +0000 (GMT)
+Received: from quad.pendre.co.uk ([127.0.0.1])
+ by localhost (quad.pendre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id Xi8nG3eWwYRq; Fri, 10 Dec 2021 23:33:48 +0000 (GMT)
+Received: from [192.168.0.1] (quad.pendre.co.uk [192.168.0.1])
+ by quad.pendre.co.uk (Postfix) with ESMTPS id 345969600DA
+ for <wireguard@lists.zx2c4.com>; Fri, 10 Dec 2021 23:33:48 +0000 (GMT)
+Message-ID: <46de3fe6-b355-41c3-d92e-dfdffb163dd9@elrepo.org>
+Date: Fri, 10 Dec 2021 23:33:47 +0000
 MIME-Version: 1.0
-References: <CACD9L=CAinAO0CHRR25-sEoxCqNp_8BCqU9kJLK-Wzt++oy4bg@mail.gmail.com>
-In-Reply-To: <CACD9L=CAinAO0CHRR25-sEoxCqNp_8BCqU9kJLK-Wzt++oy4bg@mail.gmail.com>
-From: Reid Rankin <reidrankin@gmail.com>
-Date: Fri, 10 Dec 2021 18:29:59 -0500
-Message-ID: <CAMaqUZ1yWooNbHdDhTAzrUeHtQCFn7QunSWdAdhdG+Ru6=K9Mg@mail.gmail.com>
-Subject: Re: separate allowedips from routing for multipath
-To: Arvid Picciani <aep@exys.org>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.0
+Subject: Re: Cannot add wg0 on CentOS 8
+Content-Language: en-US
+To: wireguard@lists.zx2c4.com
+References: <1877736804.292900.1639046846065.ref@mail.yahoo.com>
+ <1877736804.292900.1639046846065@mail.yahoo.com>
+From: Phil Perry <pperry@elrepo.org>
+In-Reply-To: <1877736804.292900.1639046846065@mail.yahoo.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -66,9 +51,32 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-WireGuard doesn't care what address V has, because peers are defined
-by their public key. If V switches from A1 to A2, upon receiving a
-handshake packet from V's key from the address A2, B will start
-sending packets for V out to A2. Incoming packets can arrive from any
-IP; if they're from a connection with V, V's AllowedIP rules will be
-applied.
+On 09/12/2021 10:47, Mehdi Haghgoo wrote:
+> Hi,
+> 
+> I'm trying to add  a wireguard device on CentOS Stream (was Linux just converted to Stream).
+> When I enter "ip link add wg0 type wireguard" or try it using wg-quick wg0 up, I get the following error:
+> 
+> RTNETLINK answers: Operation not supported
+> 
+> I have wireguard-tools and kmod-wireguard installed.
+> Additional information:
+> 
+> uname -r: 4.18.0-147.8.1.el8_1.x86_64
+> 
+> wg --version: wireguard-tools v1.0.20210914 - https://git.zx2c4.com/wireguard-tools/
+> 
+> kmod-wireguard version: 1.0.20211208
+> 
+> 
+> Best regards,
+> Mehdi
+
+Is the wireguard module loaded? I doubt it.
+
+You are running a *very* old kernel, and I suspect the version of 
+kmod-wireguard you are running does not support that kernel. Why are you 
+running a kernel that is two years out of date and full of unpatched 
+security holes? Updating your system is probably the first step to 
+fixing your issue.
+
