@@ -4,39 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECC18C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 10 Dec 2021 23:37:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E452BC433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 11 Dec 2021 07:28:51 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 974d6f09;
-	Fri, 10 Dec 2021 23:33:50 +0000 (UTC)
-Received: from quad.pendre.co.uk (quad.pendre.co.uk [92.27.241.245])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id e413de41
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 2e50459f;
+	Sat, 11 Dec 2021 07:28:49 +0000 (UTC)
+Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com
+ [2607:f8b0:4864:20::832])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 505679d7
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 10 Dec 2021 23:33:49 +0000 (UTC)
-Received: from localhost (localhost [127.0.0.1])
- by quad.pendre.co.uk (Postfix) with ESMTP id BC5D69600F8
- for <wireguard@lists.zx2c4.com>; Fri, 10 Dec 2021 23:33:48 +0000 (GMT)
-Received: from quad.pendre.co.uk ([127.0.0.1])
- by localhost (quad.pendre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id Xi8nG3eWwYRq; Fri, 10 Dec 2021 23:33:48 +0000 (GMT)
-Received: from [192.168.0.1] (quad.pendre.co.uk [192.168.0.1])
- by quad.pendre.co.uk (Postfix) with ESMTPS id 345969600DA
- for <wireguard@lists.zx2c4.com>; Fri, 10 Dec 2021 23:33:48 +0000 (GMT)
-Message-ID: <46de3fe6-b355-41c3-d92e-dfdffb163dd9@elrepo.org>
-Date: Fri, 10 Dec 2021 23:33:47 +0000
+ Sat, 11 Dec 2021 07:28:48 +0000 (UTC)
+Received: by mail-qt1-x832.google.com with SMTP id q14so10516822qtx.10
+ for <wireguard@lists.zx2c4.com>; Fri, 10 Dec 2021 23:28:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=exys-org.20210112.gappssmtp.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=JU2iwLSETbPfFpxjhxh7yX0xWJY+FcXHnJpnqPDxoAY=;
+ b=REX3L84yyCCpLUExdVPk5EwKVuycju/dCXohwetd248BHcGnD9FlXr2R0O9Wab4mTe
+ Hw/ikjKk7iI6exMoFHIwhx7rKicFtHmFocU6xiZHZcbba20iEit4nuGrKUmrd75MOVET
+ gIqeSpu01PQN/wXJY28Ll8gVXhVfod1nSt37aHJP+QvZqireGhTaZJlbn/KCz9b6pl/e
+ DvuF5HEORp7tKIV9oKXaWltK/Gj5Qowc8DAs8emB8ONDHFPZIl5QjR1XNXK8/OldA9pX
+ t3c1nZ+LGxPxHNUSlC6HtpmlnKj1jQTZamaecMPaP5tz7se3GwLx5ese+Vv871uRuGpi
+ yslA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=JU2iwLSETbPfFpxjhxh7yX0xWJY+FcXHnJpnqPDxoAY=;
+ b=GBbiH8AWIhL4IOeHRG7MHPN3BfeKr0ch2veBVTRiVg3RoWAvdny8zZ3hNHsrxmXb8a
+ zH6eJVpnj+Tqg7SL7BKU5ORpf7pOeuBJEx3uKdmdJuKsS+qwlHZlPX4mR4kF0Jw+z7es
+ cs27jefgEbgPZ8FuGIyzZYe8Tm0O5Sc/1D6two/mNjIOXq80J/vwSbnu3OvFq/lkKIMj
+ 7qwYwAwq3uZmxzWhLFOm6axdLVKn+onRoRbQL4DN6foRmFlAQn5oR7jmduKmRW/QoFFU
+ g9APpVPm5d5QE3BE9biPR/knjtO+/yZyqEhtr0SVaZ77FU17anZNSFfub3IkM6LE4w/b
+ YRdw==
+X-Gm-Message-State: AOAM531Pf4cbWEOzUD9f3hcfwUAs1P4CCHTZUskrjUgT3B9OzVWGFyCU
+ 4vjmruD13VkMl/EhBWfsJUy3BrG0CKDay0qYTquEkw==
+X-Google-Smtp-Source: ABdhPJwvifnM5nlJ8zsgbpU+rXZb11anKrmrgMyfO2cBQDlDvGLOZLnusOqlUV/MGES7VF21ThxH5CBtTeZA57jSkUk=
+X-Received: by 2002:a05:622a:508:: with SMTP id
+ l8mr31815963qtx.650.1639207727602; 
+ Fri, 10 Dec 2021 23:28:47 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.0
-Subject: Re: Cannot add wg0 on CentOS 8
-Content-Language: en-US
-To: wireguard@lists.zx2c4.com
-References: <1877736804.292900.1639046846065.ref@mail.yahoo.com>
- <1877736804.292900.1639046846065@mail.yahoo.com>
-From: Phil Perry <pperry@elrepo.org>
-In-Reply-To: <1877736804.292900.1639046846065@mail.yahoo.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <CACD9L=CAinAO0CHRR25-sEoxCqNp_8BCqU9kJLK-Wzt++oy4bg@mail.gmail.com>
+ <CAMaqUZ1yWooNbHdDhTAzrUeHtQCFn7QunSWdAdhdG+Ru6=K9Mg@mail.gmail.com>
+In-Reply-To: <CAMaqUZ1yWooNbHdDhTAzrUeHtQCFn7QunSWdAdhdG+Ru6=K9Mg@mail.gmail.com>
+From: Arvid Picciani <aep@exys.org>
+Date: Sat, 11 Dec 2021 08:28:37 +0100
+Message-ID: <CACD9L=BWM_OPmBjTh7JUsBkL3A6V_hiyHDos=1MrEkJ5P3QhWg@mail.gmail.com>
+Subject: Re: separate allowedips from routing for multipath
+To: Reid Rankin <reidrankin@gmail.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -51,32 +69,24 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 09/12/2021 10:47, Mehdi Haghgoo wrote:
-> Hi,
-> 
-> I'm trying to add  a wireguard device on CentOS Stream (was Linux just converted to Stream).
-> When I enter "ip link add wg0 type wireguard" or try it using wg-quick wg0 up, I get the following error:
-> 
-> RTNETLINK answers: Operation not supported
-> 
-> I have wireguard-tools and kmod-wireguard installed.
-> Additional information:
-> 
-> uname -r: 4.18.0-147.8.1.el8_1.x86_64
-> 
-> wg --version: wireguard-tools v1.0.20210914 - https://git.zx2c4.com/wireguard-tools/
-> 
-> kmod-wireguard version: 1.0.20211208
-> 
-> 
-> Best regards,
-> Mehdi
+Thanks Reid,
 
-Is the wireguard module loaded? I doubt it.
+i'm aware of how that works, but that's not the question.
+V is an IP routed on A1 or A2, not a "road warrior" case.
 
-You are running a *very* old kernel, and I suspect the version of 
-kmod-wireguard you are running does not support that kernel. Why are you 
-running a kernel that is two years out of date and full of unpatched 
-security holes? Updating your system is probably the first step to 
-fixing your issue.
+I can look into if port reuse is possible if a patchset doing that
+would be acceptable.
 
+On Sat, Dec 11, 2021 at 12:30 AM Reid Rankin <reidrankin@gmail.com> wrote:
+>
+> WireGuard doesn't care what address V has, because peers are defined
+> by their public key. If V switches from A1 to A2, upon receiving a
+> handshake packet from V's key from the address A2, B will start
+> sending packets for V out to A2. Incoming packets can arrive from any
+> IP; if they're from a connection with V, V's AllowedIP rules will be
+> applied.
+
+
+
+-- 
++4916093821054
