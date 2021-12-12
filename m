@@ -4,37 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F5BDC433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 11 Dec 2021 17:25:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AE01C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 12 Dec 2021 21:44:09 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 7698d77f;
-	Sat, 11 Dec 2021 17:25:28 +0000 (UTC)
-Received: from mail.toke.dk (mail.toke.dk [45.145.95.4])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 5ef69746
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id c75b3145;
+	Sun, 12 Dec 2021 21:44:07 +0000 (UTC)
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id eef7ad84
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 12 Dec 2021 21:44:05 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by sin.source.kernel.org (Postfix) with ESMTPS id C1F88CE0DB5
+ for <wireguard@lists.zx2c4.com>; Sun, 12 Dec 2021 21:44:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9A5EC341C5
+ for <wireguard@lists.zx2c4.com>; Sun, 12 Dec 2021 21:43:59 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="LFs6GHky"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1639345437;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=wuWWOG06jHoX+4wXbGvhn/Ibb5cdPf3rX931gCVhPHc=;
+ b=LFs6GHkyB403z8WVeJnXkBhsfTNyJ71M4uVo1vg4c+iUMSBYmAKWo74IAyljcwAGwpd1F9
+ LdgnqwkE0/vDuVUBuG7hg/S4DoEJYiCKYT/gB9xmgZpu7rlqjSqZ8K2obOMeF9JvRI5uNW
+ /0NAomuvXD38hMcoPwoI6Y5Gv4J2MBU=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 6e379b93
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 11 Dec 2021 17:25:26 +0000 (UTC)
-From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=toke.dk; s=20161023;
- t=1639243525; bh=UBSEYVHq2kVUAE/IK0bQvRIx4kMCMmneDVoivpOdiIQ=;
- h=From:To:Subject:In-Reply-To:References:Date:From;
- b=UU0xIEGovn1UJCvIy9usyXeA5kGTo7iVP3N5kbpByEJw5yPgY8RcnWvooMjazkeXv
- jGxxeKx7/c9eUGlQGHn83TQ8d7Flp7Em6I5oTJWa/+a5WJ2fpImwWYXSMdrCAmIuKF
- lw3SC48UuSKcT//4MDh5eXuFDVuitFWwKysyImH13Kq235S3SfAKsD1I2oGodN+PS5
- la63pO4G4U4rwP3QI0sCwhNPJ/umApPPtGTc1RCl+gCNZV0sFqbH8wdk3imUxndvh5
- kDG6/TkthEnaGTLKhqFVnMbPbmIj18BESlao4BBmg3tfFJzk86qMfcat48ZOUk2OhT
- JF5mg/4ME44og==
-To: Phil Perry <pperry@elrepo.org>, wireguard@lists.zx2c4.com
-Subject: Re: Cannot add wg0 on CentOS 8
-In-Reply-To: <46de3fe6-b355-41c3-d92e-dfdffb163dd9@elrepo.org>
-References: <1877736804.292900.1639046846065.ref@mail.yahoo.com>
- <1877736804.292900.1639046846065@mail.yahoo.com>
- <46de3fe6-b355-41c3-d92e-dfdffb163dd9@elrepo.org>
-Date: Sat, 11 Dec 2021 18:25:24 +0100
-X-Clacks-Overhead: GNU Terry Pratchett
-Message-ID: <871r2jvyt7.fsf@toke.dk>
+ Sun, 12 Dec 2021 21:43:57 +0000 (UTC)
+Received: by mail-yb1-f177.google.com with SMTP id q74so33975510ybq.11
+ for <wireguard@lists.zx2c4.com>; Sun, 12 Dec 2021 13:43:56 -0800 (PST)
+X-Gm-Message-State: AOAM530QW3SFRr1h6kuUtWZXRpD1hZ95jbY8x6Xc9Hcwn+ibpVdOzKKk
+ LPULpwichij6r3Cq7XfpBqTCjswqWXyGcTey9pU=
+X-Google-Smtp-Source: ABdhPJwjqoNWBa2qQK+rxWr+swgx3+iGACPVZQbxEqd/slrZvqKS1n/I46vgmdC3G8OgZn6X2tSLjVwYFpD1cPCYAIM=
+X-Received: by 2002:a25:1e83:: with SMTP id e125mr28011034ybe.32.1639345436480; 
+ Sun, 12 Dec 2021 13:43:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20210706132714.8220-1-minipli@grsecurity.net>
+ <CAHmME9opYoaoSTHud9sF4BOFBPS=NVYPJSGQr37bxNai26MGFg@mail.gmail.com>
+ <1ef9bbf4-b8f8-18df-3c80-3181c2b5b9c5@grsecurity.net>
+ <CAHmME9odv1V9wUrLsX16J68wVD3rq+op0VvaNxtsLGG8Rrz4tQ@mail.gmail.com>
+ <3ed9270f-00da-5c88-cadd-59b4419b9a98@grsecurity.net>
+ <CAHmME9rFHkydmrYcS83PEf=MJP8brwsdis+7TQ=oLkO4RNTX9g@mail.gmail.com>
+ <30231bb2-50e0-3880-b705-942b263eafe8@grsecurity.net>
+ <CAHmME9rT+aR-FJKFxVaW+tsACKX0kH-2T6cw7xbjjaeVsJbybw@mail.gmail.com>
+ <1554725710.1290070.1639240504281.JavaMail.zimbra@inria.fr>
+In-Reply-To: <1554725710.1290070.1639240504281.JavaMail.zimbra@inria.fr>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sun, 12 Dec 2021 22:43:45 +0100
+X-Gmail-Original-Message-ID: <CAHmME9ppTs-jmmV9uV+C0jbtQC5a5RWO5zJB5_-dRD3BMjDZZA@mail.gmail.com>
+Message-ID: <CAHmME9ppTs-jmmV9uV+C0jbtQC5a5RWO5zJB5_-dRD3BMjDZZA@mail.gmail.com>
+Subject: Re: [PATCH 0/2] wireguard-linux-compat: grsecurity compat patches
+To: Aymeric Fromherz <aymeric.fromherz@inria.fr>
+Cc: Mathias Krause <minipli@grsecurity.net>, 
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -50,52 +80,28 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Phil Perry <pperry@elrepo.org> writes:
+Hi Aymeric, Mathias,
 
-> On 09/12/2021 10:47, Mehdi Haghgoo wrote:
->> Hi,
->>=20
->> I'm trying to add=C2=A0 a wireguard device on CentOS Stream (was Linux j=
-ust converted to Stream).
->> When I enter "ip link add wg0 type wireguard" or try it using wg-quick w=
-g0 up, I get the following error:
->>=20
->> RTNETLINK answers: Operation not supported
->>=20
->> I have wireguard-tools and kmod-wireguard installed.
->> Additional information:
->>=20
->> uname -r: 4.18.0-147.8.1.el8_1.x86_64
->>=20
->> wg --version: wireguard-tools v1.0.20210914 - https://git.zx2c4.com/wire=
-guard-tools/
->>=20
->> kmod-wireguard version: 1.0.20211208
->>=20
->>=20
->> Best regards,
->> Mehdi
+On Sat, Dec 11, 2021 at 5:35 PM Aymeric Fromherz
+<aymeric.fromherz@inria.fr> wrote:
 >
-> Is the wireguard module loaded? I doubt it.
+> Thanks for the heads-up. We were being overly conservative during verific=
+ation of inline assembly code in Vale, and marked several registers as poss=
+ibly modified while they were only read.
 >
-> You are running a *very* old kernel, and I suspect the version of=20
-> kmod-wireguard you are running does not support that kernel. Why are you=
-=20
-> running a kernel that is two years out of date and full of unpatched=20
-> security holes?
+> This is now fixed for fmul, fmul2, fsqr and fsqr2, and will be merged int=
+o the master branch of EverCrypt shortly.
+> In the meantime, the diff for the resulting inline assembly after Vale co=
+degen is available here: https://github.com/project-everest/hacl-star/pull/=
+501/commits/1a71adb40c3f78da16e16975dbb1d4de5adeab8c#diff-5aabe9f6aa87508c9=
+d81d4c9e89eff0b06b1e2aeaf5b04eba51da71c5bea6940
 
-RHEL (and thus CentOS) kernel version numbers are a complete fiction, so
-don't mind the '4.18'. The important bit is the '-147' at the end, which
-is still way out of date, though...
+Thanks for that! I've imported this into my staging tree here:
+https://w-g.pw/l/rmQK
 
-> Updating your system is probably the first step to fixing your issue.
+I'll wait a few days -- and until the Vale PR has been merged -- to
+submit that to the linux-crypto mailing list, but there's a preview.
+Mathias - I wonder if you still need alternatives with the new codegen
+there.
 
-My guess would be that he actually did update the system, it's just
-running the old kernel still? I.e., if you install kmod-wireguard from
-elrepo, that depends on a specific version of the kernel (-348 in the
-current version), but if you haven't rebooted to actually run that
-kernel, the module is obviously not going to work...
-
-So, erm, Mehdi, have you tried turning it off and back on again? ;)
-
--Toke
+Jason
