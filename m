@@ -4,48 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AE01C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 12 Dec 2021 21:44:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 482B3C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 13 Dec 2021 07:44:52 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id c75b3145;
-	Sun, 12 Dec 2021 21:44:07 +0000 (UTC)
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id eef7ad84
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Sun, 12 Dec 2021 21:44:05 +0000 (UTC)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by sin.source.kernel.org (Postfix) with ESMTPS id C1F88CE0DB5
- for <wireguard@lists.zx2c4.com>; Sun, 12 Dec 2021 21:44:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9A5EC341C5
- for <wireguard@lists.zx2c4.com>; Sun, 12 Dec 2021 21:43:59 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="LFs6GHky"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1639345437;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wuWWOG06jHoX+4wXbGvhn/Ibb5cdPf3rX931gCVhPHc=;
- b=LFs6GHkyB403z8WVeJnXkBhsfTNyJ71M4uVo1vg4c+iUMSBYmAKWo74IAyljcwAGwpd1F9
- LdgnqwkE0/vDuVUBuG7hg/S4DoEJYiCKYT/gB9xmgZpu7rlqjSqZ8K2obOMeF9JvRI5uNW
- /0NAomuvXD38hMcoPwoI6Y5Gv4J2MBU=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 6e379b93
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 233be86e;
+	Mon, 13 Dec 2021 07:44:51 +0000 (UTC)
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com
+ [2a00:1450:4864:20::431])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 5503d7a8
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 12 Dec 2021 21:43:57 +0000 (UTC)
-Received: by mail-yb1-f177.google.com with SMTP id q74so33975510ybq.11
- for <wireguard@lists.zx2c4.com>; Sun, 12 Dec 2021 13:43:56 -0800 (PST)
-X-Gm-Message-State: AOAM530QW3SFRr1h6kuUtWZXRpD1hZ95jbY8x6Xc9Hcwn+ibpVdOzKKk
- LPULpwichij6r3Cq7XfpBqTCjswqWXyGcTey9pU=
-X-Google-Smtp-Source: ABdhPJwjqoNWBa2qQK+rxWr+swgx3+iGACPVZQbxEqd/slrZvqKS1n/I46vgmdC3G8OgZn6X2tSLjVwYFpD1cPCYAIM=
-X-Received: by 2002:a25:1e83:: with SMTP id e125mr28011034ybe.32.1639345436480; 
- Sun, 12 Dec 2021 13:43:56 -0800 (PST)
-MIME-Version: 1.0
+ Mon, 13 Dec 2021 07:44:49 +0000 (UTC)
+Received: by mail-wr1-x431.google.com with SMTP id a18so25432240wrn.6
+ for <wireguard@lists.zx2c4.com>; Sun, 12 Dec 2021 23:44:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=grsecurity.net; s=grsec;
+ h=to:cc:references:from:subject:message-id:date:user-agent
+ :mime-version:in-reply-to:content-language:content-transfer-encoding;
+ bh=f0qtQeVsrnZPSJpmpBBzGBUYEGIL1yZTQMpx/zQ2+AM=;
+ b=bqHMD8vcVAz1bPHV8nK+yU2QrAFtXcGPoZAogYd2WnAwPJyo18e3+P+oxVWLSZ/VcY
+ Fq8+kSdDdOlNa0O+utVWkBfEIdlqimj4cZBekCNtnejFH19Qup4R2LSDQsODbyYfM/R3
+ QIFWZ2VZIMPqmteyviFlGKoHPunAQvfG+09cfaIVVOGRpAW3MPHBTPyrwrxclu/zKV/n
+ fLDDVpyNKyQHUW5ebFuB7G7mwFdr9qf/l5OUejlY6OSGjfuEK7kAUuiL+LZXudui2MuC
+ JOyx2xrKu+Z263IhGOAyPeN+mK05VI4EMzoCbdw1ZvMLhb9ZdC6FTzL/fHPpSr389xKz
+ Hb7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:to:cc:references:from:subject:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=f0qtQeVsrnZPSJpmpBBzGBUYEGIL1yZTQMpx/zQ2+AM=;
+ b=exH8KKa+78lzMQmzCVAvRCrfDvFnWFGOdP6Ybs1qbDT1T2EfUIfmNAwIeYqOCEzvQv
+ ttDMT929VuGMXHfJ+Mt1/Vi4NLNodQ8rp1B3dhVSlSK0ul0/QCuM0/wfSIuqrwTpK1Id
+ VFM6/SrXdulg6eDHmlpF+NTRuNihQDF+QMGRcIQOww4RSPYTn2EOnO8l3rJlhXxV7W86
+ Vsr+gGvoTw5IvVfl4S9k8ix8WIaA8gQruzpxTiHWsZUFwsVfBxswi+YW0s/JAb+xNaju
+ LJjdeMo73ukafml6PeMF6UDDg+klB55LZTb+6BghtEEg3v36UGAUKYnKM571zDockatn
+ PA+A==
+X-Gm-Message-State: AOAM5307uJ47vMLqGw717FMFuRBs/Y3uLNnvQ+amep6dM7elDbqg3Sk8
+ k59ly2zCdj74e9nB8AQ8zq/aLWy1XjRqkg==
+X-Google-Smtp-Source: ABdhPJzHCLbLKdGlgz+iGu39GzPxPhWa7o70+Mn3iGRyWABopOV5ilLY1R/2todUAbNu86DTQDkDNA==
+X-Received: by 2002:a05:6000:1568:: with SMTP id
+ 8mr8654719wrz.643.1639381489058; 
+ Sun, 12 Dec 2021 23:44:49 -0800 (PST)
+Received: from ?IPv6:2003:f6:af02:e900:e406:554b:c2af:e2f9?
+ (p200300f6af02e900e406554bc2afe2f9.dip0.t-ipconnect.de.
+ [2003:f6:af02:e900:e406:554b:c2af:e2f9])
+ by smtp.gmail.com with ESMTPSA id n2sm6311085wmi.36.2021.12.12.23.44.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 12 Dec 2021 23:44:48 -0800 (PST)
+To: Aymeric Fromherz <aymeric.fromherz@inria.fr>,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 References: <20210706132714.8220-1-minipli@grsecurity.net>
  <CAHmME9opYoaoSTHud9sF4BOFBPS=NVYPJSGQr37bxNai26MGFg@mail.gmail.com>
  <1ef9bbf4-b8f8-18df-3c80-3181c2b5b9c5@grsecurity.net>
@@ -55,17 +64,17 @@ References: <20210706132714.8220-1-minipli@grsecurity.net>
  <30231bb2-50e0-3880-b705-942b263eafe8@grsecurity.net>
  <CAHmME9rT+aR-FJKFxVaW+tsACKX0kH-2T6cw7xbjjaeVsJbybw@mail.gmail.com>
  <1554725710.1290070.1639240504281.JavaMail.zimbra@inria.fr>
-In-Reply-To: <1554725710.1290070.1639240504281.JavaMail.zimbra@inria.fr>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sun, 12 Dec 2021 22:43:45 +0100
-X-Gmail-Original-Message-ID: <CAHmME9ppTs-jmmV9uV+C0jbtQC5a5RWO5zJB5_-dRD3BMjDZZA@mail.gmail.com>
-Message-ID: <CAHmME9ppTs-jmmV9uV+C0jbtQC5a5RWO5zJB5_-dRD3BMjDZZA@mail.gmail.com>
+From: Mathias Krause <minipli@grsecurity.net>
 Subject: Re: [PATCH 0/2] wireguard-linux-compat: grsecurity compat patches
-To: Aymeric Fromherz <aymeric.fromherz@inria.fr>
-Cc: Mathias Krause <minipli@grsecurity.net>, 
- WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Message-ID: <3a1be638-4ddd-44c0-87aa-56cd26f4f396@grsecurity.net>
+Date: Mon, 13 Dec 2021 08:44:51 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
+MIME-Version: 1.0
+In-Reply-To: <1554725710.1290070.1639240504281.JavaMail.zimbra@inria.fr>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -80,28 +89,48 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Aymeric, Mathias,
+Hi Aymeric,
 
-On Sat, Dec 11, 2021 at 5:35 PM Aymeric Fromherz
-<aymeric.fromherz@inria.fr> wrote:
->
-> Thanks for the heads-up. We were being overly conservative during verific=
-ation of inline assembly code in Vale, and marked several registers as poss=
-ibly modified while they were only read.
->
-> This is now fixed for fmul, fmul2, fsqr and fsqr2, and will be merged int=
-o the master branch of EverCrypt shortly.
-> In the meantime, the diff for the resulting inline assembly after Vale co=
-degen is available here: https://github.com/project-everest/hacl-star/pull/=
-501/commits/1a71adb40c3f78da16e16975dbb1d4de5adeab8c#diff-5aabe9f6aa87508c9=
-d81d4c9e89eff0b06b1e2aeaf5b04eba51da71c5bea6940
+the changes look good to me -- quite what we already had in grsec. Just
+one more nit. The constraints for the 'out' parameter in fmul(),
+fmul2(), fsqr() and fsqr2() can be further lifted to "rm" as 'out' is
+only referenced once. This allows gcc to choose either a register or a
+memory operand, as it sees fit. In our experiments the latter lead to
+much better code gen.
 
-Thanks for that! I've imported this into my staging tree here:
-https://w-g.pw/l/rmQK
+Thanks,
+Mathias
 
-I'll wait a few days -- and until the Vale PR has been merged -- to
-submit that to the linux-crypto mailing list, but there's a preview.
-Mathias - I wonder if you still need alternatives with the new codegen
-there.
-
-Jason
+Am 11.12.21 um 17:35 schrieb Aymeric Fromherz:
+> Thanks for the heads-up. We were being overly conservative during verification of inline assembly code in Vale, and marked several registers as possibly modified while they were only read.
+> 
+> This is now fixed for fmul, fmul2, fsqr and fsqr2, and will be merged into the master branch of EverCrypt shortly.
+> In the meantime, the diff for the resulting inline assembly after Vale codegen is available here: https://github.com/project-everest/hacl-star/pull/501/commits/1a71adb40c3f78da16e16975dbb1d4de5adeab8c#diff-5aabe9f6aa87508c9d81d4c9e89eff0b06b1e2aeaf5b04eba51da71c5bea6940
+> 
+> Cheers,
+> Aymeric
+> 
+> ----- Mail original -----
+>> De: "Jason A. Donenfeld" <Jason@zx2c4.com>
+>> À: "Mathias Krause" <minipli@grsecurity.net>, "aymeric fromherz" <aymeric.fromherz@inria.fr>
+>> Cc: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
+>> Envoyé: Vendredi 10 Décembre 2021 23:58:01
+>> Objet: Re: [PATCH 0/2] wireguard-linux-compat: grsecurity compat patches
+> 
+>> CC'ing in Aymeric, who's working on Vale's codegen.
+>>
+>> On Thu, Dec 9, 2021 at 8:59 AM Mathias Krause <minipli@grsecurity.net> wrote:
+>>>
+>>> Am 08.12.21 um 15:56 schrieb Jason A. Donenfeld:
+>>>> On Mon, Dec 6, 2021 at 10:00 PM Mathias Krause <minipli@grsecurity.net> wrote:
+>>>>> Yes, probably, but you're mixing up the two.
+>>>>
+>>>> Oh, thanks, right.
+>>>>
+>>>> I'll talk to EverCrypt upstream and see.
+>>>
+>>> FWIW, 'out' is also wrongly flagged as output operand in fmul() and
+>>> fmul2(). But making it an input operand needs more surgery, as the
+>>> operand order changes and this requires some code churn.
+>>>
+>>> Mathias
