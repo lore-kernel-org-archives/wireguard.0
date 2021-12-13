@@ -4,57 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D54D3C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 13 Dec 2021 16:34:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2263C433FE
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 13 Dec 2021 16:34:30 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 0f393ef3;
-	Mon, 13 Dec 2021 16:32:12 +0000 (UTC)
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com
- [2a00:1450:4864:20::433])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 71da9be6
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id f3c4445e;
+	Mon, 13 Dec 2021 16:34:15 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 19bdcd3b
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 13 Dec 2021 16:34:13 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 0448661186
+ for <wireguard@lists.zx2c4.com>; Mon, 13 Dec 2021 16:34:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 353AEC34603
+ for <wireguard@lists.zx2c4.com>; Mon, 13 Dec 2021 16:34:11 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="Frt+OgLv"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1639413249;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qAgNlrjLQmOwwCpfCJYofbOvWqynv5G4iyr5c7Xky3c=;
+ b=Frt+OgLvmz9PqFt9m+PvRn2dfpapEJcSicFQvvtQ8q7ZmjDTslC5GSWouJ93cit0DbpRFX
+ fDG/hNKARrd4W7aLIn23HWNFUkiUzz6nCf4RN1VPjdt3c2rkwE0BTae+Qy/BpgWq995XKC
+ GbwwFwNOoiqA0GdGFpfNgYyxhAeszZE=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 27022bc0
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 13 Dec 2021 16:32:10 +0000 (UTC)
-Received: by mail-wr1-x433.google.com with SMTP id a9so28015307wrr.8
- for <wireguard@lists.zx2c4.com>; Mon, 13 Dec 2021 08:32:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=grsecurity.net; s=grsec;
- h=subject:to:cc:references:from:message-id:date:user-agent
- :mime-version:in-reply-to:content-language:content-transfer-encoding;
- bh=7PNVkitAO3zwumdxAO1Fct/97vTMu7MLYSb5+yW/29U=;
- b=atcDqHgskwhsFJn5HhtNyc0kZ1wAzs6a26h3wlnpqW2Vmj0rt33lMHFQhsUOOaPb67
- eCI+9yW/BWlzpJbp7/VPtqC7mTBodkHRyCh0QHxxgBfelteb3S6V9pyXLZdrCF4rjGPg
- CDy+z1etgngzbZC/BZuz3hT1gK8v2COvhosXITVFqphID2dyClT2aF7TRgtSuTL3p/qA
- 4BG1N57xOH+xba/i9xjV8dSoaVtoiTTrR8Lvq6eMEQvjRKfjipfJJi1S02eT+d5EcNPj
- dUAv1VLy15nZx6Or8addcGPt8l6goAs1pp1wgC1+fAYn+JXaILIM+VtI7p4pVEJYdCI5
- OzEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=7PNVkitAO3zwumdxAO1Fct/97vTMu7MLYSb5+yW/29U=;
- b=FxKNI6wOTSW6Y0g51cqa1qT/6sTNwInimiO032KaeOwaDKyetrcZp2UFoymd56V8Z/
- 79ybeyBBZi7YAjyEFSasNosAZxgN+ujwDHiMi5uQYjwtQy+0CF6d0f3e3o464+LDHjgu
- jVqwbMD8yfUWw7g0qdt0wsSsDDoJI6Crm3wOFX7M2cVgVqXlYNd9Dourul4gZqCPCP9F
- B3CBN7cB7btqrCZDYGHi7E1kU+75UoWWds3vBnTHKT774WYMqw7Hr0zlpV69wbn4ItGK
- 9667ZAgyBi67PCYqGDFKMTLiBL8AC3aps57468VG7Q/OHQg33ZutSnhItHtk9zUq3KCJ
- otTA==
-X-Gm-Message-State: AOAM532lqkKdKgHEITgVR2BVxt2dmUoyFeCjX2QQBjnKWZ3Wk62VRmCz
- H5TuRtkjV+itbpuPV/dk4fKGsGtre8oGKg==
-X-Google-Smtp-Source: ABdhPJzh7OtE+gWYtAxa8tBofmvjubsne2zDJ9bkDIa1W/X6snmsw9wbTGIX2dEgXNC68tVc/dQjFg==
-X-Received: by 2002:a5d:6a89:: with SMTP id s9mr33369710wru.123.1639413130019; 
- Mon, 13 Dec 2021 08:32:10 -0800 (PST)
-Received: from ?IPv6:2003:f6:af02:e900:e406:554b:c2af:e2f9?
- (p200300f6af02e900e406554bc2afe2f9.dip0.t-ipconnect.de.
- [2003:f6:af02:e900:e406:554b:c2af:e2f9])
- by smtp.gmail.com with ESMTPSA id e18sm11384283wrs.48.2021.12.13.08.32.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Dec 2021 08:32:09 -0800 (PST)
-Subject: Re: [PATCH 0/2] wireguard-linux-compat: grsecurity compat patches
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Aymeric Fromherz <aymeric.fromherz@inria.fr>
+ Mon, 13 Dec 2021 16:34:09 +0000 (UTC)
+Received: by mail-yb1-f175.google.com with SMTP id f186so39658657ybg.2
+ for <wireguard@lists.zx2c4.com>; Mon, 13 Dec 2021 08:34:09 -0800 (PST)
+X-Gm-Message-State: AOAM533taX/GxJSjW5Vh+Z7FPXoUz8ku7dMSB1N2OZvkQTgDyo4mJWyR
+ 39sE7+HMSTWRxr7jnOQqS2iuc0kMZZgr/vR1RF0=
+X-Google-Smtp-Source: ABdhPJwVMw2rGZWWkCxbalMZu+CAkTsKIdJeZ7tl8ZWQUYGw4bqMhcYGC5F0VBAevzba/SyGw8okk6jWsNg+Qafzafs=
+X-Received: by 2002:a25:1e83:: with SMTP id e125mr33074525ybe.32.1639413248028; 
+ Mon, 13 Dec 2021 08:34:08 -0800 (PST)
+MIME-Version: 1.0
 References: <20210706132714.8220-1-minipli@grsecurity.net>
  <CAHmME9odv1V9wUrLsX16J68wVD3rq+op0VvaNxtsLGG8Rrz4tQ@mail.gmail.com>
  <3ed9270f-00da-5c88-cadd-59b4419b9a98@grsecurity.net>
@@ -66,16 +56,18 @@ References: <20210706132714.8220-1-minipli@grsecurity.net>
  <2026222873.1815432.1639405220767.JavaMail.zimbra@inria.fr>
  <fa249625-2698-3890-7e39-9273072810b9@grsecurity.net>
  <CAHmME9pC=eVFq-4eiU6iFVGOqZfr7RgniAP7H5YGBXDqc7W9jg@mail.gmail.com>
-From: Mathias Krause <minipli@grsecurity.net>
-Message-ID: <ffb81284-53e4-dc94-75ec-d31b6a79f269@grsecurity.net>
-Date: Mon, 13 Dec 2021 17:32:07 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
-MIME-Version: 1.0
-In-Reply-To: <CAHmME9pC=eVFq-4eiU6iFVGOqZfr7RgniAP7H5YGBXDqc7W9jg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+ <ffb81284-53e4-dc94-75ec-d31b6a79f269@grsecurity.net>
+In-Reply-To: <ffb81284-53e4-dc94-75ec-d31b6a79f269@grsecurity.net>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 13 Dec 2021 17:33:57 +0100
+X-Gmail-Original-Message-ID: <CAHmME9oh4Zx01E-+5S3Ds6mj6tVhJj81sTnSreDAujaFSX1u_Q@mail.gmail.com>
+Message-ID: <CAHmME9oh4Zx01E-+5S3Ds6mj6tVhJj81sTnSreDAujaFSX1u_Q@mail.gmail.com>
+Subject: Re: [PATCH 0/2] wireguard-linux-compat: grsecurity compat patches
+To: Mathias Krause <minipli@grsecurity.net>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ Aymeric Fromherz <aymeric.fromherz@inria.fr>, 
+ Karthik Bhargavan <karthikeyan.bhargavan@inria.fr>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -90,34 +82,41 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Am 13.12.21 um 15:37 schrieb Jason A. Donenfeld:
-> On Mon, Dec 13, 2021 at 3:33 PM Mathias Krause <minipli@grsecurity.net> wrote:
->> yeah, don't worry. We can keep this change downstream in grsec. Dunno if
->> Jason wants to take it as well, his call. It was just a side observation
->> which came out of our need to read and understand the code to provide a
->> workaround for the gcc bug we were hitting.
-> 
-> I suppose I can load it up in kbench9000 to see if it makes a
-> difference. If it doesn't matter much, I'd prefer sticking with the
-> formally verified stuff. But if there is a nice speedup, then I guess
-> we can revisit more handwavy "obviously this is the same thing"
-> arguments.
+Hi Mathias,
 
-Had to hack main.c and run.sh a little, but here are some numbers:
+On Mon, Dec 13, 2021 at 5:32 PM Mathias Krause <minipli@grsecurity.net> wrote:
+>
+> Am 13.12.21 um 15:37 schrieb Jason A. Donenfeld:
+> > On Mon, Dec 13, 2021 at 3:33 PM Mathias Krause <minipli@grsecurity.net> wrote:
+> >> yeah, don't worry. We can keep this change downstream in grsec. Dunno if
+> >> Jason wants to take it as well, his call. It was just a side observation
+> >> which came out of our need to read and understand the code to provide a
+> >> workaround for the gcc bug we were hitting.
+> >
+> > I suppose I can load it up in kbench9000 to see if it makes a
+> > difference. If it doesn't matter much, I'd prefer sticking with the
+> > formally verified stuff. But if there is a nice speedup, then I guess
+> > we can revisit more handwavy "obviously this is the same thing"
+> > arguments.
+>
+> Had to hack main.c and run.sh a little, but here are some numbers:
+>
+> root@box:~# ./run.sh
+> [+] Setting no-turbo to status 1
+> [+] Setting non-boot CPUs to status 0
+> [+] Inserting module to run tests
+> insmod: ERROR: could not insert module kbench9000.ko: Unknown symbol in
+> module
+> [+] Gathering results
+>                  ever64: 115100 cycles per call
+>            ever64_out_r: 115080 cycles per call
+>           ever64_out_rm: 113957 cycles per call
+> [+] Setting non-boot CPUs to status 1
+> [+] Setting no-turbo to status 0
+>
+> Slightly faster.
 
-root@box:~# ./run.sh
-[+] Setting no-turbo to status 1
-[+] Setting non-boot CPUs to status 0
-[+] Inserting module to run tests
-insmod: ERROR: could not insert module kbench9000.ko: Unknown symbol in
-module
-[+] Gathering results
-                 ever64: 115100 cycles per call
-           ever64_out_r: 115080 cycles per call
-          ever64_out_rm: 113957 cycles per call
-[+] Setting non-boot CPUs to status 1
-[+] Setting no-turbo to status 0
+Huh, that's actually a pretty nice speedup for just changing register
+allocation... What CPU is this?
 
-Slightly faster.
-
-Mathias
+Jason
