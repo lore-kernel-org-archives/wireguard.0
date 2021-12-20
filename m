@@ -4,51 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1255C433FE
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  4 Jan 2022 18:24:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDD44C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  4 Jan 2022 18:24:30 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 66b60595;
-	Tue, 4 Jan 2022 18:20:40 +0000 (UTC)
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com
- [2a00:1450:4864:20::52b])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id da314740
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id b427d7e7;
+	Tue, 4 Jan 2022 18:20:37 +0000 (UTC)
+Received: from mail.pineview.net (mail.pineview.net [203.33.246.11])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 8a49d6a0
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 21 Dec 2021 07:52:08 +0000 (UTC)
-Received: by mail-ed1-x52b.google.com with SMTP id w16so20162930edc.11
- for <wireguard@lists.zx2c4.com>; Mon, 20 Dec 2021 23:52:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to;
- bh=/54WCL9q5ULHfCFppQba2YPtosV1GX8pCSR+S1aX0ek=;
- b=Jw3kbxT7z0lE9WfXaPho2MK0TC9vhRei2dCkIsgSsH/yYAzK3g6gsCupZs6/8i7rO7
- VswuUiBorGhn79ExfXcbaW1Q3bkPO/J3nX6YYq+GrTrkCtmWXDSaTQc/+bTHDRF1prlF
- CRlnrONfcfSpRQwLgj+u3ZcPafgwWUmTfrkNLyqCZxisbJopKclCWYliIUToEiHp7YqM
- zUXebWtvlmHmMH0KAW66KKnX527Umt7EKpQCL0l7q7NxUtF65cTMgmzfMUsyScOg2iuK
- 9hEd4ou1evNKtbyeyJP0ZtNKFUfesMfJiPVGDRy8Rnabsn5r6uwssZ9CQ5NYku/LeYQs
- t64Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=/54WCL9q5ULHfCFppQba2YPtosV1GX8pCSR+S1aX0ek=;
- b=nLUYe5jEBc2iYYda6rQXq9XzlMxAiXavaACJ5Jh6CKdTfC8Oxg7uMNCYMbhX3LkWfO
- lXVcrLJpHYwuUGBLI8bHJAMU6+DJlc/JZZIOCBpAC8LYQnXbz8+ZkkVImF1KOWWD8+ts
- 4NbgveptHYSNXJ5EfJ4eoNm0Mr33IzusxLCCSmGasRnmsN4qlyVHfBNB9rdQQcL7QzK/
- fN0DjMyC3TesJU0dhOoAYKSmQBG1m9Cp8Vw2HoAVVBaZVctf9vbxrKahHsJcIzT5JO8i
- bCuML8iVMSLrDM0N7QA62pinVR1IQOc0J3L+Jo4/uy3ECs6R/E/3+Rq18VHLdqzUbs/+
- iRuA==
-X-Gm-Message-State: AOAM533Q/TXhE6+EdOS7B9l6YIkiViazYlZUzO/psjlU9EEp1rpUPcEc
- OGfIEj7ogSO+xzFTt/+NQSPWXzGyhvAfcQ4gVHXmCRUpYLO+vA==
-X-Google-Smtp-Source: ABdhPJy8ULt+OVgOm9hr5U/4+RvL5fQiFyxR4ZBIvTzpuiY/Dfi3FBqRT/VeCDROc7mtk1eX6LdoMyfXIwRHI22K9lQ=
-X-Received: by 2002:a17:907:9493:: with SMTP id
- dm19mr1722993ejc.161.1640073127676; 
- Mon, 20 Dec 2021 23:52:07 -0800 (PST)
-MIME-Version: 1.0
-From: Chris Francy <zoredache@gmail.com>
-Date: Mon, 20 Dec 2021 23:51:55 -0800
-Message-ID: <CAM8ZctXygkOUvzEpROjcfZeFC69epbc8ef=k5OF949XB6S1-BQ@mail.gmail.com>
-Subject: Windows tunnel configured as only IPv6 gets an IPv4 APIPA address
-To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+ Mon, 20 Dec 2021 21:49:40 +0000 (UTC)
+Received: from smtpclient.apple (unknown [1.124.19.241])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+ (No client certificate requested)
+ by mail.pineview.net (Postfix) with ESMTPSA id AC1F78002A;
+ Tue, 21 Dec 2021 08:19:36 +1030 (ACDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Mike O'Connor <mike@jazmin.com.au>
+Mime-Version: 1.0 (1.0)
+Subject: Re: eBPF + IPv6 + WireGuard
+Date: Tue, 21 Dec 2021 08:19:25 +1030
+Message-Id: <35F53B88-F1A7-452D-BC86-04A49677B372@jazmin.com.au>
+References: <20211217190659.251f006a@poseidon.quill.lan>
+Cc: wireguard@lists.zx2c4.com
+In-Reply-To: <20211217190659.251f006a@poseidon.quill.lan>
+To: Alex <wireguard@centromere.net>
+X-Mailer: iPhone Mail (19B74)
 X-Mailman-Approved-At: Tue, 04 Jan 2022 18:20:36 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -64,48 +46,90 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-I really wish that the IPv4 binding would be completely disabled when an
-interface has no IPv4 addresses.
+Hi
 
-Consider a simple configuration like this
+Wireguard is a layer 3 system. As a result you must route traffic not bridge=
+, this also means that ip forwarding must be enabled.
 
-    # wg_zoredache.conf
-    [Interface]
-    PrivateKey = ...
-    Address = 2001:db8:0:0:24ae:ebff:fef0:97e6/128
+You will need to firewall the traffic or setup a separate routing table.=20
 
-When that tunnel is started on Windows you will get an 169.254.0.0/16
-address. But I didn't really expect or want that.
+Other routers in your network will need to know about the IP addresses alloc=
+ated to Wireguard and have a route for this range.
 
-I am sure some will tell me this doesn't really hurt much since a person
-configuring an IPv6 only tunnel, would not have AllowedIPs set that would
-allow this address to actually communicate with anything, so the tunnel
-will not accept or transmit these packets. But it is still kinda annoying,
-since having that IPv4 address will result in IPv4 broadcast traffic
-happening on the interface. I noticed this when I was trying to do a
-wireshark capture for something else, and was surprised how much IPv4
-broadcasts I was seeing on an interface that I intended to be IPv6 only.
+Mike
 
-So next I am sure people will suggest adding a `PreUp' or 'PostUp` command
-that runs a powershell command to disable the interface. I know with
-powershell you can disable the IPv4 binding with a command like
-`Disable-NetAdapterBinding -ifAlias wg_zoredache -ComponentID ms_tcpip`.
-But PreUp/Postup is blocked by default on Windows. Also some security
-software on block Powershell executing as a form of anti-malware
-protection. Also, simply running the command once isn't useful, since the
-Interface seems to get recreated each time the tunnel or computer restarts.
+> On 21 Dec 2021, at 3:21 am, Alex <wireguard@centromere.net> wrote:
+>=20
+> =EF=BB=BFHi all,
+>=20
+> I am championing WireGuard at work, and I have been granted permission
+> to use it for establishing remote access to a private IPv6 VLAN for all
+> employees. I have experimented with different approaches and ran in to
+> an issue.
+>=20
+> With the help of a machine dedicated fully to the job of remote access
+> (Ubuntu 20.04 / Linux 5.4), I've managed to establish end-to-end
+> connectivity between my work laptop and the servers. The VPN gateway
+> has a wg0 interface for employees and a "private0" interface for
+> private VLAN connectivity. The goal is to link the two.
+>=20
+> I noticed an odd quirk: It only works when
+> "net.ipv6.conf.all.forwarding" is 1. If this value is 0,
+> "net.ipv6.conf.[wg0 | private0].forwarding" has no effect. In other
+> words, I cannot seem to enable forwarding for *only* the interfaces
+> that need it. It only works when forwarding is enabled for *all*
+> interfaces. This is a problem because when the "all" value is set to 1,
+> the machine will start to behave as a router on VLANs for which it is
+> most definitely not a router.
+>=20
+> For the servers, I am using the officially defined[0] subnet-router
+> anycast address as the default IPv6 gateway, and it works well.
+> However, when I flipped the switch on "net.ipv6.conf.all.forwarding",
+> the VPN gateway started using NDP to announce that it was a router
+> across *all* VLANs! Specifically, it was claiming ownership over our
+> global subnet anycast address 2001:aaaa:bbbb:cccc::. This is neither
+> true nor desired. The VPN gateway started to receive outbound non-VPN
+> Internet traffic which broke Internet connectivity for all servers.=20
+>=20
+> This leads me to my first question: Why does
+> "net.ipv6.conf.wg0.forwarding" have no effect?
+>=20
+> In researching a solution, I decided to give eBPF a try. I attached an
+> XDP program to "private0" (a layer 2 device, naturally) and
+> successfully redirected packets to "wg0" (a layer 3 device) with
+> bpf_redirect[1]. If the packets are unmodified, WireGuard will happily
+> pass them to the remote hosts. This is an issue because the remote
+> hosts are expecting to receive IP(v6) packets, not Ethernet frames. If
+> I use bpf_xdp_adjust_head[1] to strip off the Ethernet frame, WireGuard
+> will drop the packet[2] before it can be sent to the remote host.
+>=20
+> My theory is that bpf_xdp_adjust_head is modifying the data pointer
+> only and not any underlying structures that may be associated with the
+> packet (sk_buff perhaps).
+>=20
+> This leads me to my second question: Why can't I redirect traffic
+> received on an L2 interface to an L3 interface, *even after stripping
+> off the Ethernet frame?*
+>=20
+> Finally, during this whole process I was using WireShark to inspect
+> traffic received by the remote host (i.e. my work laptop). With the
+> help of the extract-handshakes.sh script, I was able to decrypt traffic.
+> I did discover a bug though. I believe "index_hashtable_insert" should
+> actually be "wg_index_hashtable_insert"[3].
+>=20
+> Does anyone have any insights as to what a proper solution would look
+> like? Is there a way to achieve my goal without introducing eBPF? Is
+> XDP completely unsuited for this particular purpose? Do I actually need
+> to operate on the sk_buff level, as opposed to the xdp_buff level?
+>=20
+> Thank you all for your time.
+>=20
+> - Alex
+>=20
+> [0] https://datatracker.ietf.org/doc/rfc1884/ (Section 2.5.1)
+> [1] https://www.man7.org/linux/man-pages/man7/bpf-helpers.7.html
+> [2] https://git.zx2c4.com/wireguard-linux/tree/drivers/net/wireguard/devic=
+e.c#n131
+> [3] https://git.zx2c4.com/wireguard-tools/tree/contrib/extract-handshakes/=
+extract-handshakes.sh#n46
 
-I have more output of what I currently get, and what I am hoping for
-in this gist.
-
-- https://gist.github.com/zoredache/995bb5bea01f6fd8dced0fda708c97c8
-
-Anyway, I am just posting this as a bit of a wishlist request. Please
-consider adjusting the client to disable the IPv4 binding on the interface
-it creates if no IPv4 addresses are in the tunnel configuration. Or perhaps
-provide some other method to have a true IPv6 only wireguard interface on
-Windows.
-
-Thanks,
-
-Zoredache
