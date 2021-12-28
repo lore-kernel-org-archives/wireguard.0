@@ -4,34 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C63DBC4332F
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  4 Jan 2022 18:24:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2396C43217
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  4 Jan 2022 18:24:34 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 43a9779a;
-	Tue, 4 Jan 2022 18:20:43 +0000 (UTC)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 51958280;
+	Tue, 4 Jan 2022 18:20:44 +0000 (UTC)
 Received: from hetz0.host.rs.currently.online (hetz0.host.rs.currently.online
- [2a01:4f8:120:614b::1])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id f3aab817
+ [178.63.44.182])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id b280e616
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 28 Dec 2021 23:46:16 +0000 (UTC)
+ Tue, 28 Dec 2021 23:46:25 +0000 (UTC)
 Received: from carbon.srv.schuermann.io (carbon.srv.schuermann.io
  [178.63.44.188])
- by hetz0.host.rs.currently.online (Postfix) with ESMTPS id 93E533B91
- for <wireguard@lists.zx2c4.com>; Tue, 28 Dec 2021 23:46:15 +0000 (UTC)
+ by hetz0.host.rs.currently.online (Postfix) with ESMTPS id 11AE83A9F
+ for <wireguard@lists.zx2c4.com>; Tue, 28 Dec 2021 23:46:25 +0000 (UTC)
 From: leon@is.currently.online
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=is.currently.online;
- s=carbon; t=1640735174;
- bh=y0Odxi4VIDG1wjDAIjWdCJJBb7xOYfLtdYVXwf7JwyE=;
- h=From:To:Cc:Subject:Date;
- b=hWOq7zZMejGfZ/21n+z6Nq8LCroOUkbArZ9P5VjVaKhzSZs5sFttG2OoEKPFDQDPk
- R2cBiT7BMVt6hYwtJtUNvzJ5UHsDfM0CnHw8FTgwOTjnMjLBfnTs1irURScMLRkBPw
- rbtEXCyCj7PSb36nF5KR+hV4N6gKsDEZWYxOq56g=
+ s=carbon; t=1640735185;
+ bh=kkISvVFVdGVQin+pF6YoVuxo9dTiCSsHePzJpcHu1es=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=0omMmyawVAu5b/8d/rwWe4Nj+5IX0FM6Hlt1xNBp9Hve1/VOUQfyArnlnpxmMLxGz
+ GSQiiU3GHYOeRDjAOH9hPjkJ+YwAoPk/YHUzIM/UV4Y51Rmfh4LXJrMRHLjdOJodYw
+ PgHLUz2Zk9nN7TXgtgP1Za/1TOqxEXN3vex8LIjA=
 To: wireguard@lists.zx2c4.com
 Cc: Leon Schuermann <leon@is.currently.online>
-Subject: [RFC PATCH 0/4] Introduce per-peer MTU setting
-Date: Wed, 29 Dec 2021 00:45:21 +0100
-Message-Id: <20211228234524.633509-1-leon@is.currently.online>
+Subject: [RFC PATCH 1/4] netdevice: add ndo_lookup_mtu for dynamically
+ determining MTU
+Date: Wed, 29 Dec 2021 00:45:23 +0100
+Message-Id: <20211228234524.633509-2-leon@is.currently.online>
+In-Reply-To: <20211228234524.633509-1-leon@is.currently.online>
+References: <20211228234524.633509-1-leon@is.currently.online>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Tue, 04 Jan 2022 18:20:36 +0000
@@ -51,64 +54,85 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 From: Leon Schuermann <leon@is.currently.online>
 
-This patch series is an attempt to integrate a per-peer MTU setting
-into WireGuard. With matching changes to the wireguard-tools,
-individual MTU values can be set and retrieved for each registered
-peer.
+Add an optional function `ndo_lookup_mtu` to the `struct
+net_device_ops`. This function can be used to allow other parts of the
+network stack to let the destination netdevice determine the allowed
+packet MTU. This is done on a per-packet basis, providing the `struct
+sk_buff` holding the packet contents.
 
-While Linux supports setting an MTU metric for specific FIB route
-entries [which I've only found out after implementing this :)], and
-thus allows to lower the MTU for individual peers, this appears to
-disable regular path MTU discovery (PMTUD) entirely on the
-route. While regular PMTUD does not work over the tunnel link, it
-should still be usable on the rest of the route.
+The information obtained through this method may be cached by other
+parts of the network stack, such as for instance the path MTU
+discovery (PMTUD) mechanism. It is not guaranteed that this function
+will be called for every packet, not even that is called on a single
+packet of a given flow. When this function is not implemented or when
+it returns -ENODATA no statement about the permitted MTU is made and
+the networking stack will resort to the device MTU values. These
+properties make this mechanism capable of providing a "suggestion" for
+a packet's MTU, deviating from the default device MTU.
 
-Furthermore, with the goal of eventually introducing an in-band
-per-peer PMTUD mechanism, keeping an internal per-peer MTU value does
-not require modifying the FIB and thus potentially interfere with
-userspace.
+The device is allowed to announce MTU values lower or higher than the
+minimum and maximum device MTU respectively. Whether such MTU values
+will be respected is up to the implementation.
 
-In an effort to solve this issues, this patch series introduces a
-rather generic framework for implementing these kinds of dynamic MTU
-policies. By providing a hook in the netdevice implementation to
-decide on the applicable MTU, very flexible designs can be built. I
-suppose that these changes are rather controversial, or at least
-require some more discussion. I'm sending this patchset to the
-WireGuard development list in hopes to get some initial feedback on
-the idea and implementation and would like to eventually submit the
-non-WireGuard changes directly to the netdev ML.
+Still, even with this being a non-mandatory to implement or respect
+mechanism, it has some interesting consequences. Being able to inspect
+the entire packet buffer, the destination netdevice implementation can
+control MTUs on a flow granularity. For instance, it could be used to
+allow two devices on a shared Ethernet segment to communicate with
+each other using a large (> 1500 byte) MTU, while using a lower MTU
+for other devices.
 
-The patches are currently based on v5.10, as that happens to be
-what I was developing on. I'll gladly rebase to the latest
-revision / wireguard-devel if requested.
+The immediate motivation for these changes provide another example of
+this mechanism being useful: when using WireGuard, peers can reside
+behind paths of varying MTU restrictions. PMTUD does not work across
+these tunnel links however, as WireGuard cannot accept unauthenticated
+ICMP responses. Thus it will continue to send too large packets over
+lower-MTU links. With this mechanism WireGuard can, on a per-peer
+granularity, reduce the MTU, without limiting the overall device
+MTU. Furthermore, it can employ in-band PMTUD mechanisms to resolve
+these values automatically. While an MTU metric can be set for
+specific FIB routes and thus lower the MTU for individual peers, as a
+consequence this completely disables PMTUD on the entire route. While
+regular PMTUD does not work over the tunnel link, it should still be
+usable on the rest of the route. Furthermore, when employing an
+in-band per-peer PMTUD mechanism, modifying the FIB to store the
+detected MTU is inelegant at best.
 
-Thanks!
+Signed-off-by: Leon Schuermann <leon@is.currently.online>
+---
+ include/linux/netdevice.h | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-Leon
-
-Leon Schuermann (4):
-  netdevice: add ndo_lookup_mtu for dynamically determining MTU
-  net/ipv4: respect MTU determined by `ndo_lookup_mtu`
-  net/ipv6: respect MTU determined by `ndo_lookup_mtu`
-  net/wireguard: add per-peer MTU setting
-
- drivers/net/wireguard/allowedips.c |  2 +-
- drivers/net/wireguard/allowedips.h |  2 +-
- drivers/net/wireguard/device.c     | 20 ++++++++++++++++--
- drivers/net/wireguard/netlink.c    |  8 +++++++
- drivers/net/wireguard/peer.c       |  1 +
- drivers/net/wireguard/peer.h       |  1 +
- drivers/net/wireguard/queueing.h   |  2 +-
- include/linux/netdevice.h          | 12 +++++++++++
- include/net/ip.h                   | 34 ++++++++++++++++++++++--------
- include/net/ip6_route.h            | 14 ++++++++++--
- include/uapi/linux/wireguard.h     |  5 +++++
- net/ipv4/ip_forward.c              |  2 +-
- net/netfilter/nf_flow_table_core.c |  2 +-
- 13 files changed, 87 insertions(+), 18 deletions(-)
-
-
-base-commit: 2c85ebc57b3e1817b6ce1a6b703928e113a90442
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index 7c3da0e1ea9d..d9d59b756f57 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -1279,6 +1279,16 @@ struct netdev_net_notifier {
+  * struct net_device *(*ndo_get_peer_dev)(struct net_device *dev);
+  *	If a device is paired with a peer device, return the peer instance.
+  *	The caller must be under RCU read context.
++ * int (*ndo_lookup_mtu)(const struct sk_buff *skb,
++ *			 const struct net_device *dev);
++ *	For devices supporting dynamic lookup of the MTU for individual
++ *	skb packets, this function returns the MTU for the passed skb.
++ *	A return value of -ENODATA must be treated as if the device does
++ *	not support this feature. It is not guaranteed that this function will
++ *	be called for every packet presented to the ndo_start_xmit function.
++ *	A device must always accept packets of the announced min/max device MTU.
++ *	This function may be used to potentially allow MTU sizes lower/higher
++ *	than the min/max device MTU respectively.
+  */
+ struct net_device_ops {
+ 	int			(*ndo_init)(struct net_device *dev);
+@@ -1487,6 +1497,8 @@ struct net_device_ops {
+ 	int			(*ndo_tunnel_ctl)(struct net_device *dev,
+ 						  struct ip_tunnel_parm *p, int cmd);
+ 	struct net_device *	(*ndo_get_peer_dev)(struct net_device *dev);
++	int			(*ndo_lookup_mtu)(const struct sk_buff *skb,
++						  const struct net_device *dev);
+ };
+ 
+ /**
 -- 
 2.33.1
 
