@@ -4,51 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB15CC433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  4 Jan 2022 18:24:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C63DBC4332F
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  4 Jan 2022 18:24:33 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 3db33d60;
-	Tue, 4 Jan 2022 18:20:42 +0000 (UTC)
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com
- [2607:f8b0:4864:20::52d])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id c9c2b7bb
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 43a9779a;
+	Tue, 4 Jan 2022 18:20:43 +0000 (UTC)
+Received: from hetz0.host.rs.currently.online (hetz0.host.rs.currently.online
+ [2a01:4f8:120:614b::1])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id f3aab817
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 27 Dec 2021 07:43:05 +0000 (UTC)
-Received: by mail-pg1-x52d.google.com with SMTP id 2so12922170pgb.12
- for <wireguard@lists.zx2c4.com>; Sun, 26 Dec 2021 23:43:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to;
- bh=Ciltm22LgvFNAXznLPXxjsh1K5w8WBxpzCLSduNQ4dE=;
- b=MkKvBswbekU2S6JX8VwF5YCn21jnXwN5nQYKNCcfsM6kDDKxYFTNVAxs0i4BVl4byY
- H9LzTaPUfR/kSZl9VL8GS2gHJEZWJVZvwjO6EeNDVBccA2Lt9Q/913PdFd4IASxRYy+j
- t11uVr5saQtfvoII6F/of//UGlD4AtuszXXXsMphMV+LbbPNNyMuC7JAY4R0S0JBhAgJ
- l5jIImi83KPJhSvP0Lzncps0AJueLz34Bol5WRPOgmaYwXufnTa3dwSQpiiF/q9XzjR5
- QiTE5aW287poC/cs/BgChELunuyY/Z35DSSeh5dP2E+7eM1/Kq1UWTJccZMB83kZ83mD
- 7GRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=Ciltm22LgvFNAXznLPXxjsh1K5w8WBxpzCLSduNQ4dE=;
- b=nXcegoDOCVen3ebm2iuWqFTAcPuxwcUCuObb4qWgnripIrv4w+rss5hOVxh45OLgfJ
- QXOIYqF2J//Nye26BRs88RIz7GRpSkDetxi1pvYQJxxY5j/jC9F0sjPN+O5T2vV0g01S
- Gbluxa9H5gyweiEHSUl3wAhcgrWQWlAE47jhMKifd2LS1QNrUvm32B27OVPXTAM3IR38
- ywtz8vs0IPfgZqL2aLmp5T987v+0pYDnzxCu7ASsXSyPVP7DzaRa9oZvIwts4Gwa/no2
- VAoqYukmz0JizWp+Nb+AtsgJgVcormVJeQjqLc0KLhCQaebPkthgkE8L5Ec5AIfbkijY
- jDrA==
-X-Gm-Message-State: AOAM531uiF/4d3Wi4lFS0UEYQdHERy0pYi3C9xnlTe76uoFgcsZfXESr
- f5mGE+uyACPV2N+nK1rzmKoP3f2NsHCXr9yDPXuGHv20QBvDFmPkewk=
-X-Google-Smtp-Source: ABdhPJwQXJ7c06UNK3kyWZdmBQYdpNRNuCFkVWMDvaxRiCvJUDUbmpaSpnFgmJScT3OdqeNpJmz606GVzCSzvVFU9UI=
-X-Received: by 2002:a63:1213:: with SMTP id h19mr15039620pgl.468.1640590983929; 
- Sun, 26 Dec 2021 23:43:03 -0800 (PST)
-MIME-Version: 1.0
-From: Houman <houmie@gmail.com>
-Date: Mon, 27 Dec 2021 11:12:27 +0330
-Message-ID: <CABBZOskdS0P-3hx91JXkGkE5qaTdx_3B+gYGE4+44N9ZQg8Yhw@mail.gmail.com>
-Subject: iOS WireGuard Kit integration with my project can't be distributed to
- AppStore
+ Tue, 28 Dec 2021 23:46:16 +0000 (UTC)
+Received: from carbon.srv.schuermann.io (carbon.srv.schuermann.io
+ [178.63.44.188])
+ by hetz0.host.rs.currently.online (Postfix) with ESMTPS id 93E533B91
+ for <wireguard@lists.zx2c4.com>; Tue, 28 Dec 2021 23:46:15 +0000 (UTC)
+From: leon@is.currently.online
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=is.currently.online;
+ s=carbon; t=1640735174;
+ bh=y0Odxi4VIDG1wjDAIjWdCJJBb7xOYfLtdYVXwf7JwyE=;
+ h=From:To:Cc:Subject:Date;
+ b=hWOq7zZMejGfZ/21n+z6Nq8LCroOUkbArZ9P5VjVaKhzSZs5sFttG2OoEKPFDQDPk
+ R2cBiT7BMVt6hYwtJtUNvzJ5UHsDfM0CnHw8FTgwOTjnMjLBfnTs1irURScMLRkBPw
+ rbtEXCyCj7PSb36nF5KR+hV4N6gKsDEZWYxOq56g=
 To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Cc: Leon Schuermann <leon@is.currently.online>
+Subject: [RFC PATCH 0/4] Introduce per-peer MTU setting
+Date: Wed, 29 Dec 2021 00:45:21 +0100
+Message-Id: <20211228234524.633509-1-leon@is.currently.online>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Tue, 04 Jan 2022 18:20:36 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -64,24 +49,66 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-I have followed the instructions from WireGuard Kit Integration to
-create a simple client for myself.
-https://github.com/WireGuard/wireguard-apple#wireguardkit-integration
-I got it perfectly working.
+From: Leon Schuermann <leon@is.currently.online>
 
-But when I try to release it to the AppStore via Xcode -> Release ->
-Archive I get into this situation
-where the 'distribute app' option to the AppStore is missing.
-Strangely the archive appears only after a few seconds under 'Other
-Items' instead of under iOS Apps.
+This patch series is an attempt to integrate a per-peer MTU setting
+into WireGuard. With matching changes to the wireguard-tools,
+individual MTU values can be set and retrieved for each registered
+peer.
 
-This has been reported previously and explained here:
-https://stackoverflow.com/questions/55467829/xcode-10-1-doesnt-show-distribute-app-option-when-archiving-cant-archive
-on Stackoverflow, but none of the solutions work for me.
+While Linux supports setting an MTU metric for specific FIB route
+entries [which I've only found out after implementing this :)], and
+thus allows to lower the MTU for individual peers, this appears to
+disable regular path MTU discovery (PMTUD) entirely on the
+route. While regular PMTUD does not work over the tunnel link, it
+should still be usable on the rest of the route.
 
-Judging from this answer here:
-https://stackoverflow.com/a/67650750/92153 It seems that this is
-indeed an issue with Wireguard Framework.
+Furthermore, with the goal of eventually introducing an in-band
+per-peer PMTUD mechanism, keeping an internal per-peer MTU value does
+not require modifying the FIB and thus potentially interfere with
+userspace.
 
-Can someone please advise what to do?
-Many Thanks,
+In an effort to solve this issues, this patch series introduces a
+rather generic framework for implementing these kinds of dynamic MTU
+policies. By providing a hook in the netdevice implementation to
+decide on the applicable MTU, very flexible designs can be built. I
+suppose that these changes are rather controversial, or at least
+require some more discussion. I'm sending this patchset to the
+WireGuard development list in hopes to get some initial feedback on
+the idea and implementation and would like to eventually submit the
+non-WireGuard changes directly to the netdev ML.
+
+The patches are currently based on v5.10, as that happens to be
+what I was developing on. I'll gladly rebase to the latest
+revision / wireguard-devel if requested.
+
+Thanks!
+
+Leon
+
+Leon Schuermann (4):
+  netdevice: add ndo_lookup_mtu for dynamically determining MTU
+  net/ipv4: respect MTU determined by `ndo_lookup_mtu`
+  net/ipv6: respect MTU determined by `ndo_lookup_mtu`
+  net/wireguard: add per-peer MTU setting
+
+ drivers/net/wireguard/allowedips.c |  2 +-
+ drivers/net/wireguard/allowedips.h |  2 +-
+ drivers/net/wireguard/device.c     | 20 ++++++++++++++++--
+ drivers/net/wireguard/netlink.c    |  8 +++++++
+ drivers/net/wireguard/peer.c       |  1 +
+ drivers/net/wireguard/peer.h       |  1 +
+ drivers/net/wireguard/queueing.h   |  2 +-
+ include/linux/netdevice.h          | 12 +++++++++++
+ include/net/ip.h                   | 34 ++++++++++++++++++++++--------
+ include/net/ip6_route.h            | 14 ++++++++++--
+ include/uapi/linux/wireguard.h     |  5 +++++
+ net/ipv4/ip_forward.c              |  2 +-
+ net/netfilter/nf_flow_table_core.c |  2 +-
+ 13 files changed, 87 insertions(+), 18 deletions(-)
+
+
+base-commit: 2c85ebc57b3e1817b6ce1a6b703928e113a90442
+-- 
+2.33.1
+
