@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2396C43217
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  4 Jan 2022 18:24:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBDEBC433FE
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  4 Jan 2022 18:26:34 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 51958280;
-	Tue, 4 Jan 2022 18:20:44 +0000 (UTC)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id c454aa2a;
+	Tue, 4 Jan 2022 18:20:45 +0000 (UTC)
 Received: from hetz0.host.rs.currently.online (hetz0.host.rs.currently.online
  [178.63.44.182])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id b280e616
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 9d878a01
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 28 Dec 2021 23:46:25 +0000 (UTC)
+ Tue, 28 Dec 2021 23:46:30 +0000 (UTC)
 Received: from carbon.srv.schuermann.io (carbon.srv.schuermann.io
  [178.63.44.188])
- by hetz0.host.rs.currently.online (Postfix) with ESMTPS id 11AE83A9F
- for <wireguard@lists.zx2c4.com>; Tue, 28 Dec 2021 23:46:25 +0000 (UTC)
+ by hetz0.host.rs.currently.online (Postfix) with ESMTPS id 914D538E8
+ for <wireguard@lists.zx2c4.com>; Tue, 28 Dec 2021 23:46:30 +0000 (UTC)
 From: leon@is.currently.online
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=is.currently.online;
- s=carbon; t=1640735185;
- bh=kkISvVFVdGVQin+pF6YoVuxo9dTiCSsHePzJpcHu1es=;
+ s=carbon; t=1640735190;
+ bh=BG3lp//Fkv0CyDWfnsZB8iTPBCC1MuilJfYt8BAss1I=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=0omMmyawVAu5b/8d/rwWe4Nj+5IX0FM6Hlt1xNBp9Hve1/VOUQfyArnlnpxmMLxGz
- GSQiiU3GHYOeRDjAOH9hPjkJ+YwAoPk/YHUzIM/UV4Y51Rmfh4LXJrMRHLjdOJodYw
- PgHLUz2Zk9nN7TXgtgP1Za/1TOqxEXN3vex8LIjA=
+ b=iS3AgenS+S7oEogcgpXyAQriLImUDkjkfYNYEOOfPhdoza2jAp8/zGXpAmC33yRKv
+ CLTJd8Yymmry4fTTAd5QSltUZTYCRoO4qYH4B0Y4uftd7Rmbj52TqF2HN4fMYI22Or
+ dBKi/I+sy3vdgEPGpxFJC3DBBe36SyyPCeDgiXpA=
 To: wireguard@lists.zx2c4.com
 Cc: Leon Schuermann <leon@is.currently.online>
-Subject: [RFC PATCH 1/4] netdevice: add ndo_lookup_mtu for dynamically
- determining MTU
-Date: Wed, 29 Dec 2021 00:45:23 +0100
-Message-Id: <20211228234524.633509-2-leon@is.currently.online>
+Subject: [RFC PATCH 2/4] net/ipv4: respect MTU determined by `ndo_lookup_mtu`
+Date: Wed, 29 Dec 2021 00:45:25 +0100
+Message-Id: <20211228234524.633509-3-leon@is.currently.online>
 In-Reply-To: <20211228234524.633509-1-leon@is.currently.online>
 References: <20211228234524.633509-1-leon@is.currently.online>
 MIME-Version: 1.0
@@ -54,85 +53,112 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 From: Leon Schuermann <leon@is.currently.online>
 
-Add an optional function `ndo_lookup_mtu` to the `struct
-net_device_ops`. This function can be used to allow other parts of the
-network stack to let the destination netdevice determine the allowed
-packet MTU. This is done on a per-packet basis, providing the `struct
-sk_buff` holding the packet contents.
+This integrates the newly introduced dynamic MTU lookup mechanism with
+the IPv4 stack. It will attempt to query the destination netdevice for
+the individual packet MTU and, if not found or the mechanism is not
+implemented, fall back to the device MTU.
 
-The information obtained through this method may be cached by other
-parts of the network stack, such as for instance the path MTU
-discovery (PMTUD) mechanism. It is not guaranteed that this function
-will be called for every packet, not even that is called on a single
-packet of a given flow. When this function is not implemented or when
-it returns -ENODATA no statement about the permitted MTU is made and
-the networking stack will resort to the device MTU values. These
-properties make this mechanism capable of providing a "suggestion" for
-a packet's MTU, deviating from the default device MTU.
-
-The device is allowed to announce MTU values lower or higher than the
-minimum and maximum device MTU respectively. Whether such MTU values
-will be respected is up to the implementation.
-
-Still, even with this being a non-mandatory to implement or respect
-mechanism, it has some interesting consequences. Being able to inspect
-the entire packet buffer, the destination netdevice implementation can
-control MTUs on a flow granularity. For instance, it could be used to
-allow two devices on a shared Ethernet segment to communicate with
-each other using a large (> 1500 byte) MTU, while using a lower MTU
-for other devices.
-
-The immediate motivation for these changes provide another example of
-this mechanism being useful: when using WireGuard, peers can reside
-behind paths of varying MTU restrictions. PMTUD does not work across
-these tunnel links however, as WireGuard cannot accept unauthenticated
-ICMP responses. Thus it will continue to send too large packets over
-lower-MTU links. With this mechanism WireGuard can, on a per-peer
-granularity, reduce the MTU, without limiting the overall device
-MTU. Furthermore, it can employ in-band PMTUD mechanisms to resolve
-these values automatically. While an MTU metric can be set for
-specific FIB routes and thus lower the MTU for individual peers, as a
-consequence this completely disables PMTUD on the entire route. While
-regular PMTUD does not work over the tunnel link, it should still be
-usable on the rest of the route. Furthermore, when employing an
-in-band per-peer PMTUD mechanism, modifying the FIB to store the
-detected MTU is inelegant at best.
+`ndo_lookup_mtu` will not be queried and respected for every
+packet. For instance, flow offloading with netfilter will only take
+the device MTU into account.
 
 Signed-off-by: Leon Schuermann <leon@is.currently.online>
 ---
- include/linux/netdevice.h | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ include/net/ip.h                   | 34 ++++++++++++++++++++++--------
+ net/ipv4/ip_forward.c              |  2 +-
+ net/netfilter/nf_flow_table_core.c |  2 +-
+ 3 files changed, 27 insertions(+), 11 deletions(-)
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index 7c3da0e1ea9d..d9d59b756f57 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -1279,6 +1279,16 @@ struct netdev_net_notifier {
-  * struct net_device *(*ndo_get_peer_dev)(struct net_device *dev);
-  *	If a device is paired with a peer device, return the peer instance.
-  *	The caller must be under RCU read context.
-+ * int (*ndo_lookup_mtu)(const struct sk_buff *skb,
-+ *			 const struct net_device *dev);
-+ *	For devices supporting dynamic lookup of the MTU for individual
-+ *	skb packets, this function returns the MTU for the passed skb.
-+ *	A return value of -ENODATA must be treated as if the device does
-+ *	not support this feature. It is not guaranteed that this function will
-+ *	be called for every packet presented to the ndo_start_xmit function.
-+ *	A device must always accept packets of the announced min/max device MTU.
-+ *	This function may be used to potentially allow MTU sizes lower/higher
-+ *	than the min/max device MTU respectively.
-  */
- struct net_device_ops {
- 	int			(*ndo_init)(struct net_device *dev);
-@@ -1487,6 +1497,8 @@ struct net_device_ops {
- 	int			(*ndo_tunnel_ctl)(struct net_device *dev,
- 						  struct ip_tunnel_parm *p, int cmd);
- 	struct net_device *	(*ndo_get_peer_dev)(struct net_device *dev);
-+	int			(*ndo_lookup_mtu)(const struct sk_buff *skb,
-+						  const struct net_device *dev);
- };
+diff --git a/include/net/ip.h b/include/net/ip.h
+index 2d6b985d11cc..5232d0c07dea 100644
+--- a/include/net/ip.h
++++ b/include/net/ip.h
+@@ -433,34 +433,50 @@ static inline bool ip_sk_ignore_df(const struct sock *sk)
+ }
  
- /**
+ static inline unsigned int ip_dst_mtu_maybe_forward(const struct dst_entry *dst,
+-						    bool forwarding)
++						    bool forwarding,
++						    const struct sk_buff *skb)
+ {
+-	struct net *net = dev_net(dst->dev);
++	int err;
+ 	unsigned int mtu;
++	struct net_device *dev = dst->dev;
+ 
+-	if (net->ipv4.sysctl_ip_fwd_use_pmtu ||
+-	    ip_mtu_locked(dst) ||
+-	    !forwarding)
+-		return dst_mtu(dst);
++	err = -ENODATA;
++	if (skb && dev->netdev_ops->ndo_lookup_mtu)
++		err = dev->netdev_ops->ndo_lookup_mtu(skb, dev);
++	mtu = (err >= 0) ? err : READ_ONCE(dst->dev->mtu);
++
++	if (dev_net(dev)->ipv4.sysctl_ip_fwd_use_pmtu ||
++		ip_mtu_locked(dst) ||
++		!forwarding)
++		return min(mtu, dst_mtu(dst));
+ 
+ 	/* 'forwarding = true' case should always honour route mtu */
+ 	mtu = dst_metric_raw(dst, RTAX_MTU);
+ 	if (mtu)
+ 		return mtu;
+ 
+-	return min(READ_ONCE(dst->dev->mtu), IP_MAX_MTU);
++	return min(mtu, IP_MAX_MTU);
+ }
+ 
+ static inline unsigned int ip_skb_dst_mtu(struct sock *sk,
+ 					  const struct sk_buff *skb)
+ {
++	int err;
++	unsigned int mtu;
++	struct net_device *dev = skb_dst(skb)->dev;
++
+ 	if (!sk || !sk_fullsock(sk) || ip_sk_use_pmtu(sk)) {
+ 		bool forwarding = IPCB(skb)->flags & IPSKB_FORWARDED;
+ 
+-		return ip_dst_mtu_maybe_forward(skb_dst(skb), forwarding);
++		return ip_dst_mtu_maybe_forward(skb_dst(skb), forwarding, skb);
+ 	}
+ 
+-	return min(READ_ONCE(skb_dst(skb)->dev->mtu), IP_MAX_MTU);
++	err = -ENODATA;
++	if (dev->netdev_ops->ndo_lookup_mtu)
++		err = dev->netdev_ops->ndo_lookup_mtu(skb, dev);
++	mtu = (err >= 0) ? err : READ_ONCE(dev->mtu);
++
++	return min(mtu, IP_MAX_MTU);
+ }
+ 
+ struct dst_metrics *ip_fib_metrics_init(struct net *net, struct nlattr *fc_mx,
+diff --git a/net/ipv4/ip_forward.c b/net/ipv4/ip_forward.c
+index 00ec819f949b..7a7ec3643c37 100644
+--- a/net/ipv4/ip_forward.c
++++ b/net/ipv4/ip_forward.c
+@@ -127,7 +127,7 @@ int ip_forward(struct sk_buff *skb)
+ 		goto sr_failed;
+ 
+ 	IPCB(skb)->flags |= IPSKB_FORWARDED;
+-	mtu = ip_dst_mtu_maybe_forward(&rt->dst, true);
++	mtu = ip_dst_mtu_maybe_forward(&rt->dst, true, skb);
+ 	if (ip_exceeds_mtu(skb, mtu)) {
+ 		IP_INC_STATS(net, IPSTATS_MIB_FRAGFAILS);
+ 		icmp_send(skb, ICMP_DEST_UNREACH, ICMP_FRAG_NEEDED,
+diff --git a/net/netfilter/nf_flow_table_core.c b/net/netfilter/nf_flow_table_core.c
+index 513f78db3cb2..95bd7a87066a 100644
+--- a/net/netfilter/nf_flow_table_core.c
++++ b/net/netfilter/nf_flow_table_core.c
+@@ -87,7 +87,7 @@ static int flow_offload_fill_route(struct flow_offload *flow,
+ 
+ 	switch (flow_tuple->l3proto) {
+ 	case NFPROTO_IPV4:
+-		flow_tuple->mtu = ip_dst_mtu_maybe_forward(dst, true);
++		flow_tuple->mtu = ip_dst_mtu_maybe_forward(dst, true, NULL);
+ 		break;
+ 	case NFPROTO_IPV6:
+ 		flow_tuple->mtu = ip6_dst_mtu_forward(dst);
 -- 
 2.33.1
 
