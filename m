@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63953C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  5 Jan 2022 00:17:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D692C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  7 Jan 2022 22:13:29 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 0a1ba487;
-	Wed, 5 Jan 2022 00:14:57 +0000 (UTC)
-Received: from mail.toke.dk (mail.toke.dk [2a0c:4d80:42:2001::664])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id ff7a4b9f
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 4a7ddc32;
+	Fri, 7 Jan 2022 22:13:28 +0000 (UTC)
+Received: from hetz0.host.rs.currently.online (hetz0.host.rs.currently.online
+ [178.63.44.182])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 1efec093
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 5 Jan 2022 00:14:54 +0000 (UTC)
-From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=toke.dk; s=20161023;
- t=1641341693; bh=62pljZmRd6NMnpHMPwgl99yyovGJnGDhsktjlFBjqOo=;
- h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
- b=bL2V2p5xSb2BkXNp2vGERr9Zmb2mYnlK3t0vX17WrhVubBgdZgzsrbuaUs3b2D0Kq
- G0ZHJaorPz892dwOGzESeUD6A6Tjy6PSPZv5Phv/9D8sHuLBUntn8zzZkRMkXR4huy
- QheUsbayMK4kimQSf+hPOp2bMnKdA3zXGxfQhYBEQoGvApWxt2NMswJMf9ehhRrzSA
- YzkORZe8Yply5PxzgLJfzWgMjfm48/GSHlbpbj8UzZzxmjZ0yGwDHI2yIoZ5ncgXSI
- FmoKiwxe0atd3rylu+z4TEpg2papMaojEtrplctom4w4GHKOXwiEHrqW2Lo/ZyTkA1
- w6GmNY43wVapw==
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Sebastian Andrzej Siewior
- <bigeasy@linutronix.de>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>, Netdev
- <netdev@vger.kernel.org>, "David S. Miller" <davem@davemloft.net>, Jakub
- Kicinski <kuba@kernel.org>, Thomas Gleixner <tglx@linutronix.de>, Peter
- Zijlstra <peterz@infradead.org>
-Subject: Re: [RFC] wiregard RX packet processing.
-In-Reply-To: <CAHmME9rzEjKg41eq5jBtsLXF+vZSEnvdomZJ-rTzx8Q=ac1ayg@mail.gmail.com>
-References: <20211208173205.zajfvg6zvi4g5kln@linutronix.de>
- <CAHmME9rzEjKg41eq5jBtsLXF+vZSEnvdomZJ-rTzx8Q=ac1ayg@mail.gmail.com>
-Date: Wed, 05 Jan 2022 01:14:47 +0100
-X-Clacks-Overhead: GNU Terry Pratchett
-Message-ID: <87mtkbavig.fsf@toke.dk>
+ for <wireguard@lists.zx2c4.com>; Fri, 7 Jan 2022 22:13:26 +0000 (UTC)
+Received: from carbon.srv.schuermann.io (carbon.srv.schuermann.io
+ [178.63.44.188])
+ by hetz0.host.rs.currently.online (Postfix) with ESMTPS id 6E85F78AB;
+ Fri,  7 Jan 2022 22:13:26 +0000 (UTC)
+From: Leon Schuermann <leon@is.currently.online>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=is.currently.online;
+ s=carbon; t=1641593606;
+ bh=xX+j810LCff+5w6vbxwoPSjBqrbFx08OD5ClPWBe6UM=;
+ h=From:To:Cc:Subject:In-Reply-To:References:Date;
+ b=B89XaTMLTaMgdDGnCP3p6gq+8kyXRplq4I3gmsyTB3MGr+SSKYHisUTnv16i4DDRD
+ NrZO8rasQEyWhx4da1pdryKAIeLu6gWEX2HmKc4gM+ZjnsiUvfqdFnKCVNfEUwOzLE
+ fbpbNyrA9t9xRJno4v4tG7ju6sMdmtd3tOaPHdWQ=
+To: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
+Cc: wireguard@lists.zx2c4.com
+Subject: Re: [RFC PATCH 0/4] Introduce per-peer MTU setting
+In-Reply-To: <87tuejb2xg.fsf@toke.dk>
+References: <20211228234524.633509-1-leon@is.currently.online>
+ <87tuejb2xg.fsf@toke.dk>
+Date: Fri, 07 Jan 2022 23:13:21 +0100
+Message-ID: <87tuefry7y.fsf@silicon>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -52,95 +51,149 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-"Jason A. Donenfeld" <Jason@zx2c4.com> writes:
 
-> Hi Sebastian,
+Toke H=C3=B8iland-J=C3=B8rgensen <toke@toke.dk> writes:
+> I'm not sure I understand the use case? Either PMTUD works through the
+> tunnel and you can just let that do its job, or it doesn't and you
+> have to do out-of-band discovery anyway in which case you can just use
+> the FIB route MTU?
+
+For traffic _through_ the WireGuard tunnel, that is correct. As
+WireGuard in general does not do any funny business with the traffic it
+forwards, path MTU discovery through the tunnel works just fine. I'll
+call that end-to-end PMTUD. If this does not work for any reason, one
+has to fall back onto specifying the MTU in FIB, or some other
+mechanism.
+
+I am however concerned about the link(s) _underneath_ the WireGuard
+tunnel (where the encrypted + authenticated packets are forwarded), so
+the endpoint-to-endpoint link. Regular path MTU discovery does not work
+here. As far as I understand, the reasoning behind this is that even if
+the WireGuard endpoint does receive ICMP Fragmentation Needed / Packet
+Too Big messages from a host on the path the tunnel traverses, these
+messages are not and cannot be authenticated. This means that this
+information cannot be forwarded to the sender of the original packet,
+outside of the tunnel.
+
+This is a real-word issue I am experiencing in WireGuard setups. For
+instance, I administer the WireGuard instance of a small student ISP.
+Clients connect from a variety of networks to this endpoint, such as DSL
+links (PPPoE) which commonly have 1492 bytes MTU, or connections using
+Dual-Stack Lite, having 1460 bytes MTU due to the encapsulation
+overhead. Essentially no residential providers fragment packets, and
+some do not even send ICMP responses. Sometimes people use a tunnel
+inside another tunnel, further decreasing MTU.
+
+While reducing the server and client MTUs to the maximum MTU supported
+by all supported link types technically works, it increases IP, tunnel
+and transport header overhead. It is thus desirable to be able to
+specify an individual MTU per WireGuard peer, to use the available MTU
+on the respective routes. This is also on the WireGuard project's todo
+[1] and has been discussed before [2].
+
+> what do you mean by "usable on the rest of the route"?
+
+Actually, I think I might be wrong here. Initial tests have suggested me
+that if the route MTU is specified in the FIB, Linux would not take any
+ICMP Fragmentation Needed / Packet Too Big responses into account. I've
+tested this again, and it seems to indeed perform proper path MTU
+discovery even if the route MTU is specified. This is important as a
+route to the destination host might first go through a WireGuard tunnel
+to a peer, and then forwarded over paths which might have an even lower
+MTU.
+
+Thus the FIB entry MTU is a viable solution for setting individual
+peer's route limits, but it might be rather inelegant to modify the
+route's MTU values in the FIB from within kernel space, which might be
+needed for an in-band PMTUD mechanism.
+
+>> Furthermore, with the goal of eventually introducing an in-band
+>> per-peer PMTUD mechanism, keeping an internal per-peer MTU value does
+>> not require modifying the FIB and thus potentially interfere with
+>> userspace.
 >
-> Seems like you've identified two things, the use of need_resched, and
-> potentially surrounding napi_schedule in local_bh_{disable,enable}.
->
-> Regarding need_resched, I pulled that out of other code that seemed to
-> have the "same requirements", as vaguely conceived. It indeed might
-> not be right. The intent is to have that worker running at maximum
-> throughput for extended periods of time, but not preventing other
-> threads from running elsewhere, so that, e.g., a user's machine
-> doesn't have a jenky mouse when downloading a file.
->
-> What are the effects of unconditionally calling cond_resched() without
-> checking for if (need_resched())? Sounds like you're saying none at
-> all?
+> What "in-band per-peer PMTUD mechanism"? And why does it need this?
 
-I believe so: AFAIU, you use need_resched() if you need to do some kind
-of teardown before the schedule point, like this example I was recently
-looking at:
+As outlined above, WireGuard cannot utilize the regular ICMP-based PMTUD
+mechanism over the endpoint-to-endpoint path. It is however not great to
+default to a low MTU to accomodate for low-MTU links on this path, and
+very inconvenient to manually adjust the tunnel MTUs.
 
-https://elixir.bootlin.com/linux/latest/source/net/bpf/test_run.c#L73
+A solution to this issue could be a PMTUD mechanism through the tunnel
+link itself. It would circumvent the security considerations with
+ICMP-based PMTUD by relying exclusively on an encrypted + authenticated
+message exchange. For instance, a naive approach could be to send ICMP
+echo messages with increasing/decreasing payload size to the peer and
+discover the usable tunnel MTU based on the (lost) responses. While this
+can be implemented outside of the WireGuard kernel module, it makes
+certain assumptions about the tunnel and endpoint configuration, such as
+the endpoints having an IP assigned, this IP being in the AllowedIPs
+(not a given), responding to ICMP echo packets, etc. If such a mechanism
+were to be (optionally) integrated into WireGuard directly, it could
+have the potential to reduce these kinds of headaches significantly.
 
-If you just need to maybe reschedule, you can just call cond_resched()
-and it'll do what it says on the tin: do a schedule if needed, and
-return immediately otherwise.
+#+BEGIN_EXAMPLE
+Here is an illustration of these issues using a hacky Mininet test
+setup[3], which has the following topology (all traffic from h5 being
+routed over the tunnel between h1 and h4), with fragmentation disabled:
 
-> Regarding napi_schedule, I actually wasn't aware that it's requirement
-> to _only_ ever run from softirq was a strict one. When I switched to
-> using napi_schedule in this way, throughput really jumped up
-> significantly. Part of this indeed is from the batching, so that the
-> napi callback can then handle more packets in one go later. But I
-> assumed it was something inside of NAPI that was batching and
-> scheduling it, rather than a mistake on my part to call this from a wq
-> and not from a softirq.
->
-> What, then, are the effects of surrounding that in
-> local_bh_{disable,enable} as you've done in the patch? You mentioned
-> one aspect is that it will "invoke wg_packet_rx_poll() where you see
-> only one skb." It sounds like that'd be bad for performance, though,
-> given that the design of napi is really geared toward batching.
+      /--- wireguard ---\
+     /                   \
+    /  eth    eth    eth  \
+    h1 <-> h2 <-> h3 <-> h4 <-> h5
 
-Heh, I wrote a whole long explanation he about variable batch sizes
-because you don't control when the NAPI is scheduled, etc... And then I
-noticed the while loop is calling ptr_ring_consume_bh(), which means
-that there's already a local_bh_disable/enable pair on every loop
-invocation. So you already have this :)
+The route from h1 to h4 has an MTU of 1500 bytes:
 
-Which of course raises the question of whether there's anything to gain
-from *adding* batching to the worker? Something like:
+    mininet> h1 ping -c1 -Mdo -s1472 h4
+    1480 bytes from 10.0.2.2: icmp_seq=3D1 ttl=3D62 time=3D0.508 ms
 
-#define BATCH_SIZE 8
-void wg_packet_decrypt_worker(struct work_struct *work)
-{
-	struct crypt_queue *queue = container_of(work, struct multicore_worker,
-						 work)->ptr;
-	void *skbs[BATCH_SIZE];
-	bool again;
-	int i;
+The route from h1 to h5 (through the WireGuard tunnel, via h4) has an
+MTU of 1420 bytes:
 
-restart:
-	local_bh_disable();
-	ptr_ring_consume_batched(&queue->ring, skbs, BATCH_SIZE);
+    mininet> h1 ping -c1 -Mdo -s1392 h5
+    1400 bytes from 192.168.1.2: icmp_seq=3D1 ttl=3D63 time=3D7.44 ms
 
-	for (i = 0; i < BATCH_SIZE; i++) {
-		struct sk_buff *skb = skbs[i];
-		enum packet_state state;
+When decreasing the MTU of the h2 to h3 link, we can observe that PMTUD
+works on the route of h1 to h4:
 
-		if (!skb)
-			break;
+    mininet> h2 ip link set h2-eth1 mtu 1492
+    mininet> h3 ip link set h3-eth0 mtu 1492
+    mininet> h1 ping -c1 -Mdo -s1472 h4
+    From 10.0.0.2 icmp_seq=3D1 Frag needed and DF set (mtu =3D 1492)
 
-		state = likely(decrypt_packet(skb, PACKET_CB(skb)->keypair)) ?
-				PACKET_STATE_CRYPTED : PACKET_STATE_DEAD;
-		wg_queue_enqueue_per_peer_rx(skb, state);
-	}
-        
-	again = !ptr_ring_empty(&queue->ring);
-	local_bh_enable();
+However, when trying to ping h5 from h1 through the WireGuard tunnel,
+the packet is silently dropped:
 
-	if (again) {
-		cond_resched();
-		goto restart;
-	}
-}
+    mininet> h1 ping -c1 -Mdo -s1392 -W1 h5
+    PING 192.168.1.2 (192.168.1.2) 1392(1420) bytes of data.
 
+    --- 192.168.1.2 ping statistics ---
+    1 packets transmitted, 0 received, 100% packet loss, time 0ms
 
-Another thing that might be worth looking into is whether it makes sense
-to enable threaded NAPI for Wireguard. See:
-https://lore.kernel.org/r/20210208193410.3859094-1-weiwan@google.com
+We can change the appropriate FIB entry of the route _through_ the
+tunnel to make Linux aware of the lower MTU:
 
--Toke
+    mininet> h1 ip route change 192.168.1.0/24 dev wg0 mtu 1412
+    mininet> h1 ping -c1 -Mdo -s1392 -W1 h5
+    ping: local error: message too long, mtu=3D1412
+    mininet> h1 ping -c1 -Mdo -s1384 -W1 h5
+    1392 bytes from 192.168.1.2: icmp_seq=3D1 ttl=3D63 time=3D10.8 ms
+
+When lowering the MTU of the h4 to h5 link even further (not part of the
+endpoint-to-endpoint link, but the route), PMTUD does work, which is
+good:
+
+    mininet> h4 ip link set h4-eth1 mtu 1400
+    mininet> h5 ip link set h5-eth0 mtu 1400
+    mininet> h1 ping -c1 -Mdo -s1384 -W1 h5
+    PING 192.168.1.2 (192.168.1.2) 1384(1412) bytes of data.
+    From 192.168.0.2 icmp_seq=3D1 Frag needed and DF set (mtu =3D 1400)
+#+END_EXAMPLE
+
+Let me know if that made things any clearer. :)
+
+- Leon
+
+[1]: https://www.wireguard.com/todo/#per-peer-pmtu
+[2]: https://lists.zx2c4.com/pipermail/wireguard/2018-April/002651.html
+[3]: https://gist.github.com/lschuermann/7e5de6e00358d1312c86e2144d7352b4
