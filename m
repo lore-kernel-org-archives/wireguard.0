@@ -4,78 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29AF9C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 10 Jan 2022 20:57:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D5A0C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 11 Jan 2022 13:52:06 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 6e85bca8;
-	Mon, 10 Jan 2022 20:56:19 +0000 (UTC)
-Received: from sonic304-10.consmr.mail.bf2.yahoo.com
- (sonic304-10.consmr.mail.bf2.yahoo.com [74.6.128.33])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id babed22d
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 609fa17c;
+	Tue, 11 Jan 2022 13:49:54 +0000 (UTC)
+Received: from ams.source.kernel.org (ams.source.kernel.org
+ [2604:1380:4601:e00::1])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 2388bfc5
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 10 Jan 2022 20:56:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1641848175; bh=+hQME5PkBRLpMbpuvpeReE0uwDjz27ssE1dRK1WX304=;
- h=Date:Subject:To:References:From:In-Reply-To:From:Subject:Reply-To;
- b=HCKRll2tFmf+mYR3FATynoOQbenywQPq81OuSXXF+VV10MJlhakmQ9b+mLp4G1bre1szJeqso3mB/dDnUVq/4/u2TxY+mLbb87wXORh75rDPmRd46gYGDHsZv1SwptA9QXbnMSKJspRAIEcnEioyT/CLW/NopB/z5hKqP339bKNcgcwH/snkAAE+yfXT5VFjKJTrRBeTcZzY819567ydD6Sj3dO5Mh2Kbr3iJ+MThzoj08VR7nB7Frw01mnWvw0vRaAQ6xk8Xh/d136lQvO0YiB0Qt+UGcqsYFUNma4cJ88b/8nwhJeCo6RH+PaS7sABncpSijSLEsJ8TCa9QXzkEw==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1641848175; bh=K2K8ZExqG6dTDI79vMwEAacHLCaPcsMyVYtau9ERaLZ=;
- h=X-Sonic-MF:Date:Subject:To:From:From:Subject;
- b=itRGdOiTGE8XZtH85LuBP8IjX3xaF4cgUnjyqI1i7VbIWPL4Cd+MGNejRFtixeFrBbbe+y+/btRQ5rTznPKShZsVjsQFaxImZVOSh+shOwyKUZOqu3l92a6bquxZnmF6lU4tx4KWyuMtpFe0Qbeah05m8fWSGg9Aicx6jmA13TEBkX83XGbpahj/SPC4Z1qWVsGyM1X5YOhS4cj+rjqWDaWr6AMCJYmoH3WTvHyV1C5cAWvKaq+H1qZXcpSoPnimZnTAwjNXRNuZyXgQ7epZe9t5GOWdQODPTqyDRle+z2ULwILqkioQoUNt4oqqmaPRkJv8Hx2IhbwRxxmwdrV21Q==
-X-YMail-OSG: 0WF9lP4VM1nb6OYJ8RVWTezOjVq59wRCvzSV7jOraaimUch8V5IBH3c_hdg3_MV
- YPMWVViQmksLlv2PfKfWRJ8u0Nc20K1Z.vsQUt3Sd.xZMdn3hlRKV3PLIbczkfsbYi3JPGC_EzI0
- W3MKxHo9xnGW60CjXcdX_EnoumHZYqc2ishriEQmH6HlNxrJXm7vSBs9bLdYZdvnOCPczggqVzqD
- GxjZ5OJE4FP8W6oDNGfg2yrewATOjpstscRg98oQTg0_3TL0oLxkJMBjXyHzHhnkegvvZSfVLTQk
- LQyp62sz2uI7aOv72sSccLt8BLKdCiFozm0X4WLYahqBCEeMR2Lsf8U_2MQEyYG9O4R7v6x3WC6G
- 2mZxQvwYFqkl2uWK.fESrqrPLX9VX8X5TX2JbEbWu8kkJFP6_68WmljlHHbTo46aa8klgmgjOM4O
- UenrMJ6E4.SiKmxTYKwnSinxGeOliB85VQ1I1aHindQRqPy_lWLt44n7xBoF67SjWk7Ctaw..hKg
- Cn0_Yenvg7Dlirt6fM.s8zOPapweLqCAtBj3Mmg2rM_xO2ALWhnhj41cHnSM_x4uGsIWqRljbyha
- Cve8NhgEadtBzXCL7Tvkq3M.Vc34157Dcv1GXyv_.713_yl9AWr9HFfny2BNQitb5fjXBgCtku6Y
- 4zBrfQbkeYKcD92eLx4Wkt7PV4fp_yyn54uvJtSMEAoDTwGwIL4OfZb6dlnyqP9mMd_kFMuWkPdo
- zKCFtCPUKpn5qEMBuegVGD9SsLyerj.rmTD4aoMMolR5g.DQZIY62j6H65DfIg9ntzgXAtnV8XHa
- q89MRd3draa.ORle.DKccgVUosHymBzChUQv8JusYZ1cWki1NNsrhQ85mLutCebB7P9E0GFh4JKH
- 29yrCW7Jbymd4mwFMx9JpdO5FWIG_JS1yJQXrSHy9VOPdEBHuOv54riA4dvfemzJ6xEqvpXEwEwy
- K5kbj8eMAOcQ9X36Sf7BzullKJqcol22z2DV8GC1FGFgacx0MIZuQL0UOpVVJimtKMl432sHflrB
- _5zGpOO5nPlokyG2gVJY_twHsChb8hWC9DN4dgsZ6JXI1EItYX.pp6NlVHuVnFOcNSC90Lf2a.Dj
- LZWs2YH4VuRkuGSoDfFjAlwDJZCb0MYjK7KeHsiJZyZ4p9ZbPJweU8iRhQz._2j4N9HmNMNTaNuH
- Hw5PdtjYekXf2OcjSN.ihHUDAnr4KcIkzSlN5ZHP.2LZgk2sKLR5f8Y5zlyY8E4i9xzfodQjsLE_
- _jx5Uc_twnsQMIkEq0QCmbB.d3.cUXRYuLHQYOlOSOYkpSmz0B5QE7C7l9DLdq.6WdkeMNMF.TgE
- MY6crwm7sYtfD1ni2bPxwuuUUoXmBKf41xRQ0XZ3GRsIRTuowP3mjn4JK4rndi8Ej2M3.bHiK5yb
- O1sqIQWfStKjET.coWGVk4qzv8hFDC.D6SVYdm9ajZB6O9ypLta4AUan6WQQeMMkRFvYK5xUVLH2
- CprkHMVvAhR.Z111s9jKIvVLKSbAP_TmQetftxgDrQUb0zDUwQIRG.dIpmKMCaHml28GaLM4AH9q
- kV9ckkiyC3i8xSiPMOzWs6gWUcsy1nUuVBUFcDCR.24vcfQLv9c67Yvuv_PFqNkrvMbtSwkFpVsm
- 3A6XwxemA97ygaenlyboZ.UQLJfm64wRaLCo5tk8TIKCnrR7OMWGBgS6IVI3JmRBYmfwtveYDUC0
- AIFd3zznEAAKiWSHJRM6iL34vQqdEMZhMqFX1o6eU1WEAGLa2OKITYXvaTIeDWoOBER7AwktXUau
- yQqXO3dasHMYzSOD7TC7T3z6IsiO4qIgTQ52_srxEAu_9JSTJGlSAZ1aLXZg3KZXkU49pr30D5nL
- aLcvKaSG9SP1rvBmrmZkQDGjHL0_1FE1z.UBQdbrZOjzt_hAuorVj2GLz.Ux11LAfQzD5ZRcY3E8
- uKKKU.IugoKVqssSIbwJWdUdFCMlbXEwqW2Sd9WRxd5BbjSdOPVsJfNn2047VFSZb6CWnO4XavbH
- tq8rxGGJKmNBC4rndMJgqgEUqGObTf8A8iKmE5c8FTAWZ58RVkagdvD4NUumbmOZamzNmSXv08d2
- rbVxLgtzdUvspozxq043oj_9SKC8.ZYbmu5lvd6wD_besgSF99fuFV.hvdndYOTlj4_Bf7RGJY6r
- MHzIPvHssiUq0sbebyvsc9Bub3sngRgA56SyUjw8dovHB9n8xsjneeTvGc8T3c6JUhfpt38Ds..B
- sed7IsT7cu8owwSTlnjckL1T.
-X-Sonic-MF: <tlhackque@yahoo.com>
-Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic304.consmr.mail.bf2.yahoo.com with HTTP; Mon, 10 Jan 2022 20:56:15 +0000
-Received: by kubenode523.mail-prod1.omega.gq1.yahoo.com (VZM Hermes SMTP
- Server) with ESMTPA ID 1f28a83317864ef0f3555ff77b7cbce1; 
- Mon, 10 Jan 2022 20:56:10 +0000 (UTC)
-Message-ID: <f1444860-f37f-c268-1972-79dc31df2a9a@yahoo.com>
-Date: Mon, 10 Jan 2022 15:56:07 -0500
+ Tue, 11 Jan 2022 13:49:52 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by ams.source.kernel.org (Postfix) with ESMTPS id 1F72BB81AC3;
+ Tue, 11 Jan 2022 13:49:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8C7C36AEB;
+ Tue, 11 Jan 2022 13:49:49 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="BsvqS/6i"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1641908988;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=XGdyaSA4unTed96pEkTkPEo6fhaUILE2qaTzi95OoUw=;
+ b=BsvqS/6iIndVAioMFsu7NeJYcidazR5lGw1AyflFatkTBO/+TG189Aay+2keu8JjPH4dnM
+ xuv5DYkQhyMw9iLAscm1Qwj1CFNToX/wtHh3gksyUseb994Em0t8XqfVYeYJ6DrUBkR9d6
+ BFcM4/SIKxeoxTJ+ez6k7i0kHtXf7Gs=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b462ade0
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO); 
+ Tue, 11 Jan 2022 13:49:48 +0000 (UTC)
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: linux-crypto@vger.kernel.org, netdev@vger.kernel.org,
+ wireguard@lists.zx2c4.com, linux-kernel@vger.kernel.org,
+ bpf@vger.kernel.org, geert@linux-m68k.org, tytso@mit.edu,
+ gregkh@linuxfoundation.org, jeanphilippe.aumasson@gmail.com,
+ ardb@kernel.org
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [PATCH crypto 0/2] smaller blake2s code size on m68k and other small
+ platforms
+Date: Tue, 11 Jan 2022 14:49:32 +0100
+Message-Id: <20220111134934.324663-1-Jason@zx2c4.com>
+In-Reply-To: <CAHmME9qbnYmhvsuarButi6s=58=FPiti0Z-QnGMJ=OsMzy1eOg@mail.gmail.com>
+References: <CAHmME9qbnYmhvsuarButi6s=58=FPiti0Z-QnGMJ=OsMzy1eOg@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.1
-Subject: Re: Question about MTU and Wireguard and the current changes
-Content-Language: en-US
-To: wireguard@lists.zx2c4.com
-References: <1e345f21-4564-7df8-1aae-32ba14d42779@qupfer.de>
-From: tlhackque <tlhackque@yahoo.com>
-In-Reply-To: <1e345f21-4564-7df8-1aae-32ba14d42779@qupfer.de>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------Cu12K6TZXvTUJveQKN2oXRGk"
-X-Mailer: WebService/1.1.19551
- mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
+Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -90,69 +67,30 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------Cu12K6TZXvTUJveQKN2oXRGk
-Content-Type: multipart/mixed; boundary="------------CPcgzNWH9PsfR0idKLRCDnBU";
- protected-headers="v1"
-From: tlhackque <tlhackque@yahoo.com>
-To: wireguard@lists.zx2c4.com
-Message-ID: <f1444860-f37f-c268-1972-79dc31df2a9a@yahoo.com>
-Subject: Re: Question about MTU and Wireguard and the current changes
-References: <1e345f21-4564-7df8-1aae-32ba14d42779@qupfer.de>
-In-Reply-To: <1e345f21-4564-7df8-1aae-32ba14d42779@qupfer.de>
+Hi,
 
---------------CPcgzNWH9PsfR0idKLRCDnBU
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Geert emailed me this afternoon concerned about blake2s codesize on m68k
+and other small systems. We identified two extremely effective ways of
+chopping down the size. One of them moves some wireguard-specific things
+into wireguard proper. The other one adds a slower codepath for
+CONFIG_CC_OPTIMIZE_FOR_SIZE configurations. I really don't like that
+slower codepath, but since it is configuration gated, at least it stays
+out of the way except for people who know they need a tiny kernel image
 
-T24gMTAtSmFuLTIyIDE1OjM3LCBoZW5uaW5nLnJlaWNoQGdtYWlsLmNvbSB3cm90ZToNCj4g
-SGksDQo+IEkgcnVuIGluIHNvbWUgY29ubmVjdGlvbiB0cm91YmxlcyBiZXR3ZWVuIHR3byB3
-aXJlZ3VhcmRzIGhvc3QgKG9uZSANCj4gcnVubmluZyBmZWRvcmEgMzUsIG9uZSBhcmNoIGxp
-bnV4KS4gSWYgSSB0cmllZCB0byB0cmFuc2ZlciBsYXJnZSBmaWxlcyANCj4gdGhyb3VnaCBT
-U0ggKFNDUCBvciBidHJmcyBzZW5kL3JlY2VpdmUgdGhvcnVnaCBzc2ggdGhyb3VnaCB3aXJl
-Z3VhcmQgDQo+IHR1bm5lbCkgaXQgc3R1Y2tzIGFmdGVyIGEgZmV3IGJ5dGUgYW5kIG5vdGhp
-bmcgdHJhbnNmZXJlZCBhbnltb3JlLg0KPg0KPiBUaGlzIGhhcHBlbnMgaW4gdGhlIGxhc3Qg
-ZGF5cywgc28gcHJvYmFibHkgYW4gdXBkYXRlIG9uIG9uZSBvciBib3RoIA0KPiBtYWNoaW5l
-cy4gSSBhbHNvIHNhdywgdGhhdCB0aGVyZSBzb21lIGNoYW5nZXMgb24gdGhlIE1UVSB0aGlu
-ZyAoSWYgSSANCj4gcmVtZW1iZXIgY29ycmVjdGx5LCBhIHBlciBwZWVyIE1UVSBpcyBjb25m
-aWd1cmFibGUpDQo+DQo+IEhvd2V2ZXIuIE15IGZpcnN0IHRyeSB3YXMganVzdCBzZXQgdGhl
-IE1UVSB0byBhIGxvd2VyIG51bWJlciAoTVRVID0gDQo+IDEyMDApIGFuZCB5ZXMsIHNjcCB3
-b3JrcyBhZ2Fpbi4NCj4gT2theSwgc28gSSBkaWQgdGhlIGdvb2Qgb2xkIHBpbmcgdGVzdC4g
-InBpbmcgLU0gZG8gLXMgJFNJWkUgLWMgMSANCj4gMTcyLjE2LjAuMiIgd2l0aCAkU0laRSBp
-bmNyZWFzaW5nLiBBbmQgdGhhdCBzdXJwcmlzZWQgbWUuIEl0IHdvcmtzIA0KPiB1bnRpbCBh
-biBTaXplIG9mIDM2OTMyIEJ5dGVzLiBDaGVja2VkIHdpdGggd2lyZWd1YXJkIGFuZCAiTVRV
-ID0gMzY5MzIiIA0KPiBhbmQgeWVzLCBzY3Agc3RpbGwgd29ya2luZy4NCj4NCj4gQ2FuIHNv
-bWVib2R5IGV4cGxhaW4sIHdoeSB0aGUgb2xkIGRlZmF1bHQgc2V0dGluZyBvZiAiNjU0NTYi
-IGRvZXNuJ3QgDQo+IHdvcmsgYW55bW9yZSBidXQgdGhlIE1UVSBjYW4gc2V0IHRvIG11Y2gg
-aGlnaGVyIHZhbHVlcyBhcyB0eXBpY2FsIG9uZXM/DQo+DQo+IFRoYW5rcw0KPiBIZW5uaW5n
-DQo+DQpHdWVzczogRnJhZ21lbnRhdGlvbiBoYXBwZW5zIHNvbWV3aGVyZSBhbmQgZnJhZ21l
-bnRzIGFyZSBibG9ja2VkIGF0IHlvdXIgDQpyb3V0ZXIvZmlyZXdhbGwvaG9zdC7CoCBCbG9j
-a2luZyBmcmFnbWVudHMgaXMgYSBjb21tb24sIGlmIG1pc2d1aWRlZCwgDQoic2VjdXJpdHkg
-ZW5oYW5jZW1lbnQiLg0KDQpBIHBhY2tldCB0cmFjZSB3b3VsZCBwcm92aWRlIHRoZSBuZWNl
-c3NhcnkgY2x1ZXMgaW4gYW55IGNhc2UuDQoNCldpcmVzaGFyayBpcyBhIGNvbnZlbmllbnQg
-d2F5IHRvIGdldCBvbmUuDQoNCg==
+Thanks,
+Jason
 
---------------CPcgzNWH9PsfR0idKLRCDnBU--
+Jason A. Donenfeld (2):
+  lib/crypto: blake2s-generic: reduce code size on small systems
+  lib/crypto: blake2s: move hmac construction into wireguard
 
---------------Cu12K6TZXvTUJveQKN2oXRGk
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
+ drivers/net/wireguard/noise.c | 45 ++++++++++++++++++++++++++++++-----
+ include/crypto/blake2s.h      |  3 ---
+ lib/crypto/blake2s-generic.c  | 30 +++++++++++++----------
+ lib/crypto/blake2s-selftest.c | 31 ------------------------
+ lib/crypto/blake2s.c          | 37 ----------------------------
+ 5 files changed, 57 insertions(+), 89 deletions(-)
 
------BEGIN PGP SIGNATURE-----
+-- 
+2.34.1
 
-wsF5BAABCAAjFiEEhUZRCZitYt5SlPbZ3PhOoB301mYFAmHcnWcFAwAAAAAACgkQ3PhOoB301mbh
-fxAAsUzrmZItyxrOd+bUDHlBPTe8/Ouhevai9RMy3/B5j5LYManA0GXX6LFqFI8fy810oT6EdV5T
-mqDghMmsRY4KZViKpgvqB5Vlg0Hg3N/hD5Ud0UbAuQpoElzQYqusnHTM8L6NZ7yOLlMmcZCpXoxv
-zcG5QzzLdiPTT81QO9WwpR89xXMaIOWrNASmCo19MWxb8ifyiCQQGKzZY8MuPNz3nQ5RGuGPfJSZ
-Ba9bMKqz+xWEFVJGjbYufvRk2TCX2zvluEM2DG1p8zfpZeoC4xBV/Iq+RR5zL4ftEpVlViPMU3ek
-mrM4oaBq1WSuOHmsjXZBl0h5oUGdwzjVxyCpJpaQS4kgV3sfLu8EwQ6EROTCHTbrCTUOfUaNiO0J
-egKuvuxYT7bUMH7zlOsX0WFiuTfJVQW/5Xyj7uX1HwcBqhCcSmXQxCJ0RHKib5PU0bEDFywT71kC
-zKpxAd4mE/A9+cnqIrQM1OEFYLNLFBLiCBCJI0vJxnnrGIxevmpnAeLgyJQC6PGeX/ZcXfkyum16
-f4gjUGh4PkDm4hNyYwPwYTPV9LU6sjU3OQH3keeK3x7ty3tL6fpendsUPsS+dYgVi5cGOOpnd3Ek
-kvuaiCoTVIi4WgC6kOYqLD9xzjpiksDAoChyMcjDDmyXJO/L23UFqQD9lryhRRaIXlj9woC++e6z
-EnI=
-=JSE+
------END PGP SIGNATURE-----
-
---------------Cu12K6TZXvTUJveQKN2oXRGk--
