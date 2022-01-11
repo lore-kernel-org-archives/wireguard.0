@@ -4,63 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5908C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 11 Jan 2022 14:44:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2246EC433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 11 Jan 2022 15:40:36 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id aa763990;
-	Tue, 11 Jan 2022 14:44:10 +0000 (UTC)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id f57875dc
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id eb14db66;
+	Tue, 11 Jan 2022 15:40:34 +0000 (UTC)
+Received: from galois.linutronix.de (Galois.linutronix.de
+ [2a0a:51c0:0:12e:550::1])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 23943ae6
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 11 Jan 2022 14:44:09 +0000 (UTC)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id 9609BB81B2F
- for <wireguard@lists.zx2c4.com>; Tue, 11 Jan 2022 14:44:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF0CEC36AF7
- for <wireguard@lists.zx2c4.com>; Tue, 11 Jan 2022 14:44:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1641912245;
- bh=9QtNgp4GexGBqtOwirvi47YwIzGmn/bXKQBw5RQx9qA=;
- h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
- b=PS/GyHe2IojWJ1YN8K5T2hpa2Af5LOomqMwD4LuKDc+DGtw/iGvD4R3ncsLJXIYRl
- SS4ldPslXZc/e0b2PpOohkQsy07shAQNTq3zh39/F64JJyOExerHz5WdIUiheJsrTM
- sqQ3/Wj965F5bgkVpNJKYo0MdXMj/nj9picVUTRZYElHBNTrb9EuAdhsW4tAZUWVr9
- f7glDSpPaGqJh5bleVODz2QjWvzMiothj3La3PyL+fuMbO2obmvJxbaZL1w1FMLADu
- dbczHv4gPJBmPVjCeh9rkbZA9DSr+1PNQtbLhsGpzC+98wKbE2RiLr78eWoYxlQDXC
- TlTeVU/RQI6UA==
-Received: by mail-wr1-f53.google.com with SMTP id o3so33372600wrh.10
- for <wireguard@lists.zx2c4.com>; Tue, 11 Jan 2022 06:44:05 -0800 (PST)
-X-Gm-Message-State: AOAM531Xin4NfD31cA+Kbt5w7KPvfkK33+V6asuaPxgpQJspDvCR61L9
- i7QhHe91C5+vHxYZVLMzuh6a6IH7qz6MdnvHh7M=
-X-Google-Smtp-Source: ABdhPJz/w2V6Pid5D3w0qEs9I5COP+6n2xpVD080JqwBmLeVHA6oNfaUY4ZgnqPHsQ3vI53XZqOv8T2Gy6+VTAIQUzM=
-X-Received: by 2002:a5d:4087:: with SMTP id o7mr4115239wrp.189.1641912244034; 
- Tue, 11 Jan 2022 06:44:04 -0800 (PST)
-MIME-Version: 1.0
-References: <CAHmME9qbnYmhvsuarButi6s=58=FPiti0Z-QnGMJ=OsMzy1eOg@mail.gmail.com>
- <20220111134934.324663-1-Jason@zx2c4.com>
- <20220111134934.324663-3-Jason@zx2c4.com>
-In-Reply-To: <20220111134934.324663-3-Jason@zx2c4.com>
-From: Ard Biesheuvel <ardb@kernel.org>
-Date: Tue, 11 Jan 2022 15:43:52 +0100
-X-Gmail-Original-Message-ID: <CAMj1kXFynd4K7Zp6czgTWnDp9RHimizyMs4Yo2RsjCsEfa89fA@mail.gmail.com>
-Message-ID: <CAMj1kXFynd4K7Zp6czgTWnDp9RHimizyMs4Yo2RsjCsEfa89fA@mail.gmail.com>
-Subject: Re: [PATCH crypto 2/2] lib/crypto: blake2s: move hmac construction
- into wireguard
+ Tue, 11 Jan 2022 15:40:33 +0000 (UTC)
+Date: Tue, 11 Jan 2022 16:40:31 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+ s=2020; t=1641915632;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=X4ebBWdFE+8C08nd/CIkn3LPDWYDafN44xwshvth2ug=;
+ b=pFhf3vkZBl8xak2CU81OWunOoJ3n9/VStlFca8yvtRqN0+qACzO4/dVn5hQckoislgGSa8
+ QMZCiogKWqaohAoGIfDH8UPqXu3ROdOOWZM5XK1zwYOhSIw5bq0f9TsVrWtbVFeAhfTj8U
+ 1XPoKitKqGsKXlOprbUVFEX5AYr/bcx07n+oZCPEd0U784ZzenqnUXkFEaRRuDpAYCN1JM
+ bFjrmyrZ3yTFJCNGpIh3V1kD/1da60NiANo3U5cjpRYPn9gyGXaRIz0drt69I81iOJ63Rw
+ y+LP2x2Yiuy7quHJHRqeu2o5GaaLZvOYqIljBefwdqWPTVw+np2ypR+eNp+RuA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+ s=2020e; t=1641915632;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=X4ebBWdFE+8C08nd/CIkn3LPDWYDafN44xwshvth2ug=;
+ b=CtAAAny1PpTBIrLssPLVTa7o7uc+pONqP0L4nJCkpIWaiiLl4ERmAI66ruxUUmQ36PGH8P
+ vzJBpRCLhozTofDw==
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: Linux Crypto Mailing List <linux-crypto@vger.kernel.org>, 
- "open list:BPF JIT for MIPS (32-BIT AND 64-BIT)" <netdev@vger.kernel.org>,
- wireguard@lists.zx2c4.com, 
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, 
- "open list:BPF JIT for MIPS (32-BIT AND 64-BIT)" <bpf@vger.kernel.org>,
- Geert Uytterhoeven <geert@linux-m68k.org>, 
- "Theodore Y. Ts'o" <tytso@mit.edu>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Jean-Philippe Aumasson <jeanphilippe.aumasson@gmail.com>,
- Herbert Xu <herbert@gondor.apana.org.au>
-Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ Netdev <netdev@vger.kernel.org>, "David S. Miller" <davem@davemloft.net>,
+ Jakub Kicinski <kuba@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
+ Peter Zijlstra <peterz@infradead.org>
+Subject: Re: [RFC] wiregard RX packet processing.
+Message-ID: <Yd2k7yCGCQXfibk3@linutronix.de>
+References: <20211208173205.zajfvg6zvi4g5kln@linutronix.de>
+ <CAHmME9rzEjKg41eq5jBtsLXF+vZSEnvdomZJ-rTzx8Q=ac1ayg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAHmME9rzEjKg41eq5jBtsLXF+vZSEnvdomZJ-rTzx8Q=ac1ayg@mail.gmail.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -75,240 +66,75 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Tue, 11 Jan 2022 at 14:49, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+On 2021-12-20 18:29:49 [+0100], Jason A. Donenfeld wrote:
+> Hi Sebastian,
+>=20
+> Seems like you've identified two things, the use of need_resched, and
+> potentially surrounding napi_schedule in local_bh_{disable,enable}.
+>=20
+> Regarding need_resched, I pulled that out of other code that seemed to
+> have the "same requirements", as vaguely conceived. It indeed might
+> not be right. The intent is to have that worker running at maximum
+> throughput for extended periods of time, but not preventing other
+> threads from running elsewhere, so that, e.g., a user's machine
+> doesn't have a jenky mouse when downloading a file.
 >
-> Basically nobody should use blake2s in an HMAC construction; it already
-> has a keyed variant. But for unfortunately historical reasons, Noise,
+> What are the effects of unconditionally calling cond_resched() without
+> checking for if (need_resched())? Sounds like you're saying none at
+> all?
 
--ly
+I stand to be corrected but "if need_resched() cond_resched())" is not
+something one should do. If you hold a lock and need to drop it first
+and und you don't want to drop the lock if there is no need for
+scheduling then there is cond_resched_lock() for instance. If you need
+to do something more complex (say set a marker if you drop the lock)
+then okay _but_ in this case you do more than just the "if =E2=80=A6" from
+above.
 
-> used by WireGuard, uses HKDF quite strictly, which means we have to use
-> this. Because this really shouldn't be used by others, this commit moves
-> it into wireguard's noise.c locally, so that kernels that aren't using
-> WireGuard don't get this superfluous code baked in. On m68k systems,
-> this shaves off ~314 bytes.
->
-> Cc: Geert Uytterhoeven <geert@linux-m68k.org>
-> Cc: Herbert Xu <herbert@gondor.apana.org.au>
-> Cc: Ard Biesheuvel <ardb@kernel.org>
-> Cc: netdev@vger.kernel.org
-> Cc: wireguard@lists.zx2c4.com
-> Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+cond_resched() gets optimized away on a preemptible kernel. The side
+effect is that you have always a branch (to cond_resched()) including a
+possible RCU section (urgently needed quiescent state).
 
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
+> Regarding napi_schedule, I actually wasn't aware that it's requirement
+> to _only_ ever run from softirq was a strict one. When I switched to
+> using napi_schedule in this way, throughput really jumped up
+> significantly. Part of this indeed is from the batching, so that the
+> napi callback can then handle more packets in one go later. But I
+> assumed it was something inside of NAPI that was batching and
+> scheduling it, rather than a mistake on my part to call this from a wq
+> and not from a softirq.
 
-> ---
->  drivers/net/wireguard/noise.c | 45 ++++++++++++++++++++++++++++++-----
->  include/crypto/blake2s.h      |  3 ---
->  lib/crypto/blake2s-selftest.c | 31 ------------------------
->  lib/crypto/blake2s.c          | 37 ----------------------------
->  4 files changed, 39 insertions(+), 77 deletions(-)
->
-> diff --git a/drivers/net/wireguard/noise.c b/drivers/net/wireguard/noise.c
-> index c0cfd9b36c0b..720952b92e78 100644
-> --- a/drivers/net/wireguard/noise.c
-> +++ b/drivers/net/wireguard/noise.c
-> @@ -302,6 +302,41 @@ void wg_noise_set_static_identity_private_key(
->                 static_identity->static_public, private_key);
->  }
->
-> +static void hmac(u8 *out, const u8 *in, const u8 *key, const size_t inlen, const size_t keylen)
-> +{
-> +       struct blake2s_state state;
-> +       u8 x_key[BLAKE2S_BLOCK_SIZE] __aligned(__alignof__(u32)) = { 0 };
-> +       u8 i_hash[BLAKE2S_HASH_SIZE] __aligned(__alignof__(u32));
-> +       int i;
-> +
-> +       if (keylen > BLAKE2S_BLOCK_SIZE) {
-> +               blake2s_init(&state, BLAKE2S_HASH_SIZE);
-> +               blake2s_update(&state, key, keylen);
-> +               blake2s_final(&state, x_key);
-> +       } else
-> +               memcpy(x_key, key, keylen);
-> +
-> +       for (i = 0; i < BLAKE2S_BLOCK_SIZE; ++i)
-> +               x_key[i] ^= 0x36;
-> +
-> +       blake2s_init(&state, BLAKE2S_HASH_SIZE);
-> +       blake2s_update(&state, x_key, BLAKE2S_BLOCK_SIZE);
-> +       blake2s_update(&state, in, inlen);
-> +       blake2s_final(&state, i_hash);
-> +
-> +       for (i = 0; i < BLAKE2S_BLOCK_SIZE; ++i)
-> +               x_key[i] ^= 0x5c ^ 0x36;
-> +
-> +       blake2s_init(&state, BLAKE2S_HASH_SIZE);
-> +       blake2s_update(&state, x_key, BLAKE2S_BLOCK_SIZE);
-> +       blake2s_update(&state, i_hash, BLAKE2S_HASH_SIZE);
-> +       blake2s_final(&state, i_hash);
-> +
-> +       memcpy(out, i_hash, BLAKE2S_HASH_SIZE);
-> +       memzero_explicit(x_key, BLAKE2S_BLOCK_SIZE);
-> +       memzero_explicit(i_hash, BLAKE2S_HASH_SIZE);
-> +}
-> +
->  /* This is Hugo Krawczyk's HKDF:
->   *  - https://eprint.iacr.org/2010/264.pdf
->   *  - https://tools.ietf.org/html/rfc5869
-> @@ -322,14 +357,14 @@ static void kdf(u8 *first_dst, u8 *second_dst, u8 *third_dst, const u8 *data,
->                  ((third_len || third_dst) && (!second_len || !second_dst))));
->
->         /* Extract entropy from data into secret */
-> -       blake2s256_hmac(secret, data, chaining_key, data_len, NOISE_HASH_LEN);
-> +       hmac(secret, data, chaining_key, data_len, NOISE_HASH_LEN);
->
->         if (!first_dst || !first_len)
->                 goto out;
->
->         /* Expand first key: key = secret, data = 0x1 */
->         output[0] = 1;
-> -       blake2s256_hmac(output, output, secret, 1, BLAKE2S_HASH_SIZE);
-> +       hmac(output, output, secret, 1, BLAKE2S_HASH_SIZE);
->         memcpy(first_dst, output, first_len);
->
->         if (!second_dst || !second_len)
-> @@ -337,8 +372,7 @@ static void kdf(u8 *first_dst, u8 *second_dst, u8 *third_dst, const u8 *data,
->
->         /* Expand second key: key = secret, data = first-key || 0x2 */
->         output[BLAKE2S_HASH_SIZE] = 2;
-> -       blake2s256_hmac(output, output, secret, BLAKE2S_HASH_SIZE + 1,
-> -                       BLAKE2S_HASH_SIZE);
-> +       hmac(output, output, secret, BLAKE2S_HASH_SIZE + 1, BLAKE2S_HASH_SIZE);
->         memcpy(second_dst, output, second_len);
->
->         if (!third_dst || !third_len)
-> @@ -346,8 +380,7 @@ static void kdf(u8 *first_dst, u8 *second_dst, u8 *third_dst, const u8 *data,
->
->         /* Expand third key: key = secret, data = second-key || 0x3 */
->         output[BLAKE2S_HASH_SIZE] = 3;
-> -       blake2s256_hmac(output, output, secret, BLAKE2S_HASH_SIZE + 1,
-> -                       BLAKE2S_HASH_SIZE);
-> +       hmac(output, output, secret, BLAKE2S_HASH_SIZE + 1, BLAKE2S_HASH_SIZE);
->         memcpy(third_dst, output, third_len);
->
->  out:
-> diff --git a/include/crypto/blake2s.h b/include/crypto/blake2s.h
-> index bc3fb59442ce..4e30e1799e61 100644
-> --- a/include/crypto/blake2s.h
-> +++ b/include/crypto/blake2s.h
-> @@ -101,7 +101,4 @@ static inline void blake2s(u8 *out, const u8 *in, const u8 *key,
->         blake2s_final(&state, out);
->  }
->
-> -void blake2s256_hmac(u8 *out, const u8 *in, const u8 *key, const size_t inlen,
-> -                    const size_t keylen);
-> -
->  #endif /* _CRYPTO_BLAKE2S_H */
-> diff --git a/lib/crypto/blake2s-selftest.c b/lib/crypto/blake2s-selftest.c
-> index 5d9ea53be973..409e4b728770 100644
-> --- a/lib/crypto/blake2s-selftest.c
-> +++ b/lib/crypto/blake2s-selftest.c
-> @@ -15,7 +15,6 @@
->   * #include <stdio.h>
->   *
->   * #include <openssl/evp.h>
-> - * #include <openssl/hmac.h>
->   *
->   * #define BLAKE2S_TESTVEC_COUNT       256
->   *
-> @@ -58,16 +57,6 @@
->   *     }
->   *     printf("};\n\n");
->   *
-> - *     printf("static const u8 blake2s_hmac_testvecs[][BLAKE2S_HASH_SIZE] __initconst = {\n");
-> - *
-> - *     HMAC(EVP_blake2s256(), key, sizeof(key), buf, sizeof(buf), hash, NULL);
-> - *     print_vec(hash, BLAKE2S_OUTBYTES);
-> - *
-> - *     HMAC(EVP_blake2s256(), buf, sizeof(buf), key, sizeof(key), hash, NULL);
-> - *     print_vec(hash, BLAKE2S_OUTBYTES);
-> - *
-> - *     printf("};\n");
-> - *
->   *     return 0;
->   *}
->   */
-> @@ -554,15 +543,6 @@ static const u8 blake2s_testvecs[][BLAKE2S_HASH_SIZE] __initconst = {
->      0xd6, 0x98, 0x6b, 0x07, 0x10, 0x65, 0x52, 0x65, },
->  };
->
-> -static const u8 blake2s_hmac_testvecs[][BLAKE2S_HASH_SIZE] __initconst = {
-> -  { 0xce, 0xe1, 0x57, 0x69, 0x82, 0xdc, 0xbf, 0x43, 0xad, 0x56, 0x4c, 0x70,
-> -    0xed, 0x68, 0x16, 0x96, 0xcf, 0xa4, 0x73, 0xe8, 0xe8, 0xfc, 0x32, 0x79,
-> -    0x08, 0x0a, 0x75, 0x82, 0xda, 0x3f, 0x05, 0x11, },
-> -  { 0x77, 0x2f, 0x0c, 0x71, 0x41, 0xf4, 0x4b, 0x2b, 0xb3, 0xc6, 0xb6, 0xf9,
-> -    0x60, 0xde, 0xe4, 0x52, 0x38, 0x66, 0xe8, 0xbf, 0x9b, 0x96, 0xc4, 0x9f,
-> -    0x60, 0xd9, 0x24, 0x37, 0x99, 0xd6, 0xec, 0x31, },
-> -};
-> -
->  bool __init blake2s_selftest(void)
->  {
->         u8 key[BLAKE2S_KEY_SIZE];
-> @@ -607,16 +587,5 @@ bool __init blake2s_selftest(void)
->                 }
->         }
->
-> -       if (success) {
-> -               blake2s256_hmac(hash, buf, key, sizeof(buf), sizeof(key));
-> -               success &= !memcmp(hash, blake2s_hmac_testvecs[0], BLAKE2S_HASH_SIZE);
-> -
-> -               blake2s256_hmac(hash, key, buf, sizeof(key), sizeof(buf));
-> -               success &= !memcmp(hash, blake2s_hmac_testvecs[1], BLAKE2S_HASH_SIZE);
-> -
-> -               if (!success)
-> -                       pr_err("blake2s256_hmac self-test: FAIL\n");
-> -       }
-> -
->         return success;
->  }
-> diff --git a/lib/crypto/blake2s.c b/lib/crypto/blake2s.c
-> index 93f2ae051370..9364f79937b8 100644
-> --- a/lib/crypto/blake2s.c
-> +++ b/lib/crypto/blake2s.c
-> @@ -30,43 +30,6 @@ void blake2s_final(struct blake2s_state *state, u8 *out)
->  }
->  EXPORT_SYMBOL(blake2s_final);
->
-> -void blake2s256_hmac(u8 *out, const u8 *in, const u8 *key, const size_t inlen,
-> -                    const size_t keylen)
-> -{
-> -       struct blake2s_state state;
-> -       u8 x_key[BLAKE2S_BLOCK_SIZE] __aligned(__alignof__(u32)) = { 0 };
-> -       u8 i_hash[BLAKE2S_HASH_SIZE] __aligned(__alignof__(u32));
-> -       int i;
-> -
-> -       if (keylen > BLAKE2S_BLOCK_SIZE) {
-> -               blake2s_init(&state, BLAKE2S_HASH_SIZE);
-> -               blake2s_update(&state, key, keylen);
-> -               blake2s_final(&state, x_key);
-> -       } else
-> -               memcpy(x_key, key, keylen);
-> -
-> -       for (i = 0; i < BLAKE2S_BLOCK_SIZE; ++i)
-> -               x_key[i] ^= 0x36;
-> -
-> -       blake2s_init(&state, BLAKE2S_HASH_SIZE);
-> -       blake2s_update(&state, x_key, BLAKE2S_BLOCK_SIZE);
-> -       blake2s_update(&state, in, inlen);
-> -       blake2s_final(&state, i_hash);
-> -
-> -       for (i = 0; i < BLAKE2S_BLOCK_SIZE; ++i)
-> -               x_key[i] ^= 0x5c ^ 0x36;
-> -
-> -       blake2s_init(&state, BLAKE2S_HASH_SIZE);
-> -       blake2s_update(&state, x_key, BLAKE2S_BLOCK_SIZE);
-> -       blake2s_update(&state, i_hash, BLAKE2S_HASH_SIZE);
-> -       blake2s_final(&state, i_hash);
-> -
-> -       memcpy(out, i_hash, BLAKE2S_HASH_SIZE);
-> -       memzero_explicit(x_key, BLAKE2S_BLOCK_SIZE);
-> -       memzero_explicit(i_hash, BLAKE2S_HASH_SIZE);
-> -}
-> -EXPORT_SYMBOL(blake2s256_hmac);
-> -
->  static int __init blake2s_mod_init(void)
->  {
->         if (!IS_ENABLED(CONFIG_CRYPTO_MANAGER_DISABLE_TESTS) &&
-> --
-> 2.34.1
->
+There is no strict requirement to do napi_schedule() from hard-IRQ but
+it makes sense actually. So napi_schedule() invokes
+__raise_softirq_irqoff() which only ors a bit in the softirq state.
+Nothing else. The only reason that the softirq is invoked in a
+deterministic way is that irq_exit() has this "if
+(local_softirq_pending()) invoke_softirq()" check before returing (to
+interrupted user/ kernel code).
+
+So if you use it in a worker (for instance) the NAPI call is delayed
+until the next IRQ (due to irq_exit() part) or a random
+local_bh_enable() user.
+
+> What, then, are the effects of surrounding that in
+> local_bh_{disable,enable} as you've done in the patch? You mentioned
+> one aspect is that it will "invoke wg_packet_rx_poll() where you see
+> only one skb." It sounds like that'd be bad for performance, though,
+> given that the design of napi is really geared toward batching.
+
+As Toke H=C3=B8iland-J=C3=B8rgensen wrote in the previous reply, I missed t=
+he BH
+disable/ enable in ptr_ring_consume_bh(). So what happens is that
+ptr_ring_consume_bh() gives you one skb, you do
+wg_queue_enqueue_per_peer_rx() which raises NAPI then the following
+ptr_ring_consume_bh() (that local_bh_enable() to be exact) invokes the
+NAPI callback (I guess wg_packet_rx_poll() but as I wrote earlier, I
+didn't figure out how the skbs move from here to the other queue for
+that callback).
+
+So there is probably no batching assuming that one skb is processed in
+the NAPI callback.
+
+> Jason
+
+Sebastian
