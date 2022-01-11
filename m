@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2246EC433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 11 Jan 2022 15:40:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E168C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 11 Jan 2022 18:10:59 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id eb14db66;
-	Tue, 11 Jan 2022 15:40:34 +0000 (UTC)
-Received: from galois.linutronix.de (Galois.linutronix.de
- [2a0a:51c0:0:12e:550::1])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 23943ae6
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 29cd32e8;
+	Tue, 11 Jan 2022 18:10:57 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org
+ [2604:1380:4641:c500::1])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id f2149be7
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 11 Jan 2022 15:40:33 +0000 (UTC)
-Date: Tue, 11 Jan 2022 16:40:31 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
- s=2020; t=1641915632;
+ Tue, 11 Jan 2022 18:10:56 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 59B87616AB;
+ Tue, 11 Jan 2022 18:10:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB07C36AE9;
+ Tue, 11 Jan 2022 18:10:52 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="kHJKk0M1"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1641924651;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=X4ebBWdFE+8C08nd/CIkn3LPDWYDafN44xwshvth2ug=;
- b=pFhf3vkZBl8xak2CU81OWunOoJ3n9/VStlFca8yvtRqN0+qACzO4/dVn5hQckoislgGSa8
- QMZCiogKWqaohAoGIfDH8UPqXu3ROdOOWZM5XK1zwYOhSIw5bq0f9TsVrWtbVFeAhfTj8U
- 1XPoKitKqGsKXlOprbUVFEX5AYr/bcx07n+oZCPEd0U784ZzenqnUXkFEaRRuDpAYCN1JM
- bFjrmyrZ3yTFJCNGpIh3V1kD/1da60NiANo3U5cjpRYPn9gyGXaRIz0drt69I81iOJ63Rw
- y+LP2x2Yiuy7quHJHRqeu2o5GaaLZvOYqIljBefwdqWPTVw+np2ypR+eNp+RuA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
- s=2020e; t=1641915632;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=X4ebBWdFE+8C08nd/CIkn3LPDWYDafN44xwshvth2ug=;
- b=CtAAAny1PpTBIrLssPLVTa7o7uc+pONqP0L4nJCkpIWaiiLl4ERmAI66ruxUUmQ36PGH8P
- vzJBpRCLhozTofDw==
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Netdev <netdev@vger.kernel.org>, "David S. Miller" <davem@davemloft.net>,
- Jakub Kicinski <kuba@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
- Peter Zijlstra <peterz@infradead.org>
-Subject: Re: [RFC] wiregard RX packet processing.
-Message-ID: <Yd2k7yCGCQXfibk3@linutronix.de>
-References: <20211208173205.zajfvg6zvi4g5kln@linutronix.de>
- <CAHmME9rzEjKg41eq5jBtsLXF+vZSEnvdomZJ-rTzx8Q=ac1ayg@mail.gmail.com>
+ bh=TcLFMr0ORzl74yoB9aAnSVhN8g+ePL3bE8WfceccoNc=;
+ b=kHJKk0M1CvupLsq+a7MQZPfeqBeBb9rZ9HkorNwEg6F+lo8uG4VovY+Vg4roTmHTp72r+/
+ pbjdUIoMiinFw+v2jmLqqEw1eLnVNEI95/mfYPFS17MMXB4XZ1yjHPYTwU/UvSozyY3j4Q
+ vDNucOiesSmaVn3nJzNq5wW0GmVPrQ8=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 498a0ec0
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO); 
+ Tue, 11 Jan 2022 18:10:50 +0000 (UTC)
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: linux-crypto@vger.kernel.org, netdev@vger.kernel.org,
+ wireguard@lists.zx2c4.com, linux-kernel@vger.kernel.org,
+ bpf@vger.kernel.org, geert@linux-m68k.org, tytso@mit.edu,
+ gregkh@linuxfoundation.org, jeanphilippe.aumasson@gmail.com,
+ ardb@kernel.org
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [PATCH crypto v2 0/2] reduce code size from blake2s on m68k and other
+ small platforms
+Date: Tue, 11 Jan 2022 19:10:35 +0100
+Message-Id: <20220111181037.632969-1-Jason@zx2c4.com>
+In-Reply-To: <20220111134934.324663-1-Jason@zx2c4.com>
+References: <20220111134934.324663-1-Jason@zx2c4.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAHmME9rzEjKg41eq5jBtsLXF+vZSEnvdomZJ-rTzx8Q=ac1ayg@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -66,75 +67,38 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 2021-12-20 18:29:49 [+0100], Jason A. Donenfeld wrote:
-> Hi Sebastian,
->=20
-> Seems like you've identified two things, the use of need_resched, and
-> potentially surrounding napi_schedule in local_bh_{disable,enable}.
->=20
-> Regarding need_resched, I pulled that out of other code that seemed to
-> have the "same requirements", as vaguely conceived. It indeed might
-> not be right. The intent is to have that worker running at maximum
-> throughput for extended periods of time, but not preventing other
-> threads from running elsewhere, so that, e.g., a user's machine
-> doesn't have a jenky mouse when downloading a file.
->
-> What are the effects of unconditionally calling cond_resched() without
-> checking for if (need_resched())? Sounds like you're saying none at
-> all?
+Hi,
 
-I stand to be corrected but "if need_resched() cond_resched())" is not
-something one should do. If you hold a lock and need to drop it first
-and und you don't want to drop the lock if there is no need for
-scheduling then there is cond_resched_lock() for instance. If you need
-to do something more complex (say set a marker if you drop the lock)
-then okay _but_ in this case you do more than just the "if =E2=80=A6" from
-above.
+Geert emailed me this afternoon concerned about blake2s codesize on m68k
+and other small systems. We identified two effective ways of chopping
+down the size. One of them moves some wireguard-specific things into
+wireguard proper. The other one adds a slower codepath for small
+machines to blake2s. This worked, and was v1 of this patchset, but I
+wasn't so much of a fan. Then someone pointed out that the generic C
+SHA-1 implementation is still unrolled, which is a *lot* of extra code.
+Simply rerolling that saves about as much as v1 did. So, we instead do
+that in this v2 patchset. SHA-1 is being phased out, and soon it won't
+be included at all (hopefully). And nothing performance-oriented has
+anything to do with it anyway.
 
-cond_resched() gets optimized away on a preemptible kernel. The side
-effect is that you have always a branch (to cond_resched()) including a
-possible RCU section (urgently needed quiescent state).
+The result of these two patches mitigates Geert's feared code size
+increase for 5.17.
 
-> Regarding napi_schedule, I actually wasn't aware that it's requirement
-> to _only_ ever run from softirq was a strict one. When I switched to
-> using napi_schedule in this way, throughput really jumped up
-> significantly. Part of this indeed is from the batching, so that the
-> napi callback can then handle more packets in one go later. But I
-> assumed it was something inside of NAPI that was batching and
-> scheduling it, rather than a mistake on my part to call this from a wq
-> and not from a softirq.
+Thanks,
+Jason
 
-There is no strict requirement to do napi_schedule() from hard-IRQ but
-it makes sense actually. So napi_schedule() invokes
-__raise_softirq_irqoff() which only ors a bit in the softirq state.
-Nothing else. The only reason that the softirq is invoked in a
-deterministic way is that irq_exit() has this "if
-(local_softirq_pending()) invoke_softirq()" check before returing (to
-interrupted user/ kernel code).
 
-So if you use it in a worker (for instance) the NAPI call is delayed
-until the next IRQ (due to irq_exit() part) or a random
-local_bh_enable() user.
+Jason A. Donenfeld (2):
+  lib/crypto: blake2s: move hmac construction into wireguard
+  lib/crypto: sha1: re-roll loops to reduce code size
 
-> What, then, are the effects of surrounding that in
-> local_bh_{disable,enable} as you've done in the patch? You mentioned
-> one aspect is that it will "invoke wg_packet_rx_poll() where you see
-> only one skb." It sounds like that'd be bad for performance, though,
-> given that the design of napi is really geared toward batching.
+ drivers/net/wireguard/noise.c |  45 +++++++++++--
+ include/crypto/blake2s.h      |   3 -
+ lib/crypto/blake2s-selftest.c |  31 ---------
+ lib/crypto/blake2s.c          |  37 -----------
+ lib/sha1.c                    | 117 ++++++++--------------------------
+ 5 files changed, 64 insertions(+), 169 deletions(-)
 
-As Toke H=C3=B8iland-J=C3=B8rgensen wrote in the previous reply, I missed t=
-he BH
-disable/ enable in ptr_ring_consume_bh(). So what happens is that
-ptr_ring_consume_bh() gives you one skb, you do
-wg_queue_enqueue_per_peer_rx() which raises NAPI then the following
-ptr_ring_consume_bh() (that local_bh_enable() to be exact) invokes the
-NAPI callback (I guess wg_packet_rx_poll() but as I wrote earlier, I
-didn't figure out how the skbs move from here to the other queue for
-that callback).
+-- 
+2.34.1
 
-So there is probably no batching assuming that one skb is processed in
-the NAPI callback.
-
-> Jason
-
-Sebastian
