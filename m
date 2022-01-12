@@ -4,52 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDC85C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 16 Jan 2022 21:10:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCA93C433FE
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 16 Jan 2022 21:10:53 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id ea10c850;
-	Sun, 16 Jan 2022 21:10:51 +0000 (UTC)
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com
- [2607:f8b0:4864:20::b35])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id b5bb4872
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 8b7f0fe9;
+	Sun, 16 Jan 2022 21:10:52 +0000 (UTC)
+Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com
+ [209.85.222.54])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 0d6e390a
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 11 Jan 2022 07:42:48 +0000 (UTC)
-Received: by mail-yb1-xb35.google.com with SMTP id h14so27409019ybe.12
- for <wireguard@lists.zx2c4.com>; Mon, 10 Jan 2022 23:42:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to;
- bh=Wk/qGtz26hTAu2Z0ry2fUvvnKiyHU/sS4gV9WX8tBw4=;
- b=jI39erstFBgNIGGl+tQmwBiWrUIc9bgBj2bYOdDXTCO9Pd8IbRWtD9TS2r5MHOCHG+
- bPQlZGT7uj2aIkyb6hA3i11qstvrr0xHAd+mOW0cY6G9+T/e3OHnqOnGnS4ZKsqH7DPJ
- ofxAqXjCIf/xFi8OzWqkvjrvZASqHZSCrfRB8yQPQ7WPFCgdN1jNIKWyM1dC9AM9bXE4
- iiL5R0dwuy7J1t4mzrqIkGQZyqBiTURI07s+gq5Q74CgbzHSNcJPVqFHnPg1g1wULvN+
- 1mb+7A8KVG/MiNByEUVrtLRl1jYB+Pdc+hp+0K4ZSuaspxApTgzOAwTppyf1/UFT22CX
- H18Q==
+ Wed, 12 Jan 2022 10:58:03 +0000 (UTC)
+Received: by mail-ua1-f54.google.com with SMTP id x33so3899711uad.12
+ for <wireguard@lists.zx2c4.com>; Wed, 12 Jan 2022 02:58:02 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=Wk/qGtz26hTAu2Z0ry2fUvvnKiyHU/sS4gV9WX8tBw4=;
- b=2bmD+oxYL9WO+aAlO5wivxmRP6RsLwaEOOZZLeNNWooZvYNWS/a+ZDedxuxydZkjPR
- x6ZVkuaygs+ZXXiLj+++mNaeSgedayaF0RvGByVtLSU5F2y9nhhCbs4VdtPpuCM/YNDn
- lNnhozAYaCzI17wSf5ykvSteWyVNtzRvyDHUgstfJJS53A9/9zbNS0T5jJ7XUYknhh+/
- XgylepOfe/AZ+eEbC4mV9gvhzFlzvFuGcKBF2IJhW2B5XH9kon6x2LRKRDgQ/xp2nUrK
- saTgU3qjFNF+n6EBczQkByu8qNPzLOhg424IUKS0z+jNxYZ6aj+4t1hRp8KRnrJNY/DW
- YWdQ==
-X-Gm-Message-State: AOAM530MrQT0vG+2nezVc1j/ZDMXMgww/Wk78sFkYMuOqBprIbSQ6GVj
- MPi4F8LN9PPJ93dHwycI6mJX1r2o+mDgM3+2JoU=
-X-Google-Smtp-Source: ABdhPJyMRjDffGb4p4uOnDBwu0Qf279Fkk2F9HdUxM/rBqwFZ2JxNZsc3ES+DqcDwIb3BowdrEqXErSucCWsR0TnKvQ=
-X-Received: by 2002:a25:4aca:: with SMTP id x193mr4438918yba.149.1641886967694; 
- Mon, 10 Jan 2022 23:42:47 -0800 (PST)
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=sqfqmGnWErblTuhOUr48ULJ3GhOyu+Z25jTNW9S2YJk=;
+ b=Fbm+ZcJo7kAMNkndN8R4mpApAAC6wgfMRRhAZjcUS3RuTHSK7DugAbnH04G57cSyHF
+ v8/yNpluO9LZGpzJ6hS8dCYkw7LyMOWz66O1amtjwX2lGhDPiV6Df94FvR9curMltHMi
+ FJt7dc9Ae6qgpsVsjlvsON4zDgmYU3kPi3f51ayDAEDZhpnmEwRqVG7aRXRYgrQJF2wi
+ sIVtKPGUpjD+hpACHREvIYSGIMu5tdkbkorP51ivAqKu+Ywk+tOS2a4SmiSyrfIxfeM0
+ OBtyNat1f3tQqnmmXDE8trgdXWpbGEekNxb4GkyByRfGbeLBf2XNbElRMKVRJDYn2uWw
+ x3pQ==
+X-Gm-Message-State: AOAM533eIZYX5V14/Z6R+RYVh3i9J0DaoMinbLokOIhSOVcDNGihgKCj
+ aybkNEb28MKgo2WNxynuHm+odPiIDWEL60nx
+X-Google-Smtp-Source: ABdhPJxkFsryac+UTx5rlWedwblLMvFpkbnaZq9/Qfyl5Nveaxua1tdETVYlvTnnvj/p50URWZ3uIA==
+X-Received: by 2002:a9f:3802:: with SMTP id p2mr3992906uad.35.1641985081808;
+ Wed, 12 Jan 2022 02:58:01 -0800 (PST)
+Received: from mail-ua1-f46.google.com (mail-ua1-f46.google.com.
+ [209.85.222.46])
+ by smtp.gmail.com with ESMTPSA id a29sm3516180vsl.25.2022.01.12.02.58.00
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 12 Jan 2022 02:58:01 -0800 (PST)
+Received: by mail-ua1-f46.google.com with SMTP id m15so3954302uap.6
+ for <wireguard@lists.zx2c4.com>; Wed, 12 Jan 2022 02:58:00 -0800 (PST)
+X-Received: by 2002:ab0:4d5a:: with SMTP id k26mr3942936uag.122.1641985080812; 
+ Wed, 12 Jan 2022 02:58:00 -0800 (PST)
 MIME-Version: 1.0
-From: cruise k <cruise4k@gmail.com>
-Date: Tue, 11 Jan 2022 15:42:37 +0800
-Message-ID: <CAKcFiNC1w87Of0ukV3oPHiAkKeVT7bbTqG3p1LgoUs0bGXk9CQ@mail.gmail.com>
-Subject: INFO: task hung in wg_noise_handshake_consume_initiation
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- "David S. Miller" <davem@davemloft.net>, 
- Jakub Kicinski <kuba@kernel.org>, wireguard@lists.zx2c4.com,
- netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <CAHmME9qbnYmhvsuarButi6s=58=FPiti0Z-QnGMJ=OsMzy1eOg@mail.gmail.com>
+ <20220111134934.324663-1-Jason@zx2c4.com>
+ <20220111134934.324663-2-Jason@zx2c4.com>
+In-Reply-To: <20220111134934.324663-2-Jason@zx2c4.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Wed, 12 Jan 2022 11:57:49 +0100
+X-Gmail-Original-Message-ID: <CAMuHMdWOheM0WsHNTA2dS=wJA8kXEYx6G78bnZ51T1X8HWdzNg@mail.gmail.com>
+Message-ID: <CAMuHMdWOheM0WsHNTA2dS=wJA8kXEYx6G78bnZ51T1X8HWdzNg@mail.gmail.com>
+Subject: Re: [PATCH crypto 1/2] lib/crypto: blake2s-generic: reduce code size
+ on small systems
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: Linux Crypto Mailing List <linux-crypto@vger.kernel.org>,
+ netdev <netdev@vger.kernel.org>, wireguard@lists.zx2c4.com, 
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ bpf <bpf@vger.kernel.org>, 
+ Theodore Tso <tytso@mit.edu>, Greg KH <gregkh@linuxfoundation.org>, 
+ jeanphilippe.aumasson@gmail.com, Ard Biesheuvel <ardb@kernel.org>, 
+ Herbert Xu <herbert@gondor.apana.org.au>
 Content-Type: text/plain; charset="UTF-8"
 X-Mailman-Approved-At: Sun, 16 Jan 2022 21:10:46 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -66,38 +78,43 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+Hi Jason,
 
-Syzkaller found the following issue:
+On Tue, Jan 11, 2022 at 2:49 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+> Re-wind the loops entirely on kernels optimized for code size. This is
+> really not good at all performance-wise. But on m68k, it shaves off 4k
+> of code size, which is apparently important.
 
-HEAD commit: 75acfdb Linux 5.16-rc8
-git tree: upstream
-console output: https://pastebin.com/raw/E1a5ZGSt
-kernel config: https://pastebin.com/raw/XsnKfdRt
+On arm32:
 
-And hope the report log can help you.
+add/remove: 1/0 grow/shrink: 0/1 up/down: 160/-4212 (-4052)
+Function                                     old     new   delta
+blake2s_sigma                                  -     160    +160
+blake2s_compress_generic                    4872     660   -4212
+Total: Before=9846148, After=9842096, chg -0.04%
 
-INFO: task kworker/6:1:78 blocked for more than 143 seconds.
-      Not tainted 5.16.0-rc8+ #10
-"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-task:kworker/6:1     state:D stack:26416 pid:   78 ppid:     2 flags:0x00004000
-Workqueue: wg-kex-wg1 wg_packet_handshake_receive_worker
-Call Trace:
- <TASK>
- context_switch kernel/sched/core.c:4972 [inline]
- __schedule+0xcd9/0x2550 kernel/sched/core.c:6253
- schedule+0xd2/0x260 kernel/sched/core.c:6326
- rwsem_down_read_slowpath+0x59c/0xa90 kernel/locking/rwsem.c:1041
- __down_read_common kernel/locking/rwsem.c:1223 [inline]
- __down_read kernel/locking/rwsem.c:1232 [inline]
- down_read+0xe2/0x440 kernel/locking/rwsem.c:1472
- wg_noise_handshake_consume_initiation+0x271/0x5f0
-drivers/net/wireguard/noise.c:599
- wg_receive_handshake_packet+0x589/0x9d0 drivers/net/wireguard/receive.c:151
- wg_packet_handshake_receive_worker+0x18e/0x3d0
-drivers/net/wireguard/receive.c:220
- process_one_work+0x9df/0x16a0 kernel/workqueue.c:2298
- worker_thread+0x90/0xe20 kernel/workqueue.c:2445
- kthread+0x405/0x4f0 kernel/kthread.c:327
- ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:295
- </TASK>
+On arm64:
+
+add/remove: 1/2 grow/shrink: 0/1 up/down: 160/-4584 (-4424)
+Function                                     old     new   delta
+blake2s_sigma                                  -     160    +160
+e843419@0710_00007634_e8a0                     8       -      -8
+e843419@0441_0000423a_178c                     8       -      -8
+blake2s_compress_generic                    5088     520   -4568
+Total: Before=32800278, After=32795854, chg -0.01%
+
+> Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+
+For the size reduction:
+Tested-by: Geert Uytterhoeven <geert@linux-m68k.org>
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
