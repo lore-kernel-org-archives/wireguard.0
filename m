@@ -4,64 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F33C4C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 16 Jan 2022 21:10:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33DFDC433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 16 Jan 2022 21:13:16 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 92b2252e;
-	Sun, 16 Jan 2022 21:10:54 +0000 (UTC)
-Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com
- [209.85.221.170])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id b51c1c25
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 5cee6ba7;
+	Sun, 16 Jan 2022 21:10:55 +0000 (UTC)
+Received: from eu-smtp-delivery-151.mimecast.com
+ (eu-smtp-delivery-151.mimecast.com [185.58.85.151])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id a4495421
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 12 Jan 2022 11:00:01 +0000 (UTC)
-Received: by mail-vk1-f170.google.com with SMTP id 19so1397373vkl.2
- for <wireguard@lists.zx2c4.com>; Wed, 12 Jan 2022 03:00:01 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=P9xJBN5Sf81yronEcRpMEORUChn2S5aTbHnwQ7uOvsM=;
- b=75ZpCXVoEh1jeihH8BKL15veMdCUM+Orq7TR81eWbXdJ/2RWbWqSazKP6MVeQic1XI
- asyMH5LDt46Wf9fDwv3NeC3eyhh4fhvt5IZhxoPupzAcjRmaMd5vXyvZet0yCA+PYgBF
- 3XSMLmc8gtW5a9ewU27YyfWPmLu7BMo5vjQ+1TsLNj8AHSDrAAO+xI7ZE9vEOJNroByv
- fubUbOjmrgWd15186n3pNFhTcNa9gRQxb722C0D/ZQk7RChAT7Qc+0FG8EMtySHzjgIp
- nddaiKTBp7uzditVbu0xX5fF0ZnWGzVg7oruxmcbjwoPbaHXH5IR1t92N05/p1jGJEy8
- 5OkA==
-X-Gm-Message-State: AOAM530pP+mKVuCSkkpHTUjiZPSZfR8gmaEf0vgdammEAP7IRlYToHzx
- szONcTPqflhUo/K3rQja5Xg0JsRzr6tvZJGC
-X-Google-Smtp-Source: ABdhPJwvRT1TUZ821T0soBCY5O8IBS8bLdHq1Wakg2LEYEVXaAhhVmTeR4EFpihYCrCbwHlHic/Law==
-X-Received: by 2002:a05:6122:d11:: with SMTP id
- az17mr4368139vkb.22.1641985200629; 
- Wed, 12 Jan 2022 03:00:00 -0800 (PST)
-Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com.
- [209.85.221.170])
- by smtp.gmail.com with ESMTPSA id s18sm4940968vkf.30.2022.01.12.03.00.00
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Jan 2022 03:00:00 -0800 (PST)
-Received: by mail-vk1-f170.google.com with SMTP id h16so1383502vkp.5
- for <wireguard@lists.zx2c4.com>; Wed, 12 Jan 2022 03:00:00 -0800 (PST)
-X-Received: by 2002:a1f:384b:: with SMTP id f72mr4324936vka.0.1641985199694;
- Wed, 12 Jan 2022 02:59:59 -0800 (PST)
+ Wed, 12 Jan 2022 21:27:42 +0000 (UTC)
+Received: from AcuMS.aculab.com (156.67.243.121 [156.67.243.121]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ uk-mta-56-YKI_HUCbPtWK5PQHYtyc5g-1; Wed, 12 Jan 2022 21:27:40 +0000
+X-MC-Unique: YKI_HUCbPtWK5PQHYtyc5g-1
+Received: from AcuMS.Aculab.com (fd9f:af1c:a25b:0:994c:f5c2:35d6:9b65) by
+ AcuMS.aculab.com (fd9f:af1c:a25b:0:994c:f5c2:35d6:9b65) with Microsoft SMTP
+ Server (TLS) id 15.0.1497.26; Wed, 12 Jan 2022 21:27:40 +0000
+Received: from AcuMS.Aculab.com ([fe80::994c:f5c2:35d6:9b65]) by
+ AcuMS.aculab.com ([fe80::994c:f5c2:35d6:9b65%12]) with mapi id
+ 15.00.1497.026; Wed, 12 Jan 2022 21:27:40 +0000
+From: David Laight <David.Laight@ACULAB.COM>
+To: "'Jason A. Donenfeld'" <Jason@zx2c4.com>, Eric Biggers
+ <ebiggers@kernel.org>
+CC: Linux Crypto Mailing List <linux-crypto@vger.kernel.org>, Netdev
+ <netdev@vger.kernel.org>, WireGuard mailing list <wireguard@lists.zx2c4.com>, 
+ LKML <linux-kernel@vger.kernel.org>, bpf <bpf@vger.kernel.org>, "Geert
+ Uytterhoeven" <geert@linux-m68k.org>, Theodore Ts'o <tytso@mit.edu>, "Greg
+ Kroah-Hartman" <gregkh@linuxfoundation.org>, Jean-Philippe Aumasson
+ <jeanphilippe.aumasson@gmail.com>, Ard Biesheuvel <ardb@kernel.org>, "Herbert
+ Xu" <herbert@gondor.apana.org.au>
+Subject: RE: [PATCH crypto 1/2] lib/crypto: blake2s-generic: reduce code size
+ on small systems
+Thread-Topic: [PATCH crypto 1/2] lib/crypto: blake2s-generic: reduce code size
+ on small systems
+Thread-Index: AQHYB+VtFSMgWrVqxkafOfrj0ELoyKxf5LLQ
+Date: Wed, 12 Jan 2022 21:27:40 +0000
+Message-ID: <d7e206a5a03d46a69c0be3b8ed651518@AcuMS.aculab.com>
+References: <CAHmME9qbnYmhvsuarButi6s=58=FPiti0Z-QnGMJ=OsMzy1eOg@mail.gmail.com>
+ <20220111134934.324663-1-Jason@zx2c4.com>
+ <20220111134934.324663-2-Jason@zx2c4.com> <Yd8enQTocuCSQVkT@gmail.com>
+ <CAHmME9qGs8yfYy0GVcV8XaUt9cjCqQF2D79RvrsQE+CNLCeojA@mail.gmail.com>
+In-Reply-To: <CAHmME9qGs8yfYy0GVcV8XaUt9cjCqQF2D79RvrsQE+CNLCeojA@mail.gmail.com>
+Accept-Language: en-GB, en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.202.205.107]
 MIME-Version: 1.0
-References: <20220111181037.632969-1-Jason@zx2c4.com>
- <20220111220506.742067-1-Jason@zx2c4.com>
-In-Reply-To: <20220111220506.742067-1-Jason@zx2c4.com>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Wed, 12 Jan 2022 11:59:48 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdUcJN_ZZLnx8TuhoXYV1DAKK9NsXjH2M0xAdn9JTS16wA@mail.gmail.com>
-Message-ID: <CAMuHMdUcJN_ZZLnx8TuhoXYV1DAKK9NsXjH2M0xAdn9JTS16wA@mail.gmail.com>
-Subject: Re: [PATCH crypto v3 0/2] reduce code size from blake2s on m68k and
- other small platforms
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: Linux Crypto Mailing List <linux-crypto@vger.kernel.org>,
- netdev <netdev@vger.kernel.org>, wireguard@lists.zx2c4.com, 
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- bpf <bpf@vger.kernel.org>, 
- Theodore Tso <tytso@mit.edu>, Greg KH <gregkh@linuxfoundation.org>, 
- jeanphilippe.aumasson@gmail.com, Ard Biesheuvel <ardb@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=C51A453 smtp.mailfrom=david.laight@aculab.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: aculab.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 X-Mailman-Approved-At: Sun, 16 Jan 2022 21:10:46 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -77,58 +76,35 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Jason,
+RnJvbTogSmFzb24gQS4gRG9uZW5mZWxkDQo+IFNlbnQ6IDEyIEphbnVhcnkgMjAyMiAxODo1MQ0K
+PiANCj4gT24gV2VkLCBKYW4gMTIsIDIwMjIgYXQgNzozMiBQTSBFcmljIEJpZ2dlcnMgPGViaWdn
+ZXJzQGtlcm5lbC5vcmc+IHdyb3RlOg0KPiA+IEhvdyBhYm91dCB1bnJvbGxpbmcgdGhlIGlubmVy
+IGxvb3AgYnV0IG5vdCB0aGUgb3V0ZXIgb25lPyAgV291bGRuJ3QgdGhhdCBnaXZlDQo+ID4gbW9z
+dCBvZiB0aGUgYmVuZWZpdCwgd2l0aG91dCBodXJ0aW5nIHBlcmZvcm1hbmNlIGFzIG11Y2g/DQo+
+ID4NCj4gPiBJZiB5b3Ugc3RheSB3aXRoIHRoaXMgYXBwcm9hY2ggYW5kIGRvbid0IHVucm9sbCBl
+aXRoZXIgbG9vcCwgY2FuIHlvdSB1c2UgJ3InIGFuZA0KPiA+ICdpJyBpbnN0ZWFkIG9mICdpJyBh
+bmQgJ2onLCB0byBtYXRjaCB0aGUgbmFtaW5nIGluIEcoKT8NCj4gDQo+IEFsbCB0aGlzIG1pZ2h0
+IHdvcmssIHN1cmUuIEJ1dCBhcyBtZW50aW9uZWQgZWFybGllciwgSSd2ZSBhYmFuZG9uZWQNCj4g
+dGhpcyBlbnRpcmVseSwgYXMgSSBkb24ndCB0aGluayB0aGlzIHBhdGNoIGlzIG5lY2Vzc2FyeS4g
+U2VlIHRoZSB2Mw0KPiBwYXRjaHNldCBpbnN0ZWFkOg0KPiANCj4gaHR0cHM6Ly9sb3JlLmtlcm5l
+bC5vcmcvbGludXgtY3J5cHRvLzIwMjIwMTExMjIwNTA2Ljc0MjA2Ny0xLUphc29uQHp4MmM0LmNv
+bS8NCg0KSSB0aGluayB5b3UgbWVudGlvbmVkIGluIGFub3RoZXIgdGhyZWFkIHRoYXQgdGhlIGJ1
+ZmZlcnMgKGVnIGZvciBJUHY2DQphZGRyZXNzZXMpIGFyZSBhY3R1YWxseSBvZnRlbiBxdWl0ZSBz
+aG9ydC4NCg0KRm9yIHNob3J0IGJ1ZmZlcnMgdGhlICdyb2xsZWQtdXAnIGxvb3AgbWF5IGJlIG9m
+IHNpbWlsYXIgcGVyZm9ybWFuY2UNCnRvIHRoZSB1bnJvbGxlZCBvbmUgYmVjYXVzZSBvZiB0aGUg
+dGltZSB0YWtlbiB0byByZWFkIGFsbCB0aGUgaW5zdHJ1Y3Rpb25zDQppbnRvIHRoZSBJLWNhY2hl
+IGFuZCBkZWNvZGUgdGhlbS4NCklmIHRoZSBsb29wIGVuZHMgdXAgc21hbGwgZW5vdWdoIGl0IHdp
+bGwgZml0IGludG8gdGhlICdkZWNvZGVkIGxvb3ANCmJ1ZmZlcicgb2YgbW9kZXJuIEludGVsIHg4
+NiBjcHUgYW5kIHdvbid0IGV2ZW4gbmVlZCBkZWNvZGluZyBvbg0KZWFjaCBpdGVyYXRpb24uDQoN
+CkkgcmVhbGx5IHN1c3BlY3QgdGhhdCB0aGUgaGVhdmlseSB1bnJvbGxlZCBsb29wIGlzIG9ubHkg
+cmVhbGx5IGZhc3QNCmZvciBiaWcgYnVmZmVycyBhbmQvb3Igd2hlbiBpdCBpcyBhbHJlYWR5IGlu
+IHRoZSBJLWNhY2hlLg0KSW4gcmVhbCBsaWZlIEkgd29uZGVyIGhvdyBvZnRlbiB0aGF0IGFjdHVh
+bGx5IGhhcHBlbnM/DQpFc3BlY2lhbGx5IGZvciB0aGUgdXNlcyB0aGUga2VybmVsIGlzIG1ha2lu
+ZyBvZiB0aGUgY29kZS4NCg0KWW91IG5lZWQgdG8gYmVuY2htYXJrIHNpbmdsZSBleGVjdXRpb25z
+IG9mIHRoZSBmdW5jdGlvbg0KKGRvYWJsZSBvbiB4ODYgd2l0aCB0aGUgcGVyZm9ybWFuY2UgbW9u
+aXRvciBjeWNsZSBjb3VudGVyKQ0KdG8gZ2V0IHR5cGljYWwvYmVzdCBjbG9ja3MvYnl0ZSBmaWd1
+cmVzIHJhdGhlciB0aGFuIGENCmJpZyBhdmVyYWdlIGZvciByZXBlYXRlZCBvcGVyYXRpb24gb24g
+YSBsb25nIGJ1ZmZlci4NCg0KCURhdmlkDQoNCi0NClJlZ2lzdGVyZWQgQWRkcmVzcyBMYWtlc2lk
+ZSwgQnJhbWxleSBSb2FkLCBNb3VudCBGYXJtLCBNaWx0b24gS2V5bmVzLCBNSzEgMVBULCBVSw0K
+UmVnaXN0cmF0aW9uIE5vOiAxMzk3Mzg2IChXYWxlcykNCg==
 
-On Tue, Jan 11, 2022 at 11:05 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> Geert emailed me this afternoon concerned about blake2s codesize on m68k
-> and other small systems. We identified two effective ways of chopping
-> down the size. One of them moves some wireguard-specific things into
-> wireguard proper. The other one adds a slower codepath for small
-> machines to blake2s. This worked, and was v1 of this patchset, but I
-> wasn't so much of a fan. Then someone pointed out that the generic C
-> SHA-1 implementation is still unrolled, which is a *lot* of extra code.
-> Simply rerolling that saves about as much as v1 did. So, we instead do
-> that in this patchset. SHA-1 is being phased out, and soon it won't
-> be included at all (hopefully). And nothing performance-oriented has
-> anything to do with it anyway.
->
-> The result of these two patches mitigates Geert's feared code size
-> increase for 5.17.
->
-> v3 improves on v2 by making the re-rolling of SHA-1 much simpler,
-> resulting in even larger code size reduction and much better
-> performance. The reason I'm sending yet a third version in such a short
-> amount of time is because the trick here feels obvious and substantial
-> enough that I'd hate for Geert to waste time measuring the impact of the
-> previous commit.
->
-> Thanks,
-> Jason
->
-> Jason A. Donenfeld (2):
->   lib/crypto: blake2s: move hmac construction into wireguard
->   lib/crypto: sha1: re-roll loops to reduce code size
-
-Thanks for the series!
-
-On m68k:
-add/remove: 1/4 grow/shrink: 0/1 up/down: 4/-4232 (-4228)
-Function                                     old     new   delta
-__ksymtab_blake2s256_hmac                     12       -     -12
-blake2s_init.constprop                        94       -     -94
-blake2s256_hmac                              302       -    -302
-sha1_transform                              4402     582   -3820
-Total: Before=4230537, After=4226309, chg -0.10%
-
-Tested-by: Geert Uytterhoeven <geert@linux-m68k.org>
-
-Gr{oetje,eeting}s,
-
-                        Geert
-
---
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
