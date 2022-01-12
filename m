@@ -4,67 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57708C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 12 Jan 2022 13:22:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AA78C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 12 Jan 2022 15:29:15 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 7a8db901;
-	Wed, 12 Jan 2022 13:18:51 +0000 (UTC)
-Received: from ams.source.kernel.org (ams.source.kernel.org
- [2604:1380:4601:e00::1])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 8dbf9927
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 12 Jan 2022 13:18:49 +0000 (UTC)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id 84FFFB81DFF
- for <wireguard@lists.zx2c4.com>; Wed, 12 Jan 2022 13:18:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44ACAC36AF7
- for <wireguard@lists.zx2c4.com>; Wed, 12 Jan 2022 13:18:48 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="d40SY2Xa"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1641993526;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rRXjtbrE2Eve7J58Q9IJgxX8+W28gZ0ioA+AryafyRo=;
- b=d40SY2XaCIk0dSlLUT5yjkzn3M731524Y1ppya4erUzgWWKIfM4qfTNSnK+z4My2VtBHXW
- kY3JoOps/+i3GCja/QwYYVHvShcqblBHaBFJwykbJvD7elDljSpfkdiDVO5apndncszVww
- r9uzpV3ySCfDaeWWK9lpAKJ0ZFgh8i4=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3c15f7e7
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 168a0145;
+	Wed, 12 Jan 2022 15:29:14 +0000 (UTC)
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com
+ [2607:f8b0:4864:20::1030])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 427cd461
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 12 Jan 2022 13:18:46 +0000 (UTC)
-Received: by mail-yb1-f170.google.com with SMTP id n68so6277811ybg.6
- for <wireguard@lists.zx2c4.com>; Wed, 12 Jan 2022 05:18:46 -0800 (PST)
-X-Gm-Message-State: AOAM531WW3OaSpSoL9v8KLKJjvQTcMwM2hsvOJxHxeGz47zVeitcCcYV
- tQtIgkb6A0EGZViy7f4y2VgYzCKpHut4s3m6edI=
-X-Google-Smtp-Source: ABdhPJyQQ3vU6dkRjERWgWVka3PYGzTNU58ke8Z1uEGxTGLJbZG9wlOxUKuZ4qw6Bp1eNeWmkh3Xxr5iM9ffSIBlHoE=
-X-Received: by 2002:a5b:10:: with SMTP id a16mr12918334ybp.115.1641993525094; 
- Wed, 12 Jan 2022 05:18:45 -0800 (PST)
+ Wed, 12 Jan 2022 15:29:11 +0000 (UTC)
+Received: by mail-pj1-x1030.google.com with SMTP id o3so5630385pjs.1
+ for <wireguard@lists.zx2c4.com>; Wed, 12 Jan 2022 07:29:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=cMam/lJ2t4SKn4dDRAs8XC/nv4lgeGX8oqUPvl8zLh8=;
+ b=PhIqn/UwjNMbRn6m3ndmWMcIchoSw59oJqVnA6JOlEffx3wEIBGU192GWiRk+txE4F
+ RDQTdMsLR3opfL9DY2lnbkrEvfH6rvLkbu9kkaakUcy2IGUEiRufz0x8j2kSrc4sxn+h
+ M+VNKO0vyhrDJAVTEC53Gq0MktJPbxTvvgJVSCs0PgbgHlnF6/nStYll7aTFytVTt902
+ X6BQP6xZrKOEOly38iWf/MSjQ7UqzsSiGZr+Pmxvt/g88/HAMpuJiRUmstlnqU5+9dst
+ rTklPbbUsjp0JBPS4l/nk7nx0DebAHx5aLFU4LjNv26JYOPltPWLxygfqBFQMk1MeVt/
+ Rhaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=cMam/lJ2t4SKn4dDRAs8XC/nv4lgeGX8oqUPvl8zLh8=;
+ b=iTQGMT9lf+viP8H4HZdrbn8UIpfAxAJ7lzfgVUS2irOU3vrXBuuPYzWz96az3tRJCl
+ nQdmz1M1Y1M8T7NbS+jciT4lCytF88cRNd1/DoTiCS9qJwY0Xt8DxtrZQvCgHl9xtjMb
+ hW1jDGHUiBQeoz485GmBUkFsOa3KIVR8xUTDBtH2EV+/AMErT2fiZ+i/phKPOivAM6f4
+ CjgR06emVSdvXP5z+6QhlxdghCk41yCTvkeDXLf9YsS632Eo+cg/nHz1kKe+L9JudWaF
+ 4aGRclWgzXVB6khmJo4XOFtAwSiptNM3GJtHym656YEaqdRP9nn2m2mjZW/gF1C37m9E
+ ZJHQ==
+X-Gm-Message-State: AOAM5314VNte7AMuFwi/Bf6tKR7/Cannb2eE4U+wGhVtQlVi3Vbvnjyd
+ iu1v4ceJ7OS50zMR/HJf+kaOxEBORFiq7UcgeLlHSFn2oS044g==
+X-Google-Smtp-Source: ABdhPJzNLnmDc/Wos5x3n8rdMVMe5y4k2GjB+UjM4PftX98Tdn7H2kuoy6Coqd1B+shJK9FEjveiubK1PVJwu0Coe5A=
+X-Received: by 2002:a17:903:22ce:b0:14a:4623:60eb with SMTP id
+ y14-20020a17090322ce00b0014a462360ebmr154643plg.81.1642001349511; Wed, 12 Jan
+ 2022 07:29:09 -0800 (PST)
 MIME-Version: 1.0
-References: <20220111181037.632969-1-Jason@zx2c4.com>
- <20220111220506.742067-1-Jason@zx2c4.com>
- <CAMuHMdUcJN_ZZLnx8TuhoXYV1DAKK9NsXjH2M0xAdn9JTS16wA@mail.gmail.com>
-In-Reply-To: <CAMuHMdUcJN_ZZLnx8TuhoXYV1DAKK9NsXjH2M0xAdn9JTS16wA@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 12 Jan 2022 14:18:34 +0100
-X-Gmail-Original-Message-ID: <CAHmME9rxdksVZkN4DF_GabsEPrSDrKbo1cVQs77B_s-e2jZ64A@mail.gmail.com>
-Message-ID: <CAHmME9rxdksVZkN4DF_GabsEPrSDrKbo1cVQs77B_s-e2jZ64A@mail.gmail.com>
-Subject: Re: [PATCH crypto v3 0/2] reduce code size from blake2s on m68k and
- other small platforms
-To: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: Linux Crypto Mailing List <linux-crypto@vger.kernel.org>,
- netdev <netdev@vger.kernel.org>, 
- WireGuard mailing list <wireguard@lists.zx2c4.com>, 
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- bpf <bpf@vger.kernel.org>, 
- Theodore Tso <tytso@mit.edu>, Greg KH <gregkh@linuxfoundation.org>, 
- Jean-Philippe Aumasson <jeanphilippe.aumasson@gmail.com>,
- Ard Biesheuvel <ardb@kernel.org>, Herbert Xu <herbert@gondor.apana.org.au>
+From: Houman <houmie@gmail.com>
+Date: Wed, 12 Jan 2022 15:28:33 +0000
+Message-ID: <CABBZOsm1hzRqQ65izwk23S4rQrVCYBkwL73yi3LT5BdvNVbeeg@mail.gmail.com>
+Subject: Enable BitCode on libwg-go.a (Wireguard iOS project)
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -80,26 +63,20 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Geert,
+Hello,
 
-On Wed, Jan 12, 2022 at 12:00 PM Geert Uytterhoeven
-<geert@linux-m68k.org> wrote:
-> Thanks for the series!
->
-> On m68k:
-> add/remove: 1/4 grow/shrink: 0/1 up/down: 4/-4232 (-4228)
-> Function                                     old     new   delta
-> __ksymtab_blake2s256_hmac                     12       -     -12
-> blake2s_init.constprop                        94       -     -94
-> blake2s256_hmac                              302       -    -302
-> sha1_transform                              4402     582   -3820
-> Total: Before=4230537, After=4226309, chg -0.10%
->
-> Tested-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Currently libwg-go.a doesn't support bitcode in the Xcode project. It
+crashes with the following message:
 
-Excellent, thanks for the breakdown. So this shaves off ~4k, which was
-about what we were shooting for here, so I think indeed this series
-accomplishes its goal of counteracting the addition of BLAKE2s.
-Hopefully Herbert will apply this series for 5.17.
+libwg-go.a does not contain bitcode. You must rebuild it with bitcode
+enabled (Xcode setting ENABLE_BITCODE), obtain an updated library from
+the vendor, or disable bitcode for this target. for architecture arm64
 
-Jason
+Disabling Bitcode for the whole project is very bad for dSYMs and
+Crashlytics reporting, though.
+
+Is there any chance to enable Bitcode for Wireguard, please?  If there
+is anything I could do to help, please let me know.
+
+Many Thanks,
+Houman
