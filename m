@@ -4,57 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19574C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 12 Jan 2022 15:43:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 144A2C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 12 Jan 2022 18:32:04 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 60207258;
-	Wed, 12 Jan 2022 15:43:54 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 9456ce2d
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 75165717;
+	Wed, 12 Jan 2022 18:32:02 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org
+ [2604:1380:4641:c500::1])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id dfa6ee3e
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 12 Jan 2022 15:43:51 +0000 (UTC)
+ Wed, 12 Jan 2022 18:32:01 +0000 (UTC)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 333016197C
- for <wireguard@lists.zx2c4.com>; Wed, 12 Jan 2022 15:43:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 547EBC36AEB
- for <wireguard@lists.zx2c4.com>; Wed, 12 Jan 2022 15:43:49 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="mfDUQQ1V"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1642002227;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0vAKDZlg9/klNtvs7g86KFoTFRQ/16ab7sAV0KF90hQ=;
- b=mfDUQQ1VnNh1b3g5wRAm7Z3jQYBLHvfvBGvwgpRouBAm7IDk18FZf5Kdzu+BB2lXkiLAIM
- Tt4fdJlGUhG/wQbTjdslCVmCeflHSrw6IeTTfQqEGe1Hq1/Om6gCSpkDI5D0DqHUHqXPPL
- houIdiRwxrejptpPQckE3InRDvA504c=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2a9c76fd
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 12 Jan 2022 15:43:47 +0000 (UTC)
-Received: by mail-yb1-f174.google.com with SMTP id d7so7536927ybo.5
- for <wireguard@lists.zx2c4.com>; Wed, 12 Jan 2022 07:43:47 -0800 (PST)
-X-Gm-Message-State: AOAM5339AlxDt3k0RRmnZPF2gp1DsgXQmaFjn81t1rQsqh7ucEBrhJgy
- YG8nxHDXejj9frXE05Tq5kXj8B7s6lf4YcHGCmg=
-X-Google-Smtp-Source: ABdhPJzoJDHlJogx6Uqe87qu4cwCnwSUHr9Nf90gL+Z1svdXDeRXNt+ZR0Ya/YICugBRXT6QN8jcuhMiFMpI6/vnBT0=
-X-Received: by 2002:a25:ae8d:: with SMTP id b13mr328061ybj.255.1642002226567; 
- Wed, 12 Jan 2022 07:43:46 -0800 (PST)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 9AFED619E0;
+ Wed, 12 Jan 2022 18:31:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC72AC36AE5;
+ Wed, 12 Jan 2022 18:31:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1642012319;
+ bh=SIOFpKrKnQowDOnmtxefi+bybl5zeZB6n3VbvATVFBY=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=V4aeHa5QLi8d5BOg6sv0gr+x+PgLEzDphY5W9nRxsHjh6z4a/6EMHng9D75BAM6Ct
+ zNP0R2wv/Frb46fN9k47C2rGg5Z4eRDU45dl2liVB9tycOqrsJLcjnR1ET4JSX14sV
+ ANVlYcpU4KpPTW8Ymr0tMG7NqGErK0wEyelLvM92Qj10ktOFFrm8RAOAbdIoplI3mk
+ 5SdR7b+RMwmWXQwkKn7vvl7Qib4xy9W29MrbwtCBeWkkLk+v/Vn32DaMTggmUi7aAw
+ 1B5awF8+2fvKHU7F8hodfx9vInNNVpOFRAyWQMfoK0NaB6tdknpS3MpGI4/vknMPsV
+ aIgS2bSCn6J+Q==
+Date: Wed, 12 Jan 2022 10:31:57 -0800
+From: Eric Biggers <ebiggers@kernel.org>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: linux-crypto@vger.kernel.org, netdev@vger.kernel.org,
+ wireguard@lists.zx2c4.com, linux-kernel@vger.kernel.org,
+ bpf@vger.kernel.org, geert@linux-m68k.org, tytso@mit.edu,
+ gregkh@linuxfoundation.org, jeanphilippe.aumasson@gmail.com,
+ ardb@kernel.org, Herbert Xu <herbert@gondor.apana.org.au>
+Subject: Re: [PATCH crypto 1/2] lib/crypto: blake2s-generic: reduce code size
+ on small systems
+Message-ID: <Yd8enQTocuCSQVkT@gmail.com>
+References: <CAHmME9qbnYmhvsuarButi6s=58=FPiti0Z-QnGMJ=OsMzy1eOg@mail.gmail.com>
+ <20220111134934.324663-1-Jason@zx2c4.com>
+ <20220111134934.324663-2-Jason@zx2c4.com>
 MIME-Version: 1.0
-References: <CABBZOsm1hzRqQ65izwk23S4rQrVCYBkwL73yi3LT5BdvNVbeeg@mail.gmail.com>
-In-Reply-To: <CABBZOsm1hzRqQ65izwk23S4rQrVCYBkwL73yi3LT5BdvNVbeeg@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 12 Jan 2022 16:43:35 +0100
-X-Gmail-Original-Message-ID: <CAHmME9rtqmcjKnaR6fCC4Wtj7gkzBF+LJ8AWDsT3cweuZSkHLQ@mail.gmail.com>
-Message-ID: <CAHmME9rtqmcjKnaR6fCC4Wtj7gkzBF+LJ8AWDsT3cweuZSkHLQ@mail.gmail.com>
-Subject: Re: Enable BitCode on libwg-go.a (Wireguard iOS project)
-To: Houman <houmie@gmail.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220111134934.324663-2-Jason@zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -69,8 +64,59 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Looks like gomobile fixed it via:
+On Tue, Jan 11, 2022 at 02:49:33PM +0100, Jason A. Donenfeld wrote:
+> Re-wind the loops entirely on kernels optimized for code size. This is
+> really not good at all performance-wise. But on m68k, it shaves off 4k
+> of code size, which is apparently important.
+> 
+> Cc: Geert Uytterhoeven <geert@linux-m68k.org>
+> Cc: Herbert Xu <herbert@gondor.apana.org.au>
+> Cc: Ard Biesheuvel <ardb@kernel.org>
+> Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+> ---
+>  lib/crypto/blake2s-generic.c | 30 ++++++++++++++++++------------
+>  1 file changed, 18 insertions(+), 12 deletions(-)
+> 
+> diff --git a/lib/crypto/blake2s-generic.c b/lib/crypto/blake2s-generic.c
+> index 75ccb3e633e6..990f000e22ee 100644
+> --- a/lib/crypto/blake2s-generic.c
+> +++ b/lib/crypto/blake2s-generic.c
+> @@ -46,7 +46,7 @@ void blake2s_compress_generic(struct blake2s_state *state, const u8 *block,
+>  {
+>  	u32 m[16];
+>  	u32 v[16];
+> -	int i;
+> +	int i, j;
+>  
+>  	WARN_ON(IS_ENABLED(DEBUG) &&
+>  		(nblocks > 1 && inc != BLAKE2S_BLOCK_SIZE));
+> @@ -86,17 +86,23 @@ void blake2s_compress_generic(struct blake2s_state *state, const u8 *block,
+>  	G(r, 6, v[2], v[ 7], v[ 8], v[13]); \
+>  	G(r, 7, v[3], v[ 4], v[ 9], v[14]); \
+>  } while (0)
+> -		ROUND(0);
+> -		ROUND(1);
+> -		ROUND(2);
+> -		ROUND(3);
+> -		ROUND(4);
+> -		ROUND(5);
+> -		ROUND(6);
+> -		ROUND(7);
+> -		ROUND(8);
+> -		ROUND(9);
+> -
+> +		if (IS_ENABLED(CONFIG_CC_OPTIMIZE_FOR_SIZE)) {
+> +			for (i = 0; i < 10; ++i) {
+> +				for (j = 0; j < 8; ++j)
+> +					G(i, j, v[j % 4], v[((j + (j / 4)) % 4) + 4], v[((j + 2 * (j / 4)) % 4) + 8], v[((j + 3 * (j / 4)) % 4) + 12]);
+> +			}
 
-https://github.com/golang/mobile/commit/ddd6497b067577b19dddcb2b88017887a0227eb5
+How about unrolling the inner loop but not the outer one?  Wouldn't that give
+most of the benefit, without hurting performance as much?
 
-We should probably do the same.
+If you stay with this approach and don't unroll either loop, can you use 'r' and
+'i' instead of 'i' and 'j', to match the naming in G()?
+
+Also, please wrap lines at 80 columns.
+
+- Eric
