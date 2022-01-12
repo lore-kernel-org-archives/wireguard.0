@@ -4,60 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B830C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 12 Jan 2022 18:51:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E1B3C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 12 Jan 2022 22:01:00 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id bed8dc8d;
-	Wed, 12 Jan 2022 18:51:17 +0000 (UTC)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id d69aaf9c;
+	Wed, 12 Jan 2022 22:00:58 +0000 (UTC)
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id fece717b
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 379c24f1
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 12 Jan 2022 18:51:16 +0000 (UTC)
+ Wed, 12 Jan 2022 22:00:56 +0000 (UTC)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id D33FD616D1
- for <wireguard@lists.zx2c4.com>; Wed, 12 Jan 2022 18:51:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F602C36AEB
- for <wireguard@lists.zx2c4.com>; Wed, 12 Jan 2022 18:51:14 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 7E03B61AE1
+ for <wireguard@lists.zx2c4.com>; Wed, 12 Jan 2022 22:00:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98DFCC36AEC
+ for <wireguard@lists.zx2c4.com>; Wed, 12 Jan 2022 22:00:53 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
  dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="SVlUKGNc"
+ header.b="lr/xlBLC"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1642013471;
+ t=1642024850;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=xreHySqXLyhKUk0VW0GwsU6XUHgnG+4/Jk0kao9Oifc=;
- b=SVlUKGNcrSDoPZWC+klO14Zqk7l7Uf8MtIAFKt+cC6HwyJsLy+SLzVJX2qkW5yifFG74U1
- jkNoAR9iWafix2H1JjlgdtWawKfLApWQRctYnBS5dtnsQG3gAwp6/5nfj5vg0rGFBqRHvP
- Qe+YhFBRbUX0+Y9zskJZr0tLh1hhtZk=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 6defb0c0
+ bh=x7iEe7IoxzS5LF9sUIO2C6nbsTbfn+EF6LhXMAOlaaE=;
+ b=lr/xlBLCZhYJYGE3l7rjBQs6lpPhxatKOJKXsHsFfWW3BhDx3vbC+FWBWLhVD95Lbk1THF
+ oSse5uLcPApKGTWPwssJ2FwtmJjFGDvACZbzrZlCO4liAvC4eQxuEuVrLVB2jAb8cYgDlJ
+ DrO8bK6NuGXBT8OcmyHrGhlAr4ooSIo=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ed197f36
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 12 Jan 2022 18:51:11 +0000 (UTC)
-Received: by mail-yb1-f178.google.com with SMTP id c10so8306744ybb.2
- for <wireguard@lists.zx2c4.com>; Wed, 12 Jan 2022 10:51:10 -0800 (PST)
-X-Gm-Message-State: AOAM533Hd/8lvybpLyLYDQhOdzyP+C/b1GYj73iBj0YlBL4i34rKqVpa
- dGDTvzsEwgkIJyYbQ2z3fDBeiMcA84Je+b93a7c=
-X-Google-Smtp-Source: ABdhPJyNAIEcTXisld7XC7bhz4PalaSX6tHDm9+bpvRZLfdVf/6oPJbATFqmhRaXycqh4DhrWUXcosqQSbDYw9Ipoz0=
-X-Received: by 2002:a25:854f:: with SMTP id f15mr1311046ybn.121.1642013469238; 
- Wed, 12 Jan 2022 10:51:09 -0800 (PST)
+ Wed, 12 Jan 2022 22:00:50 +0000 (UTC)
+Received: by mail-yb1-f175.google.com with SMTP id p187so9707916ybc.0
+ for <wireguard@lists.zx2c4.com>; Wed, 12 Jan 2022 14:00:50 -0800 (PST)
+X-Gm-Message-State: AOAM533YnwAXr903ITEoyLyqoOc/P5QTGNADWhgokI9u0hDrIsBuuSYc
+ QTvgixR8M03S0+JkhZSagIFqfRGryk2fmY8Oxf4=
+X-Google-Smtp-Source: ABdhPJxpRMesfcwVP3cDFwxhtrXE3cWVaFTB1pgeIm7wgCjUmTGJYn0+LmHJIWiD1lpG6RAGzWa6tkk4ceurJUL7qr0=
+X-Received: by 2002:a25:8c4:: with SMTP id 187mr2224483ybi.245.1642024848755; 
+ Wed, 12 Jan 2022 14:00:48 -0800 (PST)
 MIME-Version: 1.0
+Received: by 2002:a05:7110:209:b0:11c:1b85:d007 with HTTP; Wed, 12 Jan 2022
+ 14:00:48 -0800 (PST)
+In-Reply-To: <d7e206a5a03d46a69c0be3b8ed651518@AcuMS.aculab.com>
 References: <CAHmME9qbnYmhvsuarButi6s=58=FPiti0Z-QnGMJ=OsMzy1eOg@mail.gmail.com>
  <20220111134934.324663-1-Jason@zx2c4.com>
  <20220111134934.324663-2-Jason@zx2c4.com>
  <Yd8enQTocuCSQVkT@gmail.com>
-In-Reply-To: <Yd8enQTocuCSQVkT@gmail.com>
+ <CAHmME9qGs8yfYy0GVcV8XaUt9cjCqQF2D79RvrsQE+CNLCeojA@mail.gmail.com>
+ <d7e206a5a03d46a69c0be3b8ed651518@AcuMS.aculab.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 12 Jan 2022 19:50:58 +0100
-X-Gmail-Original-Message-ID: <CAHmME9qGs8yfYy0GVcV8XaUt9cjCqQF2D79RvrsQE+CNLCeojA@mail.gmail.com>
-Message-ID: <CAHmME9qGs8yfYy0GVcV8XaUt9cjCqQF2D79RvrsQE+CNLCeojA@mail.gmail.com>
+Date: Wed, 12 Jan 2022 23:00:48 +0100
+X-Gmail-Original-Message-ID: <CAHmME9p-JZS480-e3MvPsa1Q07rqX79h8oNEZsF970GjT-_nqA@mail.gmail.com>
+Message-ID: <CAHmME9p-JZS480-e3MvPsa1Q07rqX79h8oNEZsF970GjT-_nqA@mail.gmail.com>
 Subject: Re: [PATCH crypto 1/2] lib/crypto: blake2s-generic: reduce code size
  on small systems
-To: Eric Biggers <ebiggers@kernel.org>
-Cc: Linux Crypto Mailing List <linux-crypto@vger.kernel.org>,
+To: David Laight <David.Laight@aculab.com>
+Cc: Eric Biggers <ebiggers@kernel.org>, 
+ Linux Crypto Mailing List <linux-crypto@vger.kernel.org>,
  Netdev <netdev@vger.kernel.org>, 
  WireGuard mailing list <wireguard@lists.zx2c4.com>,
  LKML <linux-kernel@vger.kernel.org>, 
@@ -81,15 +86,45 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, Jan 12, 2022 at 7:32 PM Eric Biggers <ebiggers@kernel.org> wrote:
-> How about unrolling the inner loop but not the outer one?  Wouldn't that give
-> most of the benefit, without hurting performance as much?
->
-> If you stay with this approach and don't unroll either loop, can you use 'r' and
-> 'i' instead of 'i' and 'j', to match the naming in G()?
+Hi David,
 
-All this might work, sure. But as mentioned earlier, I've abandoned
-this entirely, as I don't think this patch is necessary. See the v3
-patchset instead:
+On 1/12/22, David Laight <David.Laight@aculab.com> wrote:
+> I think you mentioned in another thread that the buffers (eg for IPv6
+> addresses) are actually often quite short.
+>
+> For short buffers the 'rolled-up' loop may be of similar performance
+> to the unrolled one because of the time taken to read all the instructions
+> into the I-cache and decode them.
+> If the loop ends up small enough it will fit into the 'decoded loop
+> buffer' of modern Intel x86 cpu and won't even need decoding on
+> each iteration.
+>
+> I really suspect that the heavily unrolled loop is only really fast
+> for big buffers and/or when it is already in the I-cache.
+> In real life I wonder how often that actually happens?
+> Especially for the uses the kernel is making of the code.
+>
+> You need to benchmark single executions of the function
+> (doable on x86 with the performance monitor cycle counter)
+> to get typical/best clocks/byte figures rather than a
+> big average for repeated operation on a long buffer.
+>
+> 	David
+
+This patch has been dropped entirely from future revisions. The latest
+as of writing is at:
 
 https://lore.kernel.org/linux-crypto/20220111220506.742067-1-Jason@zx2c4.com/
+
+If you'd like to do something with blake2s, by all means submit a
+patch and include various rationale and metrics and benchmarks. I do
+not intend to do that myself and do not think my particular patch here
+should be merged. But if you'd like to do something, feel free to CC
+me for a review. However, as mentioned, I don't think much needs to be
+done here.
+
+Again, v3 is here:
+https://lore.kernel.org/linux-crypto/20220111220506.742067-1-Jason@zx2c4.com/
+
+Thanks,
+Jason
