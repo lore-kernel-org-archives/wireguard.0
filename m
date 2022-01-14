@@ -4,63 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33DFDC433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 16 Jan 2022 21:13:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3D99C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 16 Jan 2022 21:15:34 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 5cee6ba7;
-	Sun, 16 Jan 2022 21:10:55 +0000 (UTC)
-Received: from eu-smtp-delivery-151.mimecast.com
- (eu-smtp-delivery-151.mimecast.com [185.58.85.151])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id a4495421
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 3ad64c1d;
+	Sun, 16 Jan 2022 21:10:56 +0000 (UTC)
+Received: from mout.perfora.net (mout.perfora.net [74.208.4.196])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id d69d7cdf
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 12 Jan 2022 21:27:42 +0000 (UTC)
-Received: from AcuMS.aculab.com (156.67.243.121 [156.67.243.121]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- uk-mta-56-YKI_HUCbPtWK5PQHYtyc5g-1; Wed, 12 Jan 2022 21:27:40 +0000
-X-MC-Unique: YKI_HUCbPtWK5PQHYtyc5g-1
-Received: from AcuMS.Aculab.com (fd9f:af1c:a25b:0:994c:f5c2:35d6:9b65) by
- AcuMS.aculab.com (fd9f:af1c:a25b:0:994c:f5c2:35d6:9b65) with Microsoft SMTP
- Server (TLS) id 15.0.1497.26; Wed, 12 Jan 2022 21:27:40 +0000
-Received: from AcuMS.Aculab.com ([fe80::994c:f5c2:35d6:9b65]) by
- AcuMS.aculab.com ([fe80::994c:f5c2:35d6:9b65%12]) with mapi id
- 15.00.1497.026; Wed, 12 Jan 2022 21:27:40 +0000
-From: David Laight <David.Laight@ACULAB.COM>
-To: "'Jason A. Donenfeld'" <Jason@zx2c4.com>, Eric Biggers
- <ebiggers@kernel.org>
-CC: Linux Crypto Mailing List <linux-crypto@vger.kernel.org>, Netdev
- <netdev@vger.kernel.org>, WireGuard mailing list <wireguard@lists.zx2c4.com>, 
- LKML <linux-kernel@vger.kernel.org>, bpf <bpf@vger.kernel.org>, "Geert
- Uytterhoeven" <geert@linux-m68k.org>, Theodore Ts'o <tytso@mit.edu>, "Greg
- Kroah-Hartman" <gregkh@linuxfoundation.org>, Jean-Philippe Aumasson
- <jeanphilippe.aumasson@gmail.com>, Ard Biesheuvel <ardb@kernel.org>, "Herbert
- Xu" <herbert@gondor.apana.org.au>
-Subject: RE: [PATCH crypto 1/2] lib/crypto: blake2s-generic: reduce code size
- on small systems
-Thread-Topic: [PATCH crypto 1/2] lib/crypto: blake2s-generic: reduce code size
- on small systems
-Thread-Index: AQHYB+VtFSMgWrVqxkafOfrj0ELoyKxf5LLQ
-Date: Wed, 12 Jan 2022 21:27:40 +0000
-Message-ID: <d7e206a5a03d46a69c0be3b8ed651518@AcuMS.aculab.com>
-References: <CAHmME9qbnYmhvsuarButi6s=58=FPiti0Z-QnGMJ=OsMzy1eOg@mail.gmail.com>
- <20220111134934.324663-1-Jason@zx2c4.com>
- <20220111134934.324663-2-Jason@zx2c4.com> <Yd8enQTocuCSQVkT@gmail.com>
- <CAHmME9qGs8yfYy0GVcV8XaUt9cjCqQF2D79RvrsQE+CNLCeojA@mail.gmail.com>
-In-Reply-To: <CAHmME9qGs8yfYy0GVcV8XaUt9cjCqQF2D79RvrsQE+CNLCeojA@mail.gmail.com>
-Accept-Language: en-GB, en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.202.205.107]
+ Fri, 14 Jan 2022 19:43:22 +0000 (UTC)
+Received: from oxuslxaltgw13.schlund.de ([10.72.76.69]) by mrelay.perfora.net
+ (mreueus003 [74.208.5.2]) with ESMTPSA (Nemesis) id
+ 0MRWGM-1mkEZE1oNM-00SfE1
+ for <wireguard@lists.zx2c4.com>; Fri, 14 Jan 2022 20:43:20 +0100
+Date: Fri, 14 Jan 2022 14:43:19 -0500 (EST)
+From: Alejandro Pablo Achterberg <aachterberg@emtech.com.ar>
+To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Message-ID: <1138419590.64184.1642189399873@email.ionos.com>
+Subject: wintun 0.13 driver - performance issue
 MIME-Version: 1.0
-Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=C51A453 smtp.mailfrom=david.laight@aculab.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: aculab.com
-Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+Importance: Normal
+X-Mailer: Open-Xchange Mailer v7.10.5-Rev34
+X-Originating-Client: open-xchange-appsuite
+X-Provags-ID: V03:K1:nJNkVciIck+3NznUM5y0kuv3z4XFCUl5aABl0eqkFWNvXwA3Z1w
+ bm5+1aMKiEYGWSE0y0uLN42p3BarhqaYnNl9fJjKRKOFDWQlXwld9u8pqzuZOO8fUZeJCv5
+ YhL8S2Rr0kj/S2hjKjjNEIGtBxu12j148hS8znawdIRap7AxxewJ/YZDwLAXeJ21HZd6XLI
+ YzX0WA5D4NoO3Pn3PHx4g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:vGKJPuu2hTI=:EyPFGJwgONgJASD4Whe4eO
+ PGhhVwDjhpYYYNIiO/a1v1nlbX98nT2sJgEqfS8Ow+90oGaylPj+1r1r+qfdHImfyWY9yrA+d
+ C3ZAryyi5Sk/iaekmGW9y5CIlcZi/qOGIFEJLOAtgm0aiCWoK+FDIGiOv0LDMRylNgPFS5jL5
+ 3RdqSb25gkyhp/xL0Qwa/U4+3QKqR53nLmfBnRYYGQccab9iUIzJpsPJxThVWwofVORH1M6JD
+ ciwBJtivXWbC6/SgeMGzn2+gNUhUInh4iB/BHVFHDx5XEtHS19YTpTuN7sITGTyhH9BgpgXnR
+ 56xSefVot33na7BaUqJirhcBzDA+wzHusX82xpAD3OEUNQMU0yqDCZjC2arXW/XSQvONLxBr7
+ K3B/i9GgkQYTy568hXvpJgqJrcOPeHZqGJXDVbK/ZkNCOR5c+fN/O0/WtLkFgF6fvu11QLs+/
+ m/fVSE+wbfIbtGGj+55Ljbk5YpTHHVXzUEpzjt6drYR7YuDVLZ0sjO3rkAgjldnbmQ0A5+0lD
+ B4r3wUASUfENH31y9UfreK+KlvPCUPCHxN6JdDuNX6qryPYWhV2nOEtvh1IqSueodBFT5WKvm
+ j4Kj57iflrKOOhbS2ZV6VsGHjB+Kq6MzfbZ33z7O3JmuTisb23zqgMEs5tLdf9TAHDPeme6PF
+ 7HbiYWBFSfSoonXKwGRcEoEN4hk4xALYTRPtelaurOuCsaE71hZsdmdndsp7RGhO3J3D4CoxZ
+ Zra57eQc6+9PC73u
 X-Mailman-Approved-At: Sun, 16 Jan 2022 21:10:46 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -76,35 +61,110 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-RnJvbTogSmFzb24gQS4gRG9uZW5mZWxkDQo+IFNlbnQ6IDEyIEphbnVhcnkgMjAyMiAxODo1MQ0K
-PiANCj4gT24gV2VkLCBKYW4gMTIsIDIwMjIgYXQgNzozMiBQTSBFcmljIEJpZ2dlcnMgPGViaWdn
-ZXJzQGtlcm5lbC5vcmc+IHdyb3RlOg0KPiA+IEhvdyBhYm91dCB1bnJvbGxpbmcgdGhlIGlubmVy
-IGxvb3AgYnV0IG5vdCB0aGUgb3V0ZXIgb25lPyAgV291bGRuJ3QgdGhhdCBnaXZlDQo+ID4gbW9z
-dCBvZiB0aGUgYmVuZWZpdCwgd2l0aG91dCBodXJ0aW5nIHBlcmZvcm1hbmNlIGFzIG11Y2g/DQo+
-ID4NCj4gPiBJZiB5b3Ugc3RheSB3aXRoIHRoaXMgYXBwcm9hY2ggYW5kIGRvbid0IHVucm9sbCBl
-aXRoZXIgbG9vcCwgY2FuIHlvdSB1c2UgJ3InIGFuZA0KPiA+ICdpJyBpbnN0ZWFkIG9mICdpJyBh
-bmQgJ2onLCB0byBtYXRjaCB0aGUgbmFtaW5nIGluIEcoKT8NCj4gDQo+IEFsbCB0aGlzIG1pZ2h0
-IHdvcmssIHN1cmUuIEJ1dCBhcyBtZW50aW9uZWQgZWFybGllciwgSSd2ZSBhYmFuZG9uZWQNCj4g
-dGhpcyBlbnRpcmVseSwgYXMgSSBkb24ndCB0aGluayB0aGlzIHBhdGNoIGlzIG5lY2Vzc2FyeS4g
-U2VlIHRoZSB2Mw0KPiBwYXRjaHNldCBpbnN0ZWFkOg0KPiANCj4gaHR0cHM6Ly9sb3JlLmtlcm5l
-bC5vcmcvbGludXgtY3J5cHRvLzIwMjIwMTExMjIwNTA2Ljc0MjA2Ny0xLUphc29uQHp4MmM0LmNv
-bS8NCg0KSSB0aGluayB5b3UgbWVudGlvbmVkIGluIGFub3RoZXIgdGhyZWFkIHRoYXQgdGhlIGJ1
-ZmZlcnMgKGVnIGZvciBJUHY2DQphZGRyZXNzZXMpIGFyZSBhY3R1YWxseSBvZnRlbiBxdWl0ZSBz
-aG9ydC4NCg0KRm9yIHNob3J0IGJ1ZmZlcnMgdGhlICdyb2xsZWQtdXAnIGxvb3AgbWF5IGJlIG9m
-IHNpbWlsYXIgcGVyZm9ybWFuY2UNCnRvIHRoZSB1bnJvbGxlZCBvbmUgYmVjYXVzZSBvZiB0aGUg
-dGltZSB0YWtlbiB0byByZWFkIGFsbCB0aGUgaW5zdHJ1Y3Rpb25zDQppbnRvIHRoZSBJLWNhY2hl
-IGFuZCBkZWNvZGUgdGhlbS4NCklmIHRoZSBsb29wIGVuZHMgdXAgc21hbGwgZW5vdWdoIGl0IHdp
-bGwgZml0IGludG8gdGhlICdkZWNvZGVkIGxvb3ANCmJ1ZmZlcicgb2YgbW9kZXJuIEludGVsIHg4
-NiBjcHUgYW5kIHdvbid0IGV2ZW4gbmVlZCBkZWNvZGluZyBvbg0KZWFjaCBpdGVyYXRpb24uDQoN
-CkkgcmVhbGx5IHN1c3BlY3QgdGhhdCB0aGUgaGVhdmlseSB1bnJvbGxlZCBsb29wIGlzIG9ubHkg
-cmVhbGx5IGZhc3QNCmZvciBiaWcgYnVmZmVycyBhbmQvb3Igd2hlbiBpdCBpcyBhbHJlYWR5IGlu
-IHRoZSBJLWNhY2hlLg0KSW4gcmVhbCBsaWZlIEkgd29uZGVyIGhvdyBvZnRlbiB0aGF0IGFjdHVh
-bGx5IGhhcHBlbnM/DQpFc3BlY2lhbGx5IGZvciB0aGUgdXNlcyB0aGUga2VybmVsIGlzIG1ha2lu
-ZyBvZiB0aGUgY29kZS4NCg0KWW91IG5lZWQgdG8gYmVuY2htYXJrIHNpbmdsZSBleGVjdXRpb25z
-IG9mIHRoZSBmdW5jdGlvbg0KKGRvYWJsZSBvbiB4ODYgd2l0aCB0aGUgcGVyZm9ybWFuY2UgbW9u
-aXRvciBjeWNsZSBjb3VudGVyKQ0KdG8gZ2V0IHR5cGljYWwvYmVzdCBjbG9ja3MvYnl0ZSBmaWd1
-cmVzIHJhdGhlciB0aGFuIGENCmJpZyBhdmVyYWdlIGZvciByZXBlYXRlZCBvcGVyYXRpb24gb24g
-YSBsb25nIGJ1ZmZlci4NCg0KCURhdmlkDQoNCi0NClJlZ2lzdGVyZWQgQWRkcmVzcyBMYWtlc2lk
-ZSwgQnJhbWxleSBSb2FkLCBNb3VudCBGYXJtLCBNaWx0b24gS2V5bmVzLCBNSzEgMVBULCBVSw0K
-UmVnaXN0cmF0aW9uIE5vOiAxMzk3Mzg2IChXYWxlcykNCg==
-
+Hi everyone !
+I have this issue to share to see if it can be considered a natural limitation of the implementation or (more probably) that I am making some bad decisions.
+I modified the example.c included in wintun-0.13 code to test higher rates of packet sending.
+I am building Multicast UDP packets 200 bytes long that are received at a consumer application -that opens a socket to the wintun adapter registering the multicast group to the socket-.
+I turned off all console logging during the test run.
+I'm running on a Windows Server 2019, 8 cores, 32 GB RAM, Visual Studio Community 2019.
+What I get is that the example can send the 100 Kpps (and up to ~300 Kpps) without problems, but not with the consumer application reading packets from the wintun adapter.
+When the consumer application is reading packets from the wintun interface the top sending rate falls about 15-20%.
+It keeps below 85 Kpps and shows some events of problems at WintunAllocateSendPacket(). I set the Rings capacity to the MAX allowed of 64 MB.
+Trying to fix this behaviour I modified the ERROR_BUFFER_OVERFLOW error handling doing a wait on the Alertable state of the Receive Ring and settting the Receive.Tailmoved event when that happens.
+This is the SendPackets() method:
+static DWORD WINAPI
+SendPackets(_Inout_ DWORD_PTR SessionPtr)
+{
+TUN_SESSION* Session = (TUN_SESSION*)SessionPtr;
+while (!HaveQuit)
+{
+BYTE* Packet = WintunAllocateSendPacket(Session, 228);
+if (Packet)
+{
+MakeIpPacket(Packet);
+WintunSendPacket(Session, Packet);
+++sentPkts;
+spin(RATE, PPS);
+}
+else {
+if (GetLastError() != ERROR_BUFFER_OVERFLOW) {
+return LogLastError(L"Packet write failed");
+}
+else {
+while (Session->Descriptor.Receive.Ring->Alertable != 1) {
+spin(1000, FALSE);
+}
+SetEvent(Session->Descriptor.Receive.TailMoved);
+++sendDelay;
+}
+}
+}
+return ERROR_SUCCESS;
+}
+and this is my spin() function:
+// Packets per second sent can be defined as PPS using windows timers or with their period using a count loop
+static boolean PPS = TRUE;
+static LONG RATE = 115000;
+static void
+spin(LONGLONG rate, boolean isPPS) {
+LARGE_INTEGER StartingTime, CurrentTime, ElapsedMicroseconds;
+LONGLONG nano;
+if (isPPS) {
+nano = 1e9 / rate;
+QueryPerformanceCounter(&StartingTime);
+while (TRUE) {
+if (HaveQuit)
+break;
+QueryPerformanceCounter(&CurrentTime);
+ElapsedMicroseconds.QuadPart = CurrentTime.QuadPart - StartingTime.QuadPart;
+ElapsedMicroseconds.QuadPart *= 1000000; // guard against loss-of-precision
+ElapsedMicroseconds.QuadPart /= Frequency.QuadPart;
+ElapsedMicroseconds.QuadPart *= 1000; // nanoseconds
+if (nano < ElapsedMicroseconds.QuadPart) {
+break;
+}
+}
+}
+else {
+if (rate < 1000) {
+return;
+}
+nano = rate;
+while (nano > 0) {
+if (HaveQuit)
+break;
+--nano;
+}
+}
+}
+Statistics reported look like this when sending to the wintun interface and without the consumer application active.
+Rate of 100 Kpps is easily reached.
+"Delayed" counts are ERROR_BUFFER_OVERFLOW events from WintunAllocateSendPacket().
+> .\wintunprj.exe
+2022-01-11 21:09:19.0371 [+] Wintun library loaded
+2022-01-11 21:09:19.0377 [+] WintunCreateAdapter: Creating adapter
+2022-01-11 21:09:19.0477 [+] SelectDriver: Using existing driver 0.13
+2022-01-11 21:09:19.0757 [+] Wintun v0.13 loaded
+2022-01-11 21:09:19.0762 [+] Starting -----------------------------
+2022-01-11 21:09:19.0774 [+] Run started with PPS: 115000
+2022-01-11 21:09:26.0764 [+] Elapsed time in seconds: 6.985698
+2022-01-11 21:09:26.0766 [+] 757111 packets sent, 42 packets received
+2022-01-11 21:09:26.0768 [+] Packets sent at 108380 pps
+2022-01-11 21:09:26.0769 [+] Final Sending problem counts - delayed: 0
+And the statistics look like this with the consumer application active.
+Packet rate drops to 84 Kpps.
+Delayed events are present but they don't look significant actually...
+.\wintunprj.exe
+2022-01-11 21:33:22.0198 [+] Wintun library loaded
+2022-01-11 21:33:22.0204 [+] WintunCreateAdapter: Creating adapter
+2022-01-11 21:33:22.0282 [+] SelectDriver: Using existing driver 0.13
+2022-01-11 21:33:22.0564 [+] Wintun v0.13 loaded
+2022-01-11 21:33:22.0576 [+] Starting -----------------------------
+2022-01-11 21:33:22.0594 [+] Run started with PPS: 115000
+2022-01-11 21:34:39.0068 [+] Elapsed time in seconds: 76.470261
+2022-01-11 21:34:39.0070 [+] 6455902 packets sent, 45 packets received
+2022-01-11 21:34:39.0072 [+] Packets sent at 84424 pps
+2022-01-11 21:34:39.0074 [+] Final Sending problem counts - delayed: 5
+Any thoughts or ideas on how is this happening and changes due will be really appreciated !
+Thanks,
+Alex
