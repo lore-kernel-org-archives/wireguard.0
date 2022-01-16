@@ -4,48 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3D99C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 16 Jan 2022 21:15:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0333FC433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 16 Jan 2022 21:15:35 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 3ad64c1d;
-	Sun, 16 Jan 2022 21:10:56 +0000 (UTC)
-Received: from mout.perfora.net (mout.perfora.net [74.208.4.196])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id d69d7cdf
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id b00e3d21;
+	Sun, 16 Jan 2022 21:10:58 +0000 (UTC)
+Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com
+ [2607:f8b0:4864:20::d2d])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id c702dd92
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 14 Jan 2022 19:43:22 +0000 (UTC)
-Received: from oxuslxaltgw13.schlund.de ([10.72.76.69]) by mrelay.perfora.net
- (mreueus003 [74.208.5.2]) with ESMTPSA (Nemesis) id
- 0MRWGM-1mkEZE1oNM-00SfE1
- for <wireguard@lists.zx2c4.com>; Fri, 14 Jan 2022 20:43:20 +0100
-Date: Fri, 14 Jan 2022 14:43:19 -0500 (EST)
-From: Alejandro Pablo Achterberg <aachterberg@emtech.com.ar>
-To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-Message-ID: <1138419590.64184.1642189399873@email.ionos.com>
-Subject: wintun 0.13 driver - performance issue
+ Sun, 16 Jan 2022 00:11:22 +0000 (UTC)
+Received: by mail-io1-xd2d.google.com with SMTP id v6so16985573iom.6
+ for <wireguard@lists.zx2c4.com>; Sat, 15 Jan 2022 16:11:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:from:date:message-id:subject:to
+ :content-transfer-encoding;
+ bh=WkVlYKWmd79A1dtTW81x7oY4qmX6f0g+FdXxlI/TFxw=;
+ b=T1Vdd6ZvGWZkEWrfurvhFoUqu0bKQSGlhbXY3I9CU+VHcAU9uJ5i+mrp+y9F3N3PNt
+ jb4IA5kHN9wbTPL8R/t3V4Z8xM6QO4SZSlLS5yB4YWcrRvE7qyEmnqBNnNZELM3JkJ8d
+ xFS0OjCavJ3oLpsF0LnlQW2GOFSRUf45pBywJKqrhHnW9nfSdrLAzwaR7h9iVkBa4iy3
+ VdcFRWkpYiD0kgaAPBvuyH/yPbqQ6BzSP4P7Aj1R6zieEVKDtjXwHS8XMwtdFtwvrJM9
+ dgJ27tqYn/Kz1aN8fZY/wu8xXJ5fK7OogpqvlMXgaj0Mk24UrQN/yXAt+HnRxjJukMmt
+ LbXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+ :content-transfer-encoding;
+ bh=WkVlYKWmd79A1dtTW81x7oY4qmX6f0g+FdXxlI/TFxw=;
+ b=6yXDlIWC5wgC5SZp9jU+MdjKByEU+djkzVR8BhykcwSUuUWiRj8CgX76RRSG7b+3jP
+ bNYWI108QgXhdfJp3f/WBbvTYpTYEU7Cjoe2KVfGUNMjOtJ1Rxr37BG0BtVc3BkumN7g
+ RYkOZqblgJ6ApBmvrapFGzNxAf+5SYNsD7OyqS2ecRCDUFqk5/dv+fuEnWw+O0xCpvAH
+ E9OcjyGNuh58x0UjTPlIETzT+go7LQsavcta3eF8iryrs0tpGUV3o3FceMTgL+9Uj4f/
+ DaDOnG1aF0HaBrH14h5CZXkwA74DbZAl4AU0VSxsMd6FEb+eDvPO106aFgyfOuO7VETB
+ /SnA==
+X-Gm-Message-State: AOAM531w0bDa016AVfHkG7Jdxfb/cE5y5y3dHD5+fdH00XNc3qmVe2Yr
+ VF6QUEPSD0fdAjLMBimMTC+MxJaZwpMhHG/UXplVCOCU1IFHqA==
+X-Google-Smtp-Source: ABdhPJxZJGiIf/9cY4SsOwcdATBwF9kL4jFv1uux0/9XDXN9Sv5oPk4VwopCuT/i3vlLhU6MyZHWAXrFr//Dhc1D3i0=
+X-Received: by 2002:a05:6602:1543:: with SMTP id
+ h3mr7008933iow.31.1642291880365; 
+ Sat, 15 Jan 2022 16:11:20 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-Importance: Normal
-X-Mailer: Open-Xchange Mailer v7.10.5-Rev34
-X-Originating-Client: open-xchange-appsuite
-X-Provags-ID: V03:K1:nJNkVciIck+3NznUM5y0kuv3z4XFCUl5aABl0eqkFWNvXwA3Z1w
- bm5+1aMKiEYGWSE0y0uLN42p3BarhqaYnNl9fJjKRKOFDWQlXwld9u8pqzuZOO8fUZeJCv5
- YhL8S2Rr0kj/S2hjKjjNEIGtBxu12j148hS8znawdIRap7AxxewJ/YZDwLAXeJ21HZd6XLI
- YzX0WA5D4NoO3Pn3PHx4g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:vGKJPuu2hTI=:EyPFGJwgONgJASD4Whe4eO
- PGhhVwDjhpYYYNIiO/a1v1nlbX98nT2sJgEqfS8Ow+90oGaylPj+1r1r+qfdHImfyWY9yrA+d
- C3ZAryyi5Sk/iaekmGW9y5CIlcZi/qOGIFEJLOAtgm0aiCWoK+FDIGiOv0LDMRylNgPFS5jL5
- 3RdqSb25gkyhp/xL0Qwa/U4+3QKqR53nLmfBnRYYGQccab9iUIzJpsPJxThVWwofVORH1M6JD
- ciwBJtivXWbC6/SgeMGzn2+gNUhUInh4iB/BHVFHDx5XEtHS19YTpTuN7sITGTyhH9BgpgXnR
- 56xSefVot33na7BaUqJirhcBzDA+wzHusX82xpAD3OEUNQMU0yqDCZjC2arXW/XSQvONLxBr7
- K3B/i9GgkQYTy568hXvpJgqJrcOPeHZqGJXDVbK/ZkNCOR5c+fN/O0/WtLkFgF6fvu11QLs+/
- m/fVSE+wbfIbtGGj+55Ljbk5YpTHHVXzUEpzjt6drYR7YuDVLZ0sjO3rkAgjldnbmQ0A5+0lD
- B4r3wUASUfENH31y9UfreK+KlvPCUPCHxN6JdDuNX6qryPYWhV2nOEtvh1IqSueodBFT5WKvm
- j4Kj57iflrKOOhbS2ZV6VsGHjB+Kq6MzfbZ33z7O3JmuTisb23zqgMEs5tLdf9TAHDPeme6PF
- 7HbiYWBFSfSoonXKwGRcEoEN4hk4xALYTRPtelaurOuCsaE71hZsdmdndsp7RGhO3J3D4CoxZ
- Zra57eQc6+9PC73u
+From: Alessio Nossa <alessio.nossa+list@gmail.com>
+Date: Sun, 16 Jan 2022 01:11:09 +0100
+Message-ID: <CAMTfdYr3YRv4MQKBhbj=Mq-QK_7nQF_DsbsB2wPLCf-idV8=ig@mail.gmail.com>
+Subject: [wireguard-apple] Siri Shortcuts/Intents integration
+To: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Mailman-Approved-At: Sun, 16 Jan 2022 21:10:46 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -61,110 +67,36 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi everyone !
-I have this issue to share to see if it can be considered a natural limitation of the implementation or (more probably) that I am making some bad decisions.
-I modified the example.c included in wintun-0.13 code to test higher rates of packet sending.
-I am building Multicast UDP packets 200 bytes long that are received at a consumer application -that opens a socket to the wintun adapter registering the multicast group to the socket-.
-I turned off all console logging during the test run.
-I'm running on a Windows Server 2019, 8 cores, 32 GB RAM, Visual Studio Community 2019.
-What I get is that the example can send the 100 Kpps (and up to ~300 Kpps) without problems, but not with the consumer application reading packets from the wintun adapter.
-When the consumer application is reading packets from the wintun interface the top sending rate falls about 15-20%.
-It keeps below 85 Kpps and shows some events of problems at WintunAllocateSendPacket(). I set the Rings capacity to the MAX allowed of 64 MB.
-Trying to fix this behaviour I modified the ERROR_BUFFER_OVERFLOW error handling doing a wait on the Alertable state of the Receive Ring and settting the Receive.Tailmoved event when that happens.
-This is the SendPackets() method:
-static DWORD WINAPI
-SendPackets(_Inout_ DWORD_PTR SessionPtr)
-{
-TUN_SESSION* Session = (TUN_SESSION*)SessionPtr;
-while (!HaveQuit)
-{
-BYTE* Packet = WintunAllocateSendPacket(Session, 228);
-if (Packet)
-{
-MakeIpPacket(Packet);
-WintunSendPacket(Session, Packet);
-++sentPkts;
-spin(RATE, PPS);
-}
-else {
-if (GetLastError() != ERROR_BUFFER_OVERFLOW) {
-return LogLastError(L"Packet write failed");
-}
-else {
-while (Session->Descriptor.Receive.Ring->Alertable != 1) {
-spin(1000, FALSE);
-}
-SetEvent(Session->Descriptor.Receive.TailMoved);
-++sendDelay;
-}
-}
-}
-return ERROR_SUCCESS;
-}
-and this is my spin() function:
-// Packets per second sent can be defined as PPS using windows timers or with their period using a count loop
-static boolean PPS = TRUE;
-static LONG RATE = 115000;
-static void
-spin(LONGLONG rate, boolean isPPS) {
-LARGE_INTEGER StartingTime, CurrentTime, ElapsedMicroseconds;
-LONGLONG nano;
-if (isPPS) {
-nano = 1e9 / rate;
-QueryPerformanceCounter(&StartingTime);
-while (TRUE) {
-if (HaveQuit)
-break;
-QueryPerformanceCounter(&CurrentTime);
-ElapsedMicroseconds.QuadPart = CurrentTime.QuadPart - StartingTime.QuadPart;
-ElapsedMicroseconds.QuadPart *= 1000000; // guard against loss-of-precision
-ElapsedMicroseconds.QuadPart /= Frequency.QuadPart;
-ElapsedMicroseconds.QuadPart *= 1000; // nanoseconds
-if (nano < ElapsedMicroseconds.QuadPart) {
-break;
-}
-}
-}
-else {
-if (rate < 1000) {
-return;
-}
-nano = rate;
-while (nano > 0) {
-if (HaveQuit)
-break;
---nano;
-}
-}
-}
-Statistics reported look like this when sending to the wintun interface and without the consumer application active.
-Rate of 100 Kpps is easily reached.
-"Delayed" counts are ERROR_BUFFER_OVERFLOW events from WintunAllocateSendPacket().
-> .\wintunprj.exe
-2022-01-11 21:09:19.0371 [+] Wintun library loaded
-2022-01-11 21:09:19.0377 [+] WintunCreateAdapter: Creating adapter
-2022-01-11 21:09:19.0477 [+] SelectDriver: Using existing driver 0.13
-2022-01-11 21:09:19.0757 [+] Wintun v0.13 loaded
-2022-01-11 21:09:19.0762 [+] Starting -----------------------------
-2022-01-11 21:09:19.0774 [+] Run started with PPS: 115000
-2022-01-11 21:09:26.0764 [+] Elapsed time in seconds: 6.985698
-2022-01-11 21:09:26.0766 [+] 757111 packets sent, 42 packets received
-2022-01-11 21:09:26.0768 [+] Packets sent at 108380 pps
-2022-01-11 21:09:26.0769 [+] Final Sending problem counts - delayed: 0
-And the statistics look like this with the consumer application active.
-Packet rate drops to 84 Kpps.
-Delayed events are present but they don't look significant actually...
-.\wintunprj.exe
-2022-01-11 21:33:22.0198 [+] Wintun library loaded
-2022-01-11 21:33:22.0204 [+] WintunCreateAdapter: Creating adapter
-2022-01-11 21:33:22.0282 [+] SelectDriver: Using existing driver 0.13
-2022-01-11 21:33:22.0564 [+] Wintun v0.13 loaded
-2022-01-11 21:33:22.0576 [+] Starting -----------------------------
-2022-01-11 21:33:22.0594 [+] Run started with PPS: 115000
-2022-01-11 21:34:39.0068 [+] Elapsed time in seconds: 76.470261
-2022-01-11 21:34:39.0070 [+] 6455902 packets sent, 45 packets received
-2022-01-11 21:34:39.0072 [+] Packets sent at 84424 pps
-2022-01-11 21:34:39.0074 [+] Final Sending problem counts - delayed: 5
-Any thoughts or ideas on how is this happening and changes due will be really appreciated !
-Thanks,
-Alex
+Hello
+In the last month I worked on the implementation of Siri
+Shortcuts/Intents integration for the WireGuard app (at the moment,
+only on iOS), to automate some tasks like connecting a
+tunnel, getting tunnel peers, and updating configuration at runtime. I
+saw that this feature was on your TODO List too [1].
+
+My idea is to have an interface to manage connections, to make up for
+the absence of wgctrl-go [2] on iOS. I need this to dynamically update
+endpoints at runtime for NAT Traversal purposes [3]; specifically, I
+need peers' public keys and a way to set endpoints at runtime [4].
+
+There are some issues due to an Apple's bug [5] that doesn't allow an
+extension to update the configuration owned by its parent app. As a
+workaround the update configuration action will launch the main app.
+
+As this is my first time contributing to wireguard-apple, if you have
+any advice, I'm here to hear from you.
+As suggested in macOS and iOS TODO list, I=E2=80=99d like to have push acce=
+ss
+to the repository (or any other way I can submit it) to contribute
+with my work (I already sent an email to team at wireguard.com, but
+received no response).
+
+Kind regards,
+
+[1] https://docs.google.com/document/d/1BnzImOF8CkungFnuRlWhnEpY2OmEHSckat6=
+2aZ6LYGY
+[2] https://github.com/WireGuard/wgctrl-go
+[3] https://www.jordanwhited.com/posts/wireguard-endpoint-discovery-nat-tra=
+versal/
+[4] https://github.com/jwhited/wgsd/blob/master/cmd/wgsd-client/main.go
+[5] https://developer.apple.com/forums/thread/96020
