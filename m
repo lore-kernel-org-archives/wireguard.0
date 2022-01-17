@@ -4,55 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0333FC433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 16 Jan 2022 21:15:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89E1FC433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 Jan 2022 10:52:37 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id b00e3d21;
-	Sun, 16 Jan 2022 21:10:58 +0000 (UTC)
-Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com
- [2607:f8b0:4864:20::d2d])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id c702dd92
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 588c710c;
+	Mon, 17 Jan 2022 10:51:09 +0000 (UTC)
+Received: from krn.amebis.si (krn.amebis.si [93.103.235.207])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id cb86778a
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 16 Jan 2022 00:11:22 +0000 (UTC)
-Received: by mail-io1-xd2d.google.com with SMTP id v6so16985573iom.6
- for <wireguard@lists.zx2c4.com>; Sat, 15 Jan 2022 16:11:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to
- :content-transfer-encoding;
- bh=WkVlYKWmd79A1dtTW81x7oY4qmX6f0g+FdXxlI/TFxw=;
- b=T1Vdd6ZvGWZkEWrfurvhFoUqu0bKQSGlhbXY3I9CU+VHcAU9uJ5i+mrp+y9F3N3PNt
- jb4IA5kHN9wbTPL8R/t3V4Z8xM6QO4SZSlLS5yB4YWcrRvE7qyEmnqBNnNZELM3JkJ8d
- xFS0OjCavJ3oLpsF0LnlQW2GOFSRUf45pBywJKqrhHnW9nfSdrLAzwaR7h9iVkBa4iy3
- VdcFRWkpYiD0kgaAPBvuyH/yPbqQ6BzSP4P7Aj1R6zieEVKDtjXwHS8XMwtdFtwvrJM9
- dgJ27tqYn/Kz1aN8fZY/wu8xXJ5fK7OogpqvlMXgaj0Mk24UrQN/yXAt+HnRxjJukMmt
- LbXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to
- :content-transfer-encoding;
- bh=WkVlYKWmd79A1dtTW81x7oY4qmX6f0g+FdXxlI/TFxw=;
- b=6yXDlIWC5wgC5SZp9jU+MdjKByEU+djkzVR8BhykcwSUuUWiRj8CgX76RRSG7b+3jP
- bNYWI108QgXhdfJp3f/WBbvTYpTYEU7Cjoe2KVfGUNMjOtJ1Rxr37BG0BtVc3BkumN7g
- RYkOZqblgJ6ApBmvrapFGzNxAf+5SYNsD7OyqS2ecRCDUFqk5/dv+fuEnWw+O0xCpvAH
- E9OcjyGNuh58x0UjTPlIETzT+go7LQsavcta3eF8iryrs0tpGUV3o3FceMTgL+9Uj4f/
- DaDOnG1aF0HaBrH14h5CZXkwA74DbZAl4AU0VSxsMd6FEb+eDvPO106aFgyfOuO7VETB
- /SnA==
-X-Gm-Message-State: AOAM531w0bDa016AVfHkG7Jdxfb/cE5y5y3dHD5+fdH00XNc3qmVe2Yr
- VF6QUEPSD0fdAjLMBimMTC+MxJaZwpMhHG/UXplVCOCU1IFHqA==
-X-Google-Smtp-Source: ABdhPJxZJGiIf/9cY4SsOwcdATBwF9kL4jFv1uux0/9XDXN9Sv5oPk4VwopCuT/i3vlLhU6MyZHWAXrFr//Dhc1D3i0=
-X-Received: by 2002:a05:6602:1543:: with SMTP id
- h3mr7008933iow.31.1642291880365; 
- Sat, 15 Jan 2022 16:11:20 -0800 (PST)
+ Mon, 17 Jan 2022 10:51:07 +0000 (UTC)
+Received: by krn.amebis.si (Postfix, from userid 982)
+ id 1D04D18E8082; Mon, 17 Jan 2022 11:51:07 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rozman.si;
+ s=default; t=1642416667;
+ bh=1DALzfGuJP+vMRZoq89iPTOdD7rbNr1Wx5GQIR7et10=;
+ h=From:To:Subject:Date:References:In-Reply-To:From;
+ b=Vj/JDPlbcnpDl0oJtvCFT5CtbQnVeoXACT+iMgWc9Rlsihy/+mvXPZFMl4UTMCEsF
+ uz0xt3a9aAoAyYcJ/0if08vG0YOx7b8idLdvCoVHO/qjqB+TQxFCN/BkiRxG2QSj/o
+ 5IckY/GCkj6fa/6ekqxAX+B1VWx3axt/joFxIMSw=
+Received: from Konj.amebis.doma (konj.amebis.doma [IPv6:2a01:260:4101:1464::4])
+ by krn.amebis.si (Postfix) with ESMTPS id 8BEBE18E8784;
+ Mon, 17 Jan 2022 11:51:01 +0100 (CET)
+Received: from Konj.amebis.doma (2a01:260:4101:1464::4) by Konj.amebis.doma
+ (2a01:260:4101:1464::4) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Mon, 17 Jan
+ 2022 11:51:01 +0100
+Received: from Konj.amebis.doma ([fe80::545:cd17:7444:be04]) by
+ Konj.amebis.doma ([fe80::545:cd17:7444:be04%9]) with mapi id 15.02.0986.015;
+ Mon, 17 Jan 2022 11:51:01 +0100
+From: Simon Rozman <simon@rozman.si>
+To: Tony Pros <tony@tpro.tech>, "wireguard@lists.zx2c4.com"
+ <wireguard@lists.zx2c4.com>
+Subject: RE: Wireguard Windows Service Issues
+Thread-Topic: Wireguard Windows Service Issues
+Thread-Index: AQHYCx9E30DZMIZgXEWU7b9AocfeL6xnBrMQ
+Date: Mon, 17 Jan 2022 10:51:01 +0000
+Message-ID: <e48d98ba2ad34d2f86fb34e5c95aebaf@rozman.si>
+References: <M95S0K3OLlWrjbBpofGUvTbVG6o7H8pKclgaVy8bSYAIklVksUf0PfyKeTYWPtt9QUBcrGlmQXnKvvndSWIntkZ-_pWfIG9vGbjeyv7H1jQ=@tpro.tech>
+In-Reply-To: <M95S0K3OLlWrjbBpofGUvTbVG6o7H8pKclgaVy8bSYAIklVksUf0PfyKeTYWPtt9QUBcrGlmQXnKvvndSWIntkZ-_pWfIG9vGbjeyv7H1jQ=@tpro.tech>
+Accept-Language: en-SI, en-GB, sl-SI, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2a01:260:4101:1464:dd44:d95e:4473:b64c]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-From: Alessio Nossa <alessio.nossa+list@gmail.com>
-Date: Sun, 16 Jan 2022 01:11:09 +0100
-Message-ID: <CAMTfdYr3YRv4MQKBhbj=Mq-QK_7nQF_DsbsB2wPLCf-idV8=ig@mail.gmail.com>
-Subject: [wireguard-apple] Siri Shortcuts/Intents integration
-To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailman-Approved-At: Sun, 16 Jan 2022 21:10:46 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -67,36 +65,49 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello
-In the last month I worked on the implementation of Siri
-Shortcuts/Intents integration for the WireGuard app (at the moment,
-only on iOS), to automate some tasks like connecting a
-tunnel, getting tunnel peers, and updating configuration at runtime. I
-saw that this feature was on your TODO List too [1].
-
-My idea is to have an interface to manage connections, to make up for
-the absence of wgctrl-go [2] on iOS. I need this to dynamically update
-endpoints at runtime for NAT Traversal purposes [3]; specifically, I
-need peers' public keys and a way to set endpoints at runtime [4].
-
-There are some issues due to an Apple's bug [5] that doesn't allow an
-extension to update the configuration owned by its parent app. As a
-workaround the update configuration action will launch the main app.
-
-As this is my first time contributing to wireguard-apple, if you have
-any advice, I'm here to hear from you.
-As suggested in macOS and iOS TODO list, I=E2=80=99d like to have push acce=
-ss
-to the repository (or any other way I can submit it) to contribute
-with my work (I already sent an email to team at wireguard.com, but
-received no response).
-
-Kind regards,
-
-[1] https://docs.google.com/document/d/1BnzImOF8CkungFnuRlWhnEpY2OmEHSckat6=
-2aZ6LYGY
-[2] https://github.com/WireGuard/wgctrl-go
-[3] https://www.jordanwhited.com/posts/wireguard-endpoint-discovery-nat-tra=
-versal/
-[4] https://github.com/jwhited/wgsd/blob/master/cmd/wgsd-client/main.go
-[5] https://developer.apple.com/forums/thread/96020
+SGksDQoNCj4gSSBiZWxpZXZlIHRoZXJlJ3MgYSBidWcgaW4gdGhlIFdpbmRvd3Mgc2VydmljZSBp
+bXBsZW1lbnRhdGlvbiwgaWYgdGhpcw0KPiBpc3N1ZSBpcyBieSBkZXNpZ24sIGl0J3MgcHJvYmxl
+bWF0aWMuDQo+IA0KPiBJIGhhdmUgbm9uLWFkbWluIHVzZXJzIHdlcmUgd2hlbiBJIGluaXRpYWxs
+eSBzZXQgdGhlbSB1cCB3aXRoIHdpcmVndWFyZCwNCj4gSSBjb25maWd1cmVkIGl0IHRvIHVzZSB0
+aGUgc2VydmljZSwgdXNpbmcgdGhlIGNvbW1hbmQ6DQo+IA0KPiB3aXJlZ3VhcmQgL2luc3RhbGx0
+dW5uZWxzZXJ2aWNlICJDOlxQcm9ncmFtDQo+IEZpbGVzXFdpcmVHdWFyZFxEYXRhXENvbmZpZ3Vy
+YXRpb25zXHZwbi5kb21haW4ub3JnLmNvbmYuZHBhcGkiDQo+IA0KPiBUaGUgdHVubmVsIHdvcmtl
+ZCBmaW5lIHRoZSBmaXJzdCB0aW1lLiBUaGVuIHRoZSB1c2VyIHJlYm9vdHMgdGhlIGxhcHRvcCwN
+Cj4gb3IgY2xvc2VzIGl0IG9yIGxlYXZlcyB3aGF0ZXZlciBjb2ZmZWUgc2hvcCB0aGV5IHdlcmUg
+YXQgYW5kIGdldA0KPiBkaXNjb25uZWN0ZWQgZnJvbSB0aGUgd2lyZWxlc3MgbmV0d29yayB0aGV5
+IHdlcmUgdXNpbmcuIFdoZW4gdGhpcw0KPiBoYXBwZW5zLCBmb3Igc29tZSByZWFzb24sIHRoZSB3
+aXJlZ3VhcmQgc2VydmljZSB0aGVuIGdldHMgdG9ybiBkb3duDQo+IG5ldmVyIHRvIGNvbWUgYmFj
+ayBhZ2FpbiB1bnRpbCBJIGlzc3VlIHRoZSBjb21tYW5kIGZyb20gbXkgYWRtaW4gYWNjb3VudA0K
+PiBhZ2Fpbi4NCg0KQ2FuIHlvdSBkbyB0aGUgd2lyZWd1YXJkIC9kdW1wbG9nID4gd2lyZWd1YXJk
+LmxvZyBhbmQgaW52ZXN0aWdhdGUuDQoNCj4gVGhlcmUgd2FzIGFuIGlzc3VlIHdpdGggc29tZSB1
+c2VycyBpbml0aWFsIGNvbmZpZ3VyYXRpb24gaW4gdGhhdCB0aGV5DQo+IGNvdWxkIG5vdCBxdWVy
+eSBob3N0bmFtZSB2aWEgRE5TLCBzbyB0aGF0IGVudGVyaW5nIHRoZSBjb21tYW5kIHRvDQo+IGlu
+c3RhbGxzZXJ2aWNlIHdvdWxkIG5vdCBldmVuIGNyZWF0ZSB0aGUgc2VydmljZS4NCg0KV2lyZUd1
+YXJkIHNlcnZpY2VzIHN0YXJ0IGVhcmx5IG9uIGJvb3QgLSBzb21ldGltZXMgZXZlbiBiZWZvcmUg
+dGhlIEROU0NhY2hlIChETlMgQ2xpZW50KS4gSWYgdGhlIHNlcnZpY2UgY2FuJ3QgcmVzb2x2ZSBo
+b3N0bmFtZXMgdXNlZCBpbiB0aGUgY29uZmlnIGZpbGUsIGl0IHdpbGwgc3RvcC4gQnV0IGl0IHdp
+bGwgbG9nIHRoaXMuIFJlc29sdXRpb24gdG8gdGhpcyBwcm9ibGVtIGlzOg0KLSBVc2UgSVBzIHJh
+dGhlciB0aGFuIGhvc3RuYW1lcy4NCi0gQWRkIGhvc3RuYW1lcyB5b3UgdXNlIGluIHlvdXIgLmNv
+bmYgZmlsZSB0byBDOlxXaW5kb3dzXHN5c3RlbTMyXGRyaXZlcnNcZXRjXGhvc3RzLg0KLSBBZGQg
+RE5TQ2FjaGUgZGVwZW5kZW5jeSB0byB0aGUgV2lyZUd1YXJkVHVubmVsJDx5b3VyIHR1bm5lbCBu
+YW1lPiBzZXJ2aWNlLg0KDQpJIHBlcnNvbmFsbHkgd291bGQgcGljayBvbmUgb2YgdGhlIGZpcnN0
+IHR3byBvcHRpb25zIGFib3ZlLiBEb24ndCBsaWtlIHRoZSBpZGVhIG15IGxhcHRvcCBpcyBhc2tp
+bmcgYSBjb2ZmZWUgc2hvcCdzIEROUyB3aGF0IGlzIG15IFZQTiBlbmRwb2ludCBJUCBhZGRyZXNz
+Lg0KDQo+IEhlcmUncyBhIGZldyBub3RlcyB0aGF0IG1pZ2h0IGhlbHAgd2l0aCB1bmRlcnN0YW5k
+aW5nLg0KPiAtIFVzZXJzIG11c3QgaGF2ZSB0aGUgVlBOIGVzdGFibGlzaGVkIGJlZm9yZSB0aGV5
+IGxvZyBpbnRvIHRoZSBhY3RpdmUNCj4gZGlyZWN0b3J5IHNlcnZlcnMgb24gdGhlIHJlbW90ZSBu
+ZXR3b3JrIHNvIHRoYXQgdGhleSBjYW4gZ2V0IGFsbCBvZg0KPiB0aGVpciBHUE8gZGlyZWN0aXZl
+cy4NCj4gLSBXaXJlZ3VhcmQgU2VydmljZSBzaG91bGQgc3RheSB1cCBzbyB0aGF0IGFueSB0aW1l
+IGEgdXNlcnMgY29ubmVjdHMgdG8NCj4gYW55IG5ldHdvcmssIHRoZSBWUE4gaXMgZXN0YWJsaXNo
+ZWQgaW1tZWRpYXRlbHkgYWZ0ZXIgdGhhdC4NCj4gLSBUaGUgV2lyZWd1YXJkIHNlcnZpY2Ugc2hv
+dWxkIGFsc28gc3RheSBiZWNhdXNlIG5vbi1hZG1pbiB1c2VycyBjYW5ub3QNCj4gY3JlYXRlIGEg
+bmV3IHNlcnZpY2UNCg0KSSB1bmRlcnN0YW5kLiBUaGF0IGlzIGV4YWN0bHkgaG93IHdlIHVzZSBX
+aXJlR3VhcmQgaW4gb3VyIGNvbXBhbnkuDQoNCj4gSWYgdGhpcyBpc3N1ZSBpcyBob3cgdGhpbmdz
+IHdpbGwgc3RheSwgYW5kIHRoaXMgaXMgbm90IGNvbnNpZGVyZWQgYSBidWcsDQo+IGhvdyB3b3Vs
+ZCB5b3UgY29uZmlndXJlIHdpbmRvd3Mgbm9uLWFkbWluIHVzZXJzIHRvIHR1bm5lbCB0byBhbg0K
+PiBlbnRlcnByaXNlIG5ldHdvcmsgYmVmb3JlIGxvZ2luIHZpYSBXaXJlR3VhcmQgYW5kIHRvIGNv
+bnRpbnVvdXNseSB0cnkgdG8NCj4gZXN0YWJsaXNoIHRoZSB0dW5uZWwgd2hpbGUgdGhlIHVzZXIg
+aXMgbm90IGNvbm5lY3RlZCB0byBhIG5ldHdvcms/DQoNCkxldCBtZSBhc3N1cmUgeW91LCB0aGUg
+YmVoYXZpb3IgeW91IGFyZSBleHBlY3RpbmcgaXMgZGVmaW5pdGVseSBwYXRob2xvZ2ljYWwuIFBs
+ZWFzZSBpbnZlc3RpZ2F0ZSB0aGUgbG9nIGZpbGUgd2h5IHRoZSB0dW5uZWwgc2VydmljZSBkb2Vz
+IG5vdCBwZXJzaXN0IGFzIGl0IHNob3VsZC4NCg0KQmVzdCByZWdhcmRzLA0KU2ltb24NCg==
