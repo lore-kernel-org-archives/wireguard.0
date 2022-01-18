@@ -4,55 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 671BAC433FE
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 Jan 2022 12:47:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B234C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Jan 2022 11:43:18 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id da5170be;
-	Mon, 17 Jan 2022 12:47:12 +0000 (UTC)
-Received: from krn.amebis.si (krn.amebis.si [93.103.235.207])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 6d3bc409
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id ed115219;
+	Tue, 18 Jan 2022 11:43:17 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id ea16a950
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 18 Jan 2022 11:43:15 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 3C11F6131E
+ for <wireguard@lists.zx2c4.com>; Tue, 18 Jan 2022 11:43:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F70AC00446
+ for <wireguard@lists.zx2c4.com>; Tue, 18 Jan 2022 11:43:13 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="UWhDxVOV"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1642506192;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=UY51soStDeX7hSwfxW/Nourib51ic30YjyXLLEp9HtA=;
+ b=UWhDxVOVNcUjzvUjwHhHyZQFX3zZLK5d4RfOkN0lnf3m9KvPS3j6bQjJKu4LDZbLIqNc1D
+ LOZX8oz9CBYHnFxK7r275wTMloTj8R9AJqU6I2NYT5FDs0zM946ELlHB3z3o4AyPMb5TjY
+ fp/rXFKHgo4ERVJ7g8yCS6L+u4GdKbc=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 58220e35
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 17 Jan 2022 12:47:10 +0000 (UTC)
-Received: by krn.amebis.si (Postfix, from userid 982)
- id 72E1618E8083; Mon, 17 Jan 2022 13:47:09 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rozman.si;
- s=default; t=1642423629;
- bh=zkwmL2ES1SDiSN+bv7lmV1EbA7RJN/nGe0Dsnn9XX5E=;
- h=From:To:Subject:Date:References:In-Reply-To:From;
- b=J90Vl2LUcJRcapEv6xF/SqFq46qBXv28IQPedoWCvxDup0hRnDCBt0olfNbayY8GF
- rvxZktkMbWcFRTdOouXNuTDm8RPGbzr7Cm45AVozXFNTP4bl14tRn88PJqJ+8sqOY7
- uNr7XzP/AzMeAk6pQPRrGvKoAz3aTLldjM2Iu1V0=
-Received: from Konj.amebis.doma (konj.amebis.doma [IPv6:2a01:260:4101:1464::4])
- by krn.amebis.si (Postfix) with ESMTPS id 9F59518E8784;
- Mon, 17 Jan 2022 13:47:07 +0100 (CET)
-Received: from Konj.amebis.doma (2a01:260:4101:1464::4) by Konj.amebis.doma
- (2a01:260:4101:1464::4) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Mon, 17 Jan
- 2022 13:47:07 +0100
-Received: from Konj.amebis.doma ([fe80::545:cd17:7444:be04]) by
- Konj.amebis.doma ([fe80::545:cd17:7444:be04%9]) with mapi id 15.02.0986.015;
- Mon, 17 Jan 2022 13:47:07 +0100
-From: Simon Rozman <simon@rozman.si>
-To: tlhackque <tlhackque@yahoo.com>, "wireguard@lists.zx2c4.com"
- <wireguard@lists.zx2c4.com>
-Subject: RE: Wireguard Windows Service Issues
-Thread-Topic: Wireguard Windows Service Issues
-Thread-Index: AQHYCx9E30DZMIZgXEWU7b9AocfeL6xnBrMQ///6UoCAACOowA==
-Date: Mon, 17 Jan 2022 12:47:07 +0000
-Message-ID: <022c115a7c254bec99bb67a12f9d59f4@rozman.si>
-References: <M95S0K3OLlWrjbBpofGUvTbVG6o7H8pKclgaVy8bSYAIklVksUf0PfyKeTYWPtt9QUBcrGlmQXnKvvndSWIntkZ-_pWfIG9vGbjeyv7H1jQ=@tpro.tech>
- <e48d98ba2ad34d2f86fb34e5c95aebaf@rozman.si>
- <56d2209f-f655-6302-df6d-bce587c8368d@yahoo.com>
-In-Reply-To: <56d2209f-f655-6302-df6d-bce587c8368d@yahoo.com>
-Accept-Language: en-SI, en-GB, sl-SI, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [2a01:260:4101:1464:dd44:d95e:4473:b64c]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ Tue, 18 Jan 2022 11:43:11 +0000 (UTC)
+Received: by mail-yb1-f170.google.com with SMTP id m6so54757735ybc.9
+ for <wireguard@lists.zx2c4.com>; Tue, 18 Jan 2022 03:43:11 -0800 (PST)
+X-Gm-Message-State: AOAM5327A8a0Pybzxww0zg1X9bLnWJqeLAJ0OkmiFc/BmMigHjyEQ+hC
+ VorpYNCCyfMy7noBds9itaJPfCuI+pbKCbJMUxQ=
+X-Google-Smtp-Source: ABdhPJyEGJF0pwT3RY1nsH6lCBYOcSCuzgxGWqoaEC3w3XUMUZqr+gElLrE5UBtj52h3avkewVEljTNUn5n2TrbaiKo=
+X-Received: by 2002:a25:854f:: with SMTP id f15mr32699113ybn.121.1642506189835; 
+ Tue, 18 Jan 2022 03:43:09 -0800 (PST)
 MIME-Version: 1.0
+Received: by 2002:a05:7110:209:b0:11c:1b85:d007 with HTTP; Tue, 18 Jan 2022
+ 03:43:09 -0800 (PST)
+In-Reply-To: <YeZhVGczxcBl0sI9@gondor.apana.org.au>
+References: <CAHmME9rxdksVZkN4DF_GabsEPrSDrKbo1cVQs77B_s-e2jZ64A@mail.gmail.com>
+ <YeZhVGczxcBl0sI9@gondor.apana.org.au>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 18 Jan 2022 12:43:09 +0100
+X-Gmail-Original-Message-ID: <CAHmME9ogAW0o2PReNtsD+fFgwp28q2kP7WADtbd8kA7GsnKBpg@mail.gmail.com>
+Message-ID: <CAHmME9ogAW0o2PReNtsD+fFgwp28q2kP7WADtbd8kA7GsnKBpg@mail.gmail.com>
+Subject: Re: [PATCH crypto v3 0/2] reduce code size from blake2s on m68k and
+ other small platforms
+To: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: geert@linux-m68k.org, linux-crypto@vger.kernel.org, netdev@vger.kernel.org,
+ wireguard@lists.zx2c4.com, linux-kernel@vger.kernel.org, bpf@vger.kernel.org, 
+ tytso@mit.edu, gregkh@linuxfoundation.org, jeanphilippe.aumasson@gmail.com, 
+ ardb@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -67,39 +76,9 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-SGksDQoNCj4gIEZyb20gdGhpcyBkZXNjcmlwdGlvbiwgaXQgc2VlbXMgdGhhdCB0aGVyZSdzIHJv
-b20gZm9yIGltcHJvdmVtZW50Lg0KPiANCj4gSXQgZG9lc24ndCBzZWVtIHJlYXNvbmFibGUgZm9y
-IHRoZSBXaXJlR3VhcmQgc2VydmljZSB0byBzdG9wLiBMb2cgYW5kDQo+IHBlcmhhcHMgZGlzcGxh
-eSBhbiBlcnJvciwgc3VyZS7CoCBCdXQgc3RvcHBpbmcgc2VlbXMgaGFyc2gsIGFuZCB3b3VsZA0K
-PiBwcmV2ZW50IG90aGVyIHR1bm5lbCBlbmRwb2ludHMgZnJvbSB3b3JraW5nIC0gbm90IGEgZ29v
-ZCB1c2VyDQo+IGV4cGVyaWVuY2UuDQo+IA0KPiBJdCB3b3VsZCBzZWVtIGJldHRlciBmb3IgdGhl
-IHNlcnZpY2UgdG8gc2V0IGEgdGltZXIgYW5kIHJldHJ5IGZhaWx1cmVzDQo+IHBlcmlvZGljYWxs
-eSAtIG1hbnkgRE5TIGlzc3VlcyBhcmUgdHJhbnNpZW50Lg0KPiANCj4gSXQgYWxzbyBzZWVtcyB0
-byBtZSB0aGF0IGl0IHdvdWxkIGJlIGJldHRlciBmb3IgdGhlIGRlZmF1bHQgdG8gYmUgb3B0aW9u
-DQo+IDMgLSBtYWtlIGFsbCB0dW5uZWxzIGRlcGVuZGVudCBvbiBETlNDYWNoZSB3aXRob3V0IHJl
-cXVpcmluZyBhbnkNCj4gdXNlci9hZG1pbiBhY3Rpb24uwqAgT25lIGNvdWxkIGNvbmRpdGlvbiB0
-aGlzIG9uIGFuIGVuZHBvaW50IGJlaW5nDQo+IHNwZWNpZmllZCBhcyBhIGhvc3RuYW1lLCBidXQg
-dGhhdCBkb2Vzbid0IHNlZW0gd29ydGggdGhlIGVmZm9ydC7CoCBQcmV0dHkNCj4gbXVjaCBhbnkg
-dXNlIG9mIGEgdHVubmVsIG5lZWRzIG5hbWUgcmVzb2x1dGlvbi7CoCBFdmVuIGlmIHlvdXIgcmVz
-b2x2ZXJzDQo+IGFyZSBhdCB0aGUgb3RoZXIgZW5kIG9mIHRoZSB0dW5uZWwsIHN0YXJ0aW5nIHRo
-ZSBjbGllbnQgYmVmb3JlIGl0J3MgdXANCj4gaXMgaGFybWxlc3MuDQo+IA0KPiBBbnlvbmUgY29u
-Y2VybmVkIGFib3V0IEROUyBzbm9vcGluZyBvbiBuYW1lIHJlc29sdXRpb24gb2YgdGhlIGVuZHBv
-aW50cw0KPiBjYW4gYXZvaWQgaXQgYnkgdXNpbmcgZWl0aGVyIG9mIHRoZSBvdGhlciB0d28gb3B0
-aW9uczogaGFyZGNvZGVkIElQIGluDQo+IHRoZSBjb25maWd1cmF0aW9uLCBvciBhbiBlbnRyeSBp
-biAiaG9zdHMiLg0KPiANCj4gIkl0IGp1c3Qgd29ya3MiIHNlZW1zIG11Y2ggbW9yZSBkZXNpcmFi
-bGUgdGhhbiBteXN0ZXJ5IHNlcnZpY2Ugc3RvcHMuwqAgQQ0KPiBVSSBzdGF0dXMgIndhaXRpbmcg
-Zm9yIGhvc3RuYW1lIHJlc29sdXRpb24iIHdvdWxkIGJlIGlkZWFsLg0KDQpUaGUgRE5TQ2FjaGUg
-c2VydmljZSBpcyBvcHRpb25hbCBvbiBXaW5kb3dzIDcvOC84LjEvU2VydmVyIDIwMDhSMi8yMDEy
-UjIgYW5kIG1heSBiZSBldmVuIGRpc2FibGVkLiAoQW5kIHRoZSByZXNvbHV0aW9uIHdvdWxkIHdv
-cmsganVzdCBmaW5lLikgU2luY2UgU0NNIHRyZWF0cyBhbGwgc2VydmljZSBkZXBlbmRlbmNpZXMg
-YXMgImhhcmQiIGRlcGVuZGVuY2llcywgdGhhdCB3b3VsZCByZW5kZXIgYWxsIFdpcmVHdWFyZCB0
-dW5uZWwgc2VydmljZXMgZmFpbCB0byBzdGFydC4gSXQncyBhIGZhaXJseSByYXJlIHVzZSBjYXNl
-LCBidXQgYSBkZW1vbnN0cmF0aW9uIFNDTSBzZXJ2aWNlIGRlcGVuZGVuY2llcyBtdXN0IGJlIGF1
-dGhvcmVkIHdpdGggZXh0cmVtZSBjYXJlLg0KDQpJJ2QgcmF0aGVyIHN1Z2dlc3QgcHVyc3Vpbmcg
-dGhlIG1hY09TIGFwcHJvYWNoIHdoZXJlIHNlcnZpY2VzIGRvbid0IGhhdmUgYW55IGRlcGVuZGVu
-Y2llcyB0byBmb3JjZSBkZXZlbG9wZXJzIGVuZ2luZWVyIHRoZWlyIHNlcnZpY2VzIHRvIHNsZWVw
-IGFuZCByZXRyeSB1bnRpbCB0aGVpciBkZXBlbmRlbmNpZXMgZ2V0IGF2YWlsYWJsZS4gQXMgeW91
-IHN1Z2dlc3RlZCBmaXJzdC4gSG93ZXZlciwgV2lyZUd1YXJkIGZvciBXaW5kb3dzIGFscmVhZHkg
-aGFzIEROUyByZXNvbHV0aW9uIHJldHJ5aW5nIGxvb3AuIE1heWJlIGl0IG5lZWRzIGltcHJvdmVt
-ZW50PyBMZXQncyB3YWl0IHRvIHNlZSB3aGF0IE9QJ3MgbG9nIHNheXMuDQoNClJlZ2FyZHMsDQpT
-aW1vbg0K
+On 1/18/22, Herbert Xu <herbert@gondor.apana.org.au> wrote:
+> As the patches that triggered this weren't part of the crypto
+> tree, this will have to go through the random tree if you want
+> them for 5.17.
+
+Sure, will do.
