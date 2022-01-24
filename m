@@ -4,55 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57358C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 24 Jan 2022 14:47:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60039C433FE
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 24 Jan 2022 18:18:04 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 1c383d9c;
-	Mon, 24 Jan 2022 14:47:08 +0000 (UTC)
-Received: from krn.amebis.si (krn.amebis.si [2a01:260:4101:1464::1])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 7152a13f
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 1df86803;
+	Mon, 24 Jan 2022 18:18:02 +0000 (UTC)
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com
+ [2a00:1450:4864:20::531])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id bc6fd06b
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 24 Jan 2022 14:47:06 +0000 (UTC)
-Received: by krn.amebis.si (Postfix, from userid 982)
- id E371D18E8085; Mon, 24 Jan 2022 15:47:05 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rozman.si;
- s=default; t=1643035625;
- bh=3tIFgqvd9H3CH1joOWyZLyD6HciYWhTLiQ8dS+6xVMU=;
- h=From:To:CC:Subject:Date:References:In-Reply-To:From;
- b=ReoWDAuRW+SFhJbzp4m+0+Mfy5wvyTyaNZ3edeC/mBQlsb/9VIHxDJpNImnrFL3zX
- YQN2Ii1cnxPjMXQm70UMij1tZw+10pZVTMewCnzyLCNndLDW1GEmQPRJiFtB/H08ef
- h2eUeko1LG+G9vKF9Dab1GWCSFt3CDCCRyW3EMGs=
-Received: from Konj.amebis.doma (konj.amebis.doma [IPv6:2a01:260:4101:1464::4])
- by krn.amebis.si (Postfix) with ESMTPS id B232D18E8784;
- Mon, 24 Jan 2022 15:47:03 +0100 (CET)
-Received: from Konj.amebis.doma (2a01:260:4101:1464::4) by Konj.amebis.doma
- (2a01:260:4101:1464::4) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Mon, 24 Jan
- 2022 15:47:03 +0100
-Received: from Konj.amebis.doma ([fe80::545:cd17:7444:be04]) by
- Konj.amebis.doma ([fe80::545:cd17:7444:be04%9]) with mapi id 15.02.0986.015;
- Mon, 24 Jan 2022 15:47:03 +0100
-From: Simon Rozman <simon@rozman.si>
-To: Tony Pros <tony@tpro.tech>
-CC: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-Subject: RE: Wireguard Windows Service Issues
-Thread-Topic: Wireguard Windows Service Issues
-Thread-Index: AQHYCx9E30DZMIZgXEWU7b9AocfeL6xnBrMQgAbnCYCABD99kA==
-Date: Mon, 24 Jan 2022 14:47:03 +0000
-Message-ID: <4fcaa402dbcb47609db707aabb5ccbdd@rozman.si>
+ Mon, 24 Jan 2022 18:18:00 +0000 (UTC)
+Received: by mail-ed1-x531.google.com with SMTP id j23so53003421edp.5
+ for <wireguard@lists.zx2c4.com>; Mon, 24 Jan 2022 10:18:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=message-id:date:mime-version:user-agent:subject:content-language:to
+ :references:from:in-reply-to:content-transfer-encoding;
+ bh=L87O8ioSJNAYs87tXddt5InHmlcqZGIjXyI4F1Uqy2c=;
+ b=eftBc7CRv6lwkeskk6I4JMa0mvTDkoHB8Z5CCxux21UvIOXp8hTHn8jus1jBVGqOwn
+ ubCAWPvppS2e0ysO1sOrUCgvP1R0vUUOcqERxBVy2KNetIKNC2lEqIyx6HqjJPtBzS0r
+ 4o87F6z/CLsmw5T2Xq9nweDdhjzP2B964/uTU9V97JrStQjxUo3sgdbB+cwrHFWIXKD0
+ VHsAPvK7TIhwGwaqb+kFoYwOPs0OTW5njTVvwviN5MbTT1/8qA1WyVWxKQN3fUV8VgQV
+ qU5yc7BujSccz0suqWRNVg8veXmOnljBUrEoFvy3PTOlXx2IZZuo0tN75v4PSzNOHBVw
+ XfRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+ :content-language:to:references:from:in-reply-to
+ :content-transfer-encoding;
+ bh=L87O8ioSJNAYs87tXddt5InHmlcqZGIjXyI4F1Uqy2c=;
+ b=gwAC/KpkjVxt2v/kHAZw/OcfScOviJw3St6OSrXubykb+1H6Q6fn+q4B5JS/l8W7JT
+ jvRLHAYT0H3dgp9BFo42Sgu2PgsBW5vHrS1DjMs/AYAZqJ6IySLYas9cfnC1XXqdMrdr
+ IHq6TenAYpfeiScRq+t0EQLWx+q9hDl6ZcRhAd7JwQdn/gGgvJ0cfHiEXAurfEnP2pyu
+ SAGuU6HuU/6olYLNoK8jv3v6OpLLCPdzTehnLxGyJALBFasT0Y7zIYhTbpH3K0O1NpMP
+ DudZ1v/fl5gObcLsRNIxMNde9rRMUjeR5pAnKX6DAtTI1IntwVMa4eMf6ZKWEoCJrkxE
+ n28A==
+X-Gm-Message-State: AOAM53352IwPn7RgGflFy5Xz5vHs0VqeTCOH46SkAAt4RPT3dENkQigj
+ OC5OwOvgtSeu+1H+YdmDVdfAPY1YzXd5olvl
+X-Google-Smtp-Source: ABdhPJxnicM8Ir61tkuzBTIUBytgt75PciCs6pEkdv1jnJp8z3T1v3X/LG+qJCxLNUFOQIlnrD/DlQ==
+X-Received: by 2002:aa7:dd59:: with SMTP id o25mr16922167edw.288.1643048280101; 
+ Mon, 24 Jan 2022 10:18:00 -0800 (PST)
+Received: from [192.168.100.171] ([84.69.122.33])
+ by smtp.googlemail.com with ESMTPSA id d25sm5222157ejz.4.2022.01.24.10.17.59
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 Jan 2022 10:17:59 -0800 (PST)
+Message-ID: <154d5705-2445-6297-cade-2103738a0667@gmail.com>
+Date: Mon, 24 Jan 2022 18:17:58 +0000
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: Wireguard Windows Service Issues
+Content-Language: en-GB
+To: wireguard@lists.zx2c4.com
 References: <M95S0K3OLlWrjbBpofGUvTbVG6o7H8pKclgaVy8bSYAIklVksUf0PfyKeTYWPtt9QUBcrGlmQXnKvvndSWIntkZ-_pWfIG9vGbjeyv7H1jQ=@tpro.tech>
  <e48d98ba2ad34d2f86fb34e5c95aebaf@rozman.si>
- <9-M1j7GQozeUMiB1Qm-kk17KUFZ_tE4h4oF-n0QEGEXh0IYS-sv3PDvecqKRPasw5Kw_60Do1VAMBuWQymyiQ79wnej1AOl8KsvWwVZ3mlE=@tpro.tech>
-In-Reply-To: <9-M1j7GQozeUMiB1Qm-kk17KUFZ_tE4h4oF-n0QEGEXh0IYS-sv3PDvecqKRPasw5Kw_60Do1VAMBuWQymyiQ79wnej1AOl8KsvWwVZ3mlE=@tpro.tech>
-Accept-Language: en-SI, en-GB, sl-SI, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [2a01:260:4101:1464:d1b7:b674:953f:fdd2]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
+From: Simon McNair <simonmcnair@gmail.com>
+In-Reply-To: <e48d98ba2ad34d2f86fb34e5c95aebaf@rozman.si>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -67,72 +77,74 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-SGksDQoNCj4gVGhlIHByb2JsZW0gc3RpbGwgaXMgb2NjdXJyaW5nLCB0aGUgc2VydmljZSBzZWVt
-cyB0byBnZXQgdG9ybiBkb3duIG5ldmVyDQo+IHRvIGNvbWUgYmFjayBhZ2FpbiBvbmNlIHRoZSB1
-c2VyIGNvbWVzIGJhY2sgdG8gdGhlIG9mZmljZSBhbmQgY29ubmVjdHMNCj4gYmFjayBpbnRvIHRo
-ZSBtYWluIG5ldHdvcmsgd2l0aCBldGhlcm5ldC4gV2hlbiB0aGUgdXNlciBpcyBvbiB0aGUgbWFp
-bg0KPiBuZXR3b3JrIHRoZSBWUE4gaG9zdCBhZGRyZXNzIHdpbGwgbm90IGdldCByZXNvbHZlZCBi
-eSBETlMgYnkgZGVzaWduLiBXZQ0KPiBkbyBub3Qgd2FudCB0aGUgdXNlciB0byBiZSBvbiB0aGUg
-VlBOIHdoZW4gdGhleSBhcmUgYWxyZWFkeSBvbiB0aGUNCj4gaW50ZXJuYWwgbmV0d29yay4gSWYg
-dGhlcmUncyBhIGJldHRlciB3YXkgdG8gaGFuZGxlIHRoZSBWUE4gbm90DQo+IGNvbm5lY3Rpbmcg
-d2hlbiB0aGUgbm9uLWFkbWluIHVzZXIgaXMgb24gdGhlIGludGVybmFsIG5ldHdvcmsgSSdtIG9w
-ZW4NCj4gdG8gdGhhdCB0b28uIFdlIHVzZSBhIGhvc3RuYW1lIGZvciBWUE4gc2VydmVyIHJlc29s
-dXRpb24gYmVjYXVzZSB3ZSB1c2UNCj4gYm90aCBJUHY0IGFuZCBJUHY2IGZvciBob3N0IGNvbm5l
-Y3Rpdml0eS4NCg0KV2hlbiB5b3VyIGxhcHRvcCBpcyBjb25uZWN0ZWQgdG8gdGhlICJtYWluIG5l
-dHdvcmsiIGFuZCBib290cywgdGhlIHR1bm5lbCBzZXJ2aWNlIHdpbGwgZ2l2ZSB1cCBvbiB0aGUg
-RE5TIHJlc29sdXRpb24gZmFpbHVyZSBhZnRlciBhIGZldyBtaW51dGVzIGFuZCBleGl0LiBUaGUg
-bWFuYWdlciBzZXJ2aWNlIHdpbGwgbm90aWNlIHRoYXQgdGhlIHNlcnZpY2UgaXMgZGVhZCBhbmQg
-d2lsbCBjbGVhbiBpdCB1cC4gSGVuY2UgeW91ciB0dW5uZWwgc2VydmljZSBjZWFzZXMgdG8gZXhp
-c3QgYW5kIGRvZXNuJ3QgZ2V0IHN0YXJ0ZWQgb24gdGhlIG5leHQgYm9vdCBhbnkgbW9yZS4NCg0K
-U3BsaXQgRE5TIGlzIG5vdCB0aGUgcmlnaHQgd2F5IHRvIHByZXZlbnQgV2lyZUd1YXJkIHR1bm5l
-bGluZyBvZiB0aGUgb24tbGluayB0cmFmZmljLg0KDQpPbiBteSBkZXZpY2VzLCBJIGtlZXAgdGhl
-IFZQTiB0dW5uZWwgYWN0aXZlIGFsbCB0aGUgdGltZS4gUmVnYXJkbGVzcyB0aGUgbmV0d29yayB0
-aGUgZGV2aWNlIGlzIHBoeXNpY2FsbHkgY29ubmVjdGVkIHRvLiBZb3UgYXJlIG5vdCB1c2luZyB0
-aGUgSVAgYWRkcmVzc2VzIGZyb20geW91ciBtYWluIG5ldHdvcmsgc3VibmV0IGZvciBXaXJlR3Vh
-cmQgY2xpZW50cy4gU28sIHdoZW4geW91IGNvbm5lY3QgeW91ciBsYXB0b3AgcGh5c2ljYWxseSBp
-bnRvIHRoZSBtYWluIG5ldHdvcmssIHRoZSBOSUNzJyBvbi1saW5rIHJvdXRlIHNob3VsZCBiZSBw
-cmVmZXJyZWQgb3ZlciB0aGUgcm91dGUgYWRkZWQgYnkgV2lyZUd1YXJkcycgQWxsb3dlZElQcy4g
-VGhpcyBtYWtlcyB0aGUgbG9jYWwgbmV0d29yayB0cmFmZmljIGZsb3cgZGlyZWN0bHkuDQoNCkJ1
-dCAtIGFuZCB2ZXJ5IGltcG9ydGFudCBmb3Igc2VhbWxlc3Mgcm9hbWluZyAtIHNjaGVkdWxlIHBl
-cmlvZGljIGVsZXZhdGVkIGNhbGxzIG9mIGB3Zy5leGUgc2V0IHZwbi5kb21haW4uY29tIHBlZXIg
-PHlvdXIgVlBOIHBlZXIgQmFzZTY0LWVuY29kZWQgcHVia2V5PiBlbmRwb2ludCB2cG4ueHh4eC5v
-cmc6NTE4MjBgLiBJdCdzIGNoZWFwIGFuZCBjYW4gYmUgc2NoZWR1bGVkIHRvIHRyaWdnZXIgZXZl
-cnkgMiBtaW51dGVzIChhbmQgaW1tZWRpYXRlbHkgYWZ0ZXIgc2NoZWR1bGVkIHRpbWUgaXMgbWlz
-c2VkKS4gSWYgeW91ciBsYXB0b3AgaXMgY29ubmVjdGVkIG9uIHlvdXIgbWFpbiBuZXR3b3JrLCBX
-aXJlR3VhcmQgcm9hbWluZyB3aWxsIGxlYXJuIDE5Mi4xNjguOTkuMSBhcyB0aGUgcGVlciBlbmRw
-b2ludC4gVGhlbiB5b3UgcHV0IHlvdXIgbGFwdG9wIHRvIHNsZWVwIGFuZCB3YWtlIGl0IHVwIGF0
-IGhvbWUgaW4gYSBkaWZmZXJlbnQgbmV0d29yay4gSXQgd2lsbCBjb250aW51ZSB0byB1c2UgMTky
-LjE2OC45OS4xIGFzIHBlZXIgZW5kcG9pbnQsIGJ1dCB0aGF0J3Mgbm8gbG9uZ2VyIGNvcnJlY3Qu
-IFBlcmlvZGljIHJlc2V0IG9mIHBlZXIgZW5kcG9pbnQgZml4ZXMgdGhpcy4NCg0KPiAyMDIyLTAx
-LTIxIDE0OjAwOjI1LjM4NTEwOTogW01HUl0gU3RhcnRpbmcgYXQgYm9vdCBXaXJlR3VhcmQvMC41
-LjMNCj4gKFdpbmRvd3MgMTAuMC4xOTA0MzsgYW1kNjQpDQo+IDIwMjItMDEtMjEgMTQ6MDA6MjUu
-Mzg1NjE3OiBbVFVOXSBbdnBuLmRvbWFpbi5jb21dIFN0YXJ0aW5nIGF0IGJvb3QNCj4gV2lyZUd1
-YXJkLzAuNS4zIChXaW5kb3dzIDEwLjAuMTkwNDM7IGFtZDY0KQ0KPiAyMDIyLTAxLTIxIDE0OjAw
-OjI1LjM5MjM1NzogW1RVTl0gW3Zwbi5kb21haW4uY29tXSBTQ00gbG9ja2VkIGZvciAxcyBieQ0K
-PiAuXE5UIFNlcnZpY2UgQ29udHJvbCBNYW5hZ2VyLCBtYXJraW5nIHNlcnZpY2UgYXMgc3RhcnRl
-ZA0KPiAyMDIyLTAxLTIxIDE0OjAwOjI1LjM5NzA1NDogW1RVTl0gW3Zwbi5kb21haW4uY29tXSBX
-YXRjaGluZyBuZXR3b3JrDQo+IGludGVyZmFjZXMNCj4gMjAyMi0wMS0yMSAxNDowMDoyNS4zOTk4
-NjU6IFtUVU5dIFt2cG4uZG9tYWluLmNvbV0gUmVzb2x2aW5nIEROUyBuYW1lcw0KPiAyMDIyLTAx
-LTIxIDE0OjAwOjI1LjY0MDU3NTogW1RVTl0gW3Zwbi5kb21haW4uY29tXSBIb3N0IG5vdCBmb3Vu
-ZCB3aGVuDQo+IHJlc29sdmluZyB2cG4ueHh4eC5vcmcsIGJ1dCBubyBJbnRlcm5ldCBjb25uZWN0
-aW9uIGF2YWlsYWJsZSwgc2xlZXBpbmcNCj4gZm9yIDQgc2Vjb25kcw0KPiAyMDIyLTAxLTIxIDE0
-OjAwOjI5LjY0ODY2MDogW1RVTl0gW3Zwbi5kb21haW4uY29tXSBIb3N0IG5vdCBmb3VuZCB3aGVu
-DQo+IHJlc29sdmluZyB2cG4ueHh4eC5vcmcsIGJ1dCBubyBJbnRlcm5ldCBjb25uZWN0aW9uIGF2
-YWlsYWJsZSwgc2xlZXBpbmcNCj4gZm9yIDQgc2Vjb25kcw0KPiAyMDIyLTAxLTIxIDE0OjAwOjMz
-LjY1NzM0NTogW1RVTl0gW3Zwbi5kb21haW4uY29tXSBIb3N0IG5vdCBmb3VuZCB3aGVuDQo+IHJl
-c29sdmluZyB2cG4ueHh4eC5vcmcsIGJ1dCBubyBJbnRlcm5ldCBjb25uZWN0aW9uIGF2YWlsYWJs
-ZSwgc2xlZXBpbmcNCj4gZm9yIDQgc2Vjb25kcw0KPiAyMDIyLTAxLTIxIDE0OjAwOjM3LjY3Mjc5
-NjogW1RVTl0gW3Zwbi5kb21haW4uY29tXSBIb3N0IG5vdCBmb3VuZCB3aGVuDQo+IHJlc29sdmlu
-ZyB2cG4ueHh4eC5vcmcsIGJ1dCBubyBJbnRlcm5ldCBjb25uZWN0aW9uIGF2YWlsYWJsZSwgc2xl
-ZXBpbmcNCj4gZm9yIDQgc2Vjb25kcw0KPiAyMDIyLTAxLTIxIDE0OjAwOjQxLjY4MjQ3MjogW1RV
-Tl0gW3Zwbi5kb21haW4uY29tXSBIb3N0IG5vdCBmb3VuZCB3aGVuDQo+IHJlc29sdmluZyB2cG4u
-eHh4eC5vcmcsIGJ1dCBubyBJbnRlcm5ldCBjb25uZWN0aW9uIGF2YWlsYWJsZSwgc2xlZXBpbmcN
-Cj4gZm9yIDQgc2Vjb25kcw0KDQpUaGUgb24tYm9vdCBjb25uZWN0aXZpdHkgZGV0ZWN0aW9uIHdh
-cyB1bnJlbGlhYmxlIGFuZCB3YXMgcmVtb3ZlZCBpbiBodHRwczovL2dpdC56eDJjNC5jb20vd2ly
-ZWd1YXJkLXdpbmRvd3MvY29tbWl0Lz9pZD1iNzVjYzM4YzYwZTM2ZTExMTdiYjQwZmQ0YWM3OGM0
-NGYxYWFlMWY2LiBJZiBTQ00gc3RhcnRlZCB0aGUgdHVubmVsIHNlcnZpY2UgYmVmb3JlIERuc2Nh
-Y2hlIGFuZCBvdGhlciBuZXR3b3JraW5nIHNlcnZpY2VzLCBXaXJlR3VhcmQgY291bGRuJ3QgdGVs
-bCBmcm9tIHRoZSBXaW5kb3dzIEROUyByZXNvbHZpbmcgcmVzcG9uc2Ugd2hldGhlciB0aGUgcmVz
-b2x2ZSBmYWlsdXJlIGlzIHRyYW5zaWVudCBvciBub3QuDQpUaGlzIGZpeCBoYXMgbm90IHlldCBi
-ZWVuIHB1Ymxpc2hlZCwgYnV0IGl0IHdpbGwgbm90IGhlbHAgeW91ciB0dW5uZWwgZGVhY3RpdmF0
-aW9uIG9uIHNwbGl0IEROUyBpc3N1ZS4NCg0KQmVzdCByZWdhcmRzLA0KU2ltb24NCg0K
+just to insert my 2p.
+
+Provided the service manager is installed whilst the tunnel will not 
+appear in the list of tunnels you can view the logfile which will assist 
+with diagnosis.
+
+ From my perspective I set up exactly the same set-up myself at the 
+weekend and it is behaving as advertised (except not on wifi).
+
+The part of this that makes me curious though is the fact that the 
+connection is via wifi so the adapter will stay visible but the 
+underlying connection will drop and the ip addresses, DNS etc will 
+change behind the scenes with each wireless network they connect to.  I 
+would think wireguard would handle this, but the log file would 
+certainly be worth of scrutiny.
+
+Also worth thinking around powers aving and the closing of the laptop 
+lid putting the adapter in to power saving and dropping the underlying 
+connection.
+
+Simon
+
+
+On 17/01/2022 10:51, Simon Rozman wrote:
+> Hi,
+>
+>> I believe there's a bug in the Windows service implementation, if this
+>> issue is by design, it's problematic.
+>>
+>> I have non-admin users were when I initially set them up with wireguard,
+>> I configured it to use the service, using the command:
+>>
+>> wireguard /installtunnelservice "C:\Program
+>> Files\WireGuard\Data\Configurations\vpn.domain.org.conf.dpapi"
+>>
+>> The tunnel worked fine the first time. Then the user reboots the laptop,
+>> or closes it or leaves whatever coffee shop they were at and get
+>> disconnected from the wireless network they were using. When this
+>> happens, for some reason, the wireguard service then gets torn down
+>> never to come back again until I issue the command from my admin account
+>> again.
+> Can you do the wireguard /dumplog > wireguard.log and investigate.
+>
+>> There was an issue with some users initial configuration in that they
+>> could not query hostname via DNS, so that entering the command to
+>> installservice would not even create the service.
+> WireGuard services start early on boot - sometimes even before the DNSCache (DNS Client). If the service can't resolve hostnames used in the config file, it will stop. But it will log this. Resolution to this problem is:
+> - Use IPs rather than hostnames.
+> - Add hostnames you use in your .conf file to C:\Windows\system32\drivers\etc\hosts.
+> - Add DNSCache dependency to the WireGuardTunnel$<your tunnel name> service.
+>
+> I personally would pick one of the first two options above. Don't like the idea my laptop is asking a coffee shop's DNS what is my VPN endpoint IP address.
+>
+>> Here's a few notes that might help with understanding.
+>> - Users must have the VPN established before they log into the active
+>> directory servers on the remote network so that they can get all of
+>> their GPO directives.
+>> - Wireguard Service should stay up so that any time a users connects to
+>> any network, the VPN is established immediately after that.
+>> - The Wireguard service should also stay because non-admin users cannot
+>> create a new service
+> I understand. That is exactly how we use WireGuard in our company.
+>
+>> If this issue is how things will stay, and this is not considered a bug,
+>> how would you configure windows non-admin users to tunnel to an
+>> enterprise network before login via WireGuard and to continuously try to
+>> establish the tunnel while the user is not connected to a network?
+> Let me assure you, the behavior you are expecting is definitely pathological. Please investigate the log file why the tunnel service does not persist as it should.
+>
+> Best regards,
+> Simon
