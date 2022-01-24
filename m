@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60039C433FE
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 24 Jan 2022 18:18:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC77CC433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 24 Jan 2022 18:28:09 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 1df86803;
-	Mon, 24 Jan 2022 18:18:02 +0000 (UTC)
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com
- [2a00:1450:4864:20::531])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id bc6fd06b
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id ec13cdcf;
+	Mon, 24 Jan 2022 18:26:57 +0000 (UTC)
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com
+ [2a00:1450:4864:20::434])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id e4e7db71
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 24 Jan 2022 18:18:00 +0000 (UTC)
-Received: by mail-ed1-x531.google.com with SMTP id j23so53003421edp.5
- for <wireguard@lists.zx2c4.com>; Mon, 24 Jan 2022 10:18:00 -0800 (PST)
+ Mon, 24 Jan 2022 18:26:56 +0000 (UTC)
+Received: by mail-wr1-x434.google.com with SMTP id s18so15254375wrv.7
+ for <wireguard@lists.zx2c4.com>; Mon, 24 Jan 2022 10:26:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
  h=message-id:date:mime-version:user-agent:subject:content-language:to
- :references:from:in-reply-to:content-transfer-encoding;
- bh=L87O8ioSJNAYs87tXddt5InHmlcqZGIjXyI4F1Uqy2c=;
- b=eftBc7CRv6lwkeskk6I4JMa0mvTDkoHB8Z5CCxux21UvIOXp8hTHn8jus1jBVGqOwn
- ubCAWPvppS2e0ysO1sOrUCgvP1R0vUUOcqERxBVy2KNetIKNC2lEqIyx6HqjJPtBzS0r
- 4o87F6z/CLsmw5T2Xq9nweDdhjzP2B964/uTU9V97JrStQjxUo3sgdbB+cwrHFWIXKD0
- VHsAPvK7TIhwGwaqb+kFoYwOPs0OTW5njTVvwviN5MbTT1/8qA1WyVWxKQN3fUV8VgQV
- qU5yc7BujSccz0suqWRNVg8veXmOnljBUrEoFvy3PTOlXx2IZZuo0tN75v4PSzNOHBVw
- XfRg==
+ :cc:references:from:in-reply-to:content-transfer-encoding;
+ bh=4XAI3k0FxRUdQsyp2h5lwphfk/GwAmAxYvgNnXb2nxw=;
+ b=bA5sYvNxQuGWi1zigZ3gs5TUd1yvuAgBPFYUoZph8ZCHBRh2yD9S5yNfR+hlEx73JQ
+ SVw9pklsSsGD5g2eEtKPjREj6wu8BKI0qAvj6xIQJhQ2GBZJG8VlJf+0B5O3KhQpWwta
+ WRuM21Zrf7GfJph2O56V0LDuFwZIII/b8HCTmXLSC49dlzpA7oJj9AYJcQunSqLhYxhr
+ Xkn5cyNbYjrR3lxAvEHYANqQawpktoT9UpCI9j3o/fXahpS9Gsay78SB2MD1hxo3XAWx
+ mg0TqC4VzHloDuZokcHHz22YASO1OFR34Mt1n2tEjWgP96t9nl7lnhSvz3Uo0xs/EZuG
+ boHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
- :content-language:to:references:from:in-reply-to
+ :content-language:to:cc:references:from:in-reply-to
  :content-transfer-encoding;
- bh=L87O8ioSJNAYs87tXddt5InHmlcqZGIjXyI4F1Uqy2c=;
- b=gwAC/KpkjVxt2v/kHAZw/OcfScOviJw3St6OSrXubykb+1H6Q6fn+q4B5JS/l8W7JT
- jvRLHAYT0H3dgp9BFo42Sgu2PgsBW5vHrS1DjMs/AYAZqJ6IySLYas9cfnC1XXqdMrdr
- IHq6TenAYpfeiScRq+t0EQLWx+q9hDl6ZcRhAd7JwQdn/gGgvJ0cfHiEXAurfEnP2pyu
- SAGuU6HuU/6olYLNoK8jv3v6OpLLCPdzTehnLxGyJALBFasT0Y7zIYhTbpH3K0O1NpMP
- DudZ1v/fl5gObcLsRNIxMNde9rRMUjeR5pAnKX6DAtTI1IntwVMa4eMf6ZKWEoCJrkxE
- n28A==
-X-Gm-Message-State: AOAM53352IwPn7RgGflFy5Xz5vHs0VqeTCOH46SkAAt4RPT3dENkQigj
- OC5OwOvgtSeu+1H+YdmDVdfAPY1YzXd5olvl
-X-Google-Smtp-Source: ABdhPJxnicM8Ir61tkuzBTIUBytgt75PciCs6pEkdv1jnJp8z3T1v3X/LG+qJCxLNUFOQIlnrD/DlQ==
-X-Received: by 2002:aa7:dd59:: with SMTP id o25mr16922167edw.288.1643048280101; 
- Mon, 24 Jan 2022 10:18:00 -0800 (PST)
+ bh=4XAI3k0FxRUdQsyp2h5lwphfk/GwAmAxYvgNnXb2nxw=;
+ b=KrFMmARpKNr/jAG5sOQhK/NdwY8dqxqMo/LE7OSmF0EFlSS5qLLQv7PwmOMXj5wscu
+ ixzVQFq6RZkDUniNbHsBGdeMookd8CKbGirfulGR26Bx/B01teNgEteBVzXw4aNJSseD
+ ZxQvQQqRblgLxLQZWBaBII6r3uiL7l63UnW22IQH30Ehx+3VDuQug0nmPovPBmnj/EFn
+ uZ7e6F+hravkNRPeRzPVu+O9YpgR3wztA3BuWw1jDaWUmEyUsM9lYUMPALE7nxf5WFe5
+ MkqnbeFvDj9BXkZFzkougVbCsQb9TP0FNZbPMtwDUiWHLzAqDhIILErQP4pQRYLp73qf
+ 3gTg==
+X-Gm-Message-State: AOAM533A6usgoIwnAtuaQl9tKOmj69HWSnL6LpJebP650gUhgxUDyf85
+ v8rRuAUaobpuM5R7jXOhoakQLCnN5aDZiLJR
+X-Google-Smtp-Source: ABdhPJxpJ/2L9KiroCeGLCAeB+o1S31HeNX46nk7v2X96X1PGtvVeTdjjX4fL95ViL7SX19vvhJ56w==
+X-Received: by 2002:adf:9dc5:: with SMTP id q5mr15363412wre.272.1643048815976; 
+ Mon, 24 Jan 2022 10:26:55 -0800 (PST)
 Received: from [192.168.100.171] ([84.69.122.33])
- by smtp.googlemail.com with ESMTPSA id d25sm5222157ejz.4.2022.01.24.10.17.59
- for <wireguard@lists.zx2c4.com>
+ by smtp.googlemail.com with ESMTPSA id o26sm14543755wro.9.2022.01.24.10.26.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Jan 2022 10:17:59 -0800 (PST)
-Message-ID: <154d5705-2445-6297-cade-2103738a0667@gmail.com>
-Date: Mon, 24 Jan 2022 18:17:58 +0000
+ Mon, 24 Jan 2022 10:26:55 -0800 (PST)
+Message-ID: <7886ff22-03eb-148a-3e2d-1f968bbfa59b@gmail.com>
+Date: Mon, 24 Jan 2022 18:26:54 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.5.0
-Subject: Re: Wireguard Windows Service Issues
+Subject: Re: apologies if this DNS conditional forwarding query is a daft
+ question
 Content-Language: en-GB
-To: wireguard@lists.zx2c4.com
-References: <M95S0K3OLlWrjbBpofGUvTbVG6o7H8pKclgaVy8bSYAIklVksUf0PfyKeTYWPtt9QUBcrGlmQXnKvvndSWIntkZ-_pWfIG9vGbjeyv7H1jQ=@tpro.tech>
- <e48d98ba2ad34d2f86fb34e5c95aebaf@rozman.si>
+To: Frank Carmickle <frank@carmickle.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <c0520a00-cd2b-db1d-b678-4134593e7206@gmail.com>
+ <E8EC188A-7643-4843-8289-473D4ACBCE7E@carmickle.com>
 From: Simon McNair <simonmcnair@gmail.com>
-In-Reply-To: <e48d98ba2ad34d2f86fb34e5c95aebaf@rozman.si>
+In-Reply-To: <E8EC188A-7643-4843-8289-473D4ACBCE7E@carmickle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -77,74 +78,82 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-just to insert my 2p.
+Hi Frank,
 
-Provided the service manager is installed whilst the tunnel will not 
-appear in the list of tunnels you can view the logfile which will assist 
-with diagnosis.
+Thanks for responding.
 
- From my perspective I set up exactly the same set-up myself at the 
-weekend and it is behaving as advertised (except not on wifi).
+My implementation is a mixture of point to point and site to site.
 
-The part of this that makes me curious though is the fact that the 
-connection is via wifi so the adapter will stay visible but the 
-underlying connection will drop and the ip addresses, DNS etc will 
-change behind the scenes with each wireless network they connect to.  I 
-would think wireguard would handle this, but the log file would 
-certainly be worth of scrutiny.
+I have laptops and mobile phones which connect directly in, but I also 
+have entire class c subnets routing traffic (the only real difference 
+being enabling ip routing/bridgining the networks vs no routing and only 
+being able to see the single device).
 
-Also worth thinking around powers aving and the closing of the laptop 
-lid putting the adapter in to power saving and dropping the underlying 
-connection.
+The windows implementation of wireshark only allows a point to point 
+connection as windows does not enable routing (in a similar way that I 
+don't believe linux does by default).  This can be worked around in 
+windows by selecting the adapter and 'sharing' it with the wireshark 
+connection (internet connection sharing or ICS).  This means that 
+wireshark can see the entire private class c network changing a point 
+connection to a site.
+
+My desired result is that each sites class C subnet maintains it's own 
+dhcp leases and reverse dns of the same (using the ISP router).  For 
+each class C subnet I can configure, per peer, that name resolution 
+should go to the appropriate dns server.
+
+In summary each house has an ISP router which does DHCP and DNS, I would 
+like to configure each peer to connect via IP to the peers ISP router in 
+order to resolve DNS.
+
+I hope that makes sense.
+
+Regards
 
 Simon
 
 
-On 17/01/2022 10:51, Simon Rozman wrote:
-> Hi,
+On 24/01/2022 13:28, Frank Carmickle wrote:
+> Greetings Simon,
 >
->> I believe there's a bug in the Windows service implementation, if this
->> issue is by design, it's problematic.
+>> On Jan 24, 2022, at 4:59 AM, Simon McNair <simonmcnair@gmail.com> wrote:
 >>
->> I have non-admin users were when I initially set them up with wireguard,
->> I configured it to use the service, using the command:
+>> Hi,
+>> Again apologies if this is networking newb question
+>> I have just spent the weekend laboriously learning about wireguard windows and finally powershell & internet connection sharing. My usage case is supporting a parents network and/or sharing resources in a small site(s) to site(s) network.
+>> My question is this.  Without buying any extra commodity hardware, or installing any more software is it possible to set up conditional DNS forwarding per peer for DNS ?  I would like each subnets DNS server (in this case isp router) to handle DNS for that subnet.
 >>
->> wireguard /installtunnelservice "C:\Program
->> Files\WireGuard\Data\Configurations\vpn.domain.org.conf.dpapi"
+>> i.e. if the dns request is for a subnet on peer A use DNS server 192.168.100.254 defined in peer A config
+>>         if the dns request is made a subnet on peer B use DNS server 192.168.110.254 defined in peer B config
+> I'm not totally understanding the topology you are implementing, internet sharing and site to site, that usually means that both sites have internet service. It does seem as though you can accomplish having systems in each subnet use there own DNS by not configuring a DNS directive in the wireguard config at all.
+>
+> HTH,
+> --FC
+>
+>
+>> Similar to this:
+>> [Interface]
+>> PrivateKey = pkhere
+>> ListenPort = 12345
+>> Address = 10.250.250.4/24
 >>
->> The tunnel worked fine the first time. Then the user reboots the laptop,
->> or closes it or leaves whatever coffee shop they were at and get
->> disconnected from the wireless network they were using. When this
->> happens, for some reason, the wireguard service then gets torn down
->> never to come back again until I issue the command from my admin account
->> again.
-> Can you do the wireguard /dumplog > wireguard.log and investigate.
->
->> There was an issue with some users initial configuration in that they
->> could not query hostname via DNS, so that entering the command to
->> installservice would not even create the service.
-> WireGuard services start early on boot - sometimes even before the DNSCache (DNS Client). If the service can't resolve hostnames used in the config file, it will stop. But it will log this. Resolution to this problem is:
-> - Use IPs rather than hostnames.
-> - Add hostnames you use in your .conf file to C:\Windows\system32\drivers\etc\hosts.
-> - Add DNSCache dependency to the WireGuardTunnel$<your tunnel name> service.
->
-> I personally would pick one of the first two options above. Don't like the idea my laptop is asking a coffee shop's DNS what is my VPN endpoint IP address.
->
->> Here's a few notes that might help with understanding.
->> - Users must have the VPN established before they log into the active
->> directory servers on the remote network so that they can get all of
->> their GPO directives.
->> - Wireguard Service should stay up so that any time a users connects to
->> any network, the VPN is established immediately after that.
->> - The Wireguard service should also stay because non-admin users cannot
->> create a new service
-> I understand. That is exactly how we use WireGuard in our company.
->
->> If this issue is how things will stay, and this is not considered a bug,
->> how would you configure windows non-admin users to tunnel to an
->> enterprise network before login via WireGuard and to continuously try to
->> establish the tunnel while the user is not connected to a network?
-> Let me assure you, the behavior you are expecting is definitely pathological. Please investigate the log file why the tunnel service does not persist as it should.
->
-> Best regards,
-> Simon
+>> [PeerA]
+>> PublicKey = peerpkhere
+>> AllowedIPs = 192.168.100.0/24, 10.250.250.0/24
+>> Endpoint = my.ddnsalias.net:5678
+>> DNS = 192.168.100.254
+>>
+>> [PeerB]
+>> PublicKey = peerpkhere
+>> AllowedIPs = 192.168.110.0/24, 10.250.250.0/24
+>> Endpoint = my.ddnsalias.net:5678
+>> DNS = 192.168.110.254
+>>
+>> I know we already have the Interface level DNS option but that would fail for peers unless conditional forwarding was configured which isn't possible on most home routers.  I know I can fix this with dnsmasq or a pihole but that requires another machine on all the time.  I was just wondering if anything clever could easily be done within wireguard.  I know it's a big ask but it would be appreciated as an enhancement request.
+>>
+>> Likewise, for the windows version of wireguard it would be cool if there was an option to enable internet connection sharing on the client.  I have done this successfully (I am happy to share the steps if required) although it was a huge pita and required dangerousscripts enabling which I'm not keen on.
+>> Thanks again for all the hard work Jason, I love the app, and it is running happily on my ER-X and making my life better.
+>>
+>> Regards
+>> Simon
+>>
