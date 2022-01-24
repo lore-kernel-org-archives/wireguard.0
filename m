@@ -4,62 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A93C0C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 24 Jan 2022 10:00:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2365C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 24 Jan 2022 13:28:26 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 97495599;
-	Mon, 24 Jan 2022 09:59:58 +0000 (UTC)
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com
- [2a00:1450:4864:20::633])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id d33fd706
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 931be6d5;
+	Mon, 24 Jan 2022 13:28:24 +0000 (UTC)
+Received: from bullseyemail.carmickle.com (bullseyemail.carmickle.com
+ [2600:3c03:e000:644:f03c:91ff:feee:b908])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 95f4f0c2
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 24 Jan 2022 09:59:56 +0000 (UTC)
-Received: by mail-ej1-x633.google.com with SMTP id jx6so19856806ejb.0
- for <wireguard@lists.zx2c4.com>; Mon, 24 Jan 2022 01:59:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=message-id:date:mime-version:user-agent:content-language:to:from
- :subject:content-transfer-encoding;
- bh=e3LoQCOuhzGkP8qRhpDTf1cwzIyd3jmZr0l3ke2GBE8=;
- b=PvGh96LLiEGrMlMZgyuA8OACou2jBc6S/+wS+9DGFPt6jFrfrGGnEXlSxHQ62fB06G
- y5DHI+42P6Y6tDi6HYxNRLwG+Dx8vZacrH/VgOsXLHHmtgcml/PuVVB0TIOxo2z3H1B8
- f74uSazLxf5/1acnCIqwZItCl3nFvkJiw/MUfFNq3BqDOJFNY/nbh2pcOuiHl960czS/
- nKOnC/Xnk0jzMbp9i1x4iAOwh+66HGvLiU6OU5NcmP6R6hTrlLVSgqQSVc1Rwc/bxabB
- AxCgRUhgNIq8SrQH7aCyr/DA/qqyrxOooBvI/plWpJyR0VxCPZdz7YlIt7OnATSfuoFw
- ut2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:message-id:date:mime-version:user-agent
- :content-language:to:from:subject:content-transfer-encoding;
- bh=e3LoQCOuhzGkP8qRhpDTf1cwzIyd3jmZr0l3ke2GBE8=;
- b=JGGsNzRADG5l9XGSIh0Aor1O0YMSk8vmKUBv9JFc7n9IGAT5PQoHUoijr2gvLemjKz
- ql8gFm9SLKKvbNFalkFmtw7HP6VpXkB4tLp6w6tv1tZtMVTBK/3gYfUysPrPpxy2Uvh4
- 66pR6Sf8xQIMTVvoxNaL7b/7akkoqcoCSJcBwZYTN2m5ngSVS9HZ05gMkap+lXh/dU/l
- YgqVjm54fVrACsi/ivSDKYXQaCTkcSnzBsuFlYJtc8vtS0GN7LnqBopwbuIe3qFabRKR
- C2ADwO7L8d5GQbBGRN0xfsxk4Y8o9nZ2gPDwfrZE5YmmcjpJtKb1Uvk+Gvi5RsUBgfPq
- fGWQ==
-X-Gm-Message-State: AOAM533CdtWbUoDIIXpudwtEMMyIglSYIGeiu5OgDtS/Q9rBuudZRLaQ
- Ahn0aOzfaL8elb+5Di6mwHa7z+zxTeT83IbH
-X-Google-Smtp-Source: ABdhPJwOSREjWn70VSkEV0hXYSwKfD47eFsBMOXu6CcERuSLof1Kgk2D+qOyJI7WXZoxm0/GqQKrwQ==
-X-Received: by 2002:a17:906:4a4d:: with SMTP id
- a13mr11620955ejv.744.1643018396263; 
- Mon, 24 Jan 2022 01:59:56 -0800 (PST)
-Received: from [192.168.100.171] ([84.69.122.33])
- by smtp.googlemail.com with ESMTPSA id x12sm5162909edv.57.2022.01.24.01.59.55
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Jan 2022 01:59:55 -0800 (PST)
-Message-ID: <c0520a00-cd2b-db1d-b678-4134593e7206@gmail.com>
-Date: Mon, 24 Jan 2022 09:59:55 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Content-Language: en-GB
-To: wireguard@lists.zx2c4.com
-From: Simon McNair <simonmcnair@gmail.com>
-Subject: apologies if this DNS conditional forwarding query is a daft question
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+ Mon, 24 Jan 2022 13:28:23 +0000 (UTC)
+Received: from [IPv6:2600:3c03:e000:3c2::91:66] (unknown
+ [IPv6:2600:3c03:e000:3c2::91:66])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by bullseyemail.carmickle.com (Postfix) with ESMTPSA id B0F94382B97E;
+ Mon, 24 Jan 2022 13:28:21 +0000 (UTC)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.21\))
+Subject: Re: apologies if this DNS conditional forwarding query is a daft
+ question
+From: Frank Carmickle <frank@carmickle.com>
+In-Reply-To: <c0520a00-cd2b-db1d-b678-4134593e7206@gmail.com>
+Date: Mon, 24 Jan 2022 08:28:20 -0500
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <E8EC188A-7643-4843-8289-473D4ACBCE7E@carmickle.com>
+References: <c0520a00-cd2b-db1d-b678-4134593e7206@gmail.com>
+To: Simon McNair <simonmcnair@gmail.com>
+X-Mailer: Apple Mail (2.3445.104.21)
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -74,55 +49,73 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
-Again apologies if this is networking newb question
-I have just spent the weekend laboriously learning about wireguard 
-windows and finally powershell & internet connection sharing. My usage 
-case is supporting a parents network and/or sharing resources in a small 
-site(s) to site(s) network.
-My question is this.  Without buying any extra commodity hardware, or 
-installing any more software is it possible to set up conditional DNS 
-forwarding per peer for DNS ?  I would like each subnets DNS server (in 
-this case isp router) to handle DNS for that subnet.
+Greetings Simon,
 
-i.e. if the dns request is for a subnet on peer A use DNS server 
+> On Jan 24, 2022, at 4:59 AM, Simon McNair <simonmcnair@gmail.com> =
+wrote:
+>=20
+> Hi,
+> Again apologies if this is networking newb question
+> I have just spent the weekend laboriously learning about wireguard =
+windows and finally powershell & internet connection sharing. My usage =
+case is supporting a parents network and/or sharing resources in a small =
+site(s) to site(s) network.
+> My question is this.  Without buying any extra commodity hardware, or =
+installing any more software is it possible to set up conditional DNS =
+forwarding per peer for DNS ?  I would like each subnets DNS server (in =
+this case isp router) to handle DNS for that subnet.
+>=20
+> i.e. if the dns request is for a subnet on peer A use DNS server =
 192.168.100.254 defined in peer A config
-        if the dns request is made a subnet on peer B use DNS server 
+>        if the dns request is made a subnet on peer B use DNS server =
 192.168.110.254 defined in peer B config
 
-Similar to this:
-[Interface]
-PrivateKey = pkhere
-ListenPort = 12345
-Address = 10.250.250.4/24
+I'm not totally understanding the topology you are implementing, =
+internet sharing and site to site, that usually means that both sites =
+have internet service. It does seem as though you can accomplish having =
+systems in each subnet use there own DNS by not configuring a DNS =
+directive in the wireguard config at all.
 
-[PeerA]
-PublicKey = peerpkhere
-AllowedIPs = 192.168.100.0/24, 10.250.250.0/24
-Endpoint = my.ddnsalias.net:5678
-DNS = 192.168.100.254
+HTH,
+--FC
 
-[PeerB]
-PublicKey = peerpkhere
-AllowedIPs = 192.168.110.0/24, 10.250.250.0/24
-Endpoint = my.ddnsalias.net:5678
-DNS = 192.168.110.254
 
-I know we already have the Interface level DNS option but that would 
-fail for peers unless conditional forwarding was configured which isn't 
-possible on most home routers.  I know I can fix this with dnsmasq or a 
-pihole but that requires another machine on all the time.  I was just 
-wondering if anything clever could easily be done within wireguard.  I 
-know it's a big ask but it would be appreciated as an enhancement request.
-
-Likewise, for the windows version of wireguard it would be cool if there 
-was an option to enable internet connection sharing on the client.  I 
-have done this successfully (I am happy to share the steps if required) 
-although it was a huge pita and required dangerousscripts enabling which 
-I'm not keen on.
-Thanks again for all the hard work Jason, I love the app, and it is 
+>=20
+> Similar to this:
+> [Interface]
+> PrivateKey =3D pkhere
+> ListenPort =3D 12345
+> Address =3D 10.250.250.4/24
+>=20
+> [PeerA]
+> PublicKey =3D peerpkhere
+> AllowedIPs =3D 192.168.100.0/24, 10.250.250.0/24
+> Endpoint =3D my.ddnsalias.net:5678
+> DNS =3D 192.168.100.254
+>=20
+> [PeerB]
+> PublicKey =3D peerpkhere
+> AllowedIPs =3D 192.168.110.0/24, 10.250.250.0/24
+> Endpoint =3D my.ddnsalias.net:5678
+> DNS =3D 192.168.110.254
+>=20
+> I know we already have the Interface level DNS option but that would =
+fail for peers unless conditional forwarding was configured which isn't =
+possible on most home routers.  I know I can fix this with dnsmasq or a =
+pihole but that requires another machine on all the time.  I was just =
+wondering if anything clever could easily be done within wireguard.  I =
+know it's a big ask but it would be appreciated as an enhancement =
+request.
+>=20
+> Likewise, for the windows version of wireguard it would be cool if =
+there was an option to enable internet connection sharing on the client. =
+ I have done this successfully (I am happy to share the steps if =
+required) although it was a huge pita and required dangerousscripts =
+enabling which I'm not keen on.
+> Thanks again for all the hard work Jason, I love the app, and it is =
 running happily on my ER-X and making my life better.
-
-Regards
-Simon
+>=20
+> Regards
+> Simon
+>=20
 
