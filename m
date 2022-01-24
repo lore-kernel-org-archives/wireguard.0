@@ -4,37 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2365C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 24 Jan 2022 13:28:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57358C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 24 Jan 2022 14:47:10 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 931be6d5;
-	Mon, 24 Jan 2022 13:28:24 +0000 (UTC)
-Received: from bullseyemail.carmickle.com (bullseyemail.carmickle.com
- [2600:3c03:e000:644:f03c:91ff:feee:b908])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 95f4f0c2
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 1c383d9c;
+	Mon, 24 Jan 2022 14:47:08 +0000 (UTC)
+Received: from krn.amebis.si (krn.amebis.si [2a01:260:4101:1464::1])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 7152a13f
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 24 Jan 2022 13:28:23 +0000 (UTC)
-Received: from [IPv6:2600:3c03:e000:3c2::91:66] (unknown
- [IPv6:2600:3c03:e000:3c2::91:66])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by bullseyemail.carmickle.com (Postfix) with ESMTPSA id B0F94382B97E;
- Mon, 24 Jan 2022 13:28:21 +0000 (UTC)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.21\))
-Subject: Re: apologies if this DNS conditional forwarding query is a daft
- question
-From: Frank Carmickle <frank@carmickle.com>
-In-Reply-To: <c0520a00-cd2b-db1d-b678-4134593e7206@gmail.com>
-Date: Mon, 24 Jan 2022 08:28:20 -0500
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <E8EC188A-7643-4843-8289-473D4ACBCE7E@carmickle.com>
-References: <c0520a00-cd2b-db1d-b678-4134593e7206@gmail.com>
-To: Simon McNair <simonmcnair@gmail.com>
-X-Mailer: Apple Mail (2.3445.104.21)
+ Mon, 24 Jan 2022 14:47:06 +0000 (UTC)
+Received: by krn.amebis.si (Postfix, from userid 982)
+ id E371D18E8085; Mon, 24 Jan 2022 15:47:05 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rozman.si;
+ s=default; t=1643035625;
+ bh=3tIFgqvd9H3CH1joOWyZLyD6HciYWhTLiQ8dS+6xVMU=;
+ h=From:To:CC:Subject:Date:References:In-Reply-To:From;
+ b=ReoWDAuRW+SFhJbzp4m+0+Mfy5wvyTyaNZ3edeC/mBQlsb/9VIHxDJpNImnrFL3zX
+ YQN2Ii1cnxPjMXQm70UMij1tZw+10pZVTMewCnzyLCNndLDW1GEmQPRJiFtB/H08ef
+ h2eUeko1LG+G9vKF9Dab1GWCSFt3CDCCRyW3EMGs=
+Received: from Konj.amebis.doma (konj.amebis.doma [IPv6:2a01:260:4101:1464::4])
+ by krn.amebis.si (Postfix) with ESMTPS id B232D18E8784;
+ Mon, 24 Jan 2022 15:47:03 +0100 (CET)
+Received: from Konj.amebis.doma (2a01:260:4101:1464::4) by Konj.amebis.doma
+ (2a01:260:4101:1464::4) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Mon, 24 Jan
+ 2022 15:47:03 +0100
+Received: from Konj.amebis.doma ([fe80::545:cd17:7444:be04]) by
+ Konj.amebis.doma ([fe80::545:cd17:7444:be04%9]) with mapi id 15.02.0986.015;
+ Mon, 24 Jan 2022 15:47:03 +0100
+From: Simon Rozman <simon@rozman.si>
+To: Tony Pros <tony@tpro.tech>
+CC: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Subject: RE: Wireguard Windows Service Issues
+Thread-Topic: Wireguard Windows Service Issues
+Thread-Index: AQHYCx9E30DZMIZgXEWU7b9AocfeL6xnBrMQgAbnCYCABD99kA==
+Date: Mon, 24 Jan 2022 14:47:03 +0000
+Message-ID: <4fcaa402dbcb47609db707aabb5ccbdd@rozman.si>
+References: <M95S0K3OLlWrjbBpofGUvTbVG6o7H8pKclgaVy8bSYAIklVksUf0PfyKeTYWPtt9QUBcrGlmQXnKvvndSWIntkZ-_pWfIG9vGbjeyv7H1jQ=@tpro.tech>
+ <e48d98ba2ad34d2f86fb34e5c95aebaf@rozman.si>
+ <9-M1j7GQozeUMiB1Qm-kk17KUFZ_tE4h4oF-n0QEGEXh0IYS-sv3PDvecqKRPasw5Kw_60Do1VAMBuWQymyiQ79wnej1AOl8KsvWwVZ3mlE=@tpro.tech>
+In-Reply-To: <9-M1j7GQozeUMiB1Qm-kk17KUFZ_tE4h4oF-n0QEGEXh0IYS-sv3PDvecqKRPasw5Kw_60Do1VAMBuWQymyiQ79wnej1AOl8KsvWwVZ3mlE=@tpro.tech>
+Accept-Language: en-SI, en-GB, sl-SI, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2a01:260:4101:1464:d1b7:b674:953f:fdd2]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -49,73 +67,72 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Greetings Simon,
-
-> On Jan 24, 2022, at 4:59 AM, Simon McNair <simonmcnair@gmail.com> =
-wrote:
->=20
-> Hi,
-> Again apologies if this is networking newb question
-> I have just spent the weekend laboriously learning about wireguard =
-windows and finally powershell & internet connection sharing. My usage =
-case is supporting a parents network and/or sharing resources in a small =
-site(s) to site(s) network.
-> My question is this.  Without buying any extra commodity hardware, or =
-installing any more software is it possible to set up conditional DNS =
-forwarding per peer for DNS ?  I would like each subnets DNS server (in =
-this case isp router) to handle DNS for that subnet.
->=20
-> i.e. if the dns request is for a subnet on peer A use DNS server =
-192.168.100.254 defined in peer A config
->        if the dns request is made a subnet on peer B use DNS server =
-192.168.110.254 defined in peer B config
-
-I'm not totally understanding the topology you are implementing, =
-internet sharing and site to site, that usually means that both sites =
-have internet service. It does seem as though you can accomplish having =
-systems in each subnet use there own DNS by not configuring a DNS =
-directive in the wireguard config at all.
-
-HTH,
---FC
-
-
->=20
-> Similar to this:
-> [Interface]
-> PrivateKey =3D pkhere
-> ListenPort =3D 12345
-> Address =3D 10.250.250.4/24
->=20
-> [PeerA]
-> PublicKey =3D peerpkhere
-> AllowedIPs =3D 192.168.100.0/24, 10.250.250.0/24
-> Endpoint =3D my.ddnsalias.net:5678
-> DNS =3D 192.168.100.254
->=20
-> [PeerB]
-> PublicKey =3D peerpkhere
-> AllowedIPs =3D 192.168.110.0/24, 10.250.250.0/24
-> Endpoint =3D my.ddnsalias.net:5678
-> DNS =3D 192.168.110.254
->=20
-> I know we already have the Interface level DNS option but that would =
-fail for peers unless conditional forwarding was configured which isn't =
-possible on most home routers.  I know I can fix this with dnsmasq or a =
-pihole but that requires another machine on all the time.  I was just =
-wondering if anything clever could easily be done within wireguard.  I =
-know it's a big ask but it would be appreciated as an enhancement =
-request.
->=20
-> Likewise, for the windows version of wireguard it would be cool if =
-there was an option to enable internet connection sharing on the client. =
- I have done this successfully (I am happy to share the steps if =
-required) although it was a huge pita and required dangerousscripts =
-enabling which I'm not keen on.
-> Thanks again for all the hard work Jason, I love the app, and it is =
-running happily on my ER-X and making my life better.
->=20
-> Regards
-> Simon
->=20
-
+SGksDQoNCj4gVGhlIHByb2JsZW0gc3RpbGwgaXMgb2NjdXJyaW5nLCB0aGUgc2VydmljZSBzZWVt
+cyB0byBnZXQgdG9ybiBkb3duIG5ldmVyDQo+IHRvIGNvbWUgYmFjayBhZ2FpbiBvbmNlIHRoZSB1
+c2VyIGNvbWVzIGJhY2sgdG8gdGhlIG9mZmljZSBhbmQgY29ubmVjdHMNCj4gYmFjayBpbnRvIHRo
+ZSBtYWluIG5ldHdvcmsgd2l0aCBldGhlcm5ldC4gV2hlbiB0aGUgdXNlciBpcyBvbiB0aGUgbWFp
+bg0KPiBuZXR3b3JrIHRoZSBWUE4gaG9zdCBhZGRyZXNzIHdpbGwgbm90IGdldCByZXNvbHZlZCBi
+eSBETlMgYnkgZGVzaWduLiBXZQ0KPiBkbyBub3Qgd2FudCB0aGUgdXNlciB0byBiZSBvbiB0aGUg
+VlBOIHdoZW4gdGhleSBhcmUgYWxyZWFkeSBvbiB0aGUNCj4gaW50ZXJuYWwgbmV0d29yay4gSWYg
+dGhlcmUncyBhIGJldHRlciB3YXkgdG8gaGFuZGxlIHRoZSBWUE4gbm90DQo+IGNvbm5lY3Rpbmcg
+d2hlbiB0aGUgbm9uLWFkbWluIHVzZXIgaXMgb24gdGhlIGludGVybmFsIG5ldHdvcmsgSSdtIG9w
+ZW4NCj4gdG8gdGhhdCB0b28uIFdlIHVzZSBhIGhvc3RuYW1lIGZvciBWUE4gc2VydmVyIHJlc29s
+dXRpb24gYmVjYXVzZSB3ZSB1c2UNCj4gYm90aCBJUHY0IGFuZCBJUHY2IGZvciBob3N0IGNvbm5l
+Y3Rpdml0eS4NCg0KV2hlbiB5b3VyIGxhcHRvcCBpcyBjb25uZWN0ZWQgdG8gdGhlICJtYWluIG5l
+dHdvcmsiIGFuZCBib290cywgdGhlIHR1bm5lbCBzZXJ2aWNlIHdpbGwgZ2l2ZSB1cCBvbiB0aGUg
+RE5TIHJlc29sdXRpb24gZmFpbHVyZSBhZnRlciBhIGZldyBtaW51dGVzIGFuZCBleGl0LiBUaGUg
+bWFuYWdlciBzZXJ2aWNlIHdpbGwgbm90aWNlIHRoYXQgdGhlIHNlcnZpY2UgaXMgZGVhZCBhbmQg
+d2lsbCBjbGVhbiBpdCB1cC4gSGVuY2UgeW91ciB0dW5uZWwgc2VydmljZSBjZWFzZXMgdG8gZXhp
+c3QgYW5kIGRvZXNuJ3QgZ2V0IHN0YXJ0ZWQgb24gdGhlIG5leHQgYm9vdCBhbnkgbW9yZS4NCg0K
+U3BsaXQgRE5TIGlzIG5vdCB0aGUgcmlnaHQgd2F5IHRvIHByZXZlbnQgV2lyZUd1YXJkIHR1bm5l
+bGluZyBvZiB0aGUgb24tbGluayB0cmFmZmljLg0KDQpPbiBteSBkZXZpY2VzLCBJIGtlZXAgdGhl
+IFZQTiB0dW5uZWwgYWN0aXZlIGFsbCB0aGUgdGltZS4gUmVnYXJkbGVzcyB0aGUgbmV0d29yayB0
+aGUgZGV2aWNlIGlzIHBoeXNpY2FsbHkgY29ubmVjdGVkIHRvLiBZb3UgYXJlIG5vdCB1c2luZyB0
+aGUgSVAgYWRkcmVzc2VzIGZyb20geW91ciBtYWluIG5ldHdvcmsgc3VibmV0IGZvciBXaXJlR3Vh
+cmQgY2xpZW50cy4gU28sIHdoZW4geW91IGNvbm5lY3QgeW91ciBsYXB0b3AgcGh5c2ljYWxseSBp
+bnRvIHRoZSBtYWluIG5ldHdvcmssIHRoZSBOSUNzJyBvbi1saW5rIHJvdXRlIHNob3VsZCBiZSBw
+cmVmZXJyZWQgb3ZlciB0aGUgcm91dGUgYWRkZWQgYnkgV2lyZUd1YXJkcycgQWxsb3dlZElQcy4g
+VGhpcyBtYWtlcyB0aGUgbG9jYWwgbmV0d29yayB0cmFmZmljIGZsb3cgZGlyZWN0bHkuDQoNCkJ1
+dCAtIGFuZCB2ZXJ5IGltcG9ydGFudCBmb3Igc2VhbWxlc3Mgcm9hbWluZyAtIHNjaGVkdWxlIHBl
+cmlvZGljIGVsZXZhdGVkIGNhbGxzIG9mIGB3Zy5leGUgc2V0IHZwbi5kb21haW4uY29tIHBlZXIg
+PHlvdXIgVlBOIHBlZXIgQmFzZTY0LWVuY29kZWQgcHVia2V5PiBlbmRwb2ludCB2cG4ueHh4eC5v
+cmc6NTE4MjBgLiBJdCdzIGNoZWFwIGFuZCBjYW4gYmUgc2NoZWR1bGVkIHRvIHRyaWdnZXIgZXZl
+cnkgMiBtaW51dGVzIChhbmQgaW1tZWRpYXRlbHkgYWZ0ZXIgc2NoZWR1bGVkIHRpbWUgaXMgbWlz
+c2VkKS4gSWYgeW91ciBsYXB0b3AgaXMgY29ubmVjdGVkIG9uIHlvdXIgbWFpbiBuZXR3b3JrLCBX
+aXJlR3VhcmQgcm9hbWluZyB3aWxsIGxlYXJuIDE5Mi4xNjguOTkuMSBhcyB0aGUgcGVlciBlbmRw
+b2ludC4gVGhlbiB5b3UgcHV0IHlvdXIgbGFwdG9wIHRvIHNsZWVwIGFuZCB3YWtlIGl0IHVwIGF0
+IGhvbWUgaW4gYSBkaWZmZXJlbnQgbmV0d29yay4gSXQgd2lsbCBjb250aW51ZSB0byB1c2UgMTky
+LjE2OC45OS4xIGFzIHBlZXIgZW5kcG9pbnQsIGJ1dCB0aGF0J3Mgbm8gbG9uZ2VyIGNvcnJlY3Qu
+IFBlcmlvZGljIHJlc2V0IG9mIHBlZXIgZW5kcG9pbnQgZml4ZXMgdGhpcy4NCg0KPiAyMDIyLTAx
+LTIxIDE0OjAwOjI1LjM4NTEwOTogW01HUl0gU3RhcnRpbmcgYXQgYm9vdCBXaXJlR3VhcmQvMC41
+LjMNCj4gKFdpbmRvd3MgMTAuMC4xOTA0MzsgYW1kNjQpDQo+IDIwMjItMDEtMjEgMTQ6MDA6MjUu
+Mzg1NjE3OiBbVFVOXSBbdnBuLmRvbWFpbi5jb21dIFN0YXJ0aW5nIGF0IGJvb3QNCj4gV2lyZUd1
+YXJkLzAuNS4zIChXaW5kb3dzIDEwLjAuMTkwNDM7IGFtZDY0KQ0KPiAyMDIyLTAxLTIxIDE0OjAw
+OjI1LjM5MjM1NzogW1RVTl0gW3Zwbi5kb21haW4uY29tXSBTQ00gbG9ja2VkIGZvciAxcyBieQ0K
+PiAuXE5UIFNlcnZpY2UgQ29udHJvbCBNYW5hZ2VyLCBtYXJraW5nIHNlcnZpY2UgYXMgc3RhcnRl
+ZA0KPiAyMDIyLTAxLTIxIDE0OjAwOjI1LjM5NzA1NDogW1RVTl0gW3Zwbi5kb21haW4uY29tXSBX
+YXRjaGluZyBuZXR3b3JrDQo+IGludGVyZmFjZXMNCj4gMjAyMi0wMS0yMSAxNDowMDoyNS4zOTk4
+NjU6IFtUVU5dIFt2cG4uZG9tYWluLmNvbV0gUmVzb2x2aW5nIEROUyBuYW1lcw0KPiAyMDIyLTAx
+LTIxIDE0OjAwOjI1LjY0MDU3NTogW1RVTl0gW3Zwbi5kb21haW4uY29tXSBIb3N0IG5vdCBmb3Vu
+ZCB3aGVuDQo+IHJlc29sdmluZyB2cG4ueHh4eC5vcmcsIGJ1dCBubyBJbnRlcm5ldCBjb25uZWN0
+aW9uIGF2YWlsYWJsZSwgc2xlZXBpbmcNCj4gZm9yIDQgc2Vjb25kcw0KPiAyMDIyLTAxLTIxIDE0
+OjAwOjI5LjY0ODY2MDogW1RVTl0gW3Zwbi5kb21haW4uY29tXSBIb3N0IG5vdCBmb3VuZCB3aGVu
+DQo+IHJlc29sdmluZyB2cG4ueHh4eC5vcmcsIGJ1dCBubyBJbnRlcm5ldCBjb25uZWN0aW9uIGF2
+YWlsYWJsZSwgc2xlZXBpbmcNCj4gZm9yIDQgc2Vjb25kcw0KPiAyMDIyLTAxLTIxIDE0OjAwOjMz
+LjY1NzM0NTogW1RVTl0gW3Zwbi5kb21haW4uY29tXSBIb3N0IG5vdCBmb3VuZCB3aGVuDQo+IHJl
+c29sdmluZyB2cG4ueHh4eC5vcmcsIGJ1dCBubyBJbnRlcm5ldCBjb25uZWN0aW9uIGF2YWlsYWJs
+ZSwgc2xlZXBpbmcNCj4gZm9yIDQgc2Vjb25kcw0KPiAyMDIyLTAxLTIxIDE0OjAwOjM3LjY3Mjc5
+NjogW1RVTl0gW3Zwbi5kb21haW4uY29tXSBIb3N0IG5vdCBmb3VuZCB3aGVuDQo+IHJlc29sdmlu
+ZyB2cG4ueHh4eC5vcmcsIGJ1dCBubyBJbnRlcm5ldCBjb25uZWN0aW9uIGF2YWlsYWJsZSwgc2xl
+ZXBpbmcNCj4gZm9yIDQgc2Vjb25kcw0KPiAyMDIyLTAxLTIxIDE0OjAwOjQxLjY4MjQ3MjogW1RV
+Tl0gW3Zwbi5kb21haW4uY29tXSBIb3N0IG5vdCBmb3VuZCB3aGVuDQo+IHJlc29sdmluZyB2cG4u
+eHh4eC5vcmcsIGJ1dCBubyBJbnRlcm5ldCBjb25uZWN0aW9uIGF2YWlsYWJsZSwgc2xlZXBpbmcN
+Cj4gZm9yIDQgc2Vjb25kcw0KDQpUaGUgb24tYm9vdCBjb25uZWN0aXZpdHkgZGV0ZWN0aW9uIHdh
+cyB1bnJlbGlhYmxlIGFuZCB3YXMgcmVtb3ZlZCBpbiBodHRwczovL2dpdC56eDJjNC5jb20vd2ly
+ZWd1YXJkLXdpbmRvd3MvY29tbWl0Lz9pZD1iNzVjYzM4YzYwZTM2ZTExMTdiYjQwZmQ0YWM3OGM0
+NGYxYWFlMWY2LiBJZiBTQ00gc3RhcnRlZCB0aGUgdHVubmVsIHNlcnZpY2UgYmVmb3JlIERuc2Nh
+Y2hlIGFuZCBvdGhlciBuZXR3b3JraW5nIHNlcnZpY2VzLCBXaXJlR3VhcmQgY291bGRuJ3QgdGVs
+bCBmcm9tIHRoZSBXaW5kb3dzIEROUyByZXNvbHZpbmcgcmVzcG9uc2Ugd2hldGhlciB0aGUgcmVz
+b2x2ZSBmYWlsdXJlIGlzIHRyYW5zaWVudCBvciBub3QuDQpUaGlzIGZpeCBoYXMgbm90IHlldCBi
+ZWVuIHB1Ymxpc2hlZCwgYnV0IGl0IHdpbGwgbm90IGhlbHAgeW91ciB0dW5uZWwgZGVhY3RpdmF0
+aW9uIG9uIHNwbGl0IEROUyBpc3N1ZS4NCg0KQmVzdCByZWdhcmRzLA0KU2ltb24NCg0K
