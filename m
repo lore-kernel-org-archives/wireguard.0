@@ -4,53 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F9A1C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 25 Jan 2022 14:16:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76525C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 25 Jan 2022 14:56:12 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 462a62b9;
-	Tue, 25 Jan 2022 14:16:21 +0000 (UTC)
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com
- [2607:f8b0:4864:20::d34])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 5728544b
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 45091140;
+	Tue, 25 Jan 2022 14:56:10 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 2b08edf7
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 25 Jan 2022 14:56:08 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 7F8E161615
+ for <wireguard@lists.zx2c4.com>; Tue, 25 Jan 2022 14:56:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1974C340E0
+ for <wireguard@lists.zx2c4.com>; Tue, 25 Jan 2022 14:56:05 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="LJvAO95L"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1643122564;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=QIcfyGrpIBgZ6FiNoiMZgRTqJ/7C/zh/Tf4MaEP/FNw=;
+ b=LJvAO95LpLNrzcDbo8jzpGzATB7qN3+KD/u9Uc2ADdBBG5SXVMDcEJ8i8v/sDhkMjuEpOB
+ F+tDVZpIV7I5/vD6aGhZAVNt8DTj8rxr9QMmadMJ5DaaQmj5nN8eZaN9EjrbG1tA/Bbbsy
+ hhpzdqca0hlEQ2Yr45Hhs61QzA6XHhc=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 647b39b4
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 25 Jan 2022 14:16:19 +0000 (UTC)
-Received: by mail-io1-xd34.google.com with SMTP id e79so23787797iof.13
- for <wireguard@lists.zx2c4.com>; Tue, 25 Jan 2022 06:16:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to
- :content-transfer-encoding;
- bh=MO6unOocDdElILMLt3B48QC3juicDKysCZl5VqfqIFs=;
- b=c5wU8DV13iyN/xL/9DMhmogpqgvYhF9xxGLtvKj+eNTOPTJtyIsJts7bDR8KVKzQwv
- mt+M77tv7swIvpN4hRm1aiWjVaAbEqoqJpxMys27KHTFZbE/6gaUClTD6GZHz/RPK8gU
- kqOjjWe7fRhDT2NnVfivowrtJauqBbpNBIxY9HQuDj7VaDJ06HIYCMhR2z8qPTA1xfFc
- qYo0NqzhTaGojgUNFlq3BeTlijfJZMaQvdsPETdEcbYJP9ViX9PfrR3Q5Njc3QCPWfMp
- w8/VwOr9YTo1UlarRw7J4+bQbtO75oAVhEsm96vDNxbwYoN3EA2fmXQsIHieZ0hQeXbg
- Y8Nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to
- :content-transfer-encoding;
- bh=MO6unOocDdElILMLt3B48QC3juicDKysCZl5VqfqIFs=;
- b=CXzQf7uM0nQWTPzn3dAqDTFeZYPn1bVvsgcO0S8yyukjkgx3sxa5bHP/l702QkStyL
- QRKJujhjHMScejNDpt6bNB3z30WApx4UHnZdqEQOCCG2bNdMqSvdZgTcQYMFZHdb08KK
- fd3FxznzXTw+l0mIaW8WzshWgZ7pMexuClOcOFLFFod0+0tFPQCRSiqk+Ftz3Cy/Gx2A
- mQErc4V0nVDTxeuGmKn6uD+oSbOuqt9jgvy7BQNBYdR5JIW61vS70vbqjpD1hLPUepZa
- Y3L6V3Htvy8Pu7Smsbuu4alY6r4EOfVjcaNKX2203QVDoQ4RYuILaKK64PfpcrQ8c5Q/
- 8H6w==
-X-Gm-Message-State: AOAM5303pf7iecWMl1rJGus7mTRMlZpmhdgZ7tnAx/bgDZ9sCIm2cP12
- AKrrdnCrQqoGUJeHI3sAF+JRcq2TQZtDXjY8/cCjbdkSBlw=
-X-Google-Smtp-Source: ABdhPJxQPn0kttz6jyDOzLQ+wkbxtTblWKFeeUc1W/+bl/Ui21TwLTgyIEbtSaaO74VHaX5K91zAobA1RyF0iNWn02k=
-X-Received: by 2002:a02:c4da:: with SMTP id h26mr1162435jaj.162.1643120177477; 
- Tue, 25 Jan 2022 06:16:17 -0800 (PST)
+ Tue, 25 Jan 2022 14:56:04 +0000 (UTC)
+Received: by mail-yb1-f178.google.com with SMTP id h14so62413256ybe.12
+ for <wireguard@lists.zx2c4.com>; Tue, 25 Jan 2022 06:56:03 -0800 (PST)
+X-Gm-Message-State: AOAM532f7KxBmdSUz0fAu/+ren0BWkkEO7JzzAvc1ZbzoOwRh83XcsRZ
+ 4jYllpgxlmrAhF98sw+tmbkgOTYphAUNn7XChYM=
+X-Google-Smtp-Source: ABdhPJzjq1RDG4ZYUU/S2mptBE3igfkr7Nc8xJ2eaw83I9GqSzjrMC1WwxK3p0JI8qx6PPaO/aSCKX06iOpPGe65dd0=
+X-Received: by 2002:a05:6902:1105:: with SMTP id
+ o5mr16613402ybu.113.1643122563186; 
+ Tue, 25 Jan 2022 06:56:03 -0800 (PST)
 MIME-Version: 1.0
-From: Alessio Nossa <alessio.nossa+list@gmail.com>
-Date: Tue, 25 Jan 2022 15:16:06 +0100
-Message-ID: <CAMTfdYou8TjP0TikezEjSWG-Rxtb8JzpPLcKOyOmE8B9sQpi8Q@mail.gmail.com>
-Subject: Contributing to iOS app
-To: wireguard@lists.zx2c4.com
+References: <CAMTfdYou8TjP0TikezEjSWG-Rxtb8JzpPLcKOyOmE8B9sQpi8Q@mail.gmail.com>
+In-Reply-To: <CAMTfdYou8TjP0TikezEjSWG-Rxtb8JzpPLcKOyOmE8B9sQpi8Q@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 25 Jan 2022 15:55:52 +0100
+X-Gmail-Original-Message-ID: <CAHmME9oPom008GYkORba_99g75Sti0WA+is2azvtONw3CnU_iQ@mail.gmail.com>
+Message-ID: <CAHmME9oPom008GYkORba_99g75Sti0WA+is2azvtONw3CnU_iQ@mail.gmail.com>
+Subject: Re: Contributing to iOS app
+To: Alessio Nossa <alessio.nossa+list@gmail.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -65,14 +70,6 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
-I=E2=80=99d like to contribute to wireguard-apple with Shortcuts integratio=
-n
-for the iOS app (this is a feature in the todo-list too).
-The implementation is almost complete, I=E2=80=99d like to be allowed to me=
-rge
-my contribution with the main app (or to have information on how I can
-submit my contributions).
-
-Kind regards,
-Alessio Nossa
+You can send them to the mailing list, or I can give you commit access
+to prefixed branches. I'll contact you offlist for the latter
+mechanics.
