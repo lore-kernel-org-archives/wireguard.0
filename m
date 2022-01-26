@@ -4,43 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E59ECC28CF5
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 26 Jan 2022 15:02:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BA9DC28CF5
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 26 Jan 2022 18:28:15 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 93cc3b0c;
-	Wed, 26 Jan 2022 15:02:52 +0000 (UTC)
-Received: from sendmail.purelymail.com (sendmail.purelymail.com
- [34.202.193.197])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 3e919521
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id cc1891a8;
+	Wed, 26 Jan 2022 18:26:02 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 4de9deb4
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 26 Jan 2022 18:26:01 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 983EE61160
+ for <wireguard@lists.zx2c4.com>; Wed, 26 Jan 2022 18:25:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D71FFC340E9
+ for <wireguard@lists.zx2c4.com>; Wed, 26 Jan 2022 18:25:58 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="guwHM09U"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1643221556;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0WDMVnxNS21cGVD8nGRsutmIDXekx0ccsYpa+g97zd4=;
+ b=guwHM09UGxkbtIjKxJuTxbz5WRegcFmdXkthx3Kquu3AutQOUfKoosZlxsg0aUz6+QHkiQ
+ d5guRsaXwTIJe7dEw/L0+KvEdwY+eQyEHiOMoDwbA8ZFeOHiMYFLbdgBYhM7aZzdk9hv7z
+ P5GE7tvqxC2dAYMYSsPdpExRfcIlHTU=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 641c4e10
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 26 Jan 2022 15:02:50 +0000 (UTC)
-DKIM-Signature: a=rsa-sha256;
- b=NwEQwggsnHWiBMz+hetrTfqswXZFTMa1IqMKPG4/fphEkOEIC75ZyY8eBAkoyPE8UjYBMfyJPipSEZxpKMJtGaCMgNEBNACIJglby3nvPv4jICEzj3OCzRucH+myf5VvCL7GP9VPVbFCYg86qKiDpNVi1bSvOmR2MphlC9fkKOcSuvf3x9SFLEGyYrxTHpBtsbVr2zxkS/VveXFkgHNcamxxL5ml3mkpJafTPI/JSEXOhr0Mbt6RuSnlq6rP+N8fEHKq8bLR+Yr8xDVcVMmRpBQjuXJ/4IXJF4o8++y5xKUCAl8C5ph+xEaydlqpxqvZa0VUEbHs2YKk0WHli9OZ1A==;
- s=purelymail3; d=msfjarvis.dev; v=1;
- bh=y4NUd2ujISuvqSwQgwVvukb5rvNOY/24GoZeFSvGGTw=; h=Received:From:To; 
-DKIM-Signature: a=rsa-sha256;
- b=QozrPhVRJY41oLTiOyozPWpl1vnX6smi9NaZp6bBdYphvSxAW0P9pHqYAMjgccHpuJkOPXwaByKCRyuafzxOgX5sXEc72KL8K9ei8eVqwNlks+916fn/d2k66EueTgQRoDW5oo9EHVK0aJ4lT6MGhoiaYtmQo0o3zH/tgtxU3xtA/qLoAy8+YeFX27TaKjqEFp+d7uMi6xtSwIux4oHOyddKug2ZlaGwYcWXWslvIU7V/nXRfzbiAftyvOIH51VH1zPe4qMdpwdWb+3qJAz5kJvmgRSSGed6CniJZzfvRaM5akWLqUdkHIAKdhobguif67B2s35sMFfSn2tEPGKiNw==;
- s=purelymail3; d=purelymail.com; v=1;
- bh=y4NUd2ujISuvqSwQgwVvukb5rvNOY/24GoZeFSvGGTw=;
- h=Feedback-ID:Received:From:To; 
-Feedback-ID: 322:138:null:purelymail
-X-Pm-Original-To: wireguard@lists.zx2c4.com
-Received: by ip-172-30-0-141.ec2.internal (JAMES SMTP Server ) with ESMTPA ID
- -176838933; Wed, 26 Jan 2022 15:02:36 +0000 (UTC)
-Date: Wed, 26 Jan 2022 20:32:32 +0530
-From: Harsh Shandilya <me@msfjarvis.dev>
-To: Michal Murin <michal.murin@jamf.com>
-Cc: "=?utf-8?Q?wireguard=40lists.zx2c4.com?=" <wireguard@lists.zx2c4.com>
-Message-ID: <EDD252CD-C22D-4712-B891-E057026A6AA1@getmailspring.com>
-In-Reply-To: <20220119082857.64215-1-michal.murin@jamf.com>
-References: <20220119082857.64215-1-michal.murin@jamf.com>
-Subject: Re: [PATCH] Fixed the failing BadConfigExceptionTest unit test
-X-Mailer: Mailspring
+ Wed, 26 Jan 2022 18:25:56 +0000 (UTC)
+Received: by mail-yb1-f174.google.com with SMTP id g14so1330228ybs.8
+ for <wireguard@lists.zx2c4.com>; Wed, 26 Jan 2022 10:25:56 -0800 (PST)
+X-Gm-Message-State: AOAM531HZdEc38PS2f9oKy5iLv9tnLyHRJXvw2fAbTD0bhk/zw9Rl9Nr
+ LWMEDNxO9ga+UdhpVsthattFkzyehJfyb2/EmW0=
+X-Google-Smtp-Source: ABdhPJznJle+/aHB3bAIPcGEfCgZBRsL4kWAYAQEdSSWWiEQMqut0MwDffIpWxfnjd8pl3DppxysHP7G5uVVjsYs1BA=
+X-Received: by 2002:a05:6902:1501:: with SMTP id
+ q1mr299542ybu.638.1643221555486; 
+ Wed, 26 Jan 2022 10:25:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+References: <20220119082857.64215-1-michal.murin@jamf.com>
+In-Reply-To: <20220119082857.64215-1-michal.murin@jamf.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 26 Jan 2022 19:25:44 +0100
+X-Gmail-Original-Message-ID: <CAHmME9oQ_SiXW-DG4HAm0k0GH17m0210U1Rb6Syuief98+w4kQ@mail.gmail.com>
+Message-ID: <CAHmME9oQ_SiXW-DG4HAm0k0GH17m0210U1Rb6Syuief98+w4kQ@mail.gmail.com>
+Subject: Re: [PATCH] Fixed the failing BadConfigExceptionTest unit test
+To: Michal Murin <michal.murin@jamf.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -55,55 +70,21 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+On Tue, Jan 25, 2022 at 5:12 PM Michal Murin <michal.murin@jamf.com> wrote:
+> Also removed the `getParsingClass()` condition from the `parseDnsServers()` method as the condition can be never met - the `InetAddresses.parse(dnsServer)` method always throws the `ParseException` with the `parsingClass` set to `InetAddress.class`.
 
-Hey Michal,
+Until one day it doesn't, and then we have to remember this subtle
+behavior. On the contrary, what's there now means that the code is
+correct regardless of changes.
 
-On Jan 19 2022, at 1:58 pm, Michal Murin <michal.murin@jamf.com> wrote:
-
-> Fixed the test by changing the DNS to a string with an invalid char in
-> the `invalid-value.conf` test configuration file. Also removed the
-> `getParsingClass()` condition from the `parseDnsServers()` method as
-> the condition can be never met - the `InetAddresses.parse(dnsServer)`
-> method always throws the `ParseException` with the `parsingClass` set
-> to `InetAddress.class`.
-> ---
-> tunnel/src/main/java/com/wireguard/config/Interface.java | 2 +-
-> tunnel/src/test/resources/invalid-value.conf             | 2 +-
-> 2 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/tunnel/src/main/java/com/wireguard/config/Interface.java b/tunnel/src/main/java/com/wireguard/config/Interface.java
-> index 694f313..5bd4da7 100644
-> --- a/tunnel/src/main/java/com/wireguard/config/Interface.java
-> +++ b/tunnel/src/main/java/com/wireguard/config/Interface.java
-> @@ -356,7 +356,7 @@ public final class Interface {
->                     try {
->                         addDnsServer(InetAddresses.parse(dnsServer));
->                     } catch (final ParseException e) {
-> -                        if (e.getParsingClass() != InetAddress.class
-> || !InetAddresses.isHostname(dnsServer))
+> -                        if (e.getParsingClass() != InetAddress.class || !InetAddresses.isHostname(dnsServer))
 > +                        if (!InetAddresses.isHostname(dnsServer))
->                             throw e;
->                         addDnsSearchDomain(dnsServer);
->                     }
-> diff --git a/tunnel/src/test/resources/invalid-value.conf b/tunnel/src/test/resources/invalid-value.conf
-> index 2889111..6a1e3b6 100644
-> --- a/tunnel/src/test/resources/invalid-value.conf
-> +++ b/tunnel/src/test/resources/invalid-value.conf
-> @@ -1,6 +1,6 @@
-> [Interface]
-> Address = 192.0.2.2/32,2001:db8:ffff:ffff:ffff:ffff:ffff:ffff/128
-> -DNS = 192.0.2.0,yes
-> +DNS = 192.0.2.0,invalid_value
-> PrivateKey = TFlmmEUC7V7VtiDYLKsbP5rySTKLIZq1yn8lMqK83wo=
-> [Peer]
-> AllowedIPs = 0.0.0.0/0, ::0/0
-> -- 
-> 2.30.1 (Apple Git-130)
-> 
-> 
 
-Thanks! The patch looks good, if you can send a v2 with a Signed-off-by
-line I'd be happy to apply this.
+Please drop this snippet from v2.
 
-Cheers,
-Harsh Shandilya
+As Harsh said, we need your sign off line. It would also be
+appreciated if you'd wrap your commit message and adjust your commit
+subject to match what the project uses conventionally.
+
+Thanks,
+Jason
