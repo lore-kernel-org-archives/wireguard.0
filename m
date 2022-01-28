@@ -4,58 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BA9DC28CF5
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 26 Jan 2022 18:28:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C1A5C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 28 Jan 2022 05:23:36 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id cc1891a8;
-	Wed, 26 Jan 2022 18:26:02 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 4de9deb4
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 26 Jan 2022 18:26:01 +0000 (UTC)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 983EE61160
- for <wireguard@lists.zx2c4.com>; Wed, 26 Jan 2022 18:25:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D71FFC340E9
- for <wireguard@lists.zx2c4.com>; Wed, 26 Jan 2022 18:25:58 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="guwHM09U"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1643221556;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0WDMVnxNS21cGVD8nGRsutmIDXekx0ccsYpa+g97zd4=;
- b=guwHM09UGxkbtIjKxJuTxbz5WRegcFmdXkthx3Kquu3AutQOUfKoosZlxsg0aUz6+QHkiQ
- d5guRsaXwTIJe7dEw/L0+KvEdwY+eQyEHiOMoDwbA8ZFeOHiMYFLbdgBYhM7aZzdk9hv7z
- P5GE7tvqxC2dAYMYSsPdpExRfcIlHTU=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 641c4e10
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 4900394b;
+	Fri, 28 Jan 2022 05:23:35 +0000 (UTC)
+Received: from mr85p00im-zteg06021501.me.com (mr85p00im-zteg06021501.me.com
+ [17.58.23.183])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 5830d928
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 26 Jan 2022 18:25:56 +0000 (UTC)
-Received: by mail-yb1-f174.google.com with SMTP id g14so1330228ybs.8
- for <wireguard@lists.zx2c4.com>; Wed, 26 Jan 2022 10:25:56 -0800 (PST)
-X-Gm-Message-State: AOAM531HZdEc38PS2f9oKy5iLv9tnLyHRJXvw2fAbTD0bhk/zw9Rl9Nr
- LWMEDNxO9ga+UdhpVsthattFkzyehJfyb2/EmW0=
-X-Google-Smtp-Source: ABdhPJznJle+/aHB3bAIPcGEfCgZBRsL4kWAYAQEdSSWWiEQMqut0MwDffIpWxfnjd8pl3DppxysHP7G5uVVjsYs1BA=
-X-Received: by 2002:a05:6902:1501:: with SMTP id
- q1mr299542ybu.638.1643221555486; 
- Wed, 26 Jan 2022 10:25:55 -0800 (PST)
-MIME-Version: 1.0
-References: <20220119082857.64215-1-michal.murin@jamf.com>
-In-Reply-To: <20220119082857.64215-1-michal.murin@jamf.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 26 Jan 2022 19:25:44 +0100
-X-Gmail-Original-Message-ID: <CAHmME9oQ_SiXW-DG4HAm0k0GH17m0210U1Rb6Syuief98+w4kQ@mail.gmail.com>
-Message-ID: <CAHmME9oQ_SiXW-DG4HAm0k0GH17m0210U1Rb6Syuief98+w4kQ@mail.gmail.com>
-Subject: Re: [PATCH] Fixed the failing BadConfigExceptionTest unit test
-To: Michal Murin <michal.murin@jamf.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+ Fri, 28 Jan 2022 05:23:32 +0000 (UTC)
+Received: from smtpclient.apple (cpe-70-95-39-162.san.res.rr.com
+ [70.95.39.162])
+ by mr85p00im-zteg06021501.me.com (Postfix) with ESMTPSA id D852427942CD
+ for <wireguard@lists.zx2c4.com>; Fri, 28 Jan 2022 05:23:30 +0000 (UTC)
+From: Stephen Larew <stephen@slarew.net>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.60.0.1.1\))
+Subject: Re: Split DNS for macOS
+Date: Thu, 27 Jan 2022 21:23:29 -0800
+References: <20211028071638.88001-1-stephen@slarew.net>
+To: wireguard@lists.zx2c4.com
+In-Reply-To: <20211028071638.88001-1-stephen@slarew.net>
+Message-Id: <16E7589D-F36A-4CCD-A388-EA435C8A8D95@slarew.net>
+X-Mailer: Apple Mail (2.3693.60.0.1.1)
+X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
+ =?UTF-8?Q?2903e8d5c8f:6.0.138,18.0.572,17.11.62.513.0000000_definitions?=
+ =?UTF-8?Q?=3D2020-02-14=5F11:2020-02-14=5F02,2020-02-14=5F11,2021-12-02?=
+ =?UTF-8?Q?=5F01_signatures=3D0?=
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ mlxlogscore=999
+ suspectscore=0 clxscore=1030 mlxscore=0 phishscore=0 adultscore=0
+ malwarescore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2201280031
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -70,21 +54,140 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Tue, Jan 25, 2022 at 5:12 PM Michal Murin <michal.murin@jamf.com> wrote:
-> Also removed the `getParsingClass()` condition from the `parseDnsServers()` method as the condition can be never met - the `InetAddresses.parse(dnsServer)` method always throws the `ParseException` with the `parsingClass` set to `InetAddress.class`.
+> On Oct 28, 2021, at 00:16, Stephen Larew <stephen@slarew.net> wrote:
+>=20
+> For many months now, I have been running a patched WireGuard macOS app
+> that enables a split DNS configuration. I would like to try to =
+upstream
+> my patches for split DNS.
+>=20
+> There has been some interest in this patch:
+> - "Mac APP DNS Search Domain" thread from July and August 2021 [1]
+> - A commenter on my GitHub fork of wireguard-apple.
+>=20
+> What is split DNS? It allows sending DNS queries to a specific server
+> based on the domain name. Systemd-resolved calls it a routing domain.
+> Apple's Network Extension framework calls it a match domain.  Split =
+DNS
+> is especially useful for internal DNS servers.
+>=20
+> For example, if corp.example.com is a routing domain for the DNS =
+server
+> at 192.0.2.1 (only accessible over WireGuard), then
+> server.corp.example.com is resolved using 192.0.2.1 while
+> www.example.com is resolved using some other DNS resolver (depending =
+on
+> the other network settings in macOS).
+>=20
+> The proposed patch adds new syntax to the wg-quick DNS=3D line.
+> Specifically, a tilde prefixed domain is treated as a routing domain.
+> Multiple routing domains can be added.
+>=20
+> Limitations:
+> - Needs modifications to iOS UI to work on iOS.
+> - Only matching routing domains are sent to the DNS servers specified =
+in
+>  the DNS=3D config line.  No separate fallback catch-all DNS server =
+can
+>  be set.
+> - Routing/match domains are also included in the list of search =
+domains.
+>  This could be changed with the matchDomainsNoSearch API, but lacking
+>  more UI or config file changes to expose this option to the user, I
+>  went with the default.
+>=20
+> [1] =
+https://lore.kernel.org/wireguard/20210810074232.aah5ktq5yzysaaey@SvensMac=
+BookAir-2.local/T/
+> [2] =
+https://github.com/slarew/wireguard-apple/commit/6ebc356d9e11ab91443e06de5=
+e89f1af57fcdff8
 
-Until one day it doesn't, and then we have to remember this subtle
-behavior. On the contrary, what's there now means that the code is
-correct regardless of changes.
+Thanks everyone for your opinions and feedback. Here=E2=80=99s my =
+summary:
 
-> -                        if (e.getParsingClass() != InetAddress.class || !InetAddresses.isHostname(dnsServer))
-> +                        if (!InetAddresses.isHostname(dnsServer))
+- DNS configuration is nuanced, fragmented, and platform dependent.
 
-Please drop this snippet from v2.
+- Split DNS can be accomplished in several ways:
+  - Via the native macOS DNS resolution machinery =
+(NEDNSSettings.matchDomains in my patch)
+  - Via a local or upstream non-platform-native DNS resolver
 
-As Harsh said, we need your sign off line. It would also be
-appreciated if you'd wrap your commit message and adjust your commit
-subject to match what the project uses conventionally.
+- Demand for split DNS exists. Other VPN apps (e.g. Tailscale and =
+DNSCloak) allow setting split DNS.
 
-Thanks,
-Jason
+--
+
+I would appreciate some feedback from the WireGuard maintainers on next =
+steps. Thanks ahead.
+
+I=E2=80=99ll address some feedback below.
+
+> On Nov 3, 2021, at 02:15, Harald Dunkel <harald.dunkel@aixigo.com> =
+wrote:
+>=20
+> Hi folks,
+>=20
+> I really like this patch. Currently DNS on MacOS is unable to resolve
+> both my local DNS names and the domain in the office in parallel, if
+> Wireguard is enabled. I have to use somehost.local to fall back to
+> zeroconf for my LAN as a workaround, which is pretty annoying.
+>=20
+> My suggestion would be to set SupplementalMatchDomains instead(!) of
+> SearchDomains, using the current config file syntax without '~'. Since
+> SupplementalMatchDomainsNoSearch is disabled by default, setting
+> SupplementalMatchDomains is sufficient to configure both lists. See
+>=20
+> =
+https://developer.apple.com/business/documentation/Configuration-Profile-R=
+eference.pdf
+>=20
+> This has to be verified, of course.
+>=20
+> Regards
+> Harri
+
+
+Harri, it sounds to me like SupplementalMatchDomains is functionally the =
+same as NEDNSSettings.matchDomains. The difference is that =
+SupplementalMatchDomains is specified in Apple=E2=80=99s configuration =
+profiles instead of thru the NEDNSSettings.matchDomains API (by way of a =
+wg-quick syntax extension in my patch). If the WireGuard macOS app =
+supported Apple=E2=80=99s configuration profiles (I don=E2=80=99t =
+believe it does but I may be mistaken), then a configuration profile =
+would conveniently avoid the extended wg-quick syntax in my patch. =
+However, I think configuration profiles are less accessible to the =
+average user.
+
+> On Nov 3, 2021, at 14:34, Andrew Fried <afried@spamteq.com> wrote:
+>=20
+> Basically, what I'm suggesting is that DNS servers handle DNS and =
+wireguard handle routing/transport.  Adding VPN functionality to a =
+nameserver or dns capabilities to Wireguard adds complexities that can =
+be better handled elsewhere.
+>=20
+> What makes Wireguard so good is that it does one thing and does it =
+really, really well.
+>=20
+> Andrew
+
+Andrew, to your point, alternative DNS solutions exist and can be =
+deployed in many ways.  WireGuard itself is not a DNS solution.  That =
+said, wg-quick style configuration (used by the WireGuard macOS app) =
+already does basic DNS configuration.  My patch adds a small extension =
+to wg-quick syntax (tilde prefixed domains) to make certain split DNS =
+scenarios possible.
+
+Crucially, my patch actually integrates directly into macOS=E2=80=99s =
+DNS machinery. No third party software or external network DNS servers =
+need apply.
+
+> On Nov 5, 2021, at 21:54, David Anderson <dave@natulte.net> wrote:
+>=20
+> Hi, Tailscale person here.
+
+Dave, your technical details sound right based on what I remember from =
+my own experimentation.
+
+-Stephen
+
