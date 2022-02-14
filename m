@@ -4,52 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA7D2C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 14 Feb 2022 13:55:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4B6DC433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 14 Feb 2022 17:55:09 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 8e059188;
-	Mon, 14 Feb 2022 13:55:12 +0000 (UTC)
-Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com
- [2607:f8b0:4864:20::f36])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 720de459
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 865892c7;
+	Mon, 14 Feb 2022 17:55:07 +0000 (UTC)
+Received: from smtp.dataaturservice.se (smtp.dataaturservice.se
+ [46.246.118.194])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id e95b3f3d
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 12 Feb 2022 02:20:50 +0000 (UTC)
-Received: by mail-qv1-xf36.google.com with SMTP id a19so10084063qvm.4
- for <wireguard@lists.zx2c4.com>; Fri, 11 Feb 2022 18:20:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to;
- bh=Ef1bxLq/sP6HAy7kL3hEMzTZFW/WpVD6xlsBoG/IOig=;
- b=bmNrcE/H4PfUjmGJQDiXz9M463YB0IbW99/2VOz6OXbFUdqg1YlAxVxxMe9iEky6h8
- f35BLdTWO3wZD1W3ixeFWcZ57dpf0oQNzOVzue0I+HXz0rcs/u6zfGHaBr9MTnUJ+vTA
- WRbiKA9aHPYBDugshbr+1JQqlOalXe5vNKr0R18/R04mbhecU+cZmG6jpNyHBj6TCS2d
- RzbVAX6qSB4taKT17Dq802SvTdiu1afhGQ828O6FZreHk2wZ2Wyut3oS/b/4EmOcdcy5
- f00m+fnTN5FExlKQYIwqsF7P73dET+GUGwFSWdUEQ2CAceLsBPQT9c8RU2ZKkyifHhiV
- U8Kw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=Ef1bxLq/sP6HAy7kL3hEMzTZFW/WpVD6xlsBoG/IOig=;
- b=Q9D51MZlI0z1Av10J4UjPTkRHuNl5G3x8SW0kSMO0xg1Lrq1T8OfgxRW0+xT7HkZqQ
- hMXPqjVna3TtnfneO3ch19uBVHTmLx99pYAlkjFKpKYYnSjOdUn9i07dpeB7pVG9cJhH
- Q4riww/ORRevQ2hkfkTsm7P1qRaZetPapwa4SPW9SSh+Vct3YGIp4c9iSPdVpzW4JU/D
- IXSbub0Ka22D/nONE3L8xO3e3YsTdMMzCFZ+eep9DHHyjaQf2IvMgQC6iNFj0IOrPtuc
- 1YYrLq3UUL/s9PPoAtdnMtKTzaMoH1GxpQSwPgCpdMkycIsGiedpnJWNYL/DDrYgUPQb
- czoQ==
-X-Gm-Message-State: AOAM531aDVSicLHbqhyJ3AkyD0O2OICSX1ISrcTZ7GehccQKIpca1j8m
- mC8/5JeNNSw9CICocSSGxEodK2DFdE1F4xURIeJ3iUUsjQQLIQ==
-X-Google-Smtp-Source: ABdhPJyvFRYmdSuR2WAoeIauq1AQUmB3TtBZqmPBCguiyqyQlw2kph2MJngFCz/jJgJjp+2ZIriZit8g8ZOH467Qu4w=
-X-Received: by 2002:a05:6214:19e9:: with SMTP id
- q9mr3154415qvc.73.1644632449473; 
- Fri, 11 Feb 2022 18:20:49 -0800 (PST)
-MIME-Version: 1.0
-From: Alexis gg <alexisgandroid@gmail.com>
-Date: Sat, 12 Feb 2022 11:20:39 +0900
-Message-ID: <CAFwG9-ZTkzZxp+ORVaGM0fHezZ51_ffVROz1Z0Ug+hz=thLzPQ@mail.gmail.com>
-Subject: reresolve-dns: use $EPOCHSECONDS instead of $(date +%s)
+ Mon, 14 Feb 2022 17:55:05 +0000 (UTC)
+Received: from smtpclient.apple (c-bd9f524e.02-19-73746f30.bbcust.telenor.se
+ [78.82.159.189])
+ by smtp.dataaturservice.se (OpenSMTPD) with ESMTPSA id b8127dfa
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 14 Feb 2022 17:55:01 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Brian Kuehn <brian@kuehn.se>
+Mime-Version: 1.0 (1.0)
+Subject: Re: Installer failed to install on Win 11
+Date: Mon, 14 Feb 2022 18:55:04 +0100
+Message-Id: <F5ABA895-81D4-4D1A-8A03-8A28F2DCF102@kuehn.se>
+References: <00b501d81dbd$3b2514e0$b16f3ea0$@kuehn.se>
+In-Reply-To: <00b501d81dbd$3b2514e0$b16f3ea0$@kuehn.se>
 To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
-X-Mailman-Approved-At: Mon, 14 Feb 2022 13:55:05 +0000
+X-Mailer: iPhone Mail (19C63)
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -64,12 +46,59 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This commit breaks everything on older OSes (esp. Centos 7):
-https://git.zx2c4.com/wireguard-tools/commit/?id=1fd95708391088742c139010cc6b821add941dec
+Hello all!
 
-There is no check on the bash's version, the built-in variable
-$EPOCHSECONDS is available only from bash 5.
-https://lists.gnu.org/archive/html/info-gnu/2019-01/msg00010.html
+I=E2=80=99ve since this last message been able to install Wireguard. I=E2=80=
+=99ve connected to my server and everything thing works perfectly.=20
 
-This isn't an improvement, $(date +%s) is stable from much older
-versions and will stay stable in future bash versions.
+In the Device Manager I have 3 Unknown devices, all seemingly connected to W=
+ireguard. It wasn=E2=80=99t until I deactivated these unknown devices that e=
+verything kicked in motion.
+
+Upon further investigation I found 2 network devices showing Wireguard affil=
+iation.
+
+I have to open a windows terminal with admin access to open a Wireguard sess=
+ion that activates.
+
+The thing I am wondering about is, why didn=E2=80=99t the options to run as a=
+dmin work in the first place? I have checked my Win 11 installation and ther=
+e is nothing outstanding nor nothing else strange. Any insights would be gre=
+at.
+
+Also how to get rid of the unknown devices would also be helpful.
+
+Greetings,
+
+Brian Kuehn
+
+Skickat fr=C3=A5n min iPhone
+
+> 14 feb. 2022 kl. 15:05 skrev brian@kuehn.se:
+>=20
+> =EF=BB=BFHello all!
+>=20
+> I=E2=80=99ve been trying to install the Windows Client on my Win 11 machin=
+e. To no avail.
+>=20
+> No I can=E2=80=99t change over to Linux on this machine. =F0=9F=98=89
+>=20
+> The installer downloads fine. When started it just sits and waits for some=
+thing. After a while, don=E2=80=99t know how long exactly, but maybe around 1=
+0 minutes a message shows up and says the installer has stopped responding. I=
+ tried a retry, but same procedure.
+>=20
+> The .msi file downloads fine. When started, it says wait until Windows con=
+figures the install. Then after like 10 minutes, a message pops up saying th=
+e server isn=E2=80=99t responding. I tried a retry, but same as before.
+>=20
+> I am a programmer, but Go isn=E2=80=99t something I=E2=80=99ve even played=
+ with, and I am totally new to this area of computing. I=E2=80=99ll probably=
+ open a VM and in Linux hook up this way until the client will install.
+>=20
+> Greetings,
+>=20
+> Brian Kuehn
+>=20
+>=20
+
