@@ -4,52 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF11DC433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 18 Feb 2022 10:08:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0ADBC433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 18 Feb 2022 12:30:17 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id e2b79e33;
-	Fri, 18 Feb 2022 10:08:41 +0000 (UTC)
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com
- [2607:f8b0:4864:20::230])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id abb6a659
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id d6535a82;
+	Fri, 18 Feb 2022 12:30:15 +0000 (UTC)
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id d004c8cc
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 18 Feb 2022 10:08:39 +0000 (UTC)
-Received: by mail-oi1-x230.google.com with SMTP id 13so2468990oiz.12
- for <wireguard@lists.zx2c4.com>; Fri, 18 Feb 2022 02:08:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wandera.com; s=google;
- h=mime-version:from:date:message-id:subject:to;
- bh=LKKgOnvs++cCqs3rjR9Zfecj/ddRGeuaq0LSJuEnEAY=;
- b=bj10vHaxbaGDVcVV4WCRmHWKS1uwmxuMG1vrzZDCNQf3PhlMrna1J5iINZc9OBoZXD
- 5KuEvnT6PaIeBRQMiQ0Zl8tiFv11g9KXUorAhqobiMkj+ID1orx4UVPB4Qxpr3CREhY/
- VPdCZ1/jsc0RArYuIhusm7eMdeNS0ohmfsJliOrr+LDMdd9iLaD9TdRBusKXCOVuAcYs
- 1QPS6Z9r4W3MZKkambvKiOTS7OQAGWmCa1/KXO7Y3hoo+8Anfxqq9fNDGvE8+r5ZyYBp
- lPY6dt39gMYY/oSXn8SIQmoUQVAKFeQx8zRXmJREbqaFuh5FGm4o2bUmBS9uJRbCNXMC
- VtTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=LKKgOnvs++cCqs3rjR9Zfecj/ddRGeuaq0LSJuEnEAY=;
- b=giPTER1Mv+Qn6QO0zMQeTTatT71DToyNS54gVSPbKKGcft1GUhdm6Snj/gvAaIIjdr
- pMowKSHg1pMXXsroPWhU3A7Z5ve+qZ+PcgaNDst1kUZDNJ0drrPsV01BqpqndPCSz+Sk
- m4w0/R4hCzr06RToUqcxLqxvUDK0k0Vmrl2/iSPcy2xaQSqhmE0ltZ8c+o0XCR320QWg
- IutOo3eKHrhkOIw1I4dk1Y/t5uocWD2i5CpYVo/CpBG6/Eid+YGf3M8EDrgJflzKr94g
- Uy/fXykpgLj1+I0hoA739JXjwUCEhqC7TfddG2KvPfB7haSKVpTK3jfDwpDx3DvMYO2W
- Yq3Q==
-X-Gm-Message-State: AOAM5325xGbitBTugD5PNOXR13hmk50C073VjF1R2ghL4QMngpJjGdL5
- AhLlRRiLl55rsVkrORAaNTnlP7iBsb6mdlNmXdW9SoAYhMwKaSQe5QZf0dvn4/S3V5ry2YtkkwK
- 2SJit6HXQO37RmGm6AxXB/rIFqtkMjlQ3kreEy6cY
-X-Google-Smtp-Source: ABdhPJzijfYj/bSWUiU9AiP+XD5MoNXYDPhfKzCCL7YaCwCsUr7ZgoWkwY777Lx1c3/cmHm/mfjN68NuUNN2rtZ5K2Q=
-X-Received: by 2002:a05:6808:11cc:b0:2d4:9b7c:6d76 with SMTP id
- p12-20020a05680811cc00b002d49b7c6d76mr1364069oiv.193.1645178917865; Fri, 18
- Feb 2022 02:08:37 -0800 (PST)
+ Fri, 18 Feb 2022 11:55:57 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id D3070210EA
+ for <wireguard@lists.zx2c4.com>; Fri, 18 Feb 2022 11:55:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1645185357; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=q9/9YWNMs1YVVaPMY13amjGyXApU719DKauxL1s7Fzc=;
+ b=lP+/2jLQ91vrYTlRMnROhjnGldOMlwD9oPsnwkgRq8V0stgle7f+hw7MVPoj/Qg907FQce
+ bzB7mhVc96aDEMtelyjqts2SClWXzpvINvLFHqONqjmmw43g5NeaCzbbode+vyDPpjnp7i
+ WYg2it2OpkOBN5aU13ExFuupkMtk7Zw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1645185357;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=q9/9YWNMs1YVVaPMY13amjGyXApU719DKauxL1s7Fzc=;
+ b=rGuDFEA80Q772qaafmgO7sphBRO2R8juTwWSri+BvFpGu5JWVm+EzD6sTY0XBbMRxVZsD3
+ ICA2+E189y9VFSBQ==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+ (No client certificate requested)
+ by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id C440313C7C
+ for <wireguard@lists.zx2c4.com>; Fri, 18 Feb 2022 11:55:57 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+ by imap2.suse-dmz.suse.de with ESMTPSA id CiqBLk2JD2IPOAAAMHmgww
+ (envelope-from <dheidler@suse.de>)
+ for <wireguard@lists.zx2c4.com>; Fri, 18 Feb 2022 11:55:57 +0000
+Message-ID: <d98464e9-d16c-78fa-d3f3-f05ad603890a@suse.de>
+Date: Fri, 18 Feb 2022 12:55:57 +0100
 MIME-Version: 1.0
-From: Laura Zelenku <laura.zelenku@wandera.com>
-Date: Fri, 18 Feb 2022 11:08:27 +0100
-Message-ID: <CAA-4Yo3orPJME2kAreKn7U7yC5=u9ca3jbTZStMam8F=Qt2tOg@mail.gmail.com>
-Subject: [PATCH] Lower log level on handshake race condition
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
 To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Language: de-DE
+From: Dominik Heidler <dheidler@suse.de>
+Subject: [PATCH] wg-quick hatchet: Support systemd-resolved split-dns setup
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Mailman-Approved-At: Fri, 18 Feb 2022 12:30:14 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -64,39 +72,40 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This issue is caused by "handshake initiation must be consumed first"
-error. It is quite weird
-because this is happening during responding on received Handshake
-initiation message but probably
-status of handshake is not set correctly in single thread for single peer.
 
-Signed-off-by: Laura Zelenku <laura.zelenku@wandera.com>
 ---
- device/send.go | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/dns-hatchet/hatchet.bash | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/device/send.go b/device/send.go
-index 0a7135f..0f0905a 100644
---- a/device/send.go
-+++ b/device/send.go
-@@ -144,7 +144,7 @@ func (peer *Peer) SendHandshakeResponse() error {
-
-        response, err := peer.device.CreateMessageResponse(peer)
-        if err != nil {
--               peer.device.log.Errorf("%v - Failed to create response
-message: %v", peer, err)
-+               peer.device.log.Verbosef("%v - Failed to create
-response message: %v", peer, err)
-                return err
-        }
-
+diff --git a/contrib/dns-hatchet/hatchet.bash b/contrib/dns-hatchet/hatchet.bash
+index bc4d090..30eb25b 100644
+--- a/contrib/dns-hatchet/hatchet.bash
++++ b/contrib/dns-hatchet/hatchet.bash
+@@ -5,7 +5,8 @@ set_dns() {
+                { printf 'nameserver %s\n' "${DNS[@]}"
+                  [[ ${#DNS_SEARCH[@]} -eq 0 ]] || printf 'search %s\n' "${DNS_SEARCH[*]}"
+                } | cmd resolvconf -a "$INTERFACE" -m 0 -x
+-       else
++       # Don't ruin a proper split dns setup
++       elif [[ "$(readlink /etc/resolv.conf)" != "/run/systemd/resolve/stub-resolv.conf" ]] ; then
+                echo "[#] mount \`${DNS[*]}' /etc/resolv.conf" >&2
+                [[ -e /etc/resolv.conf ]] || touch /etc/resolv.conf
+                { cat <<-_EOF
+@@ -30,6 +31,15 @@ set_dns() {
+                _EOF
+                )"
+        fi
++       # If systemd-resolved is installed, set the dns configuration there (as well).
++       # It might be used additionally (eg for containers) or even for the whole system.
++       # A teardown is not really needed as resolvectl detects the interface disappearing.
++       if resolvectl status >/dev/null 2>&1 ; then
++               cmd resolvectl dns "$INTERFACE" "${DNS[@]}"
++               # Prefix each domain with '~' which will tell resolvectl to use that domain
++               # for dns routing but not as a search domain
++               cmd resolvectl domain "$INTERFACE" "${DNS_SEARCH[*]/#/\~}"
++       fi
+        HAVE_SET_DNS=1
+ }
+ 
 -- 
-2.32.0 (Apple Git-132)
-
--- 
-*IMPORTANT NOTICE*: This email, its attachments and any rights attaching 
-hereto are confidential and intended exclusively for the person to whom the 
-email is addressed. If you are not the intended recipient, do not read, 
-copy, disclose or use the contents in any way. Wandera accepts no liability 
-for any loss, damage or consequence resulting directly or indirectly from 
-the use of this email and attachments.
+2.35.1
