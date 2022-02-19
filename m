@@ -4,60 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0ADBC433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 18 Feb 2022 12:30:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8127C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 19 Feb 2022 17:35:32 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id d6535a82;
-	Fri, 18 Feb 2022 12:30:15 +0000 (UTC)
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id d004c8cc
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id cf89778c;
+	Sat, 19 Feb 2022 17:35:30 +0000 (UTC)
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com
+ [2607:f8b0:4864:20::102d])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id c6db26f3
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 18 Feb 2022 11:55:57 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id D3070210EA
- for <wireguard@lists.zx2c4.com>; Fri, 18 Feb 2022 11:55:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1645185357; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=q9/9YWNMs1YVVaPMY13amjGyXApU719DKauxL1s7Fzc=;
- b=lP+/2jLQ91vrYTlRMnROhjnGldOMlwD9oPsnwkgRq8V0stgle7f+hw7MVPoj/Qg907FQce
- bzB7mhVc96aDEMtelyjqts2SClWXzpvINvLFHqONqjmmw43g5NeaCzbbode+vyDPpjnp7i
- WYg2it2OpkOBN5aU13ExFuupkMtk7Zw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1645185357;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=q9/9YWNMs1YVVaPMY13amjGyXApU719DKauxL1s7Fzc=;
- b=rGuDFEA80Q772qaafmgO7sphBRO2R8juTwWSri+BvFpGu5JWVm+EzD6sTY0XBbMRxVZsD3
- ICA2+E189y9VFSBQ==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
- (No client certificate requested)
- by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id C440313C7C
- for <wireguard@lists.zx2c4.com>; Fri, 18 Feb 2022 11:55:57 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
- by imap2.suse-dmz.suse.de with ESMTPSA id CiqBLk2JD2IPOAAAMHmgww
- (envelope-from <dheidler@suse.de>)
- for <wireguard@lists.zx2c4.com>; Fri, 18 Feb 2022 11:55:57 +0000
-Message-ID: <d98464e9-d16c-78fa-d3f3-f05ad603890a@suse.de>
-Date: Fri, 18 Feb 2022 12:55:57 +0100
+ Sat, 19 Feb 2022 17:35:28 +0000 (UTC)
+Received: by mail-pj1-x102d.google.com with SMTP id
+ v13-20020a17090ac90d00b001b87bc106bdso15071326pjt.4
+ for <wireguard@lists.zx2c4.com>; Sat, 19 Feb 2022 09:35:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=nkO1yMNql/ZIv8HPRyQ6UA62lxiDVj72dmCUoFsosDs=;
+ b=GCK96d3nMnUK/6qEer5leu1Nuly5bsK1JefvrD/KRO6qYra5U1ZoUZbz/4CyZr16To
+ jMaogkNLdQGwkRl0PBOcZR1Zt/NH6n2YJN3/UAHQmIlvR0XG5XYtcLI5c68KRuMrACI3
+ 3shHJUs/OoH4LFh+pKmwQLEa1hVGBa+9s7cqNu83Wb9CdpzwJj6EQ1W76qt7oY8yaleH
+ ActDk6cA2OAPeSvJ7BZ/BEp04aWfwb1eetMJZpNrMdlqFtTj7Ze8z5bR7iU0CNyF71ou
+ ZiWXJr2eRsPFVo5f+uQNWDWE0grWJ2k8zu/FaxhmB6xRArKPz6KI5KbP83B0f5JBylPy
+ o05g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=nkO1yMNql/ZIv8HPRyQ6UA62lxiDVj72dmCUoFsosDs=;
+ b=IoCMG6SWewHQyxWLbTtwm7bpHWxEH4eMZ3o/rqH1jJg7pI3VC4MSejunL8xR5rHnmV
+ CW0J4o8XIXy+z45lqRg32j+7S1t6831XdFQLx2oOl4w+JEKQDuXXR1Bi4js1mUXCyChf
+ Sj2xAZplyij3EPHwq3AZzTrhXluDl8f8738gNug0tx9xWzW2ZE9901627iv5lXzRV+uA
+ YHzgns307L1l170Nv7zvWJZlUPjxJNENJsJqgjdmT7TQiqCw2JpNGlEmR2mhXZq0KE//
+ rC2Qs/EttaokW7QWdc565aKtgm6PyJET8IrYQaDlk3RuJtEMEGpHztljcUBu0wj/pT/O
+ 2Njw==
+X-Gm-Message-State: AOAM531Q2m0Mv4pQ2nhXa/cqVSLuo+UTmdfiTJumuI++AbNTrA2yx/bz
+ 5AdycDEcjmRUJzfAJUg+TiOTZOwdqxsDbumA9bq/nNKps3CzNPHr
+X-Google-Smtp-Source: ABdhPJz+7JE6idMd8ZqmIYslgM8jCjq93igMS4QxGoeDhqCEs1UvBBMIfl0/HNxqt9OzWnuWcDy8jER0xRBb1teYIi8=
+X-Received: by 2002:a17:90b:4d84:b0:1b9:4109:7118 with SMTP id
+ oj4-20020a17090b4d8400b001b941097118mr17962559pjb.119.1645292126753; Sat, 19
+ Feb 2022 09:35:26 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
+From: Houman <houmie@gmail.com>
+Date: Sat, 19 Feb 2022 17:34:50 +0000
+Message-ID: <CABBZOsnRAS1bz_hT863E+GAn9D8=OXAvvsnuZhQbxsRZNVToDA@mail.gmail.com>
+Subject: Is there a Delegate for the Wireguard status in PacketTunnelProvider
+ (iOS)
 To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Language: de-DE
-From: Dominik Heidler <dheidler@suse.de>
-Subject: [PATCH] wg-quick hatchet: Support systemd-resolved split-dns setup
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Mailman-Approved-At: Fri, 18 Feb 2022 12:30:14 +0000
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -72,40 +65,52 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+Hello,
 
----
- contrib/dns-hatchet/hatchet.bash | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+I wonder if there is a Delegate we could use in PacketTunnelProvider
+to observe the state of Wireguard VPN.
 
-diff --git a/contrib/dns-hatchet/hatchet.bash b/contrib/dns-hatchet/hatchet.bash
-index bc4d090..30eb25b 100644
---- a/contrib/dns-hatchet/hatchet.bash
-+++ b/contrib/dns-hatchet/hatchet.bash
-@@ -5,7 +5,8 @@ set_dns() {
-                { printf 'nameserver %s\n' "${DNS[@]}"
-                  [[ ${#DNS_SEARCH[@]} -eq 0 ]] || printf 'search %s\n' "${DNS_SEARCH[*]}"
-                } | cmd resolvconf -a "$INTERFACE" -m 0 -x
--       else
-+       # Don't ruin a proper split dns setup
-+       elif [[ "$(readlink /etc/resolv.conf)" != "/run/systemd/resolve/stub-resolv.conf" ]] ; then
-                echo "[#] mount \`${DNS[*]}' /etc/resolv.conf" >&2
-                [[ -e /etc/resolv.conf ]] || touch /etc/resolv.conf
-                { cat <<-_EOF
-@@ -30,6 +31,15 @@ set_dns() {
-                _EOF
-                )"
-        fi
-+       # If systemd-resolved is installed, set the dns configuration there (as well).
-+       # It might be used additionally (eg for containers) or even for the whole system.
-+       # A teardown is not really needed as resolvectl detects the interface disappearing.
-+       if resolvectl status >/dev/null 2>&1 ; then
-+               cmd resolvectl dns "$INTERFACE" "${DNS[@]}"
-+               # Prefix each domain with '~' which will tell resolvectl to use that domain
-+               # for dns routing but not as a search domain
-+               cmd resolvectl domain "$INTERFACE" "${DNS_SEARCH[*]/#/\~}"
-+       fi
-        HAVE_SET_DNS=1
- }
- 
--- 
-2.35.1
+For example OpenVPN has something like this:
+
+extension PacketTunnelProvider: OpenVPNAdapterDelegate {
+    func openVPNAdapter(_ openVPNAdapter: OpenVPNAdapter, handleEvent
+event: OpenVPNAdapterEvent, message: String?) {
+        switch event {
+        case .connected:
+        case .disconnected:
+        case .reconnecting:
+        default:
+            break
+        }
+    }
+}
+
+Do we have this in Wireguard?
+
+I know it's possible to subscribe to this NEVPNStatusDidChange in the
+main app instead:
+
+override func viewDidLoad() {
+    NotificationCenter.default.addObserver(self, selector:
+#selector(vpnStatusDidChange(_:)), name:
+NSNotification.Name.NEVPNStatusDidChange, object: nil)
+}
+
+But this doesn't work well for Third party VPNs that integrate over
+the NetworkExtension framework. Even though I have observed this once,
+I see multiple connected states being triggered, after connecting a
+single time to the VPN.
+
+@objc private func vpnStatusDidChange(_ notification: Notification) {
+        let nevpnconn = notification.object as! NEVPNConnection
+        let status = nevpnconn.status
+        switch status {
+        case NEVPNStatus.invalid:
+        case NEVPNStatus.disconnected:
+        case NEVPNStatus.connecting:
+        case NEVPNStatus.connected:
+...
+}
+
+Any suggestions please?
+Thanks,
