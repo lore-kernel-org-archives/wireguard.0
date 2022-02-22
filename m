@@ -4,63 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F72FC433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 10 Mar 2022 01:00:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80522C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 14 Mar 2022 17:16:55 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 9802f6d2;
-	Thu, 10 Mar 2022 01:00:54 +0000 (UTC)
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com
- [2607:f8b0:4864:20::1030])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id b97d992c
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 4c4b8a05;
+	Mon, 14 Mar 2022 17:11:44 +0000 (UTC)
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com
+ [2607:f8b0:4864:20::b2d])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 3ff9f89c
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 10 Mar 2022 01:00:52 +0000 (UTC)
-Received: by mail-pj1-x1030.google.com with SMTP id
- lj8-20020a17090b344800b001bfaa46bca3so3735743pjb.2
- for <wireguard@lists.zx2c4.com>; Wed, 09 Mar 2022 17:00:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=prosimo.io; s=google;
- h=from:content-transfer-encoding:mime-version:subject:date:references
- :to:in-reply-to:message-id;
- bh=nQ6TQxjgj/qVtqBwbSbMF6cu/KbukTE2HUenbitCzQA=;
- b=ZsjujBJPhsUy1/hOIUe/EoRTzPrnyXnKPrK1/0lwCaAPIxxCkInhaYZrxNSLoUGyUV
- WOvmZ2ZKoG5b2tUwwOKz/xda89g3UCiiZmX3HEJLpEbogQRnbM6e6KSLHSStMcJllAM1
- 4AkVoU/fANt4zKHxMIfGnmtLIgAFYX+7MSaHQ=
+ for <WireGuard@lists.zx2c4.com>;
+ Tue, 22 Feb 2022 12:48:02 +0000 (UTC)
+Received: by mail-yb1-xb2d.google.com with SMTP id w63so19554502ybe.10
+ for <WireGuard@lists.zx2c4.com>; Tue, 22 Feb 2022 04:48:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=I2twvWhdHb1paT+Bz+WZEC1zWEUCXQym4ULH7o65yIw=;
+ b=UxaU62qfilUjf+6Cjict79phw5VACG+2ajhq0Dgeg9KFKYiOmYwPYmtOepolFB6LTC
+ 9oscRf/ZcULGq/kOpZa0ntDp32TeaBXi7mroSsHEE7YtZpEW2dFJwIz1k0fr00C6r2uV
+ Dw+8srCj/Iq6J4KZZ4ZV4bGctqLhSP70g3Buqvd1kZ98sTDlV+CFnNEXsjMlfi93XPuM
+ uqbGoylWPBRVhJcwVa/DVrwn8LEpmO47o3WwWkW9LohGFIMZzjrsQQDlcZjP0fmBPURw
+ Imhkwnw86cIpqoV7nXdgKTZTQF/oZcyD4XS6iHC8mHz2fU2DT1lCpv6/qsPdITA6SEvK
+ YFrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:from:content-transfer-encoding:mime-version
- :subject:date:references:to:in-reply-to:message-id;
- bh=nQ6TQxjgj/qVtqBwbSbMF6cu/KbukTE2HUenbitCzQA=;
- b=Dlpd5BIS63LPFTowTToAdiWpeMdLQzlKVcnaEFOUD8fo0PRb1iJdiFUEN92w3F3Uc2
- xcwjH+VnMsaW7zRBrnBuIPeloeggqN++HaMijjxRYC+A71clhrxszgKPzvEVVipgLzIB
- NdYJ4B5/Ix54038f1kOJoiHgSnUtaqc39qtdraFAM/HIZwoMl+V0x4Ia2ZkXjs9D27n+
- 2A4S/kdOoxsnsQ+OYT/RzULRZb1kywbcRlrdswxy3Ni1Ed2ULiTf49ZjTUptio3nHkOV
- 4+nsizDoj7MKZGHc6m5h+36QnxmB8l9cq0IuuZTWTa4jb7rIQgSxTSTqHcQa02P4fgC6
- mziA==
-X-Gm-Message-State: AOAM531wrqvKzQ5k/AAQcL5iGSq724av1MhVTt+6TUz85F5zL15f1Mh1
- 6PA1ojYnEozTBqPAAJxC/Nlq0eJG2oqOUA==
-X-Google-Smtp-Source: ABdhPJwyVWrQiHpkC5EHRi01EqrF0HroCb0VIS1b/lGazuMyZispjyp8IjhWtiGk1JwuM6OFY8pOSg==
-X-Received: by 2002:a17:902:a3cb:b0:151:e52e:fa0c with SMTP id
- q11-20020a170902a3cb00b00151e52efa0cmr2272961plb.70.1646874050334; 
- Wed, 09 Mar 2022 17:00:50 -0800 (PST)
-Received: from smtpclient.apple
- (172-9-238-145.lightspeed.sntcca.sbcglobal.net. [172.9.238.145])
- by smtp.gmail.com with ESMTPSA id
- l10-20020a056a00140a00b004c55d0dcbd1sm4297724pfu.120.2022.03.09.17.00.49
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 09 Mar 2022 17:00:50 -0800 (PST)
-From: Manikandan Thiagarajan <tmani@prosimo.io>
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.60.0.1.1\))
-Subject: Wireguard Go C API Callbacks
-Date: Wed, 9 Mar 2022 17:00:48 -0800
-References: <DBFC0427-180B-4757-A93A-0D9DECD959EE@prosimo.io>
-To: wireguard@lists.zx2c4.com
-In-Reply-To: <DBFC0427-180B-4757-A93A-0D9DECD959EE@prosimo.io>
-Message-Id: <0BDD2370-8F67-43BD-9186-76FF85EE1FC1@prosimo.io>
-X-Mailer: Apple Mail (2.3693.60.0.1.1)
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=I2twvWhdHb1paT+Bz+WZEC1zWEUCXQym4ULH7o65yIw=;
+ b=u/uBOcDTOCGNXTEKuayU3RkQW7Sq2Puc5XBLUxTF5I/YtWSiHg+RUlBpCGN77Yicwb
+ fuGnnVqYXVcHAQfQlhRE+Px0shs/88U6pJXPL+NewJPWtNfFHN5UUxpaq98CFq+PF62s
+ 2XqNVQ1aB2MVBPGhEAfXTebZ7M+GKMtP4ZIFPgieATHs3g70PwIZap4KNHM+OOTWv3ai
+ /yeEKAcCKsGTslj4HXcdyu/ATljixx+EcPGOKRiY2lfu0W+EghD+97h09XVCjx8stBS7
+ e3nIM22GoxD/2qXsZTT6HmVfROk/wXViw2h5DvJlyRUI30eydIUNonO3Aw1EVlXoiLEp
+ WZ4A==
+X-Gm-Message-State: AOAM531xJX/xnniGpPPQoa6F4xeaGD5EbuTdnDfDEC6KrkwkABjYPp7y
+ sMrlfaskGt1Emw1pmvITId7ybOfafEiAHf/uCBm67FLdCHA=
+X-Google-Smtp-Source: ABdhPJz705cHfdIj1d7cCoBUYmEKhOkgYQAbjwlYxRprfQRuhXboyowm9AEFtHKxP+Myui8251ZA7qH5v3mISECZfhk=
+X-Received: by 2002:a25:9a44:0:b0:622:4e:958c with SMTP id
+ r4-20020a259a44000000b00622004e958cmr23328306ybo.566.1645534080832; 
+ Tue, 22 Feb 2022 04:48:00 -0800 (PST)
+MIME-Version: 1.0
+From: Siva R <siva131mz@gmail.com>
+Date: Tue, 22 Feb 2022 18:17:50 +0530
+Message-ID: <CA+f5crf3w-BV7-Hp6FpSvCnMY3VXDug2_cvu=iDEyJVezzANOw@mail.gmail.com>
+Subject: Need Help - When 2 WireGuard tunnels are active Windows BSOD occurs
+ upon disconnecting/disabling Ethernet NIC
+To: WireGuard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
+X-Mailman-Approved-At: Mon, 14 Mar 2022 17:11:40 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -75,228 +65,25 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+Hi..
 
-We are using Wireguard Go C API to integrate with our packet tunnel =
-network extension to forward traffic to WG Tunnel on Mac OS. Sometimes =
-We encounter some issues with the tunnel that it doesn=E2=80=99t respond =
-anymore. Below log is one of the scenarios where we see this issue. The =
-Wireguard log says "no buffer space available=E2=80=9D. Below are my =
-questions regarding this issue and in general WG C API.
+This is my wg setup
 
-=E2=80=9C[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 =
-[INFO]: Failed to read packet from TUN device: route ip+net: sysctl: no =
-buffer space available"
+2 Active wg tunnels. Table=Off in both. Routes added/deleted via
+PostUp and PreDown. Both tunnels have routes configured for subnet
+0.0.0.0/0 with low priority(higher interface metric and route metric)
 
-1. When do we hit this issue? How do we prevent this.
-2. I think we need some kind of callback C APIs that notifies such =
-errors to the callers.
-3. Also it would be nice to have status update callbacks such as Tunnel =
-established, Handshake completed. Handshake failed, Tunnel file =
-descriptor closed and any other updates.
+So by default all my connections go via Ethernet unless configured in
+the application to use wg NIC.
 
-We would like to handle these notifications and take some actions such =
-as re create the tunnels, update our own UI, and etc
+Problem is when 2 wg tunnels are active Windows BSOD occurs upon
+disconnecting/disabling Ethernet NIC. It doesn't happen when 1 wg
+tunnel is active
 
-Thanks,
-Mani
+Please let me know if any other information is needed. Happy to share.
 
-[Sun Mar  6 15:27:15 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: receive incoming v4 - started
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: event worker - stopped
-replace_peers=3Dtrue
-=
-public_key=3Dxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-x
-endpoint=3Dx.x.x.x:51820
-persistent_keepalive_interval=3D0
-replace_allowed_ips=3Dtrue
-allowed_ip=3D10.50.19.176/32
-=
-public_key=3Dxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-x
-endpoint=3Dx.x.x.x:51820
-persistent_keepalive_interval=3D0
-replace_allowed_ips=3Dtrue
-allowed_ip=3D10.255.254.170/32
+I've also posted about the anomaly in reddit.
 
- for interface 100.140.34.230/11
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:286 [INFO]: =
-Update tunnel 0 CCConfig: =
-private_key=3Dxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-xx
-replace_peers=3Dtrue
-=
-public_key=3Dxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-x
-endpoint=3Dx.x.x.x:51820
-persistent_keepalive_interval=3D0
-replace_allowed_ips=3Dtrue
-allowed_ip=3D10.50.19.176/32
-=
-public_key=3Dxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx=
-x
-endpoint=3Dx.x.x.x:51820
-persistent_keepalive_interval=3D0
-replace_allowed_ips=3Dtrue
-allowed_ip=3D10.255.254.170/32
+https://www.reddit.com/r/WireGuard/comments/syk18j/when_2_wireguard_tunnels_are_active_windows_bsod/
 
-
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-UAPI: Updating private key
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-UAPI: Removing all peers
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(EBXr=E2=80=A6oDk8) - Stopping
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(EBXr=E2=80=A6oDk8) - Routine: sequential sender - stopped
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(EBXr=E2=80=A6oDk8) - Routine: sequential receiver - stopped
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(3wsi=E2=80=A68IXc) - Stopping
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(3wsi=E2=80=A68IXc) - Routine: sequential receiver - stopped
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(3wsi=E2=80=A68IXc) - Routine: sequential sender - stopped
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(EBXr=E2=80=A6oDk8) - Starting
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(EBXr=E2=80=A6oDk8) - Routine: sequential sender - started
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(EBXr=E2=80=A6oDk8) - UAPI: Created
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(EBXr=E2=80=A6oDk8) - Routine: sequential receiver - started
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(EBXr=E2=80=A6oDk8) - UAPI: Updating endpoint
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(EBXr=E2=80=A6oDk8) - UAPI: Updating persistent keepalive interval
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(EBXr=E2=80=A6oDk8) - UAPI: Removing all allowedips
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(EBXr=E2=80=A6oDk8) - UAPI: Adding allowedip
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(3wsi=E2=80=A68IXc) - Starting
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(3wsi=E2=80=A68IXc) - UAPI: Created
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(3wsi=E2=80=A68IXc) - Routine: sequential receiver - started
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(3wsi=E2=80=A68IXc) - Routine: sequential sender - started
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(3wsi=E2=80=A68IXc) - UAPI: Updating endpoint
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(3wsi=E2=80=A68IXc) - UAPI: Updating persistent keepalive interval
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(3wsi=E2=80=A68IXc) - UAPI: Removing all allowedips
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(3wsi=E2=80=A68IXc) - UAPI: Adding allowedip
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: receive incoming v4 - stopped
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: receive incoming v6 - stopped
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-UDP bind has been updated
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: receive incoming v6 - started
-[Sun Mar  6 15:27:21 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: receive incoming v4 - started
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Failed to read packet from TUN device: route ip+net: sysctl: no buffer =
-space available
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: TUN reader - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Device closing
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: receive incoming v4 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: receive incoming v6 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(EBXr=E2=80=A6oDk8) - Stopping
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(EBXr=E2=80=A6oDk8) - Routine: sequential sender - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(EBXr=E2=80=A6oDk8) - Routine: sequential receiver - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(3wsi=E2=80=A68IXc) - Stopping
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(3wsi=E2=80=A68IXc) - Routine: sequential sender - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-peer(3wsi=E2=80=A68IXc) - Routine: sequential receiver - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Device closed
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: decryption worker 2 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: decryption worker 11 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: decryption worker 6 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: decryption worker 10 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: handshake worker 7 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: decryption worker 4 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: handshake worker 10 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: decryption worker 5 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: decryption worker 12 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: handshake worker 2 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: decryption worker 7 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: decryption worker 8 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: decryption worker 1 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: decryption worker 9 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: handshake worker 9 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: handshake worker 5 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: handshake worker 1 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: decryption worker 3 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: handshake worker 11 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: handshake worker 8 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: handshake worker 12 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: handshake worker 4 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: handshake worker 3 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: handshake worker 6 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: encryption worker 5 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: encryption worker 9 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: encryption worker 6 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: encryption worker 11 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: encryption worker 12 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: encryption worker 3 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: encryption worker 10 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: encryption worker 4 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: encryption worker 1 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: encryption worker 7 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: encryption worker 8 - stopped
-[Sun Mar  6 15:27:22 2022] 832, AgentPacketTunnelProvider.mm:41 [INFO]: =
-Routine: encryption worker 2 - stopped
-
-
+Many thanks.
