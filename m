@@ -4,44 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F12D3C433EF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49F75C4332F
 	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 14 Mar 2022 17:16:57 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id a895e1eb;
-	Mon, 14 Mar 2022 17:11:47 +0000 (UTC)
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.131])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id aa7b8e49
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id e4b98f85;
+	Mon, 14 Mar 2022 17:11:46 +0000 (UTC)
+Received: from mail-4018.proton.ch (mail-4018.proton.ch [185.70.40.18])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 406f2c82
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 4 Mar 2022 12:03:03 +0000 (UTC)
-Received: from [192.168.177.41] ([94.31.101.241]) by mrelayeu.kundenserver.de
- (mreue010 [213.165.67.97]) with ESMTPSA (Nemesis) id
- 1M3UlW-1nQec11VdS-000dJK
- for <wireguard@lists.zx2c4.com>; Fri, 04 Mar 2022 13:03:03 +0100
-From: "Hendrik Friedel" <hendrik@friedels.name>
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-Subject: Wireguard and double NAT
-Date: Fri, 04 Mar 2022 12:03:05 +0000
-Message-Id: <embc5c04ac-b215-462e-b047-6bf76ae1d6ce@envy>
-User-Agent: eM_Client/8.2.1659.0
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+ for <wireguard@lists.zx2c4.com>;
+ Fri, 25 Feb 2022 17:31:54 +0000 (UTC)
+Date: Fri, 25 Feb 2022 17:31:51 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xfs.repair;
+ s=protonmail3; t=1645810313;
+ bh=MMFekGoI1vxhoSyFCMRJKePrtCjMekeJmy0/erJPzc4=;
+ h=Date:To:From:Reply-To:Subject:Message-ID:From:To:Cc:Date:Subject:
+ Reply-To:Feedback-ID:Message-ID;
+ b=kD+MDMNsD5QQ8M6tv0nvuygXJCwzHJWCSWW48sJUPGa/THLDhDwU61nhw62J+nANg
+ Hzh8Aj3GHEHUcZUMS56+znOCLSQ8uvE7QgKnDGPgLWwBs8lsfC1Iqwy+WgykaaxFwU
+ HfYhiuIDoSUqi42HhEpjcnucCfnpQia3u8SA867nzMjDQAF6tj5ybJX5YOS/b9gpmn
+ W3BSf6VVMZ+onXfWtO2F2X5/xduP+tRfFOua9nIyHwtz9LeQuo/StXwTW8Z/IGl+6O
+ EbR8GjKEOqn8xtvNAsuW2otq4D6rVTjEbcwnQ3Fqp/4WE4EpUU+4WOtm+ii/qjPH+E
+ 1FJ7Ti7JNkOWQ==
+To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+From: Michael Hicklen <michael@xfs.repair>
+Subject: WireDuard On-Connect DNS Lookup Failure (tries UDP/53,
+ does not fail over to TCP/53)
+Message-ID: <65VYfOmhDVJ1vrxWr5SuNQBkEUwy8XE6yXij13fOizK7JCUYLoSM_4SXFHM_rhz2JLgsSX0gidKKuEnH7TqxDuFkpQ2OMKXUHe-lgViMrBU=@xfs.repair>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:rAG6CAj2LR6GulJObl/3L6MmbcbCJDPqf/51G3GjO240ngyvt4y
- 0LzXxNgs4uSxI8R1da4bqrPfkmUIiy8B4wxTYhwJoRfmcbZHnN1cQ/zuSQNjKuccEcM7Ays
- tlCQoOA1aEUqfNWmyugu7Y1BFKeYgBLtrOl9ltlZgpABHIOX7xtroVR5mo3wPkK6DVBceN+
- +dC2bVNATaCNuh3AmKyrQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:lYKvBVa5wP4=:bQ7qGliIKveq1cQ/o5S+c+
- 3WCG8uDN1DKNrXucEk0ZubhfZiIA0SkrVHxG8mNuCN5k9p829aAo3y10n7tkAzIaU/ytHJgud
- v+CnU3MiL0ZY/CnnVueozjygJpLqJ8/fyBQQ8d7MngQDMEaO8hGLZrR8G+0s0Wl3ng81ZpHY4
- Y9fdIbhs8RNVwByVF2qs6DwUEM3JqctDRvkIMiMmzHIBbSwMsKZ0XJ2rnaljGk4C0V9JSLbb6
- JBe5G7AX/9iqJWl4Zq4zmV8N8Y1bR/zLB4kxpjQdCatb1jaXvNamUk3hxJMgn2CLunNJGbJKo
- /AbpuQDQ7MBuxtN87qkjK3x8QmgTYEh+ZFSzIIZEI5ndqHBT3+re8V2v7KinXFRfbarf2yYOG
- k859WXtsA5r8oetYfO/RXJbKWsNZgzA5PkOjnwBgLeUrHMHKUrPEjruwoSF/PsWCY+xN1z9Yg
- 2NxLKV9USia9bGkxIVt9rC5hs/leZCSscRhdNqs6+mByna0NqHRpnGsvn8jJJXuMHMlcEVRjW
- DmHWpdRyGZ0TU/bF/B/tThYQ4h8Q3OK0mXmG4vBj8qaEA6GMX8YdYnzXa7MJoEU0/PBGIfvZG
- AzwjMwng3MHcjzKadTJRTuFqmfX7+xINPafyCWi2j1/48xMCRyQH/ksMAPeQIdpzZs5+TciY3
- +R0mSHvD2Tk7XudK4K7bn6kpmYbyt7xz7rT/iF9ake5vwtTEmjnPetW9envn30PXqu6lqA72k
- P2ubKt9WEeajxlpf
 X-Mailman-Approved-At: Mon, 14 Mar 2022 17:11:40 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -54,24 +46,24 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Reply-To: Hendrik Friedel <hendrik@friedels.name>
+Reply-To: Michael Hicklen <michael@xfs.repair>
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
+Hi all,
 
-I have a running Server serving several Clients with a wireguard tunnel=20
-already. For this, port 51820 UDP is porwarded in my router to the=20
-Server.
+I've noticed an issue today with WireGuard where it will fail to connect to=
+ a hostname when attempting to resolve DNS in a situation where UDP DNS loo=
+kups are disabled. This is reproducible by disabling UDP 53 egress, or by c=
+onnecting to ExpressVPN first then trying to connect WireGuard to a server =
+using a hostname.
 
-Now, I have one Client with a bit of a tricky setup: I have two Routers=20
-doing NAT. For one of those, I have no control, i.e. I cannot setup=20
-portforwarding.
+This is an edge case, but I think it would be excellent if WireGuard were t=
+o attempt to fall back on TCP instead of failing out at the UDP lookup.
 
-Is it still possible, to use Wireguard to create a tunnel between my=20
-server and this tricky client? If so, is there anything special, that I=20
-need to consider?
+Note this is orthogonal to the endless requests for WireGuard to support TC=
+P tunneling - that is not what I'm talking about here.
 
-Best regards,
-Hendrik
-
+--
+Michael Hicklen
+michael@xfs.repair
