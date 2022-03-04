@@ -4,40 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66563C433FE
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 14 Mar 2022 17:16:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F12D3C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 14 Mar 2022 17:16:57 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 36003c0a;
-	Mon, 14 Mar 2022 17:11:45 +0000 (UTC)
-Received: from m239-4.eu.mailgun.net (m239-4.eu.mailgun.net [185.250.239.4])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id fa740537
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id a895e1eb;
+	Mon, 14 Mar 2022 17:11:47 +0000 (UTC)
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.131])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id aa7b8e49
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 24 Feb 2022 00:59:45 +0000 (UTC)
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=steel-hub.co.uk;
- q=dns/txt; 
- s=mta; t=1645664385; h=Content-Transfer-Encoding: Content-Type:
- Mime-Version: Reply-To: Message-Id: Date: Subject: To: From: Sender;
- bh=iUNyU2vC2CgfmmpY5PonP5xZ5t7YDWIWsr+qqmQkGHc=;
- b=PoIpHYMWnyCN13BtMiJC5X40sbjzvr/mMwgcrdAxLFkkyMxPIWKciI6Z1j6RA9CSTnJUEQvW
- vu2sCFraonbEhPyxCy9y98kWuXHxWqu8BWUNZbYsH7lfafO4bth1bpelUZHfgRXbqfquCw8w
- sIYMvdviGnMeqZ7BpKuNL6l127Y=
-X-Mailgun-Sending-Ip: 185.250.239.4
-X-Mailgun-Sid: WyI5NTViNiIsICJ3aXJlZ3VhcmRAbGlzdHMuengyYzQuY29tIiwgIjNhNWUiXQ==
-Received: from [10.10.10.64] (host81-139-198-54.in-addr.btopenworld.com
- [81.139.198.54]) by smtp-out-n02.prod.eu-central-1.postgun.com with SMTP id
- 6216d88083284d24fb797441 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 24 Feb 2022 00:59:44
- GMT
-From: "peter@steel-hub.co.uk" <peter@steel-hub.co.uk>
-To: wireguard@lists.zx2c4.com
-Subject: Windows Client - high packet loss after fragmented packet
-Date: Thu, 24 Feb 2022 00:59:45 +0000
-Message-Id: <ema686fe7b-eca9-46e4-9d80-a6ec02d74c9d@jarvis>
+ for <wireguard@lists.zx2c4.com>; Fri, 4 Mar 2022 12:03:03 +0000 (UTC)
+Received: from [192.168.177.41] ([94.31.101.241]) by mrelayeu.kundenserver.de
+ (mreue010 [213.165.67.97]) with ESMTPSA (Nemesis) id
+ 1M3UlW-1nQec11VdS-000dJK
+ for <wireguard@lists.zx2c4.com>; Fri, 04 Mar 2022 13:03:03 +0100
+From: "Hendrik Friedel" <hendrik@friedels.name>
+To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
+Subject: Wireguard and double NAT
+Date: Fri, 04 Mar 2022 12:03:05 +0000
+Message-Id: <embc5c04ac-b215-462e-b047-6bf76ae1d6ce@envy>
 User-Agent: eM_Client/8.2.1659.0
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:rAG6CAj2LR6GulJObl/3L6MmbcbCJDPqf/51G3GjO240ngyvt4y
+ 0LzXxNgs4uSxI8R1da4bqrPfkmUIiy8B4wxTYhwJoRfmcbZHnN1cQ/zuSQNjKuccEcM7Ays
+ tlCQoOA1aEUqfNWmyugu7Y1BFKeYgBLtrOl9ltlZgpABHIOX7xtroVR5mo3wPkK6DVBceN+
+ +dC2bVNATaCNuh3AmKyrQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:lYKvBVa5wP4=:bQ7qGliIKveq1cQ/o5S+c+
+ 3WCG8uDN1DKNrXucEk0ZubhfZiIA0SkrVHxG8mNuCN5k9p829aAo3y10n7tkAzIaU/ytHJgud
+ v+CnU3MiL0ZY/CnnVueozjygJpLqJ8/fyBQQ8d7MngQDMEaO8hGLZrR8G+0s0Wl3ng81ZpHY4
+ Y9fdIbhs8RNVwByVF2qs6DwUEM3JqctDRvkIMiMmzHIBbSwMsKZ0XJ2rnaljGk4C0V9JSLbb6
+ JBe5G7AX/9iqJWl4Zq4zmV8N8Y1bR/zLB4kxpjQdCatb1jaXvNamUk3hxJMgn2CLunNJGbJKo
+ /AbpuQDQ7MBuxtN87qkjK3x8QmgTYEh+ZFSzIIZEI5ndqHBT3+re8V2v7KinXFRfbarf2yYOG
+ k859WXtsA5r8oetYfO/RXJbKWsNZgzA5PkOjnwBgLeUrHMHKUrPEjruwoSF/PsWCY+xN1z9Yg
+ 2NxLKV9USia9bGkxIVt9rC5hs/leZCSscRhdNqs6+mByna0NqHRpnGsvn8jJJXuMHMlcEVRjW
+ DmHWpdRyGZ0TU/bF/B/tThYQ4h8Q3OK0mXmG4vBj8qaEA6GMX8YdYnzXa7MJoEU0/PBGIfvZG
+ AzwjMwng3MHcjzKadTJRTuFqmfX7+xINPafyCWi2j1/48xMCRyQH/ksMAPeQIdpzZs5+TciY3
+ +R0mSHvD2Tk7XudK4K7bn6kpmYbyt7xz7rT/iF9ake5vwtTEmjnPetW9envn30PXqu6lqA72k
+ P2ubKt9WEeajxlpf
 X-Mailman-Approved-At: Mon, 14 Mar 2022 17:11:40 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -50,66 +54,24 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Reply-To: "peter@steel-hub.co.uk" <peter@steel-hub.co.uk>
+Reply-To: Hendrik Friedel <hendrik@friedels.name>
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 Hello,
 
-I am using the wireguard windows client (v0.5.3) and driver (v0.10.1).
+I have a running Server serving several Clients with a wireguard tunnel=20
+already. For this, port 51820 UDP is porwarded in my router to the=20
+Server.
 
-Whenever I send data that is larger than the mtu, packet loss goes=20
-through the roof.  Some packets get through, but almost all of them=20
-(about 98%) are lost. This will continue until I deactivate and then=20
-reactivate the tunnel in the windows client.
+Now, I have one Client with a bit of a tricky setup: I have two Routers=20
+doing NAT. For one of those, I have no control, i.e. I cannot setup=20
+portforwarding.
 
-This does not seem to happen when receiving large packets. However, I=20
-haven't spent much time testing that.
+Is it still possible, to use Wireguard to create a tunnel between my=20
+server and this tricky client? If so, is there anything special, that I=20
+need to consider?
 
-I tested using an android wireguard client connected to the same server.=20
-It had no problems.
-
-I used large ping requests to replicate the issue while capturing the=20
-traffic on the wg and eth interfaces for both the client and server.
-
-When I send a large packet (e.g. 1700 bytes), the client wg interface=20
-shows two frames: the first frame length equals the mtu (1420 bytes) and=20
-the second makes up the difference + overhead (328 bytes). However, the=20
-eth interface on the client only shows the first frame. This is=20
-confirmed on the server which only receives the first frame. After a=20
-significant delay, the second frame seems to be sent and a response=20
-received, but the request has already timed out by then.
-
-After that, packets still come and go but there is some kind of delay=20
-between packets being received on one interface and appearing on the=20
-other. By the time the response comes in, the packet is already=20
-considered lost. For example, normal-sized ping requests mostly showed=20
-as timed out on the command line but I could see that a response was=20
-eventually received on the wg interface.
-
-The more large packets I send through the tunnel, the worse it gets. If=20
-I just send one large packet, there is a delay and most requests=20
-time-out. After more large packets are sent, I stop receiving responses=20
-at all on the wg interface. At this point the wireguard client will=20
-start reporting handshake failures.
-
-As before, deactivating and reactivating the tunnel restores normal=20
-operation.
-
-Here are some logs that demonstrate the problem: =20
-https://we.tl/t-qb1ChyWDIC
-
-There are three systems to note:
-
-10.106.15.10 =3D windows client (win-client)
-10.106.0.2 / 10.106.15.1 =3D wireguard server, debian 11 (server)
-10.106.0.3 =3D test system accessible on lan attached to server, debian 11=
-=20
-(host)
-
-
-Thanks,
-Peter.
-
-
+Best regards,
+Hendrik
 
