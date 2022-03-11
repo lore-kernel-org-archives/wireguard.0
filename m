@@ -4,56 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4EE1C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 14 Mar 2022 17:16:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D013C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 14 Mar 2022 17:17:01 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id e8c18144;
-	Mon, 14 Mar 2022 17:11:48 +0000 (UTC)
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com
- [2607:f8b0:4864:20::644])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 5523cd73
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 8 Mar 2022 07:31:41 +0000 (UTC)
-Received: by mail-pl1-x644.google.com with SMTP id e2so16288004pls.10
- for <wireguard@lists.zx2c4.com>; Mon, 07 Mar 2022 23:31:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :content-transfer-encoding;
- bh=AzPD7q8txdDIgtwh9LNL3h8HyNsNj9Pb4z6vMoVDAyM=;
- b=eqlF6B3ZH4aG6nRfZvm9+ahxZx0dFp7eGNqbdmkInsbZGhu3XdqjzgjaAYtgMkQ/WL
- NN0nnCGDMgLuWSriFGZFCUTff3XKNb17UX6oo4Unroeu+WaCSrVPwLzSRkOvBn9fGMIE
- VNVcwRsmf9/MriSXOFQPRVaI3DDJFXkY70UW+epl8jOZtRKhj+OKYUCfDrMuzx9EN29e
- JIiRUWdkd38ARN6CuN77fV0so6U5A8URcCHUimNhkDT7pTJh3ph6pZX521fgItJnq89+
- IDXAj9hhkCuORp2AvHDTItTpckgKOzH9yOtpPlml2XjObYl55xKBRtZdU09bc7uyWuat
- DvuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:content-transfer-encoding;
- bh=AzPD7q8txdDIgtwh9LNL3h8HyNsNj9Pb4z6vMoVDAyM=;
- b=Ug4clowXz4PrbVPDatnkJQtUC4yjbviw+ovYTXOA3CwH9e7sJo3wRS2xd2n8rvlKez
- 2s7vgZbXnjhMn0yIUMyodue9wTF5WyIIz2Z3NtsTLYcZmOf3DbtwtsoUS8hha+chQL5j
- oFkRQbX1yUvsv64Lss6vjd1+Od41p8PPvLX2dls/E975wzjKIPsK5bWzwnBsf/Ezt4GE
- WCIsA+B9HF9p5y0Bt+NSZJITFuhlNk4R9iM/tX/OOu8K+CYkWRn+qx4yqbiy+qStMYUn
- tn3v9TcsbnbE0US5fBu4t+DxN1t9QNCtfQXM+cOwM09581V+hoj1gNhHxqEvFh5r3v1X
- ZwSg==
-X-Gm-Message-State: AOAM532QnNxI7vEf+3Wsf2B9PMX6KCmU6/EdfwQ7bRMV+dr4gqaEW3FC
- Q30roCNP4q5hkBH+URRj13ZBGxVyM4fnwi39nnbFbXsr4eU=
-X-Google-Smtp-Source: ABdhPJw3im14oEMp2fWgObITc4EeIia4H/AaB0PQY+avDDRtxndEyMvlqKLCiIpCaynde5w1vwwFh4zSDCdqMsaYgKc=
-X-Received: by 2002:a17:902:dac7:b0:151:95cf:7863 with SMTP id
- q7-20020a170902dac700b0015195cf7863mr16287775plx.123.1646724699513; Mon, 07
- Mar 2022 23:31:39 -0800 (PST)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 0e7c7229;
+	Mon, 14 Mar 2022 17:11:49 +0000 (UTC)
+Received: from smtp-out.titan.email (mail19.out.titan.email [3.64.226.213])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 2d0d1781
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Fri, 11 Mar 2022 05:29:38 +0000 (UTC)
+Received: from smtp-out.flockmail.com
+ (ip-10-10-86-103.eu-central-1.compute.internal [10.10.86.103])
+ by smtp-out.titan.email (Postfix) with ESMTP id A107C12002F
+ for <wireguard@lists.zx2c4.com>; Fri, 11 Mar 2022 05:29:38 +0000 (UTC)
+Received: from smtp-out.flockmail.com (localhost [127.0.0.1])
+ by smtp-out.flockmail.com (Postfix) with ESMTP id 4348F10000D;
+ Fri, 11 Mar 2022 05:29:38 +0000 (UTC)
+X-F-Verdict: SPFVALID
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=t12smtp-sign003.email; s=titan1; t=1646976578;
+ bh=bWOjIaEQYWkf30K+KKT/ZGEr7+RPUnv1KHH/Hh79ExI=;
+ h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:From:To:Cc:
+ Subject:Message-ID;
+ b=OlQMMN8q/YlQz+tn3HIDThelWNQVu/UrWI6TJ7xpLMUgt8YFagZ0r9OaONErd7tjv
+ c8VwBlk2iWe+jCyyL8+nXrr0KUA7PPD0nVEV19Vn2V9G868+k/RgsThP6SMF6pY9fi
+ ydBJCYuOLVX58gJbRBP3IkcCEwuxZYYkGMZL6O8Q=
+Received: from localhost.localdomain (173.44.49.91.adsl.inet-telecom.org
+ [173.44.49.91])
+ by smtp-out.flockmail.com (Postfix) with ESMTPA id A0C49100009;
+ Fri, 11 Mar 2022 05:29:37 +0000 (UTC)
+Feedback-ID: :john@gravitl.com:gravitl.com:flockmailId
+From: john@gravitl.com
+To: wireguard@lists.zx2c4.com
+Cc: John Sahhar <john@gravitl.com>
+Subject: [PATCH] tun/netstack: implement MaxHeaderLength
+Date: Thu, 10 Mar 2022 23:28:32 -0600
+Message-Id: <20220311052832.86700-1-john@gravitl.com>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-References: <CAMTegSQZ=7GQMtbKpRu8Z-+igZVdKwQHb9HPyFt3ikYS2i5GsA@mail.gmail.com>
-In-Reply-To: <CAMTegSQZ=7GQMtbKpRu8Z-+igZVdKwQHb9HPyFt3ikYS2i5GsA@mail.gmail.com>
-From: Dan George <dgeor8@gmail.com>
-Date: Tue, 8 Mar 2022 18:31:28 +1100
-Message-ID: <CAMTegSQfJiwcQnAzQP3hD4Bo8zcCLkUGWiUifBFaVvLPoCoUdQ@mail.gmail.com>
-Subject: [wireguard-linux-compat] fallthrough macro breaks pre-5.4 kernel
- compatibility?
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.4 cv=VdbkgXl9 c=1 sm=1 tr=0 ts=622ade42
+ a=QEpn2SubEkQh6g3vIi6XXA==:117 a=QEpn2SubEkQh6g3vIi6XXA==:17
+ a=CEWIc4RMnpUA:10 a=eYKfDJU5AAAA:8 a=-pCSf-5qJv81JgzTw4gA:9
+ a=lmb810DE-YoBXuhcsDRM:22
+X-Virus-Scanned: ClamAV using ClamSMTP
 X-Mailman-Approved-At: Mon, 14 Mar 2022 17:11:40 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -69,35 +65,31 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi all,
+From: John Sahhar <john@gravitl.com>
 
-I just tried compiling the latest wireguard-linux-compat kernel module
-v1.0.20211208 for kernel 4.4 [1] and encountered the following error:
-"net/wireguard/compat/siphash/siphash.c:112:36: error: =E2=80=98fallthrough=
-=E2=80=99
-undeclared (first use in this function)"
-The previous version v1.0.20210606 compiles and runs fine.
+Signed-off-by: John Sahhar <john@gravitl.com>
+---
+ tun/netstack/tun.go | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-Some (inexpert) digging suggests that this is because a recent patch
-[2] modified siphash.c to use 'fallthrough', which is a Linux kernel
-compiler macro that was only added in kernel 5.4 [3].
+diff --git a/tun/netstack/tun.go b/tun/netstack/tun.go
+index 8b1bb7f..94b59f8 100644
+--- a/tun/netstack/tun.go
++++ b/tun/netstack/tun.go
+@@ -71,8 +71,11 @@ func (*endpoint) Capabilities() stack.LinkEndpointCapabilities {
+ 	return stack.CapabilityNone
+ }
+ 
+-func (*endpoint) MaxHeaderLength() uint16 {
+-	return 0
++func (e *endpoint) MaxHeaderLength() uint16 {
++	if e.hasV6 && !e.hasV4 {
++		return 40
++	}
++	return 60
+ }
+ 
+ func (*endpoint) LinkAddress() tcpip.LinkAddress {
+-- 
+2.32.0
 
-In which case, presumably, either 'fallthrough' needs to be removed
-again, or the macro added in wireguard-linux-compat somewhere. I'm
-happy to submit a patch for either (although would appreciate some
-guidance if the second option), or someone with more experience can.
-
-In my immediate case, removing all instances of 'fallthrough' from
-siphash.c has fixed compilation.
-
-Thanks,
-Dan.
-
-[1] Specifically, in case this becomes relevant, cross-compiling for
-the Synology RT2600AC router (armv7l, kernel 4.4.60) from Ubuntu
-20.04.4 x64 using gcc 4.9.3 according to the steps at
-https://gitlab.com/Kendek/syno-router-scripts/-/issues/3
-[2] https://git.zx2c4.com/wireguard-linux-compat/commit/?id=3Dea6b8e7be5072=
-553b37df4b0b8ee6e0a37134738
-[3] https://github.com/torvalds/linux/commit/294f69e662d1570703e9b56e95be37=
-a9fd3afba5
