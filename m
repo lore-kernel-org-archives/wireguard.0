@@ -4,59 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67088C4332F
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Mar 2022 04:40:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEF94C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Mar 2022 13:29:12 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 507c4f8e;
-	Wed, 16 Mar 2022 04:39:24 +0000 (UTC)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id b694e4fc
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <WireGuard@lists.zx2c4.com>;
- Wed, 16 Mar 2022 04:39:23 +0000 (UTC)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id 48F4FB818CB
- for <WireGuard@lists.zx2c4.com>; Wed, 16 Mar 2022 04:39:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF816C340E9
- for <WireGuard@lists.zx2c4.com>; Wed, 16 Mar 2022 04:39:21 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="lpeaUz/J"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1647405560;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=b4Mq3D4AsilYLBva/VNL8qSyXm1G05szI2Gw9Q2B1zE=;
- b=lpeaUz/JuOtmpVsEBgpsEooSH9+RqfcFH6maG7suQwP4K5ka0wntISfb30Y5Dk0viSjFgf
- 5EoxjKuoKuOxPp04zW1hPlExlztXDoWR4dllmIXrB8NmnkwA5czrBpdgNnMyK2OvrgIBjf
- 8fxBSPn0QG/Ww+K7fls7ne2ijG1keck=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id be69a140
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 7286d5b7;
+	Wed, 16 Mar 2022 13:29:10 +0000 (UTC)
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com
+ [2607:f8b0:4864:20::433])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id bba001f7
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <WireGuard@lists.zx2c4.com>;
- Wed, 16 Mar 2022 04:39:19 +0000 (UTC)
-Received: by mail-yw1-f181.google.com with SMTP id
- 00721157ae682-2dbd8777564so10951017b3.0
- for <WireGuard@lists.zx2c4.com>; Tue, 15 Mar 2022 21:39:19 -0700 (PDT)
-X-Gm-Message-State: AOAM533gPDcMqu17B7tf3d7IgFVRw6PcNuBVe44xK1QT+2Kd1iSGEMgE
- TjEYygFXnsLCNrXmP1m4JbfKqrWUb41idxBBryg=
-X-Google-Smtp-Source: ABdhPJzQk3LSU9p8YahF76VKPSz72LDyRQFXLkjSev51uNyr8TP0X2y3asvD1L/cIB4k50jnFXPnYn+Pm3DRdVOJnWo=
-X-Received: by 2002:a0d:e005:0:b0:2d7:fb79:8f36 with SMTP id
- j5-20020a0de005000000b002d7fb798f36mr29442737ywe.404.1647405559205; Tue, 15
- Mar 2022 21:39:19 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 16 Mar 2022 13:29:08 +0000 (UTC)
+Received: by mail-pf1-x433.google.com with SMTP id g19so3897599pfc.9
+ for <wireguard@lists.zx2c4.com>; Wed, 16 Mar 2022 06:29:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=J+VEgPf3T/8s8jsBYss7k35A6k4lbrc1PhyPevALUgk=;
+ b=a03E78IYEULs4L0vsGrlnrktgzv8Q4xjiQUBlc/Ve5dcxO8dBdIZO+5CaW3XGse6HH
+ YKfEAbxRrdYMGfR9eOV4iPjYtAOk8tzgrXHm8//aSu3DbF9O8EQyDybWbIJ56Vu+ZHt7
+ RHevifuef154sV296UaHxSCNyAQ3BReWirLwOv6Aeowfryot/2Ko/nhzhlgspGNkp/ew
+ AWb35ptflBkpJ/4PmweZRf2tefd2a4qqbcALKZWrGG3ANTinMoeFHhbw+HUjT/Xt68bO
+ 14DZQxIKiXrem7vCYykVb/wOYQE0LJ757YEr2dYlMTF9l1PUuktZkkqp/fgHOiXRBTJM
+ ussg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=J+VEgPf3T/8s8jsBYss7k35A6k4lbrc1PhyPevALUgk=;
+ b=gY4R3amFYICIm8dQd7/xPGx2YN9PCbgYJhtpfKFzTRrRGRnbzhr8keKDeIDAkH5PZ7
+ L01wLl+fMeQd1TkJQmVjVk7RAshtYai43UxVmyoqFllAZjG/IFXZ/g+kNcpUaDOXMg7M
+ kceMBqgzRBZvDlrjDc2245i4FkymD9WD/HHUDWznS7r9vyYDpN6L6JWv9cn1wdb5qqES
+ Ikkn40jU9VkS08Jv0DUyVdRF2igYf/TvWEhSQYJJ+TezSpfHatA+udUQdqxdt0RbBIdQ
+ tT30FDuR8KKN0qaNoYWakh3LjsYDpR4Me7zPyteugSFTrJ/OB2SZUcAM5AQEfvWpnVH2
+ s1hg==
+X-Gm-Message-State: AOAM532ZGfDPsR05lL9/L0sjNlk4yc2Na9T1qcd0wEyVBCSXKW8T8fFP
+ imdBFOzj/j1unQ2z3GgrQv2M2AE+wx7Z/eTM4mmxYxd+NDUj/lNW4H0=
+X-Google-Smtp-Source: ABdhPJz/qYP2zZpD3BzicXMKIqnJIzKr3+hwzEfIZTXr7B7pK8JHR6gBqwb6DSi53+t115gi3hKCrd6JDLzTLok4wt8=
+X-Received: by 2002:a63:6f87:0:b0:380:cccc:b387 with SMTP id
+ k129-20020a636f87000000b00380ccccb387mr28885749pgc.172.1647437346748; Wed, 16
+ Mar 2022 06:29:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <CA+f5crf3w-BV7-Hp6FpSvCnMY3VXDug2_cvu=iDEyJVezzANOw@mail.gmail.com>
-In-Reply-To: <CA+f5crf3w-BV7-Hp6FpSvCnMY3VXDug2_cvu=iDEyJVezzANOw@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 15 Mar 2022 22:39:08 -0600
-X-Gmail-Original-Message-ID: <CAHmME9pN-ALmcckt8Yjr37L5noXe2n7vsJ-sFtdf101iCVOusA@mail.gmail.com>
-Message-ID: <CAHmME9pN-ALmcckt8Yjr37L5noXe2n7vsJ-sFtdf101iCVOusA@mail.gmail.com>
-Subject: Re: Need Help - When 2 WireGuard tunnels are active Windows BSOD
- occurs upon disconnecting/disabling Ethernet NIC
-To: Siva R <siva131mz@gmail.com>
-Cc: WireGuard mailing list <WireGuard@lists.zx2c4.com>
+From: Houman <houmie@gmail.com>
+Date: Wed, 16 Mar 2022 13:28:30 +0000
+Message-ID: <CABBZOsnPNS3ZONaTEWvye6sy+kA8rS3uNUm1UUnQgFkcY=aYXg@mail.gmail.com>
+Subject: Is Wireguard supported on Mac Catalyst?
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -72,14 +63,21 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Siva,
+Hello,
 
-Can you send me the files in C:\windows\minidump and
-c:\windows\memory.dmp if it exists? This will let me figure out what's
-happened. These contain memory dumps of crashes, so you should
-probably send it to me directly rather than to the public mailing
-list.
+The Wireguard project currently supports both iOS and MacOS natively.
+Now there is also the option of enabling Mac Catalyst inside an iOS
+target and making it Mac compatible. Without having to rewrite the
+code in Mac's AppKit.
 
-Thanks for reporting the bug.
+But does Wireguard support Catalyst?
 
-Jason
+When I try to build the project with Catalyst enabled, I get this error:
+
+ld: library not found for -lwg-go
+
+I have been trying now for hours. It would be amazing to know if
+that's possible or not.
+
+Many Thanks,
+Houman
