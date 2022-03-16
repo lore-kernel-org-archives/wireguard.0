@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB1A6C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 21 Mar 2022 19:34:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7623DC433FE
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 21 Mar 2022 19:34:52 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id f5a306a2;
-	Mon, 21 Mar 2022 19:34:49 +0000 (UTC)
-Received: from mxout23.cac.washington.edu (mxout23.cac.washington.edu
- [140.142.32.140])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 87b48adf
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 113ea058;
+	Mon, 21 Mar 2022 19:34:51 +0000 (UTC)
+Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
+ [64.147.123.21])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 36fb147f
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 14 Mar 2022 17:18:16 +0000 (UTC)
-Received: from smtp.washington.edu (smtp.washington.edu [140.142.234.157])
- by mxout23.cac.washington.edu (8.14.4+UW20.07/8.14.4+UW19.10) with ESMTP id
- 22EHGT4d011739
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <wireguard@lists.zx2c4.com>; Mon, 14 Mar 2022 10:16:30 -0700
-X-Auth-Received: from mail.ipd.uw.edu (mail.ipd.uw.edu [128.95.160.136])
- (authenticated authid=ipdit)
- by smtp.washington.edu (8.16.1+UW21.10/8.14.4+UW19.10) with ESMTPSA id
- 22EHGTl2014866
- (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <wireguard@lists.zx2c4.com>; Mon, 14 Mar 2022 10:16:29 -0700
-X-UW-Orig-Sender: ipdit@smtp.washington.edu
-Received: from [192.168.2.129] (unknown [128.95.160.246])
- (Authenticated sender: lugo)
- by mail.ipd.uw.edu (Postfix) with ESMTPSA id 3500884904
- for <wireguard@lists.zx2c4.com>; Mon, 14 Mar 2022 10:16:29 -0700 (PDT)
+ Wed, 16 Mar 2022 21:10:47 +0000 (UTC)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.west.internal (Postfix) with ESMTP id D2EB332008FA
+ for <wireguard@lists.zx2c4.com>; Wed, 16 Mar 2022 17:10:44 -0400 (EDT)
+Received: from imap41 ([10.202.2.91])
+ by compute3.internal (MEProxy); Wed, 16 Mar 2022 17:10:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:date:from:from
+ :in-reply-to:message-id:mime-version:reply-to:sender:subject
+ :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm3; bh=ZoR+rR1gtfmqyPHRmKnb5d36g/2ev+Jd3Xv3OSp3o
+ nQ=; b=aTFPDTSnG7g6cPBUWtQFLCbBgxRAc8A5fBQptf3IUngKRw5QWfXLAWr+U
+ UVmHxVCfPtxk0ZSUKTwa+dviOretYTab7caG5RWonxvOZZGLfUgw1UQS4d4yU6+U
+ YAnhMHxA5/CRgLrMEV7AGE5LB5a8tppQXR0CI4tDy2muyxAc6E/FVpLwhz/7MkBP
+ H5wedu/kxmQPnixGZWKf4Z1vfUGtx/5J9PHHll6TEpnawCkp/WGX928GJbpIUN/a
+ +2qXCb+LranLAtVW4+DhBSSFMAz37aoJpgaX/3orrCZFpC/ePesuGf6wcKtg4K2t
+ JgGOrnAlGzz1bDu+ZXs1Yi/aq94bQ==
+X-ME-Sender: <xms:VFIyYmK6dtDsCV5UBfOQT01d3HBS7JoqXuqjq9EtdvNnFoPgC3OKWw>
+ <xme:VFIyYuKDT4TEhC7r4HuSSTacM2tZUoJds5n7ipRBShQdnktVNlKEPeD8bIYMV0qD6
+ Jxa6u9aLz_xZ0jqvnw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrudefvddgudegfecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+ necuuegrihhlohhuthemuceftddtnecufghrlhcuvffnffculdefhedmnecujfgurhepof
+ gfggfkfffhvffutgesthdtredtreertdenucfhrhhomhepvhhviihvlhgrugcuoehmrghi
+ lhesvhhviihvlhgrugdrgiihiieqnecuggftrfgrthhtvghrnhepgefhfeekkeeltdegue
+ eukeegtdegffettefhjeelvefhtdejhfeiiefhledtleefnecuffhomhgrihhnpeiigidv
+ tgegrdgtohhmpdgurhhophgsohigrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenuc
+ frrghrrghmpehmrghilhhfrhhomhepmhgrihhlsehvvhiivhhlrggurdighiii
+X-ME-Proxy: <xmx:VFIyYmuLEE4zj5o7-VeA_IhrRvFy08hN6AAxZSOnQrXfL0UOu3iy_A>
+ <xmx:VFIyYrbq1K-9Y4r95n-oNUl7tiBhjxfqTyR9uICVSnKVz6_IKtwmBw>
+ <xmx:VFIyYtY3k5jOM9rRa1febC38HW52MTJNRuRzO6FwpRNl2zqYZ1gfIQ>
+ <xmx:VFIyYmlPi_dZMIhH9Ld93AA2jVCvIjZKLdx15LQHRY9GgM3F4KfZKQ>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 215233C031B; Wed, 16 Mar 2022 17:10:44 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-4907-g25ce6f34a9-fm-20220311.001-g25ce6f34
+Mime-Version: 1.0
+Message-Id: <a2cc8b81-8462-4974-b3b0-a58f4e7a77b0@www.fastmail.com>
+Date: Thu, 17 Mar 2022 00:10:21 +0300
+From: vvzvlad <mail@vvzvlad.xyz>
 To: wireguard@lists.zx2c4.com
-From: Luki Goldschmidt <lugo@uw.edu>
-Subject: Performance on 10G / 1500 MTU link
-Message-ID: <506c5c38-8451-7982-f2fe-d9a489e71752@ipd.uw.edu>
-Date: Mon, 14 Mar 2022 10:16:28 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-PMX-Version: 6.4.9.2830568, Antispam-Engine: 2.7.2.2107409,
- Antispam-Data: 2022.3.14.170619, AntiVirus-Engine: 5.89.0,
- AntiVirus-Data: 2022.2.25.5890002
-X-PMX-Server: mxout23.cac.washington.edu
-X-Uwash-Spam: Gauge=IIIIIIII, Probability=8%, Report=
- HTML_00_01 0.05, HTML_00_10 0.05, BODYTEXTP_SIZE_3000_LESS 0,
- BODY_SIZE_1000_LESS 0, BODY_SIZE_2000_LESS 0, BODY_SIZE_5000_LESS 0,
- BODY_SIZE_7000_LESS 0, BODY_SIZE_800_899 0, DATE_TZ_NA 0, FROM_EDU_TLD 0,
- NO_CTA_FOUND 0, NO_CTA_URI_FOUND 0, NO_FUR_HEADER 0, NO_URI_FOUND 0,
- NO_URI_HTTPS 0, SENDER_NO_AUTH 0, __BODY_NO_MAILTO 0, __CT 0, __CTE 0,
- __CT_TEXT_PLAIN 0, __FRAUD_PARTNERSHIP 0, __FROM_DOMAIN_NOT_IN_BODY 0,
- __FROM_NAME_NOT_IN_ADDR 0, __FROM_NAME_NOT_IN_BODY 0, __HAS_FROM 0,
- __HAS_MSGID 0, __HEADER_ORDER_FROM 0, __MIME_TEXT_ONLY 0, __MIME_TEXT_P 0,
- __MIME_TEXT_P1 0, __MIME_VERSION 0, __MOZILLA_USER_AGENT 0,
- __NO_HTML_TAG_RAW 0, __PHISH_SPEAR_STRUCTURE_1 0, __SANE_MSGID 0,
- __SUBJ_ALPHA_END 0, __TO_MALFORMED_2 0, __TO_NO_NAME 0, __URI_NO_MAILTO 0,
- __USER_AGENT 0
+Subject: Bug in the macOS client wireguard: make disable the tunnel from the
+ context menu impossibility
+Content-Type: text/plain
 X-Mailman-Approved-At: Mon, 21 Mar 2022 19:34:47 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -74,26 +73,11 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+In your repository (https://git.zx2c4.com/wireguard-apple/) I have not found a githab or something similar, where I could leave an issue, so I write to the post, as I was advised by one of the committers. 
 
-Has anyone succeeded in saturating a 10Gb link with a MTU 1500 using
-WireGuard?
+I am actively using WG client on my apple devices, and if the ios-clients work fine, with macos versions I have problems from time to time, so I want to point them out to developers. 
 
-On a LAN with 10Gb or 40Gb links, I'm getting 5-6 Gbps throughput with
-WireGuard (tunnel MTU 1420). Without WireGuard, I have no problem
-pushing 9.8 and 35 Gbps, respectively. When I increase the tunnel MTU to
-8920, I can easily push 9.3 Gbps through Wireguard.
+Here is, for example, one of the problems: https://www.dropbox.com/s/4bit2xem8g1wmk8/Screen%202022-03-13%20at%2017.59.43.mov?dl=0
+If the option "on demand" is enabled, then after disconnecting the tunnel from the context menu or from the system settings, it immediately reconnects. 
 
-I'm testing testing with iperf using a single or multiple parallel
-transfers. I tried kernels 5.14 and 5.15, and a range of CPUs like Intel
-E5-2680v4, E3-1270v6, Xeon Silver 4114. The bottleneck seems to linked
-to packets per second.
-
-I can't use jumbo frames over the WAN connection so MTU 1500 (link) will
-have to be it, but I'd love to get the most out of the 10 Gbps
-connection. The WAN link latency is only ~1 ms so it ought to be doable.
-
-Any tuning tips are appreciated.
-
-Luki
-
+If the respected developers are interested, I could describe the reproduction of some of these kinds of problems and give some thoughts on usability (I compare it to warp, which is very nice to use).
