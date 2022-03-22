@@ -4,45 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97AE4C4332F
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 22 Apr 2022 00:21:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77B19C43217
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 22 Apr 2022 00:21:25 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 16064383;
-	Thu, 21 Apr 2022 23:48:58 +0000 (UTC)
-Received: from oxalide-smtp-out.extra.cea.fr (oxalide-smtp-out.extra.cea.fr
- [132.168.224.13])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 70bcc21a
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 53d1a458;
+	Thu, 21 Apr 2022 23:49:51 +0000 (UTC)
+Received: from mx1.heinlein-support.de (mx2.heinlein-support.de
+ [91.198.250.20])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 626774a2
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 20 Apr 2022 09:20:54 +0000 (UTC)
-Received: from pisaure.intra.cea.fr (pisaure.intra.cea.fr [132.166.88.21])
- by oxalide-sys.extra.cea.fr (8.14.7/8.14.7/CEAnet-Internet-out-4.0) with ESMTP
- id 23K9Ks9J008768
- for <wireguard@lists.zx2c4.com>; Wed, 20 Apr 2022 11:20:54 +0200
-Received: from pisaure.intra.cea.fr (localhost [127.0.0.1])
- by localhost (Postfix) with SMTP id 564B1203376
- for <wireguard@lists.zx2c4.com>; Wed, 20 Apr 2022 11:20:54 +0200 (CEST)
-Received: from muguet1-smtp-out.intra.cea.fr (muguet1-smtp-out.intra.cea.fr
- [132.166.192.12])
- by pisaure.intra.cea.fr (Postfix) with ESMTP id 436112036B9
- for <wireguard@lists.zx2c4.com>; Wed, 20 Apr 2022 11:20:54 +0200 (CEST)
-Received: from [132.166.141.77] (is223528.intra.cea.fr [132.166.141.77])
- by muguet1-sys.intra.cea.fr (8.14.7/8.14.7/CEAnet-Internet-out-4.0) with ESMTP
- id 23K9KsxW025842
- for <wireguard@lists.zx2c4.com>; Wed, 20 Apr 2022 11:20:54 +0200
-Message-ID: <367df062-5c7c-2916-db4d-afdf6c7d92db@cea.fr>
-Date: Wed, 20 Apr 2022 11:20:54 +0200
+ Tue, 22 Mar 2022 09:35:41 +0000 (UTC)
+Received: from marchiv.heinlein-support.de (marchiv.heinlein-support.de
+ [91.198.250.63])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mx1.heinlein-support.de (Postfix) with ESMTPS id A99992E097B
+ for <wireguard@lists.zx2c4.com>; Tue, 22 Mar 2022 10:35:38 +0100 (CET)
+Received: from MailAppDispatcher (localhost.localdomain [127.0.0.1])
+ by marchiv.heinlein-support.de (Postfix) with ESMTP id 9DD3948146
+ for <wireguard@lists.zx2c4.com>; Tue, 22 Mar 2022 10:35:38 +0100 (CET)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+ by marchiv.heinlein-support.de (Postfix) with ESMTP id 7989F48145
+ for <wireguard@lists.zx2c4.com>; Tue, 22 Mar 2022 10:35:38 +0100 (CET)
+X-Virus-Scanned: Heinlein Anti-Spam at mail-archiv
+Received: from marchiv.heinlein-support.de ([127.0.0.1])
+ by localhost (marchiv.heinlein-support.de [127.0.0.1]) (amavisd-new,
+ port 10024)
+ with ESMTP id wjbVydcKDxFJ for <wireguard@lists.zx2c4.com>;
+ Tue, 22 Mar 2022 10:35:37 +0100 (CET)
+Received: from plasma5.jpberlin.de (plasma5.jpberlin.de [80.241.58.36])
+ by marchiv.heinlein-support.de (Postfix) with ESMTPS
+ for <wireguard@lists.zx2c4.com>; Tue, 22 Mar 2022 10:35:37 +0100 (CET)
+Received: from [10.0.44.42] (unknown [10.0.44.42])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest
+ SHA256) (Client did not present a certificate)
+ (Authenticated sender: r.sander@heinlein-support.de)
+ by plasma.jpberlin.de (Postfix) with ESMTPSA id 44B4CAC036
+ for <wireguard@lists.zx2c4.com>; Tue, 22 Mar 2022 10:35:37 +0100 (CET)
+Message-ID: <75feba5a-9289-0ceb-ef39-285bacdcc506@heinlein-support.de>
+Date: Tue, 22 Mar 2022 10:35:36 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
+Subject: Re: Systemd-resolved problem
+Content-Language: de-DE
 To: wireguard@lists.zx2c4.com
-Content-Language: en-GB
-From: Dimitri Papadopoulos Orfanos <dimitri.papadopoulos@cea.fr>
-Subject: Wintun on Windows 11
-Organization: CEA
+References: <CAL0AYvcHYP1GN+DZN96fQw9f+FUU8b+C9yOCrWGnAEtezCnBDA@mail.gmail.com>
+From: Robert Sander <r.sander@heinlein-support.de>
+Organization: Heinlein Support GmbH
+Jabber-ID: r.sander@jabber.heinlein-support.de
+In-Reply-To: <CAL0AYvcHYP1GN+DZN96fQw9f+FUU8b+C9yOCrWGnAEtezCnBDA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Mailman-Approved-At: Thu, 21 Apr 2022 23:48:42 +0000
+X-Mailarchiv-ID: 8412714
+X-Rspamd-Score: -7.00 / 15.00 / 15.00
+X-Rspamd-Queue-Id: A99992E097B
+X-MBO-SPAM-Probability: 
+X-Mailman-Approved-At: Thu, 21 Apr 2022 23:49:50 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -57,13 +75,18 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+Am 19.03.22 um 15:20 schrieb Barry Cisna:
 
-The README states that Wintun "is a layer 3 TUN driver for Windows 7, 8, 
-8.1, and 10":
-	https://git.zx2c4.com/wintun/tree/README.md#n4
+>   when doing a resolvectl with the wg0 interface up there are no dns
+> servers on the wg0 interface
 
-You should add Windows 11 to the list.
+Where should they come from?
 
-Best Regards,
-Dimitri
+Do you have the default route through your Wireguard tunnel?
+Then systemd-resolved likely will not be able to reach the DNS resolvers 
+any more. You will have to configure resolvers that are reachable 
+through the Wireguard tunnel (e.g. 9.9.9.9 or similar).
+
+Regards
+-- 
+Robert
