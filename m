@@ -4,49 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB2A3C43219
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Apr 2022 23:48:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 567B9C4332F
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Apr 2022 23:48:47 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 57539351;
-	Thu, 21 Apr 2022 23:48:48 +0000 (UTC)
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com
- [2607:f8b0:4864:20::22c])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id a5e9caee
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 95e8f04a;
+	Thu, 21 Apr 2022 23:48:44 +0000 (UTC)
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com
+ [2607:f8b0:4864:20::32a])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 0cebe831
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 25 Mar 2022 23:11:59 +0000 (UTC)
-Received: by mail-oi1-x22c.google.com with SMTP id e4so9801636oif.2
- for <wireguard@lists.zx2c4.com>; Fri, 25 Mar 2022 16:11:59 -0700 (PDT)
+ Wed, 23 Mar 2022 20:08:02 +0000 (UTC)
+Received: by mail-ot1-x32a.google.com with SMTP id
+ x8-20020a9d6288000000b005b22c373759so1838259otk.8
+ for <wireguard@lists.zx2c4.com>; Wed, 23 Mar 2022 13:08:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
  h=mime-version:from:date:message-id:subject:to;
- bh=Im1zVujpYUT8wKNVuX7pbLmWiF/K1D8xAwctz7f9N2A=;
- b=pk65C5W3Vjp2m1luKGGKTea1b0I/jbX9XidbUMJM9m3bchhRbNjmH+Lyy7DcbT45c2
- dw2KWV2jDF2tgfkjLuVHNCEfnld2NUUdLjf8bLFH7o7P7FAhUVxTG7F/64lmq0hxlo+P
- 9eqcYSrtQmj3/H75gDHzvJto18Cof/cU9Ui9rgGb4ZGk4gqz7uRPVgHv85eKMa95EclZ
- CX/a3AzjMmGpha7g0RC6g1/o6hMFj9eD+bs8EVirNvfu24dVSBQfwtg4XpmJqSpCIiC3
- 6fArXuXBVuNpsifJqbrFkjxpR+ONdJGr3T0lw0SwBhzW40WRPuG4qJ1ZBrQls3q5SW+n
- nw4A==
+ bh=L69q5oQYaRpqpFBtuidEkFIRV9lGg80sr6JO6MsvG6k=;
+ b=mAcbnGuWsh3BIYJ75+MOfYnEGvJEu4eABt4vQ+9px07TUGbIxk0wIkCFWDylxKVtFV
+ nwZDbrbbJF2qlcJYdlyoZNgzBUITu1CO2AI4iPkfON5CytCnZW7vGXOmZJq+EI36I6Lq
+ zkhxxaSSzMLMSlUOcCbURuB2n3DrRq+UT4L26ZmqUR+yYn6wRvSYcdZHqscCJy0zxAQd
+ Qr0WRHcIg0WRVsWXa2ibLxpNoNNFYOlF0IBpTxZGEIEYLTafmEp3mVLqJiwN7hwetju4
+ Dh31LSVQ5b/gBPsJzqeU3fnEOIO4SlKQ1KVblZBKUXEomUc4aNqaS07vPlwVLdatx2XP
+ 7cyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=Im1zVujpYUT8wKNVuX7pbLmWiF/K1D8xAwctz7f9N2A=;
- b=ZUC/I4AudaBjWzeMmfJlm21hOugwpTKFkfxH9S7dwdmg5hG7FYgbmWVapFOmrsc82t
- zac2bOgm1Ez78AHNEadbHp5ffPOy8ObEix1+goI6AogEUoStUFPhSoJv6A39UQ8xyuv5
- Gpq8g0Ta/4G1/jkNX0RA734pZIqgmt3Yh4ET0dvglbQ9nL/lI1FUnc07sDOkHOKIcTct
- aFbLLZVCSQZAxL4JMsvktYfwGj2543GfVeO+WwuHCUfpv9pPi85K7VM9Xmo0Jjy9OBR5
- FUdPInQbqlH2T1f8mU54unUo8k4kwocBJzBSbnZyZihHdy2gkaQruy4+qpRuhlpcaU8x
- nRJA==
-X-Gm-Message-State: AOAM530KtgyK6mYNoEc+EedKKmBY2n0HCAI1YNAcmz9yvasPsabGYwEu
- RzfrggpZQ1DSzVrOO5kBZwz1/1grmW3g60GLYu9ui+Lwg/0=
-X-Google-Smtp-Source: ABdhPJycK4yuA0cz9cT3n5suBWxBTc+jziRQLat72waHl5IfuuNq9DxSZzWYtl8n3XGfmx7/Ul9C8JnZg15Ml2o+BPI=
-X-Received: by 2002:a05:6808:14b:b0:2ec:b129:11c1 with SMTP id
- h11-20020a056808014b00b002ecb12911c1mr11612948oie.210.1648249918254; Fri, 25
- Mar 2022 16:11:58 -0700 (PDT)
+ bh=L69q5oQYaRpqpFBtuidEkFIRV9lGg80sr6JO6MsvG6k=;
+ b=6cBAl+LP74C5dLngCyJmrmQGy1h/dMyR5qRK57YF9HMXZ9xNgnL8NDutMstgGx48V/
+ OHQqVECV1X/8lI/jReWRvblhlx4C4SVm+bUZ46GKcPd3ZYRg48RMgTZLA5+t+Fg259a9
+ 0QF8mH34cy/CwaGbO5NLg1N42RIo9aezyhQtmADjqcbQaT8UYxoGqJD8Fqd2sLwEZgXw
+ E8ksPITVFmv1wfNfMKrKZ2+aWLGj8K2l/ABeYgULyprwB7UVIfC8sCYqu8jDT0RzFO9X
+ 7zSCeeXuvRpEkp75EdD17M1g8mz63jAygifteVsp4QmiOjgP8Ac+iOEZwy3vmOqimBUK
+ m1Cw==
+X-Gm-Message-State: AOAM5339BnCB2lb2JvLdDjG1lYGTilWDZYv39wv247yFSpHLaBJyYpAA
+ n3yUlJYONSAGurtjGk5EwtQDAMe9PZPgaolu124mgCa4
+X-Google-Smtp-Source: ABdhPJxASUXF5fVcMOb0t/61BFGzYHh9SBOY4yOvn+8kWIV2K74DbrETbAQsT9VaiPmmHoQX+R0Kkns9Ktxgd6KA1Wo=
+X-Received: by 2002:a05:6830:4d0:b0:5c9:6679:fa0f with SMTP id
+ s16-20020a05683004d000b005c96679fa0fmr753198otd.184.1648066081295; Wed, 23
+ Mar 2022 13:08:01 -0700 (PDT)
 MIME-Version: 1.0
 From: Barry Cisna <brcisna@gmail.com>
-Date: Fri, 25 Mar 2022 18:11:47 -0500
-Message-ID: <CAL0AYvdc7Pm5b=MGXnQo3-yNmbBRQ8kF_oW75W8J0MGdh1J4VA@mail.gmail.com>
-Subject: one subnet not pingable
+Date: Wed, 23 Mar 2022 15:07:50 -0500
+Message-ID: <CAL0AYvfw6EoUJy21pOcH9NOA1zh4zttrpZhiLsQar32VuNoEiA@mail.gmail.com>
+Subject: WG IPV6 problem
 To: wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
 X-Mailman-Approved-At: Thu, 21 Apr 2022 23:48:42 +0000
@@ -66,32 +67,19 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 Hello All,
 
-Peer2   (client) - Debian Bullseye
-wwan0  = 100.64.2.161/30   # cellular modem CGNAT
-bridge0 = ethernet & wifi interfaces   192.168.67.1
-wg0client2  = 192.168.67.2
+Have Wireguard setup as PEER1 on an Debian Bullseye machine residing
+on Google Cloud instance. IPV4 only,,
+PEER2 is the home Debian Bullseye server  behind cgnat cellular provider
+After a learning curve these connect fine and PEER2 does get the PEER
+1 public ipv4 address,,,with a US Cellular hotspot connected to PEER2.
+BUT on the same PEER2 if i use a T-Mobile hotspot ,,,again
+CGNAT,,internet does still work fine and can ping PEER1,,,BUT does not
+get PEER1 public ip address.
+Only thing i see different is the T-Mobile hot spot is set to IPV6
+only in the GUi settings of  the hotspot. I did not in the Network
+manager gui setting of PEER2 the IPV6 is set to 'IGNORE' I havent yet
+tried changing that to 'automatic'.
+What would i change in the PEER2 Network Manager config to make this
+work with IPV6?
 
-Peer 1 (server)
-Google Cloud Instance Debian Bullseye static IPV4 address
-ens4 = 10.128.0.2
-wg0 +  192.168.69.1
-
-PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A
-POSTROUTING -o ens4 -j MASQUERADE
-PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D
-POSTROUTING -o ens4 -j MASQUERADE
-
-Peer2, Clients connected to LAN/bridge0 both wired and wireless can
-webbrowse but is delayed. DNS not exactly right,,
-
-Peer2 can ping Peer1 fine responds both interface addresses
-
-If Peer1 pings Peer2 at 192.168.67.1 returns "no message,,,something"
-and returns 192.168.69.1
-if Peer1 pings Peer2 at wwan0 it gets a response
-So..it seems the wwan0 can not hop to the bridge0 interface for some reason,
-I have tried for hours to make static routes what i think may work,and
-always get "route already exists'. tried a few iptables guesses on
-client,,,no go..
-
-Thanks
+Thank You
