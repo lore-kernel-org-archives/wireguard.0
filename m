@@ -4,65 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA41EC433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 22 Mar 2022 11:50:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA531C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 24 Mar 2022 06:07:21 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 86ffa4b8;
-	Tue, 22 Mar 2022 11:50:19 +0000 (UTC)
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com
- [2a00:1450:4864:20::12f])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id c2d2b55d
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 08b9707c;
+	Thu, 24 Mar 2022 06:07:19 +0000 (UTC)
+Received: from sendmail.purelymail.com (sendmail.purelymail.com
+ [34.202.193.197])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id efa4bc4e
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 22 Mar 2022 11:50:18 +0000 (UTC)
-Received: by mail-lf1-x12f.google.com with SMTP id p15so18597811lfk.8
- for <wireguard@lists.zx2c4.com>; Tue, 22 Mar 2022 04:50:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mullvad.net; s=july2021;
- h=mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=+4qRZYb/o6/8KHfMXdMtGXio4abMUxEp55vSE5oP558=;
- b=grefrgkwMhRdz7C1Xy7zyiwpo7Lh8zXUg4LIVf2pvk+rbjbss2Jsvwta+QxPzKjLTu
- 5A07ED3DCJKn2LPqn7bmzQTU6vIYk4hYNrsLnYKSeGaxFAbvFSQI20Els+tLN+60CPr2
- NnMhGqWkwRzx4ymj8F8Sep1IXo8rnpkGD727MJd+AcRctMSvmS/tnt7FQ3aBP++U4Ubn
- j3h/IcLqf3y98sukeb6cC73hRrQbYahwN0H9x/6M/EO+2d6hivBVfy6ZALiGH91xMgU+
- vCp2GzuTAoz5Gk7/cgKdQ6UjXSoxFe32J4s5IhE1ux6iRKMMDvuwvlgijUptQimeGXy4
- XXrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=+4qRZYb/o6/8KHfMXdMtGXio4abMUxEp55vSE5oP558=;
- b=CZBVFdKJLzIWmG92KupEGkNJVQ1gUrSgnr4HCFrd8XSo9gojbeIDGHFMqKUPUPMQjk
- VMU+//srQpTaHlypJIIsiHcTlCADZMdX71EPtNmaLL+/5iCWW1T6Wr8uaB2fTu8uRbdz
- ekk6o/wkaWMTAxC6RuZg+IqkauoizEG4VCfaiHLYoBOTSY0CQZT6XWIeHTJ52NeTsEW2
- S9RReO0vF4etdxOpUDz9a59NADHaF+Ys/78CSrVnbt0kkfREfCVCyZ9RMnFz9CzIFIcQ
- d1u2qk8iCUTyAJEMwuMJ1gfR1TrGldxeq7ZP+olaPNgKRICG65oElpswMzX38q60qahw
- 726g==
-X-Gm-Message-State: AOAM531X1zWEb5DK7Tn98Wo3DQerfKCBmVDZ38LmxTHYmApvsL8+CpkR
- gkp+12csXEgVv5yrZgqGAuls/vN2TT9+PblZ
-X-Google-Smtp-Source: ABdhPJxj7bUL1b2OD6CxW60yeACoxu/ayteYl6ZMWNZdV2icmY3wztY9pFGjCv6NCXZ/q5PIuPBDCg==
-X-Received: by 2002:a05:6512:39c7:b0:44a:2e30:7f69 with SMTP id
- k7-20020a05651239c700b0044a2e307f69mr5760663lfu.103.1647949817629; 
- Tue, 22 Mar 2022 04:50:17 -0700 (PDT)
-Received: from smtpclient.apple ([193.138.218.213])
- by smtp.gmail.com with ESMTPSA id
- s17-20020a195e11000000b0044a3054d319sm555343lfb.121.2022.03.22.04.50.16
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 22 Mar 2022 04:50:16 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
-Subject: Re: WireGuardKit iOS - Import package and usage of 'Shared' classes
-From: Andrej Mihajlov <and@mullvad.net>
-In-Reply-To: <CA+QYBNn=ObJGz04je7a36VQnWNdGjn20LjsG04KDOmxzZA_oqA@mail.gmail.com>
-Date: Tue, 22 Mar 2022 12:50:12 +0100
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Thu, 24 Mar 2022 06:07:17 +0000 (UTC)
+DKIM-Signature: a=rsa-sha256;
+ b=MwH4pMpAG7W4NtOhVdyh5bKxVpcOSUJx4/x2qYs00HkEynatK1GikqNvWg795lvD2L5dkEidJmlwO0Nplcgq5HiM8rzTGPlAW6p4hYBps7M2tn7rhMmPbZORkXMVNx/bFzTBySW8Iv4hRYZ9bNUcOnzXXVemffiNuE4NwmT38oe1tYD4pwJN3zqampF4xc+7uvmgPc22NnyLeFEuyyH5bot17KSrDHM91DXJf5VzBXRqBQcdpBxYdNjHXNcwTilgomkBvXTN9np2LZLG6HEeuERbfKBapqR3QZO/7Mp3sZzwQAiuAok2KaYfH3lUEBCSUUdqNKDnNhFA42mTtjevtw==;
+ s=purelymail3; d=msfjarvis.dev; v=1;
+ bh=wZ1OOQ6WbFYY/ROpY/Tk1iUGbpxTYjrA50FXJR0/vbQ=; h=Received:From:To; 
+DKIM-Signature: a=rsa-sha256;
+ b=u9/0Zt0TyNkI2QiIfmmzBhghvJqYY72Vvp3QtjmyOu3fSwQex1whWMZikpZDiAioSGZI/AS1b0juvRZFPjXHO5KrQKkAXg8B4Hi5H5sBufhmv34E4tAleRaUo8vzAhW5TQ8Yv+pXAIWREymXEd8ca1nn569CWQy+JgePlceo9rnhNE4BsbK6H5HgTv14eHq815g0eCosGJAwHeAigLojuaZjSwmhNDxU4wOdqoDAyjVRC/6W14zWvPpxOkH6JcZ4tUXMyvdkQEAqqWXp6qoD/A/hVjQdWZvrw1d/vlUe7HZk3g1rZpoPxpNcw9dINZliURJZJtRGyeGbTah9ofCJFQ==;
+ s=purelymail3; d=purelymail.com; v=1;
+ bh=wZ1OOQ6WbFYY/ROpY/Tk1iUGbpxTYjrA50FXJR0/vbQ=;
+ h=Feedback-ID:Received:From:To; 
+Feedback-ID: 322:138:null:purelymail
+X-Pm-Original-To: wireguard@lists.zx2c4.com
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -1361472091; 
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+ Thu, 24 Mar 2022 06:06:51 +0000 (UTC)
+MIME-Version: 1.0
+Date: Thu, 24 Mar 2022 06:06:51 +0000
+From: Harsh Shandilya <me@msfjarvis.dev>
+To: Lao Deng <laodeng99@163.com>
+Cc: wireguard@lists.zx2c4.com
+Subject: Re: Introduce Navigation component to Wireguard-Android
+In-Reply-To: <7fd66fe3.14e.17f9a1b030e.Coremail.laodeng99@163.com>
+References: <7fd66fe3.14e.17f9a1b030e.Coremail.laodeng99@163.com>
+User-Agent: Purely Mail via Roundcube/1.5.1
+Message-ID: <fb849ca5ae862dae8e8f06d818b2e276@purelymail.com>
+X-Sender: me@msfjarvis.dev
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <49AF0CB9-0474-40D2-813B-4B1C22CB8161@mullvad.net>
-References: <CA+QYBNn=ObJGz04je7a36VQnWNdGjn20LjsG04KDOmxzZA_oqA@mail.gmail.com>
-To: Alexey Ponkin <alexey.ponkin@gmail.com>
-X-Mailer: Apple Mail (2.3654.120.0.1.13)
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -79,32 +60,34 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 Hi,
 
-The source code under Sources/Shared is a part of WireGuard app. These =
-files are checked out by SPM, because both WireGuardKit and WireGuard =
-app share the same repository. However, these files aren=E2=80=99t part =
-of WireGuardKit and thus not available for direct import via =
-WireGuardKit.
-
-Best,
-Andrej
-
-> On 20 Mar 2022, at 16:24, Alexey Ponkin <alexey.ponkin@gmail.com> =
-wrote:
+On 2022-03-17 22:58, Lao Deng wrote:
+> I am going to add some un-related functions to Wireguard-Android . The
+> final app. should look like the demo of
+> com.google.android.material.bottomnavigation.BottomNavigationView ,
+> =C2=A0which=C2=A0 consists of a=C2=A0 bottom navigation component and sev=
+eral=C2=A0
+> independent fragments( or activities ) .=C2=A0
 >=20
-> Hi guys,
-> I'm trying to use WiregurdKit in my iOS app. I imported the package as
-> described here - https://github.com/WireGuard/wireguard-apple. Now I
-> can use `PacketTunnelProvider` inside `WireGuardNetworkExtension`. But
-> unfortunately , I can't use any classes and extensions from the
-> `Shared` folder
-> =
-(https://github.com/WireGuard/wireguard-apple/tree/master/Sources/Shared).=
+>=20
+> I am wondering how to introduce this navigation component to the
+> wireguard-android=C2=A0 project with the least modification :) Could you
+> please shed some light on it ?
+> Thankyou for your attention :)=C2=A0=C2=A0
+>=20
 
-> Is there any way to make them 'visible' for my project? I'm fairly new
-> to Swift and iOS development. I would like, for instance, to reuse
-> this extension =
-(https://github.com/WireGuard/wireguard-apple/blob/master/Sources/Shared/M=
-odel/NETunnelProviderProtocol%2BExtension.swift)
-> and may be, `Keychan` wrapper class.
-> Thanks in advance for your help.
+I'm a bit confused, is this change something you are proposing for the=20
+upstream project or are you looking for assistance to implement this in=20
+a fork?
 
+I don't think we want a Bottom Navigation component in the app itself=20
+since it adds no value to the app, the only new destination we could add=20
+with it would be a quicker entry into settings which is not a=20
+high-priority destination requiring such a prominent navigation action.
+
+If you want to add it to a fork, the only real help I can provide is=20
+that MainActivity inflates the main_activity.xml layout which in turn=20
+handles inflating TunnelListFragment, so you'd want to make changes to=20
+MainActivity and its layout for adding the component.
+
+--
+Harsh Shandilya
