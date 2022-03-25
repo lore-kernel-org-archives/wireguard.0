@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65E49C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 Apr 2022 08:05:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB2A3C43219
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Apr 2022 23:48:48 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 071b2ceb;
-	Wed, 20 Apr 2022 08:05:44 +0000 (UTC)
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com
- [2a00:1450:4864:20::635])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 5d822489
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 57539351;
+	Thu, 21 Apr 2022 23:48:48 +0000 (UTC)
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com
+ [2607:f8b0:4864:20::22c])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id a5e9caee
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 20 Apr 2022 08:05:41 +0000 (UTC)
-Received: by mail-ej1-x635.google.com with SMTP id l7so1897571ejn.2
- for <wireguard@lists.zx2c4.com>; Wed, 20 Apr 2022 01:05:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=exys-org.20210112.gappssmtp.com; s=20210112;
+ Fri, 25 Mar 2022 23:11:59 +0000 (UTC)
+Received: by mail-oi1-x22c.google.com with SMTP id e4so9801636oif.2
+ for <wireguard@lists.zx2c4.com>; Fri, 25 Mar 2022 16:11:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
  h=mime-version:from:date:message-id:subject:to;
- bh=aWk1glIb5fQPQ4AvSFdOJsApxF0o6YNYLVWfDL8PDNg=;
- b=5y+sVJ9hFpVrTisgB+xYavZ9OYqumoJFABRaRNBV46TVpSflIjHVZPoxlA6pecDyNE
- 7TP0uVRtBUTwyyKW3QgOCE2zKc5Y2YeK0iI3eXhM+x6xiroxtdYmUdF7Y/yU4tD7SDti
- aykWHZTlZSmhUcy0QpDhQrKJeUBV7L4WPc50WHsEMtpoURBQ2LzzkUJu4xoXWyK2e+oi
- CP4l1m90oitQbrlH4M7Y+XYdvi6+1sBbV4wyZ916kRWRW4tGp4AXKNXekax26dVOdhvW
- kDwS9MLnoZtOUo3nKueHTeVxWGSvRV8+vfInmHlL1snPSdj9olKBfKpnn/acBoH0+ETk
- Qbcg==
+ bh=Im1zVujpYUT8wKNVuX7pbLmWiF/K1D8xAwctz7f9N2A=;
+ b=pk65C5W3Vjp2m1luKGGKTea1b0I/jbX9XidbUMJM9m3bchhRbNjmH+Lyy7DcbT45c2
+ dw2KWV2jDF2tgfkjLuVHNCEfnld2NUUdLjf8bLFH7o7P7FAhUVxTG7F/64lmq0hxlo+P
+ 9eqcYSrtQmj3/H75gDHzvJto18Cof/cU9Ui9rgGb4ZGk4gqz7uRPVgHv85eKMa95EclZ
+ CX/a3AzjMmGpha7g0RC6g1/o6hMFj9eD+bs8EVirNvfu24dVSBQfwtg4XpmJqSpCIiC3
+ 6fArXuXBVuNpsifJqbrFkjxpR+ONdJGr3T0lw0SwBhzW40WRPuG4qJ1ZBrQls3q5SW+n
+ nw4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=aWk1glIb5fQPQ4AvSFdOJsApxF0o6YNYLVWfDL8PDNg=;
- b=z5m7ztCdrZsHt3+MZMcjbxDxZ/cl+HwQV2coTBfc/2mRvES0Y/tBXZjD8H2/Fuj32S
- jK6wVSCfxaD05k/u4IiFgj8Y94nHAhkDYmyVeT6iWJvJQnPNpr+DAAOJ6HrvHNheTY0G
- khgge3gycFYIglni8HQfshutnhuHY6il6sPxxPfxR2ZZScOZCvw5si//idPt5SOFvT8f
- CTmhv4M501SBlCTyTcJWV572wFsJsmpYvjn9pSajcnKRcots6v6M19VrsUmvQwhKWc+H
- WfFF2WaoQQBy95zFs9WLxfa0wbJOD/wLdSV4536Q7xihwyhRsRPPI2bvE0jJI74/afP4
- vWGw==
-X-Gm-Message-State: AOAM533j+klD/uTIDZ4AshZNtvj4i+IdR7FdComP2+LCjRWPMjaW+RvH
- pDpBQxh3Jy9GdFwx/7whf5Sm4CGnKdHEkJOgR/MW83j2rYCWtA==
-X-Google-Smtp-Source: ABdhPJxtjSINIvZgpJn5OiR6Zrf1TMuId/uExO2w1w/FRKkHXQ/RCSRsmzm3LPcHcBUiynjDAQNrWQmuwQeDgjccsvE=
-X-Received: by 2002:a17:907:6d10:b0:6e8:8fbc:310c with SMTP id
- sa16-20020a1709076d1000b006e88fbc310cmr16644519ejc.530.1650441940966; Wed, 20
- Apr 2022 01:05:40 -0700 (PDT)
+ bh=Im1zVujpYUT8wKNVuX7pbLmWiF/K1D8xAwctz7f9N2A=;
+ b=ZUC/I4AudaBjWzeMmfJlm21hOugwpTKFkfxH9S7dwdmg5hG7FYgbmWVapFOmrsc82t
+ zac2bOgm1Ez78AHNEadbHp5ffPOy8ObEix1+goI6AogEUoStUFPhSoJv6A39UQ8xyuv5
+ Gpq8g0Ta/4G1/jkNX0RA734pZIqgmt3Yh4ET0dvglbQ9nL/lI1FUnc07sDOkHOKIcTct
+ aFbLLZVCSQZAxL4JMsvktYfwGj2543GfVeO+WwuHCUfpv9pPi85K7VM9Xmo0Jjy9OBR5
+ FUdPInQbqlH2T1f8mU54unUo8k4kwocBJzBSbnZyZihHdy2gkaQruy4+qpRuhlpcaU8x
+ nRJA==
+X-Gm-Message-State: AOAM530KtgyK6mYNoEc+EedKKmBY2n0HCAI1YNAcmz9yvasPsabGYwEu
+ RzfrggpZQ1DSzVrOO5kBZwz1/1grmW3g60GLYu9ui+Lwg/0=
+X-Google-Smtp-Source: ABdhPJycK4yuA0cz9cT3n5suBWxBTc+jziRQLat72waHl5IfuuNq9DxSZzWYtl8n3XGfmx7/Ul9C8JnZg15Ml2o+BPI=
+X-Received: by 2002:a05:6808:14b:b0:2ec:b129:11c1 with SMTP id
+ h11-20020a056808014b00b002ecb12911c1mr11612948oie.210.1648249918254; Fri, 25
+ Mar 2022 16:11:58 -0700 (PDT)
 MIME-Version: 1.0
-From: Arvid Picciani <aep@exys.org>
-Date: Wed, 20 Apr 2022 10:05:30 +0200
-Message-ID: <CACD9L=DWEargDr8f1gXzigZ=NQsSz=18vzQMgVQKzUN++r4ELw@mail.gmail.com>
-Subject: will frequently changing allowed-list result in latency spikes?
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Barry Cisna <brcisna@gmail.com>
+Date: Fri, 25 Mar 2022 18:11:47 -0500
+Message-ID: <CAL0AYvdc7Pm5b=MGXnQo3-yNmbBRQ8kF_oW75W8J0MGdh1J4VA@mail.gmail.com>
+Subject: one subnet not pingable
+To: wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
+X-Mailman-Approved-At: Thu, 21 Apr 2022 23:48:42 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -64,26 +64,34 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+Hello All,
 
-we're currently using wg as point-to-point transport between thousands of vms.
-each peer has a separate interface so we can do BGP with bird.
+Peer2   (client) - Debian Bullseye
+wwan0  = 100.64.2.161/30   # cellular modem CGNAT
+bridge0 = ethernet & wifi interfaces   192.168.67.1
+wg0client2  = 192.168.67.2
 
-this works extremely well. But due to lack of port-reuse, eventually
-you run out of udp ports.
-Now i'm thinking of redesigning it with a single wg interface and
-using wgs native destination selection which is based on allow-list.
+Peer 1 (server)
+Google Cloud Instance Debian Bullseye static IPV4 address
+ens4 = 10.128.0.2
+wg0 +  192.168.69.1
 
-that means every topology change results in a netlink call to wg to
-replace all affected peers with a new peer with a new allowed-list.
+PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A
+POSTROUTING -o ens4 -j MASQUERADE
+PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D
+POSTROUTING -o ens4 -j MASQUERADE
 
-In a quick test i couldn't see any problems with that.  But i'm
-worried that might change with scale. Replacing a peer config might
-flush its buffer, possibly resulting in packet loss.  Or more likely
-reset its crypto session, resulting in a latency spike until the
-handshake finished.
+Peer2, Clients connected to LAN/bridge0 both wired and wireless can
+webbrowse but is delayed. DNS not exactly right,,
 
-anyone has more insight into that?
+Peer2 can ping Peer1 fine responds both interface addresses
 
--- 
-+4916093821054
+If Peer1 pings Peer2 at 192.168.67.1 returns "no message,,,something"
+and returns 192.168.69.1
+if Peer1 pings Peer2 at wwan0 it gets a response
+So..it seems the wwan0 can not hop to the bridge0 interface for some reason,
+I have tried for hours to make static routes what i think may work,and
+always get "route already exists'. tried a few iptables guesses on
+client,,,no go..
+
+Thanks
