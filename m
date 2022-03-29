@@ -4,54 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB706C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 26 Mar 2022 12:49:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E1CFC433FE
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 29 Mar 2022 16:30:15 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 658ba22c;
-	Sat, 26 Mar 2022 12:49:31 +0000 (UTC)
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com
- [2607:f8b0:4864:20::102a])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 13e1843e
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 5b4fb204;
+	Tue, 29 Mar 2022 16:30:13 +0000 (UTC)
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 681e50dd
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 29 Mar 2022 16:30:12 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by ams.source.kernel.org (Postfix) with ESMTPS id DA73CB818CF
+ for <wireguard@lists.zx2c4.com>; Tue, 29 Mar 2022 16:30:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 490E4C34111
+ for <wireguard@lists.zx2c4.com>; Tue, 29 Mar 2022 16:30:10 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="LluaCtVN"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1648571407;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gWpDt/rwNM/nig7k6lt+szP4lNhhSqQ0Y3OUIZSEPzM=;
+ b=LluaCtVN26lstEHPHhDvzm408FZEe/4mLDt08eIz1J1NR7wtqR/Dfur4+J3Iwe20oNT4eP
+ 7VZuh8hwb45mISaO6Yg+09dG9R9gvyqkEB+Au+u0FYJwkLfjihE43ADtiViJ9FbsnRvlp7
+ kZVo/SCzGRVIOvYhSSKlwXnzRnyC5vE=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7f05d0ca
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 26 Mar 2022 12:49:29 +0000 (UTC)
-Received: by mail-pj1-x102a.google.com with SMTP id
- o3-20020a17090a3d4300b001c6bc749227so11073040pjf.1
- for <wireguard@lists.zx2c4.com>; Sat, 26 Mar 2022 05:49:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
- bh=XESGQmw2y1D73AGLlq64cqEDm3Bg1e8kZ2bquz6ZkS4=;
- b=j6V/Sj6fnc5U2PFuiB5G5MyWjxvxLRawMT4d8zdWfOjiOVt9d20CCzVImPd8atJyX1
- WLsinXEFJOMXKvUS54t6xCF3ME7dVmkRTugdxxsw0xA5LUp5Q16mF0Umx0SEhCddcrbS
- ontFmQB4OyBrRuxvVzZmi4qpK8G7jNMaj0K/76jHrFPiNyJ0rNJc5M/CLq82ZyEHG3ZU
- fddGDzxoU7JSBBnHFog6kp7j0srITmxN8X7H2A0g8scA4rcdgsi2nW/IF+WZ9L2MCBoh
- 41PFGhAlxtj6jvsa6e/tnWE7iuts059JOHiycNZEpaGY3pUIetSlDzAls7qTLWHoivpj
- TDRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to;
- bh=XESGQmw2y1D73AGLlq64cqEDm3Bg1e8kZ2bquz6ZkS4=;
- b=gmZo+ky5HNvlm8La9m8r7MjXVltqkMKWgf2i0Pfgm97ZA2/606ZOWgBUEMSTnRwxbn
- /fY+OxVGuZTX8Z5N+TloFLTZYJ7hZvCvODSDFdeK8Vxns4yZZDOKa8YkpK5AMKp5RYl8
- 53mKXWF78xCpFw8+jpP5ZQGhhq0KScpaacQK+5LbZ6jIriwD/cS21C7aKMvM9yR0kOVw
- UVZWfksh059cM/EulPbsvvPRpBm71OAo2QHcsVAbQANBlq0Nj1n1urwo1n5gxR+nSce9
- fIRyQfWA2RcHV9MEO0cKy13KIxxMkk8Qfdo8qtvzgsCZ07caw+njL9OSEspK0KsjboH9
- PYzg==
-X-Gm-Message-State: AOAM531ps/PR9ZImCg41iRx+zHz+MTPq1TtaTt1tcG0g5J4Z4ppLThFo
- 6ie3mUJnhxLUA7YDScUEmp8pcxf07QuskRktKBl6EkO7K5k=
-X-Google-Smtp-Source: ABdhPJz5UNpeDsuDw7eg593xjkVg5X4ssaXfurrPlN6hPjQPQOzHqUYFQH65xiuEL+suk3uVCG2R2rvatb98EzhrLVU=
-X-Received: by 2002:a17:90b:17c3:b0:1c6:b0ff:abf with SMTP id
- me3-20020a17090b17c300b001c6b0ff0abfmr18172798pjb.24.1648298967723; Sat, 26
- Mar 2022 05:49:27 -0700 (PDT)
+ Tue, 29 Mar 2022 16:30:07 +0000 (UTC)
+Received: by mail-yw1-f173.google.com with SMTP id
+ 00721157ae682-2d07ae0b1c4so189005317b3.11
+ for <wireguard@lists.zx2c4.com>; Tue, 29 Mar 2022 09:30:07 -0700 (PDT)
+X-Gm-Message-State: AOAM5315kJcVKg/Wo4yaEXfGpPtxERGIyOGmOoErrT00kU/hQn99kDKh
+ VnQY3TakdC93/iza7vnXkwQNlHgpwk47/LgPumA=
+X-Google-Smtp-Source: ABdhPJx19sXr2RsIii2GkQbjQnPceSjSSWkgV89Y13xyhfMg4Uq23lWzaHw/ZQPb9dPHhvxRKHs0O6YsjXedp4I+Fis=
+X-Received: by 2002:a0d:d508:0:b0:2e5:d9ec:d668 with SMTP id
+ x8-20020a0dd508000000b002e5d9ecd668mr32980539ywd.499.1648571406134; Tue, 29
+ Mar 2022 09:30:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <CABBZOsnPNS3ZONaTEWvye6sy+kA8rS3uNUm1UUnQgFkcY=aYXg@mail.gmail.com>
-In-Reply-To: <CABBZOsnPNS3ZONaTEWvye6sy+kA8rS3uNUm1UUnQgFkcY=aYXg@mail.gmail.com>
-From: Houman <houmie@gmail.com>
-Date: Sat, 26 Mar 2022 12:48:51 +0000
-Message-ID: <CABBZOs=2ntCHoNrcnv74yJEUjVPOeFABbwzFvH4KKeVkje8Nuw@mail.gmail.com>
-Subject: Re: Is Wireguard supported on Mac Catalyst?
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <20220329121552.661647-1-wanghai38@huawei.com>
+In-Reply-To: <20220329121552.661647-1-wanghai38@huawei.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 29 Mar 2022 12:29:55 -0400
+X-Gmail-Original-Message-ID: <CAHmME9rpRTLN7tHOsdVTJZfKLVsr_ZBTkWsheLKNjX5-3-rwkg@mail.gmail.com>
+Message-ID: <CAHmME9rpRTLN7tHOsdVTJZfKLVsr_ZBTkWsheLKNjX5-3-rwkg@mail.gmail.com>
+Subject: Re: [PATCH net] wireguard: socket: fix memory leak in send6()
+To: wanghai38@huawei.com
+Cc: David Miller <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, 
+ WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ Netdev <netdev@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -67,38 +73,4 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Jason,
-
-I hope all is well.
-
-I was hoping to nudge you on this issue again to see if you could
-clarify this, please.
-Does Wireguard support Mac Catalyst (macOS 11.0) on the Apple repo?
-https://github.com/WireGuard/wireguard-apple
-
-Mac Catalyst is supported natively in Xcode and allows turning an iOS
-app into a Mac app.
-
-Many Thanks,
-Houman
-
-On Wed, 16 Mar 2022 at 13:28, Houman <houmie@gmail.com> wrote:
->
-> Hello,
->
-> The Wireguard project currently supports both iOS and MacOS natively.
-> Now there is also the option of enabling Mac Catalyst inside an iOS
-> target and making it Mac compatible. Without having to rewrite the
-> code in Mac's AppKit.
->
-> But does Wireguard support Catalyst?
->
-> When I try to build the project with Catalyst enabled, I get this error:
->
-> ld: library not found for -lwg-go
->
-> I have been trying now for hours. It would be amazing to know if
-> that's possible or not.
->
-> Many Thanks,
-> Houman
+Applied, thanks for the patch.
