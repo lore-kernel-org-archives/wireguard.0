@@ -4,62 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D35E1C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 22 Apr 2022 00:45:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBA83C4332F
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 22 Apr 2022 00:45:02 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 9a1c760e;
-	Thu, 21 Apr 2022 23:50:27 +0000 (UTC)
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com
- [2607:f8b0:4864:20::1036])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 1d908cb5
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 108fd418;
+	Thu, 21 Apr 2022 23:50:28 +0000 (UTC)
+Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 3291ae2e
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 19 Mar 2022 09:04:44 +0000 (UTC)
-Received: by mail-pj1-x1036.google.com with SMTP id
- l4-20020a17090a49c400b001c6840df4a3so6549398pjm.0
- for <wireguard@lists.zx2c4.com>; Sat, 19 Mar 2022 02:04:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=from:to:subject:date:message-id:reply-to:user-agent:mime-version
- :content-transfer-encoding;
- bh=TK0YadH1UO3y8FatK4Oidj0OWTcZOktEo/ttjkEwYLk=;
- b=oqpJ7rzwKllE68g6BR78Yni9ZRX239UQQ7EdUw/i/tWeWVJSfkFyOqcJ2uozFHESqx
- wk4s2LG6y6AZAyyai+6k4OpOu7RYrMWa/Zz0YZjFCZ7QNRQrsYAOJ++mh+0Xt8E4ovkr
- fPt/Cs5FeXS/ml519goSB2dEGUZvjv4XuV+zpdOi4VDVWAvfj6Tz8CaAQRA7EqlvMZmj
- 3Im6mfz1pj4cgBk5K3Lxhj9uBKSgDAxxFtrUPnzCT2o6i8W5peF18ATr6enYjc5MGKyt
- VsExlacSgSFOtwQ6C6amT3jZuSJsi6HWvUe4nMTp2OS/Cc4vjWDyjIZz9UIFQadE7YFj
- roRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:from:to:subject:date:message-id:reply-to
- :user-agent:mime-version:content-transfer-encoding;
- bh=TK0YadH1UO3y8FatK4Oidj0OWTcZOktEo/ttjkEwYLk=;
- b=d3sME+tAn1vg5asngie2nBItMZQfYtaM1xflt5HOs9AG6OBLVL7rQYhN+S8Tz0dnYR
- ZDo2fu8BlfjtGh074YW+KndLJnPVIrFTeIvyg8iydV3LH6KCDQgByGYgQHNLck/B5IjF
- htGT2rJaBhJkswMvwBpU2RmRexWH447diD+XDPpcGgWqPB7+Ld+Qe894LVms7Dyv7zOk
- It/lSMYDHX7ufQJResc7IZEsdK3rAVRfNFvUODyZaIsq999X2ua29iEoPW9mWfHC6HsE
- 1ITp3v7ePcfJYXyoW0MZG887OsLtm/0rhQwdaxMleOxFx2E0XVr6tu709c+ir7b1b9Xd
- P5WA==
-X-Gm-Message-State: AOAM531psi+zS3jwMLQz2j70/wJa2W++RSlg57V5djISUCdMdxHx/xY+
- YWU+zi6UouARnRBzLBLA6uL6yDnKLylDXg==
-X-Google-Smtp-Source: ABdhPJy6J6n7e03n7oYkQtrpPo09cQq6FwwKPJwULR9XNQAqwzwCGzAOiqGnRytiGUoetHH/ixLdvA==
-X-Received: by 2002:a17:90b:4f92:b0:1bf:25e2:f6af with SMTP id
- qe18-20020a17090b4f9200b001bf25e2f6afmr15521785pjb.98.1647680682558; 
- Sat, 19 Mar 2022 02:04:42 -0700 (PDT)
-Received: from [192.168.99.100] (38-34-127-72.starry-inc.net. [38.34.127.72])
- by smtp.gmail.com with ESMTPSA id
- h14-20020a63384e000000b00366ba5335e7sm9502825pgn.72.2022.03.19.02.04.42
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 19 Mar 2022 02:04:42 -0700 (PDT)
-From: "Michael Adams" <unquietwiki@gmail.com>
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-Subject: Anyone working on fixing IPv6 name resolution in the Windows client?
-Date: Sat, 19 Mar 2022 09:04:40 +0000
-Message-Id: <emce1a687a-ef9c-43f6-9d66-638b66aed36b@6afb5539.com>
-User-Agent: eM_Client/9.0.1361.0
+ Tue, 29 Mar 2022 11:57:51 +0000 (UTC)
+Received: from kwepemi100018.china.huawei.com (unknown [172.30.72.56])
+ by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4KSSjk4mzGzcbPH;
+ Tue, 29 Mar 2022 19:57:30 +0800 (CST)
+Received: from kwepemm600001.china.huawei.com (7.193.23.3) by
+ kwepemi100018.china.huawei.com (7.221.188.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.21; Tue, 29 Mar 2022 19:57:47 +0800
+Received: from huawei.com (10.175.104.82) by kwepemm600001.china.huawei.com
+ (7.193.23.3) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2308.21; Tue, 29 Mar
+ 2022 19:57:46 +0800
+From: Wang Hai <wanghai38@huawei.com>
+To: <Jason@zx2c4.com>, <davem@davemloft.net>, <kuba@kernel.org>
+CC: <wireguard@lists.zx2c4.com>, <netdev@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <wanghai38@huawei.com>
+Subject: [PATCH net] wireguard: socket: fix memory leak in send6()
+Date: Tue, 29 Mar 2022 20:15:52 +0800
+Message-ID: <20220329121552.661647-1-wanghai38@huawei.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.175.104.82]
+X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
+ kwepemm600001.china.huawei.com (7.193.23.3)
+X-CFilter-Loop: Reflected
 X-Mailman-Approved-At: Thu, 21 Apr 2022 23:50:26 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -72,19 +52,51 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Reply-To: Michael Adams <unquietwiki@gmail.com>
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-I've been trying to make a report about this, and not sure if I've=20
-successfully done so. It apparently has been the case for some time that=20
-the Windows Wireguard client will disregard AAAA DNS records in hostname=20
-lookup; specifying IPv6 addresses as a host does work.
+I got a memory leak report:
 
-Thank you all for working on an awesome VPN platform; I've found it to=20
-be incredibly useful.
+unreferenced object 0xffff8881191fc040 (size 232):
+  comm "kworker/u17:0", pid 23193, jiffies 4295238848 (age 3464.870s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<ffffffff814c3ef4>] slab_post_alloc_hook+0x84/0x3b0
+    [<ffffffff814c8977>] kmem_cache_alloc_node+0x167/0x340
+    [<ffffffff832974fb>] __alloc_skb+0x1db/0x200
+    [<ffffffff82612b5d>] wg_socket_send_buffer_to_peer+0x3d/0xc0
+    [<ffffffff8260e94a>] wg_packet_send_handshake_initiation+0xfa/0x110
+    [<ffffffff8260ec81>] wg_packet_handshake_send_worker+0x21/0x30
+    [<ffffffff8119c558>] process_one_work+0x2e8/0x770
+    [<ffffffff8119ca2a>] worker_thread+0x4a/0x4b0
+    [<ffffffff811a88e0>] kthread+0x120/0x160
+    [<ffffffff8100242f>] ret_from_fork+0x1f/0x30
 
+In function wg_socket_send_buffer_as_reply_to_skb() or
+wg_socket_send_buffer_to_peer(), the semantics of send6()
+is required to free skb. But when CONFIG_IPV6 is disable,
+kfree_skb() is missing. This patch adds it to fix this bug.
 
-Michael Adams
-https://unquietwiki.com/
+Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
+Signed-off-by: Wang Hai <wanghai38@huawei.com>
+---
+ drivers/net/wireguard/socket.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/net/wireguard/socket.c b/drivers/net/wireguard/socket.c
+index 6f07b949cb81..467eef0e563b 100644
+--- a/drivers/net/wireguard/socket.c
++++ b/drivers/net/wireguard/socket.c
+@@ -160,6 +160,7 @@ static int send6(struct wg_device *wg, struct sk_buff *skb,
+ 	rcu_read_unlock_bh();
+ 	return ret;
+ #else
++	kfree_skb(skb);
+ 	return -EAFNOSUPPORT;
+ #endif
+ }
+-- 
+2.25.1
 
