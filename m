@@ -4,50 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 165BDC433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Apr 2022 23:51:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CF51C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Apr 2022 23:55:40 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id c4402f01;
-	Thu, 21 Apr 2022 23:48:51 +0000 (UTC)
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com
- [2607:f8b0:4864:20::234])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 7f8ba0bf
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sat, 2 Apr 2022 12:42:47 +0000 (UTC)
-Received: by mail-oi1-x234.google.com with SMTP id k10so5452857oia.0
- for <wireguard@lists.zx2c4.com>; Sat, 02 Apr 2022 05:42:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to;
- bh=5APsVisN9yO8bKgbK9K3MYX9mCLXwQNX0GLlUvqaAjg=;
- b=dFMAonpTfeWqPsPQE8TdrY2SiCozbqVRv35nIt4TNTlq4A+pjq/rCJnbgGA7oZSXkU
- 3ktRILz4w96APC1ETc4/xK3D85DVuiSYnMhmkX79PKWt1Y0pFRdNxeViJTKt9Di9eHWr
- U5vNxRXl5D+yggDQCsJ5g0tflIlXQv2HcRseSvC1WM7zSi/2LL8O2dumK4nWNsf9vhFQ
- 6KWDBb15ewCBTyple9Stb5C0K9LSeDvnlw4Nv770sSyj53S0Sz01/SnZExaMimFzww2u
- YGKI6GG0hAUjIDtrmCKJovjBwi5/vmaOEetSNc7uqvHtpc6y3WfbN7sLc7iIOWdyXKVS
- GHEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=5APsVisN9yO8bKgbK9K3MYX9mCLXwQNX0GLlUvqaAjg=;
- b=GRjR+HcxPI23ROnnrLC5FFZwTq3Qn9nHMIzFfpxVptwgWhWWJWMfC3Zr57i0F9WMlF
- ex4aGnWUWY1FV+i7hhdWZtnvg+4+JM94UZmRgv2p1nr7c6eMGVt98FSmj0S9oUEsRrdA
- 2MtTghICLGLcj4MNWHLW7+HyTxGCfoTbwPG7uUWdYhXoIrC5rLdEkv+ziz189Cv41/Yn
- +TM4LHMfdflfydXvZkKmf5/nZ7aBtVZ1nugvy4GUzrDzR8vOGeEZtpO+KHvtH8mfhaBO
- f36bpoN9QiFZFjNzrie+235h6wZmrQcykHybHvgWTFZOgsrtT6sNiE5Py//akQG7Im9e
- 2luQ==
-X-Gm-Message-State: AOAM533cpgNyq32xirGyPJ9GvGcyPLhuNk/zpsHBIGjmfDYKtYqBopOz
- vdnubAX4La9XGOU4m5bo0EE9iMua+jDCXAxvvRNfCRgMeX0=
-X-Google-Smtp-Source: ABdhPJzit5+X9iCe5LfjgrAPfSRCHJ2E+Cuwly8nef3Iao+HSXwnZps1QlL9ehqJ9la/ABbPU25hZzWt9tQG0hNQvX8=
-X-Received: by 2002:aca:1213:0:b0:2ef:1f7e:3d93 with SMTP id
- 19-20020aca1213000000b002ef1f7e3d93mr6589454ois.177.1648903366067; Sat, 02
- Apr 2022 05:42:46 -0700 (PDT)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 496702c8;
+	Thu, 21 Apr 2022 23:48:52 +0000 (UTC)
+Received: from resqmta-c1p-023465.sys.comcast.net
+ (resqmta-c1p-023465.sys.comcast.net [2001:558:fd00:56::5])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 746a0d45
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Sat, 2 Apr 2022 18:50:38 +0000 (UTC)
+Received: from resomta-c1p-023278.sys.comcast.net ([96.102.18.240])
+ by resqmta-c1p-023465.sys.comcast.net with ESMTP
+ id ai2xnuhb0LLKyaipZnJta4; Sat, 02 Apr 2022 18:50:37 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+ s=20190202a; t=1648925437;
+ bh=QrYQG3jR61XS6+8QyOcCgtewHVtv/NvUlID0XUwMQDk=;
+ h=Received:Received:From:To:Subject:Date:Message-ID:MIME-Version:
+ Content-Type;
+ b=JM/9ZY0PGEx16bjXidWqD0pFRUJsDxlKOc0sbmOi0OMFRtrYu35oGZiVGO5jkbqcD
+ e0jLA4LWpV/Z+eRW+Kxt1UR0LVJ2SJQW2DlLPADyz0hfbm9/AKN32oXnjRZ0//vOCb
+ LELuR3v6clTle8LDQydNPVlj1aOYyI0dvJfCE3o04Rncsw2DM8g4Fsy6x74l0IlP3/
+ 0FISOy6yvnckJabwR7I53dkRd3JosK9ByGaee3eBHffmIW1G2WIUYflyL4D9ulmpG3
+ /lfI9fWWzBmt2c/MTnYIDfIMg2nWiN2mL9VnN9pJfgTEV89fL6vd5JgD8Z1e4FLy59
+ bSoZMx6ssrHBA==
+Received: from Dad2 ([71.161.220.10])
+ by resomta-c1p-023278.sys.comcast.net with ESMTPSA
+ id aipRnyOfkskEkaipSnhQnp; Sat, 02 Apr 2022 18:50:35 +0000
+X-Xfinity-VAAS: gggruggvucftvghtrhhoucdtuddrgedvvddrudeikedgudefvdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucevohhmtggrshhtqdftvghsihdpqfgfvfdppffquffrtefokffrnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvfhgjufffkfggtgfgofhtsehtjehgtddvtddvnecuhfhrohhmpeeolhgvnhgrghhhrghnmhestghomhgtrghsthdrnhgvtheqnecuggftrfgrthhtvghrnhepieekieejtdeghfejtdevudekudeffedtieejleevgfekhfeuvdegjeehfeeigeelnecukfhppeejuddrudeiuddrvddvtddruddtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehhvghlohepffgrugdvpdhinhgvthepjedurdduiedurddvvddtrddutddpmhgrihhlfhhrohhmpehlvghnrghghhgrnhhmsegtohhmtggrshhtrdhnvghtpdhnsggprhgtphhtthhopedupdhrtghpthhtohepfihirhgvghhurghrugeslhhishhtshdriiigvdgtgedrtghomh
+X-Xfinity-VMeta: sc=0.00;st=legit
+From: <lenaghanm@comcast.net>
+To: <wireguard@lists.zx2c4.com>
+References: 
+In-Reply-To: 
+Subject: Wireguard Windows Client questions
+Date: Sat, 2 Apr 2022 14:50:29 -0400
+Message-ID: <004a01d846c2$896fe0c0$9c4fa240$@comcast.net>
 MIME-Version: 1.0
-From: Barry Cisna <brcisna@gmail.com>
-Date: Sat, 2 Apr 2022 07:42:35 -0500
-Message-ID: <CAL0AYvf0NqPprxZGMe9oqeRdr5aWG+c4sk1pjY6CeUQJJoRZbQ@mail.gmail.com>
-Subject: hostapd compatible
-To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-us
+Thread-Index: AQC4vxNFHYpMIJzyNmOonMo2i40GLq8cBsgw
 X-Mailman-Approved-At: Thu, 21 Apr 2022 23:48:42 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -63,74 +62,60 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello All,
 
-Have been struggling trying to get WireGuard set for a peer(B) that
-also acts as an ltsp server to diskless clients,,running dnsmasq,
-which iis connected to a Google Cloud instance WireGaurd
+Good day, this is my first posting on this list. I have read many of the
+past messages in the Archives but cannot find the answers I'm looking for
+and hoped I could get help from this list.
+I currently have a set up on multiple Windows PC's where the user needs to
+access services on multiple remote systems. Depending on the service the
+underlying network settings of the system may need to be changed and in some
+cases require connecting to a VPN server. Currently there are 2 possible VPN
+services (OpenVPN and SoftEtherVPN). I now need to add a 3rd option which is
+Wireguard.
 
-PeerA - Google Cloud Debian Bullseye static ip
-PeerB - local Debian Bullseye behind CGNAT  cellular connection
+The interfaces to the VPN's are completely hidden from the users. They
+simply double click on an icon for the service they want to connect to and
+my code under the covers takes care of disconnecting any active sessions and
+connecting to the new one. I have read the documentation on the
+wireguard.exe options to see if I can develop a similar hidden mechanism to
+connect and disconnect from a Wireguard peer and have the following
+questions.
 
-PeerB uses a cellular modem for internet wwan0 and a bridged interface
-for supplying dhcp to thin clients via dnsmasq
-bridge0 = ethernet & wlan,which in turns uses hostapd to run the wlan
-in master mode AP.
-After many hours of iptabling,multiple wired clients works fine
-through dnsmasq and internet through PeerB.
-BUT the wireless clients are super slow and most web pages never
-complete. Have tried all mtu settings on PeerA and PeerB and now see
-no fragmented hits in wireshark.
-It almost seems as though the MTU on the wlan interface needs to be
-changed, but never see any fragment hits on wireshark on the wified
-client?
- Do NOT have stp enabled on the bridge,Have not tried enabling stp.
-MTU 1460 seems to be the best setting for this setup,,but have read on
-many tuts using GCloud instance should be 1360. This MTU 1360 made web
-pages almost unusable for this setup.
+1. The documentation implies that if I executed the following command from a
+command line "wireguard.exe" that it will start the Manager Service and show
+the UI. It then states that calling wireguard.exe /installmanagerservice is
+suitable for silent installation but what I find is that the Management GUI
+is still activated and shown on the desktop. 
+Is there anyway to start the service without the GUI window appearing? And
+is there anyway to prevent the UI in the system tray from being installed?
+
+2. If for any reason the Wireguard peer is not reachable then the Handshake
+does not complete. When using the GUI the tunnel is shows Active but it is
+the tunnelservice that is active not the connection. Is there a way to limit
+the number of handshake retries before giving up on trying to connect?
+
+3. From time to time the endpoint address of the peer system may have
+changed (I do not use a dynamic DNS service) so when trying to connect I hit
+the problem described in 2 above. I know what the new endpoint address is
+and can set it dynamically using the wg set command and the connection is
+then made. I would like to be able to programmatically save this change
+without having to manually edit the client config files. I tried using wg
+syncconf but get a permissions error because of the properties around the
+dpapi config files.
+Is there an alternative way to doing this short of deleting the existing
+dpapi file and adding a new .conf file and have the manager service encrypt
+it but that approach means I need to keep the private key in the clear
+somewhere in order to create the new conf file.\
+
+4. There are 2 option listed under wireguard command line options namely
+/managerservice and /tunnelservice CONFIG_PATH - can someone tell me what
+they are supposed to do every time I try running one of them I get an error
+popup that says - The service process could not connect to the service
+controller.wireguard
+
+Thanks in advance for any guidance you can give me.
+
+Regards
+Mike
 
 
-wgo-client2.conf-
-
-[Interface]
-PrivateKey = <>
-Address = 192.168.69.2/24
-#Address = 10.88.88.2/24
-#DNS = 10.128.0.2
-#Table=off
-MTU = 1460
-#------------------------------------------------------------------------------------------
-#PostUp = ip6tables -t nat -A POSTROUTING -o wwan0 -j MASQUERADE
-#PostDown = ip6tables -t nat -A POSTROUTING -o wwan0 -j MASQUERADE
-
-# PostUp = iptables -A FORWARD -i wg0client2 -j ACCEPT
-# PostDown = iptables -t nat -A POSTROUTING -o wwan0 -j MASQUERADE
-
-
-[Peer]
-# Google Cloud Server
- PublicKey = <.>
- Endpoint = 35.226.##.###:51820
- AllowedIPs = 0.0.0.0/0, ::/0 # Forward all traffic to server
-
- network/interfaces
-
- auto bridge0
-auto wlp3s0
-auto enp2s0
-iface wlp3s0 inet manual
-iface enp2s0 inet manual
-#iface wlp3s0 inet6 manual
-#iface enp2s0 inet6 manual
-#bridge setup
-iface bridge0 inet static
-bridge_ports enp2s0 wlp3s0
-    address 192.168.67.1
-broadcast 192.168.67.255
-netmask 255.255.255.0
-post-up iptables-restore < /etc/iptables.up.rules
-post-up ip6tables-restore < /etc/ip6tables.up.rules
-# gateway 192.168.67.1
-# bridge_stp on
-
-Thanks
