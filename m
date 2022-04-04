@@ -4,51 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E40CC433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 Apr 2022 21:35:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 290F1C433FE
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 Apr 2022 22:56:29 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 79b67119;
-	Mon, 4 Apr 2022 21:35:06 +0000 (UTC)
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com
- [2a00:1450:4864:20::22a])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 2b578fce
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id bac2933f;
+	Mon, 4 Apr 2022 22:56:28 +0000 (UTC)
+Received: from srv.inf7.email (srv.inf7.email [64.225.52.57])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id b2e00e95
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 4 Apr 2022 21:35:04 +0000 (UTC)
-Received: by mail-lj1-x22a.google.com with SMTP id c15so14644260ljr.9
- for <wireguard@lists.zx2c4.com>; Mon, 04 Apr 2022 14:35:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to;
- bh=mkI/iMlTi8h78uskdeC14d0gj/jksLpcfIiVcU0xZek=;
- b=a2dMcB8pBGiCT6dH9djrjLc6UuhW/vdqJgrm4BxTpwokZRIC4HVKT8AfLSMsQqZikm
- 9Wb725GWeDfREDuaqvJzKIipObGY1SnHVyxjLAerEhbeHyH3wRCsANH5HKEBHF1I3KeH
- rFksp/mRPG1H5scVDaG6xXwgS8iDcXUFE7W+4ThwDItuIaGHdizveuRfr+BhRnj3twou
- vcGPTcHWLK2OVBlJYBItlbvtiwmsUoInSM+Fmw5g+K2ORWhjqI+ctyelkkUsmYjlPKhN
- pJDC6n1dUuFsNOpG7kdD5G4VY+1/kIf81hOdXSexmeVQtUPQv77WilCHJ3o2MkZo/eKS
- zNKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=mkI/iMlTi8h78uskdeC14d0gj/jksLpcfIiVcU0xZek=;
- b=0cwvNFbL5q3lxkhJiLFueMCkaxTrkjzDDlgjlunGCf8ucJMNqhpkfvuc3a+M5AJxuo
- gF0ioS/S9gCyNvt8J3pArBSIVVA7xgEhk0h6svLW6dgbc+hJ0dWT3CWbcwPVZPCmoo/w
- IZwEWa0hsSAbNJ1blyNRWLk28ysjNE/1oz64kmuSWXhS0EtPubGmzCwXp8Q5gRxfBxPl
- Ba3EBuTuQoZE5T4KMX3ZStS1Y+OqVYEO6vkkv8isBJ0/GtczAWVihcejUnTsJ3+isIAB
- uqpcVk8EScm5LX+d/WwhJNT/Ll8zLzI8HZiUJYYbsQQpW3J9UiN90nS9aAn3wPSvQC4n
- 5geg==
-X-Gm-Message-State: AOAM533eouZlRFenZvPYhI8xoQy6unJ3jacQCqUVPSdclVXNzxbj2KiO
- CFLnA8MfwK+Ca1F/kc8MeaG8aqmbVkZgU8zrBNHl1lLI
-X-Google-Smtp-Source: ABdhPJxnROrZw4ByX4HVOLIuQiqrrvZZ7EDm3WMU4Y2zemF4ce4xisX9IqB1Y6f3kqUb/lbUfQUT5nizdF7kenmJ894=
-X-Received: by 2002:a2e:bf1d:0:b0:247:dea7:f657 with SMTP id
- c29-20020a2ebf1d000000b00247dea7f657mr66648ljr.454.1649108103877; Mon, 04 Apr
- 2022 14:35:03 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Mon, 4 Apr 2022 22:56:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=solidadmin.com; s=default; h=Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:To:Subject:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Cc:Content-ID:Content-Description:Resent-Date:Resent-From:
+ Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+ List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=T3omJn8Xcr6dK+XQq5veh4XLsuXrbqTTHJKTqqLuC3w=; b=AwjbUscxqPE9k9bsANMRlzKfs8
+ bIjT5B+WS+wWgESi2paFG8auKYFW/Xz9qFUut/Do6sfaPeyP6lugfOuSm+xk8H0XeLWT5zWu0VlH0
+ x2T4UHYQJKOcV7Y9HhVl3sRbDE+jDxkJ/LMugqijUQpGnLglceVqt5es8+bmVWzEzT2rPDIYh1Q4X
+ 2v8wDGXMqSjG4TqST5B/b0UvhF9QcPWDmXfl6ADLpzivDxzsnVWN1/oXbAxV/fsRivVNdlAD4zuiI
+ qDP7GspB87Qv4X7VkDoZ6fIAJS4CxGgRpfAvjoyP2NtNof7W/od/9rIKkYSv9S/vwHyyN2X5mF3zp
+ rz8CJWnQ==;
+Received: from c-71-201-101-213.hsd1.il.comcast.net ([71.201.101.213]:47162
+ helo=[192.168.1.242])
+ by srv.inf7.email with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.94.2) (envelope-from <joe@solidadmin.com>)
+ id 1nbVcX-004eXK-SO
+ for wireguard@lists.zx2c4.com; Mon, 04 Apr 2022 22:56:25 +0000
+Message-ID: <22f7069e-fac3-09e8-5f2e-2d3c93506352@solidadmin.com>
+Date: Mon, 4 Apr 2022 17:56:24 -0500
 MIME-Version: 1.0
-From: Devanath S <s.devanath@gmail.com>
-Date: Mon, 4 Apr 2022 14:34:52 -0700
-Message-ID: <CADjMg7VSw58f+2Pj9_aJOupVPcAneVA9DDbmVLGEVpZW_XY2nw@mail.gmail.com>
-Subject: wireguard performance
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>,
- "Jason A. Donenfeld" <Jason@zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: wireguard performance
+Content-Language: en-US
+To: wireguard@lists.zx2c4.com
+References: <CADjMg7VSw58f+2Pj9_aJOupVPcAneVA9DDbmVLGEVpZW_XY2nw@mail.gmail.com>
+From: Joe Doss <joe@solidadmin.com>
+Organization: SolidAdmin
+In-Reply-To: <CADjMg7VSw58f+2Pj9_aJOupVPcAneVA9DDbmVLGEVpZW_XY2nw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse,
+ please include it with any abuse report
+X-AntiAbuse: Primary Hostname - srv.inf7.email
+X-AntiAbuse: Original Domain - lists.zx2c4.com
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - solidadmin.com
+X-Get-Message-Sender-Via: srv.inf7.email: authenticated_id:
+ jdoss@solidadmin.com
+X-Authenticated-Sender: srv.inf7.email: jdoss@solidadmin.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -63,13 +71,22 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi All,
+On 4/4/22 4:34 PM, Devanath S wrote:
+> We were trying to test the performance of wireguard on GCP and found
+> it around 1G for TCP and around 500-800 for UDP.
+> 
+> Plz do let us know if there are any ways to UP this performance.  Any
+> suggestion is appreciated.
 
-We were trying to test the performance of wireguard on GCP and found
-it around 1G for TCP and around 500-800 for UDP.
+GCP network defaults to a lower MTU (1460). You might want to adjust 
+your WireGuard tunnel's MTUs and the default GCP VPC MTU. See:
 
-Plz do let us know if there are any ways to UP this performance.  Any
-suggestion is appreciated.
+https://cloud.google.com/network-connectivity/docs/vpn/concepts/mtu-considerations
 
-Regards
-Dev
+Joe
+
+
+
+-- 
+Joe Doss
+joe@solidadmin.com
