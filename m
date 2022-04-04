@@ -4,45 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 190B0C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 Apr 2022 06:56:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E40CC433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 Apr 2022 21:35:08 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 82a091e2;
-	Mon, 4 Apr 2022 06:55:59 +0000 (UTC)
-Received: from tampoco.espindola.nl (tampoco.espindola.nl [149.210.133.191])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 19955088
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 79b67119;
+	Mon, 4 Apr 2022 21:35:06 +0000 (UTC)
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com
+ [2a00:1450:4864:20::22a])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 2b578fce
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 4 Apr 2022 06:55:58 +0000 (UTC)
-Received: from [192.168.68.249] (drawbridge.espindola.nl [62.251.122.20])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (Client did not present a certificate)
- (Authenticated sender: frank-deze)
- by tampoco.espindola.nl (Postfix) with ESMTPSA id B1B123C0184;
- Mon,  4 Apr 2022 08:55:57 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=deze.org; s=default;
- t=1649055357; bh=ZKFrmFd+xyaKrFSfSz1mZWmm16Q0NQqtDkJ0LDvapIc=;
- h=Date:Subject:To:References:From:In-Reply-To;
- b=HY70roX2uNYVr0Rjnl/j3rRtkhJ+38f+DHz2YXQ26a01HoGavJ/TFNHqXXr+Pspmz
- J5iHvv+hed5pqEGsUe/XKIBl9D+fpy8jIeFMzUrwlc2SYrqBxU0Qgz9C3nPqDo9U0P
- 7qMTv/qQILCenIjLzacYvvHDCvWLWjN6rsTzt1/Ew0tz21RskvKiaQILobzYX15c88
- bHztvPnxGdgNohg4cG7Jnp28osqldx1o92eef66osnMeRzGxRlxMRM3E74RQHIrij2
- ZT1CUapv5ZyR6LwFEa4EMjNlMf5jE0IGswxlAOa/KjlfjeAsQaA2uGwheZBnhV6Ysj
- PIZJw9+t0yLsA==
-Message-ID: <88efb74e-39ec-99e5-98a8-244e0af70724@deze.org>
-Date: Mon, 4 Apr 2022 08:55:58 +0200
+ for <wireguard@lists.zx2c4.com>; Mon, 4 Apr 2022 21:35:04 +0000 (UTC)
+Received: by mail-lj1-x22a.google.com with SMTP id c15so14644260ljr.9
+ for <wireguard@lists.zx2c4.com>; Mon, 04 Apr 2022 14:35:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=mkI/iMlTi8h78uskdeC14d0gj/jksLpcfIiVcU0xZek=;
+ b=a2dMcB8pBGiCT6dH9djrjLc6UuhW/vdqJgrm4BxTpwokZRIC4HVKT8AfLSMsQqZikm
+ 9Wb725GWeDfREDuaqvJzKIipObGY1SnHVyxjLAerEhbeHyH3wRCsANH5HKEBHF1I3KeH
+ rFksp/mRPG1H5scVDaG6xXwgS8iDcXUFE7W+4ThwDItuIaGHdizveuRfr+BhRnj3twou
+ vcGPTcHWLK2OVBlJYBItlbvtiwmsUoInSM+Fmw5g+K2ORWhjqI+ctyelkkUsmYjlPKhN
+ pJDC6n1dUuFsNOpG7kdD5G4VY+1/kIf81hOdXSexmeVQtUPQv77WilCHJ3o2MkZo/eKS
+ zNKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=mkI/iMlTi8h78uskdeC14d0gj/jksLpcfIiVcU0xZek=;
+ b=0cwvNFbL5q3lxkhJiLFueMCkaxTrkjzDDlgjlunGCf8ucJMNqhpkfvuc3a+M5AJxuo
+ gF0ioS/S9gCyNvt8J3pArBSIVVA7xgEhk0h6svLW6dgbc+hJ0dWT3CWbcwPVZPCmoo/w
+ IZwEWa0hsSAbNJ1blyNRWLk28ysjNE/1oz64kmuSWXhS0EtPubGmzCwXp8Q5gRxfBxPl
+ Ba3EBuTuQoZE5T4KMX3ZStS1Y+OqVYEO6vkkv8isBJ0/GtczAWVihcejUnTsJ3+isIAB
+ uqpcVk8EScm5LX+d/WwhJNT/Ll8zLzI8HZiUJYYbsQQpW3J9UiN90nS9aAn3wPSvQC4n
+ 5geg==
+X-Gm-Message-State: AOAM533eouZlRFenZvPYhI8xoQy6unJ3jacQCqUVPSdclVXNzxbj2KiO
+ CFLnA8MfwK+Ca1F/kc8MeaG8aqmbVkZgU8zrBNHl1lLI
+X-Google-Smtp-Source: ABdhPJxnROrZw4ByX4HVOLIuQiqrrvZZ7EDm3WMU4Y2zemF4ce4xisX9IqB1Y6f3kqUb/lbUfQUT5nizdF7kenmJ894=
+X-Received: by 2002:a2e:bf1d:0:b0:247:dea7:f657 with SMTP id
+ c29-20020a2ebf1d000000b00247dea7f657mr66648ljr.454.1649108103877; Mon, 04 Apr
+ 2022 14:35:03 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: MTUs go strange ways - ?
-Content-Language: en-US
-To: lejeczek <peljasz@yahoo.co.uk>, wireguard@lists.zx2c4.com
-References: <c8f39df3-e207-2dfb-c65d-5c6b4267f159.ref@yahoo.co.uk>
- <c8f39df3-e207-2dfb-c65d-5c6b4267f159@yahoo.co.uk>
-From: Frank Volf <frank@deze.org>
-In-Reply-To: <c8f39df3-e207-2dfb-c65d-5c6b4267f159@yahoo.co.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Devanath S <s.devanath@gmail.com>
+Date: Mon, 4 Apr 2022 14:34:52 -0700
+Message-ID: <CADjMg7VSw58f+2Pj9_aJOupVPcAneVA9DDbmVLGEVpZW_XY2nw@mail.gmail.com>
+Subject: wireguard performance
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -57,40 +63,13 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+Hi All,
 
-Hi,
+We were trying to test the performance of wireguard on GCP and found
+it around 1G for TCP and around 500-800 for UDP.
 
-The "-s" option provides the length of the ICMP data in the packet, not 
-the total packet length.
-To the data size you need to add 8 bytes for the ICMP header and 20 
-bytes for the IP header.
-So, you are sending 1328 bytes (which is noted between the brackets in 
-your output).
+Plz do let us know if there are any ways to UP this performance.  Any
+suggestion is appreciated.
 
-If you change to "-s 1292" then you are actually sending packets with 
-total length of 1320.
-
-Kind regards,
-
-Frank
-
-
-Op 2-4-2022 om 19:41 schreef lejeczek:
-> Hi guys
->
-> I thought there was no better place to ask but here so - both ends are 
-> centOS and end up having different MTUs for 'wg' interfaces and that I 
-> thought, was wrong.
-> 1370 (server) VS 1320 (client)
-> I expected that would be negotiated between nodes without user 
-> involved, right?
-> Moreover if I from the client do:
->
-> -> $ ping server -M do -s 1300
-> PING 10.3.3.1 (10.3.3.1) 1300(1328) bytes of data.
-> ping: local error: message too long, mtu=1320
->
-> Could some expert or two shed more light on what & why is happening?
-> many thanks, L.
->
-
+Regards
+Dev
