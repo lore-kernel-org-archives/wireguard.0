@@ -4,62 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77B19C43217
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 22 Apr 2022 00:21:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 618B2C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 22 Apr 2022 00:21:26 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 53d1a458;
-	Thu, 21 Apr 2022 23:49:51 +0000 (UTC)
-Received: from mx1.heinlein-support.de (mx2.heinlein-support.de
- [91.198.250.20])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 626774a2
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 22 Mar 2022 09:35:41 +0000 (UTC)
-Received: from marchiv.heinlein-support.de (marchiv.heinlein-support.de
- [91.198.250.63])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mx1.heinlein-support.de (Postfix) with ESMTPS id A99992E097B
- for <wireguard@lists.zx2c4.com>; Tue, 22 Mar 2022 10:35:38 +0100 (CET)
-Received: from MailAppDispatcher (localhost.localdomain [127.0.0.1])
- by marchiv.heinlein-support.de (Postfix) with ESMTP id 9DD3948146
- for <wireguard@lists.zx2c4.com>; Tue, 22 Mar 2022 10:35:38 +0100 (CET)
-Received: from localhost (localhost.localdomain [127.0.0.1])
- by marchiv.heinlein-support.de (Postfix) with ESMTP id 7989F48145
- for <wireguard@lists.zx2c4.com>; Tue, 22 Mar 2022 10:35:38 +0100 (CET)
-X-Virus-Scanned: Heinlein Anti-Spam at mail-archiv
-Received: from marchiv.heinlein-support.de ([127.0.0.1])
- by localhost (marchiv.heinlein-support.de [127.0.0.1]) (amavisd-new,
- port 10024)
- with ESMTP id wjbVydcKDxFJ for <wireguard@lists.zx2c4.com>;
- Tue, 22 Mar 2022 10:35:37 +0100 (CET)
-Received: from plasma5.jpberlin.de (plasma5.jpberlin.de [80.241.58.36])
- by marchiv.heinlein-support.de (Postfix) with ESMTPS
- for <wireguard@lists.zx2c4.com>; Tue, 22 Mar 2022 10:35:37 +0100 (CET)
-Received: from [10.0.44.42] (unknown [10.0.44.42])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest
- SHA256) (Client did not present a certificate)
- (Authenticated sender: r.sander@heinlein-support.de)
- by plasma.jpberlin.de (Postfix) with ESMTPSA id 44B4CAC036
- for <wireguard@lists.zx2c4.com>; Tue, 22 Mar 2022 10:35:37 +0100 (CET)
-Message-ID: <75feba5a-9289-0ceb-ef39-285bacdcc506@heinlein-support.de>
-Date: Tue, 22 Mar 2022 10:35:36 +0100
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 0743c929;
+	Thu, 21 Apr 2022 23:49:52 +0000 (UTC)
+Received: from mail.wut.de (mail.wut.de [87.193.174.109])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTP id 99b7abbc
+ for <wireguard@lists.zx2c4.com>; Thu, 7 Apr 2022 08:07:28 +0000 (UTC)
+Received: from localhost (localhost [127.0.0.1])
+ by mail.wut.de (Postfix) with ESMTP id 7937E4C0002
+ for <wireguard@lists.zx2c4.com>; Thu,  7 Apr 2022 10:07:28 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wut.de; h=
+ content-transfer-encoding:content-type:subject:from
+ :content-language:user-agent:mime-version:date:message-id
+ :received:received; s=wutundwinzig; t=1649318848; x=1651133248;
+ bh=Uomzlk9NpgR6mulzDGRFdsuVLP1HJ2uyPlrMVDtTWuU=; b=w6/TDXjXUHiU
+ aSEq80j7PvUS7HtjaR6j+2w4PQqqCSgmME3a/6ILJpBocwXc4/F+4gpdireC/jFw
+ GWWYvlJSFNd/tr8JZqk7Oh2dvw+0uB+4g34NzTVTWzdTSi6kL1L2aXFF9JguHplj
+ SLVCRI4wFI3gCzM2wxwaCXIx3Kex5u2GCAREdiZXnBmDVQzI4NB6lklWZxQ1HMWV
+ xDP/9fvYL0rnyrqWTGzA02kTTI+f0jcNbmkzRr4ucfeHwmlmI+gRJEidg4co4YPj
+ CmKOry/voTw0pa6EiWTxKVl2CBaGJotGBkJDDnjWDx8rbo+vNMIHoNRlWdrWEl7L
+ 56PFcq10kA==
+X-Amavis-Modified: Mail body modified (using disclaimer) - ms3.wtintern.de
+Received: from mail.wut.de ([127.0.0.1])
+ by localhost (ms3.wtintern.de [127.0.0.1]) (amavisd-new, port 10026)
+ with LMTP id 7SA8gpn6CZ8b; Thu,  7 Apr 2022 10:07:28 +0200 (CEST)
+Received: from [10.242.2.5] (unknown [10.242.2.5])
+ by mail.wut.de (Postfix) with ESMTPA id 296CB4C0001
+ for <wireguard@lists.zx2c4.com>; Thu,  7 Apr 2022 10:07:28 +0200 (CEST)
+Message-ID: <03fa1a4e-1693-0016-73eb-49bf9bdc7615@wut.de>
+Date: Thu, 7 Apr 2022 10:07:27 +0200
 MIME-Version: 1.0
-Subject: Re: Systemd-resolved problem
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
 Content-Language: de-DE
 To: wireguard@lists.zx2c4.com
-References: <CAL0AYvcHYP1GN+DZN96fQw9f+FUU8b+C9yOCrWGnAEtezCnBDA@mail.gmail.com>
-From: Robert Sander <r.sander@heinlein-support.de>
-Organization: Heinlein Support GmbH
-Jabber-ID: r.sander@jabber.heinlein-support.de
-In-Reply-To: <CAL0AYvcHYP1GN+DZN96fQw9f+FUU8b+C9yOCrWGnAEtezCnBDA@mail.gmail.com>
+From: Simon Lindhorst <s.lindhorst@wut.de>
+Subject: odd behaviour for PSK with wg syncconf
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Mailarchiv-ID: 8412714
-X-Rspamd-Score: -7.00 / 15.00 / 15.00
-X-Rspamd-Queue-Id: A99992E097B
-X-MBO-SPAM-Probability: 
 X-Mailman-Approved-At: Thu, 21 Apr 2022 23:49:50 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -75,18 +59,68 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Am 19.03.22 um 15:20 schrieb Barry Cisna:
+Hi,
 
->   when doing a resolvectl with the wg0 interface up there are no dns
-> servers on the wg0 interface
+I tried a little bit around with PresharedKeys an found an odd behaviour 
+when I use /wg syncconf/ instead of /wg setconf./
 
-Where should they come from?
+My config:
 
-Do you have the default route through your Wireguard tunnel?
-Then systemd-resolved likely will not be able to reach the DNS resolvers 
-any more. You will have to configure resolvers that are reachable 
-through the Wireguard tunnel (e.g. 9.9.9.9 or similar).
+    /[Interface]//
+    //PrivateKey = yGKbadTuMvT6JWven0yh8tJMFMCnpYoDizueu4K9QF0=//
+    //Listenport = 4444//
+    //
+    //[Peer]//
+    //PublicKey = Ts7VwZt8Q2QB5fTydQEfTgqfz1u4WIL6YMQKlMKZ6E8=//
+    //AllowedIPs = 10.10.10.2,192.168.10.0/24,192.168.0.0/24//
+    //PresharedKey=oipUDdsUPj1lYZMSN2jdx66OSvARhRpso2GD1frE3xo=/
 
-Regards
--- 
-Robert
+/wg setconf /leads to:
+
+    //root # wg showconf wg0
+    [Interface]
+    ListenPort = 4444
+    PrivateKey = yGKbadTuMvT6JWven0yh8tJMFMCnpYoDizueu4K9QF0=
+
+    [Peer]
+    PublicKey = Ts7VwZt8Q2QB5fTydQEfTgqfz1u4WIL6YMQKlMKZ6E8=
+    PresharedKey = oipUDdsUPj1lYZMSN2jdx66OSvARhRpso2GD1frE3xo=
+    AllowedIPs = 10.10.10.2/32, 192.168.10.0/24, 192.168.0.0/24
+    Endpoint = 10.40.28.51:37842/
+
+When I comment out the PresharedKey and do
+
+    //root # wg syncconf wg0 "/etc/vpn/wg0.conf"/
+
+I get
+
+    //root # wg showconf wg0//
+    //[Interface]//
+    //ListenPort = 4444//
+    //PrivateKey = yGKbadTuMvT6JWven0yh8tJMFMCnpYoDizueu4K9QF0=//
+    //
+    //[Peer]//
+    //PublicKey = Ts7VwZt8Q2QB5fTydQEfTgqfz1u4WIL6YMQKlMKZ6E8=//
+    //PresharedKey = oipUDdsUPj1lYZMSN2jdx66OSvARhRpso2GD1frE3xo=//
+    //AllowedIPs = 10.10.10.2/32, 192.168.10.0/24, 192.168.0.0/24//
+    //Endpoint = 10.40.28.51:37842/
+
+The PSK entry is always there. But when I change the PSK in the config 
+file the PSK entry is correctly changed in /wg showconf/ output after 
+call /wg syncconf/.
+
+Is there a reason for this behaviour?
+
+
+Kind regards
+
+S.
+
+-- Unsere Aussagen koennen Irrtuemer und Missverstaendnisse enthalten.
+Bitte pruefen Sie die Aussagen fuer Ihren Fall, bevor Sie Entscheidungen 
+auf Grundlage dieser Aussagen treffen.
+Wiesemann & Theis GmbH, Porschestr. 12, D-42279 Wuppertal
+Geschaeftsfuehrer: Dipl.-Ing. Ruediger Theis
+Registergericht: Amtsgericht Wuppertal, HRB 6377 
+Infos zum Datenschutz: https://www.wut.de/datenschutz
+Tel. +49-202/2680-0, Fax +49-202/2680-265, https://www.wut.de
