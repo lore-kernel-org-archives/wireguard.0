@@ -4,57 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3150EC433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 10 Apr 2022 19:06:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F1FDC433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 13 Apr 2022 17:45:31 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id ad26e5d3;
-	Sun, 10 Apr 2022 19:06:50 +0000 (UTC)
-Received: from mail.dr-lotz.de (mail.dr-lotz.de [2a01:4f8:161:6ffe::5])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 21837542
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 8b75a1c3;
+	Wed, 13 Apr 2022 17:45:30 +0000 (UTC)
+Received: from sonic310-11.consmr.mail.ir2.yahoo.com
+ (sonic310-11.consmr.mail.ir2.yahoo.com [77.238.177.32])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 8a1e132b
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 10 Apr 2022 19:06:46 +0000 (UTC)
-Received: from linus-pc.. (ipbcc0dc80.dynamic.kabel-deutschland.de
- [188.192.220.128])
- by mail.dr-lotz.de (Postfix) with ESMTPSA id DA43A6CC2D;
- Sun, 10 Apr 2022 21:06:45 +0200 (CEST)
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=lotz.li; s=202112; 
- t=1649617606;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=yvR5KIYx1siUjLyjZY1sVsdO1xVwMh3dAu4n9WZQ60U=;
- b=6pwaIwUhy/ELWwmMHnDX9uVWES9K+D67W6Sdj6JloCPdR1YJYKswzjKQHhl/dL5i6tZDRr
- ugFDl5aadWF2WbAQ==
-From: Linus Karl <linus@lotz.li>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>
-Cc: wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, Linus Karl <linus@lotz.li>
-Subject: [PATCH v3] wireguard: add netlink mcast on endpoint change
-Date: Sun, 10 Apr 2022 21:06:35 +0200
-Message-Id: <20220410190635.1171195-2-linus@lotz.li>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220410190635.1171195-1-linus@lotz.li>
-References: <20220410190635.1171195-1-linus@lotz.li>
+ Wed, 13 Apr 2022 17:45:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.co.uk; s=s2048;
+ t=1649871927; bh=FdlflU5GMud5I7d2iMsaw3Hv48BCI+tgxQb8v3CSWKM=;
+ h=Date:To:From:Subject:References:From:Subject:Reply-To;
+ b=PGjomFhFRfORDT3dCDjIDc3zPeJmUDOLVOjjzMQUyzQ8ubJxyNz69lBShw1JgpIMt6QpHpQcOx9b+wMmnDBOsjHkxEGEuThnZ8DCLo3cW322GWKVZh0qUMr02myfdS2Th2WLF5pSnqSu651sH5kpZrvIl6otYv2izd97h25+VClSF5fv5Np/rc/MWPuwL/s4BVxUY2vQ/KXeHGfMIbJdKfBkkx8P8DKSDgKGEZgj/9XTs+OPNEjdwEDLrQORtXE61FtNNJOYExlEDFpAqEAl959Bpb6jp2MMwNk4/zyUmJMWRwz5pVcEGAzWPAIEEde4H7NYJRMjF2QvZsA7ps9B3Q==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
+ t=1649871927; bh=/CvUWFeNPKWS0aathI8Zs75KfLitoQh24n/G8PjEggJ=;
+ h=X-Sonic-MF:Date:To:From:Subject:From:Subject;
+ b=XywTBgjIJhpx2NjlpKcEiCddopj8q1hs1mi6I9xKNZF4/G7P6oGaqxEKnrPTnibI03uz0FdB6yLxuxLk6Xn6uLjolAMhnvPhV1xe8Z5h2JTqckdhdzu/7COFcz8x0aGkQM5KnhDl/FXZa6W5FxPSG+sJCHSDYdaLs2j3s28vgdQ2pBS+ESWMxNjfLWVe+/PEA6WDoglNN2XIrip+OCZVzq6ayoAS1PXzHW72V6tWPIfF5nTidtlrc1VYIWtTtvz+L2uFHXjK7KpzQ6YrCRwxT0FtggJws7cZ/NRhFE+S+P1ZFS7BRKw+Lhv1XfPmPwC3xYS7nxhiUAbIZCga7JmT1g==
+X-YMail-OSG: EwYhkncVM1lwz0EjOdjwBhtMcnfUy84pcwDN3CHIdbA4QCRAs6yfRgfk8K9IQ2L
+ 0fDawMgKE9pe_slucNTa4PDw2s1IyshJZLboDXj6hxUvVSmr.IaTXKgAsFO5SJEp.HVLiHThAYpT
+ nenye.3jQcVXZdVdeIobYKH78.cE3dtbjutI9lwlcvtx_jtQxD53UPThA.5fUGh07X6SLsmnc7Wr
+ QyN7DGMQqeDZp96jD2UnhgEyZ6VCDaj7kXu8MbJJIjNYnZ6szOTSDrQTwSlOEO.lgB.QBg9tG4K6
+ .QEYkBVNDoChQPFfFhcgHQiLNrvQOo_5T6N8OKHunAga5rwUkl5NQ40VhanM4oKHVzKiS50L2nNv
+ k17YViTpk.uHytxgbqk16EGmPfmP7PbXPCpkX9GyRV5ZLw0aEHWlTf1yXPyAXqTCsX_imIv35QMC
+ MATUk5wNK4.ANy2z.9c4tnmrn8078c.OU8n7U_lhkauFfPiS98MRzYnhNPIVAxrLw7i_JuJrDHQx
+ _x6dA0nYD4ljn62UXBDhqXaTmnxGSIMCJpyCLuqP2742WBngfo.XSiReV6MZGgzXK0DL6Ap1P1rR
+ 8.C6j1CaRBMf6WfEIs8bf1gg2b8Z57OhGCQb6pYLR4U0AtSVgJz90BPo76twtjZN2JI0UgCX1wFz
+ xFpa9IohM5fNitB59vNzByQaYi43IW4slklr3it07XzuZsk5lR3oX1Qguia.V5uA46kcpHBNOMXr
+ Pbm8l0g4H1X08Msf4wQyKtPDc79vMiVhFMDB40Yt.5umZQQPIWAoRUH9.FI2jBcw2sSsBVVOCUlw
+ QkGjtZ6hcuKwN8mAMUizTHYMUJTnuh0fnDY0z8ISTlGJ08F5b2WA56o7M0ObhR0vKNVIyL5Oby27
+ OgoMQ1hlqKILnjBwIQoepH2HlO0RFWVl0ti99u0m_UPIReVKpSdMHi7x9D64o2UfGqT1b0rizV8j
+ V3XhhZ4Ued2ZFfYHyuTyrtX.SpSquy5JBe.mgE.4fvSBNq7ZjqGhYbilu3xvpq.q2JtfpuLAgDnD
+ CEYbacVOMKtgLzoVpommwW9jofXLVUGrD5l1hBmeMPzefXAUt0m7pEZzhSARBc0zxFASEH24gRea
+ ISbZ9qD9C093yCORu9XtkXIgzaLgjq0hnIKlEsQ_4IELbbEdp5FWrCqUbmxiuhdDEkoKBOpOQFc4
+ AhltSjzQcupyTOh5jP94cDxHnjVR8_pXhvN0e7oa5t1tLicTeoCbKpps8u.jYg985jqh.roymP6U
+ wNNe..oAkci5wnBjtr7Kv0Y3XHuZ6Ub2eWL.YekPuRH0fCDSsFOzNo7.oXVnImKj9wSiBw8Aegbk
+ 2aBJSn.7TcfnArYCoRoAZUcJ6DTB4cgt8DuuCkyHfU3qY70RYg._PXDSxidZEQBRLefyvL1j.lud
+ YRobdbP0Pb7mdIaLC5OVZEZ6IdKnuGOmSWa.MuEs1CzDJbmsquKj8mE3bz7EyDWb5tPhNhk_vPA.
+ fldrrsVoWoXqH2rxRxgalP819r2MTaPwnnUZ0I42GlVIw2xpu9WLfpG2etMyWzpu9sbEku8X_T_c
+ Uihc6r5EazWOCS172jYqk9K19NrD9AlUfX95CJTfSFYTC6cClr2GLTjhbe6D1AS_PIdj5Qls2Az1
+ P0tOgWCOxVsIKlJyILicMKmV_AAtZEQ8qs6HqBtilif428gMe26a56fF1tZ_h455UBvB3YFRAvLy
+ 4aknUJH_ZWUUNeJ22DQ6wuZNTkpFTtgEH2IlproJv7mjg5GjGGq0vnTePK72Mm0fds16x6uS9QsE
+ 1TGBWZsUwSM_Lo6rzFVaKrbSSZEje49QpY.tXZqoiTuSfIvOOoi_8aGSCywbZO0tq0vnLeIDLkc4
+ OP_iMyCuQ_9tcBN9GnYm_qIGLe2aC5_RNGTlMqD3C8GcG7KlKymv82EqJU4f2H5TICpDaE2WFmIJ
+ 5L2wdPgClHO7MgE7hJB4wGn_ISJuVQo2U_ym5Eo21UbxK0ziuakp9AyUo3hN3y7PX3G6ebfeiySf
+ pX5SqLOLTmHhAqMoDb9svKv0y2KW7gm6ECOLzz3lAfFgZK1I0eUDQnDBwB1Ge9cRBbkoDaH2R0yU
+ UEMhdJxgLgCnbJ5Ct2C4N1JOnNutKv6VpmZTnIam9QTBvK1zRIICkIRz35_9Hx6Oo4q09q8emLZS
+ wLf92wr4IgYEyYeNdXb3CezfJ4mnXoKMHsnIPceH9Xq70Z6WbooOyzwg9ps2oN7kSNTVIkyjPNCY
+ mQtbFpGcrls9xfSvPQMjosWn.hhc2Zl89pRCYkYoL_xVqGkrK08Kbnu61
+X-Sonic-MF: <peljasz@yahoo.co.uk>
+Received: from sonic.gate.mail.ne1.yahoo.com by
+ sonic310.consmr.mail.ir2.yahoo.com with HTTP; Wed, 13 Apr 2022 17:45:27 +0000
+Received: by hermes--canary-production-ir2-7d675798cc-pbgq7 (VZM Hermes SMTP
+ Server) with ESMTPA ID d445b9e4147265d403ca48975fe41358; 
+ Wed, 13 Apr 2022 17:45:25 +0000 (UTC)
+Message-ID: <077cdb1c-e06c-d2fd-1475-269ed744d5ca@yahoo.co.uk>
+Date: Wed, 13 Apr 2022 18:45:24 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: -----
-X-Rspamd-Queue-Id: DA43A6CC2D
-Authentication-Results: ORIGINATING;
- auth=pass smtp.auth=linus smtp.mailfrom=linus@lotz.li
-X-Spamd-Result: default: False [-5.60 / 15.00]; REPLY(-4.00)[];
- BAYES_HAM(-3.00)[100.00%]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[]; MIME_GOOD(-0.10)[text/plain];
- RCVD_COUNT_ZERO(0.00)[0]; MIME_TRACE(0.00)[0:+];
- FROM_EQ_ENVFROM(0.00)[]; RCPT_COUNT_SEVEN(0.00)[8];
- DKIM_SIGNED(0.00)[lotz.li:s=202112];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- ASN(0.00)[asn:3209, ipnet:188.192.0.0/14, country:DE];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[]; ARC_NA(0.00)[]
-X-Rspamd-Server: mail
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+To: wireguard@lists.zx2c4.com
+Content-Language: en-US
+From: lejeczek <peljasz@yahoo.co.uk>
+Subject: error - ? - Address already in use
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+References: <077cdb1c-e06c-d2fd-1475-269ed744d5ca.ref@yahoo.co.uk>
+X-Mailer: WebService/1.1.20001
+ mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -69,241 +88,18 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This commit adds a new multicast group "peers" to the netlink api for
-wireguard. The purpose of this multicast group is to notify userspace
-when the peers of an interface change. This is also triggered when
-root changes the endpoint manually.
+Hi guys
 
-This feature is enabled through setting a new WGDEVICE_A_MONITOR
-attribute to WGDEVICE_MONITOR_F_ENDPOINT.
+what is below error the symptom of?
 
-An example for an consumer of this API would be a service that keeps
-track of all peer endpoints and sends this information to the peers.
-This would allow NAT-to-NAT connections without the need of using
-STUN on each client.
+-> $ wg-quick up wg-r2
+[#] ip link add wg-r2 type wireguard
+[#] wg setconf wg-r2 /dev/fd/63
+[#] ip -4 address add 10.3.3.254/24 dev wg-r2
+[#] ip link set mtu 1320 up dev wg-r2
+RTNETLINK answers: Address already in use
+[#] ip link delete dev wg-r2
 
-Signed-off-by: Linus Karl <linus@lotz.li>
----
- drivers/net/wireguard/device.h  |  1 +
- drivers/net/wireguard/netlink.c | 68 +++++++++++++++++++++++++++++++--
- drivers/net/wireguard/netlink.h |  4 ++
- drivers/net/wireguard/socket.c  |  5 +++
- include/uapi/linux/wireguard.h  | 12 ++++++
- 5 files changed, 87 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/net/wireguard/device.h b/drivers/net/wireguard/device.h
-index 43c7cebbf50b..74d9d772cc94 100644
---- a/drivers/net/wireguard/device.h
-+++ b/drivers/net/wireguard/device.h
-@@ -54,6 +54,7 @@ struct wg_device {
- 	unsigned int num_peers, device_update_gen;
- 	u32 fwmark;
- 	u16 incoming_port;
-+	bool endpoint_monitor;
- };
- 
- int wg_device_init(void);
-diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlink.c
-index d0f3b6d7f408..5902910e015e 100644
---- a/drivers/net/wireguard/netlink.c
-+++ b/drivers/net/wireguard/netlink.c
-@@ -27,7 +27,8 @@ static const struct nla_policy device_policy[WGDEVICE_A_MAX + 1] = {
- 	[WGDEVICE_A_FLAGS]		= { .type = NLA_U32 },
- 	[WGDEVICE_A_LISTEN_PORT]	= { .type = NLA_U16 },
- 	[WGDEVICE_A_FWMARK]		= { .type = NLA_U32 },
--	[WGDEVICE_A_PEERS]		= { .type = NLA_NESTED }
-+	[WGDEVICE_A_PEERS]		= { .type = NLA_NESTED },
-+	[WGDEVICE_A_MONITOR]		= { .type = NLA_U8 }
- };
- 
- static const struct nla_policy peer_policy[WGPEER_A_MAX + 1] = {
-@@ -233,7 +234,9 @@ static int wg_get_device_dump(struct sk_buff *skb, struct netlink_callback *cb)
- 				wg->incoming_port) ||
- 		    nla_put_u32(skb, WGDEVICE_A_FWMARK, wg->fwmark) ||
- 		    nla_put_u32(skb, WGDEVICE_A_IFINDEX, wg->dev->ifindex) ||
--		    nla_put_string(skb, WGDEVICE_A_IFNAME, wg->dev->name))
-+		    nla_put_string(skb, WGDEVICE_A_IFNAME, wg->dev->name) ||
-+		    nla_put_u8(skb, WGDEVICE_A_MONITOR,
-+			       wg->endpoint_monitor ? WGDEVICE_MONITOR_F_ENDPOINT : 0))
- 			goto out;
- 
- 		down_read(&wg->static_identity.lock);
-@@ -538,6 +541,15 @@ static int wg_set_device(struct sk_buff *skb, struct genl_info *info)
- 			goto out;
- 	}
- 
-+	if (info->attrs[WGDEVICE_A_MONITOR]) {
-+		u8 monitor = nla_get_u8(info->attrs[WGDEVICE_A_MONITOR]);
-+
-+		if (monitor & ~__WGDEVICE_MONITOR_F_ALL)
-+			goto out;
-+		wg->endpoint_monitor =
-+			(monitor & WGDEVICE_MONITOR_F_ENDPOINT) == WGDEVICE_MONITOR_F_ENDPOINT;
-+	}
-+
- 	if (flags & WGDEVICE_F_REPLACE_PEERS)
- 		wg_peer_remove_all(wg);
- 
-@@ -618,6 +630,12 @@ static const struct genl_ops genl_ops[] = {
- 	}
- };
- 
-+static const struct genl_multicast_group wg_genl_mcgrps[] = {
-+	{
-+		.name = WG_MULTICAST_GROUP_PEERS
-+	}
-+};
-+
- static struct genl_family genl_family __ro_after_init = {
- 	.ops = genl_ops,
- 	.n_ops = ARRAY_SIZE(genl_ops),
-@@ -626,7 +644,9 @@ static struct genl_family genl_family __ro_after_init = {
- 	.maxattr = WGDEVICE_A_MAX,
- 	.module = THIS_MODULE,
- 	.policy = device_policy,
--	.netnsok = true
-+	.netnsok = true,
-+	.mcgrps = wg_genl_mcgrps,
-+	.n_mcgrps = ARRAY_SIZE(wg_genl_mcgrps)
- };
- 
- int __init wg_genetlink_init(void)
-@@ -638,3 +658,45 @@ void __exit wg_genetlink_uninit(void)
- {
- 	genl_unregister_family(&genl_family);
- }
-+
-+int wg_genl_mcast_peer_endpoint_change(struct wg_peer *peer)
-+{
-+	struct sk_buff *skb;
-+	void *hdr, *peer_nest, *peer_array_nest;
-+	int fail = 0;
-+
-+	skb = genlmsg_new(NLMSG_GOODSIZE, GFP_KERNEL);
-+	hdr = genlmsg_put(skb, 0, 0,
-+			  &genl_family, 0, WG_CMD_CHANGED_PEER);
-+
-+	nla_put_u32(skb, WGDEVICE_A_IFINDEX, peer->device->dev->ifindex);
-+	nla_put_string(skb, WGDEVICE_A_IFNAME, peer->device->dev->name);
-+
-+	peer_nest = nla_nest_start(skb, WGDEVICE_A_PEERS);
-+	peer_array_nest = nla_nest_start(skb, 0);
-+	down_read(&peer->handshake.lock);
-+	nla_put(skb, WGPEER_A_PUBLIC_KEY, NOISE_PUBLIC_KEY_LEN,
-+		peer->handshake.remote_static);
-+	up_read(&peer->handshake.lock);
-+
-+	read_lock_bh(&peer->endpoint_lock);
-+	if (peer->endpoint.addr.sa_family == AF_INET)
-+		fail = nla_put(skb, WGPEER_A_ENDPOINT,
-+			       sizeof(peer->endpoint.addr4),
-+			       &peer->endpoint.addr4);
-+	else if (peer->endpoint.addr.sa_family == AF_INET6)
-+		fail = nla_put(skb, WGPEER_A_ENDPOINT,
-+			       sizeof(peer->endpoint.addr6),
-+			       &peer->endpoint.addr6);
-+	read_unlock_bh(&peer->endpoint_lock);
-+	if (fail)
-+		return fail;
-+
-+	nla_nest_end(skb, peer_array_nest);
-+	nla_nest_end(skb, peer_nest);
-+	genlmsg_end(skb, hdr);
-+
-+	fail = genlmsg_multicast_netns(&genl_family, dev_net(peer->device->dev),
-+				       skb, 0, 0, GFP_KERNEL);
-+	return fail;
-+}
-diff --git a/drivers/net/wireguard/netlink.h b/drivers/net/wireguard/netlink.h
-index 15100d92e2e3..74ecc72a79a6 100644
---- a/drivers/net/wireguard/netlink.h
-+++ b/drivers/net/wireguard/netlink.h
-@@ -6,6 +6,10 @@
- #ifndef _WG_NETLINK_H
- #define _WG_NETLINK_H
- 
-+#include "peer.h"
-+
-+int wg_genl_mcast_peer_endpoint_change(struct wg_peer *peer);
-+
- int wg_genetlink_init(void);
- void wg_genetlink_uninit(void);
- 
-diff --git a/drivers/net/wireguard/socket.c b/drivers/net/wireguard/socket.c
-index 0414d7a6ce74..33e4da2a37ee 100644
---- a/drivers/net/wireguard/socket.c
-+++ b/drivers/net/wireguard/socket.c
-@@ -8,6 +8,7 @@
- #include "socket.h"
- #include "queueing.h"
- #include "messages.h"
-+#include "netlink.h"
- 
- #include <linux/ctype.h>
- #include <linux/net.h>
-@@ -294,6 +295,10 @@ void wg_socket_set_peer_endpoint(struct wg_peer *peer,
- 	dst_cache_reset(&peer->endpoint_cache);
- out:
- 	write_unlock_bh(&peer->endpoint_lock);
-+
-+	if (peer->device->endpoint_monitor) {
-+		wg_genl_mcast_peer_endpoint_change(peer);
-+	}
- }
- 
- void wg_socket_set_peer_endpoint_from_skb(struct wg_peer *peer,
-diff --git a/include/uapi/linux/wireguard.h b/include/uapi/linux/wireguard.h
-index ae88be14c947..cde044fb1124 100644
---- a/include/uapi/linux/wireguard.h
-+++ b/include/uapi/linux/wireguard.h
-@@ -29,6 +29,7 @@
-  *    WGDEVICE_A_PUBLIC_KEY: NLA_EXACT_LEN, len WG_KEY_LEN
-  *    WGDEVICE_A_LISTEN_PORT: NLA_U16
-  *    WGDEVICE_A_FWMARK: NLA_U32
-+ *    WGDEVICE_A_MONITOR: NLA_U8
-  *    WGDEVICE_A_PEERS: NLA_NESTED
-  *        0: NLA_NESTED
-  *            WGPEER_A_PUBLIC_KEY: NLA_EXACT_LEN, len WG_KEY_LEN
-@@ -83,6 +84,9 @@
-  *    WGDEVICE_A_PRIVATE_KEY: len WG_KEY_LEN, all zeros to remove
-  *    WGDEVICE_A_LISTEN_PORT: NLA_U16, 0 to choose randomly
-  *    WGDEVICE_A_FWMARK: NLA_U32, 0 to disable
-+ *    WGDEVICE_A_MONITOR: NLA_U8, set to a value of wgdevice_monitor_flag to
-+ *                      enable monitoring of events using multicast messages
-+ *                      over netlink
-  *    WGDEVICE_A_PEERS: NLA_NESTED
-  *        0: NLA_NESTED
-  *            WGPEER_A_PUBLIC_KEY: len WG_KEY_LEN
-@@ -136,9 +140,12 @@
- 
- #define WG_KEY_LEN 32
- 
-+#define WG_MULTICAST_GROUP_PEERS          "peers"
-+
- enum wg_cmd {
- 	WG_CMD_GET_DEVICE,
- 	WG_CMD_SET_DEVICE,
-+	WG_CMD_CHANGED_PEER,
- 	__WG_CMD_MAX
- };
- #define WG_CMD_MAX (__WG_CMD_MAX - 1)
-@@ -157,9 +164,14 @@ enum wgdevice_attribute {
- 	WGDEVICE_A_LISTEN_PORT,
- 	WGDEVICE_A_FWMARK,
- 	WGDEVICE_A_PEERS,
-+	WGDEVICE_A_MONITOR,
- 	__WGDEVICE_A_LAST
- };
- #define WGDEVICE_A_MAX (__WGDEVICE_A_LAST - 1)
-+enum wgdevice_monitor_flag {
-+	WGDEVICE_MONITOR_F_ENDPOINT = 1U << 0,
-+	__WGDEVICE_MONITOR_F_ALL = WGDEVICE_MONITOR_F_ENDPOINT
-+};
- 
- enum wgpeer_flag {
- 	WGPEER_F_REMOVE_ME = 1U << 0,
-
-base-commit: 1862a69c917417142190bc18c8ce16680598664b
--- 
-2.35.1
-
+I'll only add that I looked into "obvious" places and found 
+nothing.
+many thanks, L.
