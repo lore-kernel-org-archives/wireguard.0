@@ -4,51 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26B0DC433FE
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 14 Apr 2022 07:46:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E93A4C433FE
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 14 Apr 2022 11:58:26 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id b4fcc5ed;
-	Thu, 14 Apr 2022 07:46:48 +0000 (UTC)
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com
- [2607:f8b0:4864:20::542])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 8a6ccfcd
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 0c4ca4a6;
+	Thu, 14 Apr 2022 11:58:24 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org
+ [2604:1380:4641:c500::1])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id ce1adfff
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 14 Apr 2022 11:58:22 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 4C0B161B6B
+ for <wireguard@lists.zx2c4.com>; Thu, 14 Apr 2022 11:58:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B36DC385A1
+ for <wireguard@lists.zx2c4.com>; Thu, 14 Apr 2022 11:58:20 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="U63Cq0fl"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1649937497;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0+tyDdaud0kiRmw8JRN89CzIpjI4CklQbrxH74flBhI=;
+ b=U63Cq0fl5eBV+Bco0G7lzZ9CpSjnbV3gIrnLyWveyQB4k2Bgzzu3oIYzMk+d4Q0ieovZ92
+ O9ogC+fJ+dqpF6Df1TFUQWZPzuGaTaoLoH1QU0kYLajCg55r78TUmpHaN+ffHcfOhEBk24
+ R276B/heUPweH4/IfWwDDNnXE/uUZeA=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 42c00147
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 14 Apr 2022 07:46:46 +0000 (UTC)
-Received: by mail-pg1-x542.google.com with SMTP id q12so4077420pgj.13
- for <wireguard@lists.zx2c4.com>; Thu, 14 Apr 2022 00:46:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to;
- bh=UZZKp/Sicw9+n5gNdMqScWpKCpGcGbPgJMoj+qcK4/Q=;
- b=kzsD+81k9OvmR+jrQNvqg9EBH/ykXG9OYn6987xXRge+YLn6lwgVjI73qmMPU0lXZg
- 0WJzYlMKylq+z4EB1h5ibCWPkmPHAG9U3663cx5EXEzxq4IROhDlek1LmMV8LLOjEqer
- mn/z84bzBuj7TWCPXQfgQuqQZwtfifksGtS9cfkjJvIIuSZdUQmTGzKob8o8DR2Rp8W5
- y7JC9Hx32VVxn3z59Tlkywi1gGldnN2B0o95Gl8dccjWHXddCONosEAevCThEYNqKVYw
- cfn0NcUU4kDjIm/lZmAyMenF/EhFC685SwH+noHryPWlTkeu0P44loKMP4LVGJMhHbyf
- HuAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=UZZKp/Sicw9+n5gNdMqScWpKCpGcGbPgJMoj+qcK4/Q=;
- b=nOFYg1CfaeGn69vPq0oUeYYv5up0tvcIVAu4Iiqrb4xcSgHuVHwaDxXXITPYgia7C5
- j1Q9Coo1Lwu0vvZczm9px+n8h/exZcS6bvJdVsTP8VIxfbE/qKqD71yZfS7AuzEjLiNp
- VX461fDMi1rAeOQN+myCeXpP2sRAPOu0gbNpW0Ng2PnCCPh5VLWgqXR5+Pl4CDnQBed6
- ExiPqR5G/Wkh6AKKPh9joaYNM2YbaAaEJLXgP4GA6vjJRPCuqRIhafP4ww8bnWWiCuTz
- 1axvMpJ+gWXIZvwOdCsdQq1ncjlnwHbLYjfWbO41cSnPKe1U79HvRrbw5oxJdes7TknK
- 6Kxw==
-X-Gm-Message-State: AOAM533JXi2LF26hlK1UhiY917mOvTtoTf2dRxCi/LiU0+nD8MOhHL7z
- urEnmjPrnoNM7G/FDnouNB8g0c7x+dHg5up+OqEigzFM
-X-Google-Smtp-Source: ABdhPJyX57xIy51wjtxGqWUaayIrbg26wi2caKnuVABa5gBOtBI/5SHEmSrD3kwwA2NX/FSGyauhL0kcBKxnGGpWC4A=
-X-Received: by 2002:a63:4862:0:b0:385:fb1d:fc54 with SMTP id
- x34-20020a634862000000b00385fb1dfc54mr1320375pgk.57.1649922404657; Thu, 14
- Apr 2022 00:46:44 -0700 (PDT)
+ Thu, 14 Apr 2022 11:58:17 +0000 (UTC)
+Received: by mail-yw1-f178.google.com with SMTP id
+ 00721157ae682-2ec05db3dfbso52398887b3.7
+ for <wireguard@lists.zx2c4.com>; Thu, 14 Apr 2022 04:58:17 -0700 (PDT)
+X-Gm-Message-State: AOAM530ej/fqVc9S9OxJDt5OVcFLi5jB5IzMltcdPtJO7sMjHCP3C6vm
+ ZSYinm3Zd8as9aEpxpKA26dpHvzkmioF7FeD/gw=
+X-Google-Smtp-Source: ABdhPJw5pFFo3/eGiTk3uI3THl4Do92diVuSvMWAn3JON0H3IzibadXY4xzo3Jp01LIaTcrdhee3BfMGV1MYR9QYmIM=
+X-Received: by 2002:a81:1d4:0:b0:2eb:1b10:f43e with SMTP id
+ 203-20020a8101d4000000b002eb1b10f43emr1685819ywb.100.1649937495961; Thu, 14
+ Apr 2022 04:58:15 -0700 (PDT)
 MIME-Version: 1.0
-From: Dan George <dgeor8@gmail.com>
-Date: Thu, 14 Apr 2022 17:46:33 +1000
-Message-ID: <CAMTegST6Q826cFt8m5wWeFNQGK5tqvVPQSaB8WBO9+7naHfFjQ@mail.gmail.com>
-Subject: [wireguard-apple] Reresolving DNS on device wake/network
- change/interval
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <20220414104458.3097244-1-razor@blackwall.org>
+ <20220414104458.3097244-2-razor@blackwall.org>
+In-Reply-To: <20220414104458.3097244-2-razor@blackwall.org>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 14 Apr 2022 13:58:04 +0200
+X-Gmail-Original-Message-ID: <CAHmME9qZyz26gnfcZCjAiLhYqZ9LwJN1VZ+3rgGmhxJYrGvZCw@mail.gmail.com>
+Message-ID: <CAHmME9qZyz26gnfcZCjAiLhYqZ9LwJN1VZ+3rgGmhxJYrGvZCw@mail.gmail.com>
+Subject: Re: [PATCH net 1/2] wireguard: device: fix metadata_dst xmit null
+ pointer dereference
+To: Nikolay Aleksandrov <razor@blackwall.org>
+Cc: Netdev <netdev@vger.kernel.org>, Daniel Borkmann <daniel@iogearbox.net>, 
+ Martynas Pumputis <m@lambda.lt>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>, 
+ Jakub Kicinski <kuba@kernel.org>, David Miller <davem@davemloft.net>,
+ stable <stable@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -64,21 +78,20 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
+Hi Nikolay,
 
-Is there any way when using the macOS WG apps to reresolve DNS for an
-endpoint on device wake, a network change event, or at a regular
-interval?
+On Thu, Apr 14, 2022 at 12:45 PM Nikolay Aleksandrov
+<razor@blackwall.org> wrote:
+> When we try to transmit an skb with md_dst attached through wireguard
+> we hit a null pointer dereference[1] in wg_xmit() due to the use of
+> dst_mtu() which calls into dst_blackhole_mtu() which in turn tries to
+> dereference dst->dev. Since wireguard doesn't use md_dsts we should use
+> skb_valid_dst() which checks for DST_METADATA flag and if it's set then
+> fallback to wireguard's device mtu. That gives us the best chance of
+> transmitting the packet, otherwise if the blackhole netdev is used we'd
+> get ETH_MIN_MTU.
 
-Two options I've come across:
-- there's a TODO (B.4) to integrate the App Store app with wg(8) which
-would potentially allow the use of reresolve-dns.sh (but not yet).
-- scutil --nc can bounce the VPN interface in Network Preferences,
-which reresolves DNS, but this is disruptive to traffic. Perhaps a
-launchd script to run this on device wake/network change would be a
-good-enough solution.
+Thanks for the patch. Will queue up this patch #1 in the wireguard
+tree and send it out to net.git not before too long.
 
-Any other options out there?
-
-Thanks,
-Dan.
+Jason
