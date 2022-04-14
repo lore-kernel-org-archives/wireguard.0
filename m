@@ -4,46 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 618B2C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 22 Apr 2022 00:21:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 494EDC433FE
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 22 Apr 2022 00:21:27 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 0743c929;
-	Thu, 21 Apr 2022 23:49:52 +0000 (UTC)
-Received: from mail.wut.de (mail.wut.de [87.193.174.109])
- by lists.zx2c4.com (OpenSMTPD) with ESMTP id 99b7abbc
- for <wireguard@lists.zx2c4.com>; Thu, 7 Apr 2022 08:07:28 +0000 (UTC)
-Received: from localhost (localhost [127.0.0.1])
- by mail.wut.de (Postfix) with ESMTP id 7937E4C0002
- for <wireguard@lists.zx2c4.com>; Thu,  7 Apr 2022 10:07:28 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wut.de; h=
- content-transfer-encoding:content-type:subject:from
- :content-language:user-agent:mime-version:date:message-id
- :received:received; s=wutundwinzig; t=1649318848; x=1651133248;
- bh=Uomzlk9NpgR6mulzDGRFdsuVLP1HJ2uyPlrMVDtTWuU=; b=w6/TDXjXUHiU
- aSEq80j7PvUS7HtjaR6j+2w4PQqqCSgmME3a/6ILJpBocwXc4/F+4gpdireC/jFw
- GWWYvlJSFNd/tr8JZqk7Oh2dvw+0uB+4g34NzTVTWzdTSi6kL1L2aXFF9JguHplj
- SLVCRI4wFI3gCzM2wxwaCXIx3Kex5u2GCAREdiZXnBmDVQzI4NB6lklWZxQ1HMWV
- xDP/9fvYL0rnyrqWTGzA02kTTI+f0jcNbmkzRr4ucfeHwmlmI+gRJEidg4co4YPj
- CmKOry/voTw0pa6EiWTxKVl2CBaGJotGBkJDDnjWDx8rbo+vNMIHoNRlWdrWEl7L
- 56PFcq10kA==
-X-Amavis-Modified: Mail body modified (using disclaimer) - ms3.wtintern.de
-Received: from mail.wut.de ([127.0.0.1])
- by localhost (ms3.wtintern.de [127.0.0.1]) (amavisd-new, port 10026)
- with LMTP id 7SA8gpn6CZ8b; Thu,  7 Apr 2022 10:07:28 +0200 (CEST)
-Received: from [10.242.2.5] (unknown [10.242.2.5])
- by mail.wut.de (Postfix) with ESMTPA id 296CB4C0001
- for <wireguard@lists.zx2c4.com>; Thu,  7 Apr 2022 10:07:28 +0200 (CEST)
-Message-ID: <03fa1a4e-1693-0016-73eb-49bf9bdc7615@wut.de>
-Date: Thu, 7 Apr 2022 10:07:27 +0200
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 6b2f05c6;
+	Thu, 21 Apr 2022 23:49:54 +0000 (UTC)
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com
+ [2a00:1450:4864:20::636])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 88874d48
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 14 Apr 2022 10:45:12 +0000 (UTC)
+Received: by mail-ej1-x636.google.com with SMTP id s18so9322476ejr.0
+ for <wireguard@lists.zx2c4.com>; Thu, 14 Apr 2022 03:45:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=blackwall-org.20210112.gappssmtp.com; s=20210112;
+ h=from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=wK3Vu/zllzq8WW1cGsouYUQlE32V/v7LYbuG4KARwww=;
+ b=iWo3MuKhvQmURfId57Q9uVQNBSA37QsqxkHYuHTUlbM4DFyctAvxrqNB/IKdRzrNOD
+ zJqUM34hZ268u8gA/eQsmhLSaeJqqFsEuoEerQ4HgjmrjgyRkWR+FbFn0QDRB9rtQId9
+ JiKuZjBHR9Be84RkQ9KZm0tWSbz8uNDRMkEEU8VfjgNX5pYy7Uk9l6Dx4PhytkF5f+l6
+ FQZVuwkpGSbnaIp37yQTI3jpdNRqxxq61/mIAQdMxhrgexjZPeOUZrArpb1p0HejOXtz
+ IJLEFTlraweDr79RyAW072wL5wLxjB37KWYNPYSDbZJRp5McegC9XhxrRsyZAfCUb5vP
+ AdAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=wK3Vu/zllzq8WW1cGsouYUQlE32V/v7LYbuG4KARwww=;
+ b=uBQ2rNlskQeZZiM9G4WBm1HBjk9gHH+MciIDCXbjBpjBp5czUU+Qw4zKtfyPWE5l4/
+ JmmmfbUpZLJ/o1cic8mM2rnePJNP9RsTUWgyg8DLKdjGVDSd/VEbNC9rQTPtKZYnjs6h
+ 3X/RQ5Kqd7qBcrxT+5Idju02+KBSVe6FVIhOpxDhUPYXEA06Q8cFTqIOI2iUyHsUaUku
+ Ue+tOFeMqBQ6J4WRxXldHrBRP0uyZAB/aKGv8NZpMTgv7ZugbC9nEiOW0A3BYa5wLkG0
+ VOaZtfUwEpRlZ4zAQkkUryVDWW4qKi9xo9eK+xqMsiSsuND/zR1o371/HP6Nc//R9ath
+ fb1A==
+X-Gm-Message-State: AOAM530vHyyq7PaZ9muNtfZbHeyCMRmh8AQofS22AlxiMMQU9ALSwgJl
+ BApbQhc1jq4eYsDhW498bKry5A==
+X-Google-Smtp-Source: ABdhPJw+lUQ4hQwaZcm0NYtAWY2TeyGXIOIdTleMr9lZonqxWXnefd5lDNruLr7zmdbdkrs7EzX8pQ==
+X-Received: by 2002:a17:907:7205:b0:6e7:ee50:ea94 with SMTP id
+ dr5-20020a170907720500b006e7ee50ea94mr1732651ejc.351.1649933111632; 
+ Thu, 14 Apr 2022 03:45:11 -0700 (PDT)
+Received: from debil.. (87-243-81-1.ip.btc-net.bg. [87.243.81.1])
+ by smtp.gmail.com with ESMTPSA id
+ hy24-20020a1709068a7800b006e888dbf1d6sm504984ejc.91.2022.04.14.03.45.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 14 Apr 2022 03:45:11 -0700 (PDT)
+From: Nikolay Aleksandrov <razor@blackwall.org>
+To: netdev@vger.kernel.org
+Cc: Daniel Borkmann <daniel@iogearbox.net>, Martynas Pumputis <m@lambda.lt>,
+ "Jason A . Donenfeld" <Jason@zx2c4.com>, wireguard@lists.zx2c4.com,
+ kuba@kernel.org, davem@davemloft.net,
+ Nikolay Aleksandrov <razor@blackwall.org>
+Subject: [PATCH net 0/2] wireguard: device: fix metadata_dst xmit null pointer
+ dereference
+Date: Thu, 14 Apr 2022 13:44:56 +0300
+Message-Id: <20220414104458.3097244-1-razor@blackwall.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Content-Language: de-DE
-To: wireguard@lists.zx2c4.com
-From: Simon Lindhorst <s.lindhorst@wut.de>
-Subject: odd behaviour for PSK with wg syncconf
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Thu, 21 Apr 2022 23:49:50 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -60,67 +79,21 @@ Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 Hi,
+Patch 01 fixes a null pointer dereference in wireguard's xmit path when
+transmitting skbs with metadata_dst attached. Patch 02 adds a selftest for
+that case using bpf_skb_set_tunnel_key on wg device's egress path.
 
-I tried a little bit around with PresharedKeys an found an odd behaviour 
-when I use /wg syncconf/ instead of /wg setconf./
+Thanks,
+ Nik
 
-My config:
+Nikolay Aleksandrov (2):
+  wireguard: device: fix metadata_dst xmit null pointer dereference
+  wireguard: selftests: add metadata_dst xmit selftest
 
-    /[Interface]//
-    //PrivateKey = yGKbadTuMvT6JWven0yh8tJMFMCnpYoDizueu4K9QF0=//
-    //Listenport = 4444//
-    //
-    //[Peer]//
-    //PublicKey = Ts7VwZt8Q2QB5fTydQEfTgqfz1u4WIL6YMQKlMKZ6E8=//
-    //AllowedIPs = 10.10.10.2,192.168.10.0/24,192.168.0.0/24//
-    //PresharedKey=oipUDdsUPj1lYZMSN2jdx66OSvARhRpso2GD1frE3xo=/
+ drivers/net/wireguard/device.c             |  3 +-
+ tools/testing/selftests/wireguard/netns.sh | 63 ++++++++++++++++++++++
+ 2 files changed, 65 insertions(+), 1 deletion(-)
 
-/wg setconf /leads to:
+-- 
+2.35.1
 
-    //root # wg showconf wg0
-    [Interface]
-    ListenPort = 4444
-    PrivateKey = yGKbadTuMvT6JWven0yh8tJMFMCnpYoDizueu4K9QF0=
-
-    [Peer]
-    PublicKey = Ts7VwZt8Q2QB5fTydQEfTgqfz1u4WIL6YMQKlMKZ6E8=
-    PresharedKey = oipUDdsUPj1lYZMSN2jdx66OSvARhRpso2GD1frE3xo=
-    AllowedIPs = 10.10.10.2/32, 192.168.10.0/24, 192.168.0.0/24
-    Endpoint = 10.40.28.51:37842/
-
-When I comment out the PresharedKey and do
-
-    //root # wg syncconf wg0 "/etc/vpn/wg0.conf"/
-
-I get
-
-    //root # wg showconf wg0//
-    //[Interface]//
-    //ListenPort = 4444//
-    //PrivateKey = yGKbadTuMvT6JWven0yh8tJMFMCnpYoDizueu4K9QF0=//
-    //
-    //[Peer]//
-    //PublicKey = Ts7VwZt8Q2QB5fTydQEfTgqfz1u4WIL6YMQKlMKZ6E8=//
-    //PresharedKey = oipUDdsUPj1lYZMSN2jdx66OSvARhRpso2GD1frE3xo=//
-    //AllowedIPs = 10.10.10.2/32, 192.168.10.0/24, 192.168.0.0/24//
-    //Endpoint = 10.40.28.51:37842/
-
-The PSK entry is always there. But when I change the PSK in the config 
-file the PSK entry is correctly changed in /wg showconf/ output after 
-call /wg syncconf/.
-
-Is there a reason for this behaviour?
-
-
-Kind regards
-
-S.
-
--- Unsere Aussagen koennen Irrtuemer und Missverstaendnisse enthalten.
-Bitte pruefen Sie die Aussagen fuer Ihren Fall, bevor Sie Entscheidungen 
-auf Grundlage dieser Aussagen treffen.
-Wiesemann & Theis GmbH, Porschestr. 12, D-42279 Wuppertal
-Geschaeftsfuehrer: Dipl.-Ing. Ruediger Theis
-Registergericht: Amtsgericht Wuppertal, HRB 6377 
-Infos zum Datenschutz: https://www.wut.de/datenschutz
-Tel. +49-202/2680-0, Fax +49-202/2680-265, https://www.wut.de
