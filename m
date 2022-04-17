@@ -4,66 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE48DC433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 14 Apr 2022 12:25:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0221EC433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 17 Apr 2022 08:14:30 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id f66fd899;
-	Thu, 14 Apr 2022 12:25:15 +0000 (UTC)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 7e36c1f5
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 14 Apr 2022 12:25:14 +0000 (UTC)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id 36C2FB82932
- for <wireguard@lists.zx2c4.com>; Thu, 14 Apr 2022 12:25:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0133C385A5
- for <wireguard@lists.zx2c4.com>; Thu, 14 Apr 2022 12:25:12 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="RNE5M1wf"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1649939110;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=gBVmdiWCorX+uFvVK0ZqpWTuLJLgfbGSk7tZCswLl78=;
- b=RNE5M1wf2/YjR+JQHXbENyhld4PfTtIIYyr2Qy/e4iZCBnty9HHvL7Gn6AlLPqGQlM2oXM
- SaQarrfkj0U4fTDm+yEsPl5wFd1c0ohyS2hy8BhHs/4bczKwqRnS/PoSOA07nbDq6ja1Xw
- A0ALvGhB3dgjwVfPAceq83wZLx1thmo=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 77dddd7f
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 8ebd2a0a;
+	Sun, 17 Apr 2022 08:14:28 +0000 (UTC)
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.187])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id c278ca8c
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 14 Apr 2022 12:25:10 +0000 (UTC)
-Received: by mail-yw1-f182.google.com with SMTP id
- 00721157ae682-2ef5380669cso36413837b3.9
- for <wireguard@lists.zx2c4.com>; Thu, 14 Apr 2022 05:25:09 -0700 (PDT)
-X-Gm-Message-State: AOAM531pkdmzhkAlrdEbA82eWsIgO4cgSA2Yj888Si2P+XXSrVedevj7
- 5xdBJulwbpvc+ObIhwq43/E5nbuK6zLB+UC4mRY=
-X-Google-Smtp-Source: ABdhPJwuXVwCOKYwo+QibHTqhc4CQkpMy0JUNQFxa2fDln4GPipK4lWG3ymV2zEjTuR9mbtmrUzmfm+JjujJJoGgoRc=
-X-Received: by 2002:a81:1e81:0:b0:2eb:cdd3:20ee with SMTP id
- e123-20020a811e81000000b002ebcdd320eemr1735758ywe.396.1649939108475; Thu, 14
- Apr 2022 05:25:08 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220414104458.3097244-1-razor@blackwall.org>
- <20220414104458.3097244-3-razor@blackwall.org>
- <CAHmME9ouN0O-mfi4d_xVon_SxzE4hbzdD0Zm8hRLS4k5C3dPFw@mail.gmail.com>
- <2607574b-6726-6772-7921-84156393df95@blackwall.org>
-In-Reply-To: <2607574b-6726-6772-7921-84156393df95@blackwall.org>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 14 Apr 2022 14:24:57 +0200
-X-Gmail-Original-Message-ID: <CAHmME9pmK_5aSy9CVbFmFYc7RSK8g44NVGQb2thbrz+u6YFPYQ@mail.gmail.com>
-Message-ID: <CAHmME9pmK_5aSy9CVbFmFYc7RSK8g44NVGQb2thbrz+u6YFPYQ@mail.gmail.com>
-Subject: Re: [PATCH net 2/2] wireguard: selftests: add metadata_dst xmit
- selftest
-To: Nikolay Aleksandrov <razor@blackwall.org>
-Cc: Netdev <netdev@vger.kernel.org>, Daniel Borkmann <daniel@iogearbox.net>, 
- Martynas Pumputis <m@lambda.lt>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>, 
- Jakub Kicinski <kuba@kernel.org>, David Miller <davem@davemloft.net>
-Content-Type: text/plain; charset="UTF-8"
+ Sun, 17 Apr 2022 08:14:27 +0000 (UTC)
+Received: from [192.168.177.41] ([94.31.101.241]) by mrelayeu.kundenserver.de
+ (mreue011 [213.165.67.97]) with ESMTPSA (Nemesis) id
+ 1N5VXu-1nz5Uu2gYc-016vxV
+ for <wireguard@lists.zx2c4.com>; Sun, 17 Apr 2022 10:14:26 +0200
+From: "Hendrik Friedel" <hendrik@friedels.name>
+To: wireguard@lists.zx2c4.com
+Subject: ipv6 vs. ipv4
+Date: Sun, 17 Apr 2022 08:14:26 +0000
+Message-Id: <emdff71c03-470a-45f8-ade7-0343b0b698ab@envy>
+User-Agent: eM_Client/8.2.1659.0
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:WlojXFZ9zFJqghX6pU8lcRuWIrbWRQQ+DK9zKnNyxA2t6yYuMf5
+ YFOWnSfVQW70uaUnPDkutfsxtRMSwTcKjWvMMnhSmYh5QAe+CvQejGMfhBo+PNp1OWGFYTd
+ DLeMWh57xuomEenjyU/TsSvczOwGS2clvmRKH2B7tEQ3WZekqKPP/gvqc8Fx+AI4icbtGN9
+ z2di9A89cdDHhK/IeVVNg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:rd00NsSS/nY=:4hq+MLgFmEHJ7X/ezvm3lN
+ 34TdE37WMLOP/fPHd1hDkSyNgVVrKdG9uaXKVc1rYDFlqprdrWU8+8K9zHynvsOd3zndjWLca
+ O4eqAQ9uEscxAgaEgxpg/m62jbcsddOWgDg5O531cSx1slTVJtrTjROIuyEUKPoY/p3v7yPqJ
+ BSevLbKoNlRLIa1tbLiBQg24WGypDfdZ3I28cwYmJF071DsHmLQy5HieMM8rZcV4/pFvt5JjO
+ jo9/5w52L6zXwQ96JwPwMFZ56GfBrI+4StWDjWeZGMsVM5qq4ctlCZqeK/fs6JiMdoHA9DpU6
+ N7vb7LbD8ZLmrOSJyNNC35QzbRnymnVvC4ODUSgjG44Q+Si/kCt8H+f7GWGxq4uFX2cMMLD9a
+ 02N3yhKnaesWoZq+bL8rhJ8sahKDZoFFLRkzJgE9UJrd/PokKtjiWqyH6NoIxZo71v9HWjth3
+ MUkQYFoGcAZngLi0TbsOwhh0o0lMIZeR/89hRbWVUvR3CbiiE8uDo6YYf9oDCWMU+kQr7W8oS
+ Fr+1mSh2Ojvnnxprvozp1b0j0hngdKZiTaTfa5vTSqbSfrz1jxdQt8AnyY98vlMrtnrEgIBAL
+ siSzsXZQgN6JU+pPnD/1p5eTfQPZLoNBf4bFyWko78HH6AnaxZn/69GyKQoBiZUoGkg8PU6qx
+ SXrcBlBss1pMvDBBxCXyoAEcRBMqgD1r4BxkwqOynVDNQaZTaEzSrGbWA6n3/+2tB2t2CsPvo
+ lrg0h6BCEfL15HfDcE559b+6DktPtLST2czBbQ==
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -75,13 +54,25 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
+Reply-To: Hendrik Friedel <hendrik@friedels.name>
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Thu, Apr 14, 2022 at 2:12 PM Nikolay Aleksandrov <razor@blackwall.org> wrote:
-> My bad, I completely missed the qemu part.
+Hello,
 
-If you're curious, by the way, there's this running all those tests
-for every commit https://www.wireguard.com/build-status/
+I understood that wireguard prefers ipv6 over ipv4 by default.
+Nevertheless, on both Windows and Android I do not get a connection=20
+(only sent bytes no received bytes) when using my domain=20
+(friedel.dynv6.net). If I use the IP=20
+(2a00:6020:1bfb:c700:ba27:ebff:fe3e:6c55), I get a normal connection.
+I can imagine that WG uses ipv4 (the A-record is set, I cannot change=20
+that, but it points to an invalid ip)
 
-Jason
+How can I -when using the domain- enforce that ipv6 is really used?
+
+Apart from that, my suspicion is that ipv4 is in fact used here... How=20
+can I really find out, why I get no bytes on the received counter?
+
+Best regards,
+Hendrik
+
