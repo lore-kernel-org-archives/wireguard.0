@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0221EC433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 17 Apr 2022 08:14:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21730C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 17 Apr 2022 08:24:20 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 8ebd2a0a;
-	Sun, 17 Apr 2022 08:14:28 +0000 (UTC)
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.187])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id c278ca8c
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id e9a32209;
+	Sun, 17 Apr 2022 08:22:38 +0000 (UTC)
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.130])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id f4e21f99
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 17 Apr 2022 08:14:27 +0000 (UTC)
+ Sun, 17 Apr 2022 08:22:36 +0000 (UTC)
 Received: from [192.168.177.41] ([94.31.101.241]) by mrelayeu.kundenserver.de
- (mreue011 [213.165.67.97]) with ESMTPSA (Nemesis) id
- 1N5VXu-1nz5Uu2gYc-016vxV
- for <wireguard@lists.zx2c4.com>; Sun, 17 Apr 2022 10:14:26 +0200
+ (mreue010 [213.165.67.97]) with ESMTPSA (Nemesis) id
+ 1N6KpF-1nzMcX1zXF-016dVx
+ for <wireguard@lists.zx2c4.com>; Sun, 17 Apr 2022 10:22:36 +0200
 From: "Hendrik Friedel" <hendrik@friedels.name>
 To: wireguard@lists.zx2c4.com
-Subject: ipv6 vs. ipv4
-Date: Sun, 17 Apr 2022 08:14:26 +0000
-Message-Id: <emdff71c03-470a-45f8-ade7-0343b0b698ab@envy>
+Subject: Better Output
+Date: Sun, 17 Apr 2022 08:22:32 +0000
+Message-Id: <em19dde1c0-bcda-4ad2-b3ce-d72fb64993e4@envy>
 User-Agent: eM_Client/8.2.1659.0
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:WlojXFZ9zFJqghX6pU8lcRuWIrbWRQQ+DK9zKnNyxA2t6yYuMf5
- YFOWnSfVQW70uaUnPDkutfsxtRMSwTcKjWvMMnhSmYh5QAe+CvQejGMfhBo+PNp1OWGFYTd
- DLeMWh57xuomEenjyU/TsSvczOwGS2clvmRKH2B7tEQ3WZekqKPP/gvqc8Fx+AI4icbtGN9
- z2di9A89cdDHhK/IeVVNg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:rd00NsSS/nY=:4hq+MLgFmEHJ7X/ezvm3lN
- 34TdE37WMLOP/fPHd1hDkSyNgVVrKdG9uaXKVc1rYDFlqprdrWU8+8K9zHynvsOd3zndjWLca
- O4eqAQ9uEscxAgaEgxpg/m62jbcsddOWgDg5O531cSx1slTVJtrTjROIuyEUKPoY/p3v7yPqJ
- BSevLbKoNlRLIa1tbLiBQg24WGypDfdZ3I28cwYmJF071DsHmLQy5HieMM8rZcV4/pFvt5JjO
- jo9/5w52L6zXwQ96JwPwMFZ56GfBrI+4StWDjWeZGMsVM5qq4ctlCZqeK/fs6JiMdoHA9DpU6
- N7vb7LbD8ZLmrOSJyNNC35QzbRnymnVvC4ODUSgjG44Q+Si/kCt8H+f7GWGxq4uFX2cMMLD9a
- 02N3yhKnaesWoZq+bL8rhJ8sahKDZoFFLRkzJgE9UJrd/PokKtjiWqyH6NoIxZo71v9HWjth3
- MUkQYFoGcAZngLi0TbsOwhh0o0lMIZeR/89hRbWVUvR3CbiiE8uDo6YYf9oDCWMU+kQr7W8oS
- Fr+1mSh2Ojvnnxprvozp1b0j0hngdKZiTaTfa5vTSqbSfrz1jxdQt8AnyY98vlMrtnrEgIBAL
- siSzsXZQgN6JU+pPnD/1p5eTfQPZLoNBf4bFyWko78HH6AnaxZn/69GyKQoBiZUoGkg8PU6qx
- SXrcBlBss1pMvDBBxCXyoAEcRBMqgD1r4BxkwqOynVDNQaZTaEzSrGbWA6n3/+2tB2t2CsPvo
- lrg0h6BCEfL15HfDcE559b+6DktPtLST2czBbQ==
+X-Provags-ID: V03:K1:JcwPo3t/Hb7lxlZXFS0zVZfIo2ELD8t1jIvQ4mE0vB95kN7bPxh
+ 1rkdplfJGdQp+/l8IUh3HW9PLRNwzkLnfKwDJBYOafuFwtE0XaxuF9ig3snheECBMLNKj+w
+ kWaWvUtYVQtKQQXBb5U4gCHOla3pJbd5sLJ6bxoj6jLgPuDypouggUuOS1fc3HtSIn8sZbd
+ W2iUl5uEtM8gG0CL22/4A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:CyZuLy5FLDY=:bvjo5fdw1KGILumjAOxAlr
+ kZtUUwdHQtBQuILNlIb3yNeOyhe4sCXAKHvefCn8k9nf7S1r3JF2/B2xcbq6a8y8JrMCsS66d
+ 7UOLB+BQsFrlVx+hmdkKDguaawC55gbRA/j5K5lAZbIV/GgVIuS99T3lA9vw5R5M3XICVkDvS
+ Wku81JwBYSgGFaUaaf+pUeWc1LJjq9GDCIDgsLU5Ylxc8zsD6fw1C4bkDzk4lqWITLtrFdGne
+ iFsGFEeMpj+7snDjepSlk/ui3FSd/FUp5NIZn2uxed8yZMt6j8gBOJTENRHjqhr4e9vCl8n00
+ w+/SQiadvZHt6AzrzZaTHAe7qK3BDCtWBl2DKQwQKgQtopq10j8ssD6mbR/7LViZQVopYuLGX
+ af5s6J0uZTbvCiYIWm6x8HeJtfBOM6Q1hp927MTi2YsWBTVsh865Li4/3i+KX4AMyOxKX9tQm
+ ipipr/QeyLJLc0aUG/iJ8ayjbfQzmJNah5rDLZTea721HVE6wyl0BJkypxOjMm6Z6wB6iiTsZ
+ 5yNNMMfpXYM6fomEqLEdEjN8PCjeK6MGnrisFrZ7vbfuRmatWMNsNKEKDpQZsN6xybm4aS0R9
+ kptr8zlHLulST1hH0Z1nPwUOv80E6Lk1iuPLd1Y7anxs71PryXkGo2YL+9xx0o/Sx0ZPBeufO
+ fuW+77b2AJIyOm0yzZP4aFdF0FkyTcyQBMI26O8Z0WD1qPiQDvoQvBExDGO427et5C2KXIeoO
+ dzeqkjt6INOBEW+e
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -60,19 +60,34 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 Hello,
 
-I understood that wireguard prefers ipv6 over ipv4 by default.
-Nevertheless, on both Windows and Android I do not get a connection=20
-(only sent bytes no received bytes) when using my domain=20
-(friedel.dynv6.net). If I use the IP=20
-(2a00:6020:1bfb:c700:ba27:ebff:fe3e:6c55), I get a normal connection.
-I can imagine that WG uses ipv4 (the A-record is set, I cannot change=20
-that, but it points to an invalid ip)
+when using wireguard - both Android and Windows - clients, I in the past=20
+often thought that the connection is fine but in fact, I had a wrong=20
+Key.
+The Windows-Client showed a green Checkmark under Status. The Android=20
+Client showed the "key" symbol and it showed also the "switch" on the=20
+right hand side (=3Dactiv) and blue.
+Obviously, the connection was not working, but I would have hoped that=20
+Wireguard would have told me, that the connection was not ok.
+In fact, I was only able to determine whether the connection was working=20
+by trying to access some Service (e.g. google) or by observing the=20
+"Received/bytes" counter which remained at 0.
 
-How can I -when using the domain- enforce that ipv6 is really used?
+I would suggest an improvement here:
+1) If no Server responds on the particular domain/IP, wireguard should=20
+show a message
+     Could not connect to [my.domain.com] under IP=20
+[2a00:1234:1234:c700:ba27:ebff:fe3e:2342] or 1.4.4.1.
+2) If a wireguard server responds, but the key is not valid it should=20
+show a message
+     Connection failed. Host responded, but key was invalid
+3) If the connection fails, the Windows Client should show a RED symbol=20
+under status.
+4) If the connection fails, the "key" symbol should not be shown under=20
+Android and the toggle-switch should move from right&blue (active) back=20
+to left&grey.
 
-Apart from that, my suspicion is that ipv4 is in fact used here... How=20
-can I really find out, why I get no bytes on the received counter?
+Would that be possible?
 
-Best regards,
+Greetings,
 Hendrik
 
