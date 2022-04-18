@@ -4,72 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EEA3C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 22 Apr 2022 00:44:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAEB1C433FE
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 22 Apr 2022 00:45:00 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 22ed2a8e;
-	Thu, 21 Apr 2022 23:49:57 +0000 (UTC)
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com
- [2a00:1450:4864:20::52a])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 8d153c5a
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id b4c591f6;
+	Thu, 21 Apr 2022 23:49:58 +0000 (UTC)
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com
+ [2607:f8b0:4864:20::1034])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 16857e9c
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 14 Apr 2022 12:12:41 +0000 (UTC)
-Received: by mail-ed1-x52a.google.com with SMTP id v4so6081245edl.7
- for <wireguard@lists.zx2c4.com>; Thu, 14 Apr 2022 05:12:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=blackwall-org.20210112.gappssmtp.com; s=20210112;
- h=message-id:date:mime-version:user-agent:subject:content-language:to
- :cc:references:from:in-reply-to:content-transfer-encoding;
- bh=rhRwaWht/J6fvPbw/1zwrOPPkEZ7TQU79YfUwkCsdwM=;
- b=2qTh20UMAp/GP2n+qZcbQWlYkPs1azsU6UR5GYW6VdsAjSxmrQ75uUH7H2Lw9QbrN1
- Lwr3IvYBW7za1efKzTQvINSSddtVlY0r1GTFVpJdXVi+i5zZtiKyWFGxBn+/Qm2LR0P2
- AmTpDMMu5ivj6qpEgDmkjzqMklIIImpzeh6a3U5Mjg3gzAKR2rAE4tS8jdgXD91oLb41
- lF1RlUhUMqZ478oQ3/K/cdSUagRx2cFF0aftkGEYNYIJnqvxu8Djbrq7EUjnUDGN2pFw
- 133rmeMs0dYFDqkJsZ5SAycFFwiJA8UouRP3M7IKCYufbJfdbCGFU5XgBA86HYk0vhXj
- S13w==
+ Mon, 18 Apr 2022 02:12:27 +0000 (UTC)
+Received: by mail-pj1-x1034.google.com with SMTP id
+ mm4-20020a17090b358400b001cb93d8b137so16120609pjb.2
+ for <wireguard@lists.zx2c4.com>; Sun, 17 Apr 2022 19:12:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=message-id:date:mime-version:user-agent:to:from:subject
+ :content-transfer-encoding;
+ bh=5fZNWM+NzmFfJvskwsP1Glt8KeZGLRutw3B6JYenU8c=;
+ b=pYen+T7Rjcco9kIJyo7ttUsC5zlPLj+lIQA5IkNJ6+6utYvKS34MVf/i1NCOwDt6vt
+ aVjJMAdfhj2O3GP91I1qtAGXQjW1hqxzeiSgSpqNi0zblv9lg8JqsluayT66BI8ymknq
+ RJ7vYaFdHm52lviFap2zw65eHl15630YHUK4iGdx6lQpr2fOQ/4mR6jzA24CXu2WpM6l
+ Mh2cW9+7sqJ6mFr52eDzbrvJ6cW7iFDm7WRnG7fmXswiYy03LwMvQ2Sf0XDqp70vg3zr
+ L//BJqiJMsnSOw2tjn3x/auIA5E1cSB3dDPqkCMrTnSvk4OFt+9dahe3A46NrE+WiibS
+ QsAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
- :content-language:to:cc:references:from:in-reply-to
- :content-transfer-encoding;
- bh=rhRwaWht/J6fvPbw/1zwrOPPkEZ7TQU79YfUwkCsdwM=;
- b=nyAtsTsa33D0ZV7sQkYxlL9VlsE+xSTeTPMx/mRk/21TwFAnlk3LfZcUW/JqtR1WJx
- DtaJnozZNTVfIHQEfUyNRrRp+cnNdQ/FJgSnfOmswcVT3gyPwsCqe7yhF0Hyc/Kf+7iR
- O+o07yb8zleiKzFXiz0Cm6Wl9nNtXXkK6Rhb1iPjJp91RK4i+LS2F/t2UUdqhpy1UoNL
- PFkeuVdsEDRQZ9n2Gj1YMNSkuAd2Ni2Ytq8p41A1ki+3AcaaRZ31EGvdrD5/JBtopmR2
- bzqFfpSDPcFULR8z2u1V0Yty5xINH91Ls0rTlhc/o6w38hEoMsvzPr7Yl9yA1DhjI59P
- C+ow==
-X-Gm-Message-State: AOAM5317doorMHMpXfrLAHupfmDTSTpFF8HpBhKCmU9AOxb4A7pZptxT
- RkLdWzEqVWBuZuZuXOil7KZLXw==
-X-Google-Smtp-Source: ABdhPJzF41g9n4BhcFyZM2BPEmqtGuuWJKd9rk9+VVAeWFIhL/Lm0cfv8vDLahOPrEt1FcCnaexnwQ==
-X-Received: by 2002:a05:6402:1385:b0:413:2bc6:4400 with SMTP id
- b5-20020a056402138500b004132bc64400mr2694016edv.94.1649938361247; 
- Thu, 14 Apr 2022 05:12:41 -0700 (PDT)
-Received: from [192.168.0.111] (87-243-81-1.ip.btc-net.bg. [87.243.81.1])
+ h=x-gm-message-state:message-id:date:mime-version:user-agent:to:from
+ :subject:content-transfer-encoding;
+ bh=5fZNWM+NzmFfJvskwsP1Glt8KeZGLRutw3B6JYenU8c=;
+ b=s1d9Nf/Qf47x0C2yHg4J2tCR59xvpDUsMcqNKudI1FZ59DQ3v2DtTUwD+vbLAicA9d
+ 1sSmciyNv1vFEvveYQAXLGNYC1xxXpMltSsNfeOXKuoHScNw8TgUgnSp3OGXVpglWxx4
+ BrSeF0mclzA6A9m/sMRfvn4IiIsXth/YYxiyzVkl/udHWt4sAJNeqJdvJp+aHikAWnX4
+ In7e5HbuEFS8isy8+b/9nUocsLhEnx7RdkYMjGY5Wmk70bIyNtVSxznSsVaRwGunoV1a
+ Jqgr56ncgCVZsbgbks8g2OwOwZ5vgi9JlN9EA8NfbHjsSLMxBRNxJymoxPXRYoPVCSrQ
+ g+tA==
+X-Gm-Message-State: AOAM531fvpTvIVN9DxvWkLPO/jHErA2iAugO3vP6i6c+y3kKw/61mlfF
+ TRSj4mHq/31v3FJqUKnwX8q8dCH0Bpo=
+X-Google-Smtp-Source: ABdhPJzEzj5e3ZZ0cG6FxMKdkkWuZX+QbHmyFug8Ybr7fsLFsDm5CT9qpRgbJgdyPVa2bdOiWBMEpw==
+X-Received: by 2002:a17:903:32ce:b0:158:f3cb:8900 with SMTP id
+ i14-20020a17090332ce00b00158f3cb8900mr6316637plr.66.1650247945979; 
+ Sun, 17 Apr 2022 19:12:25 -0700 (PDT)
+Received: from localhost (59-115-140-93.dynamic-ip.hinet.net. [59.115.140.93])
  by smtp.gmail.com with ESMTPSA id
- e26-20020a1709067e1a00b006e8cb5c173bsm585527ejr.13.2022.04.14.05.12.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Apr 2022 05:12:40 -0700 (PDT)
-Message-ID: <2607574b-6726-6772-7921-84156393df95@blackwall.org>
-Date: Thu, 14 Apr 2022 15:12:39 +0300
+ t15-20020a63b70f000000b00381510608e9sm10841350pgf.14.2022.04.17.19.12.25
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 17 Apr 2022 19:12:25 -0700 (PDT)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) 
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange ECDHE (P-384) server-signature ECDSA (P-256) server-digest
+ SHA256) (No client certificate requested)
+ by upg.tw (Postfix) with ESMTPSA id 71115140161
+ for <wireguard@lists.zx2c4.com>; Mon, 18 Apr 2022 10:12:24 +0800 (CST)
+Message-ID: <84b2749c-4a9d-b58e-0659-09ee9c70c67c@gmail.com>
+Date: Mon, 18 Apr 2022 10:12:21 +0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH net 2/2] wireguard: selftests: add metadata_dst xmit
- selftest
-Content-Language: en-US
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: Netdev <netdev@vger.kernel.org>, Daniel Borkmann <daniel@iogearbox.net>,
- Martynas Pumputis <m@lambda.lt>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Jakub Kicinski <kuba@kernel.org>, David Miller <davem@davemloft.net>
-References: <20220414104458.3097244-1-razor@blackwall.org>
- <20220414104458.3097244-3-razor@blackwall.org>
- <CAHmME9ouN0O-mfi4d_xVon_SxzE4hbzdD0Zm8hRLS4k5C3dPFw@mail.gmail.com>
-From: Nikolay Aleksandrov <razor@blackwall.org>
-In-Reply-To: <CAHmME9ouN0O-mfi4d_xVon_SxzE4hbzdD0Zm8hRLS4k5C3dPFw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+To: wireguard@lists.zx2c4.com
+From: Nohk Two <nohktwo@gmail.com>
+Subject: Is it possible to disable wireguard on specific Wi-Fi ?
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Mailman-Approved-At: Thu, 21 Apr 2022 23:49:50 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -86,29 +82,28 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 14/04/2022 15:06, Jason A. Donenfeld wrote:
-> Hi Nikolay,
-> 
-> These tests need to run in the minimal fast-to-compile test harness
-> inside of tools/testing/selftests/wireguard/qemu, which you can try
-> out with:
-> 
-> $ make -C tools/testing/selftests/wireguard/qemu -j$(nproc)
-> 
-> Currently iproute2 is built, but only ip(8) is used in the image, so
-> you'll need to add tc(8) to there. Clang, however, seems a bit
-> heavyweight. I suspect it'd make more sense to just base64 up that
-> object file and include it as a string in the file? Or, alternatively,
-> we could just not move ahead with this rather niche test, and revisit
-> the issue if we wind up wanting to test for lots of bpf things.
-> Thoughts on that?
-> 
-> Jason
+Hello,
 
-Hi Jason,
-My bad, I completely missed the qemu part. I'll look into including the
-ready object file. If it works out, looks compact and well
-I'll post v2.
+I setup a wireguard server at home and has a public IP address. This 
+server allows the clients to access my LAN (e.g. 192.168.87.0/24) and 
+configuring the DNS servers as my DNS servers in my LAN (e.g. 
+192.168.87.1 and 192.168.87.2).
 
-Thanks,
- Nik
+My family members use their phones (iPhone and Android) to connect to my 
+LAN via the Wireguard for iOS/Android App. And this worked perfectly 
+while the phones are using the 4G/5G network.
+
+But when the phones connect to the Wi-Fi of my home's router, the DHCP 
+assigns the IP addresses as 192.168.87.0/24, it's my LAN, to the phones. 
+In this situation, phones' owners should manually turn off their 
+Wireguard connection to have the internet accessing. I guess there are 
+something conflict because the vanilla IP network and the allowed IP 
+network are the same.
+
+So, I have this idea that if it is possible to configure the Wireguard 
+app to turn off or disable automatically when the network is established 
+on specific Wi-Fi SSIDs ?
+
+Or do you have better ideas ?
+
+Thanks.
