@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76E8DC433FE
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Apr 2022 08:40:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 962B9C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Apr 2022 08:47:20 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id d96abd55;
-	Mon, 18 Apr 2022 08:40:10 +0000 (UTC)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id b1d9f965;
+	Mon, 18 Apr 2022 08:43:37 +0000 (UTC)
 Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.133])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 5f5d9cc5
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id e265b769
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 18 Apr 2022 08:40:08 +0000 (UTC)
+ Mon, 18 Apr 2022 08:43:36 +0000 (UTC)
 Received: from [192.168.177.41] ([94.31.101.241]) by mrelayeu.kundenserver.de
- (mreue009 [213.165.67.97]) with ESMTPSA (Nemesis) id
- 1MF39M-1niYmZ2UBc-00FWMy; Mon, 18 Apr 2022 10:40:03 +0200
+ (mreue010 [213.165.67.97]) with ESMTPSA (Nemesis) id
+ 1Mn2Jj-1oNdwW2oOV-00k8Nb; Mon, 18 Apr 2022 10:43:35 +0200
 From: "Hendrik Friedel" <hendrik@friedels.name>
-To: "Aaron Jones" <me@aaronmdjones.net>, wireguard@lists.zx2c4.com
-Subject: Re[2]: Better Output
-Date: Mon, 18 Apr 2022 08:40:02 +0000
-Message-Id: <emc5e5b4f5-ac77-4b94-ab65-2b839761543f@envy>
-In-Reply-To: <c93e4542-d4d8-8cef-871a-0c3810d3242f@aaronmdjones.net>
-References: <em19dde1c0-bcda-4ad2-b3ce-d72fb64993e4@envy>
- <c93e4542-d4d8-8cef-871a-0c3810d3242f@aaronmdjones.net>
+To: "Kilian Schauer" <kilian@schauer.tech>
+Subject: Re[2]: ipv6 vs. ipv4
+Cc: wireguard@lists.zx2c4.com
+Date: Mon, 18 Apr 2022 08:43:34 +0000
+Message-Id: <ema52cc7e0-e1ab-4564-a4a6-fbb65abb12c4@envy>
+In-Reply-To: <9ff861ea-6d25-4e63-ba43-615afe1b655b@schauer.tech>
+References: <emdff71c03-470a-45f8-ade7-0343b0b698ab@envy>
+ <9ff861ea-6d25-4e63-ba43-615afe1b655b@schauer.tech>
 User-Agent: eM_Client/8.2.1659.0
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:zEGCIl0JsMf8XgxqjoVFZfp1AIqaRgPHnVJbX8cUvw3slxUmu4m
- BgL8nAfEUlmJmBwKM0iIeRq75qc5ikWOleg9NeqFAZwm65bSIOuAWBHDNrmjkP6kCEIboKx
- ZnZFGMeReQnFGMFsBcmw0enBm4G3Qae17gbX5gSIsRH1+iBC8MS4KACEU+FM2983C9CcicL
- x7m4EQpuaDi0sTRFyVhDw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:c/xGNHE6Jsg=:x5HMzEJEeh4GVE8jChV910
- 6foWahk5wO6aXlNCPeo0m4Tcjk1c04gCUjk66trYt830guWmoCXuH8i5kTffwu4Y4z2YjuflO
- Wmw0wLmLP8qREjat2uH+burAmA+KWQLwahh3ww0YDYaE3b0yLyr7Ubgwud9pH1WnvVxKSqyjY
- ZEb1uwhc8oJHWSZy+MfltVmNc1CWsOopw0o9RPDPbz434SZmUK6jzYPQmq4OuTE3c4IrJFhEN
- YEYB4BnqzPHHhRU6HFCVvmAwvIu5VEjzpdx9v/PJgJloHWo08c8XVn08mHWiWcKIA6hutqTY2
- LeJPAs0uD+2L8mifUDwNDWnRXVEU5Mc1pQWY+UrOL2wWOZiUJMg/oYmp63v+ge1XgEdiHZb7i
- Chg7G+07Gwi6HQ9LZmpAPb4KWdnLflvVNoEnS3mA1H4yOW6rbhLqHh1ejAh3yf4+RXput6let
- hiUbSOrc3qAagHvtFedMvlQeJrCWVS85sL1V/SBeeAbti8CUp6ej6mZI4EZAjpme3aZs85Q85
- ydCQiujEE7+tu642eFzMbJ8sGa3M9DZ7HPPNFwp0hSfIidw8ZiGxAsfJT8a3cnFsMPHiCjeby
- k6m8Gz6kahXHoVvfLhHIsP/FWlEpyxb9fzkx2VYBQzheJsDUMkgnxsbFIr1MQHDmE8o8d/XVh
- vODr9JfiBieR9ebKNA+a54dIPy4wa+N7m2fVI6UeyoXQdI9rKtFs/wkrh0ivHqpQ/cwQ=
+X-Provags-ID: V03:K1:fcCegs9+29pLXSLQRIKmXnePyEbsNOM1gtSn34PjYgUgLXwYpDd
+ EH7pqIdzt6DR0w3XY/Ggry2FQhSZbOHRM+91r/dJP+xCR0Piwr0Mvjq+kj7W1TvWvndvv+G
+ bVhiAhhQRpHV1Q+3tam66uWUSBcT2/ywu7XYaGXguIraNztpHkJHZyEaYlvVQu6kfwGCHA/
+ z1VU4zaJqsmvyTPexM1WA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:UeuyRyVA4Yk=:zv7m1K1gjBKXpANdZfKLfF
+ 7Y5zLtrlqkiERtBJ1IUNDRxWKM/ySvr89wCBVlgMjOs8UpnzNU3IyKhlFSckwLPBQfKZrEh/U
+ /5RVKnPB5gBjpO9E27F2n35DwptE/hHX6NxkS78Wd9Q+fJXVsMNAwT/Q/M85lwXFCk3wfYVmY
+ cwA4thJ+YeFZtKbWhddAZLrpTpC7pH4Bj5vjb7RBNyLDnX4X6qR8SAfDgc2VPYWSX8jWwlNR6
+ JO25e6G+FDpQaWKDMSB3I9lvN/WzdwWGC/ePfEFKE7DEf0CLjxpnn6o0/OykmDlcyUGuzpWzo
+ hYlBkdQ8VyNTnvzBBkov8xRLaWGNRmSVQKLc+ft3k3u0q0a2FKAMSFwWsakzSixTbZPDo53ym
+ 2tmhrhHYNBsaR16RQK5ouWcj5DvP4o8T2ehrWAsH7vauohV49cabfbjjUC87hycRphDw7w9Aw
+ MEHNA8rfIZoLUiGQXy58DEnyn0AlZ/AGvt1/RizziIYTx9d71AOaGytN62Inr5JBGsSlleBld
+ VPZbU+uuXsyQAE5HW+BkxPiruypkAm26a5QV4zyWeBb+5MPbT9Tf33AYs+0l1pbD5vUAWDPsH
+ KzKtcIPm46bBtZGbVANL54LoUg2CG0Z6TjswJR42E1fZpjH0kV9qtLr7UeTtF4Dt2EAWZ4X94
+ oBUBSRwOQjs82CObZVOQYmfSvSwXqwyEszbGejmYlvYXwlFjCmKzFmkkktt4fDdd+w0w=
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -59,69 +60,24 @@ Reply-To: Hendrik Friedel <hendrik@friedels.name>
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello Aaron,
+Hello Kilian,
 
 thanks for your reply.
 
->This would be technically achievable, but note that WireGuard
->uses UDP, which has no concept of "connections". See also
->below.
-That is understood. But one can distinguish between a situation where a=20
-(not sure about an alternative word) "connection" was established and=20
-where not.
+>the WireGuard mobile apps prefer IPv4 for connecting to the peer, since th=
+is helps roaming between networks (where many are still IPv4-only).
+understood. Is that documented somewhere? For the Windows-Client, I did=20
+read somewhere that ipv6 is preferred.
+I find it inconsistent, that the clients behave differently.
 
-By the way: What does the Green Symbol today in the windows-client tell=20
-me? Currently, I find it totally mis-leading. I think today it only=20
-shows that:
-1) the domain could be resolved to an IP
-2) data was sent to it
-That seems not very useful.
-
-> > 2) If a wireguard server responds, but the key is not valid
->
->WireGuard does not respond if the keys are not valid. See
->section 5.1 ("Silence is a Virtue") in the WireGuard
->whitepaper [1].
-Then, Silence is also a sign of a failed connection, no? --> red symbol.=20
-But ok, it cannot show the reason "key invalid".
-
-> > 3) If the connection fails, the Windows Client should show
-> >    a RED symbol under status.
->
->This could only be determined by a previously-in-use session
->having had no packets received for greater than the maximum
->rekey interval (2 minutes).
-Why? If a connection is established, data is received, in my experience=20
---> green Symbol. If no data is received --> red.
-Sorry, but having to check the "bytes received" and ignoring the green=20
-symbol is hardly intuitive (a bit geeky, if I may say that). The 99%=20
-user does not know the backgrounds and/or the whitepaper.
-
->However, WireGuard itself will not send any data if it has no
->data to send (same section of the whitepaper), and so if you
->are not using the tunnel for 2 minutes, this would be
->indistinguishable from a failed tunnel.
-Well, I was only thinking about the esablishing of a connection, not the=20
-situation while a tunnel is up (but not used).
-So, I understand that an icon that was turned green once may have to=20
-stay green (as one cannot distinguish between no data *intended* to be=20
-transmitted and no data transmitted *unintendedly*/failed connection.
-Unless:
-
->An exception is if you enable keepalives; they are 0-length
->data packets.
-In that case, the Icon would always be able to reflect the real status.
-
-Now, would that not be something for the ToDo List?
+>If you want to force an IPv6 transport, you either need to put a raw IPv6=
+ address into Endpoint, or use an AAAA-only domain
+Intuitively, I tried [my.domain.com]:51280 in order to enforce ipv6=20
+(just like ipv6 adresses are enclosed in [].
+Would that not be an enhancement to the app?
 
 Best regards,
 Hendrik
 
->
->
->[1] https://www.wireguard.com/papers/wireguard.pdf
->
->Regards,
->Aaron Jones
 >
 
