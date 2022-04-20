@@ -4,32 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3302C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 22 Apr 2022 00:21:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97AE4C4332F
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 22 Apr 2022 00:21:24 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 67d8d3d2;
-	Thu, 21 Apr 2022 23:48:57 +0000 (UTC)
-Received: from schauer.tech (schauer.tech [2a03:4000:24:7af::1])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 99193b14
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 16064383;
+	Thu, 21 Apr 2022 23:48:58 +0000 (UTC)
+Received: from oxalide-smtp-out.extra.cea.fr (oxalide-smtp-out.extra.cea.fr
+ [132.168.224.13])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 70bcc21a
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 17 Apr 2022 09:26:59 +0000 (UTC)
-Received: from fairemail.op8t.kilian.schauer.tech
- (p5de48493.dip0.t-ipconnect.de [93.228.132.147])
- by schauer.tech (Postfix) with ESMTPSA id 01F7A401AE;
- Sun, 17 Apr 2022 11:26:58 +0200 (CEST)
-Date: Sun, 17 Apr 2022 09:26:57 +0000 (UTC)
-From: Kilian Schauer <kilian@schauer.tech>
-To: Hendrik Friedel <hendrik@friedels.name>
-Cc: wireguard@lists.zx2c4.com
-Message-ID: <9ff861ea-6d25-4e63-ba43-615afe1b655b@schauer.tech>
-In-Reply-To: <emdff71c03-470a-45f8-ade7-0343b0b698ab@envy>
-References: <emdff71c03-470a-45f8-ade7-0343b0b698ab@envy>
-Subject: Re: ipv6 vs. ipv4
+ Wed, 20 Apr 2022 09:20:54 +0000 (UTC)
+Received: from pisaure.intra.cea.fr (pisaure.intra.cea.fr [132.166.88.21])
+ by oxalide-sys.extra.cea.fr (8.14.7/8.14.7/CEAnet-Internet-out-4.0) with ESMTP
+ id 23K9Ks9J008768
+ for <wireguard@lists.zx2c4.com>; Wed, 20 Apr 2022 11:20:54 +0200
+Received: from pisaure.intra.cea.fr (localhost [127.0.0.1])
+ by localhost (Postfix) with SMTP id 564B1203376
+ for <wireguard@lists.zx2c4.com>; Wed, 20 Apr 2022 11:20:54 +0200 (CEST)
+Received: from muguet1-smtp-out.intra.cea.fr (muguet1-smtp-out.intra.cea.fr
+ [132.166.192.12])
+ by pisaure.intra.cea.fr (Postfix) with ESMTP id 436112036B9
+ for <wireguard@lists.zx2c4.com>; Wed, 20 Apr 2022 11:20:54 +0200 (CEST)
+Received: from [132.166.141.77] (is223528.intra.cea.fr [132.166.141.77])
+ by muguet1-sys.intra.cea.fr (8.14.7/8.14.7/CEAnet-Internet-out-4.0) with ESMTP
+ id 23K9KsxW025842
+ for <wireguard@lists.zx2c4.com>; Wed, 20 Apr 2022 11:20:54 +0200
+Message-ID: <367df062-5c7c-2916-db4d-afdf6c7d92db@cea.fr>
+Date: Wed, 20 Apr 2022 11:20:54 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+To: wireguard@lists.zx2c4.com
+Content-Language: en-GB
+From: Dimitri Papadopoulos Orfanos <dimitri.papadopoulos@cea.fr>
+Subject: Wintun on Windows 11
+Organization: CEA
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Correlation-ID: <9ff861ea-6d25-4e63-ba43-615afe1b655b@schauer.tech>
 X-Mailman-Approved-At: Thu, 21 Apr 2022 23:48:42 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -45,26 +57,13 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+Hi,
 
-17.04.2022 10:20:03 Hendrik Friedel <hendrik@friedels.name>:
+The README states that Wintun "is a layer 3 TUN driver for Windows 7, 8, 
+8.1, and 10":
+	https://git.zx2c4.com/wintun/tree/README.md#n4
 
-> Hello,
-> 
-> I understood that wireguard prefers ipv6 over ipv4 by default.
-> Nevertheless, on both Windows and Android I do not get a connection (only sent bytes no received bytes) when using my domain (friedel.dynv6.net). If I use the IP (2a00:6020:1bfb:c700:ba27:ebff:fe3e:6c55), I get a normal connection.
-> I can imagine that WG uses ipv4 (the A-record is set, I cannot change that, but it points to an invalid ip)
-> 
-> How can I -when using the domain- enforce that ipv6 is really used?
-> 
-> Apart from that, my suspicion is that ipv4 is in fact used here... How can I really find out, why I get no bytes on the received counter?
-> 
-> Best regards,
-> Hendrik
+You should add Windows 11 to the list.
 
-Hi Hendrik,
-
-the WireGuard mobile apps prefer IPv4 for connecting to the peer, since this helps roaming between networks (where many are still IPv4-only). If the A record of the Endpoint domain is broken, it won't work.
-If you want to force an IPv6 transport, you either need to put a raw IPv6 address into Endpoint, or use an AAAA-only domain.
-
-Hope this helps,
-Kilian
+Best Regards,
+Dimitri
