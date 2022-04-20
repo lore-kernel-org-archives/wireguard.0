@@ -4,47 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 962B9C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Apr 2022 08:47:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65E49C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 Apr 2022 08:05:46 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id b1d9f965;
-	Mon, 18 Apr 2022 08:43:37 +0000 (UTC)
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.133])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id e265b769
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 071b2ceb;
+	Wed, 20 Apr 2022 08:05:44 +0000 (UTC)
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com
+ [2a00:1450:4864:20::635])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 5d822489
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 18 Apr 2022 08:43:36 +0000 (UTC)
-Received: from [192.168.177.41] ([94.31.101.241]) by mrelayeu.kundenserver.de
- (mreue010 [213.165.67.97]) with ESMTPSA (Nemesis) id
- 1Mn2Jj-1oNdwW2oOV-00k8Nb; Mon, 18 Apr 2022 10:43:35 +0200
-From: "Hendrik Friedel" <hendrik@friedels.name>
-To: "Kilian Schauer" <kilian@schauer.tech>
-Subject: Re[2]: ipv6 vs. ipv4
-Cc: wireguard@lists.zx2c4.com
-Date: Mon, 18 Apr 2022 08:43:34 +0000
-Message-Id: <ema52cc7e0-e1ab-4564-a4a6-fbb65abb12c4@envy>
-In-Reply-To: <9ff861ea-6d25-4e63-ba43-615afe1b655b@schauer.tech>
-References: <emdff71c03-470a-45f8-ade7-0343b0b698ab@envy>
- <9ff861ea-6d25-4e63-ba43-615afe1b655b@schauer.tech>
-User-Agent: eM_Client/8.2.1659.0
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:fcCegs9+29pLXSLQRIKmXnePyEbsNOM1gtSn34PjYgUgLXwYpDd
- EH7pqIdzt6DR0w3XY/Ggry2FQhSZbOHRM+91r/dJP+xCR0Piwr0Mvjq+kj7W1TvWvndvv+G
- bVhiAhhQRpHV1Q+3tam66uWUSBcT2/ywu7XYaGXguIraNztpHkJHZyEaYlvVQu6kfwGCHA/
- z1VU4zaJqsmvyTPexM1WA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:UeuyRyVA4Yk=:zv7m1K1gjBKXpANdZfKLfF
- 7Y5zLtrlqkiERtBJ1IUNDRxWKM/ySvr89wCBVlgMjOs8UpnzNU3IyKhlFSckwLPBQfKZrEh/U
- /5RVKnPB5gBjpO9E27F2n35DwptE/hHX6NxkS78Wd9Q+fJXVsMNAwT/Q/M85lwXFCk3wfYVmY
- cwA4thJ+YeFZtKbWhddAZLrpTpC7pH4Bj5vjb7RBNyLDnX4X6qR8SAfDgc2VPYWSX8jWwlNR6
- JO25e6G+FDpQaWKDMSB3I9lvN/WzdwWGC/ePfEFKE7DEf0CLjxpnn6o0/OykmDlcyUGuzpWzo
- hYlBkdQ8VyNTnvzBBkov8xRLaWGNRmSVQKLc+ft3k3u0q0a2FKAMSFwWsakzSixTbZPDo53ym
- 2tmhrhHYNBsaR16RQK5ouWcj5DvP4o8T2ehrWAsH7vauohV49cabfbjjUC87hycRphDw7w9Aw
- MEHNA8rfIZoLUiGQXy58DEnyn0AlZ/AGvt1/RizziIYTx9d71AOaGytN62Inr5JBGsSlleBld
- VPZbU+uuXsyQAE5HW+BkxPiruypkAm26a5QV4zyWeBb+5MPbT9Tf33AYs+0l1pbD5vUAWDPsH
- KzKtcIPm46bBtZGbVANL54LoUg2CG0Z6TjswJR42E1fZpjH0kV9qtLr7UeTtF4Dt2EAWZ4X94
- oBUBSRwOQjs82CObZVOQYmfSvSwXqwyEszbGejmYlvYXwlFjCmKzFmkkktt4fDdd+w0w=
+ Wed, 20 Apr 2022 08:05:41 +0000 (UTC)
+Received: by mail-ej1-x635.google.com with SMTP id l7so1897571ejn.2
+ for <wireguard@lists.zx2c4.com>; Wed, 20 Apr 2022 01:05:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=exys-org.20210112.gappssmtp.com; s=20210112;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=aWk1glIb5fQPQ4AvSFdOJsApxF0o6YNYLVWfDL8PDNg=;
+ b=5y+sVJ9hFpVrTisgB+xYavZ9OYqumoJFABRaRNBV46TVpSflIjHVZPoxlA6pecDyNE
+ 7TP0uVRtBUTwyyKW3QgOCE2zKc5Y2YeK0iI3eXhM+x6xiroxtdYmUdF7Y/yU4tD7SDti
+ aykWHZTlZSmhUcy0QpDhQrKJeUBV7L4WPc50WHsEMtpoURBQ2LzzkUJu4xoXWyK2e+oi
+ CP4l1m90oitQbrlH4M7Y+XYdvi6+1sBbV4wyZ916kRWRW4tGp4AXKNXekax26dVOdhvW
+ kDwS9MLnoZtOUo3nKueHTeVxWGSvRV8+vfInmHlL1snPSdj9olKBfKpnn/acBoH0+ETk
+ Qbcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=aWk1glIb5fQPQ4AvSFdOJsApxF0o6YNYLVWfDL8PDNg=;
+ b=z5m7ztCdrZsHt3+MZMcjbxDxZ/cl+HwQV2coTBfc/2mRvES0Y/tBXZjD8H2/Fuj32S
+ jK6wVSCfxaD05k/u4IiFgj8Y94nHAhkDYmyVeT6iWJvJQnPNpr+DAAOJ6HrvHNheTY0G
+ khgge3gycFYIglni8HQfshutnhuHY6il6sPxxPfxR2ZZScOZCvw5si//idPt5SOFvT8f
+ CTmhv4M501SBlCTyTcJWV572wFsJsmpYvjn9pSajcnKRcots6v6M19VrsUmvQwhKWc+H
+ WfFF2WaoQQBy95zFs9WLxfa0wbJOD/wLdSV4536Q7xihwyhRsRPPI2bvE0jJI74/afP4
+ vWGw==
+X-Gm-Message-State: AOAM533j+klD/uTIDZ4AshZNtvj4i+IdR7FdComP2+LCjRWPMjaW+RvH
+ pDpBQxh3Jy9GdFwx/7whf5Sm4CGnKdHEkJOgR/MW83j2rYCWtA==
+X-Google-Smtp-Source: ABdhPJxtjSINIvZgpJn5OiR6Zrf1TMuId/uExO2w1w/FRKkHXQ/RCSRsmzm3LPcHcBUiynjDAQNrWQmuwQeDgjccsvE=
+X-Received: by 2002:a17:907:6d10:b0:6e8:8fbc:310c with SMTP id
+ sa16-20020a1709076d1000b006e88fbc310cmr16644519ejc.530.1650441940966; Wed, 20
+ Apr 2022 01:05:40 -0700 (PDT)
+MIME-Version: 1.0
+From: Arvid Picciani <aep@exys.org>
+Date: Wed, 20 Apr 2022 10:05:30 +0200
+Message-ID: <CACD9L=DWEargDr8f1gXzigZ=NQsSz=18vzQMgVQKzUN++r4ELw@mail.gmail.com>
+Subject: will frequently changing allowed-list result in latency spikes?
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -56,28 +61,29 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Reply-To: Hendrik Friedel <hendrik@friedels.name>
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello Kilian,
+Hi,
 
-thanks for your reply.
+we're currently using wg as point-to-point transport between thousands of vms.
+each peer has a separate interface so we can do BGP with bird.
 
->the WireGuard mobile apps prefer IPv4 for connecting to the peer, since th=
-is helps roaming between networks (where many are still IPv4-only).
-understood. Is that documented somewhere? For the Windows-Client, I did=20
-read somewhere that ipv6 is preferred.
-I find it inconsistent, that the clients behave differently.
+this works extremely well. But due to lack of port-reuse, eventually
+you run out of udp ports.
+Now i'm thinking of redesigning it with a single wg interface and
+using wgs native destination selection which is based on allow-list.
 
->If you want to force an IPv6 transport, you either need to put a raw IPv6=
- address into Endpoint, or use an AAAA-only domain
-Intuitively, I tried [my.domain.com]:51280 in order to enforce ipv6=20
-(just like ipv6 adresses are enclosed in [].
-Would that not be an enhancement to the app?
+that means every topology change results in a netlink call to wg to
+replace all affected peers with a new peer with a new allowed-list.
 
-Best regards,
-Hendrik
+In a quick test i couldn't see any problems with that.  But i'm
+worried that might change with scale. Replacing a peer config might
+flush its buffer, possibly resulting in packet loss.  Or more likely
+reset its crypto session, resulting in a latency spike until the
+handshake finished.
 
->
+anyone has more insight into that?
 
+-- 
++4916093821054
