@@ -4,53 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0523EC433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 22 Apr 2022 16:26:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD854C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 22 Apr 2022 17:24:30 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id ce86d0f6;
-	Fri, 22 Apr 2022 16:25:41 +0000 (UTC)
-Received: from krn.amebis.si (krn.amebis.si [93.103.235.207])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 794e8a66
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 7e9132c1;
+	Fri, 22 Apr 2022 17:24:28 +0000 (UTC)
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com
+ [2607:f8b0:4864:20::236])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id edd0a503
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 22 Apr 2022 16:25:40 +0000 (UTC)
-Received: by krn.amebis.si (Postfix, from userid 982)
- id 5C7ED18E87DC; Fri, 22 Apr 2022 18:25:40 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rozman.si;
- s=default; t=1650644740;
- bh=3dwio9Ktwa+Cf4xYcXz5k7ifr4fU9lA7zlLb2c4O86Q=;
- h=From:To:Subject:Date:References:In-Reply-To:From;
- b=elDF8AQnWk23Th6R8FBX8QjLaX8hPNaeY8Q241M/sMzkMnwXAQGEjjDi96ruSMfmo
- IAYl92y2Q/6or4aHVjKTzBNS9Z2DTtVW2+CTbinsfLP4epp5Pbs0NwZ6nzjykpjokC
- dGnXELChnF2gwKz4Pfrp3gjlo6Lqq2A6fSn13txc=
-Received: from Konj.amebis.doma (konj.amebis.doma [IPv6:2a01:260:4101:1464::4])
- by krn.amebis.si (Postfix) with ESMTPS id 0710918E8784;
- Fri, 22 Apr 2022 18:25:38 +0200 (CEST)
-Received: from Konj.amebis.doma (2a01:260:4101:1464::4) by Konj.amebis.doma
- (2a01:260:4101:1464::4) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 22 Apr
- 2022 18:25:37 +0200
-Received: from Konj.amebis.doma ([fe80::545:cd17:7444:be04]) by
- Konj.amebis.doma ([fe80::545:cd17:7444:be04%9]) with mapi id 15.02.0986.022;
- Fri, 22 Apr 2022 18:25:37 +0200
-From: Simon Rozman <simon@rozman.si>
-To: Dimitri Papadopoulos Orfanos <dimitri.papadopoulos@cea.fr>,
- "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-Subject: RE: Wintun on Windows 11
-Thread-Topic: Wintun on Windows 11
-Thread-Index: AQHYVd0yZI4v9c/0vEO3PxQRWTHMraz8HstQ
-Date: Fri, 22 Apr 2022 16:25:37 +0000
-Message-ID: <0606b759a4ac40e2b3b791c4761d0d40@rozman.si>
-References: <367df062-5c7c-2916-db4d-afdf6c7d92db@cea.fr>
-In-Reply-To: <367df062-5c7c-2916-db4d-afdf6c7d92db@cea.fr>
-Accept-Language: en-SI, en-GB, sl-SI, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [2a01:260:4101:1464:9556:65b5:a12a:25e7]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ Fri, 22 Apr 2022 13:36:25 +0000 (UTC)
+Received: by mail-oi1-x236.google.com with SMTP id q129so9054619oif.4
+ for <wireguard@lists.zx2c4.com>; Fri, 22 Apr 2022 06:36:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=from:to:subject:date:message-id:in-reply-to:references:mime-version
+ :content-transfer-encoding;
+ bh=see1AwYsA07CUou7PN9gJyiZ1lTNI3+tWlNB+AOGUok=;
+ b=C9qE01YLWDx+volJjry4oVgtIel4fmK7nduDLDAxT1fFvAVtmOGcMIPUJVK7qZ1Ar8
+ LWfOI9qSv4V5DrEzFQy8OKhrj23sY63yHg1z94Dkv+pD+nAHIY8nEEmUgqcXtDWigL0R
+ Nd6BYbN1fBWKwZleMxu5WkJaA7OWLleD4pc0YNmsc5Ih2/OTV4eb5bKLtkNpk9vqHhf1
+ qDrQl4fhef0DBxowSE49nwV+ieEDqM4Ch9VP2tuVJrgS4TMTaSGDWiBSkunkIkLiWWAr
+ jV+3D2cXNxnJ1J7BCIw3Me8FzTSN/JgINaXpXeZiwsD0qMc6Z6V/1pQc12ahfVXKSosz
+ 4Sgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+ :references:mime-version:content-transfer-encoding;
+ bh=see1AwYsA07CUou7PN9gJyiZ1lTNI3+tWlNB+AOGUok=;
+ b=OBSXAKaszL8Ag1DEtwA2awSFzPPxDZSraL2rYXu38DfXE7rycAPJ3JjZaAhT20H7zd
+ E8SRyJdiYKyUuuTT5PeIEPPRRb/g9L7LzeTlmeMlGE59XNOyMu84joHv/PxUTsX1qRXI
+ oXMr3nBI65SQwX1sgBO7pCMFEbt6MkUITOFq6T5soJ6rWeZk3oS3A8QpLVccb8xJrrB3
+ 59T0Uhyv/oNkmC506c7YrYm4brkJQMmGuS81Sxq9NsscIGfnkAYyOvhtdj3UQuVau9z5
+ 0/PIxHV82SwkN0eXw8dYboVuCo6bI4MtJU0Ko6GSVLS7dA6yflU2btcLkuHVOWJL2cTS
+ ziYA==
+X-Gm-Message-State: AOAM5332lBOYumwQwKsyGxQkiOH9UEHQDWjzBKltIokaXojJWsAE9bN5
+ gIFKwg4h3FoGsFjV2EhRhhf9SeCdq5o=
+X-Google-Smtp-Source: ABdhPJz5SRkR3RaFEZwpqnzW/mmnkF5dG7dLD0xh+RqaL8hfFsRaZbQlbydoP6p4mJ2Vzd4sxoPBGw==
+X-Received: by 2002:a05:6808:1452:b0:316:9f5c:d6b9 with SMTP id
+ x18-20020a056808145200b003169f5cd6b9mr2238959oiv.221.1650634584428; 
+ Fri, 22 Apr 2022 06:36:24 -0700 (PDT)
+Received: from [10.0.4.89] ([70.114.124.8]) by smtp.gmail.com with ESMTPSA id
+ ay9-20020a056808300900b0032272231c25sm749122oib.40.2022.04.22.06.36.23
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 22 Apr 2022 06:36:23 -0700 (PDT)
+From: "Jason Grant" <dadima@gmail.com>
+To: wireguard@lists.zx2c4.com
+Subject: Re: Is it possible to disable wireguard on specific Wi-Fi ?
+Date: Fri, 22 Apr 2022 08:36:23 -0500
+X-Mailer: MailMate (1.13.2r5673)
+Message-ID: <148B89DC-E709-41D2-B942-4FD63558EEDC@gmail.com>
+In-Reply-To: <84b2749c-4a9d-b58e-0659-09ee9c70c67c@gmail.com>
+References: <84b2749c-4a9d-b58e-0659-09ee9c70c67c@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"; format=flowed; markup=markdown
+Content-Transfer-Encoding: 8bit
+X-Mailman-Approved-At: Fri, 22 Apr 2022 17:24:27 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -65,7 +75,14 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-PiBUaGUgUkVBRE1FIHN0YXRlcyB0aGF0IFdpbnR1biAiaXMgYSBsYXllciAzIFRVTiBkcml2ZXIg
-Zm9yIFdpbmRvd3MgNywgOCwNCj4gOC4xLCBhbmQgMTAiOg0KPiAJaHR0cHM6Ly9naXQuengyYzQu
-Y29tL3dpbnR1bi90cmVlL1JFQURNRS5tZCNuNA0KPiANCj4gWW91IHNob3VsZCBhZGQgV2luZG93
-cyAxMSB0byB0aGUgbGlzdC4NCg0KVGhhbmtzLiBBZGRlZC4NCg0KUmVnYXJkcywNClNpbW9uIA0K
+On 17 Apr 2022, at 21:12, Nohk Two wrote:
+
+> So, I have this idea that if it is possible to configure the Wireguard 
+> app to turn off or disable automatically when the network is 
+> established on specific Wi-Fi SSIDs ?
+
+The MacOS WireGuard client has exactly this feature. You can 
+enable/disable on-demand access for particular SSIDs, and it’s very 
+useful for a situation where you’re moving your device around, between 
+home and office say. Any timetable for adding this feature to other 
+platforms, like Windows or Android?
