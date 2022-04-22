@@ -4,47 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 360CBC433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 22 Apr 2022 07:13:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9E96C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 22 Apr 2022 09:29:16 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 6fe73c9c;
-	Fri, 22 Apr 2022 07:13:52 +0000 (UTC)
-Received: from mail1.tootai.net (<unknown> [2a01:4f8:a0:821b::58:14])
- by lists.zx2c4.com (OpenSMTPD) with ESMTP id 021e6c0d
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 25ab79a1;
+	Fri, 22 Apr 2022 09:29:15 +0000 (UTC)
+Received: from mail.otpe.de (mail.otpe.de [194.163.141.229])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 164d7114
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 22 Apr 2022 07:13:47 +0000 (UTC)
-Received: from mail1.tootai.net (localhost [127.0.0.1])
- by mail1.tootai.net (Postfix) with ESMTP id C2D8F6081407
- for <wireguard@lists.zx2c4.com>; Fri, 22 Apr 2022 09:13:46 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=tootai.net; s=mail;
- t=1650611626; bh=O5msl90oVbN+1QJlYPzAv89OnOXBROxpGp4Qo9HKp2U=;
- h=Date:Subject:To:References:From:In-Reply-To:From;
- b=BjLFyjtVlMnDrJjFZJe78H3cRlmMnWFJW11a30zLw3OcGZjmgkrA5ujiuqOqFGlab
- sxwpVw5aVN5qtrCaSdufltz85Px66yV3oCPbB1i5Hj6yKeNN70VXF01REQ1AmXsDz6
- pGL2AOhC/xTfAZ44GzRTCYT5kqlz38FMtRoTx5LQ=
-Received: from [IPV6:2a01:729:16e:10::24] (unknown [IPv6:2a01:729:16e:10::24])
- by mail1.tootai.net (Postfix) with ESMTPA id A7E236081718
- for <wireguard@lists.zx2c4.com>; Fri, 22 Apr 2022 09:13:46 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=tootai.net; s=mail;
- t=1650611626; bh=O5msl90oVbN+1QJlYPzAv89OnOXBROxpGp4Qo9HKp2U=;
- h=Date:Subject:To:References:From:In-Reply-To:From;
- b=BjLFyjtVlMnDrJjFZJe78H3cRlmMnWFJW11a30zLw3OcGZjmgkrA5ujiuqOqFGlab
- sxwpVw5aVN5qtrCaSdufltz85Px66yV3oCPbB1i5Hj6yKeNN70VXF01REQ1AmXsDz6
- pGL2AOhC/xTfAZ44GzRTCYT5kqlz38FMtRoTx5LQ=
-Message-ID: <c202757f-99eb-215f-9e22-4b473a2b9f98@tootai.net>
-Date: Fri, 22 Apr 2022 09:13:44 +0200
+ Fri, 22 Apr 2022 09:29:14 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon)
+ with ESMTPSA id 3AB8E460FC6; Fri, 22 Apr 2022 11:29:12 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qupfer.de; s=dkim;
+ t=1650619753; h=from:subject:date:message-id:to:mime-version:content-type:
+ content-transfer-encoding:content-language:in-reply-to:references;
+ bh=FV8C2qbxFdldBxTkzZLTTk9NUwUlt2JSWdRgIyzlXXI=;
+ b=LO0TOh836rLnJ9+GisYjkvkxiIWs4cqfxrEXhFxPRkrTIDXR9ONk+CajGkLt6drLmkyrGm
+ rtmjB4H4HszD7LbW0cYmgyfwR7/N0D8TmABnGgpIG6hOPRidFnntpW5Tr14mHhJXO68Zxs
+ 408U5zaZuLbi4YeCAG+47AbSbNg5MBMcUeTIO+kLi0Hll/nujnps1itM6hVqtZKyFZeCoj
+ GK4BfaMb6rGBSCtNyQZpsGHp98n7yQaKwY5IlNyZwWgNrBedwj0EfItuXsiNCe9M/NWBLd
+ g0jZV7Dmg/CcYyvQqsneDzNMAP+YeDHQIZPQLnJC2LSeLQzWTLdq2Ubdp2CgoQ==
+Message-ID: <34a3aa4f-76b6-9fbe-93ec-01cee228b382@qupfer.de>
+Date: Fri, 22 Apr 2022 11:29:10 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: Choosing local IP address
-Content-Language: fr-FR
-To: wireguard@lists.zx2c4.com
-References: <91765b65-5daa-c699-4a72-b59b0f6f9ebb@rail.eu.org>
-From: Daniel <tech@tootai.net>
-In-Reply-To: <91765b65-5daa-c699-4a72-b59b0f6f9ebb@rail.eu.org>
+ Thunderbird/91.8.1
+Subject: Re: Is it possible to disable wireguard on specific Wi-Fi ?
+Content-Language: en-US
+To: Nohk Two <nohktwo@gmail.com>, wireguard@lists.zx2c4.com
+References: <77422@imapsync>
+From: wireguard@qupfer.de
+In-Reply-To: <77422@imapsync>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: ClamAV using ClamSMTP
+X-Last-TLS-Session-Version: TLSv1.3
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -59,37 +53,11 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi
 
-Le 26/03/2022 à 21:27, Erwan David a écrit :
-> Hello
->
-> I have a wireguard setup between my home router (and the home network 
-> behind) and a distant FreeBSD servers with several jails.
->
-> I use IPv6 fir transport, but I have a routing problem because whan at 
-> home I need to ssh to the server, and if I use for endpoint address 
-> (on the home router) the main IPv6 address it ends up with a traffic 
-> half out of the tunnel (from home to server), and half in the tunnel 
-> (from server to home).
->
->
-> So I chose to add an IPv6 address to the server, route it outside the 
-> tunnel and use it only for the tunnel. But I cannot specify to 
-> wireguard on the server to use this address, thus I get packets from 
-> the main address, my router changes the endpoint address and tunnel 
-> does not work.
->
-> How can I say to wireguard which IP address to use when sending ths 
-> encrypted packets to the endpoint ?
+On 18.04.22 04:12, Nohk Two wrote:
+>  I guess there are something conflict because the vanilla IP network 
+> and the allowed IP network are the same.
 
-Not sure I understand your problem but you can't use the ip address used 
-to mount the tunnel to access the other end. You have to give an ipv6 
-ULA address to each endpoint. In your case, this should be GUA Home <> 
-GUA FreeBSD to mount the tunnel. To access the other end in ipv6, give 
-an ULA address to each wg and you're done.
+Thats right, but you can simply use other IPs for your WG clients 
+(192.168.187.0/24 or 172.16.0.0/24)
 
-Also be sure that you put the right address in your config file
-
--- 
-Daniel
