@@ -4,58 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2174C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 22 Apr 2022 09:51:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 530C7C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 22 Apr 2022 11:05:50 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 68968760;
-	Fri, 22 Apr 2022 09:51:22 +0000 (UTC)
-Received: from m32-12.eu.mailgun.net (m32-12.eu.mailgun.net [141.193.32.12])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id f4f1398f
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id b00b5148;
+	Fri, 22 Apr 2022 11:05:48 +0000 (UTC)
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com
+ [2607:f8b0:4864:20::42a])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 5b268178
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 22 Apr 2022 09:51:21 +0000 (UTC)
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=oern.de; q=dns/txt;
- s=mta; 
- t=1650621081; h=Content-Transfer-Encoding: Content-Type: In-Reply-To:
- From: From: References: To: To: Subject: Subject: MIME-Version: Date:
- Message-ID: Sender: Sender;
- bh=Ojsdw1p4W+xFq9GLk3L7dOXlpuBuDaMSBMwSXW1Iwm8=;
- b=QNVap4cdrqYLBofn33UeYIzpEcLU9w6kJiNNypcys8crjRywA+Fv2seAQoRfn57JBq3+nIcL
- iwrt7+bE5zrS6hQB+4VZLNHbLj3uXEPf3CldnsDFKbSAAKuFeiUoVeCpIUiOBzFWPymwzDpJ
- 6i2tJq5PZdNJiwykutpBApjbQm87E4MVDZUJjHaYSQORpXJqKQOSGTKVpi9syd+Ay2a76Two
- msddTlyA2YlOINISl9Z/W2g2+mi39DK0yuGtlfXPcGX8c4ox5tQALVdsExFjM1UJYhyZoefb
- scF05525jH0M488KLoGp5J1PLxJUxky6K0Z+vHbS8zQcSBg+Tg3NcQ==
-X-Mailgun-Sending-Ip: 141.193.32.12
-X-Mailgun-Sid: WyI5YWZmYiIsICJ3aXJlZ3VhcmRAbGlzdHMuengyYzQuY29tIiwgImUwNzRkIl0=
-Received: from mail.7lb.de (mail.7lb.de [2.56.212.54]) by
- smtp-out-n03.prod.eu-central-1.postgun.com with SMTP id
- 62627a997e6ccf7943f41612 (version=TLS1.3, cipher=TLS_AES_128_GCM_SHA256);
- Fri, 22 Apr 2022 09:51:21 GMT
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon)
- with ESMTPSA id ED9BE80FA7
- for <wireguard@lists.zx2c4.com>; Fri, 22 Apr 2022 11:51:18 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oern.de; s=laniv9ai;
- t=1650621079; h=from:subject:date:message-id:to:mime-version:content-type:
- content-transfer-encoding:content-language:in-reply-to:references;
- bh=Ojsdw1p4W+xFq9GLk3L7dOXlpuBuDaMSBMwSXW1Iwm8=;
- b=p0PRNQ7iY84YsoL+EPGlRujPb3S464KuBAkyOYVdwzhbWgdKC2w1a0FS3WvRHPoXi/Bzwv
- epk0IXSVP/DSXDHhGngb/S6erILkoRajpdX054pUeuX0SqzGoTiyWHW9kkHlX4lzNf7D6s
- 4Oo4v214ekAIE7bL8PBVO6aAT5q6Aac=
-Message-ID: <94ddb2e7-9181-1a38-1b35-3e1a9766846e@oern.de>
-Date: Fri, 22 Apr 2022 11:51:17 +0200
+ Fri, 22 Apr 2022 11:05:45 +0000 (UTC)
+Received: by mail-pf1-x42a.google.com with SMTP id b15so7692783pfm.5
+ for <wireguard@lists.zx2c4.com>; Fri, 22 Apr 2022 04:05:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=message-id:date:mime-version:user-agent:subject:to:references:from
+ :in-reply-to:content-transfer-encoding;
+ bh=V49XXPRqZVtx2UU/TNJWpdf5433HZq7Qd2XpIdNUfUI=;
+ b=NuBwyj0UsmldFS6ML8mz/hQDwn8wyidG0+IYCqlgvb6ra/XICgnQrTV/PWhdw9OOVz
+ mZLZhqyCcCW90mLZZgtrQFfwHaiZV+ppglv+LKqqmnYFJC7/MHVOpmIbo4yrWt05yPqh
+ esMz1JCgm2mpOBTVmEFFMe1OsrHsk4bndFI1uNWzgx6J+rGpiNCVrICW1Adl+2rqN9z0
+ Tu1kc8H/C9l/QUBBamz/EfcIsBV65tMmjBpDI9jzi1jZd0OGqlVYTs31sXRSZ5lAAEnb
+ ELkz53xz/3djLECiDjs8VMe/MyJ3UdC9B3hzj3MMUcuI+bQjLUgstrczfQRIp1CiStVa
+ UiTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+ :to:references:from:in-reply-to:content-transfer-encoding;
+ bh=V49XXPRqZVtx2UU/TNJWpdf5433HZq7Qd2XpIdNUfUI=;
+ b=wU76EqWd6USvIFvRTPQgkN/j1+XDy1ersHeHo3SJBtwdJxLx1zUGMRNekDv872q/W8
+ sO5Bz+APqO6Z6/3XJLPLztL6D3htxJQHCW5vr3R6a6o9g9juViP4aSTz1X0FVnSShI74
+ uPAPgw7TbtcKeWq9twJG37kBanV2Dl1f5l44f/eupSueD6r+dxCjxYyPz0cqvLaWIGCH
+ Cru7aDoE+X1R020YQim8p+MX7iEmcFotyW8E2YzEeg0Lg2NL1Kcg8pgFTLLoczbFjWkI
+ EvNyI3zYSLri+O3RDP75DEimpyr3cgH4Xdj2EDvrqoxVIroxFJGF8EtwKUvfT2t4oEqo
+ EkDg==
+X-Gm-Message-State: AOAM532R0Fdq5daCnwJAeITjbjG0UJlJralm5aUUvfLdLOriuXLMeBbw
+ UPH/0ELEBe7AUlDBV4ldjHRq9/6akNY=
+X-Google-Smtp-Source: ABdhPJwbDLnFqNrajT5vuRXxnF9dPPg8vVuNcMl3ZZEr1Zo44H8OTcvIGDljyTfaccubEQQUwiINrw==
+X-Received: by 2002:a05:6a00:26cf:b0:4f6:fc52:7b6a with SMTP id
+ p15-20020a056a0026cf00b004f6fc527b6amr4375511pfw.39.1650625543939; 
+ Fri, 22 Apr 2022 04:05:43 -0700 (PDT)
+Received: from localhost (59-115-140-93.dynamic-ip.hinet.net. [59.115.140.93])
+ by smtp.gmail.com with ESMTPSA id
+ l2-20020a056a0016c200b004f7e3181a41sm2335669pfc.98.2022.04.22.04.05.43
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 22 Apr 2022 04:05:43 -0700 (PDT)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) 
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange ECDHE (P-384) server-signature ECDSA (P-256) server-digest
+ SHA256) (No client certificate requested)
+ by upg.tw (Postfix) with ESMTPSA id 35A5A14019F
+ for <wireguard@lists.zx2c4.com>; Fri, 22 Apr 2022 19:05:42 +0800 (CST)
+Message-ID: <1b8b8a8d-0805-2b88-4fbb-f0a05cb2d0d0@gmail.com>
+Date: Fri, 22 Apr 2022 19:05:40 +0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.8.1
 Subject: Re: Is it possible to disable wireguard on specific Wi-Fi ?
-Content-Language: en-US
 To: wireguard@lists.zx2c4.com
 References: <84b2749c-4a9d-b58e-0659-09ee9c70c67c@gmail.com>
  <fd11943c-99e1-d0a0-b28b-de7d5c617eb3@oern.de>
-From: =?UTF-8?Q?Bj=c3=b6rn_Fries?= <ml-wireguard@oern.de>
+From: Nohk Two <nohktwo@gmail.com>
 In-Reply-To: <fd11943c-99e1-d0a0-b28b-de7d5c617eb3@oern.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Last-TLS-Session-Version: TLSv1.3
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -70,33 +83,33 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Am 22.04.22 um 08:16 schrieb Björn Fries:
+On 2022/4/22 14:16, Björn Fries wrote:
+> Hello,
+> 
+> Am 18.04.22 um 04:12 schrieb Nohk Two:
+>> This server allows the clients to access my LAN (e.g. 192.168.87.0/24) 
+>> and 
+> [..]
+>> But when the phones connect to the Wi-Fi of my home's router, the DHCP 
+>> assigns the IP addresses as 192.168.87.0/24, it's my LAN, to the phones. 
+> [...]
+>> Or do you have better ideas ?
+> 
 > the way I solve this is that I use a slightly larger /23-subnet in the
 > AllowedIPs=192.168.87.0/23
 > 
 > and when I get a local IP inside 192.168.87.0/24 at home, the kernel 
 > automatically uses the more specific route.
+I think I know your point. And since my network is 192.168.87.0/24, I 
+have to use 192.168.86.0/23 (not 192.168.87.0/23) in the AllowedIPs. 
+Because "87" is an odd number and it's "1000 0111" in binary
 
-an example:
-my laptop e.g. has
+However, it failed in my Android phone. There is no internet accessing 
+as usual. I didn't try this in iPhone because Eugenio Tampieri told me 
+that Wireguard for iOS has the feature I required (and worked nicely) 
+but not Android.
 
-Address = 172.22.247.58/32
-PrivateKey = xxx
+Maybe I have to adjust my LAN's network to even number to make /24 
+enlarge to /23 happy.
 
-[Peer]
-PublicKey = xxx
-AllowedIPs = 172.22.144.1/32, 192.168.0.0/23
-Endpoint =  myhomeIP:51820
-PersistentKeepalive = 25
-
-172.22.144.1/32 is the wireguard-IP of my wireguard-server at home.
-
-This way I can reach for example my printer at 192.168.0.10 even if I am 
-on the move, because my wireguard server is installed on my router at 
-home (Unifi USG-3P).
-The printer sends it packets for 172.22.247.58 simply to its default 
-gateway, which is my router/wg-server, that forwards it over wireguard.
-
-When I'm in my network at home, my laptop gets the IP 192.168.1.72/24 
-and automatically talks to the other devices in the LAN without taking 
-the wireguard route, because the subnet is more specific.
+Thank you very much.
