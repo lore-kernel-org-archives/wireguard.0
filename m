@@ -4,51 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A34A8C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 22 Apr 2022 00:45:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B431C433FE
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 22 Apr 2022 00:45:04 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id fb4763da;
-	Thu, 21 Apr 2022 23:50:29 +0000 (UTC)
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com
- [2a00:1450:4864:20::62d])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id d9d638c7
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 7 Apr 2022 00:06:12 +0000 (UTC)
-Received: by mail-ej1-x62d.google.com with SMTP id l26so7552653ejx.1
- for <wireguard@lists.zx2c4.com>; Wed, 06 Apr 2022 17:06:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to;
- bh=yh/90ZjVqgfgr/+m/Xm/FlKEBN103n6icBLi2imp7bQ=;
- b=ESzoEbhHKUZLnL8+3VtdXiPFHRDEWSQLmJGZzehsyQeQAgifkjxo5wIbiDGRQlhHDo
- cR1f4BDQESOLCtLEe9EDh45LMvkL1gllIR8F+czbvfXRaTXVvlzCrgAyFT0sd/x4lUw/
- C8l4F7d82alsuwplDg5kjUN672ISwWdsyaxG3db9AvJLJCzNcuswt+VIJV1dPH6rkkVQ
- UOub9v/oCcmzgfERpdqtnweJz9xYQ/OnEwymLiagbiXQowgm+TNFdZUObLkEa0bu3rIT
- yX2U8JwrsDQS7zRP2T9de2bk6zcCkhGYd3FGsijKkBtH8DvAPNR1hAhLcs5Qhh3eYt5I
- bT8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=yh/90ZjVqgfgr/+m/Xm/FlKEBN103n6icBLi2imp7bQ=;
- b=Z104NhnkJXEaDV3sinRPsBTM1Z+QYOXgdv57XCeUEUsID6uaWPQR1EwvJhqcOOEFoF
- 9ZCQK4PIPI+Vv0LZK2Xejuu2XPu3m46tiItVQ+VsgvczGOFf7rHh+K+lXJIwJAM9LGuD
- zdbhNc8fRAxcTHKBGzQDEvQpMdRYJaktd7fTvtUTjZpxiM7PtWhoLKRzrieB3Y72ueqB
- p0I3nuylFwiZuThDcjiHsuVHoksU0N5zGanpZxZh91tG57XiEkp+8xvLhPAo8gcheW/Z
- 1t6rRSwxyp7hQfGWdVIWJhtq6DdQaBPM3bZ01MzIYmu2r0u0fMtbS7McC8AZ638F1VYL
- O8lw==
-X-Gm-Message-State: AOAM533FbCGCBv32J0CVpCDZh345LV4zT3aM39EkWRZ4eVhjuio1dKPr
- 17NyRgfOhkiiLq8BVFn5Pc0TY7M7vygvhWqGrgcLMJnaPjM=
-X-Google-Smtp-Source: ABdhPJxFgHlw8RVAeTIcg8wKmsE3Vle87K8qtXZe1NPi5wXDPkW1lliRtjootN8zT9mG93z+ZufGKyue10MUwCrEEME=
-X-Received: by 2002:a17:906:58d2:b0:6da:b635:fbf3 with SMTP id
- e18-20020a17090658d200b006dab635fbf3mr10416692ejs.40.1649289972344; Wed, 06
- Apr 2022 17:06:12 -0700 (PDT)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 2e96d275;
+	Fri, 22 Apr 2022 00:02:30 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org
+ [2604:1380:4641:c500::1])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 398175b4
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Fri, 22 Apr 2022 00:02:29 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 5DCC261F09;
+ Fri, 22 Apr 2022 00:02:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FEECC385A7;
+ Fri, 22 Apr 2022 00:02:26 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="U1g8W4w5"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1650585744;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=s9YJ+AxOvCGo+608yNkBuz6fniGjDnN27/vTN4qozqQ=;
+ b=U1g8W4w5mXPOSzp02yDVyUOJq3OHK6F9LOhkjdvSk/1MX063a58lwwKfrPDj2Y/UZx+loo
+ Xl7bK2lV1BkP7iJYsjq9sNzhJ57z5tVGLY5eAZpvDF5S/QviE4shKPxlmkmyp5JR9LxTyZ
+ c5LFRt48T/pkfculMStrb+EsyJSr7VI=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id eaac2843
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO); 
+ Fri, 22 Apr 2022 00:02:24 +0000 (UTC)
+Date: Fri, 22 Apr 2022 02:02:21 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Charles-Francois Natali <cf.natali@gmail.com>
+Cc: wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
+ linux-crypto@vger.kernel.org, Daniel Jordan <daniel.m.jordan@oracle.com>,
+ Steffen Klassert <steffen.klassert@secunet.com>
+Subject: Re: [PATCH] WireGuard: restrict packet handling to non-isolated CPUs.
+Message-ID: <YmHwjdfZJJ2DeLTK@zx2c4.com>
+References: <20220405212129.2270-1-cf.natali@gmail.com>
 MIME-Version: 1.0
-From: Aaron Turner <synfinatic@gmail.com>
-Date: Wed, 6 Apr 2022 17:05:46 -0700
-Message-ID: <CANAZdzV=aU51WJO+8F9hUHrRL+V-+tQPHYHUKD8bHqhtvmnjsw@mail.gmail.com>
-Subject: Wireguard crashing MacOS when going to sleep and tunnel active
-To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
-X-Mailman-Approved-At: Thu, 21 Apr 2022 23:50:26 +0000
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220405212129.2270-1-cf.natali@gmail.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -63,32 +66,46 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-I asked on the #wireguard channel and was told to post here like it's
-1999, but here it goes:
+netdev@ - Original thread is at
+https://lore.kernel.org/wireguard/20220405212129.2270-1-cf.natali@gmail.com/
 
-MacOS Catalina / 10.15.7
-MacBook Pro 16"/ 2019 (intel)
-Wireguard from Apple Store v1.0.15 (26)
+Hi Charles-François,
 
-Recently switched from using OpenVPN to Wireguard.  Since then, I've
-twice had my computer reboot upon wake-up which is definitely a new
-behavior.  The only commonality I can think of is that both times I
-had a Wireguard tunnel active when I closed the screen to put it to
-sleep.
+On Tue, Apr 05, 2022 at 10:21:29PM +0100, Charles-Francois Natali wrote:
+> WireGuard currently uses round-robin to dispatch the handling of
+> packets, handling them on all online CPUs, including isolated ones
+> (isolcpus).
+> 
+> This is unfortunate because it causes significant latency on isolated
+> CPUs - see e.g. below over 240 usec:
+> 
+> kworker/47:1-2373323 [047] 243644.756405: funcgraph_entry: |
+> process_one_work() { kworker/47:1-2373323 [047] 243644.756406:
+> funcgraph_entry: | wg_packet_decrypt_worker() { [...]
+> kworker/47:1-2373323 [047] 243644.756647: funcgraph_exit: 0.591 us | }
+> kworker/47:1-2373323 [047] 243644.756647: funcgraph_exit: ! 242.655 us
+> | }
+> 
+> Instead, restrict to non-isolated CPUs.
 
-Not getting a kernel panic/report to Apple message upon booting.
+Huh, interesting... I haven't seen this feature before. What's the
+intended use case? To never run _anything_ on those cores except
+processes you choose? To run some things but not intensive things? Is it
+sort of a RT-lite?
 
-Dunno what else would be useful to help diagnose or disprove this, so
-feel free to reply directly to me.
+I took a look in padata/pcrypt and it doesn't look like they're
+examining the housekeeping mask at all. Grepping for
+housekeeping_cpumask doesn't appear to show many results in things like
+workqueues, but rather in core scheduling stuff. So I'm not quite sure
+what to make of this patch.
 
-Regards,
-Aaron
+I suspect the thing to do might be to patch both wireguard and padata,
+and send a patch series to me, the padata people, and
+netdev@vger.kernel.org, and we can all hash this out together.
 
+Regarding your patch, is there a way to make that a bit more succinct,
+without introducing all of those helper functions? It seems awfully
+verbose for something that seems like a matter of replacing the online
+mask with the housekeeping mask.
 
---
-Aaron Turner
-https://synfin.net/
-My father once told me that respect for the truth comes close to being
-the basis for all morality.  "Something cannot emerge from nothing,"
-he said.  This is profound thinking if you understand how unstable
-"the truth" can be.  -- Frank Herbert, Dune
+Jason
