@@ -4,60 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7306C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 24 Apr 2022 20:03:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD066C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 24 Apr 2022 20:12:20 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 85bc6fb7;
-	Sun, 24 Apr 2022 20:03:42 +0000 (UTC)
-Received: from srv.inf7.email (srv.inf7.email [64.225.52.57])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id d3abe13b
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 327f72b7;
+	Sun, 24 Apr 2022 20:09:53 +0000 (UTC)
+Received: from mout02.posteo.de (mout02.posteo.de [185.67.36.66])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id fcb74f72
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 24 Apr 2022 20:03:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=solidadmin.com; s=default; h=Content-Transfer-Encoding:Content-Type:
- In-Reply-To:Subject:From:Cc:References:To:MIME-Version:Date:Message-ID:Sender
- :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
- List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=loOlZ5/LjuaI/P2w8UQOerSV6KummQSxDcT1jY+cQp8=; b=coHNjquKm/A1DLBNNMVaJVOmdV
- c5F18nzTeaYtyPTHnLADXqoyJixM/GVrWBHpHi3+U1AZ2p8o9V+qP1LF/rz4CpgVqZl4daLAknjp1
- /aMsc+N9phyv4erkDZVUcx3+gjAuTZT2JPuIV1zJwqSj7E4JgOoQ9mBB69q+sVFjM21Jpi1NJTVyl
- 2ousQIsJ4A/6WIyfD6BeBdR/Lwca1IIMI7osWxEcbyH0olr+ehskTDfHJ687F0GdjhYIdrncr5SAA
- d8N/Ug2TDGSZBDHz0huK7LULCEaUrFPkjLULp1rzlS49M0F0Bbi763is3HbbfgXSUoT17tzbTEb9T
- 26lFppuQ==;
-Received: from c-71-201-101-213.hsd1.il.comcast.net ([71.201.101.213]:45096
- helo=[192.168.1.11])
- by srv.inf7.email with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.95) (envelope-from <joe@solidadmin.com>) id 1niiSI-008qpk-EG;
- Sun, 24 Apr 2022 20:03:38 +0000
-Message-ID: <a18d6a8a-1dcc-3093-6931-5ffb1236d287@solidadmin.com>
-Date: Sun, 24 Apr 2022 15:03:37 -0500
+ Fri, 22 Apr 2022 17:45:25 +0000 (UTC)
+Received: from submission (posteo.de [185.67.36.169]) 
+ by mout02.posteo.de (Postfix) with ESMTPS id 83FB4240107
+ for <wireguard@lists.zx2c4.com>; Fri, 22 Apr 2022 19:45:25 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.de; s=2017;
+ t=1650649525; bh=7atDeM3o6EdVFECjLyxTP1wITEWr2gSSIdFSlf20hag=;
+ h=From:To:Cc:Subject:Date:From;
+ b=OaFvW+l/TYm/C5xCR2FH9YvpDTiznW5tYu4MJLVmcN/PJLiTiQJCdlg8qDaYkPVfz
+ edieGAVOkXJUw4XWbjJ7vWmU+3U+9fwpla+sIp29D7sMzgwu+DIPkQ5Jnnbl1k27QC
+ eeTLOLPsGF/H7Mn/Rlhsc3B1go+6xaJYX1zaM1nedqg9bf67jvWGSN5a5g4rBUqNEa
+ lY5oFiqX9hlcxH66H0Th4aAnrvlPHhk8KIjL1AZVdl+kSbxqqOfGnc791hNzG6r3So
+ Go3n2bCucyDDs6BF/tnNDnFPeAA2mGaLVOcetpz6FcpxTkN4oqKAz2dZyL8teU8maw
+ NIQyyfma/9x0w==
+Received: from customer (localhost [127.0.0.1])
+ by submission (posteo.de) with ESMTPSA id 4KlMJ45Cfgz9rxF;
+ Fri, 22 Apr 2022 19:45:24 +0200 (CEST)
+From: Andreas Weigel <andreas.weigel@posteo.de>
+To: wireguard@lists.zx2c4.com
+Cc: Andreas Weigel <andreas.weigel@posteo.de>
+Subject: [PATCH 0/1] wg syncconf not clearing PresharedKey/PersistentKeepalive
+Date: Fri, 22 Apr 2022 17:45:05 +0000
+Message-Id: <20220422174506.22299-1-andreas.weigel@posteo.de>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Content-Language: en-US
-To: steved@redhat.com
-References: <22218021-270c-8ac9-c214-76ae4e1c1263@redhat.com>
-Cc: wireguard@lists.zx2c4.com
-From: Joe Doss <joe@solidadmin.com>
-Organization: SolidAdmin
-Subject: Re: wireguard.ko on RHEL8
-In-Reply-To: <22218021-270c-8ac9-c214-76ae4e1c1263@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse,
- please include it with any abuse report
-X-AntiAbuse: Primary Hostname - srv.inf7.email
-X-AntiAbuse: Original Domain - lists.zx2c4.com
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - solidadmin.com
-X-Get-Message-Sender-Via: srv.inf7.email: authenticated_id:
- jdoss@solidadmin.com
-X-Authenticated-Sender: srv.inf7.email: jdoss@solidadmin.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Mailman-Approved-At: Sun, 24 Apr 2022 20:09:51 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -72,48 +52,22 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hey Steve,
+Hi,
 
-On 4/24/22 1:16 PM, Steve Dickson wrote:
-> 
-> Trying to install wireguard.ko on a RHEL8 vm (4.18.0-348.el8.x86_64)
-> and I'm getting
-> 
->     wireguard: module verification failed: signature and/or required key 
-> missing - tainting kernel
-> 
-> The entire error:
-> http://pastebin.test.redhat.com/1046896
-> 
-> is there anything at can be done about that?
-> 
-> I'm new to wireguard and I'm pretty impress...
-> It came up in both Fedora rawhide and an
-> unreleased verson of RHEL9...
-> 
-> We are trying to used it as our network in
-> a community wide virtual NFS testing event
-> called Bakeathon [1]
-> 
-> Again I'm new to wireguard but not to kernels ;-)
-> So if you could throw something at me to
-> help me get over this bum... It would be appreciated!
-> 
-> Note: I am not member of this list so please
-> reply to be directly.
+I noticed that wg syncconf does not actually clear PresharedKey and
+PersistentKeepalive values if those are not set in the file but set in
+the running config. The proposed patch changes that to always
+clear those if they are not set in the configuration file, which imho is
+the correct behavior.
 
-You have secure boot enabled, so you need to generate a MOK key pair, 
-manually sign your wireguard.ko, and enroll your MOK cert or disable 
-secure boot.
+Andreas
 
-I use this script [1] to sign my NVIDIA drivers on my workstation after 
-they are built via akmod.
+Andreas Weigel (1):
+  wg syncconf: explicitly reset PresharedKey/PersistentKeepalive
 
-Hope this helps!
-Joe
-
-[1]: https://gist.github.com/jdoss/495e814ef4ef599e480c31d4843eb6c0
+ src/setconf.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 -- 
-Joe Doss
-joe@solidadmin.com
+2.25.1
+
