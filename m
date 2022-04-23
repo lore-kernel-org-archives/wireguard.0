@@ -4,55 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AF50C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 23 Apr 2022 01:08:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 698BEC433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 23 Apr 2022 02:03:10 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 8227a44a;
-	Sat, 23 Apr 2022 01:08:14 +0000 (UTC)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 33d5769d
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id cb0f7b55;
+	Sat, 23 Apr 2022 02:01:37 +0000 (UTC)
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com
+ [2607:f8b0:4864:20::62a])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 9091318e
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 23 Apr 2022 01:08:12 +0000 (UTC)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id 14D3DB831BC;
- Sat, 23 Apr 2022 01:08:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2231BC385A0;
- Sat, 23 Apr 2022 01:08:10 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="Yy/eAe26"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1650676088;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6AW/tHyGYH7buMqMi2HrCUPQKHLBIz8Z8Mq8CEPo14E=;
- b=Yy/eAe26VKr7OGfH2Y6VmzQOHrBaFcJLcZFxCIwoM5GuWBkc2pVHJvNsZCnWn7qW3IE260
- elg/9Ox4JG1Pse8sMQB6nuBzab/le2Ft81PiwE6ZwKadRJyrJbbMWUX6Sn6qMScxZY19r8
- ci2DLY0hWVYObTdHGli6SRfrLCitsj4=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ff5900aa
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO); 
- Sat, 23 Apr 2022 01:08:08 +0000 (UTC)
-Date: Sat, 23 Apr 2022 03:08:04 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: =?utf-8?Q?Charles-Fran=C3=A7ois?= Natali <cf.natali@gmail.com>
-Cc: wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- linux-crypto@vger.kernel.org, Daniel Jordan <daniel.m.jordan@oracle.com>,
- Steffen Klassert <steffen.klassert@secunet.com>
-Subject: Re: [PATCH] WireGuard: restrict packet handling to non-isolated CPUs.
-Message-ID: <YmNRdLy1U2N9JN2n@zx2c4.com>
-References: <20220405212129.2270-1-cf.natali@gmail.com>
- <YmHwjdfZJJ2DeLTK@zx2c4.com>
- <CAH_1eM2ECPKLcHAKQ-RNf4Zj5hrgT-aJ9pjTKfChf9fnZp5Vkw@mail.gmail.com>
+ Sat, 23 Apr 2022 02:01:34 +0000 (UTC)
+Received: by mail-pl1-x62a.google.com with SMTP id n18so14591222plg.5
+ for <wireguard@lists.zx2c4.com>; Fri, 22 Apr 2022 19:01:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=message-id:date:mime-version:user-agent:subject:to:cc:references
+ :from:in-reply-to:content-transfer-encoding;
+ bh=ftDI3fGxYjSHQufYqbd+z4VxYRZZpLg3z3NT+8BHTIE=;
+ b=Q+M/b61A6tYVshwlDHCfqgvcjHPsv1YZfSNwUqg80x3c7o7ZDwJshvwP61uM9Y/iYj
+ N+wH0S0x2WSx9+iHDuJ4sc5zHJiPHnrQRgXtFGdb0Mi7Y/pcKfAm3v0vANyxZecloHLj
+ coYNS25ZGjJRpShC3r1izFW2ZVTlnzqquUdCxLu5HdaVqC6aQYJ6qsoagyVcVS7bsFbl
+ z3QHDlsA3xCKv9Wqng/PERf0ymHAXgb2FDuWf+q0MYOXRjfn698OhmW8d1y9DWzAGhp1
+ 3If7o5yCvVm8ShN3YR7hlvFcmrbmIacftPmnEIxV6FrJyv4bcDInfZ6Tkg61yHfmysiq
+ YGgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+ :to:cc:references:from:in-reply-to:content-transfer-encoding;
+ bh=ftDI3fGxYjSHQufYqbd+z4VxYRZZpLg3z3NT+8BHTIE=;
+ b=n8mth4vGflCQJAfuejBS1Hwb1OeIjCbGHbL8M2Y1K9Q9h/rz470qOuUPBDfVKyz9PU
+ SEcsOaug+/jel6mIF2JA4EduB2DIrXEcEEys6kKxb7/BTd7OMyVD/+ii4ZIgJ1YLyDsl
+ 8Yk80CXZSnqquJ9etwd08HF3XAkX6KU2R0ytxC+P25MOyTqZbipD/VBN0vHraW81d/V2
+ oErfojUivz9hTkNVSEsChJ9ghwImEwnsn4pYdpp0VDR4g4bc9oYMeQHG7oNdPDn2Fqrs
+ jc722a4clyTJ/DBlB7NRTfAJb6oy3AO1eCcyN8SHwDlJVVXWgV4tPd8wKBiwauT0lCPI
+ 2FUw==
+X-Gm-Message-State: AOAM532MRg8PB7Y0BekWlBlPJjPCzw6AthtfCW0TxJSYUD3IaAPaDOSW
+ m0Zk2Y+cmDZbQeUD2ufAMW41Zi54ZUA9Bg==
+X-Google-Smtp-Source: ABdhPJw8bHSTXJzkCj77u4D4M5ocC0fihjaKFqg1OsCffbLyqkyj4Nyx3Ryn8+ZNhHM5BK0I7KyJVw==
+X-Received: by 2002:a17:902:c78b:b0:15c:e5dc:4f63 with SMTP id
+ w11-20020a170902c78b00b0015ce5dc4f63mr895189pla.90.1650679293126; 
+ Fri, 22 Apr 2022 19:01:33 -0700 (PDT)
+Received: from localhost (59-115-140-93.dynamic-ip.hinet.net. [59.115.140.93])
+ by smtp.gmail.com with ESMTPSA id
+ gw16-20020a17090b0a5000b001cd4989fed1sm7256665pjb.29.2022.04.22.19.01.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 22 Apr 2022 19:01:32 -0700 (PDT)
+Received: from [192.168.50.10] (blum-vo.family.era [192.168.50.10])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange ECDHE (P-384) server-signature ECDSA (P-256) server-digest
+ SHA256) (No client certificate requested)
+ by mail.family.era (Postfix) with ESMTPSA id 07B5714019F;
+ Sat, 23 Apr 2022 10:01:31 +0800 (CST)
+Message-ID: <1dd6c632-0aa3-fffe-78fe-cfb61c22028e@gmail.com>
+Date: Sat, 23 Apr 2022 10:01:28 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAH_1eM2ECPKLcHAKQ-RNf4Zj5hrgT-aJ9pjTKfChf9fnZp5Vkw@mail.gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: Is it possible to disable wireguard on specific Wi-Fi ?
+To: Kai Haberzettl <khaberz@gmail.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <84b2749c-4a9d-b58e-0659-09ee9c70c67c@gmail.com>
+ <CA+CGqo+038VDaCQv9UVJBrh_vKA67AUc78mEvDSYw8Npuy1L5Q@mail.gmail.com>
+From: Nohk Two <nohktwo@gmail.com>
+In-Reply-To: <CA+CGqo+038VDaCQv9UVJBrh_vKA67AUc78mEvDSYw8Npuy1L5Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -67,70 +83,20 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Charles,
-
-On Fri, Apr 22, 2022 at 11:23:01PM +0100, Charles-François Natali wrote:
-> > Regarding your patch, is there a way to make that a bit more succinct,
-> > without introducing all of those helper functions? It seems awfully
-> > verbose for something that seems like a matter of replacing the online
-> > mask with the housekeeping mask.
+On 2022/4/23 02:23, Kai Haberzettl wrote:
+> On Fri, Apr 22, 2022 at 2:26 AM Nohk Two <nohktwo@gmail.com> wrote:
+>>
+> [...]
+>> So, I have this idea that if it is possible to configure the Wireguard
+>> app to turn off or disable automatically when the network is established
+>> on specific Wi-Fi SSIDs ?
+>>
+>> Or do you have better ideas ?
 > 
-> Indeed, I wasn't really happy about that.
-> The reason I've written those helper functions is that the housekeeping mask
-> includes possible CPUs (cpu_possible_mask), so unfortunately it's not just a
-> matter of e.g. replacing cpu_online_mask with
-> housekeeping_cpumask(HK_FLAG_DOMAIN), we have to perform an AND
-> whenever we compute the weight, find the next CPU in the mask etc.
-> 
-> And I'd rather have the operations and mask in a single location instead of
-> scattered throughout the code, to make it easier to understand and maintain.
-> 
-> Happy to change to something more inline though, or open to suggestions.
+> As a workaround, you can achieve what you want with tasker.
+Indeed, this "tasker" app might work. Though it's some kind of overkill.
 
-Probably more inlined, yea. A simpler version of your patch would
-probably be something like this, right?
+I will consider this workaround on the Android phone when there are no 
+other solutions.
 
-diff --git a/drivers/net/wireguard/queueing.h b/drivers/net/wireguard/queueing.h
-index 583adb37ee1e..b3117cdd647d 100644
---- a/drivers/net/wireguard/queueing.h
-+++ b/drivers/net/wireguard/queueing.h
-@@ -112,6 +112,8 @@ static inline int wg_cpumask_choose_online(int *stored_cpu, unsigned int id)
- 		cpu = cpumask_first(cpu_online_mask);
- 		for (i = 0; i < cpu_index; ++i)
- 			cpu = cpumask_next(cpu, cpu_online_mask);
-+		while (!housekeeping_test_cpu(cpu, HK_???))
-+			cpu = cpumask_next(cpu, cpu_online_mask);
- 		*stored_cpu = cpu;
- 	}
- 	return cpu;
-@@ -128,7 +130,7 @@ static inline int wg_cpumask_next_online(int *next)
- {
- 	int cpu = *next;
-
--	while (unlikely(!cpumask_test_cpu(cpu, cpu_online_mask)))
-+	while (unlikely(!cpumask_test_cpu(cpu, cpu_online_mask) && !housekeeping_test_cpu(cpu, HK_???)))
- 		cpu = cpumask_next(cpu, cpu_online_mask) % nr_cpumask_bits;
- 	*next = cpumask_next(cpu, cpu_online_mask) % nr_cpumask_bits;
- 	return cpu;
-
-However, from looking at kernel/sched/isolation.c a bit, I noticed that
-indeed you're right that most of these functions (save one) are based on
-cpu_possible_mask rather than cpu_online_mask. This is frustrating
-because the code makes smart use of static branches to remain quick, but
-ANDing housekeeping_cpumask() with cpu_online_mask would, in the fast
-path, wind up ANDing cpu_online_mask with cpu_possible_mask, which is
-silly and pointless. That makes me suspect that maybe the best approach
-would be adding a relevant helper to kernel/sched/isolation.c, so that
-the helper can then do the `if (static_branch_unlikely(&housekeeping_overridden))`
-stuff internally.
-
-Or maybe you'll do some measurements and decide that just [ab]using
-housekeeping_test_cpu() like above is actually optimal? Not really sure
-myself.
-
-Anyway, I'll keep an eye out for your joint wireguard/padata series. Be
-sure to CC the people who wrote the isolation & housekeeping code, as
-they likely have opinions about this stuff (and certainly know more than
-me about it).
-
-Jason
+Thank you very much.
