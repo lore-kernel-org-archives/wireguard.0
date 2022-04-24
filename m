@@ -4,65 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64BCFC433FE
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 24 Apr 2022 20:12:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4066AC43217
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 24 Apr 2022 20:12:23 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 07aaf595;
-	Sun, 24 Apr 2022 20:09:56 +0000 (UTC)
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.131])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 44d1cf6f
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 3295c079;
+	Sun, 24 Apr 2022 20:09:57 +0000 (UTC)
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com
+ [2607:f8b0:4864:20::22b])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 980f1ed5
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 22 Apr 2022 20:26:55 +0000 (UTC)
-Received: from [192.168.10.75] ([95.91.235.163]) by mrelayeu.kundenserver.de
- (mreue011 [213.165.67.97]) with ESMTPSA (Nemesis) id
- 1MAwoL-1nb9Ea05XN-00BPD6; Fri, 22 Apr 2022 22:21:49 +0200
-Message-ID: <4b222049-3ea1-356b-d50c-6b6533fb9eb1@anterias.io>
-Date: Fri, 22 Apr 2022 22:21:45 +0200
+ Sun, 24 Apr 2022 09:20:02 +0000 (UTC)
+Received: by mail-oi1-x22b.google.com with SMTP id a10so13980086oif.9
+ for <wireguard@lists.zx2c4.com>; Sun, 24 Apr 2022 02:20:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=SCHMbSaYA6a4nVgUe57/3r8Gxv/yUrMOwc+qFG8cFn0=;
+ b=czUtoS7xz33EkD3yMb8PtHLUi+eGf5YbnxhMTs/0poGTBKIt1vPqMUxFCDNdwQRIVg
+ 0dUge1WtQtdqaTVYhrwpN5g4Kn9IQARmiRQAyv17ZzFpWZaKiyIN7ek6QucfN9RM5RZU
+ KN8aPxGiHlscSUlU+jzZREC0XqWEDakagAHBHbBlciA3mLxxHc/x/OskYQEAy5WfnsYb
+ a19SDDVprnI7KH1HIxD9boBAqWjIXYn4EWpU9KepEmILgyLte/xRj/8gBlyLDKLovJoO
+ 6O04vIDm+AZAkwZ/oHo2bUj6/4uy2qBaeuDMqbvGWwrA3Nk62UlUvwNB8PLoqafc33+L
+ WApQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=SCHMbSaYA6a4nVgUe57/3r8Gxv/yUrMOwc+qFG8cFn0=;
+ b=q34qblBL090WDgPZvTMl48fhMPwhGBlNUzt6khCW451MJ8Ox7JlyjIbxHHXAx7BKap
+ uHjWiHfE/o+4a3/1yej/zpnW6BMH0VC552WPTvBCTQUETT9dQLTFjgnJJYLef1o8fwGY
+ mJsJ1MKEMVSmshb8I/xgIT94b6fAralh1MKjWYNHTTMjRqr4Sa5oOlxTTyx3OAvnscMN
+ 7PQ+Yo6jZ3FKON8FkQmWJO345SYo+3tHoEnB/MlmmI7fVtLtTGgv4UlC8Kqqi1ERoy+a
+ v7PNtc6tAAoL9WuFhV2Ifr2FP0N1Gjt5qTvVkoL6DlDrKQNDKewCLVZlfu0nxpFQgJ5s
+ 2+UQ==
+X-Gm-Message-State: AOAM533FqO+fIMudvDU0vV+8nQ/7LdvcyMXCH77+gffzASzgPkurVPrR
+ BhKna0aG6hAQSWd7M7t0taOo4sZeBwCOslefoYfmr+YBzSB8HQ==
+X-Google-Smtp-Source: ABdhPJwfHMoZHXKaCmRw1P5Z7BTNJPsMoV25mKAOkOk7dvCXaOp2Eg2NpAAdZeXlw4F5BPxVJPwZLU2YrXQHJy7nE6g=
+X-Received: by 2002:a05:6808:1991:b0:322:cc19:3199 with SMTP id
+ bj17-20020a056808199100b00322cc193199mr10198366oib.297.1650792001483; Sun, 24
+ Apr 2022 02:20:01 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- Phillip McMahon <phillip.mcmahon@gmail.com>
-Cc: Adrian Larsen <alarsen@maidenheadbridge.com>,
- Clint Dovholuk <clint.dovholuk@netfoundry.io>,
- Riccardo Paolo Bestetti <pbl@bestov.io>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
-References: <CAHmME9oMFQtePYt37+4eyOn23mwHwP2UGxQi=SaJk9J3p1zCpw@mail.gmail.com>
- <C7CEJYWC3YU7.2DQYKR91NB6CP@enhorning>
- <8bf9e364f87bd0018dabca03dcc8c19b@mail.gmail.com>
- <CAHmME9pdDDjVWmxGdh42tJy2KbxT7ZSj9PEsjEyHRMwZpora+A@mail.gmail.com>
- <d9dc454a-15fd-a547-8d0f-b7916818c3de@maidenheadbridge.com>
- <CAHmME9q_UbmfVyd9hH5+b1n6pE=mOgZdKMcyF=AFf2Nm0QHumg@mail.gmail.com>
- <3b4f9ec2-2f50-25c9-0e27-7ca0d2f16943@maidenheadbridge.com>
- <CAHmME9pP4u5-HjZcdj0SAymGmoG36kA0sbcvRo7=mr8XZ-RXHA@mail.gmail.com>
- <CABtXGiD7Q4904nit3C=A12AnJh0rmLeW3skhPoWXEYdP2mLTXw@mail.gmail.com>
- <CAHmME9ohy8Tfko=hO3jLDCJ92X6LQmYoCyTmCgH9N0R5EdPw5g@mail.gmail.com>
- <CABtXGiDREy3K00JLQfuCmu3hTrKnorBd0VrL5kKEL4_x3Lc1jA@mail.gmail.com>
- <CAHmME9o6MdOW=ODPH=Ksh5urUJaaE5Y8HPwkdL7F-_3XCa1KJQ@mail.gmail.com>
- <CABtXGiAK_T0sVPPq_aXLs_fnPG=A9bKZrN-oj7dZa4Wb2j0_Eg@mail.gmail.com>
- <CAHmME9qAmJt7C7KefU9m-9NkqdmkkGWY34YFwNT0Qm-N_1Tkxw@mail.gmail.com>
-In-Reply-To: <CAHmME9qAmJt7C7KefU9m-9NkqdmkkGWY34YFwNT0Qm-N_1Tkxw@mail.gmail.com>
-From: "zer0flash@anterias.io" <zer0flash@anterias.io>
-Subject: Re: Using WireGuard on Windows as non-admin - proper solution?
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:E79aZ65HP8Gnb9Ya99vpba2ia24kMxXxbLdQnklwmgqs7mUZ8zo
- zHqOR4UWrVQNV21l45bRi/iteh2+vJoRoT51rhufOwhYF/UHWjIk6ZTRTKnCeNeXrDYia8L
- n9EKIsQ8/ftunMTO8/OY13qtYV52qIbz1a1iQFXcksqdrBiYGmW1ZOxuPgABwHBr7AusIJM
- E+hUDgwHtfxxr4B3JBtLA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:edBgEZecyHs=:YOQO8Ok4Ty0HcOax6ftVa9
- OgJ+zBHnEZx/W79ThaW9zP+gxqB1SKbQbZQ3PnzotowtZqXP9TJwJV7fgGbEwFODlOtE/6nuv
- nINb2ZLit7GuRTf01azFVKI0l+Uo70ok3mTyr7OhR0CDVOWOyfu+bcks1KqRTgQgQ20Z1P+WY
- mShB4SyeN4FBx7jmnyH2IqugyFg5FDEy+Jte6WVFBQukD+0vjg/V6OpVouEGxtc9ArZcf49tK
- Y2ZWSpmk27ipuMMcdbqiD5RUNQQGpb++LlVRQBBuC1n6lOF7AhfRI9dIHsGphlXJRrrbwQCHo
- HQvYyVkSSnkK7McBZPg6F5XXukDEvWvVDSzlX2Qcut5V2GC1PXY/oRUIl4DJKi1+Ltn9PR5cz
- ZKM4m7LyIzSm3mOLjqIeYbzNzCNupD7YCPkhqkLg1q5DITC5ZeEeZCJK4qXJSb04i3qJXxP9x
- F14dbjDFH3tJrzEKby9J/NQ6zvyCGfttrZNw11MI0vLtybK+3aJeXtuGiGtXPsv0mCU4h4XNL
- HXUqZL2knSnHYjc6/ttfm9EW/5dnB4WqUSetxym+E4kLpBfbXgJRFf/Vu4v9/NsbmQr/0fJSL
- C2C/07vyXb+8WwZwCJQzMCWpWQFaeNRUJXZW7cWBieRfSPxLTDBTgdc2WFtAAmWu3JTLD/VwG
- 1leFqUUrLIYKcYKdQFDhY9QC8SctmpIji+RjTV+qfzu002JrjV/CoWioruJ9ija0yMXV+C/3t
- EkIvfyDoFTdSd/6m
+From: roy azachi <royaza1998@gmail.com>
+Date: Sun, 24 Apr 2022 12:19:50 +0300
+Message-ID: <CAHskJYgbLezQMWkC=+LaZ0vhKMz2Qg1fSmigNGGsDj0yxRVHQA@mail.gmail.com>
+Subject: [PATCH] Fix Wireguard-Apple Logger Memory Leak (Fix Wireguard-Apple
+ Logger Memory Leak)
+To: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
 X-Mailman-Approved-At: Sun, 24 Apr 2022 20:09:51 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -78,47 +65,64 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+Using "Instruments" tool shows every log message from the
+SystemExtension creates a persistent allocation. Although it seems
+there is no retain cycle, the allocated resources are not freed, which
+might be caused by the way the function is invoked using golang
+instead of the usual swift invocation freeing allocations with zero
+retain counter . Using the "autoreleasepool" seems to solve it.
+the call tree not freed:
+  12 WireGuardNetworkExtension     runtime.asmcgocall.abi0
+  11 WireGuardNetworkExtension     _cgo_f1100e4bfc6f_Cfunc_callLogger
+  10 WireGuardNetworkExtension     callLogger
+   9 WireGuardNetworkExtension     @objc closure #1 in
+WireGuardAdapter.setupLogHandler()
+<reducted>/wireguard-apple/<compiler-generated>:0
+   8 WireGuardNetworkExtension     closure #1 in
+WireGuardAdapter.setupLogHandler()
+<reducted>/wireguard-apple/Sources/WireGuardKit/WireGuardAdapter.swift:299
+   7 libswiftCore.dylib      specialized static String._fromUTF8Repairing(_:)
+   6 libswiftCore.dylib      specialized static
+String._uncheckedFromUTF8(_:asciiPreScanResult:)
+   5 libswiftCore.dylib      specialized static
+__StringStorage.create(initializingFrom:isASCII:)
+   4 libswiftCore.dylib      _allocateStringStorage(codeUnitCapacity:)
+   3 libswiftCore.dylib      _swift_allocObject_
+   2 libswiftCore.dylib      _swift_allocObject_
+   1 libswiftCore.dylib      swift_slowAlloc
+   0 libsystem_malloc.dylib      _malloc_zone_malloc
 
-On Sun, Nov 29, 2020 at 9:59 PM Jason A. Donenfeld wrote:
-> On Sun, Nov 29, 2020 at 8:44 PM Phillip McMahon
-> <phillip.mcmahon@gmail.com> wrote:
->> Won't drag this already long and confusing thread out. Not challenging
->> the current implementation, just the notion that any other suggestion
->> is a dead end and the topic is closed.
-> 
-> Alright. Well, if you do think of good reasons why NCO is not a good
-> match for unpriv'd WireGuard control, please let me know. The whole
-> basis of going that route is the apparent intuition that these two
-> types of things, network modification and tunnel up/down, are one and
-> the same. But if you have in mind a way where the analogy breaks down,
-> that'd be very interesting to learn and would potentially be grounds
-> for changing course.
+Signed-off-by: Roy Azachi <royaza1998@gmail.com>
+---
+ Sources/WireGuardKit/WireGuardAdapter.swift | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-We provision a lot of road warrior laptops, where users are not admins. 
-They can of course use 5g, wifi or lan as required and have to be able 
-to switch on/off the vpn tunnel. If working from our office for example, 
-they do not need the vpn due to an existing site-to-site vpn connection. 
-So they need to turn it off by themselves. That's why the feature makes 
-a lot of sense in my humble opinition.
+diff --git a/Sources/WireGuardKit/WireGuardAdapter.swift
+b/Sources/WireGuardKit/WireGuardAdapter.swift
+index 4cb2e2e..3828951 100644
+--- a/Sources/WireGuardKit/WireGuardAdapter.swift
++++ b/Sources/WireGuardKit/WireGuardAdapter.swift
+@@ -295,11 +295,12 @@ public class WireGuardAdapter {
 
-However, any member of the local "Network Configuration Operators" group 
-is not only able to to activate the WireGuard tunnel but also
+             let unretainedSelf =
+Unmanaged<WireGuardAdapter>.fromOpaque(context)
+                 .takeUnretainedValue()
++            autoreleasepool {
++                let swiftString = String(cString:
+message).trimmingCharacters(in: .newlines)
++                let tunnelLogLevel = WireGuardLogLevel(rawValue:
+logLevel) ?? .verbose
 
-- disable any firewall rules
-- add new any firewall rules
-- disable the whole firewall by changing the default to allow all incoming
-- change ip address / dns settings on any interface
-
-I think that adding an otherwise unprivileged user to the NCO group just 
-for activating a preconfigured vpn tunnel might pose security issues in 
-other areas.
-
-> 
-> Jason
-> 
-
-Regards
+-            let swiftString = String(cString:
+message).trimmingCharacters(in: .newlines)
+-            let tunnelLogLevel = WireGuardLogLevel(rawValue:
+logLevel) ?? .verbose
+-
+-            unretainedSelf.logHandler(tunnelLogLevel, swiftString)
++                unretainedSelf.logHandler(tunnelLogLevel, swiftString)
++            }
+         }
+     }
 
 --
-Fabian
+2.30.1 (Apple Git-130)
