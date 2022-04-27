@@ -4,55 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14E4EC433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 27 Apr 2022 18:48:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98197C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 27 Apr 2022 18:59:22 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id f035c96d;
-	Wed, 27 Apr 2022 18:48:16 +0000 (UTC)
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com
- [2607:f8b0:4864:20::b30])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id be0a520d
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 27154e8a;
+	Wed, 27 Apr 2022 18:52:49 +0000 (UTC)
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com
+ [2a00:1450:4864:20::22a])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id a84ca7c3
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 25 Apr 2022 07:46:30 +0000 (UTC)
-Received: by mail-yb1-xb30.google.com with SMTP id v25so3751079ybd.8
- for <wireguard@lists.zx2c4.com>; Mon, 25 Apr 2022 00:46:30 -0700 (PDT)
+ Wed, 27 Apr 2022 18:51:11 +0000 (UTC)
+Received: by mail-lj1-x22a.google.com with SMTP id v4so3834786ljd.10
+ for <wireguard@lists.zx2c4.com>; Wed, 27 Apr 2022 11:51:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to
- :content-transfer-encoding;
- bh=CMhR5VM/477a9Yj4YYtd8Ckd+NxR5Pi7JfTi20JrFec=;
- b=b25ANSEejlT5EIjmEpOT+MMY95nCdKOxWgjAvoXNVNZghk8B1g8S9ZMiA424okHn3g
- VqDpGndTR5YIn8CSHnFIB4zI5BAhvMWcZ896VgeD4nfBMwI344hDAA8MnXh0AF1PWT76
- L2frVxq4n+35ANiRBsmwx7r1wYSpVDfdxR8jukJbjBJnNy5326pMZO9OPoYsCUcOSg4g
- damJhm2Q9Yac8gFy8Yqwtki3edO9Je7nu8Br+d+BI98PmgVJbGeAlxn69qmChxSB658J
- gbmLzhFMDanbSJg4LS3rpd4HgWunZHDle9klzV8DAhdD24CPsM+4OO49cPeL2V1gXWyW
- EYcw==
+ h=mime-version:from:date:message-id:subject:to;
+ bh=X1V6hgDwYU1Mt1xt8aZNqkunKKrVkE5RgOciCJzloRQ=;
+ b=dMstIZacVSbaBYHV4lf5ZX3W+yN74tbkTaEFFkHhh3XJPeoupSuGvti1SFn8IwGvm1
+ aIPqv+e0EzL+OKGUodElCNRjn4lWFyDBMC7fVbDPD/IGyLI0FjHhW1RBRiBulvpa/6iC
+ Bj96YR9Nw+FznSY+0jXhIMVpWfABn8qvL84YB4YhEdpCi2oJf/NlX+USQz2ZncZMtkjC
+ GCTlwOmZ7JvnGbC2YLtjwNJKf7IiIAC4reFSttl3e/zVQ/gxFudnVtWeFofg1uUWf1eR
+ HcIwwDMgquG+WapfHFhnQO6FbZJeWkfQqiewvfZvYWc/VWp61Jt6SQYf1iTM9SiXEcf/
+ GKHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to
- :content-transfer-encoding;
- bh=CMhR5VM/477a9Yj4YYtd8Ckd+NxR5Pi7JfTi20JrFec=;
- b=bm9tUjKv3ZlP8HAk5Ubg1BpjPX1NPQ4pDuPlP6zGEnlul0nENp2kAxRBw4JCao4vOe
- 2tdkzgsYc/s+UM94h17iPVyo8R9jO8Qr5kS/SvYmd1bvWqn6fTnLxC2L88q57S0GMGUf
- 2LZkrRdvvP2sFLeAJsQhmZBb9lRd9569Ma2MZt/x2ytFJpfbI36WYRXRDALD6jJVktQR
- 17Ed/iJDMwJOX8ViQg/BsSGGu0th0u9WSYQpbDbRrBMWGIc9NR7COzpwghuwiqduPpco
- Dgawa11o+VRcw4B2Qcgd+ohJcx+jYs1pAEb+LCK1i/R6+5CDLUF3vsXylw0LPmHERc7R
- lf9g==
-X-Gm-Message-State: AOAM530PxLRrVHZlOUZ/tvMkh5Vqh2oCOVeFpS07fXTdWeoiS6S9SteJ
- i893LAePbkmosBskRqyJjMGdiOaeDygZG4CghpE+KgTdZfA=
-X-Google-Smtp-Source: ABdhPJyfilPj/OkCnylw35qUYt+XiAA8iobCboskWboyAWX3gdhWftyAQSr3/78pqgHsqsr4e+/Mfx7KrwdvcRuhp4Q=
-X-Received: by 2002:a25:3d8:0:b0:645:dba1:fe0f with SMTP id
- 207-20020a2503d8000000b00645dba1fe0fmr11134483ybd.457.1650872789049; Mon, 25
- Apr 2022 00:46:29 -0700 (PDT)
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=X1V6hgDwYU1Mt1xt8aZNqkunKKrVkE5RgOciCJzloRQ=;
+ b=YzB4NYcKI/LhrZehZ1UrZ//mxppLjcEnCktS65sLj0xnhRwwPQmvPefLojd5aFTuCn
+ zwfNNjxWyomg+YcjOgY3H+ESVMsJ9fKq9HJooXH5U/3nmH2+fgxavmEGcXyi5TdlF5Oj
+ l4puTb0/8MGmfXwpbWP3zMHamQYjwtcSqFaUJoplKi3eSH+nw5nDZqKdAo3M5yxzSCHo
+ NjS8nhNXmGC5zqY3acgCUsitraglXOgDRkOEkeChkPVYY0gOeNwKJJZUoDwpt6XSLfZU
+ aMFAUw9qbi1oo+uzRNqutc2KigbEQaPxz+WdiYkSq6CgSrxGC7nXCsWKfFvl3AOlaUMD
+ bA8g==
+X-Gm-Message-State: AOAM532r7Sst9YvFjphoDEoyEBM4PFhP0vfVoJqzaHK//GEqUedJhkZS
+ mLbT0Z1vjT0eiiypqy3crdtxgiCt/hd41XnCGJhzmuvJwQRKgQ==
+X-Google-Smtp-Source: ABdhPJx8NPtxVQUpbijIsbYckURcrWmzv8/KMNMlp4HITSKAClDJJQoWDWWnF2m/ZAESnOL9WfcXhaH5LvC7yby4lX4=
+X-Received: by 2002:a2e:a54d:0:b0:24f:631:ed47 with SMTP id
+ e13-20020a2ea54d000000b0024f0631ed47mr14598079ljn.372.1651085470857; Wed, 27
+ Apr 2022 11:51:10 -0700 (PDT)
 MIME-Version: 1.0
-From: Szymon Nowak <szymonn841@gmail.com>
-Date: Mon, 25 Apr 2022 09:46:18 +0200
-Message-ID: <CA+hy6dtvQ0W2Z9-TWwpcTyGXMQjrxTB_FMdg-2ZVZs4J=7F3hg@mail.gmail.com>
-Subject: Windows version two big problems
+From: Pierre Grimme <gamedev.pierre.grimme@gmail.com>
+Date: Wed, 27 Apr 2022 20:50:58 +0200
+Message-ID: <CAHjGJ4PPALxp8x5kCVFb3a2_0CydJF2CzP0LdFmnZ7YfCh4MRA@mail.gmail.com>
+Subject: Feature Request: Configurable Re-Resolving of DNS Endpoints
 To: wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailman-Approved-At: Wed, 27 Apr 2022 18:48:15 +0000
+X-Mailman-Approved-At: Wed, 27 Apr 2022 18:52:48 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -67,37 +64,36 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-I  found two Wireguard problems under Windows and am looking for help
+[Situation]
+Using a Domain as Endpoint on your WG-Client to reach the server with
+a dynamic IP address breaks the connectivity when the server changes
+its public IP address.
+Wireguard only resolves domains once and uses from there on the
+resolved IP address. This is a huge problem in the private sector,
+where static IP addresses are not common. Even worse is the situation
+with Dual-Stack-Lite configurations, where your public IPv4 address is
+not reachable from outside. You have to use domains pointing to your
+current IPv6 address to get connection to your local network.
+The end user does not understand why the connection is not working
+anymore, especially on mobile devices. Also, a workaround with the
+re-resolve script is not possible due to lack of system file access
+and permissions. Private internet connections are force quitted every
+24h. More often if something goes wrong.
 
-First problem
-When you generate a key, its first character is =E2=80=9E\=E2=80=9D  or  =
-=E2=80=9E+=E2=80=9D
-then the peer configuration does not work properly and you cannot
-connect to such configured client
+[Intention]
+There is an open-source project called netmaker which builds meshed
+networks with wireguard vpn connections. If you try to self-host this
+program on your private internet connection you need an endpoint
+address which is static. The need here is to input an address
+dynamically via a domain so you could always reach your server master.
 
-Exampe
-C:\Program Files\WireGuard>wg genpsk
-+RFmc+cEztZ/XcNquWvUJdNqlVfYWB3fM7bVCDaUOV4=3D
-
-[Peer]
-PublicKey =3D vruCee8G/DSwxotMHfhYQu8hcDEyi6uX4XEjT4FDxDc=3D
-PresharedKey =3D +RFmc+cEztZ/XcNquWvUJdNqlVfYWB3fM7bVCDaUOV4=3D
-
-All the peers below stop working
-
-Second problem
-When i add rule to VPN peer
-example
-C:\Program Files\WireGuard>wg set peer_server peer
-pExQ/CXgvHrq6kSO15H+PnCwDxENY7Mk3P7rPYv0F3Y=3D preshared-key
-client3_PresharedKey allowed-ips 10.0.0.4/32
-
-Then i cant  update config file
-C:\Program Files\WireGuard>wg setconf peer_server peer_server.conf
-Line unrecognized: `Address=3D10.0.0.1/24'
-Configuration parsing error
-
-Wg not supporte "Addres line" - I know  , only wq-quick supoort this
-rule but wg-quick not exist on Windows platform . Every time I have to
-add a rule manually and restart the service, then I disconnect all
-clients
+[Solution]
+The solution would be to re-resolve the endpoint address from time to
+time. The big benefit is that your endpoint IP could be dynamic. Your
+domain can point to a cname, a or aaaa record, which would enable
+people with a Dual-Stack-Lite internet connection a "stable"
+connection. Due to the concept of wireguard to be minimalistic it
+would be perfect, if the feature is off by default and only turned on
+when you enable it in wg-interface config. It would be great to have a
+configurable parameter e.g "dns-resolve-duration = 10 #in seconds"
+The solution should be usable with all available wireguard clients.
