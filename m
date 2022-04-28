@@ -4,55 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A99FAC433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 28 Apr 2022 05:56:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 200C0C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 28 Apr 2022 16:06:40 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 59d31f0a;
-	Thu, 28 Apr 2022 05:56:03 +0000 (UTC)
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com
- [2a00:1450:4864:20::12e])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id e287b7fe
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 037eb0c3;
+	Thu, 28 Apr 2022 16:06:38 +0000 (UTC)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id c539a5d2
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 28 Apr 2022 05:56:02 +0000 (UTC)
-Received: by mail-lf1-x12e.google.com with SMTP id w1so6725589lfa.4
- for <wireguard@lists.zx2c4.com>; Wed, 27 Apr 2022 22:56:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
- bh=eraD9E3KCTbsbmEWT2iLg3x251PjILBXIqHIiVlpvsA=;
- b=p9ZnHzUArH8W4Ynaxi+JHxgMVNMKxPLKxMXi9I08t4bdWz5b8zYC2mHeYe1KUTNT0U
- 75aZSJP79gnVIOoaqcF1HH8ZO8U3bB+qnwhQR4yjfRRpT1/acBCSDorqY5vYYpTs9ps8
- Ae2GaPYHDvIRjZRErqmWOtDIlUG6UkCyTZc3bbVHiN3PgyaPR1M+xcJMJIldZJIbRwhL
- mXK6+/GKT/Mbo6nU4qFPI98U1lH2HrUsDCMajggI24mXpyasGc0KKDqTvCFaCiiGoLg/
- mWUb9I2eNKJwHV3HHlZ4Q8GeK9Uk0E+7lrQ7zp8XeKz25+2rGaaRTHOJ+bOMdoQemdvX
- 86gQ==
+ Thu, 28 Apr 2022 16:06:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1651161995;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ymFvaz8a/ubJLwW4jTXXd97KopLtZOBPbdxPL02P7JY=;
+ b=VjUhORwq9fjkPSsvlgV6pOGaTYywGEseVSUsbc08wWmR9YMYGQmemghc3SUyDRdtroxjcY
+ rniz/b0ekQBCNmM56csaOp5Xs+Klh9uwGkiaPcKsUzIwxuexjJBdcyP1MLlnRb4QhkbObm
+ 7HkQrbxBHLItI+5JlOY0nSWia1wYgJk=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-388-XpOftjRGOjmGeMEx9qlbYg-1; Thu, 28 Apr 2022 12:06:34 -0400
+X-MC-Unique: XpOftjRGOjmGeMEx9qlbYg-1
+Received: by mail-qk1-f200.google.com with SMTP id
+ bl27-20020a05620a1a9b00b0069994eeb30cso3505130qkb.11
+ for <wireguard@lists.zx2c4.com>; Thu, 28 Apr 2022 09:06:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to;
- bh=eraD9E3KCTbsbmEWT2iLg3x251PjILBXIqHIiVlpvsA=;
- b=eGrxd6I0rG5ubUXVBQrzh0U1q3qGHo6SX81jy7qYG8l0hoB18lHuxq53eyhri5Z/Zc
- gDjM6HdoNcyJaGDgEEVlEBtvfxFva2a/s3lA4ec/7HLJixkJzPFWl6fy7R5JG9UFWD6M
- wTL9OpdVmvyjNEK+aH5f0Lg73HqgMihFP5YQmxxXQEO14QE801DbjIZp1XC394+PbCDj
- t6Kv9seycK6UZpiY8KJAKt/x1YyneLa7tJWWMiAtOHchZL7KOI7ov8HqtpP0pIt51/Ju
- sNc3c/E1HuvKz4xB7VCCTUpYwD5KLGTS1YWWWBwep2IuWInSTrLgiPmWfbwxRzX+NHCg
- PHjQ==
-X-Gm-Message-State: AOAM530LPSdDAkP16bRQn6+lb9F/d0E4DkbLxw074Bzqks6Q6x1uZT3K
- fAeSh33nhD1M5RKNmGNtnSZmWbPkqP793TtGX2hpTvlBvEc=
-X-Google-Smtp-Source: ABdhPJxzdRVlkrGTGJeDmQ/yZRMEP6Rm4U43TJ4efv502Rc6c5hxz44H+tBzyuEARymGXCBHCnXDyjS4vNMuogB1Ljg=
-X-Received: by 2002:a05:6512:1194:b0:471:b0dd:8755 with SMTP id
- g20-20020a056512119400b00471b0dd8755mr22021700lfr.212.1651125361602; Wed, 27
- Apr 2022 22:56:01 -0700 (PDT)
+ h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+ :content-language:to:cc:references:from:in-reply-to
+ :content-transfer-encoding;
+ bh=ymFvaz8a/ubJLwW4jTXXd97KopLtZOBPbdxPL02P7JY=;
+ b=w72exxnGgshBs0cPq60k9EwC5L24qRZpIcvhV4zFaGzw5vsolZEfHcvLSKKa2FWERJ
+ jfj7rSqTXs5GLkVsv5FuI1R3qx5B8TgPMjrJOS+xMTe7K3n/ZxLa87YT0kRkTKZ0sg0N
+ RHACSSyuRDvUFuLf+L3wI5FOxShB3L/SL72SLj1rKh8Sg/g17lY5lH8vtixcuK0hMhN4
+ 1SIhAk1mh2rHkz/wjiGM86YnMTdlfcXu3MO3UxsKK5OuEgStTxcizGdsZ1qyZ+kLQdlt
+ tTZRd//lAS5GpdIgL2YqKLQSmmHWFOgIg5cshaYJRnoiWRBE6+qTjymW1VJepaygYnah
+ 9mQg==
+X-Gm-Message-State: AOAM531rCfSt8MkOSlJWiYa9+jpR618yur2GuNnIqxxAxaKidA0Hvtkf
+ zauOJ0USklld6EHyxPZmKjX8nvHq9B8gCG84wOg9BZoXWjZJbQuhg4ejT0KYB32zTOzO/WfpKiA
+ 3wzhcm6VzryQBBGjx0JIG
+X-Received: by 2002:a05:620a:bc6:b0:67d:1870:8b35 with SMTP id
+ s6-20020a05620a0bc600b0067d18708b35mr19936214qki.85.1651161993290; 
+ Thu, 28 Apr 2022 09:06:33 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJzn3WXda00cVzUDa2s3fuM3BrMD8BZZxPpOb8OpK7TtQKcAMg+Xbpw/blm796W+G9nxoIgHgA==
+X-Received: by 2002:a05:620a:bc6:b0:67d:1870:8b35 with SMTP id
+ s6-20020a05620a0bc600b0067d18708b35mr19936189qki.85.1651161992892; 
+ Thu, 28 Apr 2022 09:06:32 -0700 (PDT)
+Received: from [172.31.1.6] ([71.168.80.171]) by smtp.gmail.com with ESMTPSA id
+ m16-20020a05622a055000b002f35423f7c0sm225092qtx.93.2022.04.28.09.06.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 28 Apr 2022 09:06:32 -0700 (PDT)
+Message-ID: <fde03ba9-d12a-e574-296f-747ad6141497@redhat.com>
+Date: Thu, 28 Apr 2022 12:06:31 -0400
 MIME-Version: 1.0
-References: <CAHjGJ4PPALxp8x5kCVFb3a2_0CydJF2CzP0LdFmnZ7YfCh4MRA@mail.gmail.com>
- <CAHx9mscwNEn9Ao3Br_x6tEFJg4uBrf1K8wXaJoM2jZf_5=C52Q@mail.gmail.com>
-In-Reply-To: <CAHx9mscwNEn9Ao3Br_x6tEFJg4uBrf1K8wXaJoM2jZf_5=C52Q@mail.gmail.com>
-From: Pierre Grimme <gamedev.pierre.grimme@gmail.com>
-Date: Thu, 28 Apr 2022 07:55:48 +0200
-Message-ID: <CAHjGJ4OS281R_6i=5Kf8JMtqo4UsLR6Fs4_whPHuuO=GRpgZmg@mail.gmail.com>
-Subject: Re: Feature Request: Configurable Re-Resolving of DNS Endpoints
-To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: wireguard.ko on RHEL8
+To: Joe Doss <joe@solidadmin.com>
+Cc: wireguard@lists.zx2c4.com
+References: <22218021-270c-8ac9-c214-76ae4e1c1263@redhat.com>
+ <a18d6a8a-1dcc-3093-6931-5ffb1236d287@solidadmin.com>
+From: Steve Dickson <steved@redhat.com>
+In-Reply-To: <a18d6a8a-1dcc-3093-6931-5ffb1236d287@solidadmin.com>
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=steved@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -67,15 +92,68 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Am Mi., 27. Apr. 2022 um 22:55 Uhr schrieb Omkhar Arasaratnam
-<omkhar@gmail.com>:
->
-> Like this?
->
-> https://github.com/WireGuard/wireguard-tools/blob/master/contrib/reresolve-dns/reresolve-dns.sh
+Hey!
 
-This script may be a good option for Linux Clients, but for Android
-devices or Chromebook not. The main point
-of this feature request is to provide an additional configurable
-parameter which implements nicely into
-wg.conf files.
+My apologies on my delayed response...
+
+On 4/24/22 4:03 PM, Joe Doss wrote:
+> Hey Steve,
+> 
+> On 4/24/22 1:16 PM, Steve Dickson wrote:
+>>
+>> Trying to install wireguard.ko on a RHEL8 vm (4.18.0-348.el8.x86_64)
+>> and I'm getting
+>>
+>>     wireguard: module verification failed: signature and/or required 
+>> key missing - tainting kernel
+>>
+>> The entire error:
+>> http://pastebin.test.redhat.com/1046896
+>>
+>> is there anything at can be done about that?
+>>
+>> I'm new to wireguard and I'm pretty impress...
+>> It came up in both Fedora rawhide and an
+>> unreleased verson of RHEL9...
+>>
+>> We are trying to used it as our network in
+>> a community wide virtual NFS testing event
+>> called Bakeathon [1]
+>>
+>> Again I'm new to wireguard but not to kernels ;-)
+>> So if you could throw something at me to
+>> help me get over this bum... It would be appreciated!
+>>
+>> Note: I am not member of this list so please
+>> reply to be directly.
+> 
+> You have secure boot enabled, so you need to generate a MOK key pair, 
+> manually sign your wireguard.ko, and enroll your MOK cert or disable 
+> secure boot.
+> 
+> I use this script [1] to sign my NVIDIA drivers on my workstation after 
+> they are built via akmod.
+> 
+> Hope this helps!
+> Joe
+> 
+> [1]: https://gist.github.com/jdoss/495e814ef4ef599e480c31d4843eb6c0
+> 
+Thanks for the pointer... but I ended doing something
+different that worked very well...
+
+1) I enabled the Fedora Infra Cloud repo which has
+    the jdoss/wireguard repo
+       dnf copr enable jdoss/wireguard
+
+2) Then installed the  wireguard-dkms and  wireguard-tools
+    packets which brought in the dkms command.
+        dnf install wireguard-dkms wireguard-tools
+
+3) Then I simply reboot and mdks compile the module and
+    installed it... Very cool!
+
+Thanks again!
+
+steved.
+
