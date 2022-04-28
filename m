@@ -4,58 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19E6BC433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 30 Apr 2022 14:41:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2E98C433FE
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 30 Apr 2022 14:41:39 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 4e427f9f;
-	Sat, 30 Apr 2022 14:39:46 +0000 (UTC)
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com
- [2607:f8b0:4864:20::629])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 0396385b
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id c32fa8b2;
+	Sat, 30 Apr 2022 14:39:48 +0000 (UTC)
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26]) by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 8b57383b
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 26 Apr 2022 11:20:07 +0000 (UTC)
-Received: by mail-pl1-x629.google.com with SMTP id c12so29870767plr.6
- for <wireguard@lists.zx2c4.com>; Tue, 26 Apr 2022 04:20:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=twopicode.com.au; s=google;
- h=from:to:subject:date:message-id:mime-version;
- bh=/fNnBAWoae57JbW+knqruZTob8nFTc16EQhnCv2Ln7Y=;
- b=bsmar1kjx8osIK2NQq8dwRPfxHXplGA/ka0mxhGf4erVZfKosHE6t4JBaEL4pZF/Ld
- 1hX993i5qOKmMAQenUZ5zW/UZNlOAxCWSR9d6DN7MTTRmcAglUkGHmsUppmXZ63QxwtR
- EdspCDyJLCgcZN+KWUG23Go4+1XOZH5RFHRCgaosII0Bql+GvilpJOwc27kV7l1FO3LN
- mwrwHIh/6o0/miCLb9Gg0Vab00aya58Fbtdc6rSi5JcVDxaV0u0Liqn2rSPh7X/U1jeY
- dz3gB8tAC+6tn43Hk5gT56sdr9VkNn8XVhASZGQbOpOO6ckLPVhfmFgvaXT+5eQPMSyi
- 67ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:from:to:subject:date:message-id:mime-version;
- bh=/fNnBAWoae57JbW+knqruZTob8nFTc16EQhnCv2Ln7Y=;
- b=cSI7SjztlnLU4h4Q4lggw3txeEZOJtGALi5Rsnsp1Y4g5L7n/HgV4Tmk9iWBbNG0I4
- GFqXUnGcwt7Ckq54MjK/CKjGo6GuJUVU9hqeyN0xwkTWdzPpIEryFNyuvYM19GuPiMJs
- BzL707E3Pk01o5Kbq5KmkCA5zM01fKsiSDj6aWN0Zn2bYPmmNil/0p6w/3e0BorWjXx2
- Ty7xFwOrhaFviLk8bhyjp7jGvtex7K2j3npDte/4jtuaAM173YVWifWeNyqnBoe2kfya
- wVETs3jIYhqJ7vXH3zWrcWRm/VMAkSICq1Mno4T0DuCQf5JX75MthySX0+a+tb3L66ra
- quOQ==
-X-Gm-Message-State: AOAM531jhDL3F+sDQmZh1MwbWoHCUbOfy3/oJ/3/jaRqWYKuTM+WYDGO
- hQt0cE588lEcCf2XJKgcXECYmDxwW/WmSRjBVmE=
-X-Google-Smtp-Source: ABdhPJzu2csFQJrxZ6+6aX6jPsYeCVJF7ryUnDTnbQ04JAYQH3iTaN1buFA4UjxD0N/g59AsXTGj0g==
-X-Received: by 2002:a17:90b:3809:b0:1d2:ab07:484a with SMTP id
- mq9-20020a17090b380900b001d2ab07484amr37090555pjb.236.1650972005697; 
- Tue, 26 Apr 2022 04:20:05 -0700 (PDT)
-Received: from [10.0.0.24] ([101.180.69.32]) by smtp.gmail.com with ESMTPSA id
- y198-20020a62cecf000000b0050d436ad942sm6359040pfg.16.2022.04.26.04.20.04
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 26 Apr 2022 04:20:05 -0700 (PDT)
-From: "James Rickett" <jrickett@twopicode.com.au>
+ Thu, 28 Apr 2022 13:14:37 +0000 (UTC)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+ by mailout.nyi.internal (Postfix) with ESMTP id E7D6F5C0152
+ for <wireguard@lists.zx2c4.com>; Thu, 28 Apr 2022 09:14:35 -0400 (EDT)
+Received: from imap47 ([10.202.2.97])
+ by compute2.internal (MEProxy); Thu, 28 Apr 2022 09:14:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=feld.me; h=cc
+ :content-type:date:date:from:from:in-reply-to:message-id
+ :mime-version:reply-to:sender:subject:subject:to:to; s=fm3; t=
+ 1651151675; x=1651238075; bh=ucqs1OjlbylvKxJvRnntyiwH00uj/sTk91X
+ qmwaWQ8I=; b=pqPzw/ocqYLljJ6ZzEJuqTUAyJ53w47tO4w1FpxtWqd4y6cHeUy
+ 7vOjolabriqgDv8oaur0dOJGS8RlIvJvoC0Z6+XxIcRGBqmC64PpBI19xqEHC0ii
+ lv2ROsEnrFYRkU208sV5g3zkdthoPnROZuWT0HEp7rBmn9Xr+NbVKEnv1PnrgLV8
+ JUxXgEIFaPoK0+6meXIf/ZNa/LIdouKcWQaytzyhcllPC1ZlpyP8wW/MsmRISypR
+ 7v42y1MMldyoHc6avE2kMLrhuIZ9+2Xzn6otGYaOjVt7iFwnfbKEK2b0Uz5Q5FGm
+ ZfNh5gUzzWb7EXqTxPPwGWUB2jXjvgFQ99A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:date:from:from
+ :in-reply-to:message-id:mime-version:reply-to:sender:subject
+ :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm1; t=1651151675; x=1651238075; bh=ucqs1OjlbylvK
+ xJvRnntyiwH00uj/sTk91XqmwaWQ8I=; b=f62T771fZFwcTZ3i6/BSiG50s3ifb
+ 26Jn3kxjEgRV/icxSzZRKTTekRUi6aoeJDike8takPl73bA6TLj4eCuJT4CYXEhU
+ ASRp4sjdpQCVYW3o6+E5jZvRQzPo50VI9n8c9/5BefPtYUr2+IG+J/LBos7IsjMI
+ GtZJxUtebgSw9l8TjD6mAbIc64Y/boU00zGsCNgX4eSnEbedAcK1oxNm/28Y61Xk
+ djYCdGCdH7aZZ5KRuAO4pcaIxUYcIqNrg6ubxFD4kQXeXojeY0xwvbK8LqH/nKiM
+ UdcvUr9di8QI6tJXK/1UXHg/JX5+eKLOvGDnQIyGt4fDYYxv/pP8daY5A==
+X-ME-Sender: <xms:O5NqYmRB3-dFlept9h2uSc4uRr7fON4kjduoRjlX9x7F5kbAXNnrbQ>
+ <xme:O5NqYrzL9JYHV0aKR9S3c3QZanXbawYMM3wXoQo71W7YH5DbnIlutao_8zPmWvbsm
+ g2s4uDjy4UZGe2w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrudejgdeifecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkfffhvffutgesthdtredtre
+ ertdenucfhrhhomhepfdforghrkhcuhfgvlhguvghrfdcuoehfvghlugesfhgvlhgurdhm
+ vgeqnecuggftrfgrthhtvghrnhepgeekiedukedvueejhfejgfehffeujeffgfegtdfhff
+ fgudejtdeuleegvddvieefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehm
+ rghilhhfrhhomhepfhgvlhgusehfvghlugdrmhgv
+X-ME-Proxy: <xmx:O5NqYj3_9QWg4_I1l3dS3AsHIDnXoaRw9dwTxr6Qy9Sg8EPToD-ShA>
+ <xmx:O5NqYiDnLQQ9tD0ul7l1DbyCilcXcovogizVChdij9ZIMj8ijunSCA>
+ <xmx:O5NqYvjs9RIj_u0U2vVgfsM0eSWHifcEYKjs_4dGFj4nT6KP0mPdiQ>
+ <xmx:O5NqYhc6CCZhOJJk6QEq0cNoSlLd4O6IPXDUC_7dwnSfan0djaPcHg>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 80B58A6005D; Thu, 28 Apr 2022 09:14:35 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.7.0-alpha0-591-gfe6c3a2700-fm-20220427.001-gfe6c3a27
+Mime-Version: 1.0
+Message-Id: <80f2d9f4-9917-4e59-87fc-6713e80b1880@www.fastmail.com>
+Date: Thu, 28 Apr 2022 09:14:13 -0400
+From: "Mark Felder" <feld@feld.me>
 To: wireguard@lists.zx2c4.com
-Subject: iOS Per-app VPN
-Date: Tue, 26 Apr 2022 21:20:01 +1000
-X-Mailer: MailMate (1.13.2r5673)
-Message-ID: <36BB837F-F667-4DD7-A410-042E923C4914@twopicode.com.au>
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; markup=markdown
+Subject: [MacOS] DNS search path not working?
+Content-Type: text/plain
 X-Mailman-Approved-At: Sat, 30 Apr 2022 14:39:45 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -73,20 +82,20 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 Hello,
 
-I'm developing an iOS app to be used as a per-app VPN. When opening an 
-app that I've designated to use the VPN, the VPN connects, but internet 
-does not work.
+I've observed this on MacOS 12 Monterey. I have also tested on iOS 15.4.1 where it works as expected. (I know they share the same codebase).
 
-If I change the configuration payload type back to 
-"com.apple.vpn.managed" to work as a normal VPN, it works, so I believe 
-the rest of details are correct.
+On MacOS I have my DNS configured correctly as DNS = 1.2.3.4, int.foo.com but it doesn't seem to actually work. e.g., if I have a host named server.int.foo.com I cannot just "ping server"; I have to use the FQDN of server.int.foo.com.
 
-The only thing I've got to go on at the moment is I noticed this message 
-pop up in the logs a number of times: "[NET] Received a packet with 
-unknown IP version". Not sure if this is part of the problem or not.
+This behavior works correctly with an OpenVPN connection using the Viscosity software. I have compared the output of scutil --dns and verified that both OpenVPN and Wireguard appear to generate identical DNS configuration. I'm not sure where else to look for differences between what OpenVPN/Viscosity and Wireguard are doing.
 
-Any assistance would be much appreciated!
+Any tips?
 
-Thanks,
 
-James
+Thanks!
+
+
+Mark
+
+-- 
+  Mark Felder
+  feld@feld.me
