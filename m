@@ -4,67 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2E98C433FE
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 30 Apr 2022 14:41:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0396FC433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 30 Apr 2022 14:41:40 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id c32fa8b2;
-	Sat, 30 Apr 2022 14:39:48 +0000 (UTC)
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
- [66.111.4.26]) by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 8b57383b
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id dc2285e8;
+	Sat, 30 Apr 2022 14:39:49 +0000 (UTC)
+Received: from b-painless.mh.aa.net.uk (b-painless.mh.aa.net.uk
+ [2001:8b0:0:30::52])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 22dd29ea
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 28 Apr 2022 13:14:37 +0000 (UTC)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
- by mailout.nyi.internal (Postfix) with ESMTP id E7D6F5C0152
- for <wireguard@lists.zx2c4.com>; Thu, 28 Apr 2022 09:14:35 -0400 (EDT)
-Received: from imap47 ([10.202.2.97])
- by compute2.internal (MEProxy); Thu, 28 Apr 2022 09:14:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=feld.me; h=cc
- :content-type:date:date:from:from:in-reply-to:message-id
- :mime-version:reply-to:sender:subject:subject:to:to; s=fm3; t=
- 1651151675; x=1651238075; bh=ucqs1OjlbylvKxJvRnntyiwH00uj/sTk91X
- qmwaWQ8I=; b=pqPzw/ocqYLljJ6ZzEJuqTUAyJ53w47tO4w1FpxtWqd4y6cHeUy
- 7vOjolabriqgDv8oaur0dOJGS8RlIvJvoC0Z6+XxIcRGBqmC64PpBI19xqEHC0ii
- lv2ROsEnrFYRkU208sV5g3zkdthoPnROZuWT0HEp7rBmn9Xr+NbVKEnv1PnrgLV8
- JUxXgEIFaPoK0+6meXIf/ZNa/LIdouKcWQaytzyhcllPC1ZlpyP8wW/MsmRISypR
- 7v42y1MMldyoHc6avE2kMLrhuIZ9+2Xzn6otGYaOjVt7iFwnfbKEK2b0Uz5Q5FGm
- ZfNh5gUzzWb7EXqTxPPwGWUB2jXjvgFQ99A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:date:from:from
- :in-reply-to:message-id:mime-version:reply-to:sender:subject
- :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm1; t=1651151675; x=1651238075; bh=ucqs1OjlbylvK
- xJvRnntyiwH00uj/sTk91XqmwaWQ8I=; b=f62T771fZFwcTZ3i6/BSiG50s3ifb
- 26Jn3kxjEgRV/icxSzZRKTTekRUi6aoeJDike8takPl73bA6TLj4eCuJT4CYXEhU
- ASRp4sjdpQCVYW3o6+E5jZvRQzPo50VI9n8c9/5BefPtYUr2+IG+J/LBos7IsjMI
- GtZJxUtebgSw9l8TjD6mAbIc64Y/boU00zGsCNgX4eSnEbedAcK1oxNm/28Y61Xk
- djYCdGCdH7aZZ5KRuAO4pcaIxUYcIqNrg6ubxFD4kQXeXojeY0xwvbK8LqH/nKiM
- UdcvUr9di8QI6tJXK/1UXHg/JX5+eKLOvGDnQIyGt4fDYYxv/pP8daY5A==
-X-ME-Sender: <xms:O5NqYmRB3-dFlept9h2uSc4uRr7fON4kjduoRjlX9x7F5kbAXNnrbQ>
- <xme:O5NqYrzL9JYHV0aKR9S3c3QZanXbawYMM3wXoQo71W7YH5DbnIlutao_8zPmWvbsm
- g2s4uDjy4UZGe2w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrudejgdeifecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkfffhvffutgesthdtredtre
- ertdenucfhrhhomhepfdforghrkhcuhfgvlhguvghrfdcuoehfvghlugesfhgvlhgurdhm
- vgeqnecuggftrfgrthhtvghrnhepgeekiedukedvueejhfejgfehffeujeffgfegtdfhff
- fgudejtdeuleegvddvieefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehm
- rghilhhfrhhomhepfhgvlhgusehfvghlugdrmhgv
-X-ME-Proxy: <xmx:O5NqYj3_9QWg4_I1l3dS3AsHIDnXoaRw9dwTxr6Qy9Sg8EPToD-ShA>
- <xmx:O5NqYiDnLQQ9tD0ul7l1DbyCilcXcovogizVChdij9ZIMj8ijunSCA>
- <xmx:O5NqYvjs9RIj_u0U2vVgfsM0eSWHifcEYKjs_4dGFj4nT6KP0mPdiQ>
- <xmx:O5NqYhc6CCZhOJJk6QEq0cNoSlLd4O6IPXDUC_7dwnSfan0djaPcHg>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 80B58A6005D; Thu, 28 Apr 2022 09:14:35 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.7.0-alpha0-591-gfe6c3a2700-fm-20220427.001-gfe6c3a27
-Mime-Version: 1.0
-Message-Id: <80f2d9f4-9917-4e59-87fc-6713e80b1880@www.fastmail.com>
-Date: Thu, 28 Apr 2022 09:14:13 -0400
-From: "Mark Felder" <feld@feld.me>
+ Fri, 29 Apr 2022 17:32:55 +0000 (UTC)
+Received: from
+ 6.1.c.8.3.e.5.7.c.e.5.d.a.b.c.f.0.5.8.0.9.1.8.0.0.b.8.0.1.0.0.2.ip6.arpa
+ ([2001:8b0:819:850:fcba:d5ec:75e3:8c16] helo=[IPV6:fd34:5ae5:ae:ae15::1])
+ by painless-b.tch.aa.net.uk with esmtp (Exim 4.94.2)
+ (envelope-from <andrew-wireguard@pileofstuff.org>)
+ id 1nkUUB-00H5Qt-NX
+ for wireguard@lists.zx2c4.com; Fri, 29 Apr 2022 18:32:55 +0100
+Message-ID: <01945803-1ae8-135b-17d8-3e5504548763@pileofstuff.org>
+Date: Fri, 29 Apr 2022 18:32:54 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Content-Language: en-GB
+From: Andrew Sayers <andrew-wireguard@pileofstuff.org>
+Subject: bug(?): Wireguard should allow packets from multiple peers
 To: wireguard@lists.zx2c4.com
-Subject: [MacOS] DNS search path not working?
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Sat, 30 Apr 2022 14:39:45 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -80,22 +48,127 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
+Hi,
 
-I've observed this on MacOS 12 Monterey. I have also tested on iOS 15.4.1 where it works as expected. (I know they share the same codebase).
+I think this is a bug, but some of it is beyond me.
+This e-mail might actually just be a request for help :)
 
-On MacOS I have my DNS configured correctly as DNS = 1.2.3.4, int.foo.com but it doesn't seem to actually work. e.g., if I have a host named server.int.foo.com I cannot just "ping server"; I have to use the FQDN of server.int.foo.com.
+In some cases, an address can be associated with multiple peers.
+I'll describe a specific scenario below, but in short: a device might have
+peers with different-length netmasks, and might send and receive packets via
+different routes depending on configuration of devices across the network.
 
-This behavior works correctly with an OpenVPN connection using the Viscosity software. I have compared the output of scutil --dns and verified that both OpenVPN and Wireguard appear to generate identical DNS configuration. I'm not sure where else to look for differences between what OpenVPN/Viscosity and Wireguard are doing.
+A configuration similar to the one described below causes the error
+"Packet has unallowed src IP" for the kernel backend, and causes
+"packet with disallowed source address" for the Go backend.
+See 
+https://git.zx2c4.com/wireguard-linux/tree/drivers/net/wireguard/receive.c#n415
+and https://git.zx2c4.com/wireguard-go/tree/device/receive.go#n437
+for the start of the relevant blocks. I assume other backends behave 
+similarly,
+but don't have relevant test devices to hand.
 
-Any tips?
+If I understand correctly, these blocks only accept a *single* valid peer.
+I'll argue below that behaviour is incorrect, but if it's right, the message
+could stand to be improved.  The kernel backend message reads:
 
+     "%s: Packet has unallowed src IP (%pISc) from peer %llu (%pISpfsc)\n"
 
-Thanks!
+Something like the following would be more helpful:
 
+     "%s: Packet has incorrect src IP (%pISc) from peer %llu (%pISpfsc) 
+instead of peer %llu (%pISpfsc)\n"
 
-Mark
+Using the word "incorrect" and specifying the (single) correct value would
+indicate there's only one right value and would provide a hint to fix it.
 
--- 
-  Mark Felder
-  feld@feld.me
+To see why multiple peers should be allowed, consider the following:
+
+Alice and Bob each have a home server and a phone with a networked camera.
+They would like their servers to regularly download pictures from the 
+phones,
+and would occasionally like to access the other's camera from their own 
+phone.
+
+Their servers are reliably accessible over the Internet,
+while their phones are behind firewalls and change address frequently.
+
+They need to create a VPN that lets all four devices communicate.
+They don't want to unnecessarily forward packets between servers,
+and don't want to reconfigure their phones when they add more devices.
+
+So they create an "Alice and Bob" subnet with IPv6* prefix `fdab::`.
+
+Alice's phone's Wireguard configuration looks like this:
+
+     [Interface]
+     # Alice's phone has a single IP on the VPN:
+     Address = fdab:A1ce::1/128
+
+     [Peer]
+     # Alice's phone accepts all devices verified by her server:
+     AllowedIPs = fdab::/16
+     Endpoint = alices-server.example.com:51820
+
+     [Peer]
+     # Connect directly to Bob's server where possible:
+     AllowedIPs = fdab:B0b::/64
+     Endpoint = bobs-server.example.com:51820
+
+Bob's phone's configuration is the inverse:
+
+     [Interface]
+     # Bob's phone has a single IP on the VPN:
+     Address = fdab:B0b::1/128
+
+     [Peer]
+     # Bob's phone accepts all devices verified by his server:
+     AllowedIPs = fdab::/16
+     Endpoint = bobs-server.example.com:51820
+
+     [Peer]
+     # Connect directly to Alice's server where possible:
+     AllowedIPs = fdab:A1ce::/64
+     Endpoint = alices-server.example.com:51820
+
+When Alice's server tries to access Bob's camera, it sends packets directly
+to his phone.  Bob's phone sees a packet with a `fdab:A1ce::` source and
+peer `alices-server.example.com`.  That's fine - it accepts the packet.
+
+But when Alice tries to access Bob's camera from her phone, the phone
+sends those packets via Bob's server.  Bob's phone sees a packet with
+a `fdab:A1ce::` source and peer `bobs-server.example.com`.
+Wireguard rejects these packets in my tests, presumably because
+it expects Alice's packets to come from Alice's server.
+
+Instead, Wireguard should accept packets from any peer
+with a matching IP prefix in `AllowedIPs`.
+
+To reply in advance to some obvious counterarguments:
+
+Yes, this creates a needlessly asymmetric route (Bob's phone receives
+messages via Bob's server and replies via Alice's server).  You can argue
+that's bad for complexity or good for privacy.  So long as the packets 
+get to
+their destination, I'd argue it doesn't matter.
+
+Yes, this two-user example would be better solved with a star network
+around either Alice or Bob's server.  The value is more obvious at scale,
+as load gets distributed between multiple servers.  If you prefer, you can
+add Carol and Dave to the network with configurations similar to the above.
+
+No, this can't be solved by selecting a different "correct" peer.
+That would force the servers to route data between them, adding
+an extra hop and wasting bandwidth.
+
+No, this can't be solved by telling the phones about each other.
+Even if we could work around whatever firewall the phone might be behind,
+and we could update DNS entries quickly enough when devices change address,
+Alice and Bob would have to manually update their phones for every
+device on the network.  That's fine with the four nodes in the example,
+but not practical at any greater scale.
+
+	- Andrew Sayers
+
+* I'm just using IPv6 addresses for readability, although IPv6's larger
+   address space might cause more people to notice this issue
