@@ -4,36 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0396FC433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 30 Apr 2022 14:41:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54AA4C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  5 May 2022 19:38:42 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id dc2285e8;
-	Sat, 30 Apr 2022 14:39:49 +0000 (UTC)
-Received: from b-painless.mh.aa.net.uk (b-painless.mh.aa.net.uk
- [2001:8b0:0:30::52])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 22dd29ea
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Fri, 29 Apr 2022 17:32:55 +0000 (UTC)
-Received: from
- 6.1.c.8.3.e.5.7.c.e.5.d.a.b.c.f.0.5.8.0.9.1.8.0.0.b.8.0.1.0.0.2.ip6.arpa
- ([2001:8b0:819:850:fcba:d5ec:75e3:8c16] helo=[IPV6:fd34:5ae5:ae:ae15::1])
- by painless-b.tch.aa.net.uk with esmtp (Exim 4.94.2)
- (envelope-from <andrew-wireguard@pileofstuff.org>)
- id 1nkUUB-00H5Qt-NX
- for wireguard@lists.zx2c4.com; Fri, 29 Apr 2022 18:32:55 +0100
-Message-ID: <01945803-1ae8-135b-17d8-3e5504548763@pileofstuff.org>
-Date: Fri, 29 Apr 2022 18:32:54 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Content-Language: en-GB
-From: Andrew Sayers <andrew-wireguard@pileofstuff.org>
-Subject: bug(?): Wireguard should allow packets from multiple peers
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 37e84baf;
+	Thu, 5 May 2022 19:38:40 +0000 (UTC)
+Received: from smtp.ungleich.ch (smtp.ungleich.ch
+ [2a0a:e5c0:0:2:400:b3ff:fe39:7956])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id f0506587
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Thu, 5 May 2022 19:38:38 +0000 (UTC)
+Received: from blind.localdomain (localhost [IPv6:::1])
+ by smtp.ungleich.ch (Postfix) with ESMTP id BC55620643
+ for <wireguard@lists.zx2c4.com>; Thu,  5 May 2022 21:38:33 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ungleich.ch;
+ s=202201; t=1651779513;
+ bh=GQL9joPKliS7GmXWMF4vphWNN/cM+dDczMQxKqIDZFk=;
+ h=From:To:Subject:Date:From;
+ b=G8+RlTYwJe6eXCC7R8FVY3QsRU2+udPKgzMfUvqZ50kRer80KLOx7PVelEgfic/km
+ MRjYGOvgcJqlFNbDV2gCheGtgguEfEHmfoYjaDQcJ8zF5sFW1Gt1ua1PZKwb1L7xZI
+ 8X2m2bnVprx1amJZQU8de4Of9N76VfjQpKpYUkA3hAPa5t+LWH5LGHi5lz7AxBEVIj
+ syr8LkQX1yEBjI/DLAbL8BJC2Hl+9/A1wOgo09hDGAGaCwsjwgK3Lt7B4y5uEBOHV1
+ eqQsqdvfJRrdKR1b17QnVUJ/jX34oIfBT/KxI7SjMnhEpseVOJgJ8aEZxt+dkPeqhZ
+ mi1cRePT0etHg==
+Received: by blind.localdomain (Postfix, from userid 1000)
+ id 3494F13A0C80; Thu,  5 May 2022 21:38:38 +0200 (CEST)
+User-agent: mu4e 1.7.13; emacs 28.1
+From: Nico Schottelius <nico.schottelius@ungleich.ch>
 To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Mailman-Approved-At: Sat, 30 Apr 2022 14:39:45 +0000
+Subject: Interface not deleted in kubernetes
+Date: Thu, 05 May 2022 21:32:19 +0200
+Message-ID: <874k2393cx.fsf@ungleich.ch>
+MIME-Version: 1.0
+Content-Type: text/plain
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -48,127 +51,79 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
 
-I think this is a bug, but some of it is beyond me.
-This e-mail might actually just be a request for help :)
+Hello,
 
-In some cases, an address can be associated with multiple peers.
-I'll describe a specific scenario below, but in short: a device might have
-peers with different-length netmasks, and might send and receive packets via
-different routes depending on configuration of devices across the network.
+I am not sure if I am off-topic here, but I am not sure where to best
+raise this issue. The situation is: if I start a Pod in Kubernetes that
+uses the ungleich-wireguard:0.0.5 [0] container, which is basically
+using this script [1] I am able to get the following output:
 
-A configuration similar to the one described below causes the error
-"Packet has unallowed src IP" for the kernel backend, and causes
-"packet with disallowed source address" for the Go backend.
-See 
-https://git.zx2c4.com/wireguard-linux/tree/drivers/net/wireguard/receive.c#n415
-and https://git.zx2c4.com/wireguard-go/tree/device/receive.go#n437
-for the start of the relevant blocks. I assume other backends behave 
-similarly,
-but don't have relevant test devices to hand.
+--------------------------------------------------------------------------------
+[21:29] blind:~% kubectl -n test logs -f wireguard-7cf446469-gmkvd
++ wg show
+interface: clients
+  public key: 5QzByP8MnQyR7seJWJyiP6fFHn5OnkPI+O0WAuYoLko=
+  private key: (hidden)
+  listening port: 51820
 
-If I understand correctly, these blocks only accept a *single* valid peer.
-I'll argue below that behaviour is incorrect, but if it's right, the message
-could stand to be improved.  The kernel backend message reads:
+peer: fnIGys3sZKfyjSA7oXw891IOxuuRi7yYM6tihNG+1WA=
+  allowed ips: 10.0.0.2/32
++ wg-quick up /etc/wireguard/clients.conf
+Warning: `/etc/wireguard/..2022_05_05_19_29_32.4005058985/clients.conf' is world accessible
+wg-quick: `clients' already exists
++ exit 1
+[21:29] blind:~%
+--------------------------------------------------------------------------------
 
-     "%s: Packet has unallowed src IP (%pISc) from peer %llu (%pISpfsc)\n"
+As the pod/container are freshly created, I assume that the "clients"
+interface is a leftover from a previous run of that container. Which
+brings me to the real questions:
 
-Something like the following would be more helpful:
+  Are wireguard interfaces
 
-     "%s: Packet has incorrect src IP (%pISc) from peer %llu (%pISpfsc) 
-instead of peer %llu (%pISpfsc)\n"
+      a) Not contained in a container?
+      b) Not destroyed if the container is destroyed?
 
-Using the word "incorrect" and specifying the (single) correct value would
-indicate there's only one right value and would provide a hint to fix it.
+As containers are namespaced, I would have expected the device to die
+with the container, but I even cleared the full deployment and get this
+error again.
 
-To see why multiple peers should be allowed, consider the following:
+My logical understand would be that the interface should be destroyed if
+the container exits, however the output implies that this is not the
+case.
 
-Alice and Bob each have a home server and a phone with a networked camera.
-They would like their servers to regularly download pictures from the 
-phones,
-and would occasionally like to access the other's camera from their own 
-phone.
+Any pointers in this direction are very welcome.
 
-Their servers are reliably accessible over the Internet,
-while their phones are behind firewalls and change address frequently.
+Best regards,
 
-They need to create a VPN that lets all four devices communicate.
-They don't want to unnecessarily forward packets between servers,
-and don't want to reconfigure their phones when they add more devices.
+Nico
 
-So they create an "Alice and Bob" subnet with IPv6* prefix `fdab::`.
+[0]
+https://hub.docker.com/layers/ungleich-wireguard/ungleich/ungleich-wireguard/0.0.5/images/sha256-cf50085115df1f686509288375349ce61cc4ef06a06c940cf7cbd9041a6d9ef6?context=explore
 
-Alice's phone's Wireguard configuration looks like this:
+[1]
+--------------------------------------------------------------------------------
+#!/bin/sh
 
-     [Interface]
-     # Alice's phone has a single IP on the VPN:
-     Address = fdab:A1ce::1/128
+set -x
 
-     [Peer]
-     # Alice's phone accepts all devices verified by her server:
-     AllowedIPs = fdab::/16
-     Endpoint = alices-server.example.com:51820
+# Ensure everything is clean / show prior state
+wg show
 
-     [Peer]
-     # Connect directly to Bob's server where possible:
-     AllowedIPs = fdab:B0b::/64
-     Endpoint = bobs-server.example.com:51820
+# Start all definitions
+for conf in /etc/wireguard/*.conf; do
+    # Try to up and if any tunnel fails -> exit
+    wg-quick up "$conf" || exit 1
+done
 
-Bob's phone's configuration is the inverse:
+# Debug output
+while true; do
+    wg show
+    sleep 300
+done
+--------------------------------------------------------------------------------
 
-     [Interface]
-     # Bob's phone has a single IP on the VPN:
-     Address = fdab:B0b::1/128
 
-     [Peer]
-     # Bob's phone accepts all devices verified by his server:
-     AllowedIPs = fdab::/16
-     Endpoint = bobs-server.example.com:51820
-
-     [Peer]
-     # Connect directly to Alice's server where possible:
-     AllowedIPs = fdab:A1ce::/64
-     Endpoint = alices-server.example.com:51820
-
-When Alice's server tries to access Bob's camera, it sends packets directly
-to his phone.  Bob's phone sees a packet with a `fdab:A1ce::` source and
-peer `alices-server.example.com`.  That's fine - it accepts the packet.
-
-But when Alice tries to access Bob's camera from her phone, the phone
-sends those packets via Bob's server.  Bob's phone sees a packet with
-a `fdab:A1ce::` source and peer `bobs-server.example.com`.
-Wireguard rejects these packets in my tests, presumably because
-it expects Alice's packets to come from Alice's server.
-
-Instead, Wireguard should accept packets from any peer
-with a matching IP prefix in `AllowedIPs`.
-
-To reply in advance to some obvious counterarguments:
-
-Yes, this creates a needlessly asymmetric route (Bob's phone receives
-messages via Bob's server and replies via Alice's server).  You can argue
-that's bad for complexity or good for privacy.  So long as the packets 
-get to
-their destination, I'd argue it doesn't matter.
-
-Yes, this two-user example would be better solved with a star network
-around either Alice or Bob's server.  The value is more obvious at scale,
-as load gets distributed between multiple servers.  If you prefer, you can
-add Carol and Dave to the network with configurations similar to the above.
-
-No, this can't be solved by selecting a different "correct" peer.
-That would force the servers to route data between them, adding
-an extra hop and wasting bandwidth.
-
-No, this can't be solved by telling the phones about each other.
-Even if we could work around whatever firewall the phone might be behind,
-and we could update DNS entries quickly enough when devices change address,
-Alice and Bob would have to manually update their phones for every
-device on the network.  That's fine with the four nodes in the example,
-but not practical at any greater scale.
-
-	- Andrew Sayers
-
-* I'm just using IPv6 addresses for readability, although IPv6's larger
-   address space might cause more people to notice this issue
+--
+Sustainable and modern Infrastructures by ungleich.ch
