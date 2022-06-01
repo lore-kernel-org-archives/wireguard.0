@@ -4,24 +4,29 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B05FC433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  1 Jun 2022 09:36:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58A65C4332F
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  1 Jun 2022 09:36:52 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 9daa76cd;
-	Wed, 1 Jun 2022 09:33:55 +0000 (UTC)
-Received: from sym2.noone.org (sym.noone.org [178.63.92.236])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 734c0e85
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id d6bf51f1;
+	Wed, 1 Jun 2022 09:36:24 +0000 (UTC)
+Received: from sym2.noone.org (sym.noone.org [2a01:4f8:120:4161::3])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id c3edceb9
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 1 Jun 2022 09:33:54 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Wed, 1 Jun 2022 09:36:23 +0000 (UTC)
 Received: by sym2.noone.org (Postfix, from userid 1002)
- id 4LCkVV38s1zvjhV; Wed,  1 Jun 2022 11:33:54 +0200 (CEST)
+ id 4LCkYM4fZTzvjhV; Wed,  1 Jun 2022 11:36:23 +0200 (CEST)
+Date: Wed, 1 Jun 2022 11:36:23 +0200
 From: Tobias Klauser <tklauser@distanz.ch>
 To: wireguard@lists.zx2c4.com
-Subject: [PATCH wireguard-go] tun: use ByteSliceToString from
+Subject: Re: [PATCH wireguard-go] tun: use ByteSliceToString from
  golang.org/x/sys/unix
-Date: Wed,  1 Jun 2022 11:33:54 +0200
-Message-Id: <20220601093354.30833-1-tklauser@distanz.ch>
-X-Mailer: git-send-email 2.11.0
+Message-ID: <20220601093622.dacco7owtrm6u2y7@distanz.ch>
+References: <20220601093354.30833-1-tklauser@distanz.ch>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220601093354.30833-1-tklauser@distanz.ch>
+User-Agent: NeoMutt/20170113 (1.7.2)
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -36,39 +41,9 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Use unix.ByteSliceToString in (*NativeTun).nameSloce to convert the
-TUNGETIFF ioctl result []byte to a string.
+On 2022-06-01 at 11:33:54 +0200, Tobias Klauser <tklauser@distanz.ch> wrote:
+> Use unix.ByteSliceToString in (*NativeTun).nameSloce to convert the
+                                             ^- this should say
+					     `nameSlow`
 
-Signed-off-by: Tobias Klauser <tklauser@distanz.ch>
----
- tun/tun_linux.go | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
-
-diff --git a/tun/tun_linux.go b/tun/tun_linux.go
-index 89b716d9c70b..fbb8585ff449 100644
---- a/tun/tun_linux.go
-+++ b/tun/tun_linux.go
-@@ -9,7 +9,6 @@ package tun
-  */
- 
- import (
--	"bytes"
- 	"errors"
- 	"fmt"
- 	"os"
-@@ -321,11 +320,7 @@ func (tun *NativeTun) nameSlow() (string, error) {
- 	if errno != 0 {
- 		return "", fmt.Errorf("failed to get name of TUN device: %w", errno)
- 	}
--	name := ifr[:]
--	if i := bytes.IndexByte(name, 0); i != -1 {
--		name = name[:i]
--	}
--	return string(name), nil
-+	return unix.ByteSliceToString(ifr[:]), nil
- }
- 
- func (tun *NativeTun) Write(buf []byte, offset int) (int, error) {
--- 
-2.36.1
-
+I can fix it up in a v2 patch if needed.
