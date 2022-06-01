@@ -4,29 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58A65C4332F
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  1 Jun 2022 09:36:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66CA1C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  1 Jun 2022 09:54:39 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id d6bf51f1;
-	Wed, 1 Jun 2022 09:36:24 +0000 (UTC)
-Received: from sym2.noone.org (sym.noone.org [2a01:4f8:120:4161::3])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id c3edceb9
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 1 Jun 2022 09:36:23 +0000 (UTC)
-Received: by sym2.noone.org (Postfix, from userid 1002)
- id 4LCkYM4fZTzvjhV; Wed,  1 Jun 2022 11:36:23 +0200 (CEST)
-Date: Wed, 1 Jun 2022 11:36:23 +0200
-From: Tobias Klauser <tklauser@distanz.ch>
-To: wireguard@lists.zx2c4.com
-Subject: Re: [PATCH wireguard-go] tun: use ByteSliceToString from
- golang.org/x/sys/unix
-Message-ID: <20220601093622.dacco7owtrm6u2y7@distanz.ch>
-References: <20220601093354.30833-1-tklauser@distanz.ch>
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id d1f530f3;
+	Wed, 1 Jun 2022 09:51:46 +0000 (UTC)
+Received: from rin.romanrm.net (rin.romanrm.net [51.158.148.128])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id a3328127
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Wed, 1 Jun 2022 09:51:45 +0000 (UTC)
+Received: from nvm (nvm2.home.romanrm.net [IPv6:fd39::4a:3cff:fe57:d6b5])
+ by rin.romanrm.net (Postfix) with SMTP id B460158;
+ Wed,  1 Jun 2022 09:51:44 +0000 (UTC)
+Date: Wed, 1 Jun 2022 14:51:43 +0500
+From: Roman Mamedov <rm@romanrm.net>
+To: Houman <houmie@gmail.com>
+Cc: Janne Johansson <icepic.dz@gmail.com>, WireGuard mailing list
+ <wireguard@lists.zx2c4.com>
+Subject: Re: How to improve Wireguard speed?
+Message-ID: <20220601145143.75234bd8@nvm>
+In-Reply-To: <CABBZOs=kxe4DwHN=utdb8FzDTt3=TcSo05JVAo=-JCUjC_eEug@mail.gmail.com>
+References: <CABBZOs=CRGXaYmajx6GLJMU0sxZbda=qDgKsiB_KM_k3DygCJg@mail.gmail.com>
+ <CAA6-MF84eCwegH3UcQuqrL7YaCQULf5=KafQYZPVJWATEtfL0Q@mail.gmail.com>
+ <CABBZOs=kxe4DwHN=utdb8FzDTt3=TcSo05JVAo=-JCUjC_eEug@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220601093354.30833-1-tklauser@distanz.ch>
-User-Agent: NeoMutt/20170113 (1.7.2)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -41,9 +44,32 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 2022-06-01 at 11:33:54 +0200, Tobias Klauser <tklauser@distanz.ch> wrote:
-> Use unix.ByteSliceToString in (*NativeTun).nameSloce to convert the
-                                             ^- this should say
-					     `nameSlow`
+On Wed, 1 Jun 2022 10:07:31 +0100
+Houman <houmie@gmail.com> wrote:
 
-I can fix it up in a v2 patch if needed.
+> I didn't change the MTU settings, but I have a suspicion about MTU. I
+> found this article here that makes some interesting suggestions to set
+> MTU to 1280: https://keremerkan.net/posts/wireguard-mtu-fixes/
+> 
+> And beyond that iptables -A FORWARD -p tcp --tcp-flags SYN,RST SYN -j
+> TCPMSS --clamp-mss-to-pmtu
+
+So did you apply both of that, and what was the effect?
+
+What are the other point that you test against, is it another VPS (better if
+you could try with that), or your home connection?
+
+It could be your home provider has different speed limits (shaping) in place
+for UDP. Should be possible to test this with:
+
+  iperf3 -s                        # on VPS
+
+  iperf3 -u -b 500M -c <VPS IP> -R # on the other side
+
+And then see how many "Lost/Total Datagrams" (xx %) you get. A high percentage
+would indicate that the actual top speed for UDP is less than 500Mbit by this
+value.
+
+-- 
+With respect,
+Roman
