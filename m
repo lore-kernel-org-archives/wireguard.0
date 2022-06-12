@@ -4,37 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D42D1C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 17 Jun 2022 11:39:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B760CC43334
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 17 Jun 2022 11:39:51 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 61a8ebf0;
-	Fri, 17 Jun 2022 11:39:48 +0000 (UTC)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id c2ce04d4;
+	Fri, 17 Jun 2022 11:39:51 +0000 (UTC)
 Received: from mx0.riseup.net (mx0.riseup.net [198.252.153.6])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 9be6bea4
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id b341a83f
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 9 Jun 2022 21:56:21 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 12 Jun 2022 21:34:14 +0000 (UTC)
 Received: from fews1.riseup.net (fews1-pn.riseup.net [10.0.1.83])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256
  client-signature RSA-PSS (2048 bits) client-digest SHA256)
  (Client CN "mail.riseup.net", Issuer "R3" (not verified))
- by mx0.riseup.net (Postfix) with ESMTPS id 4LJybR0mtnz9sdL
- for <wireguard@lists.zx2c4.com>; Thu,  9 Jun 2022 21:56:19 +0000 (UTC)
+ by mx0.riseup.net (Postfix) with ESMTPS id 4LLnyX5fFHz9s4M
+ for <wireguard@lists.zx2c4.com>; Sun, 12 Jun 2022 21:34:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
- t=1654811779; bh=acr+0KtLpeZnAdK181NS6Fb5BDxK52F2pYDDgGkWQak=;
+ t=1655069652; bh=acr+0KtLpeZnAdK181NS6Fb5BDxK52F2pYDDgGkWQak=;
  h=From:To:Subject:Date:Reply-To:From;
- b=H2VhR/CHT1XXq8huSUiTSnBrZnluawMiEgoxO5EVdlFVNGdDNMkiYWJhb4Bzrn6Ip
- 1WaCh/YwUXfZHFOn3/6kUW67M1q0G01y3S9TenWXDC4BCsfNqtUhkkSLjeLQi0E4cJ
- /gEJWJgF35bScIv9mzFp64xeUaghBtQxYTonVzf0=
-X-Riseup-User-ID: 745C3A8A69817C445C643B3E8D5877877C7D0EFCB827D76666F222017BFC5D3C
+ b=tQ6REXYbnHuy1v+r8jZEbKJF/7yIaa02JSQQPVS6F89pjnK1lKd+50la9kwlz2/4S
+ ov8dmD/A/dvxuRlO1oyU/R0FYCKRfT1X1Pk+fOhV4ttBduNEg2LAsOE3MI84DO9KjT
+ VeUyXnC2mg7jJ4asZ/K7rbHo9RYXrKTQUiOZhmSg=
+X-Riseup-User-ID: 3073ACBB20DE7EEF8DF8798A91EC627BF88BFDBEBA4C431020CFCF4A10A14825
 Received: from [127.0.0.1] (localhost [127.0.0.1])
- by fews1.riseup.net (Postfix) with ESMTPSA id 4LJybQ11sdz5vfP
- for <wireguard@lists.zx2c4.com>; Thu,  9 Jun 2022 21:56:17 +0000 (UTC)
+ by fews1.riseup.net (Postfix) with ESMTPSA id 4LLnyW4bzrz5w35
+ for <wireguard@lists.zx2c4.com>; Sun, 12 Jun 2022 21:34:11 +0000 (UTC)
 From: enlight <enlight@riseup.net>
-To: wireguard@lists.zx2c4.com
-Subject: [question] wireguard-windows issue
-Date: Thu, 09 Jun 2022 21:56:12 +0000
-Message-Id: <em8858b9e2-9f1d-410c-84c0-b4ef6f15e771@594329c5.com>
+To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Subject: [question] wireguard-windows wfp issue
+Date: Sun, 12 Jun 2022 21:34:08 +0000
+Message-Id: <em1e5036cb-2ace-44db-80c1-23772d981c13@8507782e.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
