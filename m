@@ -4,41 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B760CC43334
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 17 Jun 2022 11:39:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A8C0C43334
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 17 Jun 2022 11:39:54 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id c2ce04d4;
-	Fri, 17 Jun 2022 11:39:51 +0000 (UTC)
-Received: from mx0.riseup.net (mx0.riseup.net [198.252.153.6])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id b341a83f
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id ef3d5fcb;
+	Fri, 17 Jun 2022 11:39:53 +0000 (UTC)
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com
+ [2a00:1450:4864:20::12d])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id fd107343
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 12 Jun 2022 21:34:14 +0000 (UTC)
-Received: from fews1.riseup.net (fews1-pn.riseup.net [10.0.1.83])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256
- client-signature RSA-PSS (2048 bits) client-digest SHA256)
- (Client CN "mail.riseup.net", Issuer "R3" (not verified))
- by mx0.riseup.net (Postfix) with ESMTPS id 4LLnyX5fFHz9s4M
- for <wireguard@lists.zx2c4.com>; Sun, 12 Jun 2022 21:34:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
- t=1655069652; bh=acr+0KtLpeZnAdK181NS6Fb5BDxK52F2pYDDgGkWQak=;
- h=From:To:Subject:Date:Reply-To:From;
- b=tQ6REXYbnHuy1v+r8jZEbKJF/7yIaa02JSQQPVS6F89pjnK1lKd+50la9kwlz2/4S
- ov8dmD/A/dvxuRlO1oyU/R0FYCKRfT1X1Pk+fOhV4ttBduNEg2LAsOE3MI84DO9KjT
- VeUyXnC2mg7jJ4asZ/K7rbHo9RYXrKTQUiOZhmSg=
-X-Riseup-User-ID: 3073ACBB20DE7EEF8DF8798A91EC627BF88BFDBEBA4C431020CFCF4A10A14825
-Received: from [127.0.0.1] (localhost [127.0.0.1])
- by fews1.riseup.net (Postfix) with ESMTPSA id 4LLnyW4bzrz5w35
- for <wireguard@lists.zx2c4.com>; Sun, 12 Jun 2022 21:34:11 +0000 (UTC)
-From: enlight <enlight@riseup.net>
-To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-Subject: [question] wireguard-windows wfp issue
-Date: Sun, 12 Jun 2022 21:34:08 +0000
-Message-Id: <em1e5036cb-2ace-44db-80c1-23772d981c13@8507782e.com>
+ Tue, 14 Jun 2022 13:53:09 +0000 (UTC)
+Received: by mail-lf1-x12d.google.com with SMTP id s6so13983017lfo.13
+ for <wireguard@lists.zx2c4.com>; Tue, 14 Jun 2022 06:53:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=tNfxMq9UgtuKtldX4mV/7xZWjbqV/s9Dqb++EMjK95g=;
+ b=oAAxxsJsX9bs919gADYelffiZvN/rT7f+ro7AFr+COmzlWdtwfLgVertnSK/nZGNts
+ 6eLuUyKzn0bjgRtwt0mxRk5TAv+BqNfQnBo6Z1F/OyRJ8ZKemlyCHtvncA5etVjPtN/X
+ lTHOmUulVsipWlntdS8BtE6sYCWDjJnR9Nipzxnh/CXyI4KMX0w1DFmmPYdZq6td5UZ8
+ AwtJq2jyJWTztlQtmRJtildwQn4eRb2kjrQU2m42LMv9XaFkU7I5w9hndadmXJ0d4si8
+ X6GsL/k9oBx1poqoHtP15iOnGVQKnpGWSj+o4ZJVUbZtVUcCKsVNivKjuimx3DLMdJQK
+ YE+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=tNfxMq9UgtuKtldX4mV/7xZWjbqV/s9Dqb++EMjK95g=;
+ b=ARFBu7Jljda8c8s/8TLTn2C04kqGxixfv7OZBoWsbvm6EGbBHS8LaO1CsYBB0fi6oT
+ /t1VsL5XHUTIg3ObK9qb+st/bhXZ6z9laUJxYtC8FTwi0oPzh3/9/hMhRMSOOMxd6Dhr
+ 0RGfYdl+mtb+1TcO6zs5+AcnshyaAu1HKkbtihEmoEXIdkpwolbT99pjKsaDrgB5QhfY
+ bvl7ZMt4MKascVHmuVPqDLUg5x4oxsDrFjhcN//QN9VvyXCEZRqaHOOvsCUIaV9ZQpiy
+ gE2nXVR0Zr4wlxBXzCrKOpjLYvMJDzb0/shfikR6Mp6qJyVKicWBCx3GQOITUgD4F/7A
+ +iYg==
+X-Gm-Message-State: AJIora9Oau7s+qIFUC9tWNtHTv5S7wK5JGZb8RH6vtG/dWa7//k8lWrG
+ AmcrFsEcoQwrl551/hOz295SUq3fP68yg0Ox
+X-Google-Smtp-Source: AGRyM1tuOc1Lwwkmt5NSpA8gcc5odUSBJSCXrxAEWO295y/QcVvobIWmXIx/22fsWQbLtN3b2YyKMA==
+X-Received: by 2002:ac2:5496:0:b0:479:1cee:89d9 with SMTP id
+ t22-20020ac25496000000b004791cee89d9mr3231040lfk.587.1655214788413; 
+ Tue, 14 Jun 2022 06:53:08 -0700 (PDT)
+Received: from localhost.localdomain ([217.72.11.142])
+ by smtp.gmail.com with ESMTPSA id
+ q3-20020a2e5c03000000b00253d84812edsm1353105ljb.2.2022.06.14.06.53.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 14 Jun 2022 06:53:08 -0700 (PDT)
+From: Stepan Rabotkin <epicstyt@gmail.com>
+To: wireguard@lists.zx2c4.com
+Cc: Stepan Rabotkin <epicstyt@gmail.com>
+Subject: [PATCH] feat: add search to app list
+Date: Tue, 14 Jun 2022 16:52:39 +0300
+Message-Id: <20220614135239.1034-1-epicstyt@gmail.com>
+X-Mailer: git-send-email 2.32.0.windows.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Fri, 17 Jun 2022 11:39:46 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -51,39 +70,158 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Reply-To: enlight <enlight@riseup.net>
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
+---
+ .../android/fragment/AppListDialogFragment.kt | 39 +++++++++++++------
+ .../res/layout/app_list_dialog_fragment.xml   | 15 +++++++
+ ui/src/main/res/values/strings.xml            |  1 +
+ 3 files changed, 44 insertions(+), 11 deletions(-)
 
-when enabling wireguard kill-switch, it creates aggressive wireguard=20
-firewall rule on windows, it creates rule on windows filtering platform=20
-(WFP).  The rule is to block all inbound/outbound traffic not for or=20
-from wireguard interface.
-
-i want to modify current wireguard wfp rule to premit inbound/outbout=20
-traffic to additional interfaces,  like vmware interface. There are=20
-several network interfaces in my system active, like "Yggdrasil" ->=20
-adapter name in Network and sharing center (it uses wintun driver to=20
-create).
-
-I tried to modify "wireguard-windows/tunnel/firewall/blocker.go"  inside=20
-EnableFirewall( ) to add:
-```
-var adapter *driver.Adapter
-var luid2 winipcfg.LUID
-
-adapter, err =3D driver.OpenAdapter("Yggdrasil")  -> gives error here
-luid2 =3D adapter.LUID()
-err =3D permitTunInterface(session, baseObjects, 12, uint64(luid2))
-```
-
-the error is: ```Failed to find matching adapter name: Element not=20
-found. (Code 0x00000490)
-Unable to enable firewall rules: Firewall error at=20
-golang.zx2c4.com/wireguard/windows/tunnel/firewall/blocker.go:148:=20
-Element not found.```
-
-how can i solve the issue ?
+diff --git a/ui/src/main/java/com/wireguard/android/fragment/AppListDialogFragment.kt b/ui/src/main/java/com/wireguard/android/fragment/AppListDialogFragment.kt
+index 1a40a1c..e9b4cf6 100644
+--- a/ui/src/main/java/com/wireguard/android/fragment/AppListDialogFragment.kt
++++ b/ui/src/main/java/com/wireguard/android/fragment/AppListDialogFragment.kt
+@@ -11,6 +11,7 @@ import android.widget.Button
+ import android.widget.Toast
+ import androidx.appcompat.app.AlertDialog
+ import androidx.core.os.bundleOf
++import androidx.core.widget.doAfterTextChanged
+ import androidx.databinding.Observable
+ import androidx.fragment.app.DialogFragment
+ import androidx.fragment.app.setFragmentResult
+@@ -28,7 +29,8 @@ import kotlinx.coroutines.launch
+ import kotlinx.coroutines.withContext
+ 
+ class AppListDialogFragment : DialogFragment() {
+-    private val appData = ObservableKeyedArrayList<String, ApplicationData>()
++    private val appList: MutableList<ApplicationData> = ArrayList()
++    private val appListFiltered = ObservableKeyedArrayList<String, ApplicationData>()
+     private var currentlySelectedApps = emptyList<String>()
+     private var initiallyExcluded = false
+     private var button: Button? = null
+@@ -39,14 +41,13 @@ class AppListDialogFragment : DialogFragment() {
+         val pm = activity.packageManager
+         lifecycleScope.launch(Dispatchers.Default) {
+             try {
+-                val applicationData: MutableList<ApplicationData> = ArrayList()
+                 withContext(Dispatchers.IO) {
+                     val packageInfos = pm.getPackagesHoldingPermissions(arrayOf(Manifest.permission.INTERNET), 0)
+                     packageInfos.forEach {
+                         val packageName = it.packageName
+                         val appInfo = it.applicationInfo
+                         val appData = ApplicationData(appInfo.loadIcon(pm), appInfo.loadLabel(pm).toString(), packageName, currentlySelectedApps.contains(packageName))
+-                        applicationData.add(appData)
++                        appList.add(appData)
+                         appData.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
+                             override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+                                 if (propertyId == BR.selected)
+@@ -55,10 +56,10 @@ class AppListDialogFragment : DialogFragment() {
+                         })
+                     }
+                 }
+-                applicationData.sortWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it.name })
++                appList.sortWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it.name })
+                 withContext(Dispatchers.Main.immediate) {
+-                    appData.clear()
+-                    appData.addAll(applicationData)
++                    appListFiltered.clear()
++                    appListFiltered.addAll(appList)
+                 }
+             } catch (e: Throwable) {
+                 withContext(Dispatchers.Main.immediate) {
+@@ -78,7 +79,7 @@ class AppListDialogFragment : DialogFragment() {
+     }
+ 
+     private fun setButtonText() {
+-        val numSelected = appData.count { it.isSelected }
++        val numSelected = appList.count { it.isSelected }
+         button?.text = if (numSelected == 0)
+             getString(R.string.use_all_applications)
+         else when (tabs?.selectedTabPosition) {
+@@ -106,15 +107,19 @@ class AppListDialogFragment : DialogFragment() {
+         alertDialogBuilder.setNegativeButton(R.string.cancel) { dialog, _ -> dialog.dismiss() }
+         alertDialogBuilder.setNeutralButton(R.string.toggle_all) { _, _ -> }
+         binding.fragment = this
+-        binding.appData = appData
++        binding.appData = appListFiltered
+         loadData()
++        binding.appSearchText.doAfterTextChanged {
++            appListFiltered.clear()
++            appListFiltered.addAll(filter(it.toString()))
++        }
+         val dialog = alertDialogBuilder.create()
+         dialog.setOnShowListener {
+             button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+             setButtonText()
+             dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener { _ ->
+-                val selectAll = appData.none { it.isSelected }
+-                appData.forEach {
++                val selectAll = appList.none { it.isSelected }
++                appList.forEach {
+                     it.isSelected = selectAll
+                 }
+             }
+@@ -122,9 +127,21 @@ class AppListDialogFragment : DialogFragment() {
+         return dialog
+     }
+ 
++    private fun filter(s: String): MutableList<ApplicationData> {
++        val resultData: MutableList<ApplicationData> = ArrayList()
++
++        for (app in appList) {
++            if (app.name.lowercase().contains(s)) {
++                resultData.add(app)
++            }
++        }
++
++        return resultData
++    }
++
+     private fun setSelectionAndDismiss() {
+         val selectedApps: MutableList<String> = ArrayList()
+-        for (data in appData) {
++        for (data in appList) {
+             if (data.isSelected) {
+                 selectedApps.add(data.packageName)
+             }
+diff --git a/ui/src/main/res/layout/app_list_dialog_fragment.xml b/ui/src/main/res/layout/app_list_dialog_fragment.xml
+index 4503de1..572996d 100644
+--- a/ui/src/main/res/layout/app_list_dialog_fragment.xml
++++ b/ui/src/main/res/layout/app_list_dialog_fragment.xml
+@@ -40,6 +40,21 @@
+                 android:text="@string/include_in_tunnel" />
+         </com.google.android.material.tabs.TabLayout>
+ 
++        <com.google.android.material.textfield.TextInputLayout
++            android:id="@+id/app_search_layout"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:padding="10dp">
++
++            <com.google.android.material.textfield.TextInputEditText
++                android:id="@+id/app_search_text"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:hint="@string/search"
++                android:imeOptions="actionDone" />
++
++        </com.google.android.material.textfield.TextInputLayout>
++
+         <FrameLayout
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+diff --git a/ui/src/main/res/values/strings.xml b/ui/src/main/res/values/strings.xml
+index 6c09019..80967ad 100644
+--- a/ui/src/main/res/values/strings.xml
++++ b/ui/src/main/res/values/strings.xml
+@@ -237,4 +237,5 @@
+     <string name="biometric_prompt_private_key_title">Authenticate to view private key</string>
+     <string name="biometric_auth_error">Authentication failure</string>
+     <string name="biometric_auth_error_reason">Authentication failure: %s</string>
++    <string name="search">Search</string>
+ </resources>
+-- 
+2.32.0.windows.2
 
