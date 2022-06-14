@@ -4,81 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4265AC43334
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Jun 2022 19:15:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ACB4C43334
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Jun 2022 19:59:35 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 62f66e69;
-	Tue, 14 Jun 2022 19:15:47 +0000 (UTC)
-Received: from mx2.freebsd.org (mx2.freebsd.org [96.47.72.81])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id df4efe7a
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id d1c1341e;
+	Tue, 14 Jun 2022 19:59:33 +0000 (UTC)
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 79b808fc
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 14 Jun 2022 19:15:45 +0000 (UTC)
-Received: from mx1.freebsd.org (mx1.freebsd.org [96.47.72.80])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits)
- client-signature RSA-PSS (4096 bits))
- (Client CN "mx1.freebsd.org", Issuer "R3" (verified OK))
- by mx2.freebsd.org (Postfix) with ESMTPS id 2FE33920E7;
- Tue, 14 Jun 2022 19:15:44 +0000 (UTC) (envelope-from jrm@FreeBSD.org)
-Received: from smtp.freebsd.org (smtp.freebsd.org
- [IPv6:2610:1c1:1:606c::24b:4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
- client-signature RSA-PSS (4096 bits) client-digest SHA256)
- (Client CN "smtp.freebsd.org", Issuer "R3" (verified OK))
- by mx1.freebsd.org (Postfix) with ESMTPS id 4LMynr0BTDz3vK6;
- Tue, 14 Jun 2022 19:15:44 +0000 (UTC) (envelope-from jrm@FreeBSD.org)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=freebsd.org; s=dkim;
- t=1655234144;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=xMyA/fNsDKwWWcuwbYBvaAIDCEPyJ90NjWLqxns4Dfc=;
- b=N0zGuuDWkhs4rE1FwURUsVs13mg3D6UJjon2RQUu+NDgQrns23Dp6BljJnRozGYo7fS12B
- ixZFI3i3dRKeOUY+0KahL52XV5Cz1XMKk8HykqxivRSxOe2bvi9od+KUJrXbBRn2hU3mPN
- ZBGM4uxqbK2uCo0HGhOrL4WklNElz9x4AQgZJBH7NMMSVPFyt3qBfZYe4q4rhh6y4fpxbu
- ua6roUIHtTrN85Of8hmQDzyLB0HE2/rfyTcDx7IAOToPgQ0HeYZb1zYCERKYDLCkePvMTj
- 1AOUhbjsPXD/J0HrVTZ8UifoFU4vaTfCHCHwZD19nfIMWhwJ+VEioD2Fe9yfjA==
-Received: from phe.ftfl.ca
- (drmons0544w-156-34-173-250.dhcp-dynamic.fibreop.ns.bellaliant.net
- [156.34.173.250])
+ Tue, 14 Jun 2022 19:59:32 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (Client did not present a certificate)
- (Authenticated sender: jrm/mail)
- by smtp.freebsd.org (Postfix) with ESMTPSA id A6101C0B7;
- Tue, 14 Jun 2022 19:15:43 +0000 (UTC) (envelope-from jrm@FreeBSD.org)
-From: Joseph Mingrone <jrm@FreeBSD.org>
-To: wireguard@lists.zx2c4.com
-Cc: decke@freebsd.org,
-	mad@madpilot.net,
-	Joseph Mingrone <jrm@FreeBSD.org>
-Subject: [PATCH] compat: Update version to handle sbcreatecontrol() changes
-Date: Tue, 14 Jun 2022 16:15:26 -0300
-Message-Id: <20220614191526.70200-1-jrm@FreeBSD.org>
-X-Mailer: git-send-email 2.36.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=freebsd.org;
- s=dkim; t=1655234144;
+ (No client certificate requested)
+ by ams.source.kernel.org (Postfix) with ESMTPS id 140F8B81AF2;
+ Tue, 14 Jun 2022 19:59:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30D93C3411B;
+ Tue, 14 Jun 2022 19:59:30 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="h05XDdiI"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1655236768;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=xMyA/fNsDKwWWcuwbYBvaAIDCEPyJ90NjWLqxns4Dfc=;
- b=OFONUvTAFEY2oso20OPbNKMA/zQTAbz65nogKuytMr7p5/uWxMiXn8BjOhy8b9q0Qcecq7
- zj5U0Ty58MvvaFt1GZ5GVSX5iw/FWkfSWnNxGsIopS2HEDHhh7nkt5d9qWqmRX2Js3Fofg
- kLMeHtZpAVXROfcP0PYqoWo8qhS5FTyUVYtmYhCb4IZsdX/LVscObHu4c3ca0cyVbTD6vN
- s6Gj7oKqDG1uz+aE4qgKOFarPUALG8uAJlalyaff7hdHXnmkfpZnjLR8Pvd96Gp4ggLTAl
- F23L4pxAva7TWcXVwRKH01DlVvHEqG7+oOHJKfNg94/JAr6o+kJzFJarBIXfew==
-ARC-Seal: i=1; s=dkim; d=freebsd.org; t=1655234144; a=rsa-sha256; cv=none;
- b=OX2ts6SXosOmf7DwRfW91QsSN8Ci194gpdB65/n8RwYcbsyI3Auou3Btzre+aJUJJ87RAO
- QQ58UlQ7QaOURn9yevb/JNqarpB6Hpfznf9+FiMrJS/KR1hsHkdtRseOhOShvh1oAbniaR
- uy3k/sVEZEHHEtYTaF6DTQ6A8QLhb/SAyTm+rgO9QXBqyAcFE8pxYBZREW5grXJG8Qovs0
- lUJJf/BDmLej0z5xCEkOnoeXEvBMKPi25OENsvC4zxBmEGHykaqd48tqiCitVoLQGpw7j5
- Z86SlXPW6djj5tnRQzg18nxf98U8nUOBDcs6CubKbxl9XKKjKlQfojNM79ATeQ==
-ARC-Authentication-Results: i=1;
-	mx1.freebsd.org;
-	none
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=TKV0ajws2PUci8JL+LkkaCjTOvclqBxHT3EHNri+Fjc=;
+ b=h05XDdiI5L3X1ZFGYGCFvND6PI0dMafiiT+0paG9yc1URYcPQ0tRXv/JDCf/35w1664C47
+ ls8f5W1AyLISILtp1vPUBoHEZIgwX+VRop3SrjzGi9I6ZBk6AODrmgFJiPPLB/h3ThgyNv
+ czBgf+pxgbvxOSlCq0vMJQzoHBQ84os=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7e6ddf99
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO); 
+ Tue, 14 Jun 2022 19:59:28 +0000 (UTC)
+Date: Tue, 14 Jun 2022 21:59:26 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Joseph Mingrone <jrm@FreeBSD.org>
+Cc: wireguard@lists.zx2c4.com, decke@freebsd.org, mad@madpilot.net
+Subject: Re: [PATCH] compat: Update version to handle sbcreatecontrol() changes
+Message-ID: <YqjonnCu7RV0DC0j@zx2c4.com>
+References: <20220614191526.70200-1-jrm@FreeBSD.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220614191526.70200-1-jrm@FreeBSD.org>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -93,39 +61,24 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-The sockbuf changes to merge two versions of sbcreatecontrol() into one
-occurred in b46667c63eb7 in the FreeBSD src repository.  The value of
-__FreeBSD_version at the time of that commit was 1400059, so check
-for systems with a version stamp less than 1400059.
+Hi Joesph,
 
-Ideally __FreeBSD_version would have been bumped in b46667c63eb7,
-however it was set to 1400059 53 commits prior in 3a9a9c0ca44e and not
-bumped to 1400060 until 374 commits later in 85d7875d4291.  Thus, this
-is not a perfect solution because CURRENT systems built from 53 possible
-commits that require the adjustment will still fail to build the
-wireguard kernel module.  This is better than checking for systems with
-__FreeBSD_version < 1400057.  In that case, there are 767 different
-commits a CURRENT system may be built from where the module will fail to
-build.
+On Tue, Jun 14, 2022 at 04:15:26PM -0300, Joseph Mingrone wrote:
+> The sockbuf changes to merge two versions of sbcreatecontrol() into one
+> occurred in b46667c63eb7 in the FreeBSD src repository.  The value of
+> __FreeBSD_version at the time of that commit was 1400059, so check
+> for systems with a version stamp less than 1400059.
+> 
+> Ideally __FreeBSD_version would have been bumped in b46667c63eb7,
+> however it was set to 1400059 53 commits prior in 3a9a9c0ca44e and not
+> bumped to 1400060 until 374 commits later in 85d7875d4291.  Thus, this
+> is not a perfect solution because CURRENT systems built from 53 possible
+> commits that require the adjustment will still fail to build the
+> wireguard kernel module.  This is better than checking for systems with
+> __FreeBSD_version < 1400057.  In that case, there are 767 different
+> commits a CURRENT system may be built from where the module will fail to
+> build.
 
-Sponsored by:	The FreeBSD Foundation
----
- src/compat.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Seems reasonable. Applied, thanks.
 
-diff --git a/src/compat.h b/src/compat.h
-index 8567524..d55c628 100644
---- a/src/compat.h
-+++ b/src/compat.h
-@@ -24,7 +24,7 @@
- #define COMPAT_NEED_BLAKE2S
- #endif
- 
--#if __FreeBSD_version < 1400057
-+#if __FreeBSD_version < 1400059
- #include <sys/sockbuf.h>
- #define sbcreatecontrol(a, b, c, d, e) sbcreatecontrol(a, b, c, d)
- #endif
--- 
-2.36.1
-
+Jason
