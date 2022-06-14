@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 475F5C43334
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 10 Jun 2022 17:24:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FFC8C43334
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Jun 2022 09:21:29 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 21229744;
-	Fri, 10 Jun 2022 17:24:06 +0000 (UTC)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 133cf61d
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 90359458;
+	Tue, 14 Jun 2022 09:21:27 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 485c9656
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 10 Jun 2022 17:24:04 +0000 (UTC)
+ Tue, 14 Jun 2022 09:21:25 +0000 (UTC)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id 52C77B8367B
- for <wireguard@lists.zx2c4.com>; Fri, 10 Jun 2022 17:24:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3DE7C34114
- for <wireguard@lists.zx2c4.com>; Fri, 10 Jun 2022 17:24:02 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 8E31661661
+ for <wireguard@lists.zx2c4.com>; Tue, 14 Jun 2022 09:21:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14834C341C4
+ for <wireguard@lists.zx2c4.com>; Tue, 14 Jun 2022 09:21:22 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
  dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="Tf7WsjO5"
+ header.b="LMJNPfd4"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1654881840;
+ t=1655198481;
  h=from:from:reply-to:subject:subject:date:date:to:to:cc:
  mime-version:mime-version:content-type:content-type;
- bh=TIHWv0I4UG7Y3j6Zv+dQAKz3oB+XeXurySSKXt9yOMc=;
- b=Tf7WsjO5Ln74JnurYBgSmVnXKZ98e3F8svOqMCgkQANGo+01KzXlG+plV5BaTYk52Xa/nk
- ICWbdug4jyRaEL+lutar5gvDcuucdL4ue6JBmsv7rh8X/uyY+8LjcK3aSiVxN8keumrBYm
- 2UtEHwIUcTgGZ+ijwPNKxyWIBgDQ1i4=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 09504b07
+ bh=2LepwrTu2xAo7G1q6DAigynQGbKqyh85tAFuoDOe+vs=;
+ b=LMJNPfd41dcPSfd16yPyW3N0uIsrYnzbzB3B7tk1iOYg1C4iDp/BggpRhYeAfBovAVg4be
+ SxMyYLnupvaqiahjKbdR3Xofmdnn8vB5yjJYbUj2U07UgNU76VMMgdoVmf+oDAzO3xgWLq
+ QgwV9bLauJvKJaK2Y/DorOqIAWP1cc0=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c8ecc0b0
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 10 Jun 2022 17:24:00 +0000 (UTC)
-Date: Fri, 10 Jun 2022 19:23:55 +0200
+ Tue, 14 Jun 2022 09:21:21 +0000 (UTC)
+Date: Tue, 14 Jun 2022 11:21:19 +0200
 To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [ANNOUNCE] wireguard-freebsd snapshot v0.0.20220610 is available
+Subject: [ANNOUNCE] wireguard-freebsd snapshot v0.0.20220614 is available
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Message-Id: <20220610172402.C3DE7C34114@smtp.kernel.org>
+Message-Id: <20220614092123.14834C341C4@smtp.kernel.org>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -62,7 +62,7 @@ Hash: SHA256
 
 Hi,
 
-An experimental snapshot, v0.0.20220610, of WireGuard for FreeBSD has been
+An experimental snapshot, v0.0.20220614, of WireGuard for FreeBSD has been
 been tagged in the git repository.
 
 At this time this code is new, unvetted, possibly buggy, and should be
@@ -73,33 +73,21 @@ in mission critical environments.
 
 == Changes ==
 
-  * if_wg: wg_queue_len: remove locking
-  * if_wg: wg_queue_delist_staged: use more standard STAILQ_CONCAT
-  * if_wg: wgc_get/set: use M_WAITOK with malloc()
-  * if_wg: wg_clone_create: Use M_WAITOK with malloc
-  * wg_cookie: ratelimit_init: use callout_init_mtx
-  * if_wg: wg_mbuf_reset: don't free send tags
-  * if_wg: wg_module_init: clean up more if the self tests fail
+  * build: include compat.h for all files
+  * compat: fix version stamp
   
-  Numerous cleanups.
+  Two lingering compat issues.
   
-  * if_wg: avoid scheduling excessive tasks for encryption/decryption
+  * if_wg: wg_peer_alloc and wg_aip_add: Use M_WAITOK with malloc
   
-  A nice performance improvement - John reports double on iperf3 TCP throughput.
+  A small cleanup to memory allocation and error path logic.
   
-  * crypto: return an error code from mbuf crypt routines
+  * crypto: use OCF to encrypt/decrypt packets when supported
+  * crypto: use <crypto/chacha20_poly1305.h> when present
+  * crypto: use curve25519 API from the kernel when available
+  * crypto: harmonize with compat and clean up
   
-  Preparation for the OCF work John's been working on.
-  
-  * if_wg: account for input function returning a boolean
-  * if_wg: account for added argument to sbcreatecontrol
-  
-  These allow building on recent FreeBSD 14 main.
-  
-  * if_wg: do not use continue statement on \!VIMAGE
-  * build: only include compat.h for if_wg.c and fix build with an obj directory
-  
-  These allow building in different configurations.
+  Crypto from OCF and FreeBSD's library code will now be used when available.
 
 This snapshot contains commits from: John Baldwin and Jason A. Donenfeld.
 
@@ -107,8 +95,8 @@ The source repository is available at the usual location:
   git clone https://git.zx2c4.com/wireguard-freebsd
 
 This snapshot is available in compressed tarball form:
-  https://git.zx2c4.com/wireguard-freebsd/snapshot/wireguard-freebsd-0.0.20220610.tar.xz
-  SHA2-256: 518779c383e8087a60a7ec7b0969158a48b2f19a34a13b62683c982960295f17
+  https://git.zx2c4.com/wireguard-freebsd/snapshot/wireguard-freebsd-0.0.20220614.tar.xz
+  SHA2-256: b048049561f18fd48ab3fa6455f9e0ecca25c6314880f48e68c56ceacf7f6719
 
 Thank you,
 Jason Donenfeld
@@ -116,18 +104,18 @@ Jason Donenfeld
 
 -----BEGIN PGP SIGNATURE-----
 
-iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAmKjfhcQHGphc29uQHp4
-MmM0LmNvbQAKCRBJ/HASpd4DrszsD/9rSo3Cqx8AqilVII4dpbxGzHXnkSCetUc8
-e0nBLtvSZ0C/MiHSJtOD1iwdz8ndPX57P2VUdBVV/xmSeWzblfWDyB2nOoiLUq4P
-EoJaAkMD1isErVdJizlq0QQEq6UFegBcb9ttna33IZJm67uRXICzWq55yl/pJMSV
-zhsv2cQOKK8S9dUKgBtY31YKnDMZLvbtJbPP5hiDyCmrSVYrQKFd6owhCubRzGKE
-thNP/+rDgitz7vFB8Uu84Ib/dY8dVPjFbK/k3DqTdSKhefI4uc0y1buM8mV96zGi
-pXXYqi1qrgnMVpO2plhR04thACbAqT1Gbsx402q48LeJ7cD+oL0WxTJ2H9gEv/tA
-lJ4e7YnWt3zyu4SW8CvDPbVfWLVTTHR9jvV+/qJp4SVbFsDkmdHT7mWURRUtwawD
-C0p+wPlBcqdENXVtFmvaKeqclxCXFUkIC1SorIStKhYDPsFdRexOsiXAqAVdXmvJ
-ZdeX8BJWHXz7cxGNdE96ep6qBMAPJ2+9f3nLIoG/1ca0hWvDpWTGbepoekv0Ab0/
-gwXqlxUfOmCjjLBRA4vrp0JJpWJJaWWdQSVKmeDwn/z7h/kASjeL1Z7gDlkEq3yI
-hKg47SUqupG2/iSoL8EUglAPi1o498BhZANtf3LgYH3z+fd7GU4k/ugfp2KKjsOq
-+dNT9WYX9Q==
-=yY95
+iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAmKoUwMQHGphc29uQHp4
+MmM0LmNvbQAKCRBJ/HASpd4DrtWQD/9SrtU+zAXlB50zLYO1LhNexPLlgWMcAZsM
+qwJaIzxMdsXPCCfqLOfqxUXOAjPf7EWxFE8cj1iV6hLduzl0wnu84OZIxr7yvSFT
+qhk6aZxcgiUTpxIHa4WdJkxiqMNRafv6le33F233VWNBbJCn8f9JjxON8Fph0W/N
+DZ0X+fGwPJ25bnCWc//Cl7WhQulT7BxNi2jrsgpuJNmCGOeSRyfTh9ygDRX5WLD6
+mZiIfqTs4+l9gVjeUcC7b49qbZeRtpsmePfaXp5fN2U6s5cyk76SbarCHD62aFlP
+OM4xdl07J+YhsXdfj98whE1RVTS8jFvz3iADKW0MuwDEeEcDCh4vpspiNerYDIvQ
+J+aFT8+zexmv9IdNQxYK3u9W1G6COz0wspBWixZGfeqfNZyPpXVOqgdKarsdFLnz
+wYFFz8FPdMlB8A8J+aehNqqsrH6rXbE4J2poz3upxrntKMxG+u0YB5pDoxY0JkAQ
+uvT3Ij/7CdsXYHnbKwFtiv9dmSzgSpFNOzSbffBWYb24i1UCCAbJqe5Eae9b7MIh
+6PuaBp3YzlR3NHsXcliss2SbEMf1nf2WStTtKHDKW5hAyRdg4dqDMZxvPc8OU6vC
+BF1gVIEYC9wRLaNfxU/mW5ugdiN0b3u6uT9ELrN/mV56z45xPKmedpDNXKHqz3b2
+JF9KsyRjDg==
+=xgbb
 -----END PGP SIGNATURE-----
