@@ -4,44 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 727DBC433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Jun 2022 13:19:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70FDFC433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Jun 2022 17:02:48 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id aa22e969;
-	Tue, 14 Jun 2022 13:19:09 +0000 (UTC)
-Received: from smtp.ungleich.ch (smtp.ungleich.ch
- [2a0a:e5c0:0:2:400:b3ff:fe39:7956])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id fe48f619
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 83c9b0c8;
+	Tue, 14 Jun 2022 17:02:46 +0000 (UTC)
+Received: from krn.amebis.si (krn.amebis.si [93.103.235.207])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 1709c0a7
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 14 Jun 2022 13:19:08 +0000 (UTC)
-Received: from nb3.localdomain (localhost [IPv6:::1])
- by smtp.ungleich.ch (Postfix) with ESMTP id AE51D2047E;
- Tue, 14 Jun 2022 15:18:59 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ungleich.ch;
- s=202201; t=1655212739;
- bh=InbvhTZxX6TKCWugI+Sg+QSlTleZnuMyJq1geznNak8=;
- h=References:From:To:Cc:Subject:Date:In-reply-to:From;
- b=GnOo+m3cJd7Y04f/U0eS0lJE9VrRu+FXEVtO8xbS9XtZlOaRdRzUU/qJvlf6zDNlg
- ls3Fcnh7A+EE2I/4/DXdy0iGwao0cDqigulZL9Su7VUjFXw3nLSxHTEEP9McPRCw5Q
- J8HXb63JJh8VpwJ/aploZxioRT6+xisgwcfoZBdkatvMKGDLVyon0RGJhQG1QRXLnh
- WFsojGoEHs7HZlNL1ZwOB2wrXlS7yfgAmhuQOqcp8yc/xs8vhpWJIQxd05WkHlx28y
- yRVC6nKogvn+GhUM92w/Avr2d9+hUVB2CQTfIFOMMlW66J+aD8kmg7GvyRHsy86QwY
- ZT62XoGjLhNFQ==
-Received: by nb3.localdomain (Postfix, from userid 1000)
- id 26EED14C00D1; Tue, 14 Jun 2022 15:19:25 +0200 (CEST)
-References: <20220609220522.kwqa4uvuc3sijlka@bamsoftware.com>
-User-agent: mu4e 1.7.21; emacs 28.1
-From: Nico Schottelius <nico.schottelius@ungleich.ch>
-To: David Fifield <david@bamsoftware.com>
-Cc: wireguard@lists.zx2c4.com
-Subject: Re: WireGuard protocol blocking in China, swgp-go (userspace
- obfuscation proxy)
-Date: Tue, 14 Jun 2022 15:13:11 +0200
-In-reply-to: <20220609220522.kwqa4uvuc3sijlka@bamsoftware.com>
-Message-ID: <87pmjbpele.fsf@ungleich.ch>
+ Tue, 14 Jun 2022 17:02:45 +0000 (UTC)
+Received: by krn.amebis.si (Postfix, from userid 982)
+ id 7ABA218E8783; Tue, 14 Jun 2022 19:02:44 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rozman.si;
+ s=default; t=1655226164;
+ bh=r+mNuhGX+O9NPDQvp/fT0ztoSHoH8jAzUJCOlJnQ7Xk=;
+ h=From:To:Subject:Date:References:In-Reply-To:From;
+ b=Ugl9zjNzx8TIT0VI5v2I+fZ/MKTXo3qlRZIja0GnYHHN/akj9PBzAy2kZRz6cSg8P
+ iC+x0GLlL+5B8033kKBI692bZn6CfcAm2b3Em8n7JqTt+b26jSwKwtU6tYe3vY2vLo
+ +Q9vpZwsin2Bl+edeALwsvUpHXoC9wgElhHAwRzQ=
+Received: from Konj.amebis.doma (konj.amebis.doma [IPv6:2a01:260:4101:1464::4])
+ by krn.amebis.si (Postfix) with ESMTPS id 30B5218E8781;
+ Tue, 14 Jun 2022 19:02:42 +0200 (CEST)
+Received: from Konj.amebis.doma (2a01:260:4101:1464::4) by Konj.amebis.doma
+ (2a01:260:4101:1464::4) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.26; Tue, 14 Jun
+ 2022 19:02:42 +0200
+Received: from Konj.amebis.doma ([fe80::545:cd17:7444:be04]) by
+ Konj.amebis.doma ([fe80::545:cd17:7444:be04%9]) with mapi id 15.02.0986.026;
+ Tue, 14 Jun 2022 19:02:42 +0200
+From: Simon Rozman <simon@rozman.si>
+To: Thomas Hallgren <thomas@datawire.io>, "wireguard@lists.zx2c4.com"
+ <wireguard@lists.zx2c4.com>
+Subject: Re: Incompatibility between wintun.dll and go module
+Thread-Topic: Incompatibility between wintun.dll and go module
+Thread-Index: AQHYf9GnnW9vVR8T4EidZyhecaIIla1PIXqA
+Date: Tue, 14 Jun 2022 17:02:41 +0000
+Message-ID: <6F224D6F-E5DA-44C9-93AF-83A0B33EFE45@rozman.si>
+References: <CAGyv=Qv7vNrTvMriOxAyEHHUAz6qOOZDtjfj=+ru+yOKAcY8UQ@mail.gmail.com>
+In-Reply-To: <CAGyv=Qv7vNrTvMriOxAyEHHUAz6qOOZDtjfj=+ru+yOKAcY8UQ@mail.gmail.com>
+Accept-Language: en-SI, en-GB, sl-SI, en-US
+Content-Language: en-GB
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Microsoft-MacOutlook/16.61.22050700
+x-originating-ip: [2a01:260:4101:140a::5]
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <45D900CEE25C9D4D8883DABFFC7E8F66@amebis.si>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -56,35 +67,77 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-
-David Fifield <david@bamsoftware.com> writes:
-
-> I am forwarding some information about WireGuard blocking and
-> anti-blocking that was posted to a censorship circumvention forum.
-
-In regards to this topic I was wondering if it makes sense to have a
-more generic obfuscation proxy that can carry tcp/udp payload?
-
-Maybe this already exists, but I would think that something that hops
-protocols (IPv6, IPv4 endpoints, tcp/udp encapsolution), changes ports
-and uses envelope based tunneling (http, https, smtp, imap - worst case
-DNS) would make it easier to sustain communication even in more serious
-filtering scenarios.
-
-Given such a "generic obfuscator", it could be combined with "protocol"
-modes, i.e. enhancing protocols such as wireguard with the presented
-algorithm, making it even harder to predict the content.
-
-I'd assume some performance regressions using such an obfuscator, but
-maybe it could even "learn" the proper obfuscation by detecting blocks
-on easier to detect obfuscation and then switching to a stronger, but
-less efficient obfuscation.
-
-Wondering what your thoughts are on this.
-
-Best regards,
-
-Nico
-
---
-Sustainable and modern Infrastructures by ungleich.ch
+SGkhDQoNClRoZSAwLjE0KyBpcyBub3QgYmluYXJ5IGNvbXBhdGlibGUgd2l0aCAwLjEzLiBUaGUg
+QVBJIGNoYW5nZWQgY29uc2lkZXJhYmx5OiBodHRwczovL2dpdC56eDJjNC5jb20vd2ludHVuL2Rp
+ZmYvYXBpL3dpbnR1bi5oP2lkPTU0NGZkYWFmOGZiOTcwZDk2NTdhNTljMWZjNGM0NTY5ZGU0ZjJk
+M2UNCg0KVGhlIHdpcmVndWFyZC1nbyByZXBvIHdhcyBhZGp1c3RlZCBmb3IgdGhpcyBBUEkgY2hh
+bmdlIGluIGh0dHBzOi8vZ2l0Lnp4MmM0LmNvbS93aXJlZ3VhcmQtZ28vY29tbWl0Lz9pZD04MmQy
+YWE4N2FhNjIzY2I1MTQzYTQxYzMzNDVkYTRmYjg3NWFkODVkLiBXaW50dW4gYWRhcHRlciBwb29s
+cyB3ZXJlIGNvbXBsZXRlbHkgZGlzY29udGludWVkOyBob3dldmVyLCB5b3VyIHN0YWNrIHRyYWNl
+IGluZGljYXRlcyB5b3UgYXJlIHN0aWxsIHVzaW5nIGFuIG91dGRhdGVkIHZlcnNpb24gb2Ygd2ly
+ZWd1YXJkLWdvIGNhbGxpbmcgd2ludHVuLigqUG9vbCkuT3BlbkFkYXB0ZXIuDQoNClBsZWFzZSwg
+dXBkYXRlIHdpcmVndWFyZC1nbyBhbmQgdXBkYXRlLg0KDQpSZWdhcmRzLA0KU2ltb24NCg0K77u/
+LS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCkZyb206IFdpcmVHdWFyZCA8d2lyZWd1YXJkLWJv
+dW5jZXNAbGlzdHMuengyYzQuY29tPiBvbiBiZWhhbGYgb2YgVGhvbWFzIEhhbGxncmVuIDx0aG9t
+YXNAZGF0YXdpcmUuaW8+DQpEYXRlOiBUdWVzZGF5LCAxNCBKdW5lIDIwMjIgYXQgMTEuMzINClRv
+OiAid2lyZWd1YXJkQGxpc3RzLnp4MmM0LmNvbSIgPHdpcmVndWFyZEBsaXN0cy56eDJjNC5jb20+
+DQpTdWJqZWN0OiBJbmNvbXBhdGliaWxpdHkgYmV0d2VlbiB3aW50dW4uZGxsIGFuZCBnbyBtb2R1
+bGUNCg0KICAgIEhpLA0KDQogICAgV2UncmUgdXNpbmcgdGhlIHdpbnR1bi5kbGwgYW5kIHRoZSBn
+byBtb2R1bGUNCiAgICBnb2xhbmcuengyYzQuY29tL3dpcmVndWFyZC93aW5kb3dzIHYwLjUuMyBp
+biBvdXIgcHJvZHVjdC4gVGhlIGRsbA0KICAgIGluaXRpYWxpemF0aW9uIGZhaWxzIHdoZW4gdXBn
+cmFkaW5nIHRoZSB3aW50dW4uZGxsIHRvIHZlcnNpb24gMC4xNC4xDQogICAgKG9yIDAuMTQsIGl0
+IGRvZXNuJ3QgbWF0dGVyKS4gMC4xMyB3b3JrcyBmaW5lLiBSZWxldmFudCBzdGFjayB0cmFjZQ0K
+ICAgIGJlbG93Lg0KDQogICAgVGhhbmtzIGZvciBhbiBleGNlbGxlbnQgbGlicmFyeS4gV2l0aG91
+dCBpdCwgaXQgd291bGQgYmUgbXVjaCBoYXJkZXINCiAgICB0byBwb3J0IG91ciBwcm9kdWN0IHRv
+IFdpbmRvd3MuDQoNCiAgICB1bmV4cGVjdGVkIGZhdWx0IGFkZHJlc3MgMHhmZmZmZmZmZmZmZmZm
+ZmZmDQogICAgZmF0YWwgZXJyb3I6IGZhdWx0DQogICAgW3NpZ25hbCAweGMwMDAwMDA1IGNvZGU9
+MHgwIGFkZHI9MHhmZmZmZmZmZmZmZmZmZmZmIHBjPTB4ZThiMjlkXQ0KDQogICAgZ29yb3V0aW5l
+IDY1IFtydW5uaW5nLCBsb2NrZWQgdG8gdGhyZWFkXToNCiAgICBydW50aW1lLnRocm93KHsweDI3
+YjkzZDk/LCAweDA/fSkNCiAgICBydW50aW1lL3BhbmljLmdvOjk5MiArMHg3NiBmcD0weGMwMDBh
+MzkzZDggc3A9MHhjMDAwYTM5M2E4IHBjPTB4Y2U4OTk2DQogICAgcnVudGltZS5zaWdwYW5pYygp
+DQogICAgcnVudGltZS9zaWduYWxfd2luZG93cy5nbzoyNjEgKzB4MTI1IGZwPTB4YzAwMGEzOTQy
+MCBzcD0weGMwMDBhMzkzZDggcGM9MHhjZmJiMDUNCiAgICBnb2xhbmcub3JnL3gvc3lzL3dpbmRv
+d3MuVVRGMTZQdHJUb1N0cmluZygweDI0MGU2YTA/KQ0KICAgIGdvbGFuZy5vcmcveC9zeXNAdjAu
+MC4wLTIwMjIwMjA5MjE0NTQwLTM2ODEwNjRkNTE1OC93aW5kb3dzL3N5c2NhbGxfd2luZG93cy5n
+bzoxMzINCiAgICArMHgxZCBmcD0weGMwMDBhMzk0Njggc3A9MHhjMDAwYTM5NDIwIHBjPTB4ZThi
+MjlkDQogICAgZ29sYW5nLnp4MmM0LmNvbS93aXJlZ3VhcmQvdHVuL3dpbnR1bi5zZXR1cExvZ2dl
+ci5mdW5jMSgweGMwMDAwNTc1OTA/LCAweDA/KQ0KICAgIGdvbGFuZy56eDJjNC5jb20vd2lyZWd1
+YXJkQHYwLjAuMC0yMDIxMDQyNzAyMjI0NS0wOTdhZjZlMTM1MWIvdHVuL3dpbnR1bi93aW50dW5f
+d2luZG93cy5nbzo1Mw0KICAgICsweDFjIGZwPTB4YzAwMGEzOTRiMCBzcD0weGMwMDBhMzk0Njgg
+cGM9MHgxZjMyMWJjDQogICAgcnVudGltZS5jYWxsMTYoMHgwLCAweDI4ZGY0NjgsIDB4YzAwMGEz
+OTUzOCwgMHgwLCAweDAsIDB4MTAsIDB4YzAwMGEzOTc5MCkNCiAgICBydW50aW1lL2FzbV9hbWQ2
+NC5zOjcwMSArMHg1MCBmcD0weGMwMDBhMzk0ZDAgc3A9MHhjMDAwYTM5NGIwIHBjPTB4ZDE0NTMw
+DQogICAgcnVudGltZS5jYWxsYmFja1dyYXAoMHg3Yzk1ZmZlYmMwKQ0KICAgIHJ1bnRpbWUvc3lz
+Y2FsbF93aW5kb3dzLmdvOjM3OCArMHgxMzQgZnA9MHhjMDAwYTM5OGIwIHNwPTB4YzAwMGEzOTRk
+MA0KICAgIHBjPTB4ZDA0MDc0DQogICAgcnVudGltZS5jZ29jYWxsYmFja2cxKDB4ZDAzZjQwLCAw
+eDA/LCAweDApDQogICAgcnVudGltZS9jZ29jYWxsLmdvOjMxNCArMHgyY2EgZnA9MHhjMDAwYTM5
+OTgwIHNwPTB4YzAwMGEzOThiMCBwYz0weGNiNGI4YQ0KICAgIHJ1bnRpbWUuY2dvY2FsbGJhY2tn
+KDB4YzAwMDU4MzM4MD8sIDB4MzAwMDAwMDAyPywgMHhjMDAwNTgzMzgwPykNCiAgICBydW50aW1l
+L2Nnb2NhbGwuZ286MjMzICsweDEwNiBmcD0weGMwMDBhMzlhMTggc3A9MHhjMDAwYTM5OTgwIHBj
+PTB4Y2I0N2M2DQogICAgcnVudGltZS5jZ29jYWxsYmFja2coMHhkMDNmNDAsIDB4N2M5NWZmZWJj
+MCwgMHgwKQ0KICAgIDxhdXRvZ2VuZXJhdGVkPjoxICsweDM2IGZwPTB4YzAwMGEzOWE0MCBzcD0w
+eGMwMDBhMzlhMTggcGM9MHhkMTgzNTYNCiAgICBydW50aW1lLmNnb2NhbGxiYWNrKDB4Y2I0NjRi
+LCAweGQxN2JlMCwgMHhjMDAwMTAwMmMwKQ0KICAgIHJ1bnRpbWUvYXNtX2FtZDY0LnM6OTcxICsw
+eGQ3IGZwPTB4YzAwMGEzOWE2OCBzcD0weGMwMDBhMzlhNDAgcGM9MHhkMTYwZjcNCiAgICBydW50
+aW1lLnN5c3RlbXN0YWNrX3N3aXRjaCgpDQogICAgcnVudGltZS9hc21fYW1kNjQuczo0MzYgZnA9
+MHhjMDAwYTM5YTcwIHNwPTB4YzAwMGEzOWE2OCBwYz0weGQxM2ZlMA0KICAgIHJ1bnRpbWUuY2dv
+Y2FsbCgweGQxN2JlMCwgMHhjMDAwMTAwMmMwKQ0KICAgIHJ1bnRpbWUvY2dvY2FsbC5nbzoxNjcg
+KzB4YWIgZnA9MHhjMDAwYTM5YWE4IHNwPTB4YzAwMGEzOWE3MCBwYz0weGNiNDY0Yg0KICAgIHN5
+c2NhbGwuU3lzY2FsbE4oMHg3ZmZjMTY5YzNhOTA/LCB7MHhjMDAwYTM5YjQwPywgMHgzPywgMHgw
+P30pDQogICAgcnVudGltZS9zeXNjYWxsX3dpbmRvd3MuZ286NTM4ICsweDEwOSBmcD0weGMwMDBh
+MzliMjAgc3A9MHhjMDAwYTM5YWE4DQogICAgcGM9MHhkMTJkZTkNCiAgICBzeXNjYWxsLlN5c2Nh
+bGwoMHhjMDAwNDc5NTkwPywgMHgxYTQyOGM4NTEwYT8sIDB4MWE0MjhjODUxMGE/LCAweDA/LCAw
+eDA/KQ0KICAgIHJ1bnRpbWUvc3lzY2FsbF93aW5kb3dzLmdvOjQ3NiArMHgzYiBmcD0weGMwMDBh
+MzliNjggc3A9MHhjMDAwYTM5YjIwIHBjPTB4ZDEyOWZiDQogICAgZ29sYW5nLnp4MmM0LmNvbS93
+aXJlZ3VhcmQvdHVuL3dpbnR1bi4oKlBvb2wpLk9wZW5BZGFwdGVyKDB4YzAwMDE4NzgwMCwNCiAg
+ICB7MHgyN2I4MjVjPywgMHgxYTQwMzkxMDU5OD99KQ0KICAgIGdvbGFuZy56eDJjNC5jb20vd2ly
+ZWd1YXJkQHYwLjAuMC0yMDIxMDQyNzAyMjI0NS0wOTdhZjZlMTM1MWIvdHVuL3dpbnR1bi93aW50
+dW5fd2luZG93cy5nbzo4OQ0KICAgICsweGFkIGZwPTB4YzAwMGEzOWJkOCBzcD0weGMwMDBhMzli
+NjggcGM9MHgxZjMyNTZkDQogICAgZ29sYW5nLnp4MmM0LmNvbS93aXJlZ3VhcmQvdHVuLkNyZWF0
+ZVRVTldpdGhSZXF1ZXN0ZWRHVUlEKHsweDI3YjgyNWMsDQogICAgMHg0fSwgMHgwPywgMHgwKQ0K
+ICAgIGdvbGFuZy56eDJjNC5jb20vd2lyZWd1YXJkQHYwLjAuMC0yMDIxMDQyNzAyMjI0NS0wOTdh
+ZjZlMTM1MWIvdHVuL3R1bl93aW5kb3dzLmdvOjc1DQogICAgKzB4NGQgZnA9MHhjMDAwYTM5YzUw
+IHNwPTB4YzAwMGEzOWJkOCBwYz0weDFmMzM4NGQNCiAgICBnb2xhbmcuengyYzQuY29tL3dpcmVn
+dWFyZC90dW4uQ3JlYXRlVFVOKC4uLikNCiAgICBnb2xhbmcuengyYzQuY29tL3dpcmVndWFyZEB2
+MC4wLjAtMjAyMTA0MjcwMjIyNDUtMDk3YWY2ZTEzNTFiL3R1bi90dW5fd2luZG93cy5nbzo2Mw0K
+DQo=
