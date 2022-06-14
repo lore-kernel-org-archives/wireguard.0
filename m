@@ -4,39 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43138CCA47B
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Jun 2022 09:52:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 727DBC433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Jun 2022 13:19:11 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 5b2f3b50;
-	Tue, 14 Jun 2022 09:51:41 +0000 (UTC)
-Received: from iedub0.y7.hu (iedub0.y7.hu [2a05:d018:563:7900::25])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id dd8c76f8
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id aa22e969;
+	Tue, 14 Jun 2022 13:19:09 +0000 (UTC)
+Received: from smtp.ungleich.ch (smtp.ungleich.ch
+ [2a0a:e5c0:0:2:400:b3ff:fe39:7956])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id fe48f619
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 14 Jun 2022 09:51:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=wg-ml-rkaofgr.redir.email; s=may2017; h=Message-ID:Content-Type:
- MIME-Version:Subject:To:From:Date:List-Unsubscribe;
- bh=v1it6OLw3aADYAddlMOiSOY96vqpiv+lMyHy40bnpiU=; b=JkjQ8iy40cAQnuSyoOMY4PNAxY
- UajMgcQZWHDHcZau4K0CRRaG/KlMpBEa42qxtc4n5R+jedGt2sD/DLbfc5jPVM65lNqwbevH6btl+
- /8uBgwRI3+NeddHWil+FgzmeWLKgKSBC7erjVVTkx4H6ybZXYlGkfmfOFX1Bx8Vkkkhbmdf24ECpt
- KCdCP4Xv/vK6rnlvPXlqPhs5LRTnjvuR5JeC/QpR8xTx0z9AgiFgHtT2Tsb1RHzlEx6hlNXwz5MKB
- kEd+suwFmYubEcb3a61P6pD3sR6Mrji30RUiFbH/qN+9DEoTf+P9tU5LCM8dzcCrV4JdKLuPP3sus
- hkIMxNNw==;
-Received: from localhost ([::1]) helo=localhost by localhost with ESMTPSA 
- id c0b24e8e56a672859849ebdd1563ba38
- for wireguard@lists.zx2c4.com; Tue, 14 Jun 2022 09:51:39 +0000
-Date: Tue, 14 Jun 2022 09:51:07 +0000
-From: Endre Szabo <endre.szabo@wg-ml-rkaofgr.redir.email>
-To: wireguard@lists.zx2c4.com
-Subject: Re: How to generate the QR Code
-References: <CAC9cSOATKiXuaFO8UQZezP7RLebBoo-UWwM-KQJMEwhg_-+VTw@mail.gmail.com>
- <CAC9cSOBv7Zkj0uPqyaBDKC+aiwOzTrbjNGUP41iyKZb9u2i-Lw@mail.gmail.com>
+ Tue, 14 Jun 2022 13:19:08 +0000 (UTC)
+Received: from nb3.localdomain (localhost [IPv6:::1])
+ by smtp.ungleich.ch (Postfix) with ESMTP id AE51D2047E;
+ Tue, 14 Jun 2022 15:18:59 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ungleich.ch;
+ s=202201; t=1655212739;
+ bh=InbvhTZxX6TKCWugI+Sg+QSlTleZnuMyJq1geznNak8=;
+ h=References:From:To:Cc:Subject:Date:In-reply-to:From;
+ b=GnOo+m3cJd7Y04f/U0eS0lJE9VrRu+FXEVtO8xbS9XtZlOaRdRzUU/qJvlf6zDNlg
+ ls3Fcnh7A+EE2I/4/DXdy0iGwao0cDqigulZL9Su7VUjFXw3nLSxHTEEP9McPRCw5Q
+ J8HXb63JJh8VpwJ/aploZxioRT6+xisgwcfoZBdkatvMKGDLVyon0RGJhQG1QRXLnh
+ WFsojGoEHs7HZlNL1ZwOB2wrXlS7yfgAmhuQOqcp8yc/xs8vhpWJIQxd05WkHlx28y
+ yRVC6nKogvn+GhUM92w/Avr2d9+hUVB2CQTfIFOMMlW66J+aD8kmg7GvyRHsy86QwY
+ ZT62XoGjLhNFQ==
+Received: by nb3.localdomain (Postfix, from userid 1000)
+ id 26EED14C00D1; Tue, 14 Jun 2022 15:19:25 +0200 (CEST)
+References: <20220609220522.kwqa4uvuc3sijlka@bamsoftware.com>
+User-agent: mu4e 1.7.21; emacs 28.1
+From: Nico Schottelius <nico.schottelius@ungleich.ch>
+To: David Fifield <david@bamsoftware.com>
+Cc: wireguard@lists.zx2c4.com
+Subject: Re: WireGuard protocol blocking in China, swgp-go (userspace
+ obfuscation proxy)
+Date: Tue, 14 Jun 2022 15:13:11 +0200
+In-reply-to: <20220609220522.kwqa4uvuc3sijlka@bamsoftware.com>
+Message-ID: <87pmjbpele.fsf@ungleich.ch>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAC9cSOBv7Zkj0uPqyaBDKC+aiwOzTrbjNGUP41iyKZb9u2i-Lw@mail.gmail.com>
-Message-ID: <c0b24e8e56a672859849ebdd1563ba38@wg-ml-rkaofgr.redir.email>
+Content-Type: text/plain
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -51,21 +56,35 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Philip,
 
-While it is not complicated, it is not that simple to generate the QR codes just based on the Mikrotik configs. QR codes are basically encoded config files for the clients. And the added complexity is that they have the private key in them as well, which I'm sure you have on file somewere, as you had to give Mikrotik the public counterpart of that keypair.
+David Fifield <david@bamsoftware.com> writes:
 
-What I really miss of the QR code config file is a 'metadata' field that should function as a 'connection name suggestion' the user can accept (or edit as prefilled connetction name field) upon QR code reading. This would be really handly in case of a lot of connections to add to a phone.
+> I am forwarding some information about WireGuard blocking and
+> anti-blocking that was posted to a censorship circumvention forum.
 
---Endre
+In regards to this topic I was wondering if it makes sense to have a
+more generic obfuscation proxy that can carry tcp/udp payload?
 
-On Fri, Jun 03, 2022 at 14:40:47-0400, Saint Michael wrote:
-> Dear friends
-> I have a Mikrotikotic router and configured all that is necessary for
-> the VPN.  I also configured a windows client for testing. Once it
-> worked, I downloaded the Wireguard app from the Google Play Store. The
-> question is, how can I generate the QR Code so all my employees can
-> use it on their phones?
-> I could not find the answer.
-> 
-> Philip
+Maybe this already exists, but I would think that something that hops
+protocols (IPv6, IPv4 endpoints, tcp/udp encapsolution), changes ports
+and uses envelope based tunneling (http, https, smtp, imap - worst case
+DNS) would make it easier to sustain communication even in more serious
+filtering scenarios.
+
+Given such a "generic obfuscator", it could be combined with "protocol"
+modes, i.e. enhancing protocols such as wireguard with the presented
+algorithm, making it even harder to predict the content.
+
+I'd assume some performance regressions using such an obfuscator, but
+maybe it could even "learn" the proper obfuscation by detecting blocks
+on easier to detect obfuscation and then switching to a stronger, but
+less efficient obfuscation.
+
+Wondering what your thoughts are on this.
+
+Best regards,
+
+Nico
+
+--
+Sustainable and modern Infrastructures by ungleich.ch
