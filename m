@@ -4,55 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70FDFC433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Jun 2022 17:02:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4265AC43334
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Jun 2022 19:15:48 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 83c9b0c8;
-	Tue, 14 Jun 2022 17:02:46 +0000 (UTC)
-Received: from krn.amebis.si (krn.amebis.si [93.103.235.207])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 1709c0a7
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 62f66e69;
+	Tue, 14 Jun 2022 19:15:47 +0000 (UTC)
+Received: from mx2.freebsd.org (mx2.freebsd.org [96.47.72.81])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id df4efe7a
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 14 Jun 2022 17:02:45 +0000 (UTC)
-Received: by krn.amebis.si (Postfix, from userid 982)
- id 7ABA218E8783; Tue, 14 Jun 2022 19:02:44 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rozman.si;
- s=default; t=1655226164;
- bh=r+mNuhGX+O9NPDQvp/fT0ztoSHoH8jAzUJCOlJnQ7Xk=;
- h=From:To:Subject:Date:References:In-Reply-To:From;
- b=Ugl9zjNzx8TIT0VI5v2I+fZ/MKTXo3qlRZIja0GnYHHN/akj9PBzAy2kZRz6cSg8P
- iC+x0GLlL+5B8033kKBI692bZn6CfcAm2b3Em8n7JqTt+b26jSwKwtU6tYe3vY2vLo
- +Q9vpZwsin2Bl+edeALwsvUpHXoC9wgElhHAwRzQ=
-Received: from Konj.amebis.doma (konj.amebis.doma [IPv6:2a01:260:4101:1464::4])
- by krn.amebis.si (Postfix) with ESMTPS id 30B5218E8781;
- Tue, 14 Jun 2022 19:02:42 +0200 (CEST)
-Received: from Konj.amebis.doma (2a01:260:4101:1464::4) by Konj.amebis.doma
- (2a01:260:4101:1464::4) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.26; Tue, 14 Jun
- 2022 19:02:42 +0200
-Received: from Konj.amebis.doma ([fe80::545:cd17:7444:be04]) by
- Konj.amebis.doma ([fe80::545:cd17:7444:be04%9]) with mapi id 15.02.0986.026;
- Tue, 14 Jun 2022 19:02:42 +0200
-From: Simon Rozman <simon@rozman.si>
-To: Thomas Hallgren <thomas@datawire.io>, "wireguard@lists.zx2c4.com"
- <wireguard@lists.zx2c4.com>
-Subject: Re: Incompatibility between wintun.dll and go module
-Thread-Topic: Incompatibility between wintun.dll and go module
-Thread-Index: AQHYf9GnnW9vVR8T4EidZyhecaIIla1PIXqA
-Date: Tue, 14 Jun 2022 17:02:41 +0000
-Message-ID: <6F224D6F-E5DA-44C9-93AF-83A0B33EFE45@rozman.si>
-References: <CAGyv=Qv7vNrTvMriOxAyEHHUAz6qOOZDtjfj=+ru+yOKAcY8UQ@mail.gmail.com>
-In-Reply-To: <CAGyv=Qv7vNrTvMriOxAyEHHUAz6qOOZDtjfj=+ru+yOKAcY8UQ@mail.gmail.com>
-Accept-Language: en-SI, en-GB, sl-SI, en-US
-Content-Language: en-GB
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Microsoft-MacOutlook/16.61.22050700
-x-originating-ip: [2a01:260:4101:140a::5]
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <45D900CEE25C9D4D8883DABFFC7E8F66@amebis.si>
-Content-Transfer-Encoding: base64
+ Tue, 14 Jun 2022 19:15:45 +0000 (UTC)
+Received: from mx1.freebsd.org (mx1.freebsd.org [96.47.72.80])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits)
+ client-signature RSA-PSS (4096 bits))
+ (Client CN "mx1.freebsd.org", Issuer "R3" (verified OK))
+ by mx2.freebsd.org (Postfix) with ESMTPS id 2FE33920E7;
+ Tue, 14 Jun 2022 19:15:44 +0000 (UTC) (envelope-from jrm@FreeBSD.org)
+Received: from smtp.freebsd.org (smtp.freebsd.org
+ [IPv6:2610:1c1:1:606c::24b:4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
+ client-signature RSA-PSS (4096 bits) client-digest SHA256)
+ (Client CN "smtp.freebsd.org", Issuer "R3" (verified OK))
+ by mx1.freebsd.org (Postfix) with ESMTPS id 4LMynr0BTDz3vK6;
+ Tue, 14 Jun 2022 19:15:44 +0000 (UTC) (envelope-from jrm@FreeBSD.org)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=freebsd.org; s=dkim;
+ t=1655234144;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=xMyA/fNsDKwWWcuwbYBvaAIDCEPyJ90NjWLqxns4Dfc=;
+ b=N0zGuuDWkhs4rE1FwURUsVs13mg3D6UJjon2RQUu+NDgQrns23Dp6BljJnRozGYo7fS12B
+ ixZFI3i3dRKeOUY+0KahL52XV5Cz1XMKk8HykqxivRSxOe2bvi9od+KUJrXbBRn2hU3mPN
+ ZBGM4uxqbK2uCo0HGhOrL4WklNElz9x4AQgZJBH7NMMSVPFyt3qBfZYe4q4rhh6y4fpxbu
+ ua6roUIHtTrN85Of8hmQDzyLB0HE2/rfyTcDx7IAOToPgQ0HeYZb1zYCERKYDLCkePvMTj
+ 1AOUhbjsPXD/J0HrVTZ8UifoFU4vaTfCHCHwZD19nfIMWhwJ+VEioD2Fe9yfjA==
+Received: from phe.ftfl.ca
+ (drmons0544w-156-34-173-250.dhcp-dynamic.fibreop.ns.bellaliant.net
+ [156.34.173.250])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (Client did not present a certificate)
+ (Authenticated sender: jrm/mail)
+ by smtp.freebsd.org (Postfix) with ESMTPSA id A6101C0B7;
+ Tue, 14 Jun 2022 19:15:43 +0000 (UTC) (envelope-from jrm@FreeBSD.org)
+From: Joseph Mingrone <jrm@FreeBSD.org>
+To: wireguard@lists.zx2c4.com
+Cc: decke@freebsd.org,
+	mad@madpilot.net,
+	Joseph Mingrone <jrm@FreeBSD.org>
+Subject: [PATCH] compat: Update version to handle sbcreatecontrol() changes
+Date: Tue, 14 Jun 2022 16:15:26 -0300
+Message-Id: <20220614191526.70200-1-jrm@FreeBSD.org>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=freebsd.org;
+ s=dkim; t=1655234144;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=xMyA/fNsDKwWWcuwbYBvaAIDCEPyJ90NjWLqxns4Dfc=;
+ b=OFONUvTAFEY2oso20OPbNKMA/zQTAbz65nogKuytMr7p5/uWxMiXn8BjOhy8b9q0Qcecq7
+ zj5U0Ty58MvvaFt1GZ5GVSX5iw/FWkfSWnNxGsIopS2HEDHhh7nkt5d9qWqmRX2Js3Fofg
+ kLMeHtZpAVXROfcP0PYqoWo8qhS5FTyUVYtmYhCb4IZsdX/LVscObHu4c3ca0cyVbTD6vN
+ s6Gj7oKqDG1uz+aE4qgKOFarPUALG8uAJlalyaff7hdHXnmkfpZnjLR8Pvd96Gp4ggLTAl
+ F23L4pxAva7TWcXVwRKH01DlVvHEqG7+oOHJKfNg94/JAr6o+kJzFJarBIXfew==
+ARC-Seal: i=1; s=dkim; d=freebsd.org; t=1655234144; a=rsa-sha256; cv=none;
+ b=OX2ts6SXosOmf7DwRfW91QsSN8Ci194gpdB65/n8RwYcbsyI3Auou3Btzre+aJUJJ87RAO
+ QQ58UlQ7QaOURn9yevb/JNqarpB6Hpfznf9+FiMrJS/KR1hsHkdtRseOhOShvh1oAbniaR
+ uy3k/sVEZEHHEtYTaF6DTQ6A8QLhb/SAyTm+rgO9QXBqyAcFE8pxYBZREW5grXJG8Qovs0
+ lUJJf/BDmLej0z5xCEkOnoeXEvBMKPi25OENsvC4zxBmEGHykaqd48tqiCitVoLQGpw7j5
+ Z86SlXPW6djj5tnRQzg18nxf98U8nUOBDcs6CubKbxl9XKKjKlQfojNM79ATeQ==
+ARC-Authentication-Results: i=1;
+	mx1.freebsd.org;
+	none
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -67,77 +93,39 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-SGkhDQoNClRoZSAwLjE0KyBpcyBub3QgYmluYXJ5IGNvbXBhdGlibGUgd2l0aCAwLjEzLiBUaGUg
-QVBJIGNoYW5nZWQgY29uc2lkZXJhYmx5OiBodHRwczovL2dpdC56eDJjNC5jb20vd2ludHVuL2Rp
-ZmYvYXBpL3dpbnR1bi5oP2lkPTU0NGZkYWFmOGZiOTcwZDk2NTdhNTljMWZjNGM0NTY5ZGU0ZjJk
-M2UNCg0KVGhlIHdpcmVndWFyZC1nbyByZXBvIHdhcyBhZGp1c3RlZCBmb3IgdGhpcyBBUEkgY2hh
-bmdlIGluIGh0dHBzOi8vZ2l0Lnp4MmM0LmNvbS93aXJlZ3VhcmQtZ28vY29tbWl0Lz9pZD04MmQy
-YWE4N2FhNjIzY2I1MTQzYTQxYzMzNDVkYTRmYjg3NWFkODVkLiBXaW50dW4gYWRhcHRlciBwb29s
-cyB3ZXJlIGNvbXBsZXRlbHkgZGlzY29udGludWVkOyBob3dldmVyLCB5b3VyIHN0YWNrIHRyYWNl
-IGluZGljYXRlcyB5b3UgYXJlIHN0aWxsIHVzaW5nIGFuIG91dGRhdGVkIHZlcnNpb24gb2Ygd2ly
-ZWd1YXJkLWdvIGNhbGxpbmcgd2ludHVuLigqUG9vbCkuT3BlbkFkYXB0ZXIuDQoNClBsZWFzZSwg
-dXBkYXRlIHdpcmVndWFyZC1nbyBhbmQgdXBkYXRlLg0KDQpSZWdhcmRzLA0KU2ltb24NCg0K77u/
-LS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCkZyb206IFdpcmVHdWFyZCA8d2lyZWd1YXJkLWJv
-dW5jZXNAbGlzdHMuengyYzQuY29tPiBvbiBiZWhhbGYgb2YgVGhvbWFzIEhhbGxncmVuIDx0aG9t
-YXNAZGF0YXdpcmUuaW8+DQpEYXRlOiBUdWVzZGF5LCAxNCBKdW5lIDIwMjIgYXQgMTEuMzINClRv
-OiAid2lyZWd1YXJkQGxpc3RzLnp4MmM0LmNvbSIgPHdpcmVndWFyZEBsaXN0cy56eDJjNC5jb20+
-DQpTdWJqZWN0OiBJbmNvbXBhdGliaWxpdHkgYmV0d2VlbiB3aW50dW4uZGxsIGFuZCBnbyBtb2R1
-bGUNCg0KICAgIEhpLA0KDQogICAgV2UncmUgdXNpbmcgdGhlIHdpbnR1bi5kbGwgYW5kIHRoZSBn
-byBtb2R1bGUNCiAgICBnb2xhbmcuengyYzQuY29tL3dpcmVndWFyZC93aW5kb3dzIHYwLjUuMyBp
-biBvdXIgcHJvZHVjdC4gVGhlIGRsbA0KICAgIGluaXRpYWxpemF0aW9uIGZhaWxzIHdoZW4gdXBn
-cmFkaW5nIHRoZSB3aW50dW4uZGxsIHRvIHZlcnNpb24gMC4xNC4xDQogICAgKG9yIDAuMTQsIGl0
-IGRvZXNuJ3QgbWF0dGVyKS4gMC4xMyB3b3JrcyBmaW5lLiBSZWxldmFudCBzdGFjayB0cmFjZQ0K
-ICAgIGJlbG93Lg0KDQogICAgVGhhbmtzIGZvciBhbiBleGNlbGxlbnQgbGlicmFyeS4gV2l0aG91
-dCBpdCwgaXQgd291bGQgYmUgbXVjaCBoYXJkZXINCiAgICB0byBwb3J0IG91ciBwcm9kdWN0IHRv
-IFdpbmRvd3MuDQoNCiAgICB1bmV4cGVjdGVkIGZhdWx0IGFkZHJlc3MgMHhmZmZmZmZmZmZmZmZm
-ZmZmDQogICAgZmF0YWwgZXJyb3I6IGZhdWx0DQogICAgW3NpZ25hbCAweGMwMDAwMDA1IGNvZGU9
-MHgwIGFkZHI9MHhmZmZmZmZmZmZmZmZmZmZmIHBjPTB4ZThiMjlkXQ0KDQogICAgZ29yb3V0aW5l
-IDY1IFtydW5uaW5nLCBsb2NrZWQgdG8gdGhyZWFkXToNCiAgICBydW50aW1lLnRocm93KHsweDI3
-YjkzZDk/LCAweDA/fSkNCiAgICBydW50aW1lL3BhbmljLmdvOjk5MiArMHg3NiBmcD0weGMwMDBh
-MzkzZDggc3A9MHhjMDAwYTM5M2E4IHBjPTB4Y2U4OTk2DQogICAgcnVudGltZS5zaWdwYW5pYygp
-DQogICAgcnVudGltZS9zaWduYWxfd2luZG93cy5nbzoyNjEgKzB4MTI1IGZwPTB4YzAwMGEzOTQy
-MCBzcD0weGMwMDBhMzkzZDggcGM9MHhjZmJiMDUNCiAgICBnb2xhbmcub3JnL3gvc3lzL3dpbmRv
-d3MuVVRGMTZQdHJUb1N0cmluZygweDI0MGU2YTA/KQ0KICAgIGdvbGFuZy5vcmcveC9zeXNAdjAu
-MC4wLTIwMjIwMjA5MjE0NTQwLTM2ODEwNjRkNTE1OC93aW5kb3dzL3N5c2NhbGxfd2luZG93cy5n
-bzoxMzINCiAgICArMHgxZCBmcD0weGMwMDBhMzk0Njggc3A9MHhjMDAwYTM5NDIwIHBjPTB4ZThi
-MjlkDQogICAgZ29sYW5nLnp4MmM0LmNvbS93aXJlZ3VhcmQvdHVuL3dpbnR1bi5zZXR1cExvZ2dl
-ci5mdW5jMSgweGMwMDAwNTc1OTA/LCAweDA/KQ0KICAgIGdvbGFuZy56eDJjNC5jb20vd2lyZWd1
-YXJkQHYwLjAuMC0yMDIxMDQyNzAyMjI0NS0wOTdhZjZlMTM1MWIvdHVuL3dpbnR1bi93aW50dW5f
-d2luZG93cy5nbzo1Mw0KICAgICsweDFjIGZwPTB4YzAwMGEzOTRiMCBzcD0weGMwMDBhMzk0Njgg
-cGM9MHgxZjMyMWJjDQogICAgcnVudGltZS5jYWxsMTYoMHgwLCAweDI4ZGY0NjgsIDB4YzAwMGEz
-OTUzOCwgMHgwLCAweDAsIDB4MTAsIDB4YzAwMGEzOTc5MCkNCiAgICBydW50aW1lL2FzbV9hbWQ2
-NC5zOjcwMSArMHg1MCBmcD0weGMwMDBhMzk0ZDAgc3A9MHhjMDAwYTM5NGIwIHBjPTB4ZDE0NTMw
-DQogICAgcnVudGltZS5jYWxsYmFja1dyYXAoMHg3Yzk1ZmZlYmMwKQ0KICAgIHJ1bnRpbWUvc3lz
-Y2FsbF93aW5kb3dzLmdvOjM3OCArMHgxMzQgZnA9MHhjMDAwYTM5OGIwIHNwPTB4YzAwMGEzOTRk
-MA0KICAgIHBjPTB4ZDA0MDc0DQogICAgcnVudGltZS5jZ29jYWxsYmFja2cxKDB4ZDAzZjQwLCAw
-eDA/LCAweDApDQogICAgcnVudGltZS9jZ29jYWxsLmdvOjMxNCArMHgyY2EgZnA9MHhjMDAwYTM5
-OTgwIHNwPTB4YzAwMGEzOThiMCBwYz0weGNiNGI4YQ0KICAgIHJ1bnRpbWUuY2dvY2FsbGJhY2tn
-KDB4YzAwMDU4MzM4MD8sIDB4MzAwMDAwMDAyPywgMHhjMDAwNTgzMzgwPykNCiAgICBydW50aW1l
-L2Nnb2NhbGwuZ286MjMzICsweDEwNiBmcD0weGMwMDBhMzlhMTggc3A9MHhjMDAwYTM5OTgwIHBj
-PTB4Y2I0N2M2DQogICAgcnVudGltZS5jZ29jYWxsYmFja2coMHhkMDNmNDAsIDB4N2M5NWZmZWJj
-MCwgMHgwKQ0KICAgIDxhdXRvZ2VuZXJhdGVkPjoxICsweDM2IGZwPTB4YzAwMGEzOWE0MCBzcD0w
-eGMwMDBhMzlhMTggcGM9MHhkMTgzNTYNCiAgICBydW50aW1lLmNnb2NhbGxiYWNrKDB4Y2I0NjRi
-LCAweGQxN2JlMCwgMHhjMDAwMTAwMmMwKQ0KICAgIHJ1bnRpbWUvYXNtX2FtZDY0LnM6OTcxICsw
-eGQ3IGZwPTB4YzAwMGEzOWE2OCBzcD0weGMwMDBhMzlhNDAgcGM9MHhkMTYwZjcNCiAgICBydW50
-aW1lLnN5c3RlbXN0YWNrX3N3aXRjaCgpDQogICAgcnVudGltZS9hc21fYW1kNjQuczo0MzYgZnA9
-MHhjMDAwYTM5YTcwIHNwPTB4YzAwMGEzOWE2OCBwYz0weGQxM2ZlMA0KICAgIHJ1bnRpbWUuY2dv
-Y2FsbCgweGQxN2JlMCwgMHhjMDAwMTAwMmMwKQ0KICAgIHJ1bnRpbWUvY2dvY2FsbC5nbzoxNjcg
-KzB4YWIgZnA9MHhjMDAwYTM5YWE4IHNwPTB4YzAwMGEzOWE3MCBwYz0weGNiNDY0Yg0KICAgIHN5
-c2NhbGwuU3lzY2FsbE4oMHg3ZmZjMTY5YzNhOTA/LCB7MHhjMDAwYTM5YjQwPywgMHgzPywgMHgw
-P30pDQogICAgcnVudGltZS9zeXNjYWxsX3dpbmRvd3MuZ286NTM4ICsweDEwOSBmcD0weGMwMDBh
-MzliMjAgc3A9MHhjMDAwYTM5YWE4DQogICAgcGM9MHhkMTJkZTkNCiAgICBzeXNjYWxsLlN5c2Nh
-bGwoMHhjMDAwNDc5NTkwPywgMHgxYTQyOGM4NTEwYT8sIDB4MWE0MjhjODUxMGE/LCAweDA/LCAw
-eDA/KQ0KICAgIHJ1bnRpbWUvc3lzY2FsbF93aW5kb3dzLmdvOjQ3NiArMHgzYiBmcD0weGMwMDBh
-MzliNjggc3A9MHhjMDAwYTM5YjIwIHBjPTB4ZDEyOWZiDQogICAgZ29sYW5nLnp4MmM0LmNvbS93
-aXJlZ3VhcmQvdHVuL3dpbnR1bi4oKlBvb2wpLk9wZW5BZGFwdGVyKDB4YzAwMDE4NzgwMCwNCiAg
-ICB7MHgyN2I4MjVjPywgMHgxYTQwMzkxMDU5OD99KQ0KICAgIGdvbGFuZy56eDJjNC5jb20vd2ly
-ZWd1YXJkQHYwLjAuMC0yMDIxMDQyNzAyMjI0NS0wOTdhZjZlMTM1MWIvdHVuL3dpbnR1bi93aW50
-dW5fd2luZG93cy5nbzo4OQ0KICAgICsweGFkIGZwPTB4YzAwMGEzOWJkOCBzcD0weGMwMDBhMzli
-NjggcGM9MHgxZjMyNTZkDQogICAgZ29sYW5nLnp4MmM0LmNvbS93aXJlZ3VhcmQvdHVuLkNyZWF0
-ZVRVTldpdGhSZXF1ZXN0ZWRHVUlEKHsweDI3YjgyNWMsDQogICAgMHg0fSwgMHgwPywgMHgwKQ0K
-ICAgIGdvbGFuZy56eDJjNC5jb20vd2lyZWd1YXJkQHYwLjAuMC0yMDIxMDQyNzAyMjI0NS0wOTdh
-ZjZlMTM1MWIvdHVuL3R1bl93aW5kb3dzLmdvOjc1DQogICAgKzB4NGQgZnA9MHhjMDAwYTM5YzUw
-IHNwPTB4YzAwMGEzOWJkOCBwYz0weDFmMzM4NGQNCiAgICBnb2xhbmcuengyYzQuY29tL3dpcmVn
-dWFyZC90dW4uQ3JlYXRlVFVOKC4uLikNCiAgICBnb2xhbmcuengyYzQuY29tL3dpcmVndWFyZEB2
-MC4wLjAtMjAyMTA0MjcwMjIyNDUtMDk3YWY2ZTEzNTFiL3R1bi90dW5fd2luZG93cy5nbzo2Mw0K
-DQo=
+The sockbuf changes to merge two versions of sbcreatecontrol() into one
+occurred in b46667c63eb7 in the FreeBSD src repository.  The value of
+__FreeBSD_version at the time of that commit was 1400059, so check
+for systems with a version stamp less than 1400059.
+
+Ideally __FreeBSD_version would have been bumped in b46667c63eb7,
+however it was set to 1400059 53 commits prior in 3a9a9c0ca44e and not
+bumped to 1400060 until 374 commits later in 85d7875d4291.  Thus, this
+is not a perfect solution because CURRENT systems built from 53 possible
+commits that require the adjustment will still fail to build the
+wireguard kernel module.  This is better than checking for systems with
+__FreeBSD_version < 1400057.  In that case, there are 767 different
+commits a CURRENT system may be built from where the module will fail to
+build.
+
+Sponsored by:	The FreeBSD Foundation
+---
+ src/compat.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/compat.h b/src/compat.h
+index 8567524..d55c628 100644
+--- a/src/compat.h
++++ b/src/compat.h
+@@ -24,7 +24,7 @@
+ #define COMPAT_NEED_BLAKE2S
+ #endif
+ 
+-#if __FreeBSD_version < 1400057
++#if __FreeBSD_version < 1400059
+ #include <sys/sockbuf.h>
+ #define sbcreatecontrol(a, b, c, d, e) sbcreatecontrol(a, b, c, d)
+ #endif
+-- 
+2.36.1
+
