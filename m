@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A8C0C43334
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 17 Jun 2022 11:39:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31697C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 17 Jun 2022 11:43:22 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id ef3d5fcb;
-	Fri, 17 Jun 2022 11:39:53 +0000 (UTC)
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com
- [2a00:1450:4864:20::12d])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id fd107343
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id bf251c84;
+	Fri, 17 Jun 2022 11:39:58 +0000 (UTC)
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com
+ [2a00:1450:4864:20::12f])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 77e15605
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 14 Jun 2022 13:53:09 +0000 (UTC)
-Received: by mail-lf1-x12d.google.com with SMTP id s6so13983017lfo.13
- for <wireguard@lists.zx2c4.com>; Tue, 14 Jun 2022 06:53:09 -0700 (PDT)
+ Wed, 15 Jun 2022 16:07:41 +0000 (UTC)
+Received: by mail-lf1-x12f.google.com with SMTP id c2so19736399lfk.0
+ for <wireguard@lists.zx2c4.com>; Wed, 15 Jun 2022 09:07:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
  h=from:to:cc:subject:date:message-id:mime-version
  :content-transfer-encoding;
  bh=tNfxMq9UgtuKtldX4mV/7xZWjbqV/s9Dqb++EMjK95g=;
- b=oAAxxsJsX9bs919gADYelffiZvN/rT7f+ro7AFr+COmzlWdtwfLgVertnSK/nZGNts
- 6eLuUyKzn0bjgRtwt0mxRk5TAv+BqNfQnBo6Z1F/OyRJ8ZKemlyCHtvncA5etVjPtN/X
- lTHOmUulVsipWlntdS8BtE6sYCWDjJnR9Nipzxnh/CXyI4KMX0w1DFmmPYdZq6td5UZ8
- AwtJq2jyJWTztlQtmRJtildwQn4eRb2kjrQU2m42LMv9XaFkU7I5w9hndadmXJ0d4si8
- X6GsL/k9oBx1poqoHtP15iOnGVQKnpGWSj+o4ZJVUbZtVUcCKsVNivKjuimx3DLMdJQK
- YE+g==
+ b=ftjlZYy+O2hW06ZbRMAZEd7BrMFAyl6ajo7gyTA28UqxGqMfCl7Qiyly939z4PU++i
+ PCvW2gxifjxrFRDYruGVeBX8D3lrTdiDoZNAHPl4GQnITIlRbS28zjTZX18wr2YMg3+L
+ HI3NZWA3pLA6NkrncEZeXHsSI86JvL1ALc7urqGg1hWFxvacPgb4qIVjX6PNAvPnwBGL
+ cvxIf9NoGXhFOZpMFKWbsb3bb2d4jUhUY+g8V53EVf+iqrrNV0e0Yd0WMCKDnvwkYKUh
+ W7YlplVC6fEkPZ1ZJYqM8APhAPFZUF1PQYNmY3VnKjfxtTcwVnVuUdheNsNXqP48liGC
+ 13gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
  :content-transfer-encoding;
  bh=tNfxMq9UgtuKtldX4mV/7xZWjbqV/s9Dqb++EMjK95g=;
- b=ARFBu7Jljda8c8s/8TLTn2C04kqGxixfv7OZBoWsbvm6EGbBHS8LaO1CsYBB0fi6oT
- /t1VsL5XHUTIg3ObK9qb+st/bhXZ6z9laUJxYtC8FTwi0oPzh3/9/hMhRMSOOMxd6Dhr
- 0RGfYdl+mtb+1TcO6zs5+AcnshyaAu1HKkbtihEmoEXIdkpwolbT99pjKsaDrgB5QhfY
- bvl7ZMt4MKascVHmuVPqDLUg5x4oxsDrFjhcN//QN9VvyXCEZRqaHOOvsCUIaV9ZQpiy
- gE2nXVR0Zr4wlxBXzCrKOpjLYvMJDzb0/shfikR6Mp6qJyVKicWBCx3GQOITUgD4F/7A
- +iYg==
-X-Gm-Message-State: AJIora9Oau7s+qIFUC9tWNtHTv5S7wK5JGZb8RH6vtG/dWa7//k8lWrG
- AmcrFsEcoQwrl551/hOz295SUq3fP68yg0Ox
-X-Google-Smtp-Source: AGRyM1tuOc1Lwwkmt5NSpA8gcc5odUSBJSCXrxAEWO295y/QcVvobIWmXIx/22fsWQbLtN3b2YyKMA==
-X-Received: by 2002:ac2:5496:0:b0:479:1cee:89d9 with SMTP id
- t22-20020ac25496000000b004791cee89d9mr3231040lfk.587.1655214788413; 
- Tue, 14 Jun 2022 06:53:08 -0700 (PDT)
+ b=ApOMafOfdwOtIk5yERS3c40785Dnu/dGOAKrq2xcXkeji2wZckcxjKz6DeapL19rIt
+ 2bavr7dTZjqpoDRt7G/Qd05rD/+bICazVGQMp5fdU5zZAvfwreoyqcKtz7tMDzwoPyQ5
+ ju1u+qNxqk4k2IYWOi/rxnSxrhwxio52uLYX9tg7h3xTOGOw6wihb/sH9ZOnuRVytm0z
+ uCFD0jk6rwQxMtb/52ZJ3lz4eyIBmAwz3TqTzRykid9QO4047UPWkoccvI+lfRgRAEOp
+ VS0VpMpzdyWhKlLFeY9F0hnc+Q0mK5uS5fcit1UIqU5k7L52C0KnlTaTlIBICyfLXkci
+ ZcYg==
+X-Gm-Message-State: AJIora/I4Z8Lik0Q0Iitw0sZcW8Shbzt7exk00PbizkXLPDFsjhxJakO
+ IEh2hgErf5rVEdj/bUKKCspLazLphiX1rAlE
+X-Google-Smtp-Source: AGRyM1uDEZYyDOXA86OiCPVAQwrXrE5EFR+/0mzDJZjjr2XT4YPT2migW9kIyUkgT5dZn8RG2p2pgA==
+X-Received: by 2002:a05:6512:280b:b0:47b:531:8299 with SMTP id
+ cf11-20020a056512280b00b0047b05318299mr141270lfb.296.1655309260103; 
+ Wed, 15 Jun 2022 09:07:40 -0700 (PDT)
 Received: from localhost.localdomain ([217.72.11.142])
  by smtp.gmail.com with ESMTPSA id
- q3-20020a2e5c03000000b00253d84812edsm1353105ljb.2.2022.06.14.06.53.07
+ l19-20020a194953000000b0047b0f2d7650sm1843632lfj.271.2022.06.15.09.07.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jun 2022 06:53:08 -0700 (PDT)
+ Wed, 15 Jun 2022 09:07:39 -0700 (PDT)
 From: Stepan Rabotkin <epicstyt@gmail.com>
 To: wireguard@lists.zx2c4.com
 Cc: Stepan Rabotkin <epicstyt@gmail.com>
 Subject: [PATCH] feat: add search to app list
-Date: Tue, 14 Jun 2022 16:52:39 +0300
-Message-Id: <20220614135239.1034-1-epicstyt@gmail.com>
+Date: Wed, 15 Jun 2022 19:07:05 +0300
+Message-Id: <20220615160705.898-1-epicstyt@gmail.com>
 X-Mailer: git-send-email 2.32.0.windows.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
