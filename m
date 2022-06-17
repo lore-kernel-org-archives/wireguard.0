@@ -4,52 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C5DCC433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 17 Jun 2022 11:51:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B479C43334
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 17 Jun 2022 11:55:19 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id b39a3220;
-	Fri, 17 Jun 2022 11:39:59 +0000 (UTC)
-Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com
- [2607:f8b0:4864:20::f2e])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id ac15a3bf
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 48cac462;
+	Fri, 17 Jun 2022 11:53:16 +0000 (UTC)
+Received: from ams.source.kernel.org (ams.source.kernel.org
+ [2604:1380:4601:e00::1])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id b9865751
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 16 Jun 2022 01:48:20 +0000 (UTC)
-Received: by mail-qv1-xf2e.google.com with SMTP id el14so292320qvb.7
- for <wireguard@lists.zx2c4.com>; Wed, 15 Jun 2022 18:48:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to;
- bh=0h5BSKjXfJmnXh7slkNIolIHS6p9yI0tiDPBhV8xjNE=;
- b=kOt9fgKVQcbKfIaYE7IJwYQEFkWaTWGJFgnrTdm3ON6U6lpEtEOFDDtItzeVn5oNO/
- HTSPXC8JCTJwuSGF7raq62AH2olDBY7DUCSEa9rbAz2tSLYYr7rHmg2YRr7nYRN8X7U/
- 7RJhf0mfJC8U4ZX/+XieejeUd2Ufqj5zxmXxW5uOtpy7/WFtFpG1pnmIBw+gCkKjY+kZ
- 25IMJVUYswlhQU1GmXPZZPQHejFgNmDFpOq4cdJhvkxWzyI4irnJ2N3DMdulRvn7N9st
- w6wEHMzbhJmzB9PCFvV5WempwV3k+j+EXLGkq9ROcyl6vblTIwuf9gcisETLePm+caFf
- xJkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=0h5BSKjXfJmnXh7slkNIolIHS6p9yI0tiDPBhV8xjNE=;
- b=oC3yVJxllzkg8xfOrANoGMBCPGwyULv4TQcZwUufIxJhUPANzv7DCNUjQCRxmoQdWs
- HP4mjNyNGBxkudTwaCR3z/qPoE9EI5Rd9XpwpDdkd0RIIgYOO7+SyPziaE7OvBb/64Ju
- 44sFQqFXeDC6j4EkKNHjjO9pRJId1Y9i0Kz4A3DGc3A0YFmC1jVVFvtsfmdJy8HjPgz9
- 7sri3FgeJ5v0M3sYMc1tT2PRAIAOEeg/LT0N2/U3CKsUGZgg/NfML8oH3TA7sUlGa+27
- KyI8vc0TUgG7XMBipZuzAnUsAwXTVyVNAZhDSMdX8lYGLOG3bC3PCpN/z55A0nD7wAMn
- FTDw==
-X-Gm-Message-State: AJIora+DnTT1BX7/oo4egZZXWyxAMwEMznXwpXaef7U3UvkABGjVLPdJ
- bNHcuxYaPxdV5Cu6XBVfl4aoDugxnKnqRhS2ooJWLKAE6I0V8Q==
-X-Google-Smtp-Source: AGRyM1vU7CuJ/yDbh+7Mrpp3UEEAdsCB2ETmMplvSDCVgSuwkAZ9UiWNnHZm0RCUegIy6MQw/x0fSqR4pUhxllvQVJo=
-X-Received: by 2002:ad4:5ccd:0:b0:464:5848:399b with SMTP id
- iu13-20020ad45ccd000000b004645848399bmr2177349qvb.45.1655344099418; Wed, 15
- Jun 2022 18:48:19 -0700 (PDT)
+ Fri, 17 Jun 2022 11:53:15 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by ams.source.kernel.org (Postfix) with ESMTPS id C6D7AB829D0;
+ Fri, 17 Jun 2022 11:53:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 253D3C3411D;
+ Fri, 17 Jun 2022 11:53:13 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=fail reason="signature verification failed" (1024-bit key)
+ header.d=zx2c4.com header.i=@zx2c4.com header.b="ity2LnKr"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1655466791;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9Fd083+XQdBxuIlcmDRnfk77NhmAN/pWGqoLE23cNy8=;
+ b=ity2LnKrsPvtlbl+Ssh4CdyHFUZjH2uq6uThNDaoUDEluLsdsDH4zVMEsOMu5XcNgfjlcL
+ oFnrW09XYmaQn7ochNfACDz7UjzAUyPu7+0Y2ZS2fWPt/N/cRj42RC2w9O2Cn3k+IcYKpj
+ 4wNEzXcMsiaNkpWTlBF1XyqsAv/XYeY=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 4a09e78e
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO); 
+ Fri, 17 Jun 2022 11:53:11 +0000 (UTC)
+Date: Fri, 17 Jun 2022 13:53:09 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Tom Yan <tom.ty89@gmail.com>
+Cc: wireguard@lists.zx2c4.com
+Subject: Re: [PATCH] wg-quick: avoid traffics from momentarily leaking into
+ the tunnel
+Message-ID: <YqxrJRfTG+7WL16u@zx2c4.com>
+References: <20220617113419.17329-1-tom.ty89@gmail.com>
 MIME-Version: 1.0
-From: Jacob Lifshay <programmerjake@gmail.com>
-Date: Wed, 15 Jun 2022 18:48:08 -0700
-Message-ID: <CAC2bXD6FKSk1EEcw4QtqxengUvyCN2bfwzG5jFUvAPAsg2kxBA@mail.gmail.com>
-Subject: why not use ktime_get_clocktai_ts64
-To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
-X-Mailman-Approved-At: Fri, 17 Jun 2022 11:39:46 +0000
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220617113419.17329-1-tom.ty89@gmail.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -64,13 +63,35 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-I was reading in noise.c and noticed you use ktime_get_real_ts64 and
-do manual adjustments (the current code is broken if/when there's
-another leap second) rather than using ktime_get_clocktai_ts64 which
-already handles compensation for leap seconds.
+On Fri, Jun 17, 2022 at 07:34:19PM +0800, Tom Yan wrote:
+> The wireguard route table ip rule should stay as a NOP until the
+> `suppress_prefixlength 0 table main` rule is in effect. Therefore,
+> add the wireguard default route to its route table after the latter
+> rule is added.
+> 
+> Signed-off-by: Tom Yan <tom.ty89@gmail.com>
 
-https://git.zx2c4.com/wireguard-linux/tree/drivers/net/wireguard/noise.c?id=7fae4596a269d2f9a6a7d1a8695c3a68ab34f7be#n501
+Applied, thanks.
 
-Is there a reason for that?
-
-Jacob
+> ---
+>  src/wg-quick/linux.bash | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/src/wg-quick/linux.bash b/src/wg-quick/linux.bash
+> index e4d4c4f..69e5bef 100755
+> --- a/src/wg-quick/linux.bash
+> +++ b/src/wg-quick/linux.bash
+> @@ -220,9 +220,9 @@ add_default() {
+>  	fi
+>  	local proto=-4 iptables=iptables pf=ip
+>  	[[ $1 == *:* ]] && proto=-6 iptables=ip6tables pf=ip6
+> -	cmd ip $proto route add "$1" dev "$INTERFACE" table $table
+>  	cmd ip $proto rule add not fwmark $table table $table
+>  	cmd ip $proto rule add table main suppress_prefixlength 0
+> +	cmd ip $proto route add "$1" dev "$INTERFACE" table $table
+>  
+>  	local marker="-m comment --comment \"wg-quick(8) rule for $INTERFACE\"" restore=$'*raw\n' nftable="wg-quick-$INTERFACE" nftcmd 
+>  	printf -v nftcmd '%sadd table %s %s\n' "$nftcmd" "$pf" "$nftable"
+> -- 
+> 2.36.1
+> 
