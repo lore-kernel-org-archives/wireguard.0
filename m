@@ -4,70 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC6E4C43334
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 27 Jun 2022 11:02:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B54A0CCA473
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 27 Jun 2022 11:02:25 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id f978a6c4;
-	Mon, 27 Jun 2022 11:01:07 +0000 (UTC)
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com
- [64.147.123.20])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 272783ea
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 85a5c737;
+	Mon, 27 Jun 2022 11:01:09 +0000 (UTC)
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com
+ [2607:f8b0:4864:20::52c])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 010974d2
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 6 Jun 2022 13:32:27 +0000 (UTC)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id A28A53200915
- for <wireguard@lists.zx2c4.com>; Mon,  6 Jun 2022 09:32:25 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
- by compute4.internal (MEProxy); Mon, 06 Jun 2022 09:32:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- abstractbinary.org; h=cc:content-type:date:date:from:from
- :in-reply-to:message-id:mime-version:reply-to:sender:subject
- :subject:to:to; s=fm1; t=1654522345; x=1654608745; bh=tsoHai5kKb
- fITMOlT7ecbUYNfrJdF1Z8uJD6YfAws4c=; b=A6JNNvi4HZHfCDb2ylS2saErpm
- o3lwyPfpZ+FUbdLqAv6yKkTv3APHmbRyuq/QOqqrJuG+kjWe8N9R4uDw0U0TCYqC
- LA6iLNriZmayryCFQlxOkW0bcyZgUiNhO66wAxYuexqTWV4SkmyyvfA1kHaqp9fb
- 4bXNDRAmQTscCJnCQ3k2NzLK9glVDqsAhoMMsw8Ml7GZRiaW40LoM/eS3mtBLVQY
- vVdMMH5uVmWAO54Zvvsd8lYrqKc+ckY0R73G48Y4UFMMoVHUd9tZ634YA5UWvOIb
- MdQC+Q3fnzTIYmJXtMKDk+CVyReTh33vF5DrkL0TXxj710xh7v1xsP30ClNg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:date:feedback-id
- :feedback-id:from:from:in-reply-to:message-id:mime-version
- :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1654522345; x=
- 1654608745; bh=tsoHai5kKbfITMOlT7ecbUYNfrJdF1Z8uJD6YfAws4c=; b=s
- xJbaTMf7X4lgUkVb9IfKrF6lr3KaibxB233axJCfYxKeNo6u+zBs3wSBg/Gkbopu
- w5sWoEppIiIH3ch5hWhRr5vEXj8bhQQhOL0pkHzaD0a5rU4qcsOYbDMYXVkDIiI1
- P5Dwr1FPj8HVYwrdyS8focalJwnUs3U5DUb3jXyPedFmvaXZ09BzbnvOupr2tK4U
- YBqOEavZu7b6l8yWPC7KWSZ/wIsiSOPg7+sxUkQSJfXZtEUwn5tnhoEIZtC98T1e
- qsuc2pStUU4K+8y+XGi0I44U/OPCxiHbSSddaup1PyVhpeVUZgw+F0Ue7tmnGxb/
- ATQjYbzGOgd/nbKE5ADWQ==
-X-ME-Sender: <xms:6AGeYgSYWdl5UEXvMVwkjFDg225_Bby3TuXLgMSqzBlg2pDRB4hcfg>
- <xme:6AGeYtxtX-2y94TcR0uPgKMH_uhXdoD0g4Wngb77BSGE06Qjz1WNal0zZMcFJhPWU
- A0epk_tgzqzLqnXWA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedruddtvddgieehucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfffhffvufgtsehttdertd
- erredtnecuhfhrohhmpedftehlvgigrghnughruhcuufgtvhhorhhtohhvfdcuoeifihhr
- vghguhgrrhgusegrsghsthhrrggtthgsihhnrghrhidrohhrgheqnecuggftrfgrthhtvg
- hrnhepgeejleduffevudduvefghfffvdfhtdetudeuhfffueelueeivdffueelueejlefg
- necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepfihirh
- gvghhurghrugesrggsshhtrhgrtghtsghinhgrrhihrdhorhhg
-X-ME-Proxy: <xmx:6QGeYt3GhdSXXjcC4xHM73VYSa1MvnHi32UbiCM_VyRT3pyX1ubKig>
- <xmx:6QGeYkCmP-wxXahZCFSPBxgyL4ex6WPEa1aoxVUk-4-DRZiBhwIV_Q>
- <xmx:6QGeYpgNu8W5JPg4MhuRYW0dULfaWe6ZdqJftySKq9_MWqaCl8hMoQ>
- <xmx:6QGeYkt_26qPAoL-erWnAlx-ErsRPnfv110ElnwMPPwyLmoVBKQXBw>
-Feedback-ID: iff4c4080:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id E06FC15A0080; Mon,  6 Jun 2022 09:32:24 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.7.0-alpha0-592-g7095c13f5a-fm-20220603.004-g7095c13f
-Mime-Version: 1.0
-Message-Id: <fedd0d21-a55c-4e17-8dcf-dd348e157aee@www.fastmail.com>
-Date: Mon, 06 Jun 2022 14:32:04 +0100
-From: "Alexandru Scvortov" <wireguard@abstractbinary.org>
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 21 Jun 2022 14:20:23 +0000 (UTC)
+Received: by mail-pg1-x52c.google.com with SMTP id l4so13237292pgh.13
+ for <wireguard@lists.zx2c4.com>; Tue, 21 Jun 2022 07:20:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=AlvKSp7ft4ue0MTXWK9r0s0GcmqlhgzlBc3qlFtldEI=;
+ b=LEcSxnc8jwJr7ON7lpAaCeUFiRorkodzcRA1Jqs3GwTQ6iORUD/gYdyzUdtufjq5ZK
+ 4KDwyiHf1gJgMHNX/Eed14Pf2oHyhR5g+zFEsd+wYmCJGOlaWCfh7h1HyN17pAqiu77n
+ o5vgWPY758lT4QP0vCFR1iKZRbavlCfPtixO9FJ/oTlioWTurksH6xIv/OU78geqVkT3
+ Z6ahzfKHCl0bTrt3goH0PNzg/ozJKJt4jlG9pDfy58gwxaKoaCBCfTyjr6puQW9KqVLR
+ zR0KJlMmDVuIenY9yi4PQaOYrUPrH5u14Wn6u51rg6N0BCkSUZmefnWJ0yk3AvPIBKFx
+ lOVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=AlvKSp7ft4ue0MTXWK9r0s0GcmqlhgzlBc3qlFtldEI=;
+ b=S1jsgnAv1TjWLx/UDiEkmziXhhxw3514Tc/5zUWFLyHxFOR8EP0q4f9IrTGcsO1jCK
+ bMlvZoQk3S/RKC6e58nhkPK4Yi0Ef16+faWJl4qvhGTVO9h097EgSAXLmaplXtvRDdZ5
+ dqnWuwg3TInQC0SMdr+cruwYv3y2lnOumLl3RBT0m1PWXQUzPqwVFZxWjpr2UHN81zZ2
+ MFA2NJO0Q8pwytRxxjqAsUQCGZcv055Kl5AG+PB3L+YOBWq4ztOM9+row0W6DN+XOtOb
+ i6lsvw2WKYr3nuWdz3+dbwyTICBFQwgApKPfF4yt6fUJFAtPwjeWF7/f7216luQYYZci
+ QRuA==
+X-Gm-Message-State: AJIora/6QjpQwMXs7E6Yv/55zzorQiCIBj4ZXHDLwtMHr6UPdSuS9Xzk
+ 0njKo6E4gXpFHVfFORuVLC6v6qfOh+7+XcqZJ0jnTiWai5tHvmhX
+X-Google-Smtp-Source: AGRyM1vpn5JEehX8+C77JoDsAI9V7bfgy+UTF9e+Ky/ElLi2Ct4LnEPfUfkYTO1RU5hEQHKNeIh3OqvDg9KxApfUtPo=
+X-Received: by 2002:a63:3c58:0:b0:40c:83b6:1a4e with SMTP id
+ i24-20020a633c58000000b0040c83b61a4emr15413163pgn.194.1655821220869; Tue, 21
+ Jun 2022 07:20:20 -0700 (PDT)
+MIME-Version: 1.0
+From: Pavel Yegorov <yegorov.p@gmail.com>
+Date: Tue, 21 Jun 2022 17:20:09 +0300
+Message-ID: <CADuzeTx8_ODe2gF_hN6nhVFh5j+pEYXZB6fpVcC23pD2LLwCsw@mail.gmail.com>
+Subject: Wireguard is loosing connection for no reason
 To: wireguard@lists.zx2c4.com
-Subject: What's the purpose of the wg-quick firewall rules?
-Content-Type: text/plain
+Content-Type: text/plain; charset="UTF-8"
 X-Mailman-Approved-At: Mon, 27 Jun 2022 11:01:06 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -83,40 +64,119 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+Hey folks!
 
-I'm trying to understand what the firewall rules that wg-quick adds do.
+I really need some advice, cause I just don't know how to deal with my problem.
 
-I see these rules being added:
+So, I have a WG "server" on ubuntu 18.04.6 LTS, hosted in the oracle
+free tier. I've installed wireguard using well-known
+https://github.com/angristan/wireguard-install script. Then I've
+generated several configs for my desktops, phones, etc. It connects
+and runs perfectly, but sometimes it just freezes for no reason.
+There's no connectivity issues or something like that. Logs on client
+side says something like that:
 
-```
-table ip raw {
-	chain PREROUTING {
-		type filter hook prerouting priority raw; policy accept;
-		iifname != "wg0" ip daddr 10.10.1.2 fib saddr type != local  counter drop
-		iifname != "wg0" ip daddr 10.10.0.2 fib saddr type != local  counter drop
-	}
-}
-table ip mangle {
-	chain POSTROUTING {
-		type filter hook postrouting priority mangle; policy accept;
-		meta l4proto udp mark 0xca6c  counter ct mark set mark
-	}
+2022-06-21 03:01:01.845: [TUN] [win] Keypair 17 created for peer 1
+2022-06-21 03:01:01.846: [TUN] [win] Sending keepalive packet to peer
+1 (SERVER_IP:SERVER_PORT)
+2022-06-21 03:03:01.822: [TUN] [win] Sending handshake initiation to
+peer 1 (SERVER_IP:SERVER_PORT)
+2022-06-21 03:03:01.884: [TUN] [win] Receiving handshake response from
+peer 1 (SERVER_IP:SERVER_PORT)
+2022-06-21 03:03:01.884: [TUN] [win] Keypair 16 destroyed for peer 1
+2022-06-21 03:03:01.884: [TUN] [win] Keypair 18 created for peer 1
+2022-06-21 03:03:01.884: [TUN] [win] Sending keepalive packet to peer
+1 (SERVER_IP:SERVER_PORT)
+2022-06-21 03:05:02.058: [TUN] [win] Sending handshake initiation to
+peer 1 (SERVER_IP:SERVER_PORT)
+2022-06-21 03:05:02.106: [TUN] [win] Receiving handshake response from
+peer 1 (SERVER_IP:SERVER_PORT)
+2022-06-21 03:05:02.106: [TUN] [win] Keypair 17 destroyed for peer 1
+2022-06-21 03:05:02.106: [TUN] [win] Keypair 19 created for peer 1
+2022-06-21 03:05:02.106: [TUN] [win] Sending keepalive packet to peer
+1 (SERVER_IP:SERVER_PORT)
+2022-06-21 03:06:21.302: [TUN] [win] Retrying handshake with peer 1
+(SERVER_IP:SERVER_PORT) because we stopped hearing back after 15
+seconds
+2022-06-21 03:06:21.302: [TUN] [win] Sending handshake initiation to
+peer 1 (SERVER_IP:SERVER_PORT)
+2022-06-21 03:06:26.423: [TUN] [win] Handshake for peer 1
+(SERVER_IP:SERVER_PORT) did not complete after 5 seconds, retrying
+(try 2)
+2022-06-21 03:06:26.423: [TUN] [win] Sending handshake initiation to
+peer 1 (SERVER_IP:SERVER_PORT)
+2022-06-21 03:06:31.471: [TUN] [win] Handshake for peer 1
+(SERVER_IP:SERVER_PORT) did not complete after 5 seconds, retrying
+(try 3)
+2022-06-21 03:06:31.473: [TUN] [win] Sending handshake initiation to
+peer 1 (SERVER_IP:SERVER_PORT)
+2022-06-21 03:06:36.517: [TUN] [win] Handshake for peer 1
+(SERVER_IP:SERVER_PORT) did not complete after 5 seconds, retrying
+(try 4)
 
-	chain PREROUTING {
-		type filter hook prerouting priority mangle; policy accept;
-		meta l4proto udp  counter meta mark set ct mark
-	}
-}
-```
+If I reconnect WG client, it immediately connects and everything is ok.
 
-The `raw` rules seem fine, but I can't figure out what the `mangle` rules are for. They're added in `add_default`, so they have something to do with the "route all traffic through Wireguard" functionality, but removing them doesn't seem to break anything on my laptop.
+Any advices? I tried to experiment with PersistentKeepAlive param (on
+both sides!) that doesn't change anything.
 
-I think the first iteration of these were added in commit ebcf1ef8b1ad in wireguard-tools, but the commit message is "wg-quick: linux: filter bogus injected packets and don't disable rpfilter", and that doesn't make it any clearer to me.
+My server cfg:
 
-What breaks if these rules aren't present?
+[Interface]
+Address = 10.66.66.1/24,fd42:42:42::1/64
+ListenPort = SERVER_PORT
+PrivateKey = M?????Uyg4r3mo=
 
-Thank you.
+PostUp = iptables -I FORWARD -i ens3 -o wg0 -j ACCEPT; iptables -I
+FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o ens3 -j
+MASQUERADE; ip6tables -A FORWARD -i wg0 -j ACCEPT; ip6tables -t nat -A
+POSTROUTING -o ens3 -j MASQUERADE; sudo iptables -I INPUT -i ens3 -p
+udp --dport SERVER_PORT -m state --state NEW,ESTABLISHED -j ACCEPT
+PostDown = iptables -D FORWARD -i ens3 -o wg0 -j ACCEPT; iptables -D
+FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o ens3 -j
+MASQUERADE; ip6tables -D FORWARD -i wg0 -j ACCEPT; ip6tables -t nat -D
+POSTROUTING -o ens3 -j MASQUERADE; sudo iptables -D INPUT -i ens3 -p
+udp --dport SERVER_PORT -m state --state NEW,ESTABLISHED -j ACCEPT
 
-Cheers,
-Alex
+### Client iphone
+[Peer]
+PublicKey = 0+V???????4HnM=
+PresharedKey = s???????amJCxJyqcE=
+AllowedIPs = 10.66.66.2/32,fd42:42:42::2/128
+
+### Client mac
+[Peer]
+PublicKey = Tet4??????mI=
+PresharedKey = Ld???r8=
+AllowedIPs = 10.66.66.3/32,fd42:42:42::3/128
+
+My client cfg
+
+[Interface]
+PrivateKey = 4Bp????=
+Address = 10.66.66.2/32,fd42:42:42::2/128
+DNS = 8.8.8.8,1.1.1.1
+
+[Peer]
+PublicKey = 5R?????c=
+PresharedKey = sY????E=
+Endpoint = SERVER_IP:SERVER_PORT
+AllowedIPs = 0.0.0.0/0,::/0
+
+some stats
+
+root@oraclevpn:~# wg show all
+interface: wg0
+  public key: 5R?????c=
+  private key: (hidden)
+  listening port: SERVER_PORT
+
+peer: 0+?????nM=
+  preshared key: (hidden)
+  endpoint: 666.666.666.666:11111
+  allowed ips: 10.66.66.2/32, fd42:42:42::2/128
+  latest handshake: 2 minutes, 2 seconds ago
+  transfer: 533.52 MiB received, 5.18 GiB sent
+
+
+-- 
+Pavel Yegorov
