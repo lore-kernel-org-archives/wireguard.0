@@ -4,52 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10288C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 20 Jun 2022 20:52:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F82CC433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 26 Jun 2022 17:51:45 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 28de3369;
-	Mon, 20 Jun 2022 20:52:09 +0000 (UTC)
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com
- [2607:f8b0:4864:20::1030])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 9d6f9dd4
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 6dec7dc0;
+	Sun, 26 Jun 2022 17:51:44 +0000 (UTC)
+Received: from tampoco.espindola.nl (tampoco.espindola.nl [149.210.133.191])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 0fe832f2
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 20 Jun 2022 20:52:08 +0000 (UTC)
-Received: by mail-pj1-x1030.google.com with SMTP id
- h9-20020a17090a648900b001ecb8596e43so2178493pjj.5
- for <wireguard@lists.zx2c4.com>; Mon, 20 Jun 2022 13:52:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to;
- bh=boOSdbnN0FkkdwfwadPSKFNxeBVAsmhP393tlaLkd8A=;
- b=D6GUDp98afvP2P3POK8W7erTczPApSys7QDvDgRn1EkPIMtOcdzFTOUiO0pT/jbeac
- XVnJfSs8vCC0Hletr88/LOR2KSCZTp5ziJ5m2h+G1YUj0mxuk5dQdLolYXkhGufbyMPq
- r/kZ2BTYXOqPtI6xNqr7rsbZ4IAGBlbnHGyyNI6iI5jNmOE5/UAkKzrcQ2GVF9tdCiHa
- aDoBa/DRvKm8uqTyegMRVNgC4EiPbbuReOZww6XGguMbnpQdHNWRtJvPgdWa/P6lAy8U
- WWM22GEh9R3tjulPqq+Ah8j9rOcKoUiABFTP4hNQL/XknNPnkfV2fYBlCpHDV9oUizEW
- roVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=boOSdbnN0FkkdwfwadPSKFNxeBVAsmhP393tlaLkd8A=;
- b=V0hDU4RfeNk+8efkWPiqFPOcMn0TNnvmfDqAhdEn5r2ztB0SK3MJ2YECGb3JuR0mb9
- y7RaeVL84UtuMaDB5+LzUsp6qEb6FJfu1NqCFhImaz9sq4lvBK9vkdH8c3juEkXkroOp
- wzCw6P/iuRs9vU3v8fohXTgdqE6FH7tSlDL9rcXdMltYijBK1U4V5t9B7QRsp/eI0e/0
- B9IJaOrUXuC3SaF+4V23+kyAGVeVZ8e7z+1yRrh6HPFnybowOSNNeHHMlf3fHZPQSPos
- XrTEh8FX5wWcj53wluW3JAULC8AqCQfZ+2Wcz9+LFHutZS+Q46OKCSLIr0F7aT0UVJic
- +0Gw==
-X-Gm-Message-State: AJIora/eh1BUbWtp3LY/FXEmGVxDvBVKpOkfCSDIrodMmG03ud9it+lH
- JDS28RP0GM9Z5+rL5GK9JuEJRIE9LRyRtRCOjzwUVcV1IQ/saq8Q
-X-Google-Smtp-Source: AGRyM1t5XFGAAJhohmjPP5Sn5faqqgJKxXBONpZ+DTxFOBtZvBQhxDdC/nMJxQJgaRnRDIygiL4+YxagY2npa7qFlWI=
-X-Received: by 2002:a17:90b:3149:b0:1e8:505c:9c13 with SMTP id
- ip9-20020a17090b314900b001e8505c9c13mr39839235pjb.111.1655758325880; Mon, 20
- Jun 2022 13:52:05 -0700 (PDT)
+ Sun, 26 Jun 2022 17:51:42 +0000 (UTC)
+Received: from [192.168.68.249] (77-174-203-219.fixed.kpn.net [77.174.203.219])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ (Authenticated sender: frank-deze)
+ by tampoco.espindola.nl (Postfix) with ESMTPSA id 7E3933C0181;
+ Sun, 26 Jun 2022 19:51:41 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=deze.org; s=default;
+ t=1656265901; bh=CsTtEvpPhGLlluoEIt3LyY9iJMa5H19T8UOHstfGJc0=;
+ h=Date:Subject:To:References:From:In-Reply-To;
+ b=hOAYP3ssw5RsUcAmEueE8lw/7f8kvN4LHiDZ5DPco7PT1cSU2UXHmZ0Yr+RGRH6v5
+ jPeh6M8Gvuo8fvtK4kxHzQvTf+Nsl8x2QddL27IST+7u6JGKBw01YEvRlrothqWwM9
+ HOuBYKy/VdTqnIiCCo+M/Q8wCgrAsPxQmdVPrn3oIq7+gxVR87PKcNVGNMxOXA447o
+ 9g5QXiqL5hMXRi7D1xMPwUH/c+M1T6q1U1S7bHIJ0JWVXHgEb5iaKTqj0/0g+8xYwR
+ jcJF5vx1p+xPdzb4UTWjQutXf3y0SmB8jBp7Vmx52l//x9aQrYCzqvbs9sS/MoV6p8
+ ApJ1wP0byf2cg==
+Message-ID: <672909d9-560f-3e83-3c9b-e3d69e8e70fa@deze.org>
+Date: Sun, 26 Jun 2022 19:51:44 +0200
 MIME-Version: 1.0
-From: Alessio Nossa <alessio.nossa+list@gmail.com>
-Date: Mon, 20 Jun 2022 22:51:54 +0200
-Message-ID: <CAMTfdYoJfHEWXBO2L5L4NrwutgjFo5egqmfQj0dCPz7=Kib80w@mail.gmail.com>
-Subject: Bug restarting WireGuard using launchd on macOS
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [ANNOUNCE] wireguard-freebsd snapshot v0.0.20220615 is available
+Content-Language: en-US
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <20220615141140.96557C3411C@smtp.kernel.org>
+From: Frank Volf <frank@deze.org>
+In-Reply-To: <20220615141140.96557C3411C@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -64,49 +58,78 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
-I am running WireGuard (installed with wireguard-tools, using
-HomeBrew) on macOS 12.4, launched using launchd. All works fine until
-I try to restart it, always with launchd.
-When WireGuard interface is restarted, it looks like it crashes/gets
-deactivated immediately: if I run 'wg show' nothing is displayed, but
-on the "server" peer I can see that the "Latest handshake" report the
-time elapsed since last "com.example.wg.restartWg.plist" execution.
-The launchd configurations, that I saved at "/Library/LaunchDaemons/"
-are available at
-https://gist.github.com/alessionossa/78f69b9451a130240e2057acbd4eb7f8
 
-The log at "/tmp/com.example.wg.restartWg.err" of is
-    06/20/22 21:51:18
-    [+] Interface for wg1 is utun0
-    [#] rm -f /var/run/wireguard/utun0.sock
-    [#] rm -f /var/run/wireguard/wg1.name
-    --- Restarting... ---
-    [#] wireguard-go utun
-    [+] Interface for wg1 is utun0
-    [#] wg setconf utun0 /dev/fd/63
-    [#] ifconfig utun0 inet 10.181.0.5/32 10.181.0.5 alias
-    [#] ifconfig utun0 up
-    [#] route -q -n add -inet 10.181.0.3/32 -interface utun0
-    [#] route -q -n add -inet 10.181.0.254/32 -interface utun0
-    [#] route -q -n add -inet 10.181.0.11/32 -interface utun0
-    [+] Backgrounding route monitor
-    --- Restarted! ---
-    06/20/22 21:56:20
-    wg-quick: `wg1' is not a WireGuard interface
-    --- Restarting... ---
-    [#] wireguard-go utun
-    [+] Interface for wg1 is utun0
-    [#] wg setconf utun0 /dev/fd/63
-    [#] ifconfig utun0 inet 10.181.0.5/32 10.181.0.5 alias
-    [#] ifconfig utun0 up
-    [#] route -q -n add -inet 10.181.0.3/32 -interface utun0
-    [#] route -q -n add -inet 10.181.0.254/32 -interface utun0
-    [#] route -q -n add -inet 10.181.0.11/32 -interface utun0
-    [+] Backgrounding route monitor
+Hi,
+
+I tested this snapshot on my setup for 10 days now and it works 
+perfectly without any problems.
+
+My setup is fairly simple: central VPN server (FreeBSD 13.1), two 
+servers on branch sites (each behind NAT) and a mobile Android client.
+VPN's are used for management type activities, so no high bandwidth or 
+low latency requirements needed.
+So not sure if this setup is representative enough, but I'm happy with 
+how it behaves.
+
+There is one small feature that I would like to see: My central server 
+has multiple public IP addresses and sometimes Wireguard needs to 
+initiate a connection to one of the branch servers. Unfortunately, there 
+is no way to specify which source address to use for that. Currently it 
+appears to use a random IP address from the outgoing interface (mostly 
+the first IP address configured on the external interface).
+I would like to see the option to specify the IP address to be used for 
+outgoing connections, that would be  much more convenient when you have 
+to deal with upstream firewalls.
+Not sure if this is a difficult thing to implement, but I would love to 
+have it.
+
+Anyway, thanks for all the work you guys did on this great product!!!
+
+Kind regards,
+
+Frank
 
 
-If some more Information is needed to debug the issue, I am available.
+Op 15-6-2022 om 16:11 schreef Jason A. Donenfeld:
+> Hi,
+>
+> An experimental snapshot, v0.0.20220615, of WireGuard for FreeBSD has been
+> been tagged in the git repository.
+>
+> At this time this code is new, unvetted, possibly buggy, and should be
+> considered "experimental". It might contain security issues. We gladly
+> welcome your testing and bug reports, but do keep in mind that this code
+> is new, so some caution should be exercised at the moment for using it
+> in mission critical environments.
+>
+> == Changes ==
+>
+>   * ci: add FreeBSD 12.3 and 13.1
+>   * compat: update version to handle sbcreatecontrol() changes
+>
+>   More fixes to the compat layer.
+>
+>   * wg_noise: import hmac from crypto
+>   * crypto: inline blake2s convenience function
+>
+>   A few crypto cleanups.
+>
+> This snapshot contains commits from: Jason A. Donenfeld, Joseph 
+> Mingrone, and
+> Ed Maste.
+>
+> The source repository is available at the usual location:
+>   git clone https://git.zx2c4.com/wireguard-freebsd
+>
+> This snapshot is available in compressed tarball form:
+> https://git.zx2c4.com/wireguard-freebsd/snapshot/wireguard-freebsd-0.0.20220615.tar.xz
+>   SHA2-256: 
+> ad6c42d20a7c0ad2989e729dd41ea5a6a019426b762dfd0c6417e340935cca82
+>
+> Thank you,
+> Jason Donenfeld
+>
+>
+ >
 
-Best regards,
-Alessio Nossa
+
