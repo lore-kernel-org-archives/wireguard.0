@@ -4,45 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBEC6C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Jun 2022 11:44:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50B70C43334
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Jun 2022 15:02:55 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id a6576661;
-	Tue, 28 Jun 2022 11:44:31 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 1d2a72c6
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 2a594f6d;
+	Tue, 28 Jun 2022 15:02:54 +0000 (UTC)
+Received: from sonic306-20.consmr.mail.gq1.yahoo.com
+ (sonic306-20.consmr.mail.gq1.yahoo.com [98.137.68.83])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id ae5973cf
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 28 Jun 2022 11:44:29 +0000 (UTC)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 97F3A61AC2
- for <wireguard@lists.zx2c4.com>; Tue, 28 Jun 2022 11:44:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDFEEC3411D
- for <wireguard@lists.zx2c4.com>; Tue, 28 Jun 2022 11:44:26 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="j94Nj9CF"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1656416664;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type;
- bh=b/OvmzsRVp4a2zW2VkWciwTMh5cYYzJvgCSfCgRWLow=;
- b=j94Nj9CF8QaCZydcTvBlrquxZIOUM4lOxq0axdpeRB0Y0N2FQIJXqruVqlqJBsquzHhrhZ
- JKRueO0W6gxKl8XsqnuUn89+QH2tCYEwKjATBmKHwaX0WDP1/zc/OhkdxOsPtuiJO37hfI
- YfkA7zSkGXGNkd4EyzquwIspaDpEO44=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 335c0004
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO); 
- Tue, 28 Jun 2022 11:44:23 +0000 (UTC)
-Date: Tue, 28 Jun 2022 13:44:20 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: wireguard@lists.zx2c4.com
-Subject: The Future of RHEL7,8 Support in WireGuard
-Message-ID: <YrrplG8DswM0zxQO@zx2c4.com>
+ Tue, 28 Jun 2022 15:02:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.ca; s=s2048;
+ t=1656428570; bh=mJdxWi+vRg5mX2ammRonQra2G8KMb7ygMvIk+e3y9ss=;
+ h=Date:From:Subject:To:Cc:References:In-Reply-To:From:Subject:Reply-To;
+ b=oL0go7DAuaFwQBzxvAj93d5o/SRTjNurU3QevVXsSEJxvo7Naj/0J+rNSfMdOvVLsbXQIJTgLgUCMJlU0HpKFx6gGK9IgnHONv6IJij+vdQjV6ecfmmbLwOdIjumy+0fQbsK0oG9uoW+5C7HxIjlr3BK4byXi+oNWczQp9HFN883jCjR0EzSS1D23qiEoH3byuhhARCoFcBPywWTnQBv0gzW2LVDgM0OIVqLSNFpWDvjoqS2lFSIurwF/S+22aH7CpNFfNS1vHakRqRd2/HI9C46cobOKtf9FPhbbw1Zm5jyeYnxIE2nSmowLa/xjdkZfrTXQXfg2yLIXIjWtynpSA==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
+ t=1656428570; bh=jCd3itgRrfW+cbzZVwm+EqZW7GYNioHLqwThqMhCf88=;
+ h=X-Sonic-MF:Date:From:Subject:To:From:Subject;
+ b=Kyb1zFacnb78pUvFy50wTca1sb81DaB6HtI8PgG8iONE6NYQmjP7wHrP2HzY373G+jENj7C3h5RZPwJkPsYcWWd6Db/PDZMWGY8RBEROJazlTHT4SWWIBTlA0aYNrASoT0OP8xOJ6S8DMftdpzq99pT1kMAs65hL9rSRlKiuThVN84a1Kj8A2FybZZSrlgcLDY3bmHae3cAq6w9Vtn8wzSbyt97KbwuS+xfwj2zh8nK8Xm3Dzie84jYbgbk7hI9sK0eFajuwy4SxSIbPm3bGypsRflNTQY4pOoL5XXb/b6S0CS6Zxm5IeQKON/mBxBnenpvE0tMmSjFFxY6E31Dq6g==
+X-YMail-OSG: 8l3EnbgVM1l8CCCIXzJxNxhAKM2TpC2vXdUg0UqinPjPg6O0qI8zEPIiarA5C.6
+ sqK__HFKUxJT7zG1JF6uGyon9oNZeN.0NMaSIEV7ygGfCt_44w.Rf7IZ7LX75WljTynAu8y4FB0U
+ 6YyvqeNwvdkcw7Zi1A2VaGy8Pr6wmnSRGOPVqbeB.4WAe6qENHe5ovv5fDgSbJskfbR48ooPEbZa
+ GT9kqL8KPN9iddqNFX0KYDckpu_St4Dg_bJMomamg3v0y_pRC1lLcOZepb1EY40LBeyEVcUmkaYc
+ htrO0M3Y1XVJSq_zXJJPJ7gB678jrfTtCxlt4ljAxg5AN6MZTq3TjmxeIZH_mvLhUlB._a4Gl7jg
+ 0rjIkvsvIObtyCOs8rfZGOVNBktELh7d8LKPC06OGfW5lwoRfTsmlTrLWmyXbsxkm6LjXXph1zMv
+ 4cTXHoOgT1elisfOUAn89_C_X4CU5ffzj5IB30.619RChRzIGS.c91OYydQpBLs2sdejBOczNqk9
+ 9RRYOGf2Ph4uDIh.MHgigFya1.bpZmSQRnL1JK6UBye7sP72dHwohaVg3.7N9iEZZ47WDTki63Qb
+ yjkf5uix3Y2CCu.Yge1ZD6zJ9UiGQm4T1NGZA3bNjErwXJeC_zFyb4NbG0bY8ifpVmC7yHOwg7DG
+ BguLJMBTCIa4pyczbP_.8UYiHtVVrBl3GDljrXeyZqc1abWNA9Ygi5O3wilDFT98KrWP_U_gaLgo
+ ZSIhVdLd3AVuuvKDi4rMHnUFXMWL87dxe6E46eXTDqkQgOm0SVvAp9bOM0qPMxSLF39sboKrWT1T
+ DAyPGxGByBXHjFaK6Jo7Po7sTRCKEuNyTiEK9Z9Qj3sme9oVUFKu7Fd87TOqHVMwOyvfnBsZYvUU
+ up5uKXk82aAGeMXt5ajhXOz9C9ek9B.o2Hpw2UI8PIWZ4dHS8j5xuvfuUefecUQXHRQE6Inywd.q
+ n56c5F.6OipJO56OGat.CE0_OriiFEIMMRIYA_6V1WB7W1LC3sd8Fwf.EOHrzGUFxawP7UdAwrB6
+ 7ssTU68z7BjT7ZGWkQkIunN3CrTJj1NWO5fZKUcE602y5.d4Lj1b4gle4_o89wjnjPAAgY0Ka71z
+ WApZ1JtlmXfbbIiWdUiCh9iX.TmRttEFov8jR5tUjFh8W4nnmLPa807eo9IuSTNEyq.TxBm4UyGX
+ F_fT2GpgbfnRQp2L7QbI74g2oJcklkXbHSdO.NrycSWXa_C4PJJ009EB5wsajzo6VbnM0Eqxj3ie
+ w3y0sBZAv6Arrr9F3XMr5FgW0qz7fQD8swtray_N86ZnmH1voqWp6wdQKFDBE0Ip7ptzjm4XABDE
+ WBDpX90oIdlog6Rp0iSOlLgCdy690WT4waROdjllIOthw.KDy8sqpvdWe3C_OV_OdchxsN4MvlL2
+ q9LGvPwBIx2MOY7.ugLKHb40kD60M8O_ZAxskSqmNl_VlrOm8PkYJtkRzOwcMi.jtWWKdmxUzr0C
+ c8OOrCFk7BccDWXSsnGkFq_fsvW8V4vmkcVm8cksdgIcSY.79e.dby7lCnGaph.hsW2OgNUG0zNL
+ eTmcXgMIr9PQAALPd7h6tEenUYcXm54oST.zqMo.epoa.TRMnz0X3JbEQF.iNpZ.nuAHEH76cNz8
+ pMXH4P2wmkKpTEyfnK7.E.4XimdBJKhoaXmn65v475DcZN6YclHEyNxDpIV98aWJKZlAWGKpiiUt
+ GSH9_xjTBg3yUgKAIfFBjo_nh_0wAsz.3zqzsB3VltPtlRVf4HoaUU3IRSH1mW5hI2S80YRd364B
+ pzCnFbwJ1ipO4b_.gWo3ZUTFG8ZquVjbwg_EZhD3ntSUnZPz8EhdkBATSwv7u_Z.JvijpFFrkb_K
+ P1mjNUZJlWW24M6xUwH1ujYMjMT1Us7WIVnoHpNc4UkvrkgBPiiqhjOEslIxwO4qIF011kCmq7cE
+ n6GcMz4pk89_K_E4agOMiHeDqOMIqczXBLJ1ToDRSTzO.PsyIP_.KM.9QoS2yMpPGUrffuffuDPT
+ SEA4drcmjW5CdPtDYMj397rnzeZYDZYf4I7jjIZc1hzpfE9bH4oBn1E1iimW2iSC0RGu9zfKAgj9
+ ckpl3gG0d9ywRx6HOg4zext5PJy00TW4GFhYpZ_HtSST9y5jZr4noxyXs4ri6TLx4xW3cjPSXVMc
+ 45WAcQFycvAXDa0lDCmLxS2Hru6cT2w8nQE9jjZJ0g8DnhJfKCo..ORmue8lKBk7t6_iLwfOP.02
+ tSC8x7PbjGtYZGorfeXQT4YvWYonzHcgAT3BMHwcc9CCzpVoiuj6k
+X-Sonic-MF: <alex_y_xu@yahoo.ca>
+Received: from sonic.gate.mail.ne1.yahoo.com by
+ sonic306.consmr.mail.gq1.yahoo.com with HTTP; Tue, 28 Jun 2022 15:02:50 +0000
+Received: by hermes--production-ne1-7459d5c5c9-f2z7w (Yahoo Inc. Hermes SMTP
+ Server) with ESMTPA ID f5e4bf9d72858dcfc86edb9d0d0ee251; 
+ Tue, 28 Jun 2022 15:02:44 +0000 (UTC)
+Date: Tue, 28 Jun 2022 11:02:40 -0400
+From: "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>
+Subject: CONFIG_ANDROID (was: rcu_sched detected expedited stalls in amdgpu
+ after suspend)
+To: paulmck@kernel.org, rcu@vger.kernel.org, urezki@gmail.com,
+ uladzislau.rezki@sony.com, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Arve =?iso-8859-1?b?SGr4bm5lduVn?= <arve@android.com>, Todd Kjos
+ <tkjos@android.com>, Martijn Coenen <maco@android.com>, Joel Fernandes
+ <joel@joelfernandes.org>, Christian Brauner <christian@brauner.io>,
+ Hridya Valsaraju <hridya@google.com>, Suren Baghdasaryan <surenb@google.com>, 
+ linux-kernel@vger.kernel.org, "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ wireguard@lists.zx2c4.com, Theodore Ts'o <tytso@mit.edu>
+Cc: alexander.deucher@amd.com, christian.koenig@amd.com, Xinhui.Pan@amd.com,
+ amd-gfx@lists.freedesktop.org
+References: <1656357116.rhe0mufk6a.none.ref@localhost>
+ <1656357116.rhe0mufk6a.none@localhost>
+ <20220627204139.GL1790663@paulmck-ThinkPad-P17-Gen-1>
+ <1656379893.q9yb069erk.none@localhost>
+ <20220628041252.GV1790663@paulmck-ThinkPad-P17-Gen-1>
+In-Reply-To: <20220628041252.GV1790663@paulmck-ThinkPad-P17-Gen-1>
 MIME-Version: 1.0
+Message-Id: <1656421946.ic03168yc3.none@localhost>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: WebService/1.1.20280
+ mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -57,121 +100,83 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi folks,
+Excerpts from Paul E. McKenney's message of June 28, 2022 12:12 am:
+> On Mon, Jun 27, 2022 at 09:50:53PM -0400, Alex Xu (Hello71) wrote:
+>> Ah, I see. I have selected the default value for=20
+>> CONFIG_RCU_EXP_CPU_STALL_TIMEOUT, but that is 20 if ANDROID. I am not=20
+>> using Android; I'm not sure there exist Android devices with AMD GPUs.=20
+>> However, I have set CONFIG_ANDROID=3Dy in order to use=20
+>> ANDROID_BINDER_IPC=3Dm for emulation.
+>>=20
+>> In general, I think CONFIG_ANDROID is not a reliable method for=20
+>> detecting if the kernel is for an Android device; for example, Fedora=20
+>> sets CONFIG_ANDROID, but (AFAIK) its kernel is not intended for use with=
+=20
+>> Android userspace.
+>>=20
+>> On the other hand, it's not clear to me why the value 20 should be for=20
+>> Android only anyways. If, as you say in=20
+>> https://lore.kernel.org/lkml/20220216195508.GM4285@paulmck-ThinkPad-P17-=
+Gen-1/,
+>> it is related to the size of the system, perhaps some other heuristic=20
+>> would be more appropriate.
+>=20
+> It is related to the fact that quite a few Android guys want these
+> 20-millisecond short-timeout expedited RCU CPU stall warnings, but no one
+> else does.  Not yet anyway.
+>=20
+> And let's face it, the intent and purpose of CONFIG_ANDROID=3Dy is extrem=
+ely
+> straightforward and unmistakeable.  So perhaps people not running Android
+> devices but wanting a little bit of the Android functionality should do
+> something other than setting CONFIG_ANDROID=3Dy in their .config files.  =
+Me,
+> I am surprised that it took this long for something like this to bite you=
+.
+>=20
+> But just out of curiosity, what would you suggest instead?
 
-I'm confronted with a few hard facts, the first of which is good and
-exciting, and the rest are kind of disappointing:
+Both Debian and Fedora set CONFIG_ANDROID, specifically for binder. If=20
+major distro vendors are consistently making this "mistake", then=20
+perhaps the problem is elsewhere.
 
-  1) RHEL9 has WireGuard baked into it by default, so there's no
-     required compatibility backporting for it. If you use RHEL9, you
-     can use WireGuard easily.
+In my own opinion, assuming that binderfs means Android vendor is not a=20
+good assumption. The ANDROID help says:
 
-  2) The RHEL7 and RHEL8 kernels have build errors due to trivially dumb
-     mismerges, if you try to build them using nearly anything other
-     than the RHEL-supplied .config files. I've reported these bugs to
-     Red Hat and I've sent series fixing these bugs (see this git repo,
-     for example: https://git.zx2c4.com/rhel7-kernel-misery/log/ ), but
-     Red Hat's perspective is that these are non-bugs that they won't
-     fix, since the only purpose of the kernel for them is their own
-     configs.
+> Enable support for various drivers needed on the Android platform
 
-  3) Those build errors make it difficult to run WireGuard's CI on them
-     without having to apply lots of extra patches. While RHEL7 is
-     mostly set in stone now, the C8S kernel changes frequently.
-     Recently I dropped RHEL from the CI, as C8S hadn't been building
-     for some time. So now I have no way of ensuring that it continues
-     to work.
- 
-  4) RHEL7 and RHEL8 is a behind-closed-door process, which makes
-     tracking down new breakage and dealing with anything produced by it
-     an exercise in pain.
+It doesn't say "Enable only if building an Android device", or "Enable=20
+only if you are Google". Isn't the traditional Linux philosophy a=20
+collection of pieces to be assembled, without gratuitous hidden=20
+dependencies? For example, [0] removes the unnecessary Android=20
+dependency, it doesn't block the whole thing with "depends on ANDROID".
 
-  5) No companies who are using RHEL7 or RHEL8 with WireGuard have
-     reached out to me about trying to fund this work. (And in general,
-     now that WireGuard isn't a hip new marketing thing for VPN
-     providers and whomever, funding has significantly dropped off.)
+It seems to me that the proper way to set some configuration for Android=20
+kernels is or should be to ask the Android kernel config maintainers,=20
+not to set it based on an upstream kernel option. There is, after all,=20
+no CONFIG_FEDORA or CONFIG_UBUNTU or CONFIG_HANNAH_MONTANA.
 
-Given all this, I wonder whether the RHEL7 and RHEL8 backports have a
-future, and if they do, what that future looks like.
+WireGuard and random also use CONFIG_ANDROID in a similar "proxy" way as=20
+rcu, there to see if suspends are "frequent". This seems dubious for the=20
+same reasons.
 
-Note, this isn't just a matter of "backporting is hard work that nobody
-likes to do, but you do it anyway because that's what you gotta do."
-Because in contrast, I'm quite content doing backports for the
-kernel.org stable kernels that Greg and Sasha release. The process is
-open and transparent, Greg and Sasha are nice to work with, the goals
-are clear, the outcomes are dependable. It is still always work, but
-developing for kernel.org stable kernels is reasonable engineering work,
-as opposed to RHEL backporting, which is fighting uphill against
-byzantine bureaucratic processes that aren't very welcoming of my
-objectives.
+I wonder if it might be time to retire CONFIG_ANDROID: the only=20
+remaining driver covered is binder, which originates from Android but=20
+is no longer used exclusively on Android systems. Like ufs-qcom, binder=20
+is no longer used exclusively on Android devices; it is also used for=20
+Android device emulators, which might be used on Android-like mobile=20
+devices, or might not.
 
-And to be clear, it's not as though Red Hat is somehow evil here. Their
-goals simply aren't aligned. The kernel.org stable releases are meant to
-be general kernels that you can do things with, developed as part of an
-open source project. The RHEL kernel, by contrast, is part of a
-commercial product with a very specific single goal in mind. That's
-fine, and there's nothing inherently wrong with that.
+My understanding is that both Android and upstream kernel developers=20
+intend to add no more Android-specific drivers, so binder should be the=20
+only one covered for the foreseeable future.
 
-So when Red Hat tells me, "sorry, why should we care about this? RHEL7
-and 8 don't support WireGuard. Tell people to use RHEL9 for that. We're
-not going to make your life easier in RHEL7 and 8. It's not supported,"
-I sigh exasperated, because as frustrating as their position is, it's
-also an entirely reasonable position for them to have, based on what
-their goals are and what they're doing.
+> For that matter, why the private reply?
 
-That all is a very long way of saying that continuing to backport
-WireGuard to RHEL7 and 8 kernels in the normal way with WireGuard's CI
-as it currently exists is an uphill battle, just due to the nature of
-the thing. It's constant struggle to put the square peg in the round
-hole.
+Mail client issues, not intentional. Lists re-added, plus Android,=20
+WireGuard, and random.
 
-So what are our options here moving forward?
+Thanks,
+Alex.
 
-  A) I rip out RHEL7 and RHEL8 support completely, and expect people to
-     just use RHEL9.
-
-  B) Somebody extremely motivated and associated with Alma Linux or
-     Rocky Linux or Oracle sets up a dedicated CI server using the
-     official kernel builds and kernel headers, and runs `make test` on
-     every commit to either the kernels or to wireguard-linux-compat,
-     and then either:
-
-      i) has the CI automatically send me an email notification on
-         breakage so I can fix it like usual; or
-     ii) fixes it and sends a proper patch to the mailing list in the
-         correct style and format.
-     
-     Either one of those would work. (ii) would be nice, but there
-     aren't tons of people who like both CI devops and kernel
-     development, so I'd be fine with (i) too, which is more or less the
-     status quo but with functional CI.
-
-     Note, though, that this option (B) would have to be done well and
-     reliably. Were it organizationally flaky, I'd prefer to do (A), as
-     half-baked approaches tend to be worse than nothing.
-
-     If this interests any readers with the backing of large
-     RHEL-derivative projects, please get in touch.
-
-  C) Several companies who are using WireGuard with RHEL7 and RHEL8
-     provide significant project funding, and then I take care of
-     setting up dedicated and reliable RHEL CI for the project, using
-     official kernel builds and kernel headers. I could do this quite
-     well, but it doesn't seem right to do that without real funding for
-     it.
-
-     If this interests any corporate readers, please get in touch.
-
-  D) Other ideas the mailing list might have.
-
-So that's about where my thinking is at the moment. As usual, I'm not
-going to rush into any decision, and I'll do my best to keep RHEL
-support as afloat as I can until a careful decision in one of these
-directions has been made. None of this email is written with any real
-sense of urgency. But still, I'd like to at some point choose a
-direction and commit to it.
-
-Let me know what you think.
-
-Regards,
-Jason
+[0] https://lore.kernel.org/all/20220321151853.24138-1-krzk@kernel.org/
