@@ -4,57 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 845F3C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 27 Jun 2022 21:40:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBEC6C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Jun 2022 11:44:33 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 449ba806;
-	Mon, 27 Jun 2022 21:40:49 +0000 (UTC)
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com
- [2607:f8b0:4864:20::102c])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 2136e5bc
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id a6576661;
+	Tue, 28 Jun 2022 11:44:31 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 1d2a72c6
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 27 Jun 2022 21:40:47 +0000 (UTC)
-Received: by mail-pj1-x102c.google.com with SMTP id
- n16-20020a17090ade9000b001ed15b37424so10666609pjv.3
- for <wireguard@lists.zx2c4.com>; Mon, 27 Jun 2022 14:40:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=meshify-app.20210112.gappssmtp.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=cR92zYFtlaaJQI2/pXAAXOJfUK1y6sQTSnyVoUQf7Gk=;
- b=jeHCXmXjCtGpBoRjFtTQlL6e5cAvp5BmOMVc/vaj6sm9E7AiDCd5muxMP2vvdW64vT
- 6+zL48CWdJAPFD4M8mgukRaAn86n47DMjJMDPR0RQSie5f27HCJZoL6KMFdeQz3OQr44
- s+G/CLexngVEaSdmITFYy82SiubBpO8fPmBoyrv4Mgjk+8AyQEICqUINgM1pT7CBdEcQ
- GEG6mOHDQ2iFqG3XJQNL/ndAQMNzdqe1UbvC0K7Tgz8aXzJMZymAoVzq4FlgXaBHqXKq
- 7JmEvxpb+/96xbzWw9lw/I3aeVjP/2H3oj2mogBsli4wwlctmm5zDCMJRjkRfbgpr4B0
- 9ziw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=cR92zYFtlaaJQI2/pXAAXOJfUK1y6sQTSnyVoUQf7Gk=;
- b=2qS0QGEvozpdaTAYOjUSbq8M44tkAW/DZAkAd9cB2hvbLy2Ip3Tv1pSfpzuZJIPB/V
- WXJgleL/dTuhF/9/4uABQDOrWI5QOWJHG4KJkWX69CLMHRpTNCnk9Q4ytME2KCZ2auBL
- vzqbxCnSiksRvRbm/cdDKj2AeSR/kMBSEF4SAM0p/jxJXxfe6fkxplXoCVbojDNg6pKQ
- +J3nLmtd9MpbMzlD3kvNBoNEBlx413dTI2fzPPPMfLAp8voOh8uVpMhfxYURP0hSH3Cz
- Dulgak6o5dXlV+cnwaMlbm/dx3CVpkezkVUBsLBoUfYQd8VSROJRyHvQeKmprisclBd1
- 0u+Q==
-X-Gm-Message-State: AJIora+7W1u/7HfvFyNsgzAHRkQ7ZcU741wx3BmKos2y6SHeXPnd5m+N
- aUy2D4LHTHG6mWe02u/b/OBJSrESDMYiqM0ZTW/k9w==
-X-Google-Smtp-Source: AGRyM1u2C47+VetZ1Ub3Vu66GAsz6/u1kCiasFWxgTt9dX2gyxSR0yJy2DFroaRqYy9sjd4fS/eFqZed9AhD4AbxJGo=
-X-Received: by 2002:a17:902:d504:b0:16a:4846:3f46 with SMTP id
- b4-20020a170902d50400b0016a48463f46mr190145plg.159.1656366045775; Mon, 27 Jun
- 2022 14:40:45 -0700 (PDT)
+ Tue, 28 Jun 2022 11:44:29 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 97F3A61AC2
+ for <wireguard@lists.zx2c4.com>; Tue, 28 Jun 2022 11:44:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDFEEC3411D
+ for <wireguard@lists.zx2c4.com>; Tue, 28 Jun 2022 11:44:26 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="j94Nj9CF"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1656416664;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type;
+ bh=b/OvmzsRVp4a2zW2VkWciwTMh5cYYzJvgCSfCgRWLow=;
+ b=j94Nj9CF8QaCZydcTvBlrquxZIOUM4lOxq0axdpeRB0Y0N2FQIJXqruVqlqJBsquzHhrhZ
+ JKRueO0W6gxKl8XsqnuUn89+QH2tCYEwKjATBmKHwaX0WDP1/zc/OhkdxOsPtuiJO37hfI
+ YfkA7zSkGXGNkd4EyzquwIspaDpEO44=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 335c0004
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO); 
+ Tue, 28 Jun 2022 11:44:23 +0000 (UTC)
+Date: Tue, 28 Jun 2022 13:44:20 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: wireguard@lists.zx2c4.com
+Subject: The Future of RHEL7,8 Support in WireGuard
+Message-ID: <YrrplG8DswM0zxQO@zx2c4.com>
 MIME-Version: 1.0
-References: <CADuzeTx8_ODe2gF_hN6nhVFh5j+pEYXZB6fpVcC23pD2LLwCsw@mail.gmail.com>
-In-Reply-To: <CADuzeTx8_ODe2gF_hN6nhVFh5j+pEYXZB6fpVcC23pD2LLwCsw@mail.gmail.com>
-From: Alan Graham <alan@meshify.app>
-Date: Mon, 27 Jun 2022 14:40:36 -0700
-Message-ID: <CAMeHLtxurTwgOOuHQg-xALwahH7yGcTrtCmEk6TU6krpN-fSTw@mail.gmail.com>
-Subject: Re: Wireguard is loosing connection for no reason
-To: Pavel Yegorov <yegorov.p@gmail.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -69,143 +57,121 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Pavel,
+Hi folks,
 
-I also have a VM in OCI, albeit with Oracle Linux and not Ubuntu.
-It's working without issues.  Your PresharedKeys could be at fault
-based on how you obfuscated them.  However, I would look at all the
-other iptables rules that Oracle made in the VM.  They are long and
-complicated and I believe at some point I just nuked them all.
+I'm confronted with a few hard facts, the first of which is good and
+exciting, and the rest are kind of disappointing:
 
-You might also want to install Wireshark on the client and make a
-capture when you're having the problem.  You can also remove the
-fd42:42:42:2/128 references and see if that solves the problem.  I can
-imagine switching from ipv4 to ipv6 could cause such a hiccup and I
-don't actually have ipv6 setup in my config.  I'd also ensure you're
-not using Oracle's NAT feature for your VM as theirs is not a NAT you
-can run Wireguard behind.  Hopefully one of these suggestions will
-help!
+  1) RHEL9 has WireGuard baked into it by default, so there's no
+     required compatibility backporting for it. If you use RHEL9, you
+     can use WireGuard easily.
 
-Best regards,
-Alan
+  2) The RHEL7 and RHEL8 kernels have build errors due to trivially dumb
+     mismerges, if you try to build them using nearly anything other
+     than the RHEL-supplied .config files. I've reported these bugs to
+     Red Hat and I've sent series fixing these bugs (see this git repo,
+     for example: https://git.zx2c4.com/rhel7-kernel-misery/log/ ), but
+     Red Hat's perspective is that these are non-bugs that they won't
+     fix, since the only purpose of the kernel for them is their own
+     configs.
 
+  3) Those build errors make it difficult to run WireGuard's CI on them
+     without having to apply lots of extra patches. While RHEL7 is
+     mostly set in stone now, the C8S kernel changes frequently.
+     Recently I dropped RHEL from the CI, as C8S hadn't been building
+     for some time. So now I have no way of ensuring that it continues
+     to work.
+ 
+  4) RHEL7 and RHEL8 is a behind-closed-door process, which makes
+     tracking down new breakage and dealing with anything produced by it
+     an exercise in pain.
 
+  5) No companies who are using RHEL7 or RHEL8 with WireGuard have
+     reached out to me about trying to fund this work. (And in general,
+     now that WireGuard isn't a hip new marketing thing for VPN
+     providers and whomever, funding has significantly dropped off.)
 
-On Mon, Jun 27, 2022 at 4:07 AM Pavel Yegorov <yegorov.p@gmail.com> wrote:
->
-> Hey folks!
->
-> I really need some advice, cause I just don't know how to deal with my problem.
->
-> So, I have a WG "server" on ubuntu 18.04.6 LTS, hosted in the oracle
-> free tier. I've installed wireguard using well-known
-> https://github.com/angristan/wireguard-install script. Then I've
-> generated several configs for my desktops, phones, etc. It connects
-> and runs perfectly, but sometimes it just freezes for no reason.
-> There's no connectivity issues or something like that. Logs on client
-> side says something like that:
->
-> 2022-06-21 03:01:01.845: [TUN] [win] Keypair 17 created for peer 1
-> 2022-06-21 03:01:01.846: [TUN] [win] Sending keepalive packet to peer
-> 1 (SERVER_IP:SERVER_PORT)
-> 2022-06-21 03:03:01.822: [TUN] [win] Sending handshake initiation to
-> peer 1 (SERVER_IP:SERVER_PORT)
-> 2022-06-21 03:03:01.884: [TUN] [win] Receiving handshake response from
-> peer 1 (SERVER_IP:SERVER_PORT)
-> 2022-06-21 03:03:01.884: [TUN] [win] Keypair 16 destroyed for peer 1
-> 2022-06-21 03:03:01.884: [TUN] [win] Keypair 18 created for peer 1
-> 2022-06-21 03:03:01.884: [TUN] [win] Sending keepalive packet to peer
-> 1 (SERVER_IP:SERVER_PORT)
-> 2022-06-21 03:05:02.058: [TUN] [win] Sending handshake initiation to
-> peer 1 (SERVER_IP:SERVER_PORT)
-> 2022-06-21 03:05:02.106: [TUN] [win] Receiving handshake response from
-> peer 1 (SERVER_IP:SERVER_PORT)
-> 2022-06-21 03:05:02.106: [TUN] [win] Keypair 17 destroyed for peer 1
-> 2022-06-21 03:05:02.106: [TUN] [win] Keypair 19 created for peer 1
-> 2022-06-21 03:05:02.106: [TUN] [win] Sending keepalive packet to peer
-> 1 (SERVER_IP:SERVER_PORT)
-> 2022-06-21 03:06:21.302: [TUN] [win] Retrying handshake with peer 1
-> (SERVER_IP:SERVER_PORT) because we stopped hearing back after 15
-> seconds
-> 2022-06-21 03:06:21.302: [TUN] [win] Sending handshake initiation to
-> peer 1 (SERVER_IP:SERVER_PORT)
-> 2022-06-21 03:06:26.423: [TUN] [win] Handshake for peer 1
-> (SERVER_IP:SERVER_PORT) did not complete after 5 seconds, retrying
-> (try 2)
-> 2022-06-21 03:06:26.423: [TUN] [win] Sending handshake initiation to
-> peer 1 (SERVER_IP:SERVER_PORT)
-> 2022-06-21 03:06:31.471: [TUN] [win] Handshake for peer 1
-> (SERVER_IP:SERVER_PORT) did not complete after 5 seconds, retrying
-> (try 3)
-> 2022-06-21 03:06:31.473: [TUN] [win] Sending handshake initiation to
-> peer 1 (SERVER_IP:SERVER_PORT)
-> 2022-06-21 03:06:36.517: [TUN] [win] Handshake for peer 1
-> (SERVER_IP:SERVER_PORT) did not complete after 5 seconds, retrying
-> (try 4)
->
-> If I reconnect WG client, it immediately connects and everything is ok.
->
-> Any advices? I tried to experiment with PersistentKeepAlive param (on
-> both sides!) that doesn't change anything.
->
-> My server cfg:
->
-> [Interface]
-> Address = 10.66.66.1/24,fd42:42:42::1/64
-> ListenPort = SERVER_PORT
-> PrivateKey = M?????Uyg4r3mo=
->
-> PostUp = iptables -I FORWARD -i ens3 -o wg0 -j ACCEPT; iptables -I
-> FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o ens3 -j
-> MASQUERADE; ip6tables -A FORWARD -i wg0 -j ACCEPT; ip6tables -t nat -A
-> POSTROUTING -o ens3 -j MASQUERADE; sudo iptables -I INPUT -i ens3 -p
-> udp --dport SERVER_PORT -m state --state NEW,ESTABLISHED -j ACCEPT
-> PostDown = iptables -D FORWARD -i ens3 -o wg0 -j ACCEPT; iptables -D
-> FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o ens3 -j
-> MASQUERADE; ip6tables -D FORWARD -i wg0 -j ACCEPT; ip6tables -t nat -D
-> POSTROUTING -o ens3 -j MASQUERADE; sudo iptables -D INPUT -i ens3 -p
-> udp --dport SERVER_PORT -m state --state NEW,ESTABLISHED -j ACCEPT
->
-> ### Client iphone
-> [Peer]
-> PublicKey = 0+V???????4HnM=
-> PresharedKey = s???????amJCxJyqcE=
-> AllowedIPs = 10.66.66.2/32,fd42:42:42::2/128
->
-> ### Client mac
-> [Peer]
-> PublicKey = Tet4??????mI=
-> PresharedKey = Ld???r8=
-> AllowedIPs = 10.66.66.3/32,fd42:42:42::3/128
->
-> My client cfg
->
-> [Interface]
-> PrivateKey = 4Bp????=
-> Address = 10.66.66.2/32,fd42:42:42::2/128
-> DNS = 8.8.8.8,1.1.1.1
->
-> [Peer]
-> PublicKey = 5R?????c=
-> PresharedKey = sY????E=
-> Endpoint = SERVER_IP:SERVER_PORT
-> AllowedIPs = 0.0.0.0/0,::/0
->
-> some stats
->
-> root@oraclevpn:~# wg show all
-> interface: wg0
->   public key: 5R?????c=
->   private key: (hidden)
->   listening port: SERVER_PORT
->
-> peer: 0+?????nM=
->   preshared key: (hidden)
->   endpoint: 666.666.666.666:11111
->   allowed ips: 10.66.66.2/32, fd42:42:42::2/128
->   latest handshake: 2 minutes, 2 seconds ago
->   transfer: 533.52 MiB received, 5.18 GiB sent
->
->
-> --
-> Pavel Yegorov
+Given all this, I wonder whether the RHEL7 and RHEL8 backports have a
+future, and if they do, what that future looks like.
+
+Note, this isn't just a matter of "backporting is hard work that nobody
+likes to do, but you do it anyway because that's what you gotta do."
+Because in contrast, I'm quite content doing backports for the
+kernel.org stable kernels that Greg and Sasha release. The process is
+open and transparent, Greg and Sasha are nice to work with, the goals
+are clear, the outcomes are dependable. It is still always work, but
+developing for kernel.org stable kernels is reasonable engineering work,
+as opposed to RHEL backporting, which is fighting uphill against
+byzantine bureaucratic processes that aren't very welcoming of my
+objectives.
+
+And to be clear, it's not as though Red Hat is somehow evil here. Their
+goals simply aren't aligned. The kernel.org stable releases are meant to
+be general kernels that you can do things with, developed as part of an
+open source project. The RHEL kernel, by contrast, is part of a
+commercial product with a very specific single goal in mind. That's
+fine, and there's nothing inherently wrong with that.
+
+So when Red Hat tells me, "sorry, why should we care about this? RHEL7
+and 8 don't support WireGuard. Tell people to use RHEL9 for that. We're
+not going to make your life easier in RHEL7 and 8. It's not supported,"
+I sigh exasperated, because as frustrating as their position is, it's
+also an entirely reasonable position for them to have, based on what
+their goals are and what they're doing.
+
+That all is a very long way of saying that continuing to backport
+WireGuard to RHEL7 and 8 kernels in the normal way with WireGuard's CI
+as it currently exists is an uphill battle, just due to the nature of
+the thing. It's constant struggle to put the square peg in the round
+hole.
+
+So what are our options here moving forward?
+
+  A) I rip out RHEL7 and RHEL8 support completely, and expect people to
+     just use RHEL9.
+
+  B) Somebody extremely motivated and associated with Alma Linux or
+     Rocky Linux or Oracle sets up a dedicated CI server using the
+     official kernel builds and kernel headers, and runs `make test` on
+     every commit to either the kernels or to wireguard-linux-compat,
+     and then either:
+
+      i) has the CI automatically send me an email notification on
+         breakage so I can fix it like usual; or
+     ii) fixes it and sends a proper patch to the mailing list in the
+         correct style and format.
+     
+     Either one of those would work. (ii) would be nice, but there
+     aren't tons of people who like both CI devops and kernel
+     development, so I'd be fine with (i) too, which is more or less the
+     status quo but with functional CI.
+
+     Note, though, that this option (B) would have to be done well and
+     reliably. Were it organizationally flaky, I'd prefer to do (A), as
+     half-baked approaches tend to be worse than nothing.
+
+     If this interests any readers with the backing of large
+     RHEL-derivative projects, please get in touch.
+
+  C) Several companies who are using WireGuard with RHEL7 and RHEL8
+     provide significant project funding, and then I take care of
+     setting up dedicated and reliable RHEL CI for the project, using
+     official kernel builds and kernel headers. I could do this quite
+     well, but it doesn't seem right to do that without real funding for
+     it.
+
+     If this interests any corporate readers, please get in touch.
+
+  D) Other ideas the mailing list might have.
+
+So that's about where my thinking is at the moment. As usual, I'm not
+going to rush into any decision, and I'll do my best to keep RHEL
+support as afloat as I can until a careful decision in one of these
+directions has been made. None of this email is written with any real
+sense of urgency. But still, I'd like to at some point choose a
+direction and commit to it.
+
+Let me know what you think.
+
+Regards,
+Jason
