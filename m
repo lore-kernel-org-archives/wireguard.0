@@ -4,59 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 386A8C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Jun 2022 18:00:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D55AC43334
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Jun 2022 18:54:44 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id dd27c751;
-	Tue, 28 Jun 2022 18:00:02 +0000 (UTC)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id fda09e08;
+	Tue, 28 Jun 2022 18:54:43 +0000 (UTC)
 Received: from dfw.source.kernel.org (dfw.source.kernel.org
  [2604:1380:4641:c500::1])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id e2cd3a61
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 6c6e776d
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 28 Jun 2022 17:59:59 +0000 (UTC)
+ Tue, 28 Jun 2022 18:54:40 +0000 (UTC)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 5BA79619E4
- for <wireguard@lists.zx2c4.com>; Tue, 28 Jun 2022 17:59:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F185C3411D
- for <wireguard@lists.zx2c4.com>; Tue, 28 Jun 2022 17:59:57 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="IYfm/8oK"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1656439195;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dsKapWLaRAn5m7Fuu7nB6/1BBUI8oO0cnEI6xHSoXiI=;
- b=IYfm/8oK6UV41kZ51/QJzn2XkNgAweJ8uGmhR9lKrjrbElYagyvT60TjJD2OzW4pPHL0/W
- Dqedf5Qxar4Z8Z+X7NQxXDCVsuFnWhX1z4+mXlstQFp8OYp+19Z7469KZQIiNl6cV9tKnZ
- Si23pMHnaFKucb4ZZUD0Yic/QDYoxB8=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 8b7c2af4
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 28 Jun 2022 17:59:55 +0000 (UTC)
-Received: by mail-io1-f49.google.com with SMTP id y18so13669914iof.2
- for <wireguard@lists.zx2c4.com>; Tue, 28 Jun 2022 10:59:55 -0700 (PDT)
-X-Gm-Message-State: AJIora+P7ynJ8GveWwoQybsICOFQ7hisdhKX8VcRgB4XMU6yD5xdMdcp
- n/Mz+JrcwexfVYP+k2pOislcU83p7J+u1+s5aoM=
-X-Google-Smtp-Source: AGRyM1sI71JrkRgYrAJ+r6BZSlkdDGjw3YblJDu2GFaWGMuTaNv5FsfzgeWEyRBzIsrmcX6HsjyJR8vY6RGJfXuD1Uw=
-X-Received: by 2002:a05:6602:2b02:b0:65a:fea9:c715 with SMTP id
- p2-20020a0566022b0200b0065afea9c715mr10377479iov.142.1656439194970; Tue, 28
- Jun 2022 10:59:54 -0700 (PDT)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 85F7A61B2A;
+ Tue, 28 Jun 2022 18:54:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1812C3411D;
+ Tue, 28 Jun 2022 18:54:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1656442478;
+ bh=u8hEW7vux9iWZsA17pwpC0Xoyc2INnxaQpwJS9+5oLU=;
+ h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
+ b=aut/A4GTMw3jzzC61HvV4Pxub63Yl3zq1QD/P6hCp9Odn+bJBnqwbhJc1wO812UBG
+ 9GN86SmtgztNokhvz+GV7j4zHrYA97eQVl+zEa7MuNNK9DQNv3x8ztCFnW7laCPHY0
+ Mj0gx40mMyh/ymF9hpdAoINHsMpzBsBNiEAHQHvlsxiEZViaFDrAhN8Ec58WZ8wnQh
+ b9qEVAXZhD3+zLdQU5zMmtZs9AyAQRwCiononG+SwYvjpwQZwRT3SN7vBE/tEcGStS
+ JSG4tuHyhF/MOJSS+ItO9iWfSLBJlPTM6G3R/LaKMcEmx+d+6B0BTxDmuW/LD4DBMu
+ RZyiNpwXXEmYQ==
+Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
+ id BC78C5C0458; Tue, 28 Jun 2022 11:54:37 -0700 (PDT)
+Date: Tue, 28 Jun 2022 11:54:37 -0700
+From: "Paul E. McKenney" <paulmck@kernel.org>
+To: "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>
+Cc: rcu@vger.kernel.org, urezki@gmail.com, uladzislau.rezki@sony.com,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Arve =?iso-8859-1?B?SGr4bm5lduVn?= <arve@android.com>,
+ Todd Kjos <tkjos@android.com>, Martijn Coenen <maco@android.com>,
+ Joel Fernandes <joel@joelfernandes.org>,
+ Christian Brauner <christian@brauner.io>,
+ Hridya Valsaraju <hridya@google.com>,
+ Suren Baghdasaryan <surenb@google.com>, linux-kernel@vger.kernel.org,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>, wireguard@lists.zx2c4.com,
+ Theodore Ts'o <tytso@mit.edu>, alexander.deucher@amd.com,
+ christian.koenig@amd.com, Xinhui.Pan@amd.com, amd-gfx@lists.freedesktop.org
+Subject: Re: CONFIG_ANDROID (was: rcu_sched detected expedited stalls in
+ amdgpu after suspend)
+Message-ID: <20220628185437.GA1790663@paulmck-ThinkPad-P17-Gen-1>
+References: <1656357116.rhe0mufk6a.none.ref@localhost>
+ <1656357116.rhe0mufk6a.none@localhost>
+ <20220627204139.GL1790663@paulmck-ThinkPad-P17-Gen-1>
+ <1656379893.q9yb069erk.none@localhost>
+ <20220628041252.GV1790663@paulmck-ThinkPad-P17-Gen-1>
+ <1656421946.ic03168yc3.none@localhost>
 MIME-Version: 1.0
-References: <1559d27e5d07780e786f5095afae9077@mail.gmail.com>
-In-Reply-To: <1559d27e5d07780e786f5095afae9077@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 28 Jun 2022 19:59:44 +0200
-X-Gmail-Original-Message-ID: <CAHmME9r0Ak-pr748Z9BHj7c3AKo8EkCDG5TYLG8DmPKXja8LRA@mail.gmail.com>
-Message-ID: <CAHmME9r0Ak-pr748Z9BHj7c3AKo8EkCDG5TYLG8DmPKXja8LRA@mail.gmail.com>
-Subject: Re: seems that https://www.wintun.net/ down?
-To: Clint Dovholuk <clint@openziti.org>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1656421946.ic03168yc3.none@localhost>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -68,12 +72,114 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
+Reply-To: paulmck@kernel.org
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Equinix Metal had a network connectivity incident and during the
-resolution apparently unplugged a server. Things are back up now. They
-told me the hardware I'm using is deprecated anyway, so I'll be
-migrating to a more reliable machine in the next few days.
+On Tue, Jun 28, 2022 at 11:02:40AM -0400, Alex Xu (Hello71) wrote:
+> Excerpts from Paul E. McKenney's message of June 28, 2022 12:12 am:
+> > On Mon, Jun 27, 2022 at 09:50:53PM -0400, Alex Xu (Hello71) wrote:
+> >> Ah, I see. I have selected the default value for 
+> >> CONFIG_RCU_EXP_CPU_STALL_TIMEOUT, but that is 20 if ANDROID. I am not 
+> >> using Android; I'm not sure there exist Android devices with AMD GPUs. 
+> >> However, I have set CONFIG_ANDROID=y in order to use 
+> >> ANDROID_BINDER_IPC=m for emulation.
+> >> 
+> >> In general, I think CONFIG_ANDROID is not a reliable method for 
+> >> detecting if the kernel is for an Android device; for example, Fedora 
+> >> sets CONFIG_ANDROID, but (AFAIK) its kernel is not intended for use with 
+> >> Android userspace.
+> >> 
+> >> On the other hand, it's not clear to me why the value 20 should be for 
+> >> Android only anyways. If, as you say in 
+> >> https://lore.kernel.org/lkml/20220216195508.GM4285@paulmck-ThinkPad-P17-Gen-1/,
+> >> it is related to the size of the system, perhaps some other heuristic 
+> >> would be more appropriate.
+> > 
+> > It is related to the fact that quite a few Android guys want these
+> > 20-millisecond short-timeout expedited RCU CPU stall warnings, but no one
+> > else does.  Not yet anyway.
+> > 
+> > And let's face it, the intent and purpose of CONFIG_ANDROID=y is extremely
+> > straightforward and unmistakeable.  So perhaps people not running Android
+> > devices but wanting a little bit of the Android functionality should do
+> > something other than setting CONFIG_ANDROID=y in their .config files.  Me,
+> > I am surprised that it took this long for something like this to bite you.
+> > 
+> > But just out of curiosity, what would you suggest instead?
+> 
+> Both Debian and Fedora set CONFIG_ANDROID, specifically for binder. If 
+> major distro vendors are consistently making this "mistake", then 
+> perhaps the problem is elsewhere.
+> 
+> In my own opinion, assuming that binderfs means Android vendor is not a 
+> good assumption. The ANDROID help says:
+> 
+> > Enable support for various drivers needed on the Android platform
+> 
+> It doesn't say "Enable only if building an Android device", or "Enable 
+> only if you are Google". Isn't the traditional Linux philosophy a 
+> collection of pieces to be assembled, without gratuitous hidden 
+> dependencies? For example, [0] removes the unnecessary Android 
+> dependency, it doesn't block the whole thing with "depends on ANDROID".
+> 
+> It seems to me that the proper way to set some configuration for Android 
+> kernels is or should be to ask the Android kernel config maintainers, 
+> not to set it based on an upstream kernel option. There is, after all, 
+> no CONFIG_FEDORA or CONFIG_UBUNTU or CONFIG_HANNAH_MONTANA.
+> 
+> WireGuard and random also use CONFIG_ANDROID in a similar "proxy" way as 
+> rcu, there to see if suspends are "frequent". This seems dubious for the 
+> same reasons.
+> 
+> I wonder if it might be time to retire CONFIG_ANDROID: the only 
+> remaining driver covered is binder, which originates from Android but 
+> is no longer used exclusively on Android systems. Like ufs-qcom, binder 
+> is no longer used exclusively on Android devices; it is also used for 
+> Android device emulators, which might be used on Android-like mobile 
+> devices, or might not.
+> 
+> My understanding is that both Android and upstream kernel developers 
+> intend to add no more Android-specific drivers, so binder should be the 
+> only one covered for the foreseeable future.
 
-Jason
+Thank you for the perspective, but you never did suggest an alternative.
+
+So here is is what I suggest given the current setup:
+
+config RCU_EXP_CPU_STALL_TIMEOUT
+	int "Expedited RCU CPU stall timeout in milliseconds"
+	depends on RCU_STALL_COMMON
+	range 0 21000
+	default 20 if ANDROID
+	default 0 if !ANDROID
+	help
+	  If a given expedited RCU grace period extends more than the
+	  specified number of milliseconds, a CPU stall warning is printed.
+	  If the RCU grace period persists, additional CPU stall warnings
+	  are printed at more widely spaced intervals.  A value of zero
+	  says to use the RCU_CPU_STALL_TIMEOUT value converted from
+	  seconds to milliseconds.
+
+The default, and only the default, is controlled by ANDROID.
+
+All you need to do to get the previous behavior is to add something like
+this to your defconfig file:
+
+CONFIG_RCU_EXP_CPU_STALL_TIMEOUT=21000
+
+Any reason why this will not work for you?
+
+> > For that matter, why the private reply?
+> 
+> Mail client issues, not intentional. Lists re-added, plus Android, 
+> WireGuard, and random.
+
+Thank you!
+
+							Thanx, Paul
+
+> Thanks,
+> Alex.
+> 
+> [0] https://lore.kernel.org/all/20220321151853.24138-1-krzk@kernel.org/
