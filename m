@@ -4,90 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8CF3C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Jun 2022 19:28:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEFB8C43334
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 29 Jun 2022 12:14:01 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id ac416f45;
-	Tue, 28 Jun 2022 19:28:35 +0000 (UTC)
-Received: from sonic317-20.consmr.mail.gq1.yahoo.com
- (sonic317-20.consmr.mail.gq1.yahoo.com [98.137.66.146])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id c5ef04f8
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id e7620c11;
+	Wed, 29 Jun 2022 12:14:00 +0000 (UTC)
+Received: from sonic312-25.consmr.mail.ir2.yahoo.com
+ (sonic312-25.consmr.mail.ir2.yahoo.com [77.238.178.96])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id df995c13
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 28 Jun 2022 19:28:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.ca; s=s2048;
- t=1656444511; bh=lp6JELsahhZcDxMKcb8gtHLevhfULw04cbHTcBHgid0=;
- h=Date:From:Subject:To:Cc:References:In-Reply-To:From:Subject:Reply-To;
- b=jjDFzI/yTyGPTE04F5h3wA5bSgKOvp64wtETAjXTs+4HqJ2FLNbr5TUf70XYIsJYoYxJc6JpCo2lfpkyZt39JDg7xZv2zk8F2M+lCty2if+BCt8naUF15x+Yx10scAZ0xXqnGZvjdnXav2bDKNTs7zM0i2hGypN52AZh0Uy0Qlq7WAHIJ0iTDjD1xQ6pW8m6TGvOA2Th7RJeZX5i7qU24jhXG8WUVC0wcjvPfXeRPPuMIBlDZNetbd8959qNtVAGzgDgwuivC5cnTXc18Kw482wloSoNa3WbM/m75NcTCoUtWuz8vTWgc0iYq8hki1X94VSM851nJnnUqwwh7r+6ug==
+ Wed, 29 Jun 2022 12:13:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.co.uk; s=s2048;
+ t=1656504837; bh=GP7yzIUiuO2QCuf0uvPibzeox2tg41XI9NnF/lEzW+s=;
+ h=Date:To:From:Subject:References:From:Subject:Reply-To;
+ b=e79vfobPbNLQIrPFQrB7m08+b091c3Oxz72J2i12QkOVu3YjF6DkKGiA8u+k8dBcIQ8AblhIr3ZKbNiBRJdmob7alao9RGKtLva7GjEPvz7IsGPcg/s6t6uCoLHho8gScUJH52XXC4fDD8fca/Z/0Zk7qzt2FrKvhn9rA4OHa9QrjauB1UuYGOXcLEEA+0KS9UlGGGYEMvI5+yyfNXxGuek3KsZKuzAbV5mTJKKzfhfh9eZoD2RSSjw3Oo8rsjjgow+1wDOsqnE3JHc+Izh1bTE9ccEpPUTUqv/MRYo/QKrvcXhHzuh/QnKVGQQMicIlub7QAFaglaGkpV2KUmaa1g==
 X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1656444511; bh=0UZukaZ+ibNkIFwKKSDOXttoIsXq4gsEK9nnOmqJcdB=;
- h=X-Sonic-MF:Date:From:Subject:To:From:Subject;
- b=h8Ez4OgVk5inmzZ5NFmmuTb/QYRhrfo8lfXyLRPTHteLSTPPkYAq89FUN7H4wNoog6fsQwazR10YfOWm7rIFHNsNIKSXrpuL5LI4RgaQqAElgNOTkyr+4CA2yBPQCmJ7FmLHWmj3QEgGIKQV8euF1ELR6MkRISA/t2YCfnIZ89vzdi4PpFu4v335Cif1bXcLdeBJtPXnUPGht7+f2A3eOD+DW34P7rUuR3i7msEruZjIhjKZSKA4vlxzFONfbmbYus2GdybSVa2svtGpl92ya4rZtUdTRsrDFtJjbGk8Vbr6chjXIWWAjNhOiZD770o4kaG0vKumCs0afkKpyPMHlQ==
-X-YMail-OSG: zW4xm4kVM1mKC80wsYqU0Hr_NbggFiHuTmO.JnZU6z7OftV5itErH2QpzQMtg1G
- _EVW.99By_8Z7kJBwpO4jud.jhhWd75BFhilHxr1CIlcZiSxZUiRKaUIuiC8Ed.7QCAlXTxxYB6q
- 2kzJAMLZH512xS11CkjpSrySfrCfzuWocsYMlNN.9xPLWQ7GwSYCxVkY1Fjwx0MroSpMX7Blj0_p
- hDhhiYYnCKcM62IOXgWbsNuvR1huzBhVUQJGreMnJ592T0NmzFiJmsewsxKgq0QtCebg6IepT.jx
- l_7lyUMYBSPL.o7FNj9Rr4s5jURRigFMSb9IsylwkrunxB0RMJzXuhohv3T7MJMYrm7P_PmO4xoW
- 2ASe6x_8rve4.vFexl3nzmwRcyASJa1jiSY_vMpJgTaxGG5l6T4363Gmg3FfYf_0I.lSFpeLI7X4
- KpHV1GS5UDlQfz94GS8lmBL1Hha4w6B8Y3uFFaF_IN51r1Und6SwCg6wkWqHRJjZVx1mQynDmFa6
- C2fj8y4NTUDP1i5fhQGqhTFxDmsMYzNciiEaVGHq_fF6TB.mp9HGuBSAugnCjJ6HnRtxHd3z5WSo
- EXxEHRsqrOKabFy7vQvw1wLuvqSmKZSKAYCxV4lEIwgYoP7vHlvBKv0e4hlTWxJ5CL5WnBIDxf4W
- ViOVjY74j3mQ1NNTRLLcCumtaecx2zvdgPfQeNFhZFP0c_2Kak9_lMUkfuNXesjCoGIKY025rk.o
- DAj5vfcw8TCTCNptpWdw960fepFNlCti8kyVRywXDnl.3udzWJMjVlz1Y9RaQORnIDN1LUtNjP1R
- H2oQtWqVk98Xq3TnvRaNEBuAAKb3HW8HoEl.ESaQoQmblbgmbIv5QV1T9eHO__kg3rpZXyv1gJmz
- gbOezi0P4WN0Y_ahA8ltWZuLRXggSsjC3pyxDPR3x6OV4nO2Ruj_jacC6Ja9TOmhD59KPbP.6DVW
- jqG8GPIXFOfWoUV75Ab6X5hoVvrKl1DPL4RPI5gckWfOAZ7VV7lyDLmsCS7cG503x4DtRAY8G10D
- 7Jy173FDRBLBWSDj0X855_7SqvukmYEqLQD9eQpBCNEuQWV7zHo7UPckwGFAfRdfQ6mzt1btyE9_
- GLS7tm2w.n6HpZydN.Ign7aJROAJeWuhYEKwlFj78YzL.c6qNLy7rjfUF.t93RNRs72ZrVsFADp1
- KsfKzKeEmloP1X6zi.0ynJpqqMXkpNwPuXWtaQlV0wUL57c2C_PoW.WqJHT.3H7cLn.XRIMJZLXH
- MR2eZXcnpRahgpiRoMRIxaiRj0.qhgpsZhaoa3Mto1inFSxA640derzNRqN0_FR5zTIUQezXMv1I
- GONJOCaj14_GLSOfrnGttbNnjFz5nnqwVl8ipMKzaSiOWR0nWh2C.6uqNB5KgOdMYdw.GAhho7RW
- yHxeKRGU_hI4G1Xv6XOOmIWoLYQsMi.lUvsaAqtFBf19Pzb0ZnVRSREg.R7pNlYP9G35gTKgnWcV
- .GL5pyzpjh9fF3bP91tJdH8k3yYdHuHZWOA2BDZv7esvO1po5wgMF4lHP2UotQcFLdeHLvQ7kn7M
- qJUP5R7rDREZEjWNVYYrYZfUz4Fi9iLEdYI0gYvqSNsf1r7E8FaMNdngmNcu.cF7Z5wNz_XkY9dN
- s5KekZuI_syol5t2XpPa3Gt_bNxxfsED09.1A1_BxXPlgvqgSkLI5Cj7ZBx4KPU9Ruiu_urP8qRX
- 9V9_FzbOgScgdZ3IRJNNc3cJ.pB5cPD6ZqoRtr9eSzcit1sXgROzgEsaoJ4xCzf6ys9NWfkpPnSY
- DybPi_jEWc8XdABn.ROXfwXGX8VVnoq13czgBMrDdlU0KgkKQN81zHKJJn25liLG87WpJXMBoygC
- lb7bwKuD1OcU9FmVbpzcyAB1wO6LyhcidGg1xlEuT1uE8rJZ4IfsA7t9ptKGfdedqK.QcHZBRAdq
- hK3WrfN7vfqkUCMdN8QnCVzwLPy1JdljXrn8Yo_D2ijMqaxpd4T4FbcF6hBh1dGs0z0M8Nl8Up1M
- tIwBUdxALAV2PU1dizE0i2cyO32LbzxIcn2ehbVhaWnRkHOSgQK8kYGjY4QUByPON3Ih1T57xFry
- BEzSnXnHBCuLCUDOlivQcynkvXgArC5T.SHH2rhbzI_0tv1pVs_4fxg2XL98Y7MWJPhhaAX8rOx4
- SkM.1v6QVCDiF_Wchv4ynYtDVFspvJ.rVpw48eZNLTnwMlfFRH0ypjbccMCO9G8WszG0NISaaQDn
- 8INTZxamallVo0nWjF98_xc_fCJBjKD3EyDbqhJcbZP8BD3bI
-X-Sonic-MF: <alex_y_xu@yahoo.ca>
+ t=1656504837; bh=AFXl3TJqMGAc7SbHyP26/ZJcMkPEL6piFuFmWZt1T3I=;
+ h=X-Sonic-MF:Date:To:From:Subject:From:Subject;
+ b=Aj1LmprsVStqqECr45dj5v2nWHFezF6zhjyr28FrMLPpmVgkyGSuHOdxW2gBTfK2yqqvvNdfLJbhUNWh3CVDvWI2PRDsOYjJ9a/rE4wvbQPYZyblQn5SIqdes5SpmP70SNdCrIteCpkWT2HR4ainFlBV5ZJK5slPM2MCnhXdX/zrNGgE1TLNP/KCbm4y2FRywA0ITuOYqIMrEsxoEHK313Z3nBjlH9kOU2xuj19CbBUQ7INBaJ6HZgO0AVsnMizcvTmm5Y1ZMRGexU1GYqaQZoxTBb6tgzhEfZKZhGGZrfg11m/eslEZIC9yvjlzM/F3FVZFNJSAg2sjw6UAR2PuIQ==
+X-YMail-OSG: vIVkLr4VM1nnfFYcjKLPQjjqUKO7FG9f9FETyjP8yh8_26HO2LDTACtirJAoM0r
+ u7JUQAW3eXxtNVhRC2i5S.YvMLkGJJYxNnQpBcDq8.oS66imL0w.YmLKRqfhVkDxhMk8RjJc14rW
+ NZmmUI.6c8zuD36t432GjCOSHy46TFoMkiElLbQnYwt3jUpCCLJAjL6VHZSOQ9EFUxW_2FUIbV08
+ 4qV.Ex6N3HX1guolZPXznc350Jvku41t5wsyQIbZVETMN3Jkn7suW_inuVIfscxmtK78bHTbSxT0
+ Gse0lkDmjxuBS1rWJh2LglhOWuqrxETtgQSThk9gdc5D7TqJW3ibA4T5kB1fFZinlEbAFBTc2GQi
+ eZIEBLe6yeWqv9bwYN_C9ymA24WJEKIT1sH2lub4r7PTt597CiPh1MzP4lgA.9riAlDrIx5ZoizC
+ 6wYTTdie5uZB0GAW_RPEgRnBluBRvpEdMvZ320iPx1XgMuDVTC6ihY9VbnEix5QhJOMyEBNYx29T
+ n5VH7huDM0Gj.DysWib9YU3_8XmIQCBTm5jHtrLJcVguyKVvKw9UJdX0Lc.aLRJVygO.fX3u11J6
+ nWA4wWCsTuM49peZSp9xQYViL3dIg4YHvvYfXIbH7XYVByhRW_8Cc7L6YZDvbAdur_oZaQROHly9
+ QOWmHKWjByk_kcQK.LL7EK406tYUXwcqJtkE4AWS5raWLpgwkOqJtE3NVmAJTIrmQcvdumHe8kR6
+ RZ2ydVIJV1Z.gNDJl22R7DXryK8_PJPYw.3Gl7mEk9XbNTltrARFE2W7xBW.i8Y_cqcqlqMNopCX
+ j.GRaQqboLK9zRPqqGeM0zxy.D8faptf4ufyIR4h15UkTRluEMx80.Ay9FTMSPSyyl01UZ39Q6xV
+ oKgw9lIJ1Rn_JiVmPce_Z1wh.mB8e89_vMlz3NtTOqEYiaEpid.k2RSNVknAT1ekAQL6OJn_TCbv
+ 9pnRIY9MQbxzC718hjd85uawo3ZgA6GMvq3XgYlY42w198kR4KEt5CUz33tlv6X_6soXHv6x2e9_
+ XW3mixBTSoL8dvB3mSC_vrCYRrZ9b3WHQwBXWTIESL62gXvp2rEK4oG6n5X.6CReYRIpjjn0GXJD
+ PfbXSXiA0Q1Juh3bkf2554h4VpQQ80cdgm0cZDRwM8KEBqJ50DiDuvCIfbpuFWwcO3OtlfWZynEB
+ TVgAku0_BHklHqx4d0rdbDhlQl0dz1ZooWuzNpJVmebrXO_gGmz8HaPR6uMXAMZdC1z6Q6mMyZl8
+ xbtNcIKYY9qAcWwZXeQGvqQPvElbtHCnmsTSlpwBlFalPQ5GQtybQF0XIDy8kDHsIlR8FCDaHlmQ
+ lUiGynfUfxF4YgqeCDFQKtxUEbjD.3lZSsVAxHatgv_Tf7lof79iKlrbsMUf0gmK84Tk5oO5iQpL
+ s2wCAad0LsU9rM23.YKSwSyzPVYRvlE9l1FGn9HslvJxGehFINqksYohT1gbzwVb3a1XHtYT0yqo
+ QkNLyjFoLoo2lwUegqVerPVT_AYk2HolXfqUfF92UVduJzKhToQUAsHPPQdHql3R1reyzzM0Ntj3
+ UZCCj_6b1iGz2ZtnT.2ct2KNh4BAdTR2zHPSG9OcassV1eyF3Van4NfTgNHIQdtfUuwFQXdWl4XW
+ xVY0sbQ0zqsjV1R3yIp7v4ymov6TnQHJ5wim45fEQhPi7PFPnwXxs3fYeyVtrS84.P3fGrSKDeJn
+ 3YWbD.S8HnTQrfzaK1V7g0t8AslT9NXWOEnMv6OivYJNdHh_UWrx1s2Y8QCM27Mz7tJo5O_vhhwk
+ AxXNIwm_HrFKoi4UDYayx.hH.F4j3J617Eom5ziSoY_1mmYOYKCwDjffa8j18IH_13Q.aR9q7Y7f
+ .SJmKA0S3hxTt9jFOGKmM7VUnf3vKywkFoALT9KoGz573Lmd7n06Cyvx5bZzT4GrTMQsfi9EdLJh
+ 8Z__gbiqgnD1IVNwBdojA777LHdba65hhYL8dSNpKeVW8PunAckTtJTAtiaigW3YVp1OWuJybP6R
+ ggibxFgwbSkjy8.y6_DR1bONGy03ZgudDX19dzAz5eb1FWILuSwVMeT.zr3C_Y9DAg78QKVQFNDj
+ HuR1iT2ppxWtxwyHUIUkLFP3nPCBuHGZCmxTEn36ntDRWykERGyWoDqbioU0v4UcbYMP.OWNJ03Y
+ A1eJtV1_aFgqysbjqwvpE3czCAbM9N8LsYbsZGlQCOPnPnX_xejej.dWsh6foQLJOCVgvi9uQYNs
+ QXkLV_09ruMEq_UyWJ6HWN3l1S2GUcqlKGQa1YWMSCWoHZfRIa18-
+X-Sonic-MF: <peljasz@yahoo.co.uk>
 Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic317.consmr.mail.gq1.yahoo.com with HTTP; Tue, 28 Jun 2022 19:28:31 +0000
-Received: by hermes--production-ne1-7864dcfd54-clfh9 (Yahoo Inc. Hermes SMTP
- Server) with ESMTPA ID 0ba9c517f807bbba5b63c956b00d8dd2; 
- Tue, 28 Jun 2022 19:28:30 +0000 (UTC)
-Date: Tue, 28 Jun 2022 15:28:26 -0400
-From: "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>
-Subject: Re: CONFIG_ANDROID (was: rcu_sched detected expedited stalls in
- amdgpu after suspend)
-To: paulmck@kernel.org
-Cc: alexander.deucher@amd.com, amd-gfx@lists.freedesktop.org,
- Arve =?iso-8859-1?b?SGr4bm5lduVn?= <arve@android.com>, Christian Brauner
- <christian@brauner.io>, christian.koenig@amd.com, Greg Kroah-Hartman
- <gregkh@linuxfoundation.org>, Hridya Valsaraju <hridya@google.com>,
- "Jason A. Donenfeld" <Jason@zx2c4.com>, Joel Fernandes
- <joel@joelfernandes.org>, linux-kernel@vger.kernel.org, Martijn Coenen
- <maco@android.com>, rcu@vger.kernel.org, Suren Baghdasaryan
- <surenb@google.com>, Todd Kjos <tkjos@android.com>, Theodore Ts'o
- <tytso@mit.edu>, uladzislau.rezki@sony.com, urezki@gmail.com,
- wireguard@lists.zx2c4.com, Xinhui.Pan@amd.com
-References: <1656357116.rhe0mufk6a.none.ref@localhost>
- <1656357116.rhe0mufk6a.none@localhost>
- <20220627204139.GL1790663@paulmck-ThinkPad-P17-Gen-1>
- <1656379893.q9yb069erk.none@localhost>
- <20220628041252.GV1790663@paulmck-ThinkPad-P17-Gen-1>
- <1656421946.ic03168yc3.none@localhost>
- <20220628185437.GA1790663@paulmck-ThinkPad-P17-Gen-1>
-In-Reply-To: <20220628185437.GA1790663@paulmck-ThinkPad-P17-Gen-1>
+ sonic312.consmr.mail.ir2.yahoo.com with HTTP; Wed, 29 Jun 2022 12:13:57 +0000
+Received: by hermes--canary-production-ir2-74b4d6d794-tv8mb (Yahoo Inc. Hermes
+ SMTP Server) with ESMTPA ID a99d5fff41219972254c35a43e83f973; 
+ Wed, 29 Jun 2022 12:13:56 +0000 (UTC)
+Message-ID: <b05c9019-5165-84f0-b3f1-a0eeb30faad1@yahoo.co.uk>
+Date: Wed, 29 Jun 2022 13:13:55 +0100
 MIME-Version: 1.0
-Message-Id: <1656443915.mdjoauhqe0.none@localhost>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: WebService/1.1.20381
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+To: wireguard@lists.zx2c4.com
+Content-Language: en-US
+From: lejeczek <peljasz@yahoo.co.uk>
+Subject: package from fedorainfracloud for centOS 8 does not build
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+References: <b05c9019-5165-84f0-b3f1-a0eeb30faad1.ref@yahoo.co.uk>
+X-Mailer: WebService/1.1.20280
  mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -103,30 +88,13 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Excerpts from Paul E. McKenney's message of June 28, 2022 2:54 pm:
-> All you need to do to get the previous behavior is to add something like
-> this to your defconfig file:
->=20
-> CONFIG_RCU_EXP_CPU_STALL_TIMEOUT=3D21000
->=20
-> Any reason why this will not work for you?
+Hi guys.
 
-As far as I know, I do not require any particular RCU debugging features=20
-intended for developers; as an individual user and distro maintainer, I=20
-would like to select the option corresponding to "emit errors for=20
-unexpected conditions which should be reported upstream", not "emit=20
-debugging information for development purposes".
+In case somebody here looks after 
+'copr:copr.fedorainfracloud.org:jdoss:wireguard' then
 
-Therefore, I think 0 is a suitable setting for me and most ordinary=20
-(not tightly controlled) distributions. My concern is that other users=20
-and distro maintainers will also have confusion about what value to set=20
-and whether the warnings are important, since the help text does not say=20
-anything about Android, and "make oldconfig" does not indicate that the=20
-default value is different for Android.
+wireguard-dkms-1.0.20220627-1.el8.noarch for 4.18.0-394.el8.x86_64 fails 
+to build
 
-My suggestion is that the default be set to 0, and if a non-zero value=20
-is appropriate for Android, that should be communicated to the Android=20
-developers, not made conditional on CONFIG_ANDROID.
+many thanks, L.
 
-Thanks,
-Alex.
