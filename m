@@ -4,19 +4,19 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E459CCA47C
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 29 Jun 2022 23:12:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9655CCA47E
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 29 Jun 2022 23:12:25 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id ab73cc63;
-	Wed, 29 Jun 2022 23:10:46 +0000 (UTC)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 4994d981;
+	Wed, 29 Jun 2022 23:10:45 +0000 (UTC)
 Received: from verein.lst.de (verein.lst.de [213.95.11.211])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 23e54f22
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id ddb50310
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 29 Jun 2022 16:15:32 +0000 (UTC)
+ Wed, 29 Jun 2022 16:10:24 +0000 (UTC)
 Received: by verein.lst.de (Postfix, from userid 2407)
- id 0127968B05; Wed, 29 Jun 2022 18:15:27 +0200 (CEST)
-Date: Wed, 29 Jun 2022 18:15:27 +0200
+ id EE3A768AFE; Wed, 29 Jun 2022 18:10:20 +0200 (CEST)
+Date: Wed, 29 Jun 2022 18:10:20 +0200
 From: Christoph Hellwig <hch@lst.de>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Cc: Christoph Hellwig <hch@lst.de>,
@@ -42,14 +42,13 @@ Cc: Christoph Hellwig <hch@lst.de>,
  wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
  rcu@vger.kernel.org, linux-kselftest@vger.kernel.org
 Subject: Re: [PATCH] remove CONFIG_ANDROID
-Message-ID: <20220629161527.GA24978@lst.de>
+Message-ID: <20220629161020.GA24891@lst.de>
 References: <20220629150102.1582425-1-hch@lst.de>
  <20220629150102.1582425-2-hch@lst.de> <Yrx5Lt7jrk5BiHXx@zx2c4.com>
- <20220629161020.GA24891@lst.de> <Yrx6EVHtroXeEZGp@zx2c4.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Yrx6EVHtroXeEZGp@zx2c4.com>
+In-Reply-To: <Yrx5Lt7jrk5BiHXx@zx2c4.com>
 User-Agent: Mutt/1.5.17 (2007-11-01)
 X-Mailman-Approved-At: Wed, 29 Jun 2022 23:10:40 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -66,9 +65,9 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, Jun 29, 2022 at 06:13:05PM +0200, Jason A. Donenfeld wrote:
-> Good! It sounds like you're starting to develop opinions on the matter.
+On Wed, Jun 29, 2022 at 06:09:18PM +0200, Jason A. Donenfeld wrote:
+> CONFIG_ANDROID is used here for a reason. As somebody suggested in
+> another thread of which you were a participant, it acts as a proxy for
+> "probably running on Android hardware",
 
-No, I provide facts.  Look at both the definition of the symbol, and
-various distribution kernel that enabled it and think hard if they run
-on "Android" hardware.  Not just primarily, but at all.
+No, it does not in any way.
