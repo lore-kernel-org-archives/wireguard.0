@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2899CCA47E
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 29 Jun 2022 23:30:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B137C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 29 Jun 2022 23:54:26 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id c024aaa8;
-	Wed, 29 Jun 2022 23:20:06 +0000 (UTC)
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com
- [2a00:1450:4864:20::32a])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 32a19013
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 2051945e;
+	Wed, 29 Jun 2022 23:52:18 +0000 (UTC)
+Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com
+ [2607:f8b0:4864:20::1129])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id cb6b0f55
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 29 Jun 2022 23:20:04 +0000 (UTC)
-Received: by mail-wm1-x32a.google.com with SMTP id f190so9962191wma.5
- for <wireguard@lists.zx2c4.com>; Wed, 29 Jun 2022 16:20:04 -0700 (PDT)
+ Wed, 29 Jun 2022 23:52:17 +0000 (UTC)
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-31bf3656517so72989807b3.12
+ for <wireguard@lists.zx2c4.com>; Wed, 29 Jun 2022 16:52:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=+sgKiiXbPvFwyYU8o7PbhLKBAM5khScy7fiUEj1PWbo=;
- b=ZS8pZ8AkCzaaVPMBMBlNMb7xmEcWyThMpKD4H9SxTn4aRlFL+W90lgmPz6YW6AqbTK
- az6lnnWR+9t97ButIT3JuiD5TuQ7VjYn19RAuDFGSrHNamK8if1SUysJ+ITjgK4tSHJi
- 1GSlaNpR1IgPbvhoKBLigo1nSTHF/oMFj+7QVBiS93FHum9BPPx/cfy13jaj0mmZeBSe
- zOm9tqbWAwZ4ITlZMiIu/xcywPZWzBgma5twMf0dYBrIKBpvzJZOBsCw5XLqURKl6bVk
- JotXGD0fZz41OwPVNs1Q4qsbZYKIXdP64yXX0zAAeM5jRRvpwsRCJIO3yodRkRyxWVwV
- Ta6Q==
+ :cc; bh=jj2bErexLgV1A9YIdvzx3PGjusAMI02AE7tzIDJ1M5A=;
+ b=Y2Tu2OdDzMgyWgz7uI6wnDGVdXiBPwT0tk13f7mVdOKDysVRR/kbruRKXKz2I5+Mni
+ GQx6RMKlgx3jTU8tqKusqnJzX0RL/HtsP7Km6NeANpCcKuitYurgmkGIZxyd81D0b7c4
+ M6hgkp/CS/Lan4c8MCYn+6RBduyK3MXC1Q5hpln09l+yFeWTrPqOilPtanfcysyDmduD
+ 1QqYZFTcDH7Rj6fKdLgMxiOspYiBUK9DkBCSjd2QsNvE7OGJUY1fr6YAUMEzUMi16PcV
+ Pr19C5xIMVz6otGKDdAXazhClNibtSR2AR9TjfOL7WIpf1a3vQmUpvWxoW405WHuZuXJ
+ zzZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=+sgKiiXbPvFwyYU8o7PbhLKBAM5khScy7fiUEj1PWbo=;
- b=XZ5GUAWpPD7BF0GURyYOgwaRYWg7GdRfad+dDRQFwTDNRDzgy90kuoViwwZEoHdlgb
- 32YxZJ2XdcLlgRKhefbqljniwGWPBiT5oDRpfMwlSUby6F/NwLg9w1RwlPk2T4cwDXm3
- moHSZU9pQNOk2AyFmHhL7J1fXluf8EARJTZIKhBDE8W21n4ZjZZ3UxdGD6WyJkQ6QZKN
- 8W1nbYOuKHrgBPblVSs6J/ODlhrMai5tdhD2qxA3O+DuFeskZG7SzjTrPgpLEGUyCyh5
- ovo20Dk7yMXV+Z+OPhrtIbS1HvhF5nMTDe/J2FmEAPGCFhCA2ojEDL6T5HeE5/MjC9fX
- /L6g==
-X-Gm-Message-State: AJIora+49grMHnI96I4/jXc4FN3Utd6WM9CY3G29hHbN3Fv0t43CZ9qa
- VVbFlxMTgp8OaiMDgL7Uqxmgfc9CKc6yAaHzJcDQrg==
-X-Google-Smtp-Source: AGRyM1sfkNAdLMD1HYwGLNTvaIF0Dst/TgdO4rRRnXhlJE6YhvrqSGBP68be1nutxJacar9qONmUp2Galr2SkNF40y4=
-X-Received: by 2002:a05:600c:4081:b0:3a0:47c4:8dd0 with SMTP id
- k1-20020a05600c408100b003a047c48dd0mr6134358wmh.178.1656544804063; Wed, 29
- Jun 2022 16:20:04 -0700 (PDT)
+ bh=jj2bErexLgV1A9YIdvzx3PGjusAMI02AE7tzIDJ1M5A=;
+ b=6Gyh318hkAeeXVICLDqOWTuTNy5QUYnXRhybSAZjx3IT4T9FLIEYpiPBhbZPi8sVQb
+ /YxNZMdN5xoQ3HUmSUy2SAXgkQz9rDjghKb0B2WCGSeBlU8qz/xC8/+XxEznGBhfV/2k
+ tYTu3Q+kg3M3dLMj7V2OobvPQKM9B6cKSelXj6sfSUeiDtuxQII5liH5U9PzM/jeHmPw
+ ZmgeFICPL2WpXojtLTnuJMIl4Zx41UpHDk0RHnrH2ggI4h2Pgh7xjnN7wjT5GJ/eK2xN
+ Z46UmV041HDkd4bfC9+SKXZAkAlP8E016Tbc6Jy9ADeELVSC2CuTuu/yY8EsIwCN+Rry
+ xSrw==
+X-Gm-Message-State: AJIora+9aL54LLUgDMPgcsd0kp7PRj4aiO+emLEdwCtHUcroYfyO/QMA
+ jecPvINs4T3claoq6ZoUihUrjTPy4T/TMjEwcQTj
+X-Google-Smtp-Source: AGRyM1v1n7EWs3fcbJobS/0qoUyUpaOGXwj1JxcVbNWxYIvJDEF/meItbXW0LeimAccioancoaiWdGtPrhVNyLhYnGY=
+X-Received: by 2002:a81:8d08:0:b0:317:a4cd:d65d with SMTP id
+ d8-20020a818d08000000b00317a4cdd65dmr6750642ywg.329.1656546735690; Wed, 29
+ Jun 2022 16:52:15 -0700 (PDT)
 MIME-Version: 1.0
 References: <20220629161020.GA24891@lst.de> <Yrx6EVHtroXeEZGp@zx2c4.com>
  <20220629161527.GA24978@lst.de> <Yrx8/Fyx15CTi2zq@zx2c4.com>
@@ -52,13 +53,13 @@ References: <20220629161020.GA24891@lst.de> <Yrx6EVHtroXeEZGp@zx2c4.com>
  <CAC_TJve_Jk0+XD7VeSJVvJq4D9ZofnH69B4QZv2LPT4X3KNfeg@mail.gmail.com>
  <YrzaCRl9rwy9DgOC@zx2c4.com>
 In-Reply-To: <YrzaCRl9rwy9DgOC@zx2c4.com>
-From: Kalesh Singh <kaleshsingh@google.com>
-Date: Wed, 29 Jun 2022 16:19:52 -0700
-Message-ID: <CAC_TJvcEzp+zQp50wtj4=7b6vEObpJCQYLaTLhHJCxFdk3TgPg@mail.gmail.com>
+From: John Stultz <jstultz@google.com>
+Date: Wed, 29 Jun 2022 16:52:05 -0700
+Message-ID: <CANDhNCpRzzULaGmEGCbbJgVinA0pJJB-gOP9AY0Hy488n9ZStA@mail.gmail.com>
 Subject: Re: [PATCH] remove CONFIG_ANDROID
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: Christoph Hellwig <hch@lst.de>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+Cc: Kalesh Singh <kaleshsingh@google.com>, Christoph Hellwig <hch@lst.de>, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
  =?UTF-8?B?QXJ2ZSBIasO4bm5ldsOlZw==?= <arve@android.com>, 
  Todd Kjos <tkjos@android.com>, Martijn Coenen <maco@android.com>, 
  Joel Fernandes <joel@joelfernandes.org>, Christian Brauner <brauner@kernel.org>,
@@ -78,8 +79,8 @@ Cc: Christoph Hellwig <hch@lst.de>,
  "open list:KERNEL SELFTEST FRAMEWORK" <linux-kselftest@vger.kernel.org>,
  sultan@kerneltoast.com, 
  android-kernel-team <android-kernel-team@google.com>,
- John Stultz <jstultz@google.com>, 
- Saravana Kannan <saravanak@google.com>, rafael@kernel.org
+ Saravana Kannan <saravanak@google.com>, 
+ "Rafael J. Wysocki" <rafael@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -126,12 +127,6 @@ On Wed, Jun 29, 2022 at 4:02 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
 >    CONFIG_ANDROID removal.
 >
 > Does that seem like a reasonable way forward?
-
-Sounds like a plan. I'll clean up and repost your patch once the
-Gerrit change is ready.
-
-Thanks,
-Kalesh
 >
 > Jason
 >
@@ -207,15 +202,27 @@ Kalesh
 > +
 > +power_attr(pm_userspace_autosleeper);
 > +
->  #ifdef CONFIG_SUSPEND
->  static ssize_t mem_sleep_show(struct kobject *kobj, struct kobj_attribute *attr,
->                               char *buf)
-> @@ -869,6 +886,7 @@ static struct attribute * g[] = {
->  #ifdef CONFIG_PM_SLEEP
->         &pm_async_attr.attr,
->         &wakeup_count_attr.attr,
-> +       &pm_userspace_autosleeper.attr,
->  #ifdef CONFIG_SUSPEND
->         &mem_sleep_attr.attr,
->         &sync_on_suspend_attr.attr,
->
+
+Jason: Thanks for raising this issue and sharing this patch to avoid
+breakage! I really appreciate it.
+
+My only concern with this change introducting a userspace knob set at
+runtime, vs a (hopefully more specific than _ANDROID) kernel config is
+that it's not exactly clear what the flag really means (which is the
+same issue CONFIG_ANDROID has). And more problematic, with this it
+would be an ABI.
+
+So for this we probably need to have a very clear description of what
+userland is telling the kernel. Because I'm sure userlands behavior
+will drift and shift and we'll end up litigating what kind of behavior
+is really userspace_autosleeping vs userspace_sortof_autosleeping. :)
+
+Alternatively, maybe we should switch it to describe what behavior
+change we are wanting the kernel take (instead of it hinting to the
+kernel what to expect from userland's behavior)? That way it might be
+more specific.
+
+Again, really appreciate your efforts here!
+
+thanks
+-john
