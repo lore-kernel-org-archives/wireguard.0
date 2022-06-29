@@ -4,58 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DF6EC433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 29 Jun 2022 19:07:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9C49C43334
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 29 Jun 2022 20:47:41 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id a3652e27;
-	Wed, 29 Jun 2022 19:05:33 +0000 (UTC)
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com
- [2607:f8b0:4864:20::1035])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id cb54fdf6
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 4f7f4563;
+	Wed, 29 Jun 2022 20:47:39 +0000 (UTC)
+Received: from ams.source.kernel.org (ams.source.kernel.org
+ [2604:1380:4601:e00::1])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 08ec4358
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 29 Jun 2022 19:05:31 +0000 (UTC)
-Received: by mail-pj1-x1035.google.com with SMTP id
- h9-20020a17090a648900b001ecb8596e43so377104pjj.5
- for <wireguard@lists.zx2c4.com>; Wed, 29 Jun 2022 12:05:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=0GeTuZBlfQ/Y+eNOOfDxK3ZM+hvemUe7AZCxhx5HzJ8=;
- b=JJYOmj+afcpj4I6DhLvv1DJGSO9RU/r60gm7oBHP/z1whsgUGzshmjyS+68ykpAOrB
- PZMVASKhx3vYZgCdJaQmdVJhBWuZNtboZlCiQyj6WAMRN4Kvh07DF4VTpK0Sj27Lsl6/
- B+YuMmqeZEeQs4/Hm/ALEzJa6KWlGaRQbzl9tn855YrjL5qXif4aSzoOgvxnIP9DSA9A
- AjCVE/CVQkZEpunegRnMqN99nSMRJRGN9GrvEGnWTqbNczB5UFxLzgL4Q0ol3VBjFalf
- WfkCL65+80IbqNSPjmY0C880X/KyGHWw3qCM01dlaIuQdT6x35pnOEkDo3rr7x3tH16d
- 1ARw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=0GeTuZBlfQ/Y+eNOOfDxK3ZM+hvemUe7AZCxhx5HzJ8=;
- b=Z9ItFUsdjIFGEOAbtv9HhOzyCNm9WNui01+gsgzcvEp7S0RugX8TdiLa/BWqAI3f3j
- kiVJX9PUunDItWYrrvkGEs/GD2m/Z5GM96hoUyY53uxt36d69IGwlqSnoh/hK5A8Bdwc
- fWaAezQ2OK7cJAwKlmNkt/5+yqkTyD6I0e6vDg4r60XiRUyPm5FSfMClm+/6vMkCMy6/
- duHV1svBgTYOc3P8fvFny3UyLRJBfQfC8X7HtgriWEGeVQ130LZ9hhUfysaKqmXa8r7u
- hkxi3HplmHSYivB4DP6k/1BkBGSjtVyKzCaVve8wUG9mhcTEdKRcaLmRdurC7rhcurNx
- /uKA==
-X-Gm-Message-State: AJIora+RnrBsFoRFo48T6ynHL0p8atZZrA6n8TUpZjfkRFjupIKvfldh
- rFxXHRV86kQP0rmrIkRFi+c45w==
-X-Google-Smtp-Source: AGRyM1vezWQnhsis70N2EBTExcFOKozEQIEPyaWoe+3MDeqfKtNE7YXyrWd0EDrKpPcD6CkEYj+x7A==
-X-Received: by 2002:a17:902:f552:b0:16a:a17:a9bd with SMTP id
- h18-20020a170902f55200b0016a0a17a9bdmr10672461plf.97.1656529529720; 
- Wed, 29 Jun 2022 12:05:29 -0700 (PDT)
-Received: from google.com ([2620:15c:211:200:1fe6:e5f3:8461:101c])
- by smtp.gmail.com with ESMTPSA id
- e17-20020a63ee11000000b004119deff40dsm79889pgi.23.2022.06.29.12.05.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Jun 2022 12:05:28 -0700 (PDT)
-Date: Wed, 29 Jun 2022 12:05:23 -0700
-From: Kalesh Singh <kaleshsingh@google.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+ Wed, 29 Jun 2022 20:47:38 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by ams.source.kernel.org (Postfix) with ESMTPS id C90ADB81F16;
+ Wed, 29 Jun 2022 20:47:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 997C4C34114;
+ Wed, 29 Jun 2022 20:47:33 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="PIocfaGZ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1656535651;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=nvJ3fw5U4MW8nxM8aCE1R+6sT2AFWOEF89xbodNQ+Ms=;
+ b=PIocfaGZVNfSYsleBvWLhO5VJ+LmKrkUG0h5bDnae9hr+edK+R47EppxiopYDLw5kbSCAX
+ eQK5Gw+P8AHe6C3tjz8QTOM+/lZgOrILQvf6fogiJXsrsiozuZkMVdJxFrZ5pMok7P2rLE
+ r74GkuVYo0ZepToWUldrCEjQsXH8o8Q=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 019e7d6b
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO); 
+ Wed, 29 Jun 2022 20:47:31 +0000 (UTC)
+Date: Wed, 29 Jun 2022 22:47:26 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Kalesh Singh <kaleshsingh@google.com>
 Cc: Christoph Hellwig <hch@lst.de>,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Arve =?iso-8859-1?B?SGr4bm5lduVn?= <arve@android.com>,
+ Arve =?utf-8?B?SGrDuG5uZXbDpWc=?= <arve@android.com>,
  Todd Kjos <tkjos@android.com>, Martijn Coenen <maco@android.com>,
  Joel Fernandes <joel@joelfernandes.org>,
  Christian Brauner <brauner@kernel.org>,
@@ -77,17 +64,16 @@ Cc: Christoph Hellwig <hch@lst.de>,
  rcu@vger.kernel.org, linux-kselftest@vger.kernel.org,
  sultan@kerneltoast.com
 Subject: Re: [PATCH] remove CONFIG_ANDROID
-Message-ID: <Yryic4YG9X2/DJiX@google.com>
-References: <20220629150102.1582425-1-hch@lst.de>
- <20220629150102.1582425-2-hch@lst.de> <Yrx5Lt7jrk5BiHXx@zx2c4.com>
+Message-ID: <Yry6XvOGge2xKx/n@zx2c4.com>
+References: <20220629150102.1582425-2-hch@lst.de> <Yrx5Lt7jrk5BiHXx@zx2c4.com>
  <20220629161020.GA24891@lst.de> <Yrx6EVHtroXeEZGp@zx2c4.com>
  <20220629161527.GA24978@lst.de> <Yrx8/Fyx15CTi2zq@zx2c4.com>
  <20220629163007.GA25279@lst.de> <Yrx/8UOY+J8Ao3Bd@zx2c4.com>
- <YryNQvWGVwCjJYmB@zx2c4.com>
+ <YryNQvWGVwCjJYmB@zx2c4.com> <Yryic4YG9X2/DJiX@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YryNQvWGVwCjJYmB@zx2c4.com>
+In-Reply-To: <Yryic4YG9X2/DJiX@google.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -102,38 +88,38 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, Jun 29, 2022 at 07:34:58PM +0200, Jason A. Donenfeld wrote:
-> On Wed, Jun 29, 2022 at 06:38:09PM +0200, Jason A. Donenfeld wrote:
-> > On the technical topic, an Android developer friend following this
-> > thread just pointed out to me that Android doesn't use PM_AUTOSLEEP and
-> > just has userspace causing suspend frequently. So by his rough
-> > estimation your patch actually *will* break Android devices. Zoinks.
-> > Maybe he's right, maybe he's not -- I don't know -- but you should
-> > probably look into this if you want this patch to land without breakage.
+Hi Kalesh,
+
+On Wed, Jun 29, 2022 at 12:05:23PM -0700, Kalesh Singh wrote:
+> Thanks for raising this.
 > 
-> More details: https://cs.android.com/android/platform/superproject/+/master:system/core/libsuspend/autosuspend_wakeup_count.cpp;bpv=1;bpt=1;l=52?q=%22%2Fsys%2Fpower%2Fstate%22&start=51&gsn=sys_power_state&gs=kythe%3A%2F%2Fandroid.googlesource.com%2Fplatform%2Fsuperproject%3Flang%3Dc%252B%252B%3Fpath%3Dsystem%2Fcore%2Flibsuspend%2Fautosuspend_wakeup_count.cpp%23ftWlDJuOhS_2fn3Ri7rClxA30blj_idGgT12aoUHd1o
+> Android no longer uses PM_AUTOSLEEP, is correct. libsuspend is
+> also now deprecated. Android autosuspend is initiatiated from the
+> userspace system suspend service [1].
 > 
-> So indeed it looks like it's userspace controlled. If you want this to
-> be a runtime, rather than a compiletime, switch, maybe
-> autosuspend_init() of that file could write to a sysctl.
+> A runtime config sounds more reasonable since in the !PM_AUTOSLEEP
+> case, it is userspace which decides the suspend policy.
 > 
-> Who at Google "owns" that code? Can somebody CC them in?
+> [1] https://cs.android.com/android/platform/superproject/+/bf3906ecb33c98ff8edd96c852b884dbccb73295:system/hardware/interfaces/suspend/1.0/default/SystemSuspend.cpp;l=265
 
-Hi Jason,
+Bingo, thanks for the pointer. So looking at this, I'm trying to tease
+out some heuristic that wouldn't require any changes, but I don't really
+see anything _too_ perfect. One fragment of an idea would be that the
+kernel treats things in autosuspending mode if anybody is holding open a
+fd to /sys/power/state. But I worry this would interact with
+non-autosuspending userspaces that also hold open the file. So barring
+that, I'm not quite sure.
 
-Thanks for raising this.
+If you also can't think of something, maybe we should talk about adding
+something that requires code changes. In that line of thinking, how
+would you feel about opening /sys/power/userspace_autosuspender and
+keeping that fd open. Then the kernel API would have
+`bool pm_has_userspace_autosuspender(void)` that code could check.
+Alternatively, if you don't want refcounting fd semantics for that, just
+writing a "1" into a similar file seems fine?
 
-Android no longer uses PM_AUTOSLEEP, is correct. libsuspend is
-also now deprecated. Android autosuspend is initiatiated from the
-userspace system suspend service [1].
+Any strong opinions about it? Personally it doesn't make much of a
+difference to me. The important thing is just that it'd be something
+you're willing to implement in that SystemSuspend.cpp file.
 
-A runtime config sounds more reasonable since in the !PM_AUTOSLEEP
-case, it is userspace which decides the suspend policy.
-
-[1] https://cs.android.com/android/platform/superproject/+/bf3906ecb33c98ff8edd96c852b884dbccb73295:system/hardware/interfaces/suspend/1.0/default/SystemSuspend.cpp;l=265
-
---Kalesh
-
-> 
-> Jason
-> 
+Jason
