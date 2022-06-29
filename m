@@ -4,75 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A2BAC43334
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 29 Jun 2022 16:25:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDD44C43334
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 29 Jun 2022 16:30:32 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 6b2ae064;
-	Wed, 29 Jun 2022 16:25:51 +0000 (UTC)
-Received: from sin.source.kernel.org (sin.source.kernel.org
- [2604:1380:40e1:4800::1])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 2a652efa
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 0398c78a;
+	Wed, 29 Jun 2022 16:29:10 +0000 (UTC)
+Received: from mout.kundenserver.de (mout.kundenserver.de [217.72.192.75])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id c721396f
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 29 Jun 2022 16:25:49 +0000 (UTC)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by sin.source.kernel.org (Postfix) with ESMTPS id 28479CE282B;
- Wed, 29 Jun 2022 16:25:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C294C34114;
- Wed, 29 Jun 2022 16:25:41 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="pcAWGf38"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1656519940;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=68juHfv4ygcIaahoO6PbfPTLidvNwti4IiRxQ+0kt6w=;
- b=pcAWGf38OzIMgyPi4OUE3lxDPN67fDsAwjtmVY65jBcFJHVgSvrOJLrXxTDJgzjglyzQ1u
- 2CSO9+yCjfBazL0tv1CtSmUtDTr4aCsE3ZzVZ02CULsAB0CdMri+FLuqwPNnCRQgJS+/oB
- YOKOC2ccbkhGrCi051exLIABSKZ8eyM=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 1fb02a60
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO); 
- Wed, 29 Jun 2022 16:25:40 +0000 (UTC)
-Date: Wed, 29 Jun 2022 18:25:32 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Christoph Hellwig <hch@lst.de>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Arve =?utf-8?B?SGrDuG5uZXbDpWc=?= <arve@android.com>,
- Todd Kjos <tkjos@android.com>, Martijn Coenen <maco@android.com>,
- Joel Fernandes <joel@joelfernandes.org>,
- Christian Brauner <brauner@kernel.org>,
- Hridya Valsaraju <hridya@google.com>,
- Suren Baghdasaryan <surenb@google.com>, Theodore Ts'o <tytso@mit.edu>,
- "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>,
- Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>,
- "Paul E. McKenney" <paulmck@kernel.org>,
- Frederic Weisbecker <frederic@kernel.org>,
- Neeraj Upadhyay <quic_neeraju@quicinc.com>,
- Josh Triplett <josh@joshtriplett.org>,
- Steven Rostedt <rostedt@goodmis.org>,
- Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
- Lai Jiangshan <jiangshanlai@gmail.com>,
- Shuah Khan <shuah@kernel.org>, linux-kernel@vger.kernel.org,
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- rcu@vger.kernel.org, linux-kselftest@vger.kernel.org
-Subject: Re: [PATCH] remove CONFIG_ANDROID
-Message-ID: <Yrx8/Fyx15CTi2zq@zx2c4.com>
-References: <20220629150102.1582425-1-hch@lst.de>
- <20220629150102.1582425-2-hch@lst.de> <Yrx5Lt7jrk5BiHXx@zx2c4.com>
- <20220629161020.GA24891@lst.de> <Yrx6EVHtroXeEZGp@zx2c4.com>
- <20220629161527.GA24978@lst.de>
+ Wed, 29 Jun 2022 16:29:08 +0000 (UTC)
+Received: from [192.168.68.152] ([141.136.189.73]) by mrelayeu.kundenserver.de
+ (mreue107 [212.227.15.183]) with ESMTPSA (Nemesis) id
+ 1M5PRT-1o5l571VIr-001PfB for <wireguard@lists.zx2c4.com>; Wed, 29 Jun 2022
+ 18:29:08 +0200
+Date: Wed, 29 Jun 2022 16:29:10 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220629161527.GA24978@lst.de>
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Wireguard-android: consider displaying last handshake ?
+To: wireguard@lists.zx2c4.com
+From: Max Schulze <max.schulze@online.de>
+Message-ID: <75C09BF0-72BB-46C6-90CC-61683021617A@online.de>
+X-Provags-ID: V03:K1:1keWP9Owgk9T2MIyGc4VBZe1Fn3qjEMoJatjuy43tqgzthz4ebY
+ UywBjJj9ElVty4mQ+CHb5MFDbcU30WBugMksWwjoShSznebjxRlpSd7Zc3BGg0CA+NDHi3v
+ BQSYdsRzz3AcC/HTs0PRiDdsagKU7TCMiPEqCyHEuvGzFDn9QjGXHRzSn+nq0dnlIeT7Tdb
+ WL2d8RQ7BqD3U8zuE+GSQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:UjPUCyId88A=:kzRO6qxCEAoOTHcD+jcd7N
+ KLT67mWwLtbwhSIfWEU5zaEhTw/OJH2xhB8ZN87LVNGUz4sIQtZozLifwbx6Ckw26+W3Lt8dd
+ n2AdDaIjIzmvsc6CA6guxEO8P2hrBHNdMqHkMrex4Pi9pb5Iw44IvxZgtUu8Fty08CaP0PcUo
+ iQzWLF4hTVJLhKRJ6vUDElVSI6XuGhahZ141iHZsgmGIfJfR4mxb0XD5TwU3FmHJ7r3AU197h
+ soW335VKXkxLChT2AcFYXiKedAq9PFGEHVByW31feKvPWdVC5LC9sj8BFGhr5ocAZXYTHoNhw
+ PlBntu1GVS9KnwXsi+npjqi3SEQW7xhjCbOhU7nCKslZU9sb1lAAnJp8wVrJtJVkmnLkF+Ibq
+ GEA4KDFqoi5lCCd4D+rFUz1A3401wmNZHCbGds381+uOktzrQ/FSJK8tH55AyLk6beGHO8oER
+ SLPXu68BzpUQ6GXJkV1USP/7c1DzoKMJzm8nVLlvpe2Gw3m5CJbfWBnEd+7YWNaIf6k0sR0dg
+ XSgU6e+q9dA83/SEORS8V+3J2uP2wb1Xtb//otEi55xZz3NB2jS9Pt+rieVneHZgzp6Shs0R/
+ 9VQbBH1fnF6F/q8gisRcneh/cVFeprG5n3IJDPnpYhpmxhqxi3egZK+DX3XCHB9UCAFyvWvTr
+ aSYdYF16whcKoA8jCRN/OrrIEI821SaT7yXcqwOeYYs2TmjpbIW2C1bpQVkr+mK/OfRwJ54hx
+ vAuwyvgVFIYNLHIuAfNaoQP6atUeWk14rFofmlsIaEquGyENGSbYW0yxn9M=
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -87,40 +57,17 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, Jun 29, 2022 at 06:15:27PM +0200, Christoph Hellwig wrote:
-> On Wed, Jun 29, 2022 at 06:13:05PM +0200, Jason A. Donenfeld wrote:
-> > Good! It sounds like you're starting to develop opinions on the matter.
-> 
-> No, I provide facts.
+I find it very hard to debug wireguard connections on mobile=2E
 
-Lol.
+I think it might be great if the last handshake would be displayed, just l=
+ike on the desktop implementations (win, Linux)=2E
 
-> Look at both the definition of the symbol, and
-> various distribution kernel that enabled it and think hard if they run
-> on "Android" hardware.  Not just primarily, but at all.
+This would really make life easier=2E It does not need to be the second -c=
+ounting counter, a timestamp would be great=2E This way, all platforms woul=
+d be equivalent, I=2Ee=2E you could always ask "is there a handshake time d=
+isplayed"?
 
-There are two failure modes:
+It looks like there is a pull request at=C2=A0https://github=2Ecom/WireGua=
+rd/wireguard-android/pull/30/commits=C2=A0but I cannot judge the quality=2E
 
-1) Key clearing code is skipped when it shouldn't be.
-2) Key clearing code is run when it shouldn't be.
-
-You've identified (well, Alex in the other thread I think?) a case of
-(1). I was sort of thinking the fix to that would be that distros
-shouldn't enable that option, but it doesn't really matter to me.
-
-However, what I'm pointing out is the potential for (2). A (2)-style
-regression means that WireGuard basically doesn't work, because, for
-example, qcacld's packet-triggered wakeups tend to be too short to
-renegotiate a handshake.
-
-Anyway, instead of the slow drip of "facts" and ≤three sentence emails,
-can you just write up a paragraph that indicates this is safe to do (for
-both (1) and (2)) in your v+1?
-
-I don't really want to argue about it, because I don't have anything to
-argue about. Your change is probably fine. I'd just like it to be
-spelled out why this is safe to do from somebody who has looked into it.
-I have not looked into it, but it sounds like you have or are in the
-process of doing so. Just write down what you find, please.
-
-Jason
+M
