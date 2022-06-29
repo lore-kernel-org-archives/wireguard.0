@@ -4,41 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D466C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 29 Jun 2022 16:36:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA5DFC43334
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 29 Jun 2022 16:42:46 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 261732e0;
-	Wed, 29 Jun 2022 16:34:48 +0000 (UTC)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id a2e4bb1c;
+	Wed, 29 Jun 2022 16:38:24 +0000 (UTC)
 Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id c5caa5e7
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 40b11435
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 29 Jun 2022 16:34:46 +0000 (UTC)
+ Wed, 29 Jun 2022 16:38:22 +0000 (UTC)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id 3B49AB82285;
- Wed, 29 Jun 2022 16:34:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECB63C34114;
- Wed, 29 Jun 2022 16:34:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1656520485;
- bh=sFETOlgQpy9AOtXsqkIBLwAzXJA3N7SbWK2htFFpod4=;
- h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
- b=CwSA1DDZbxtpffCPw7RONM05jSVQih1yJlYiH1+2sOckkrXu4HrZ+vG16N2gI4Ztw
- q8yv8hACvHaNqdek8TGLXgDz6g9NCQC6IynBCDq3zAKhSo2E6+A9W0HWNhOsyCh88G
- 3O6JZFqs9zevcfps9aJhBHSxFvQHaoMe1XMKNiStcnKtUaNHNTR2SDFsWsEIiCsIgW
- w3L6RI0MJ61ph5CFFS4+o4+mOfhgMLK6nCmOkbOkrnLCLWpdJq7/zCUH7PuUPF1iRL
- myuN/9jPx8UsOIPnnuaHo/QRgZTWO8jjAbZS8gKC6IXmLUEZBcP5NumrwkiEN+q6SI
- uJO6m6L0XbDRg==
-Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
- id 76CC25C0E5F; Wed, 29 Jun 2022 09:34:44 -0700 (PDT)
-Date: Wed, 29 Jun 2022 09:34:44 -0700
-From: "Paul E. McKenney" <paulmck@kernel.org>
+ by ams.source.kernel.org (Postfix) with ESMTPS id 29B61B825AB;
+ Wed, 29 Jun 2022 16:38:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38917C34114;
+ Wed, 29 Jun 2022 16:38:18 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="ZNKx75q7"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1656520696;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=oqsTdiLfWpJvLwXGqGd7Je96p2+qJUVXjf/cM3xQGqA=;
+ b=ZNKx75q7yT64VSkCyZYIG/UKOvmj2k2d+g2rhHqSjeu1Zdq/d9bl9TVbzbqjHVmavQYjof
+ KuXqFM7kkX42Se1F8LiCZUWNnALfjzJmU8Ysdci7RZK9kyZOyLEcxbiTpNjTBsI4Ywyan1
+ UosUpF3Ud0xyjAhkSthaJ/NO4xyrkkI=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2422f02d
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO); 
+ Wed, 29 Jun 2022 16:38:16 +0000 (UTC)
+Date: Wed, 29 Jun 2022 18:38:09 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 To: Christoph Hellwig <hch@lst.de>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Arve =?iso-8859-1?B?SGr4bm5lduVn?= <arve@android.com>,
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Arve =?utf-8?B?SGrDuG5uZXbDpWc=?= <arve@android.com>,
  Todd Kjos <tkjos@android.com>, Martijn Coenen <maco@android.com>,
  Joel Fernandes <joel@joelfernandes.org>,
  Christian Brauner <brauner@kernel.org>,
@@ -48,6 +51,7 @@ Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
  "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>,
  Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>,
+ "Paul E. McKenney" <paulmck@kernel.org>,
  Frederic Weisbecker <frederic@kernel.org>,
  Neeraj Upadhyay <quic_neeraju@quicinc.com>,
  Josh Triplett <josh@joshtriplett.org>,
@@ -58,15 +62,17 @@ Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
  rcu@vger.kernel.org, linux-kselftest@vger.kernel.org
 Subject: Re: [PATCH] remove CONFIG_ANDROID
-Message-ID: <20220629163444.GG1790663@paulmck-ThinkPad-P17-Gen-1>
+Message-ID: <Yrx/8UOY+J8Ao3Bd@zx2c4.com>
 References: <20220629150102.1582425-1-hch@lst.de>
  <20220629150102.1582425-2-hch@lst.de> <Yrx5Lt7jrk5BiHXx@zx2c4.com>
  <20220629161020.GA24891@lst.de> <Yrx6EVHtroXeEZGp@zx2c4.com>
- <20220629161527.GA24978@lst.de>
+ <20220629161527.GA24978@lst.de> <Yrx8/Fyx15CTi2zq@zx2c4.com>
+ <20220629163007.GA25279@lst.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220629161527.GA24978@lst.de>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220629163007.GA25279@lst.de>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -78,22 +84,29 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Reply-To: paulmck@kernel.org
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, Jun 29, 2022 at 06:15:27PM +0200, Christoph Hellwig wrote:
-> On Wed, Jun 29, 2022 at 06:13:05PM +0200, Jason A. Donenfeld wrote:
-> > Good! It sounds like you're starting to develop opinions on the matter.
+On Wed, Jun 29, 2022 at 06:30:07PM +0200, Christoph Hellwig wrote:
+> On Wed, Jun 29, 2022 at 06:25:32PM +0200, Jason A. Donenfeld wrote:
+> > Anyway, instead of the slow drip of "facts" and ≤three sentence emails,
+> > can you just write up a paragraph that indicates this is safe to do (for
+> > both (1) and (2)) in your v+1?
 > 
-> No, I provide facts.  Look at both the definition of the symbol, and
-> various distribution kernel that enabled it and think hard if they run
-> on "Android" hardware.  Not just primarily, but at all.
+> Why would I care?  If your config wakeups up so often that you need
+> special casing find a way to deal with it. 
 
-So you are OK if your patch is accepted, and then CONFIG_ANDROID is
-re-introduced but used only for building kernels intended to run on
-Android systems?
+You should care, because the change you're suggesting might break code
+that I maintain. If you don't care about breaking my code with your
+change, than just have my "nack", and it'll be up to Greg to decide
+whether he wants to apply this despite the nack for two separate
+affected code spots.
 
-Asking for a friend.  ;-)
+On the technical topic, an Android developer friend following this
+thread just pointed out to me that Android doesn't use PM_AUTOSLEEP and
+just has userspace causing suspend frequently. So by his rough
+estimation your patch actually *will* break Android devices. Zoinks.
+Maybe he's right, maybe he's not -- I don't know -- but you should
+probably look into this if you want this patch to land without breakage.
 
-							Thanx, Paul
+Jason
