@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DC94CCA480
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 29 Jun 2022 16:22:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 800A3C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 29 Jun 2022 16:22:12 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 1f667960;
-	Wed, 29 Jun 2022 16:13:22 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id c446ed9f
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 21e5d5c5;
+	Wed, 29 Jun 2022 16:09:39 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org
+ [2604:1380:4641:c500::1])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 1f8d0076
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 29 Jun 2022 16:13:20 +0000 (UTC)
+ Wed, 29 Jun 2022 16:09:37 +0000 (UTC)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id A448E61BDD;
- Wed, 29 Jun 2022 16:13:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63F62C341C8;
- Wed, 29 Jun 2022 16:13:15 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 8484361BD2;
+ Wed, 29 Jun 2022 16:09:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E8D2C34114;
+ Wed, 29 Jun 2022 16:09:32 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
  dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="Q9vbz+5x"
+ header.b="pUHci5uX"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1656519194;
+ t=1656518970;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=2cfMwnhft1D4xbZ2Z+S26lAEbUfjwtP9hJSq4aVEMEo=;
- b=Q9vbz+5xTJpIE1kbDcyI9KjWcNalvFQOVBP04lCLuY5xRgte1A+L0BbZHiOE8jVaF9kZ4t
- TkwR/Ux00q/HJqcQAgb3AaVXb7QqYGrMSOLx1ipYqOW7yhiufJnibUDiX9/4+RkdIv26Ab
- 71ULea8RqRJbCpCUVX7f/y6+ZlB7q+U=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 35771d53
+ bh=ulgicCSwAYHtgZTUtITAxwZdp4jV/NBvkJ1S3ys4pvs=;
+ b=pUHci5uXb9l405fL8FD2wM/Xr8vP+OkOGimAV+9AWYLO6eTRGFk57+3ZykBS/RtrcrOCul
+ +XfDgJ1rvZtR4QCuYxlv8tFOlV+QTfMl5aImwN0xYvu8A6G6V/9++ByQTmF52mdzRIs99r
+ f+1hTkVgPTNYEGoMVtvF05tQC9H5M7M=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 766dd221
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO); 
- Wed, 29 Jun 2022 16:13:13 +0000 (UTC)
-Date: Wed, 29 Jun 2022 18:13:05 +0200
+ Wed, 29 Jun 2022 16:09:29 +0000 (UTC)
+Date: Wed, 29 Jun 2022 18:09:18 +0200
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 To: Christoph Hellwig <hch@lst.de>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -61,14 +62,13 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
  wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
  rcu@vger.kernel.org, linux-kselftest@vger.kernel.org
 Subject: Re: [PATCH] remove CONFIG_ANDROID
-Message-ID: <Yrx6EVHtroXeEZGp@zx2c4.com>
+Message-ID: <Yrx5Lt7jrk5BiHXx@zx2c4.com>
 References: <20220629150102.1582425-1-hch@lst.de>
- <20220629150102.1582425-2-hch@lst.de> <Yrx5Lt7jrk5BiHXx@zx2c4.com>
- <20220629161020.GA24891@lst.de>
+ <20220629150102.1582425-2-hch@lst.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220629161020.GA24891@lst.de>
+In-Reply-To: <20220629150102.1582425-2-hch@lst.de>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -83,18 +83,67 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, Jun 29, 2022 at 06:10:20PM +0200, Christoph Hellwig wrote:
-> On Wed, Jun 29, 2022 at 06:09:18PM +0200, Jason A. Donenfeld wrote:
-> > CONFIG_ANDROID is used here for a reason. As somebody suggested in
-> > another thread of which you were a participant, it acts as a proxy for
-> > "probably running on Android hardware",
-> 
-> No, it does not in any way.
+Hi Christoph,
 
-Good! It sounds like you're starting to develop opinions on the matter.
-Please weave these into some analysis of the issue and put this in your
-v2 patch. To be clear, the thing I care about is that this won't make
-the behavior worse for any kernels. If you feel like you've got that
-covered, say why in your patch, and then it's fine by me.
+On Wed, Jun 29, 2022 at 05:01:02PM +0200, Christoph Hellwig wrote:
+> diff --git a/drivers/char/random.c b/drivers/char/random.c
+> index e3dd1dd3dd226..f35ad1a9dff3e 100644
+> --- a/drivers/char/random.c
+> +++ b/drivers/char/random.c
+> @@ -755,8 +755,7 @@ static int random_pm_notification(struct notifier_block *nb, unsigned long actio
+>  	spin_unlock_irqrestore(&input_pool.lock, flags);
+>  
+>  	if (crng_ready() && (action == PM_RESTORE_PREPARE ||
+> -	    (action == PM_POST_SUSPEND &&
+> -	     !IS_ENABLED(CONFIG_PM_AUTOSLEEP) && !IS_ENABLED(CONFIG_ANDROID)))) {
+> +	    (action == PM_POST_SUSPEND && !IS_ENABLED(CONFIG_PM_AUTOSLEEP)))) {
+>  		crng_reseed();
+>  		pr_notice("crng reseeded on system resumption\n");
+>  	}
+> diff --git a/drivers/net/wireguard/device.c b/drivers/net/wireguard/device.c
+> index aa9a7a5970fda..de1cc03f7ee86 100644
+> --- a/drivers/net/wireguard/device.c
+> +++ b/drivers/net/wireguard/device.c
+> @@ -69,7 +69,7 @@ static int wg_pm_notification(struct notifier_block *nb, unsigned long action, v
+>  	 * its normal operation rather than as a somewhat rare event, then we
+>  	 * don't actually want to clear keys.
+>  	 */
+> -	if (IS_ENABLED(CONFIG_PM_AUTOSLEEP) || IS_ENABLED(CONFIG_ANDROID))
+> +	if (IS_ENABLED(CONFIG_PM_AUTOSLEEP))
+>  		return 0;
+>  
+>  	if (action != PM_HIBERNATION_PREPARE && action != PM_SUSPEND_PREPARE)
+ 
+CONFIG_ANDROID is used here for a reason. As somebody suggested in
+another thread of which you were a participant, it acts as a proxy for
+"probably running on Android hardware", which in turn is a proxy for,
+"suspend happens all the time on this machine, so don't do fancy key
+clearing stuff every time the user clicks the power button."
+
+You can see the history of that in these two commits here:
+https://git.zx2c4.com/wireguard-linux-compat/commit/?id=36f81c83674e0fd7c18e5b15499d1a275b6d4d7f
+https://git.zx2c4.com/wireguard-linux-compat/commit/?id=a89d53098dbde43f56e4d1e16ba5e24ef807c03b
+
+The former commit was done when I first got this running on an Android
+device (a Oneplus 3T, IIRC) and I encountered this problem. The latter
+was a refinement after suggestions on LKML during WireGuard's
+upstreaming.
+
+So there *is* a reason to have that kind of conditionalization in the
+code. The question is: does CONFIG_ANDROID actually represent something
+interesting here? Is this already taken care of by CONFIG_PM_AUTOSLEEP
+on all CONFIG_ANDROID devices? That is, do the base Android configs set
+CONFIG_PM_AUTOSLEEP already so this isn't necessary? Or is there some
+*other* proxy config value that should be used? Or is there a different
+solution entirely that should be considered?
+
+I don't know the answers to these questions, because I haven't done a
+recent analysis. Obviously at one point in time I did, and that's why
+the code is how it is. It sounds like you'd now like to revisit that
+original decision. That's fine with me. But you need to conduct a new
+analysis and write down your findings inside of a commit message. I must
+see that you've at least thought about the problem and looked into it
+substantially enough that making this change is safe. Your "let's delete
+it; it's not doing much" alone seems more expedient than thorough.
 
 Jason
