@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 347C4C43334
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Jun 2022 06:53:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57371C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Jun 2022 10:06:08 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id d5098d23;
-	Thu, 30 Jun 2022 06:53:34 +0000 (UTC)
-Received: from sonic310-57.consmr.mail.ir2.yahoo.com
- (sonic310-57.consmr.mail.ir2.yahoo.com [77.238.177.30])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 373d86db
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id b7c1b2d4;
+	Thu, 30 Jun 2022 10:06:06 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 48cef7eb
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Jun 2022 06:53:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.co.uk; s=s2048;
- t=1656572011; bh=Q1meTRCaZ5+c5jHSd1sKdkjU2eKj3W2fgcVSYhRzc4s=;
- h=Date:Subject:Cc:References:From:In-Reply-To:From:Subject:Reply-To;
- b=KZQZ6y+aiT317aqUtoLbvhWCHLCDLJi22Bi45ng4WAD4McDo4aJpVJofLFd52uhZiWXBZQDm05UP2oN72DLnUUe2eKUlrg3PD4MVPoWnAZZmuj6KpU/KK6V1I5OdwN6yKjpZZFVJoGZirD0mtvivZNC9AZBTy5TqDRheWV44M4BA+DTh5hYIaBeKsXQzisyKmILjbHLsqe7PHXVywipI2nPRfHdIQiSmBwz5Fg2kH3+yFQqn66LKwUhaC/KlKZFMRz6JwEJ1iTwrduCVt2keM+wpWBL7mzpDAUjQ8KMW+gOvqbDXFyJ1M6G8dBYSe6Z55JOOytzfGOUbDGncBQPfbg==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1656572011; bh=/yfCjm2sln+GpqFe9ul6ChkZTp++JP5WJCBySjZV1ah=;
- h=X-Sonic-MF:Date:Subject:From:From:Subject;
- b=a+3Kw3xpq5ViknK7Fj0Tz+k0B16JhRB1sVQuxH5oUKmtMwhIVkAZCGZt1kKXNtx94fdKekM/oWDm3Rlg8EDwZVj1Rgc98rpG8i8giyXHqkxvYxYKrKcgEchmd36qN8emZd74YEb/YMAKTfskI2JSpfkZiablo1SCOY1eIsZ75cMdPR1QhXFmrlNDXQARg+c1QHuxrdwtaht9seR2LCDv5EbIqIOczIhF+lUHkv2MDJsUdqjK+e93RQrMOkuWod1BYZnWR8GKk6lwgmwFhSRtN23CnSfz3uzToDW17L4OLsHWmaazM+HX3adwqg/haQRxiXVpo+nn114hVt/bsGugIQ==
-X-YMail-OSG: DcubalIVM1mBXuRFlD4kSkBXYwV8JheYQeVA5NaUZzB.FGZxSOdAzFTQ3Xv5sak
- J6.bIzSeIcZ82G.VwI6_KNp6gAsIBn1nkXQXUy1V1GGxNbFt0UnWD6mUcXPXCh1lzCrCTFE5IatI
- 9BlnIWFuJm0j1Gek4nE16pARd3qmEmNeGTJMGjHiUYRwPL6IJenEehTlvqysfFEZl1QDyCbf.Sd8
- w.AK2PINF3QmNlg.QYGOQTborhNYYHMux8J5qpjN8DT65ZpdJStNDKEET_ZOIMoLJvqQ8EP8kXze
- nYVCPPFwMHxq2YMlit_17hf8LDVNwZpmksoePK3pQodIoSk7O87Z7yUKmcxBW6ABD06L3TYeJHbi
- BIKzJYEQEg5wRsZLLBJIvWbffVEfnfkMN0kEHeAQOXA7agVpBl5pVdi8TetsLQqpqy7DrDSX5_Ae
- dt87QVKqNDmdXFVfB0cARPYhZ0KI4zSbff6drQRnkVjeAd4oqkAKIFv6phosWDqj3h3bnaboObpB
- woA7s1lmVWFaHxzmYdtZRKD.jEFwtY865UvNg13rqjrft0YGTf7w31lsQMkYT1eYAxHMW2x3f1fv
- kGOElrr5k5v1MvBoOqc8seVhUqRqGYch2YhWg14oFkJmuOfav6Eu0NTlHkpDL9wj8obLaZRPhFSR
- NKskSsqhlc.nNphkgJjE_EFRKnu.E.f0vXWX_dwAA8BiTPevZBEMjWVChdmprauqTasa_Z_4RTo1
- 7F1h.DOjOq1rykWT7gnDuuM6r6sw2lUkXzHeoQNemp52I1r1KUUwJl0YhyaOuCDLLNUoKPZgFZfN
- zNI_v8bHxD1c7dqMMu8h2U12mnASfYcfrUZ7nmFTKQTsMBSx_b9nxaaP8RTmNBCaBZipMpuN2hSd
- HOSVTh4kFyUhjP7DrXvDUyvH9V20bu_KVnhRNfdeu36ph6FZvwOXBt2QNeEH.kyefskIj9C9y_ik
- VAjozRhTgesZTrmrW1hBKPocLEk99b1vkpUaqp0WC3yhxqIv.VfGuaXHQhGaY2ud.PzPq0edexrA
- T0VPdNnSgV55iXNJbHSytvHEt1e.ZrLWR1U96CEtABLRCTRyb2s4C1cdJToCYrc8y1LiurfuN5MX
- KfTjg_MiYtq4bWyGXh5rbfpeGRxGgWfZPmtN9RDjaK.loSvsEI8Bf3tz0w5Iou5qe9qE.mw97yYX
- VeG9O0oDtHvYYRve1ITgfszG6Pg1jG3awkkeW0JuSdmiqLvuFJ5hKpmsq1E2sjLMC3k3_BEnNRxo
- JSbuV_bTOXdn7D72T5zAjApK5uOYq8dBY6NCTdkV5CMX4DN3JshfIqLWe.75brQqZT0QhLE8AuZd
- Ha6fbm3Fcd2r2CBl36NlJTI7R9VDEzuzPKlZOwxywuHXyhCo__iJcP18vr7De0lPuJCDeIrwJ.gT
- IrD20s683ekPROjs3t8TqdnAzAjbPXT_6ATfkQEqLA7K1u29gujhgIQnoUaDD7QiNLV7VLKrvuh3
- ZZTGFYUeivZbSu5VDz98g88RQRoh0i1UYPZgwjHJI4Tnnr4Wr1E2ApYuQriT9EXJnYrFqzn2dUNf
- Mf4lDOtPlH2y4NhXSGpUlEkdgLHFW64BsedswSlsZabpixSX3YJrg5NozZj2yiMUqGEXTM8JYEgf
- Ut9m0tIcuYoubS4S1oH8Mcp7021Buv4Xql_qVwuz_kzT1ZqKga4.eeJVoW83vhPbNvoN.SdMXaPU
- N.tQNgiiUDALNh0zhF4LDOhAJWlkWwpTJ9MPMdeJ0QgQO7Sm5EjF2zU1UVWrHHCujtHj9eS9Hr5m
- FnwwrHYRxVj39xot9t3Ho5vj8JqnoSFX4rZGiYxVpuglUARLY4oDYWDYY1CHMNZmqdvYzVdD3_vg
- 1Ph_fLl95qyeeAGiIEzAX.AkB4JaXpL4SoTs7qo8tSyVLM2vXwSXhsiK0Vj0iBGSlxG5NqQMtX.b
- ov0Ur.8hEOjYHh6R.EpgD3aLunlp4azQwPBMTQ.QD8XswrfExM6sUgAKbN5SOUJ3tLDwO3sFat.d
- BjCFeyPr5.m0AJHDH6XtU8VX4HWZxe8QbPlWdoul3zV7RnAvssm0SoQXPiZd5g9DaF5.9.wiLOWn
- 7brxb6GINSJbMG5zIjZPL5NpeOTWFz.67gEghVIlmEtaSlrgaPD4Yb3hA8_PDwcPq7zbFvBvzZ_9
- M_1nUKfBrIh8tskj8qknG_35quzMXBYgsBYrZlKlGdXSJAqXGinlwApIll3JlMQ.Bs5g03gd.maN
- zTHBVw6zkFaWZsdzu13zsuGqpxe8auGQqYHasFAqee.eXETfIeRqoMyMUSNmBrGi7XffsVSiHpzM
- BxRLJ1_dRGT0-
-X-Sonic-MF: <peljasz@yahoo.co.uk>
-Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic310.consmr.mail.ir2.yahoo.com with HTTP; Thu, 30 Jun 2022 06:53:31 +0000
-Received: by hermes--canary-production-ir2-74b4d6d794-wvl67 (Yahoo Inc. Hermes
- SMTP Server) with ESMTPA ID c0abda9aec9679e241b1da430383e01b; 
- Thu, 30 Jun 2022 06:53:28 +0000 (UTC)
-Message-ID: <c1ecbad3-8b01-6caa-8fb0-68b59ef62fc5@yahoo.co.uk>
-Date: Thu, 30 Jun 2022 07:53:28 +0100
+ Thu, 30 Jun 2022 10:06:03 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id F0FE562198;
+ Thu, 30 Jun 2022 10:06:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14DCCC34115;
+ Thu, 30 Jun 2022 10:05:57 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="ACkRU+Ds"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1656583556;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lpetoj7kI9rRA+ZeAoTE77fi6zOrRL2bKq1/FPJ526c=;
+ b=ACkRU+DstmTaTG/qZ0irEBLPkULFIDpmiMuCN9oQNUCoD/n8pqTayt4kE4T3q3fKiM6hfE
+ 1kdRZnJIBzQ8fCYp9BJHZ7IO5rxsJ5v1LZ3Q18QgIcZRPREkUJDOIDkZj3Lq1fTNRQTDM3
+ 0klFcqdwCZnEM1ZY8LMAJrzSICKkUiQ=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2d14dac7
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO); 
+ Thu, 30 Jun 2022 10:05:55 +0000 (UTC)
+Date: Thu, 30 Jun 2022 12:05:50 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Kalesh Singh <kaleshsingh@google.com>
+Cc: John Stultz <jstultz@google.com>, Christoph Hellwig <hch@lst.de>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Arve =?utf-8?B?SGrDuG5uZXbDpWc=?= <arve@android.com>,
+ Todd Kjos <tkjos@android.com>, Martijn Coenen <maco@android.com>,
+ Joel Fernandes <joel@joelfernandes.org>,
+ Christian Brauner <brauner@kernel.org>,
+ Hridya Valsaraju <hridya@google.com>,
+ Suren Baghdasaryan <surenb@google.com>, Theodore Ts'o <tytso@mit.edu>,
+ "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>,
+ Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>,
+ "Paul E. McKenney" <paulmck@kernel.org>,
+ Frederic Weisbecker <frederic@kernel.org>,
+ Neeraj Upadhyay <quic_neeraju@quicinc.com>,
+ Josh Triplett <josh@joshtriplett.org>,
+ Steven Rostedt <rostedt@goodmis.org>,
+ Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+ Lai Jiangshan <jiangshanlai@gmail.com>,
+ Shuah Khan <shuah@kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+ wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
+ rcu <rcu@vger.kernel.org>,
+ "open list:KERNEL SELFTEST FRAMEWORK" <linux-kselftest@vger.kernel.org>,
+ sultan@kerneltoast.com,
+ android-kernel-team <android-kernel-team@google.com>,
+ Saravana Kannan <saravanak@google.com>,
+ "Rafael J. Wysocki" <rafael@kernel.org>
+Subject: Re: [PATCH] remove CONFIG_ANDROID
+Message-ID: <Yr11fp13yMRiEphS@zx2c4.com>
+References: <Yrx/8UOY+J8Ao3Bd@zx2c4.com> <YryNQvWGVwCjJYmB@zx2c4.com>
+ <Yryic4YG9X2/DJiX@google.com> <Yry6XvOGge2xKx/n@zx2c4.com>
+ <CAC_TJve_Jk0+XD7VeSJVvJq4D9ZofnH69B4QZv2LPT4X3KNfeg@mail.gmail.com>
+ <YrzaCRl9rwy9DgOC@zx2c4.com>
+ <CANDhNCpRzzULaGmEGCbbJgVinA0pJJB-gOP9AY0Hy488n9ZStA@mail.gmail.com>
+ <YrztOqBBll66C2/n@zx2c4.com> <YrzujZuJyfymC0LP@zx2c4.com>
+ <CAC_TJvcNOx1C5csdkMCAPVmX4gLcRWkxKO8Vm=isgjgM-MowwA@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: package from fedorainfracloud for centOS 8 does not build
-Content-Language: en-US
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-References: <b05c9019-5165-84f0-b3f1-a0eeb30faad1.ref@yahoo.co.uk>
- <b05c9019-5165-84f0-b3f1-a0eeb30faad1@yahoo.co.uk>
- <CAHmME9o5Qpg_oHjWFBa6zoVZd4ALOpBnjj7Y-y_ipgtZ4+o_qQ@mail.gmail.com>
-From: lejeczek <peljasz@yahoo.co.uk>
-In-Reply-To: <CAHmME9o5Qpg_oHjWFBa6zoVZd4ALOpBnjj7Y-y_ipgtZ4+o_qQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Mailer: WebService/1.1.20381
- mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAC_TJvcNOx1C5csdkMCAPVmX4gLcRWkxKO8Vm=isgjgM-MowwA@mail.gmail.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -92,21 +93,137 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+Hi Kalesh,
 
+On Wed, Jun 29, 2022 at 09:25:32PM -0700, Kalesh Singh wrote:
+> On Wed, Jun 29, 2022 at 5:30 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+> >
+> > Hey again,
+> >
+> > On Thu, Jun 30, 2022 at 2:24 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+> > > 1) Introduce a simple CONFIG_PM_CONTINUOUS_AUTOSLEEPING Kconfig thing
+> > >    with lots of discouraging help text.
+> > >
+> > > 2) Go with the /sys/power tunable and bikeshed the naming of that a bit
+> > >    to get it to something that reflects this better, and document it as
+> > >    being undesirable except for Android phones.
+> >
+> > One other quick thought, which I had mentioned earlier to Kalesh:
+> >
+> > 3) Make the semantics a process holding open a file descriptor, rather
+> >    than writing 0/1 into a file. It'd be called /sys/power/
+> >    userspace_autosleep_ctrl, or something, and it'd enable this behavior
+> >    while it's opened. And maybe down the line somebody will want to add
+> >    ioctls to it for a different purpose. This way it's less of a tunable
+> >    and more of an indication that there's a userspace app doing/controlling
+> >    something.
+> >
+> > This idea (3) may be a lot of added complexity for basically nothing,
+> > but it might fit the usage semantics concerns a bit better than (2). But
+> > anyway, just an idea. Any one of those three are fine with me.
+> 
+> Two concerns John raised:
+>   1) Adding new ABI we need to maintain
+>   2) Having unclear config options
+> 
+> Another idea, I think, is to add the Kconfig option as
+> CONFIG_SUSPEND_SKIP_RNG_RESEED? Similar to existing
+> CONFIG_SUSPEND_SKIP_SYNC and I think it would address those concerns.
 
-On 29/06/2022 13:27, Jason A. Donenfeld wrote:
-> On Wed, Jun 29, 2022 at 2:17 PM lejeczek <peljasz@yahoo.co.uk> wrote:
->> Hi guys.
->>
->> In case somebody here looks after
->> 'copr:copr.fedorainfracloud.org:jdoss:wireguard' then
->>
->> wireguard-dkms-1.0.20220627-1.el8.noarch for 4.18.0-394.el8.x86_64 fails
->> to build
->>
->> many thanks, L.
-> https://lists.zx2c4.com/pipermail/wireguard/2022-June/007664.html
-is there a reason for which you do not keep multiple 
-versions in the repo - so to "downgrade" people would have 
-as an option?
-thanks, L.
+I mentioned in my reply to him that this doesn't really work for me:
+
+| As a general rule, I don't expose knobs like that in wireguard /itself/,
+| but wireguard has no problem with adapting to whatever machine properties
+| it finds itself on. And besides, this *is* a very definite device
+| property, something really particular and peculiar about the machine
+| the kernel is running on. It's a concrete thing that the kernel should
+| know about. So let's go with your "very clear description idea", above,
+| instead.
+
+IOW, we're not going to add a tunable on every possible place this is
+used.
+
+Anyway if you don't want a runtime switch, make a compiletime switch
+called CONFIG_PM_CONTINUOUS_RAPID_AUTOSLEEPING or whatever, write some
+very discouraging help text, and call it a day. And this way you don't
+have to worry about ABI and we can change this later on and do the whole
+thing as a no-big-deal change that somebody can tweak later without
+issue.
+
+The below diff is some boiler plate to help you get started with that
+direction. Similar order of operations for this one:
+
+1. You write a patch for Android's base config to enable this option and
+   post it on Gerrit.
+
+2. You take the diff below, clean it up or bikeshed the naming a bit or
+   do whatever there, and submit it to the kernel, including as a `Link:
+   ...` this thread and the Gerrit link.
+
+3. When the patch lands, you submit the Gerrit CL.
+
+4. When both have landed, Christoph moves forward with his
+   CONFIG_ANDROID removal.
+
+So really, just pick an option here -- the runtime switch or the
+compiletime switch or the crazy fd thing I mentioned -- and run with it.
+
+Jason
+
+diff --git a/drivers/char/random.c b/drivers/char/random.c
+index e3dd1dd3dd22..5332236cb1ad 100644
+--- a/drivers/char/random.c
++++ b/drivers/char/random.c
+@@ -756,7 +756,7 @@ static int random_pm_notification(struct notifier_block *nb, unsigned long actio
+
+ 	if (crng_ready() && (action == PM_RESTORE_PREPARE ||
+ 	    (action == PM_POST_SUSPEND &&
+-	     !IS_ENABLED(CONFIG_PM_AUTOSLEEP) && !IS_ENABLED(CONFIG_ANDROID)))) {
++	     !IS_ENABLED(CONFIG_PM_AUTOSLEEP) && !IS_ENABLED(CONFIG_PM_RAPID_USERSPACE_AUTOSLEEP)))) {
+ 		crng_reseed();
+ 		pr_notice("crng reseeded on system resumption\n");
+ 	}
+diff --git a/drivers/net/wireguard/device.c b/drivers/net/wireguard/device.c
+index aa9a7a5970fd..b93171f2e6c9 100644
+--- a/drivers/net/wireguard/device.c
++++ b/drivers/net/wireguard/device.c
+@@ -69,7 +69,7 @@ static int wg_pm_notification(struct notifier_block *nb, unsigned long action, v
+ 	 * its normal operation rather than as a somewhat rare event, then we
+ 	 * don't actually want to clear keys.
+ 	 */
+-	if (IS_ENABLED(CONFIG_PM_AUTOSLEEP) || IS_ENABLED(CONFIG_ANDROID))
++	if (IS_ENABLED(CONFIG_PM_AUTOSLEEP) || IS_ENABLED(CONFIG_PM_RAPID_USERSPACE_AUTOSLEEP))
+ 		return 0;
+
+ 	if (action != PM_HIBERNATION_PREPARE && action != PM_SUSPEND_PREPARE)
+diff --git a/kernel/power/Kconfig b/kernel/power/Kconfig
+index a12779650f15..bcbfbeb39d4f 100644
+--- a/kernel/power/Kconfig
++++ b/kernel/power/Kconfig
+@@ -150,6 +150,25 @@ config PM_WAKELOCKS
+ 	Allow user space to create, activate and deactivate wakeup source
+ 	objects with the help of a sysfs-based interface.
+
++config PM_RAPID_USERSPACE_AUTOSLEEP
++	bool "Tune for rapid and consistent userspace calls to sleep"
++	depends on PM_SLEEP
++	help
++	Change the behavior of various sleep-sensitive code to deal with
++	userspace autosuspend daemons that put the machine to sleep and wake it
++	up extremely often and for short periods of time.
++
++	This option mostly disables code paths that most users really should
++	keep enabled. In particular, only enable this if:
++
++	- It is very common to be asleep for only 2 seconds before being woken;	and
++	- It is very common to be awake for only 2 seconds before sleeping.
++
++	This likely only applies to Android devices, and not other machines.
++	Therefore, you should say N here, unless you're extremely certain that
++	this is what you want. The option otherwise has bad, undesirable
++	effects, and should not be enabled just for fun.
++
+ config PM_WAKELOCKS_LIMIT
+ 	int "Maximum number of user space wakeup sources (0 = no limit)"
+ 	range 0 100000
+
