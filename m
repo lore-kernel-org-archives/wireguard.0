@@ -4,81 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57371C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Jun 2022 10:06:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AD94C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Jun 2022 10:47:50 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id b7c1b2d4;
-	Thu, 30 Jun 2022 10:06:06 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 48cef7eb
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 968060b4;
+	Thu, 30 Jun 2022 10:47:48 +0000 (UTC)
+Received: from sonic317-34.consmr.mail.ne1.yahoo.com
+ (sonic317-34.consmr.mail.ne1.yahoo.com [66.163.184.45])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 372638ba
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Jun 2022 10:06:03 +0000 (UTC)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id F0FE562198;
- Thu, 30 Jun 2022 10:06:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14DCCC34115;
- Thu, 30 Jun 2022 10:05:57 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="ACkRU+Ds"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1656583556;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=lpetoj7kI9rRA+ZeAoTE77fi6zOrRL2bKq1/FPJ526c=;
- b=ACkRU+DstmTaTG/qZ0irEBLPkULFIDpmiMuCN9oQNUCoD/n8pqTayt4kE4T3q3fKiM6hfE
- 1kdRZnJIBzQ8fCYp9BJHZ7IO5rxsJ5v1LZ3Q18QgIcZRPREkUJDOIDkZj3Lq1fTNRQTDM3
- 0klFcqdwCZnEM1ZY8LMAJrzSICKkUiQ=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2d14dac7
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO); 
- Thu, 30 Jun 2022 10:05:55 +0000 (UTC)
-Date: Thu, 30 Jun 2022 12:05:50 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Kalesh Singh <kaleshsingh@google.com>
-Cc: John Stultz <jstultz@google.com>, Christoph Hellwig <hch@lst.de>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Arve =?utf-8?B?SGrDuG5uZXbDpWc=?= <arve@android.com>,
- Todd Kjos <tkjos@android.com>, Martijn Coenen <maco@android.com>,
- Joel Fernandes <joel@joelfernandes.org>,
- Christian Brauner <brauner@kernel.org>,
- Hridya Valsaraju <hridya@google.com>,
- Suren Baghdasaryan <surenb@google.com>, Theodore Ts'o <tytso@mit.edu>,
- "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>,
- Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>,
- "Paul E. McKenney" <paulmck@kernel.org>,
- Frederic Weisbecker <frederic@kernel.org>,
- Neeraj Upadhyay <quic_neeraju@quicinc.com>,
- Josh Triplett <josh@joshtriplett.org>,
- Steven Rostedt <rostedt@goodmis.org>,
- Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
- Lai Jiangshan <jiangshanlai@gmail.com>,
- Shuah Khan <shuah@kernel.org>, LKML <linux-kernel@vger.kernel.org>,
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- rcu <rcu@vger.kernel.org>,
- "open list:KERNEL SELFTEST FRAMEWORK" <linux-kselftest@vger.kernel.org>,
- sultan@kerneltoast.com,
- android-kernel-team <android-kernel-team@google.com>,
- Saravana Kannan <saravanak@google.com>,
- "Rafael J. Wysocki" <rafael@kernel.org>
-Subject: Re: [PATCH] remove CONFIG_ANDROID
-Message-ID: <Yr11fp13yMRiEphS@zx2c4.com>
-References: <Yrx/8UOY+J8Ao3Bd@zx2c4.com> <YryNQvWGVwCjJYmB@zx2c4.com>
- <Yryic4YG9X2/DJiX@google.com> <Yry6XvOGge2xKx/n@zx2c4.com>
- <CAC_TJve_Jk0+XD7VeSJVvJq4D9ZofnH69B4QZv2LPT4X3KNfeg@mail.gmail.com>
- <YrzaCRl9rwy9DgOC@zx2c4.com>
- <CANDhNCpRzzULaGmEGCbbJgVinA0pJJB-gOP9AY0Hy488n9ZStA@mail.gmail.com>
- <YrztOqBBll66C2/n@zx2c4.com> <YrzujZuJyfymC0LP@zx2c4.com>
- <CAC_TJvcNOx1C5csdkMCAPVmX4gLcRWkxKO8Vm=isgjgM-MowwA@mail.gmail.com>
+ Thu, 30 Jun 2022 10:47:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
+ t=1656586064; bh=PEO0dXCIEFAv4d67kpCjbDEFWcaD6IDVAwoNx11yBHs=;
+ h=Date:From:To:Subject:References:From:Subject:Reply-To;
+ b=EaA+arBNCNaaGwxBORvLj8Z9PhSQfj5qyb9qZn6QNp3Qrh6nYcjQMgu3+f4tdPVTswC8+yvWy8NNp+FoJtKE3ZvsuCIn3d5IzkLrID4yfMrMG6CQ5qiZoA+1BEtsCbzIWwo5S324RnGLj6parK2jLAWt8oX7pFuwLi+Dyqb7s1jYsoXVDhKIqgmvsKuXcKyt53sIGDPPpiJMHT7YM/LmxTSKFp92qT+JXbYykCDSQnyMua6ocoIFx4blnym3ErTstACXGTBgQ7e2YOOSrY3CWPIlgf/0H30ATaLBbUkMmCN5JEXEqUgk3HgllKQU6FO9/3CVLSAGlvew0ttPjg5CAA==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
+ t=1656586064; bh=4qIzKSkny8uO0ScSLtB/gFQ6WZv5Ayp+OVS5zQw4LeF=;
+ h=X-Sonic-MF:Date:From:To:Subject:From:Subject;
+ b=C+ZlRaj9o4uKyggeoln0cPf+yH3vE0Bknld16HyUcMWdF5I4phpQ4oSt35nO3zUJBDQQM+J3a+2eMG4R1ki7e9DxzHsHSH18P0bWj6qwqUscAwnc/KYmqAW8WG29/J4HKxAwP2FiTc+jtl/mXPp7jZx1tmtpB+Yl6vvAnNiR+nbMKF4q6yAKVLlzcvzE8INscLzKyH59yIw4f+OJImfvS1UzMCMI+mduUo4gIEh0UHTJfKogiCFiW3LobGIMLOxSnnznCx1hTeKKAXAOdHJDAnmgORKt8MlurFaxmPNFpwPvRbgexmrwsQImzMu0LG0FBeLONVWERnUjgVI0kHu61A==
+X-YMail-OSG: 3ImfECEVM1leoqLPQchh9nsUW6LDNA6H5EIRLhiOdnrIBMkyNuvVbBLywvPzjoW
+ ShPz4CKNL70VU609ACYtvSd_PyDnzHpMRcy1RkpdVATxheGFj6w3SKghXcuOJeH.qPUW7Llx.KC5
+ sUueiOtu7Ujmmb2q1jMvjOZrZMQoT.P7hHgGusSHzjI.2fQimarDcSllR32apPMebIy8hXF7lfyB
+ Dd.0R_vMTStdbUR4HyMrSZlEwVuHOQQ6vcR7NLL4rHZ8y3JEMmN_azXA_CupxDCGE6qgDaJkVzQD
+ OiYONy3Btb6V6tnKWQXOF8C2LejkUVTGeqQCifj5Ps_2vdpQbGC6lp13ThwzXfXOmpT46bZ.JiWG
+ mfDq2CzMIaweONIDsYSFWkA9_4Ke0gw5ib3zspw56wjD0Op30FAGKH9Y1Sr7fBS06kze.hJr_Lvg
+ MGWO2MOBJjCY7_fkbO9xsb1A6Rrr6hd_Y82TuMEJWiK0ao4nwPrmCqLTmEl4XWTs9sBImawPY5FQ
+ DIJ9PlBJehoZiTPWgS1BS4.uQHMdG3lvdK3RsmW.AH1hMm2X03GKGseE.8JPFT.NXgjrW4r1qQ2G
+ _i3eXBZna05Lwa2V8f1E5JkV1z5LrowyVf83WUulZfHTZWlD0j7NBXzyEVB.f.1AfFfUw1k96Cxp
+ g3Ezh4LbUi8GNwp3LBZ9esHSdt1Ktv6CcDCPGZhjnNnJfxy7zb7.qqC0ZHncMASeJLQuvaB.euoN
+ RN4km.ZDJCQh9wvnusOwfLMzr8GPEPhPY9AFxOEuOytr5tKxGnNrb8L1gbdv._cZpXSbwIYMqifF
+ .GE8IB9IxMPprf5ZQwMSQZs_pfbK6ijO7EKDeuQ_2kkJ8q.qTftQdk3a1Ze4Xw72Y74YYX5MoEX4
+ QifJ9tJkbEGcc4..C0YgaDDT8cmpjNeKnLHvBmYuFvpavoRzJskFcIwXiViv33Sz1w9dEGTabto5
+ Han19gMLXq3XnRpCXFF1SL9aqOniKofOoY0ORyG0GzZZMrAZ.dm.H2lNDQgxr9rAD67i97lVmznA
+ 6sLmNRUH2QDjG5dcT5YYTi5OwsfKhF2R5MlTzPlvLdHhsEZ9XRbRi7pzdK5fB7aTTIWAnVnnuVwm
+ 24c9eWlOw5xhvEI_zyyT5s8YA8m2l9IT_24HnsbRxC.Kj_QwVn3ZKmoziEebOJcly.NO2QCkjrsQ
+ F4u3pV5ilVVdv_KzdgQTTmTKPOHRM8jxIXCR_.ExeVMYDOyx1VQeMO6kkeEONXGaIFo7NH.89H0N
+ Kw6smymgaU3zJtpge_4eOqkjBv6P7ev9P0.7Q3XbotTd9_6nScydh.H6OES9mcpMIKpOnjGbX30e
+ X5etekrJkB96eliLZzcVIv3C1NGGIv7X_grEE2M4IJq2tZMS7P_COMECF4WzWO0B3cjtZhYIot6j
+ BiiAy6kR2.7XAz0xHh6qBlAASeegENFmT68xXfrFHlXPi2VLOVsanmkQN5Slt204hLn_fM7vNlZB
+ uGYujWtqPZMGSiDjDJXLq4NYrB24_f1i_knTaMSGzKbJXPjKpI06aHRn6EI.AKotqle8rz8OUVng
+ fk.YeggDsVh_M4QUv175xQHTD.xO4njlDXxQiXUqulh9OurwQxDGmUKL1XXC02ycc05YTylvVNNI
+ 8sjsZI3zB5iRpbKflM_JuzO_OjcoBvYPfKek2qv5xLtcegECyQg1pLeZ4qaqAPSI3z1f0ASPVPfs
+ 8ns9.Oh9PA95.6rgMbOoKVS74GHkC8j4rrV9BmaVIiI8OEg8lggoHEloBuqyUOhTN4URFWKv7o1x
+ u1vTGtEPIM02u.XEOu0jFdZLiBMcD0Aw4t5cuZTC7VgLqRQuEzm2o87_3Zq.DtIrkLNxtU8YVyES
+ ByvHZwkNA7otxRQ9fk4KAcYTuQIISf6T83Ca8uyru4h1U2zIkQVxMuCu8HCAMyNa6yS3o167vqcp
+ SNdoLr6VsyjGrkesSmpLGNE4b2aPsx8Pz94LRvukbLm2S8kCojCHA_XF4R6D6OFG.5IYw99KRjHL
+ dYw.n2r0kZq5.uqiGi27ChZXMpiSIIhth10ClQ7.EPAqN2.pT.nPXQk4V4UJZ2uwDAN6vgGODzQ6
+ i8TsEbscioYJjX9dubcmqKi1IMon0_TPuXDzsJyJnQ1nr_hBKitoYZ4Fj7JqUEBSJg0O_tC2tk9w
+ MsTxyJumCma.hJu2rSsDC6CkWSNbV8CeHh6E1eloTVWF9cFVD4gBuscFH4XCgbcLGPVZ1Ratb0EZ
+ bQXehw.bdGYQ0BgBM
+X-Sonic-MF: <tlhackque@yahoo.com>
+Received: from sonic.gate.mail.ne1.yahoo.com by
+ sonic317.consmr.mail.ne1.yahoo.com with HTTP; Thu, 30 Jun 2022 10:47:44 +0000
+Received: by hermes--production-gq1-56bb98dbc7-sdhbr (Yahoo Inc. Hermes SMTP
+ Server) with ESMTPA ID 6fd0c90e8cffb8fe479cffb03b2248f8; 
+ Thu, 30 Jun 2022 10:47:40 +0000 (UTC)
+Message-ID: <23929467-11c2-cdf2-3841-2a837ba58b51@yahoo.com>
+Date: Thu, 30 Jun 2022 06:47:38 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAC_TJvcNOx1C5csdkMCAPVmX4gLcRWkxKO8Vm=isgjgM-MowwA@mail.gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Content-Language: en-US
+From: tlhackque <tlhackque@yahoo.com>
+To: WireGuard Mailing list <wireguard@lists.zx2c4.com>
+Subject: CONFIG_ANDROID
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------pQblrej6unyoQBUNfwcKQSIl"
+References: <23929467-11c2-cdf2-3841-2a837ba58b51.ref@yahoo.com>
+X-Mailer: WebService/1.1.20381
+ mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -93,137 +89,59 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Kalesh,
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------pQblrej6unyoQBUNfwcKQSIl
+Content-Type: multipart/mixed; boundary="------------saFqirXJrF4dbsgKDdyJ2N7x";
+ protected-headers="v1"
+From: tlhackque <tlhackque@yahoo.com>
+To: WireGuard Mailing list <wireguard@lists.zx2c4.com>
+Message-ID: <23929467-11c2-cdf2-3841-2a837ba58b51@yahoo.com>
+Subject: CONFIG_ANDROID
 
-On Wed, Jun 29, 2022 at 09:25:32PM -0700, Kalesh Singh wrote:
-> On Wed, Jun 29, 2022 at 5:30 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> >
-> > Hey again,
-> >
-> > On Thu, Jun 30, 2022 at 2:24 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> > > 1) Introduce a simple CONFIG_PM_CONTINUOUS_AUTOSLEEPING Kconfig thing
-> > >    with lots of discouraging help text.
-> > >
-> > > 2) Go with the /sys/power tunable and bikeshed the naming of that a bit
-> > >    to get it to something that reflects this better, and document it as
-> > >    being undesirable except for Android phones.
-> >
-> > One other quick thought, which I had mentioned earlier to Kalesh:
-> >
-> > 3) Make the semantics a process holding open a file descriptor, rather
-> >    than writing 0/1 into a file. It'd be called /sys/power/
-> >    userspace_autosleep_ctrl, or something, and it'd enable this behavior
-> >    while it's opened. And maybe down the line somebody will want to add
-> >    ioctls to it for a different purpose. This way it's less of a tunable
-> >    and more of an indication that there's a userspace app doing/controlling
-> >    something.
-> >
-> > This idea (3) may be a lot of added complexity for basically nothing,
-> > but it might fit the usage semantics concerns a bit better than (2). But
-> > anyway, just an idea. Any one of those three are fine with me.
-> 
-> Two concerns John raised:
->   1) Adding new ABI we need to maintain
->   2) Having unclear config options
-> 
-> Another idea, I think, is to add the Kconfig option as
-> CONFIG_SUSPEND_SKIP_RNG_RESEED? Similar to existing
-> CONFIG_SUSPEND_SKIP_SYNC and I think it would address those concerns.
+--------------saFqirXJrF4dbsgKDdyJ2N7x
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-I mentioned in my reply to him that this doesn't really work for me:
+RldJVzogSGF2aW5nIHdhdGNoZWQgdGhlIGRpc2N1c3Npb24gYWJvdXQgQ09ORklHX0FORFJP
+SUQsIGl0IG9jY3VycyB0byANCm1lIHRoYXQgdGhlcmUncyBhbiBhbHRlcm5hdGl2ZSBmb3Ig
+V2lyZUd1YXJkIHRoYXQgc2lkZXN0ZXBzIHRoZSBpc3N1ZS4NCg0KIEZyb20gdGhlIGxhc3Qg
+cGF0Y2hlc2V0LCBpdCBzZWVtcyB0aGF0IHRoZSBvbmx5IHVzZSBpbiBXaXJlR3VhcmQgaXMg
+dG8gDQphdm9pZCBjbGVhcmluZyBrZXlzIG9uIGV2ZXJ5IHdha2UtdXAuDQoNClNvOiBXaHkg
+bm90IHRpbWVzdGFtcCBrZXktY2xlYXIgZXZlbnRzLCBhbmQgZXN0YWJsaXNoIGEgbWluaW11
+bSBpbnRlcnZhbD8NCg0KSXQgc2VlbXMgdG8gbWUgdGhhdCB0aGlzIHdvdWxkIG1ha2UgV2ly
+ZUd1YXJkIHRvbGVyYW50IG9mIHRoZSBwZWN1bGlhciANCmJlaGF2aW9yIG9mIHRoZSBBbmRy
+b2lkIChoYW5kaGVsZCkgcGxhdGZvcm1zLCBhbmQgZXhwcmVzc2VzIHdoYXQgDQpXaXJlR3Vh
+cmQgbmVlZHMgLSBhIG1pbmltdW0gdGltZSBiZXR3ZWVuIGtleSBjbGVhcmluZyBldmVudHMu
+wqAgSXQncyBhbHNvIA0KY29tcGxldGVseSB1bmRlciBXaXJlR3VhcmQncyBjb250cm9sLCBp
+cyBwbGF0Zm9ybSBhZ25vc3RpYywgYW5kIGF2b2lkcyANCmFuIGluZXZpdGFibGUgZGlzY3Vz
+c2lvbiBhYm91dCB3aGV0aGVyIDIgc2Vjb25kcyBiZXR3ZWVuIHdha2V1cHMgaXMgDQppbW11
+dGFibGUgYW5kIHNhdGlzZmllcyBldmVyeW9uZS7CoCAoSWYgeW91IHdhaXQgbG9uZyBlbm91
+Z2gsIGV2ZXJ5IA0KY29uc3RhbnQgZXZlbnR1YWxseSBiZWNvbWVzIGEgdmFyaWFibGUuLi4p
+DQoNClRoZW4gV2lyZUd1YXJkIGNhbiB3YXRjaCB0aGUgZHVzdHN0b3JtIG92ZXIgQ09ORklH
+X0FORFJPSUQncyBmYXRlIHNldHRsZSANCm91dCBhdCBsZWlzdXJlLg0KDQpJIGhhdmUgbm8g
+ZG9nIGluIHRoaXMgZmlnaHQgLSBqdXN0IGFuIG9ic2VydmVyLg0KDQoNCg==
 
-| As a general rule, I don't expose knobs like that in wireguard /itself/,
-| but wireguard has no problem with adapting to whatever machine properties
-| it finds itself on. And besides, this *is* a very definite device
-| property, something really particular and peculiar about the machine
-| the kernel is running on. It's a concrete thing that the kernel should
-| know about. So let's go with your "very clear description idea", above,
-| instead.
+--------------saFqirXJrF4dbsgKDdyJ2N7x--
 
-IOW, we're not going to add a tunable on every possible place this is
-used.
+--------------pQblrej6unyoQBUNfwcKQSIl
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
 
-Anyway if you don't want a runtime switch, make a compiletime switch
-called CONFIG_PM_CONTINUOUS_RAPID_AUTOSLEEPING or whatever, write some
-very discouraging help text, and call it a day. And this way you don't
-have to worry about ABI and we can change this later on and do the whole
-thing as a no-big-deal change that somebody can tweak later without
-issue.
+-----BEGIN PGP SIGNATURE-----
 
-The below diff is some boiler plate to help you get started with that
-direction. Similar order of operations for this one:
+wsF5BAABCAAjFiEEhUZRCZitYt5SlPbZ3PhOoB301mYFAmK9f0oFAwAAAAAACgkQ3PhOoB301mZu
+8RAAmRuF1ipRaVznnzHmpWGqDi8VJP7GTroqh8DPE9qBryq2aq1DMvtIrrOl2dP9XSp/HtURI5nE
+wjihMXGInD9sigN7i0TfgRy1x4Jd9nzLN6CdlywzKV/AUgyVtgHQbKME7z1okmowPcfdaBpUX6Oy
+J2oea/gahJ5CGdIYPQhb3QhRFkH/g1Bla64bb92qLUxPjhh4wVzOqUlajC7G3WWoVBqYdWRzuzXz
+vrY7vLzoWIz653qGQEju/ENUIAHzCKfj3WzJWMeSnSaQ/Ttu33qKT2t/MlYMvi4p/SC3ePGiAtm/
+itm1EX+hslXHu704kwUIL2oc0zeVd0RhQC4xS5QJaEL3GP3SnFW365uXehMFN6ZP0nhCHpkXKDge
+FRMSjfvEeQb+NOWH81UwLN3CQmO1vtJpZ+XB4oEcFk79urrzxkWnsVDgoMg6FKNjpibKbs57hl+u
+ivfaT/THA8DfaGr75csvviZFej8n5OUdtu0UOwuTtZe89hqUbytRBGoCgR7pNAPP2gMtnxfOVwhj
+JJoFyy04zWMssyIPWvS58H0vfo4eO4w+5vx3Sv46C2oNRGpu/3BiPWm/LaPX4kAyUYsSRcF6xbYp
+NLPHK8RdaKuW09QBtfJjOSbxY2kkBDrW9/UA9IeGVHn+Etqfshf8aretnXqW6Ta6j5JuR0N70KGh
+FeQ=
+=oC63
+-----END PGP SIGNATURE-----
 
-1. You write a patch for Android's base config to enable this option and
-   post it on Gerrit.
-
-2. You take the diff below, clean it up or bikeshed the naming a bit or
-   do whatever there, and submit it to the kernel, including as a `Link:
-   ...` this thread and the Gerrit link.
-
-3. When the patch lands, you submit the Gerrit CL.
-
-4. When both have landed, Christoph moves forward with his
-   CONFIG_ANDROID removal.
-
-So really, just pick an option here -- the runtime switch or the
-compiletime switch or the crazy fd thing I mentioned -- and run with it.
-
-Jason
-
-diff --git a/drivers/char/random.c b/drivers/char/random.c
-index e3dd1dd3dd22..5332236cb1ad 100644
---- a/drivers/char/random.c
-+++ b/drivers/char/random.c
-@@ -756,7 +756,7 @@ static int random_pm_notification(struct notifier_block *nb, unsigned long actio
-
- 	if (crng_ready() && (action == PM_RESTORE_PREPARE ||
- 	    (action == PM_POST_SUSPEND &&
--	     !IS_ENABLED(CONFIG_PM_AUTOSLEEP) && !IS_ENABLED(CONFIG_ANDROID)))) {
-+	     !IS_ENABLED(CONFIG_PM_AUTOSLEEP) && !IS_ENABLED(CONFIG_PM_RAPID_USERSPACE_AUTOSLEEP)))) {
- 		crng_reseed();
- 		pr_notice("crng reseeded on system resumption\n");
- 	}
-diff --git a/drivers/net/wireguard/device.c b/drivers/net/wireguard/device.c
-index aa9a7a5970fd..b93171f2e6c9 100644
---- a/drivers/net/wireguard/device.c
-+++ b/drivers/net/wireguard/device.c
-@@ -69,7 +69,7 @@ static int wg_pm_notification(struct notifier_block *nb, unsigned long action, v
- 	 * its normal operation rather than as a somewhat rare event, then we
- 	 * don't actually want to clear keys.
- 	 */
--	if (IS_ENABLED(CONFIG_PM_AUTOSLEEP) || IS_ENABLED(CONFIG_ANDROID))
-+	if (IS_ENABLED(CONFIG_PM_AUTOSLEEP) || IS_ENABLED(CONFIG_PM_RAPID_USERSPACE_AUTOSLEEP))
- 		return 0;
-
- 	if (action != PM_HIBERNATION_PREPARE && action != PM_SUSPEND_PREPARE)
-diff --git a/kernel/power/Kconfig b/kernel/power/Kconfig
-index a12779650f15..bcbfbeb39d4f 100644
---- a/kernel/power/Kconfig
-+++ b/kernel/power/Kconfig
-@@ -150,6 +150,25 @@ config PM_WAKELOCKS
- 	Allow user space to create, activate and deactivate wakeup source
- 	objects with the help of a sysfs-based interface.
-
-+config PM_RAPID_USERSPACE_AUTOSLEEP
-+	bool "Tune for rapid and consistent userspace calls to sleep"
-+	depends on PM_SLEEP
-+	help
-+	Change the behavior of various sleep-sensitive code to deal with
-+	userspace autosuspend daemons that put the machine to sleep and wake it
-+	up extremely often and for short periods of time.
-+
-+	This option mostly disables code paths that most users really should
-+	keep enabled. In particular, only enable this if:
-+
-+	- It is very common to be asleep for only 2 seconds before being woken;	and
-+	- It is very common to be awake for only 2 seconds before sleeping.
-+
-+	This likely only applies to Android devices, and not other machines.
-+	Therefore, you should say N here, unless you're extremely certain that
-+	this is what you want. The option otherwise has bad, undesirable
-+	effects, and should not be enabled just for fun.
-+
- config PM_WAKELOCKS_LIMIT
- 	int "Maximum number of user space wakeup sources (0 = no limit)"
- 	range 0 100000
-
+--------------pQblrej6unyoQBUNfwcKQSIl--
