@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEF45C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Jun 2022 03:02:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEABBCCA47B
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Jun 2022 04:25:47 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 4e678e8f;
-	Thu, 30 Jun 2022 03:02:35 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 36870b6f
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 77952dda;
+	Thu, 30 Jun 2022 04:25:45 +0000 (UTC)
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com
+ [2a00:1450:4864:20::333])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 7a434a40
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Jun 2022 03:02:33 +0000 (UTC)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id B48B762046;
- Thu, 30 Jun 2022 03:02:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ADC3C3411E;
- Thu, 30 Jun 2022 03:02:27 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="cEfq2bbY"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1656558145;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=lAxoLbADZAhu/fbtT19sYsfwjIQHx+7cL3zp8zm5ylc=;
- b=cEfq2bbYg+E0cJPmGbfqowUlZyBsEFMB+Tx0GAvzVTKBOF7AJsVTfIV6F3UeLWUpu2xbSL
- REcWxgdTxNMimTFAsv2fXTf8VAIjeKWpDKecdvNtTMkrU9267h6JnxgCkrxxlSMx660w+6
- xigc6asOchBZ4Fie7h+gI+in3P0RKaw=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 44cb7fda
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO); 
- Thu, 30 Jun 2022 03:02:25 +0000 (UTC)
-Date: Thu, 30 Jun 2022 05:02:19 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Joe Perches <joe@perches.com>
-Cc: Kalesh Singh <kaleshsingh@google.com>, Christoph Hellwig <hch@lst.de>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Arve =?utf-8?B?SGrDuG5uZXbDpWc=?= <arve@android.com>,
- Todd Kjos <tkjos@android.com>, Martijn Coenen <maco@android.com>,
- Joel Fernandes <joel@joelfernandes.org>,
- Christian Brauner <brauner@kernel.org>,
- Hridya Valsaraju <hridya@google.com>,
- Suren Baghdasaryan <surenb@google.com>, Theodore Ts'o <tytso@mit.edu>,
- "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>,
- Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>,
- "Paul E. McKenney" <paulmck@kernel.org>,
- Frederic Weisbecker <frederic@kernel.org>,
- Neeraj Upadhyay <quic_neeraju@quicinc.com>,
- Josh Triplett <josh@joshtriplett.org>,
- Steven Rostedt <rostedt@goodmis.org>,
- Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
- Lai Jiangshan <jiangshanlai@gmail.com>,
- Shuah Khan <shuah@kernel.org>, LKML <linux-kernel@vger.kernel.org>,
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- rcu <rcu@vger.kernel.org>,
- "open list:KERNEL SELFTEST FRAMEWORK" <linux-kselftest@vger.kernel.org>,
- sultan@kerneltoast.com,
- android-kernel-team <android-kernel-team@google.com>,
- John Stultz <jstultz@google.com>,
- Saravana Kannan <saravanak@google.com>, rafael@kernel.org
-Subject: Re: [PATCH] remove CONFIG_ANDROID
-Message-ID: <Yr0SO0Ubi3Js7ciP@zx2c4.com>
-References: <Yrx/8UOY+J8Ao3Bd@zx2c4.com> <YryNQvWGVwCjJYmB@zx2c4.com>
+ Thu, 30 Jun 2022 04:25:43 +0000 (UTC)
+Received: by mail-wm1-x333.google.com with SMTP id
+ v193-20020a1cacca000000b003a051f41541so847796wme.5
+ for <wireguard@lists.zx2c4.com>; Wed, 29 Jun 2022 21:25:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=XF5+1TpNEHAiXDfVWQuBqZGuz8O67KY9U2sjyk0++xA=;
+ b=J/ogTuEcBjzc2rb/AX+pBYkVOtdqmFsidowp9idjspZWWtBCu0QpR9Omff+s+WRE4J
+ JQqudj/2Cr2qfjcFMt/rm61kR9b0uS6bBZ9XePjS6rge69pJNaxwG4FsPwBmcjgahoIT
+ zZ7xrswxi9aUQCIcykenow5cV1Jz6mOyIW2DJheISuKWr7KK/QYsFfFUTz46tTEUfApa
+ IsdiNxH21cVIcqCO/V4VZhpjVPJEdc87M9ji/eiTZcXPmWU0DsAVN72/jxdKBCH3gL1n
+ EWu/46jkA03D7DfT6mJU1cICL9/sZULYP1olO9hZtpAZ0rLsl247j0otusmUTpKjqAdj
+ 5pMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=XF5+1TpNEHAiXDfVWQuBqZGuz8O67KY9U2sjyk0++xA=;
+ b=JM4MOHQlYoEGQVvI3uSzxBDRe+m4+iBY+xGX4+mSzj7qZe2+39vz20P3SwjX2iyT5T
+ d4rTYt/vlsS0sF/xFIpC1crSQozQCD+10/0+9WEXhTNjQCAY/IqMqMAmRE6NGZFW9lz9
+ LcXNM80KDFogXlaxLVlWnmwpOEueK99VMGdIvPpXIrZ+/6vNxLOJxPyxEbf+h5DrS1FT
+ XlM2lDjo4ne7YaImGXXrVHLJvVjmljAy6tR419fZ7zequr1h5OlQhMBtxjTI1hD/u+WH
+ JCTSk25upPJfO1+KAWBjMREG2FwrilhOSmeoq36sQ+LoReM+IqOahvFQbclvS/0TKyV1
+ 7otw==
+X-Gm-Message-State: AJIora8eCwuItJHsnu1ULXY31DHuq5vhNzGCn/1T0hkWTDC3i5L4QMFI
+ BillfVT2tC656Mwx5gJW64O548z9UGOGQcuX1FyAzQ==
+X-Google-Smtp-Source: AGRyM1uujfLK/yIN8VLByYx5OAyz3aygJHVOScpq0uxooZ08lDRQ3geR/QBC9YsnqM9Hy0OG7EskPqyOaUSnSkkqoHQ=
+X-Received: by 2002:a05:600c:3553:b0:3a0:519b:4b96 with SMTP id
+ i19-20020a05600c355300b003a0519b4b96mr7335634wmq.61.1656563143223; Wed, 29
+ Jun 2022 21:25:43 -0700 (PDT)
+MIME-Version: 1.0
+References: <Yrx8/Fyx15CTi2zq@zx2c4.com> <20220629163007.GA25279@lst.de>
+ <Yrx/8UOY+J8Ao3Bd@zx2c4.com> <YryNQvWGVwCjJYmB@zx2c4.com>
  <Yryic4YG9X2/DJiX@google.com> <Yry6XvOGge2xKx/n@zx2c4.com>
  <CAC_TJve_Jk0+XD7VeSJVvJq4D9ZofnH69B4QZv2LPT4X3KNfeg@mail.gmail.com>
  <YrzaCRl9rwy9DgOC@zx2c4.com>
- <CAC_TJvcEzp+zQp50wtj4=7b6vEObpJCQYLaTLhHJCxFdk3TgPg@mail.gmail.com>
- <306dacfb29c2e38312943fa70d419f0a8d5ffe82.camel@perches.com>
- <YrzzWmQ9+uDRlO5K@zx2c4.com>
- <1a1f24707a03c2363e29ef91905e9f206fb6a0b5.camel@perches.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1a1f24707a03c2363e29ef91905e9f206fb6a0b5.camel@perches.com>
+ <CANDhNCpRzzULaGmEGCbbJgVinA0pJJB-gOP9AY0Hy488n9ZStA@mail.gmail.com>
+ <YrztOqBBll66C2/n@zx2c4.com> <YrzujZuJyfymC0LP@zx2c4.com>
+In-Reply-To: <YrzujZuJyfymC0LP@zx2c4.com>
+From: Kalesh Singh <kaleshsingh@google.com>
+Date: Wed, 29 Jun 2022 21:25:32 -0700
+Message-ID: <CAC_TJvcNOx1C5csdkMCAPVmX4gLcRWkxKO8Vm=isgjgM-MowwA@mail.gmail.com>
+Subject: Re: [PATCH] remove CONFIG_ANDROID
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: John Stultz <jstultz@google.com>, Christoph Hellwig <hch@lst.de>, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ =?UTF-8?B?QXJ2ZSBIasO4bm5ldsOlZw==?= <arve@android.com>, 
+ Todd Kjos <tkjos@android.com>, Martijn Coenen <maco@android.com>, 
+ Joel Fernandes <joel@joelfernandes.org>, Christian Brauner <brauner@kernel.org>,
+ Hridya Valsaraju <hridya@google.com>, Suren Baghdasaryan <surenb@google.com>,
+ "Theodore Ts'o" <tytso@mit.edu>, 
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+ Jakub Kicinski <kuba@kernel.org>, "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>,
+ Paolo Abeni <pabeni@redhat.com>, 
+ Rob Herring <robh@kernel.org>, "Paul E. McKenney" <paulmck@kernel.org>, 
+ Frederic Weisbecker <frederic@kernel.org>,
+ Neeraj Upadhyay <quic_neeraju@quicinc.com>, 
+ Josh Triplett <josh@joshtriplett.org>, Steven Rostedt <rostedt@goodmis.org>, 
+ Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+ Lai Jiangshan <jiangshanlai@gmail.com>, 
+ Shuah Khan <shuah@kernel.org>, LKML <linux-kernel@vger.kernel.org>, 
+ wireguard@lists.zx2c4.com, netdev@vger.kernel.org, rcu <rcu@vger.kernel.org>, 
+ "open list:KERNEL SELFTEST FRAMEWORK" <linux-kselftest@vger.kernel.org>,
+ sultan@kerneltoast.com, 
+ android-kernel-team <android-kernel-team@google.com>,
+ Saravana Kannan <saravanak@google.com>, 
+ "Rafael J. Wysocki" <rafael@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -94,33 +96,40 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, Jun 29, 2022 at 06:44:14PM -0700, Joe Perches wrote:
-> On Thu, 2022-06-30 at 02:50 +0200, Jason A. Donenfeld wrote:
-> > On Wed, Jun 29, 2022 at 05:36:57PM -0700, Joe Perches wrote:
-> > > > > +static ssize_t pm_userspace_autosleeper_show(struct kobject *kobj,
-> > > > > +                               struct kobj_attribute *attr, char *buf)
-> > > > > +{
-> > > > > +       return sprintf(buf, "%d\n", pm_userspace_autosleeper_enabled);
-> > > 
-> > > This should use sysfs_emit no?
-> > 
-> > Probably, yea. Note that I just copy and pasted a nearby function,
-> > pm_async_show, `:%s/`d the variable name, and then promptly `git diff |
-> > clip`d it and plonked it into my email. Looking at the file, it uses
-> > sprintf all over the place in this fashion. So you may want to submit a
-> > cleanup to Rafael on this if you're right about sysfs_emit() being
-> > universally preferred.
-> 
-> Perhaps:
-> 
-> (trivial refactored and added a missing newline in autosleep_show)
-> 
-> ---
->  kernel/power/main.c | 102 ++++++++++++++++++++++++++--------------------------
->  1 file changed, 52 insertions(+), 50 deletions(-)
+On Wed, Jun 29, 2022 at 5:30 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+>
+> Hey again,
+>
+> On Thu, Jun 30, 2022 at 2:24 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+> > 1) Introduce a simple CONFIG_PM_CONTINUOUS_AUTOSLEEPING Kconfig thing
+> >    with lots of discouraging help text.
+> >
+> > 2) Go with the /sys/power tunable and bikeshed the naming of that a bit
+> >    to get it to something that reflects this better, and document it as
+> >    being undesirable except for Android phones.
+>
+> One other quick thought, which I had mentioned earlier to Kalesh:
+>
+> 3) Make the semantics a process holding open a file descriptor, rather
+>    than writing 0/1 into a file. It'd be called /sys/power/
+>    userspace_autosleep_ctrl, or something, and it'd enable this behavior
+>    while it's opened. And maybe down the line somebody will want to add
+>    ioctls to it for a different purpose. This way it's less of a tunable
+>    and more of an indication that there's a userspace app doing/controlling
+>    something.
+>
+> This idea (3) may be a lot of added complexity for basically nothing,
+> but it might fit the usage semantics concerns a bit better than (2). But
+> anyway, just an idea. Any one of those three are fine with me.
 
-You should probably post a proper patch to the PM people. At least I'm
-not going to look at that here, as it's not really relevant at all to
-this discussion.
+Two concerns John raised:
+  1) Adding new ABI we need to maintain
+  2) Having unclear config options
 
-Jason
+Another idea, I think, is to add the Kconfig option as
+CONFIG_SUSPEND_SKIP_RNG_RESEED? Similar to existing
+CONFIG_SUSPEND_SKIP_SYNC and I think it would address those concerns.
+
+--Kalesh
+
+> Jason
