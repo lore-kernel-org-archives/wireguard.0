@@ -4,70 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6556C43334
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Jun 2022 22:05:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B8B3C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Jun 2022 22:12:41 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 371e26d8;
-	Thu, 30 Jun 2022 22:02:59 +0000 (UTC)
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com
- [2a00:1450:4864:20::331])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 6b990240
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id cdb1bf3b;
+	Thu, 30 Jun 2022 22:08:28 +0000 (UTC)
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 988431fa
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Jun 2022 22:02:57 +0000 (UTC)
-Received: by mail-wm1-x331.google.com with SMTP id
- v67-20020a1cac46000000b003a1888b9d36so132560wme.0
- for <wireguard@lists.zx2c4.com>; Thu, 30 Jun 2022 15:02:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=RmR9nWCJRvx1cVbS1nar4zM5LTb6LzpRfeA+XNWCvW8=;
- b=QSw7SI9wt9Ou0H5un+bB9AHgyuHX8JxAHbkNA1K26di0ntxBw6Xh4YdBBEwuPN+uOp
- 4Q80EvkVM/QeoNHGstVX4oPFRbPcow/2G6Pu6ngi8xs01rlf7Gs+k2f8EJRDQdfNNbcK
- usp6CgCfeNS/6kwbmcwHdxxV1p3e6RfKXQC1fvidPTu7gY3Sq9bWFe42WNNPEzVULZUA
- wSYVms5JDpLU4vrP87qMeJu2neN6zTfyYoSQbYwnX2F58WJPIGY/Qc87chpZMQpBcbfm
- pb4qjQyaISQD/THWBzEUir9KzhWQSYqYYHMFyhKXE/fLlEX6IpeygbAj+w6s7sTKQ+1m
- dk1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=RmR9nWCJRvx1cVbS1nar4zM5LTb6LzpRfeA+XNWCvW8=;
- b=m7NiYANR8U/dWHWm1GQ00UuLfP3BJU0CBvdt11RqQuiCDAEH6iX1k9+dOnXtaSuRIG
- +n9hIqEYdBtOzdC37I/1YMgPP2I3LQFXaQuQw4niYsTzxoUqAcZRZxN4gP/GYJ0T3xIV
- tN1xq406AVk6YQeFz3lYzEgA7+hfj2bRfQGLHER+OuZnn7NmwyzUq/Xof73bxtuirC9+
- xMxkLJmSVgagQ+qB+hp6zo3LYc0Nhu7cJ2W5+YTweKiGEsIU/FD4xaqi1YeFoOLZh3pZ
- fhkgDo5ljEMBvCQbI6uDK9sjUC4hbP3BcwZEE8ZxeGikweTN+ft+TowWk1lODsuJmExZ
- N5aw==
-X-Gm-Message-State: AJIora8sw3kzfGHgiAhdXlOoQyDrI8q02wSBKgLTqcY8oaRAINRw/ta4
- VxuRD0fV9Ph0xVgN8BjTUHJPV/dMbtUN36/s4y/wdg==
-X-Google-Smtp-Source: AGRyM1u72PEELgjnPjS+eqrC3Qje60s8cQXcX86vetUYMQl4XRktkox5UWMrrrm/BS2ATFCsX7adbrMcoP2yK6u7RIg=
-X-Received: by 2002:a05:600c:4081:b0:3a0:47c4:8dd0 with SMTP id
- k1-20020a05600c408100b003a047c48dd0mr11967073wmh.178.1656626577281; Thu, 30
- Jun 2022 15:02:57 -0700 (PDT)
-MIME-Version: 1.0
+ Thu, 30 Jun 2022 22:08:26 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by ams.source.kernel.org (Postfix) with ESMTPS id C61F4B82D6D;
+ Thu, 30 Jun 2022 22:08:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EE37C34115;
+ Thu, 30 Jun 2022 22:08:22 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="izP8boWZ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1656626900;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=6Q4opgcj8y74lb4+vPMz7Aaz4RXLvbhbkqhgjW9tIvg=;
+ b=izP8boWZFX5fMfz/RJGlnkHtlHosnp4H5Pul/iijp/E0mA3n7tapeU2lXvgfjFgRHC5EHI
+ HG6iJ64PfQOjoSj6rup/5Vw7Jo/sEexsNUKxxrKW1hyuSTJzNglW5R4FV+q3TpYt5wpFVP
+ pT6LxXQzcgYHKnMapyx7o8SPOSZ4nSs=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2a3c525e
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO); 
+ Thu, 30 Jun 2022 22:08:20 +0000 (UTC)
+Date: Fri, 1 Jul 2022 00:08:16 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Kalesh Singh <kaleshsingh@google.com>
+Cc: John Stultz <jstultz@google.com>, "Paul E. McKenney" <paulmck@kernel.org>,
+ Steven Rostedt <rostedt@goodmis.org>,
+ "Rafael J. Wysocki" <rafael@kernel.org>,
+ Christoph Hellwig <hch@infradead.org>,
+ Saravana Kannan <saravanak@google.com>,
+ "T.J. Mercier" <tjmercier@google.com>,
+ Suren Baghdasaryan <surenb@google.com>,
+ "Cc: Android Kernel" <kernel-team@android.com>,
+ Theodore Ts'o <tytso@mit.edu>, "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
+ LKML <linux-kernel@vger.kernel.org>, wireguard@lists.zx2c4.com,
+ netdev@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH] pm/sleep: Add PM_USERSPACE_AUTOSLEEP Kconfig
+Message-ID: <Yr4e0FCo1l3Db4Gi@zx2c4.com>
 References: <20220630191230.235306-1-kaleshsingh@google.com>
  <Yr3+RLhpp3g9A7vb@zx2c4.com>
  <CAC_TJvdV9bU2xWpbgrQuyrr6ens9gzDnZT2UzAY6Q6ZN9p7aEw@mail.gmail.com>
  <Yr4SQVjBCilyV1na@zx2c4.com>
-In-Reply-To: <Yr4SQVjBCilyV1na@zx2c4.com>
-From: Kalesh Singh <kaleshsingh@google.com>
-Date: Thu, 30 Jun 2022 15:02:46 -0700
-Message-ID: <CAC_TJvdZMr7KyUe7ro7jmFT1z5Gs3YbM9dhbL5Yp-weLvd0T3g@mail.gmail.com>
-Subject: Re: [PATCH] pm/sleep: Add PM_USERSPACE_AUTOSLEEP Kconfig
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: John Stultz <jstultz@google.com>, "Paul E. McKenney" <paulmck@kernel.org>, 
- Steven Rostedt <rostedt@goodmis.org>,
- "Rafael J. Wysocki" <rafael@kernel.org>, 
- Christoph Hellwig <hch@infradead.org>, Saravana Kannan <saravanak@google.com>, 
- "T.J. Mercier" <tjmercier@google.com>, Suren Baghdasaryan <surenb@google.com>, 
- "Cc: Android Kernel" <kernel-team@android.com>, "Theodore Ts'o" <tytso@mit.edu>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Len Brown <len.brown@intel.com>, 
- Pavel Machek <pavel@ucw.cz>, LKML <linux-kernel@vger.kernel.org>,
- wireguard@lists.zx2c4.com, 
- netdev@vger.kernel.org, linux-pm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+ <CAC_TJvdZMr7KyUe7ro7jmFT1z5Gs3YbM9dhbL5Yp-weLvd0T3g@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAC_TJvdZMr7KyUe7ro7jmFT1z5Gs3YbM9dhbL5Yp-weLvd0T3g@mail.gmail.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -82,25 +78,24 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Thu, Jun 30, 2022 at 2:14 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->
-> On Thu, Jun 30, 2022 at 01:41:40PM -0700, Kalesh Singh wrote:
-> > Our latest supported kernels in Android are based on 5.15 so the
-> > config change isn't yet needed. Once there are newer versions with the
-> > CONFIG_ANDROID removed I will add this to the defconfig.
->
-> Okay. It might be still worth getting something uploaded to gerrit so
-> that it's easy to remember and submit whenever the time comes.
->
-> Also, what about android running on mainline? Where does that base
-> config live?
+Hi Kalesh,
 
-I've uploaded the changes on android-mainline [1]. We'll submit there
-once the upstream changes are finalized.
+On Thu, Jun 30, 2022 at 03:02:46PM -0700, Kalesh Singh wrote:
+> I've uploaded the changes on android-mainline [1]. We'll submit there
+> once the upstream changes are finalized.
+> 
+> [1] https://android-review.googlesource.com/c/kernel/common/+/2142693/1
 
-[1] https://android-review.googlesource.com/c/kernel/common/+/2142693/1
+Excellent. I think everything is all set then, at least from my
+perspective. There's a viable replacement for this usage of
+CONFIG_ANDROID, there are patches ready to go both in the kernel and on
+Android's configs, and now all we do is wait for Rafael. Great!
 
-Thanks,
-Kalesh
->
-> Jason
+Maybe people will have opinions on the naming
+(CONFIG_PM_RAPID_USERSPACE_AUTOSLEEP vs
+CONFIG_PM_ANDROID_USERAPCE_AUTO_SLEEP vs what you have vs something else
+vs who knows), but whatever is chosen seems probably fine, as this is a
+pretty low key change since it can always be tweaked further later (it's
+not ABI).
+
+Jason
