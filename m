@@ -4,84 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEABBCCA47B
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Jun 2022 04:25:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 347C4C43334
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Jun 2022 06:53:35 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 77952dda;
-	Thu, 30 Jun 2022 04:25:45 +0000 (UTC)
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com
- [2a00:1450:4864:20::333])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 7a434a40
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id d5098d23;
+	Thu, 30 Jun 2022 06:53:34 +0000 (UTC)
+Received: from sonic310-57.consmr.mail.ir2.yahoo.com
+ (sonic310-57.consmr.mail.ir2.yahoo.com [77.238.177.30])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 373d86db
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Jun 2022 04:25:43 +0000 (UTC)
-Received: by mail-wm1-x333.google.com with SMTP id
- v193-20020a1cacca000000b003a051f41541so847796wme.5
- for <wireguard@lists.zx2c4.com>; Wed, 29 Jun 2022 21:25:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=XF5+1TpNEHAiXDfVWQuBqZGuz8O67KY9U2sjyk0++xA=;
- b=J/ogTuEcBjzc2rb/AX+pBYkVOtdqmFsidowp9idjspZWWtBCu0QpR9Omff+s+WRE4J
- JQqudj/2Cr2qfjcFMt/rm61kR9b0uS6bBZ9XePjS6rge69pJNaxwG4FsPwBmcjgahoIT
- zZ7xrswxi9aUQCIcykenow5cV1Jz6mOyIW2DJheISuKWr7KK/QYsFfFUTz46tTEUfApa
- IsdiNxH21cVIcqCO/V4VZhpjVPJEdc87M9ji/eiTZcXPmWU0DsAVN72/jxdKBCH3gL1n
- EWu/46jkA03D7DfT6mJU1cICL9/sZULYP1olO9hZtpAZ0rLsl247j0otusmUTpKjqAdj
- 5pMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=XF5+1TpNEHAiXDfVWQuBqZGuz8O67KY9U2sjyk0++xA=;
- b=JM4MOHQlYoEGQVvI3uSzxBDRe+m4+iBY+xGX4+mSzj7qZe2+39vz20P3SwjX2iyT5T
- d4rTYt/vlsS0sF/xFIpC1crSQozQCD+10/0+9WEXhTNjQCAY/IqMqMAmRE6NGZFW9lz9
- LcXNM80KDFogXlaxLVlWnmwpOEueK99VMGdIvPpXIrZ+/6vNxLOJxPyxEbf+h5DrS1FT
- XlM2lDjo4ne7YaImGXXrVHLJvVjmljAy6tR419fZ7zequr1h5OlQhMBtxjTI1hD/u+WH
- JCTSk25upPJfO1+KAWBjMREG2FwrilhOSmeoq36sQ+LoReM+IqOahvFQbclvS/0TKyV1
- 7otw==
-X-Gm-Message-State: AJIora8eCwuItJHsnu1ULXY31DHuq5vhNzGCn/1T0hkWTDC3i5L4QMFI
- BillfVT2tC656Mwx5gJW64O548z9UGOGQcuX1FyAzQ==
-X-Google-Smtp-Source: AGRyM1uujfLK/yIN8VLByYx5OAyz3aygJHVOScpq0uxooZ08lDRQ3geR/QBC9YsnqM9Hy0OG7EskPqyOaUSnSkkqoHQ=
-X-Received: by 2002:a05:600c:3553:b0:3a0:519b:4b96 with SMTP id
- i19-20020a05600c355300b003a0519b4b96mr7335634wmq.61.1656563143223; Wed, 29
- Jun 2022 21:25:43 -0700 (PDT)
+ Thu, 30 Jun 2022 06:53:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.co.uk; s=s2048;
+ t=1656572011; bh=Q1meTRCaZ5+c5jHSd1sKdkjU2eKj3W2fgcVSYhRzc4s=;
+ h=Date:Subject:Cc:References:From:In-Reply-To:From:Subject:Reply-To;
+ b=KZQZ6y+aiT317aqUtoLbvhWCHLCDLJi22Bi45ng4WAD4McDo4aJpVJofLFd52uhZiWXBZQDm05UP2oN72DLnUUe2eKUlrg3PD4MVPoWnAZZmuj6KpU/KK6V1I5OdwN6yKjpZZFVJoGZirD0mtvivZNC9AZBTy5TqDRheWV44M4BA+DTh5hYIaBeKsXQzisyKmILjbHLsqe7PHXVywipI2nPRfHdIQiSmBwz5Fg2kH3+yFQqn66LKwUhaC/KlKZFMRz6JwEJ1iTwrduCVt2keM+wpWBL7mzpDAUjQ8KMW+gOvqbDXFyJ1M6G8dBYSe6Z55JOOytzfGOUbDGncBQPfbg==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
+ t=1656572011; bh=/yfCjm2sln+GpqFe9ul6ChkZTp++JP5WJCBySjZV1ah=;
+ h=X-Sonic-MF:Date:Subject:From:From:Subject;
+ b=a+3Kw3xpq5ViknK7Fj0Tz+k0B16JhRB1sVQuxH5oUKmtMwhIVkAZCGZt1kKXNtx94fdKekM/oWDm3Rlg8EDwZVj1Rgc98rpG8i8giyXHqkxvYxYKrKcgEchmd36qN8emZd74YEb/YMAKTfskI2JSpfkZiablo1SCOY1eIsZ75cMdPR1QhXFmrlNDXQARg+c1QHuxrdwtaht9seR2LCDv5EbIqIOczIhF+lUHkv2MDJsUdqjK+e93RQrMOkuWod1BYZnWR8GKk6lwgmwFhSRtN23CnSfz3uzToDW17L4OLsHWmaazM+HX3adwqg/haQRxiXVpo+nn114hVt/bsGugIQ==
+X-YMail-OSG: DcubalIVM1mBXuRFlD4kSkBXYwV8JheYQeVA5NaUZzB.FGZxSOdAzFTQ3Xv5sak
+ J6.bIzSeIcZ82G.VwI6_KNp6gAsIBn1nkXQXUy1V1GGxNbFt0UnWD6mUcXPXCh1lzCrCTFE5IatI
+ 9BlnIWFuJm0j1Gek4nE16pARd3qmEmNeGTJMGjHiUYRwPL6IJenEehTlvqysfFEZl1QDyCbf.Sd8
+ w.AK2PINF3QmNlg.QYGOQTborhNYYHMux8J5qpjN8DT65ZpdJStNDKEET_ZOIMoLJvqQ8EP8kXze
+ nYVCPPFwMHxq2YMlit_17hf8LDVNwZpmksoePK3pQodIoSk7O87Z7yUKmcxBW6ABD06L3TYeJHbi
+ BIKzJYEQEg5wRsZLLBJIvWbffVEfnfkMN0kEHeAQOXA7agVpBl5pVdi8TetsLQqpqy7DrDSX5_Ae
+ dt87QVKqNDmdXFVfB0cARPYhZ0KI4zSbff6drQRnkVjeAd4oqkAKIFv6phosWDqj3h3bnaboObpB
+ woA7s1lmVWFaHxzmYdtZRKD.jEFwtY865UvNg13rqjrft0YGTf7w31lsQMkYT1eYAxHMW2x3f1fv
+ kGOElrr5k5v1MvBoOqc8seVhUqRqGYch2YhWg14oFkJmuOfav6Eu0NTlHkpDL9wj8obLaZRPhFSR
+ NKskSsqhlc.nNphkgJjE_EFRKnu.E.f0vXWX_dwAA8BiTPevZBEMjWVChdmprauqTasa_Z_4RTo1
+ 7F1h.DOjOq1rykWT7gnDuuM6r6sw2lUkXzHeoQNemp52I1r1KUUwJl0YhyaOuCDLLNUoKPZgFZfN
+ zNI_v8bHxD1c7dqMMu8h2U12mnASfYcfrUZ7nmFTKQTsMBSx_b9nxaaP8RTmNBCaBZipMpuN2hSd
+ HOSVTh4kFyUhjP7DrXvDUyvH9V20bu_KVnhRNfdeu36ph6FZvwOXBt2QNeEH.kyefskIj9C9y_ik
+ VAjozRhTgesZTrmrW1hBKPocLEk99b1vkpUaqp0WC3yhxqIv.VfGuaXHQhGaY2ud.PzPq0edexrA
+ T0VPdNnSgV55iXNJbHSytvHEt1e.ZrLWR1U96CEtABLRCTRyb2s4C1cdJToCYrc8y1LiurfuN5MX
+ KfTjg_MiYtq4bWyGXh5rbfpeGRxGgWfZPmtN9RDjaK.loSvsEI8Bf3tz0w5Iou5qe9qE.mw97yYX
+ VeG9O0oDtHvYYRve1ITgfszG6Pg1jG3awkkeW0JuSdmiqLvuFJ5hKpmsq1E2sjLMC3k3_BEnNRxo
+ JSbuV_bTOXdn7D72T5zAjApK5uOYq8dBY6NCTdkV5CMX4DN3JshfIqLWe.75brQqZT0QhLE8AuZd
+ Ha6fbm3Fcd2r2CBl36NlJTI7R9VDEzuzPKlZOwxywuHXyhCo__iJcP18vr7De0lPuJCDeIrwJ.gT
+ IrD20s683ekPROjs3t8TqdnAzAjbPXT_6ATfkQEqLA7K1u29gujhgIQnoUaDD7QiNLV7VLKrvuh3
+ ZZTGFYUeivZbSu5VDz98g88RQRoh0i1UYPZgwjHJI4Tnnr4Wr1E2ApYuQriT9EXJnYrFqzn2dUNf
+ Mf4lDOtPlH2y4NhXSGpUlEkdgLHFW64BsedswSlsZabpixSX3YJrg5NozZj2yiMUqGEXTM8JYEgf
+ Ut9m0tIcuYoubS4S1oH8Mcp7021Buv4Xql_qVwuz_kzT1ZqKga4.eeJVoW83vhPbNvoN.SdMXaPU
+ N.tQNgiiUDALNh0zhF4LDOhAJWlkWwpTJ9MPMdeJ0QgQO7Sm5EjF2zU1UVWrHHCujtHj9eS9Hr5m
+ FnwwrHYRxVj39xot9t3Ho5vj8JqnoSFX4rZGiYxVpuglUARLY4oDYWDYY1CHMNZmqdvYzVdD3_vg
+ 1Ph_fLl95qyeeAGiIEzAX.AkB4JaXpL4SoTs7qo8tSyVLM2vXwSXhsiK0Vj0iBGSlxG5NqQMtX.b
+ ov0Ur.8hEOjYHh6R.EpgD3aLunlp4azQwPBMTQ.QD8XswrfExM6sUgAKbN5SOUJ3tLDwO3sFat.d
+ BjCFeyPr5.m0AJHDH6XtU8VX4HWZxe8QbPlWdoul3zV7RnAvssm0SoQXPiZd5g9DaF5.9.wiLOWn
+ 7brxb6GINSJbMG5zIjZPL5NpeOTWFz.67gEghVIlmEtaSlrgaPD4Yb3hA8_PDwcPq7zbFvBvzZ_9
+ M_1nUKfBrIh8tskj8qknG_35quzMXBYgsBYrZlKlGdXSJAqXGinlwApIll3JlMQ.Bs5g03gd.maN
+ zTHBVw6zkFaWZsdzu13zsuGqpxe8auGQqYHasFAqee.eXETfIeRqoMyMUSNmBrGi7XffsVSiHpzM
+ BxRLJ1_dRGT0-
+X-Sonic-MF: <peljasz@yahoo.co.uk>
+Received: from sonic.gate.mail.ne1.yahoo.com by
+ sonic310.consmr.mail.ir2.yahoo.com with HTTP; Thu, 30 Jun 2022 06:53:31 +0000
+Received: by hermes--canary-production-ir2-74b4d6d794-wvl67 (Yahoo Inc. Hermes
+ SMTP Server) with ESMTPA ID c0abda9aec9679e241b1da430383e01b; 
+ Thu, 30 Jun 2022 06:53:28 +0000 (UTC)
+Message-ID: <c1ecbad3-8b01-6caa-8fb0-68b59ef62fc5@yahoo.co.uk>
+Date: Thu, 30 Jun 2022 07:53:28 +0100
 MIME-Version: 1.0
-References: <Yrx8/Fyx15CTi2zq@zx2c4.com> <20220629163007.GA25279@lst.de>
- <Yrx/8UOY+J8Ao3Bd@zx2c4.com> <YryNQvWGVwCjJYmB@zx2c4.com>
- <Yryic4YG9X2/DJiX@google.com> <Yry6XvOGge2xKx/n@zx2c4.com>
- <CAC_TJve_Jk0+XD7VeSJVvJq4D9ZofnH69B4QZv2LPT4X3KNfeg@mail.gmail.com>
- <YrzaCRl9rwy9DgOC@zx2c4.com>
- <CANDhNCpRzzULaGmEGCbbJgVinA0pJJB-gOP9AY0Hy488n9ZStA@mail.gmail.com>
- <YrztOqBBll66C2/n@zx2c4.com> <YrzujZuJyfymC0LP@zx2c4.com>
-In-Reply-To: <YrzujZuJyfymC0LP@zx2c4.com>
-From: Kalesh Singh <kaleshsingh@google.com>
-Date: Wed, 29 Jun 2022 21:25:32 -0700
-Message-ID: <CAC_TJvcNOx1C5csdkMCAPVmX4gLcRWkxKO8Vm=isgjgM-MowwA@mail.gmail.com>
-Subject: Re: [PATCH] remove CONFIG_ANDROID
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: John Stultz <jstultz@google.com>, Christoph Hellwig <hch@lst.de>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- =?UTF-8?B?QXJ2ZSBIasO4bm5ldsOlZw==?= <arve@android.com>, 
- Todd Kjos <tkjos@android.com>, Martijn Coenen <maco@android.com>, 
- Joel Fernandes <joel@joelfernandes.org>, Christian Brauner <brauner@kernel.org>,
- Hridya Valsaraju <hridya@google.com>, Suren Baghdasaryan <surenb@google.com>,
- "Theodore Ts'o" <tytso@mit.edu>, 
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
- Jakub Kicinski <kuba@kernel.org>, "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>,
- Paolo Abeni <pabeni@redhat.com>, 
- Rob Herring <robh@kernel.org>, "Paul E. McKenney" <paulmck@kernel.org>, 
- Frederic Weisbecker <frederic@kernel.org>,
- Neeraj Upadhyay <quic_neeraju@quicinc.com>, 
- Josh Triplett <josh@joshtriplett.org>, Steven Rostedt <rostedt@goodmis.org>, 
- Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
- Lai Jiangshan <jiangshanlai@gmail.com>, 
- Shuah Khan <shuah@kernel.org>, LKML <linux-kernel@vger.kernel.org>, 
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org, rcu <rcu@vger.kernel.org>, 
- "open list:KERNEL SELFTEST FRAMEWORK" <linux-kselftest@vger.kernel.org>,
- sultan@kerneltoast.com, 
- android-kernel-team <android-kernel-team@google.com>,
- Saravana Kannan <saravanak@google.com>, 
- "Rafael J. Wysocki" <rafael@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: package from fedorainfracloud for centOS 8 does not build
+Content-Language: en-US
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <b05c9019-5165-84f0-b3f1-a0eeb30faad1.ref@yahoo.co.uk>
+ <b05c9019-5165-84f0-b3f1-a0eeb30faad1@yahoo.co.uk>
+ <CAHmME9o5Qpg_oHjWFBa6zoVZd4ALOpBnjj7Y-y_ipgtZ4+o_qQ@mail.gmail.com>
+From: lejeczek <peljasz@yahoo.co.uk>
+In-Reply-To: <CAHmME9o5Qpg_oHjWFBa6zoVZd4ALOpBnjj7Y-y_ipgtZ4+o_qQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Mailer: WebService/1.1.20381
+ mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -96,40 +92,21 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, Jun 29, 2022 at 5:30 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->
-> Hey again,
->
-> On Thu, Jun 30, 2022 at 2:24 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> > 1) Introduce a simple CONFIG_PM_CONTINUOUS_AUTOSLEEPING Kconfig thing
-> >    with lots of discouraging help text.
-> >
-> > 2) Go with the /sys/power tunable and bikeshed the naming of that a bit
-> >    to get it to something that reflects this better, and document it as
-> >    being undesirable except for Android phones.
->
-> One other quick thought, which I had mentioned earlier to Kalesh:
->
-> 3) Make the semantics a process holding open a file descriptor, rather
->    than writing 0/1 into a file. It'd be called /sys/power/
->    userspace_autosleep_ctrl, or something, and it'd enable this behavior
->    while it's opened. And maybe down the line somebody will want to add
->    ioctls to it for a different purpose. This way it's less of a tunable
->    and more of an indication that there's a userspace app doing/controlling
->    something.
->
-> This idea (3) may be a lot of added complexity for basically nothing,
-> but it might fit the usage semantics concerns a bit better than (2). But
-> anyway, just an idea. Any one of those three are fine with me.
 
-Two concerns John raised:
-  1) Adding new ABI we need to maintain
-  2) Having unclear config options
 
-Another idea, I think, is to add the Kconfig option as
-CONFIG_SUSPEND_SKIP_RNG_RESEED? Similar to existing
-CONFIG_SUSPEND_SKIP_SYNC and I think it would address those concerns.
-
---Kalesh
-
-> Jason
+On 29/06/2022 13:27, Jason A. Donenfeld wrote:
+> On Wed, Jun 29, 2022 at 2:17 PM lejeczek <peljasz@yahoo.co.uk> wrote:
+>> Hi guys.
+>>
+>> In case somebody here looks after
+>> 'copr:copr.fedorainfracloud.org:jdoss:wireguard' then
+>>
+>> wireguard-dkms-1.0.20220627-1.el8.noarch for 4.18.0-394.el8.x86_64 fails
+>> to build
+>>
+>> many thanks, L.
+> https://lists.zx2c4.com/pipermail/wireguard/2022-June/007664.html
+is there a reason for which you do not keep multiple 
+versions in the repo - so to "downgrade" people would have 
+as an option?
+thanks, L.
