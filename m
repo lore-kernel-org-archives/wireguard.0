@@ -4,66 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B8B3C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Jun 2022 22:12:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37DA9C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  1 Jul 2022 08:38:38 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id cdb1bf3b;
-	Thu, 30 Jun 2022 22:08:28 +0000 (UTC)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 988431fa
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 2bea776e;
+	Fri, 1 Jul 2022 08:38:37 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id c4a34a3d
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 30 Jun 2022 22:08:26 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Jul 2022 08:38:35 +0000 (UTC)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id C61F4B82D6D;
- Thu, 30 Jun 2022 22:08:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EE37C34115;
- Thu, 30 Jun 2022 22:08:22 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="izP8boWZ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1656626900;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=6Q4opgcj8y74lb4+vPMz7Aaz4RXLvbhbkqhgjW9tIvg=;
- b=izP8boWZFX5fMfz/RJGlnkHtlHosnp4H5Pul/iijp/E0mA3n7tapeU2lXvgfjFgRHC5EHI
- HG6iJ64PfQOjoSj6rup/5Vw7Jo/sEexsNUKxxrKW1hyuSTJzNglW5R4FV+q3TpYt5wpFVP
- pT6LxXQzcgYHKnMapyx7o8SPOSZ4nSs=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2a3c525e
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO); 
- Thu, 30 Jun 2022 22:08:20 +0000 (UTC)
-Date: Fri, 1 Jul 2022 00:08:16 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Kalesh Singh <kaleshsingh@google.com>
-Cc: John Stultz <jstultz@google.com>, "Paul E. McKenney" <paulmck@kernel.org>,
- Steven Rostedt <rostedt@goodmis.org>,
- "Rafael J. Wysocki" <rafael@kernel.org>,
- Christoph Hellwig <hch@infradead.org>,
- Saravana Kannan <saravanak@google.com>,
- "T.J. Mercier" <tjmercier@google.com>,
- Suren Baghdasaryan <surenb@google.com>,
- "Cc: Android Kernel" <kernel-team@android.com>,
- Theodore Ts'o <tytso@mit.edu>, "David S. Miller" <davem@davemloft.net>,
+ by dfw.source.kernel.org (Postfix) with ESMTPS id E449C621AF;
+ Fri,  1 Jul 2022 08:38:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C82B4C3411E;
+ Fri,  1 Jul 2022 08:38:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+ s=korg; t=1656664713;
+ bh=rK44NCzWOqo4I27A6uYsVw7hmEv82qI7qYAMPwc9i4I=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=DDeZlJcZlyuirP4fEtdm38/8cVpaRhnnwtqkZonyATd0o1phMXhzCeA8sOyLQAS5w
+ Q+zA6RpYehRvzRCOhwtFItE5u15sDrMphNGX9VVxHBsGJbQ4evqTAgadi2uALmNYN6
+ I0aMVlfAO2SC59FH3Vnl1SQSniI5duk3FVI7DZAw=
+Date: Fri, 1 Jul 2022 10:38:30 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: Kalesh Singh <kaleshsingh@google.com>, jstultz@google.com,
+ paulmck@kernel.org, rostedt@goodmis.org, rafael@kernel.org,
+ hch@infradead.org, saravanak@google.com, tjmercier@google.com,
+ surenb@google.com, kernel-team@android.com, Theodore Ts'o <tytso@mit.edu>,
+ "David S. Miller" <davem@davemloft.net>,
  Eric Dumazet <edumazet@google.com>,
  Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
  Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>,
- LKML <linux-kernel@vger.kernel.org>, wireguard@lists.zx2c4.com,
+ linux-kernel@vger.kernel.org, wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org, linux-pm@vger.kernel.org
 Subject: Re: [PATCH] pm/sleep: Add PM_USERSPACE_AUTOSLEEP Kconfig
-Message-ID: <Yr4e0FCo1l3Db4Gi@zx2c4.com>
+Message-ID: <Yr6yhnZNkCDgde9z@kroah.com>
 References: <20220630191230.235306-1-kaleshsingh@google.com>
  <Yr3+RLhpp3g9A7vb@zx2c4.com>
- <CAC_TJvdV9bU2xWpbgrQuyrr6ens9gzDnZT2UzAY6Q6ZN9p7aEw@mail.gmail.com>
- <Yr4SQVjBCilyV1na@zx2c4.com>
- <CAC_TJvdZMr7KyUe7ro7jmFT1z5Gs3YbM9dhbL5Yp-weLvd0T3g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAC_TJvdZMr7KyUe7ro7jmFT1z5Gs3YbM9dhbL5Yp-weLvd0T3g@mail.gmail.com>
+In-Reply-To: <Yr3+RLhpp3g9A7vb@zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -78,24 +62,33 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Kalesh,
-
-On Thu, Jun 30, 2022 at 03:02:46PM -0700, Kalesh Singh wrote:
-> I've uploaded the changes on android-mainline [1]. We'll submit there
-> once the upstream changes are finalized.
+On Thu, Jun 30, 2022 at 09:49:24PM +0200, Jason A. Donenfeld wrote:
+> Hi Kalesh,
 > 
-> [1] https://android-review.googlesource.com/c/kernel/common/+/2142693/1
+> On Thu, Jun 30, 2022 at 07:12:29PM +0000, Kalesh Singh wrote:
+> > Systems that initiate frequent suspend/resume from userspace
+> > can make the kernel aware by enabling PM_USERSPACE_AUTOSLEEP
+> > config.
+> > 
+> > This allows for certain sleep-sensitive code (wireguard/rng) to
+> > decide on what preparatory work should be performed (or not) in
+> > their pm_notification callbacks.
+> > 
+> > This patch was prompted by the discussion at [1] which attempts
+> > to remove CONFIG_ANDROID that currently guards these code paths.
+> > 
+> > [1] https://lore.kernel.org/r/20220629150102.1582425-1-hch@lst.de/
+> > 
+> > Suggested-by: Jason A. Donenfeld <Jason@zx2c4.com>
+> > Signed-off-by: Kalesh Singh <kaleshsingh@google.com>
+> 
+> Thanks, looks good to me. Do you have a corresponding Gerrit link to the
+> change adding this to the base Android kernel config? If so, have my
+> Ack:
+> 
+>     Acked-by: Jason A. Donenfeld <Jason@zx2c4.com>
 
-Excellent. I think everything is all set then, at least from my
-perspective. There's a viable replacement for this usage of
-CONFIG_ANDROID, there are patches ready to go both in the kernel and on
-Android's configs, and now all we do is wait for Rafael. Great!
+Cool, I'll queue this up and also the CONFIG_ANDROID removal into my
+tree now, thanks all for working it out!
 
-Maybe people will have opinions on the naming
-(CONFIG_PM_RAPID_USERSPACE_AUTOSLEEP vs
-CONFIG_PM_ANDROID_USERAPCE_AUTO_SLEEP vs what you have vs something else
-vs who knows), but whatever is chosen seems probably fine, as this is a
-pretty low key change since it can always be tweaked further later (it's
-not ABI).
-
-Jason
+greg k-h
