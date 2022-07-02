@@ -4,68 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A91F8C43334
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  1 Jul 2022 23:32:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D85D9C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  2 Jul 2022 23:21:15 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 04ed03e6;
-	Fri, 1 Jul 2022 23:32:54 +0000 (UTC)
-Received: from ms.lwn.net (ms.lwn.net [2600:3c01:e000:3a1::42])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id c8956f02
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 1 Jul 2022 20:22:42 +0000 (UTC)
-Received: from localhost (unknown [IPv6:2601:281:8300:73::5f6])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by ms.lwn.net (Postfix) with ESMTPSA id BDCD936D;
- Fri,  1 Jul 2022 20:22:38 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 ms.lwn.net BDCD936D
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lwn.net; s=20201203;
- t=1656706959; bh=dxet9HAczfcZ9vu/1oL1hu5S6lHOaJx1MYQzpzQnE3w=;
- h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
- b=c/wZEaG8r9bEzMb/9Yed5GTIwTIqapPop1mA95KPr3rBUovZudh3MzbBq4CCf2w+N
- O5wA2ppfkxYCkT2qYzn/jocPg/WF6Un9rseV62tBWBuL8our/CBG1rvsHTx82AKtaK
- PadBeZObcRmaPrgOdyJXbkz9sR08gVwxb40AApbU05jfYCYZdziljL8MbgOsH9rdWj
- h8Z5rZuitWMoBgGDvgE+XvHLus3OHETunxvmSJA+s7qxDSlCCuQ0kQcBBdP75BPdWR
- ZYJRDJhoHU1mFDZqSclmpR1UPyNV2ue6xVZftBJdFvgLnyFLshgAKX8+i1NVJWFlCj
- /8mq64R3WoXEQ==
-From: Jonathan Corbet <corbet@lwn.net>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, John Stultz <jstultz@google.com>
-Cc: Kalesh Singh <kaleshsingh@google.com>, Christoph Hellwig <hch@lst.de>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Arve =?utf-8?B?SGrDuG5u?=
- =?utf-8?B?ZXbDpWc=?=
- <arve@android.com>, Todd Kjos <tkjos@android.com>, Martijn Coenen
- <maco@android.com>, Joel Fernandes <joel@joelfernandes.org>, Christian
- Brauner <brauner@kernel.org>, Hridya Valsaraju <hridya@google.com>, Suren
- Baghdasaryan <surenb@google.com>, Theodore Ts'o <tytso@mit.edu>, "David S.
- Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub
- Kicinski <kuba@kernel.org>, "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>,
- Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, "Paul E.
- McKenney" <paulmck@kernel.org>, Frederic Weisbecker <frederic@kernel.org>,
- Neeraj Upadhyay <quic_neeraju@quicinc.com>, Josh Triplett
- <josh@joshtriplett.org>, Steven Rostedt <rostedt@goodmis.org>, Mathieu
- Desnoyers <mathieu.desnoyers@efficios.com>, Lai Jiangshan
- <jiangshanlai@gmail.com>, Shuah Khan <shuah@kernel.org>, LKML
- <linux-kernel@vger.kernel.org>, wireguard@lists.zx2c4.com,
- netdev@vger.kernel.org, rcu <rcu@vger.kernel.org>, "open list:KERNEL
- SELFTEST FRAMEWORK" <linux-kselftest@vger.kernel.org>,
- sultan@kerneltoast.com, android-kernel-team
- <android-kernel-team@google.com>, Saravana Kannan <saravanak@google.com>,
- "Rafael J. Wysocki" <rafael@kernel.org>
-Subject: Re: [PATCH] remove CONFIG_ANDROID
-In-Reply-To: <YrztOqBBll66C2/n@zx2c4.com>
-References: <20220629161527.GA24978@lst.de> <Yrx8/Fyx15CTi2zq@zx2c4.com>
- <20220629163007.GA25279@lst.de> <Yrx/8UOY+J8Ao3Bd@zx2c4.com>
- <YryNQvWGVwCjJYmB@zx2c4.com> <Yryic4YG9X2/DJiX@google.com>
- <Yry6XvOGge2xKx/n@zx2c4.com>
- <CAC_TJve_Jk0+XD7VeSJVvJq4D9ZofnH69B4QZv2LPT4X3KNfeg@mail.gmail.com>
- <YrzaCRl9rwy9DgOC@zx2c4.com>
- <CANDhNCpRzzULaGmEGCbbJgVinA0pJJB-gOP9AY0Hy488n9ZStA@mail.gmail.com>
- <YrztOqBBll66C2/n@zx2c4.com>
-Date: Fri, 01 Jul 2022 14:22:38 -0600
-Message-ID: <87a69slh0x.fsf@meer.lwn.net>
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id cdfd97fc;
+	Sat, 2 Jul 2022 23:21:13 +0000 (UTC)
+Received: from melchior.bamsoftware.com (melchior.bamsoftware.com
+ [2600:3c00:e000:128:de39:20ee:9704:752d])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 2ee4e0f6
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Sat, 2 Jul 2022 23:21:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=bamsoftware.com; s=mail; h=In-Reply-To:Content-Type:MIME-Version:References
+ :Message-ID:Subject:To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding
+ :Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=SADBIpydu2Yolvshi+ARZfmto4AFpilNvI0HnIgl06U=; b=VGDWsJCBbo3wmiRomCq1FgVenZ
+ /CDEh3MG76TZRqOIHA5Hf3x4+zau7kRWN/Tydx5YTrk4RMSiaER6hxWTbCs2urWqKAeRImdfJDGAa
+ fCRPtbRm8sPGwSPZqHXhI7ULmcAOY5a0GCAwdAe7cVk5CnnKgmRXktMoJBpdWXr7Vo5o=;
+Date: Sat, 2 Jul 2022 19:21:07 -0400
+From: David Fifield <david@bamsoftware.com>
+To: wireguard@lists.zx2c4.com
+Subject: Re: WireGuard protocol blocking in China, swgp-go (userspace
+ obfuscation proxy)
+Message-ID: <20220702232107.ofaioenh3twoqdfd@bamsoftware.com>
+References: <20220609220522.kwqa4uvuc3sijlka@bamsoftware.com>
+ <87pmjbpele.fsf@ungleich.ch>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Mailman-Approved-At: Fri, 01 Jul 2022 23:32:52 +0000
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87pmjbpele.fsf@ungleich.ch>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -80,29 +49,83 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-"Jason A. Donenfeld" <Jason@zx2c4.com> writes:
+On Tue, Jun 14, 2022 at 03:13:11PM +0200, Nico Schottelius wrote:
+> > I am forwarding some information about WireGuard blocking and
+> > anti-blocking that was posted to a censorship circumvention forum.
+> 
+> In regards to this topic I was wondering if it makes sense to have a
+> more generic obfuscation proxy that can carry tcp/udp payload?
+> 
+> Maybe this already exists, but I would think that something that hops
+> protocols (IPv6, IPv4 endpoints, tcp/udp encapsolution), changes ports
+> and uses envelope based tunneling (http, https, smtp, imap - worst case
+> DNS) would make it easier to sustain communication even in more serious
+> filtering scenarios.
+> 
+> Given such a "generic obfuscator", it could be combined with "protocol"
+> modes, i.e. enhancing protocols such as wireguard with the presented
+> algorithm, making it even harder to predict the content.
+> 
+> I'd assume some performance regressions using such an obfuscator, but
+> maybe it could even "learn" the proper obfuscation by detecting blocks
+> on easier to detect obfuscation and then switching to a stronger, but
+> less efficient obfuscation.
 
-> I guess what I have in mind is the answer to these being "yes":
-> - "Is it very common to be asleep for only 2 seconds before being woken?"
-> - "Is it very common to be awake for only 2 seconds before sleeping?"
->
-> I think it'd be easiest to have a knob somewhere (compiletime,
-> runtime, wherever) that describes a device that exhibits those
-> properties. Then wireguard and other things will make a decision on how
-> to handle the crypto during relevant events.
+There are many designs for anti-censorship protocol obfuscation proxies,
+including multi-modal ones like you suggest, more or less fanciful, more
+or less realized. You can get a list of some of the more popular and
+practical ones under the "censorship-circumvention" topic on GitHub:
+	https://github.com/topics/censorship-circumvention
+There's plenty of research on the topic as well, sometimes leading to
+practical systems. CensorBib has the most important papers:
+	https://censorbib.nymity.ch/
+For an introduction and survey of ideas that have been proposed, I
+recommend reading "Making Sense of Censorship Resistance Systems"
+( https://censorbib.nymity.ch/#Khattak2016a ) and "Towards Grounding
+Censorship Circumvention in Empiricism" ( https://censorbib.nymity.ch/#Tschantz2016a ).
+There are summaries of recent research papers on censorship at
+https://github.com/net4people/bbs/issues?q=label%3A%22reading+group%22 .
+The idea of pluggable obfuscation modules is fairly ubiquitous, and has
+been systematized in various ways:
+	https://www.pluggabletransports.info/
+	https://shadowsocks.org/guide/sip003.html
+	https://guide.v2fly.org/en_US/advanced/advanced.html
+	
+Let me suggest, however, that it is a mistake to focus too narrowly on
+protocol obfuscation. It is a necessary element, but not the most
+important one nor the one that's hardest to get right. There's no
+shortage of obfuscators, and even naive protocol obfuscation usually
+works even against well-resourced censors like the GFW. The weak link of
+circumvention systems tends not to be what cover protocols they use, but
+the particulars of their connection establishment. (This point is made
+in the two SoK papers I linked above.) Empirically, censors prefer to
+disrupt communications during the early stages, when the connection is
+being first set up. It is faster, cheaper, and overall more effective
+than long-term steady-state protocol processing.
 
-So please forgive the noise from the peanut gallery, but I do find
-myself wondering...do you really need a knob for this?  The kernel
-itself can observe how often (and for how long) the system is suspended,
-and might well be able to do the right thing without explicit input from
-user space.  If it works it would eliminate a potential configuration
-problem and also perhaps respond correctly to changing workloads.
+Take HTTP for example. It's not hard to obfsucate a network tunnel so
+that it resembles HTTP at some degree of fidelity. One might think that
+to in order to block such a tunnel, a censor needs to somehow
+distinguish tunnel HTTP from "real" HTTP. But most real-world censors
+will never go that far: instead they will look at the destination IP
+address or Host header of HTTP requests, or send their own probes to
+suspected servers to see how they respond; but in any case they'll add
+the server's IP address to a firewall block list, and call it a day. The
+hard part of obfuscating a tunnel as HTTP is not faithfully implementing
+HTTP; it's protecting the server's address from being blocked for
+reasons unrelated to HTTP. Protocol obfuscation cannot help when it is
+not the protocol that is being attacked.
 
-For example, rather than testing a knob, avoid resetting keys on resume
-if the suspend time is less than (say) 30s?
+Having the tunnel hop across different endpoints is not a bad idea, but
+consider: how does a legitimate user learn what endpoints to use,
+without a censor learning them also? There are ways to protect
+circumvention endpoints, from single-user servers (which I believe is
+the model swgp-go intends), to strategic distribution of endpoint
+addresses, to colocating proxy servers with other network services, but
+these go beyond the realm of protocol obfuscation.
 
-Educate me on what I'm missing here, please :)
-
-Thanks,
-
-jon
+What I like about swgp-go is that it has a narrowly targeted goal (to
+hide the most salient distinguishers of WireGuard, with low overhead)
+and it is designed for a realistic and informed threat model. The
+protocol obfuscation is re-encryption and padding, but it doesn't have
+to be more than that.
