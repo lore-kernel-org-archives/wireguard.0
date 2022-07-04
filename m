@@ -4,50 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE69FC43334
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 Jul 2022 07:32:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD08AC433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 Jul 2022 19:16:06 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id ea096deb;
-	Mon, 4 Jul 2022 07:32:50 +0000 (UTC)
-Received: from mail-vs1-xe2b.google.com (mail-vs1-xe2b.google.com
- [2607:f8b0:4864:20::e2b])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 629c2add
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 4 Jul 2022 07:32:48 +0000 (UTC)
-Received: by mail-vs1-xe2b.google.com with SMTP id h7so8179508vsr.11
- for <wireguard@lists.zx2c4.com>; Mon, 04 Jul 2022 00:32:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to;
- bh=i2vkyY6DzCVILgYZXgnBc6sgtboTZ0FO+x/5cljbRkI=;
- b=Gr1W5hDGxvn+hSY4i33gblFg4ii7NiGOgjiL5Ls25cXgAZVVNlyH9IRIZJ0ZhQAl+i
- Zc4aAFE3PZfuEQlVE5O7/S8Qcodwl3aKuOJ97nXH2++CDIyOU9I4HbN8DJxe7LH7dER8
- bufBqyb/K52oZwAxoHnokN4CtziiVz1nT3Rt1PlXrtP2OXazmKtbuhcviMDOHNu7ezSM
- E80rWu3tW2S0AdWmXSXXhIOGlGMt96Q97n8UAkYgrngtXH2tHOzknrrD6xmcVNx1rdhB
- rGiF8sy5t0xnkC0Ua7/TvM0Z431RVcHor4P4Bb133jhjoxdqMnO/C3ykPUpH1elGbulx
- WF+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=i2vkyY6DzCVILgYZXgnBc6sgtboTZ0FO+x/5cljbRkI=;
- b=RZ16GcygleyIstlHZ1pFJ12igCyoYA4CIRl0iMeOEwdJ1ug/nqVC4IhyUqpBJKzfvo
- VQD74/Z6xNAbO2L3mOIEpS1T4ac9edkWg2XZl5aTMr5D20rWV2Nu4JjCInJ/fwY7GRFs
- qcrypHyTZFWb7VqDTLwFfG3xUri4ubKnSefBsV/an/b7KuAO4T8mG9CUK7lzgJFRlcuH
- 9B87chCQ9lYURJMXXYavayvLRVlLl9RU6H4S6kSERrTpox1YnXSYHnSKMkeI7dwPZADp
- BkKW+KR6ez9Tqan02VjZJVRlktXWMmbKq83E9+etxm8qUInmPDKbTjsJoMf/kFMUhrop
- KdvQ==
-X-Gm-Message-State: AJIora9D3nNdP6YB8KhY4DNelpwaV9zll6PI0zMFQpT9aItT8EU+q2FZ
- iCC0R+V69EfyOcymGQ7WW3nxwCKGFm5S1+qU2xDv0YAvswE=
-X-Google-Smtp-Source: AGRyM1vGwNhndhecJS0C3Kibm5M27pcknby23JJD3CzW/aqLkWJot1QF0KcI8yVCWgbxcRxOJCuyMVSeKP3XcTRR04w=
-X-Received: by 2002:a67:c113:0:b0:354:3ef9:3f79 with SMTP id
- d19-20020a67c113000000b003543ef93f79mr16616435vsj.3.1656919967192; Mon, 04
- Jul 2022 00:32:47 -0700 (PDT)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 6e252d3d;
+	Mon, 4 Jul 2022 19:16:04 +0000 (UTC)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 2d408151
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Mon, 4 Jul 2022 19:16:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1656962161;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=JzEFy2vBvEJRckAivo/vJ79Li0A+UBYKs7Ka5I1o8Vk=;
+ b=Ezh0/eF+sPc/yoIvVvjuKB1gF1qgicvfRSscAWpfeeyqCbRtk//+nzEQkClIwNzw63N4BJ
+ xcL+egww7nfAiCK9wwClCMAQwtjgt7GH3KPB6RgzTY61Fb91oFQvGmz8p4BguNx7k+Atlg
+ sGWC+7+JUZj1IC9CnpdfrHGl2hj7Fe4=
+Received: from mimecast-mx02.redhat.com (mx3-rdu2.redhat.com
+ [66.187.233.73]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-621-uc6zR04xPLysdmBmr1u7lg-1; Mon, 04 Jul 2022 15:16:00 -0400
+X-MC-Unique: uc6zR04xPLysdmBmr1u7lg-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id F1C9729ABA0D;
+ Mon,  4 Jul 2022 19:15:59 +0000 (UTC)
+Received: from rules.brq.redhat.com (unknown [10.40.208.2])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id C518841617E;
+ Mon,  4 Jul 2022 19:15:56 +0000 (UTC)
+From: Vladis Dronov <vdronov@redhat.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>,
+ Harald Freudenberger <freude@linux.ibm.com>,
+ Herbert Xu <herbert@gondor.apana.org.au>, wireguard@lists.zx2c4.com,
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: Vladis Dronov <vdronov@redhat.com>
+Subject: [PATCH] wireguard: Kconfig: select CRYPTO_CHACHA_S390
+Date: Mon,  4 Jul 2022 21:15:35 +0200
+Message-Id: <20220704191535.76006-1-vdronov@redhat.com>
 MIME-Version: 1.0
-From: Alexey Ponkin <alexey.ponkin@gmail.com>
-Date: Mon, 4 Jul 2022 09:32:37 +0200
-Message-ID: <CA+QYBN=7FjHRVk+wox36iaG1i3-ZSF59qv_-yQ6UOdZ9WPLuKw@mail.gmail.com>
-Subject: wireguard-apple: Unaligned pointer(s) for architecture arm64
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.85 on 10.11.54.10
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -62,19 +67,28 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi guys,
+Select the new implementation of CHACHA20 for S390 when available,
+it is faster than the generic software implementation.
 
-I'm trying to use wireguard-apple in my app.
-Following this guide -
-https://git.zx2c4.com/wireguard-apple/about/#wireguardkit-integration
-with small changes.
-WireGuardBridgeiOS seems to be compiling but when I tried to run my
-app(on physical device) I have lots of warnings like this - "
-Pointer not aligned at address 0x1001F8A97 ('_type.*' + 232087 from
-/Users/aponkin/Library/Developer/Xcode/DerivedData/MyApp-ffqwdheqjdaauedstuhrauhjkdcb/Build/Products/Debug-iphoneos/libwg-go.a(go.o))"
-And the build is failed with - 'Unaligned pointer(s) for architecture
-arm64' error message
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/linux-kernel/202207030630.6SZVkrWf-lkp@intel.com/
+Signed-off-by: Vladis Dronov <vdronov@redhat.com>
+---
+ drivers/net/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-Using XCode 14 Beta
-go version go1.18.3 darwin/arm64
-Any clues on how to fix that?
+diff --git a/drivers/net/Kconfig b/drivers/net/Kconfig
+index b2a4f998c180..8c1eeb5a8db8 100644
+--- a/drivers/net/Kconfig
++++ b/drivers/net/Kconfig
+@@ -94,6 +94,7 @@ config WIREGUARD
+ 	select CRYPTO_CURVE25519_NEON if ARM && KERNEL_MODE_NEON
+ 	select CRYPTO_CHACHA_MIPS if CPU_MIPS32_R2
+ 	select CRYPTO_POLY1305_MIPS if MIPS
++	select CRYPTO_CHACHA_S390 if S390
+ 	help
+ 	  WireGuard is a secure, fast, and easy to use replacement for IPSec
+ 	  that uses modern cryptography and clever networking tricks. It's
+-- 
+2.36.1
+
