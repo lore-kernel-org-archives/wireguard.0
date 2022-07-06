@@ -4,100 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44AB3C43334
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  5 Jul 2022 19:45:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D7BBC43334
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  6 Jul 2022 17:48:27 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 22b0bb46;
-	Tue, 5 Jul 2022 19:45:44 +0000 (UTC)
-Received: from AUS01-ME3-obe.outbound.protection.outlook.com
- (mail-me3aus01olkn2145.outbound.protection.outlook.com [40.92.63.145])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id b22ea2d8
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 5 Jul 2022 08:58:50 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=frKAHEJyw3NEf4j1cECT1SlFzaY9u/mfNhVhWOU2KCCnk18vhD8ay+scKlneJ0wlYE4vYCJCtGkxvHWfKuWhGl9f4HyRA3wd5oR7uw8DkczPlaXJF4HBHIh5wrw/G8XfJr0ZmYBfHHKJp7Dn5iXVUzPLbpEeRfXcqfdlgJSUWi4yy6sWMl7PVA8e/2MTzcTX5o1NrtRhelim8y9DuZ7v4kXXT5aYhjZjFfdRx4IXBnlPQL0lNW/jxnA4Y/o26h2VNkodQ3yJSC21rZmEJbHoWC+QVZGhN7noTSbkDfOCDn2hTM0Irc3laV7yzcCZen0XvwnoweuzTOHYTkk8hwXNjg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=JfBRYP2zZPxxNNDzRAPmtPiS7Q+YR/9rHK8ixh31hg8=;
- b=ERbS+6JJbhhMWu2TDqINe+0PoAgy1OCzJNoAgbhh7R2XZzgcWKbaQ3o8BBB91CWQn54hicrgHNBRGkFGzZYzR3fBochBAwoW1QFLen3nq43eiXdo0nWYy9Dp7FUR5UKi/ZQc6Grq4qXddoRYKhYvENGOMRrh/0fdQQlmg2Kg/Vo30Tgbiyz0BrGUYiyLcZeU8QKSwY0v3hViGr0vn6nN3YGsvlXzdtbny69rkmHkAywZ9dqP7Ns45SKELElilYz+KeqAMfqo/dHFkm3RnN/Ib3uONthkjk3Iqbvlpvqo7oRXA4RbZGZw0W9vSKwxfwaxWnm4vfYQFN7ohbduOKAwTw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=JfBRYP2zZPxxNNDzRAPmtPiS7Q+YR/9rHK8ixh31hg8=;
- b=RKuDWgWVH0TTLkucAXbZ/E8i5BnxrNiKfJVkUqlAxt6pSeCRJMgtbtPyODv9BsDKDmcXa4WCmOhJEwFZXgWf0Vi2ERJK3XDinhetgSSqs1eeXX7yE8ZyGoy/B2NQKcHOFlWS3Nf/wjy7/XfybEW3mSvgx73el5aRd+m+TBPtxXclc7Tz6c9yBzvU4Il4RQ8xks+eXJO8noKXtFajJCR09wjkvdYmb9mWLEeFWLCc8XBA78X9vbMXpdEaDdLUorPH5RAsJ9ig3r58VpjScpjTkLSV2eSQ61j2IScMaIge/FS4Ib7eLws+wMNr1NRLSq1VP7l9LFmHx3d0rSYH32Jf9w==
-Received: from SYBP282MB0460.AUSP282.PROD.OUTLOOK.COM (2603:10c6:10:69::16) by
- ME2P282MB0660.AUSP282.PROD.OUTLOOK.COM (2603:10c6:220:5a::17) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5395.17; Tue, 5 Jul 2022 08:58:46 +0000
-Received: from SYBP282MB0460.AUSP282.PROD.OUTLOOK.COM
- ([fe80::c198:d112:9dfd:85c8]) by SYBP282MB0460.AUSP282.PROD.OUTLOOK.COM
- ([fe80::c198:d112:9dfd:85c8%3]) with mapi id 15.20.5395.021; Tue, 5 Jul 2022
- 08:58:46 +0000
-From: Shen Red <darkranger_red@hotmail.com>
-To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-Subject: Re: package from fedorainfracloud for centOS 8 does not build
-Thread-Topic: package from fedorainfracloud for centOS 8 does not build
-Thread-Index: AQHYkE1sUO+5Q+/OQ0m11Sj9l7+JWg==
-Date: Tue, 5 Jul 2022 08:58:46 +0000
-Message-ID: <SYBP282MB04601262532DDD031AD31F24F2819@SYBP282MB0460.AUSP282.PROD.OUTLOOK.COM>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-suggested_attachment_session_id: f7de123a-4cfa-7030-5f5d-1e7e6ec93228
-x-tmn: [C+GcoYu7mNqyR8bqRlpLBaMpHOTktCv9]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 4985fc41-169a-4ec4-7a80-08da5e6491bf
-x-ms-traffictypediagnostic: ME2P282MB0660:EE_
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: UfyoiQwobzY5yx4rInvWQIWeaegh4tTQPapkJfIxDrQXXlQTx7DnwYwJDjYPSpB74j7kF6WrajDiLKPfZYXcWZ63+Yjb5Gw4Bl8VzNTchI+oQqFhR3l9tdf6Me09A2G4TVfchlSDiZUsNjIobUhLkrJ0U1PLoLNRpZbduD0sdXkv8yABTj2cr8uiS8GQ1Q6WM9RWZe7siXViPYJmbuX0KQeuCZ+zdg8GqX9Gepfs+1L3LSuaQ2MkWCXE5eT17zRYeBvL1gI26TJUa7Z8u1QEJJDMiuJXj7NkZK9bIDY5Gx/UiXTUHEznq6eZhVVthIpqPaGhssROvtaM0buiF0DTp1vZaTCSeGY29Qt2zdS/AvM07bTMrIbMx6yo5sYj1S43TbKDa+mjpTitrctupCfHTj3DVqdh/eikwlkTF2+Py4kKjQS0jUehrumIjHlYnz+Q94ZwFjY3u9Km9EoKev87365k15/+ey4kbIFN44vznGM5Vvp/y2KTdQB5TNMUNI/vmI7kt0ynVqK8Zzk4qbkljXdozyejk5+8woIKfb/Z3BdJWkBe3pXArcLLeCVvq1kHLKiDCtHHPUhqvD7+tWAlLRNfxu7DTkrEebjyw9CHhj5bHHSsCxtzH96XmPv73C8rUM/T4wzIpglTeJtts2CS7g==
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?big5?B?dFFkdnpOSEdHa2x3TmRmbUJwZjRsbW40M0RxK0VYSWZmTWROczBNelNGSlBqYk1C?=
- =?big5?B?alQweURNcU1iTDJ3SW1remdacGJIVkE2bkNYMHRCY2ZHaW51YTRzdXBSeDBFeElG?=
- =?big5?B?OUMvMU0zNDZKdlFVa2ZQT3M4NHhVN1Yvd2h3Q2IzcHVGWGNvM2gwRlNPbVVaUnd0?=
- =?big5?B?VlpTWm50Ky9GbnRsYkVPOXZQd3Z5QTZscWljWEJ6Z0V2eTRHQWVNQnlVdmdmdllo?=
- =?big5?B?YkhNNFpQWlQzOFRuRGdaMFlibjZnTmhXL1Fqc3Q0TG9MV1F1TTl4YXlTZkd0TzFO?=
- =?big5?B?ekMvQm9JaE1mNkpkaG1NVENPSWwzSEQ3TGY1NVQrVExld1FyWHU2Zy8rK1p0NTZK?=
- =?big5?B?Nkp4SzRZcC90enZ6bEcrRXBWamtKTXdhOTVpWElsKzFSNWVnTDRZdVBDTGc3MUVK?=
- =?big5?B?blRNcnBDSnl3UStsZWRJcVZleFJFT05RRFJST3B3RWRFZGJramNYdDVYQXFtTG1O?=
- =?big5?B?a1pVSERtNDhrVm5Ucm1aSzZXTUV2NmFDdExhU0dKRWxSanVzWVVtdnhzKzFJUEhE?=
- =?big5?B?TFduU29icVZKdUMxU25vcXVGTTZHY09ldzVjR0pNR0JTZllSMktPWnZrT1dlZVRS?=
- =?big5?B?ZGFtUnl4MUZmVmxOVUhxeWIwbHlBWnhkMnJXSTlNWW95Q1Jnb0w5MUtuK01hblAv?=
- =?big5?B?eVR0aFVERVJhOHpGMnBMbnBQbFNxeUlUdVM2ODFXbnd5TWRLcGo2Rmo4bDd2OXph?=
- =?big5?B?WGt5aFVDV3VNc043Sis1UTVibzM4Y3VXZGozTXJGVkpSa25rY1hSM2hNRzVvWGRs?=
- =?big5?B?dHRKOHdzYUdwL2pJdVM3QVBQQVNlb3lJbzMwUWtXWi9OS1QzL3E4SzBzS3lYMDFQ?=
- =?big5?B?Rm50d2hSR3hzZEpObmNieXk2VVZxbXFWL3BFbTRpZ3dKQlhidkFPYTdPMEtsb2J1?=
- =?big5?B?amJETUZNNlpUclNMYk1hd2JCWndzY3Z4WG9qdWQvU0JvYkVsdktid0w0SE9wU0tk?=
- =?big5?B?dW9LV2FtVlV4NHFjNnhFcHRxeTRVaGFmeVlJZ2ZwRkUzRzhBVVVlWU5pblFWVVkz?=
- =?big5?B?WVFwVER4dTdNemRnZFNlc2FsWStZdlFvVmwreHExbE5PS2hMUjJnTUh6SG5aTUNE?=
- =?big5?B?ZEw5QnErcDk0VHZ5SU10Z21WUUR3aVlLcHZqa3pkL2s4MGg0anJhQy9xVTFkQjd0?=
- =?big5?B?VHNPQkFxcFhMUGxIUk9BaW04MWw1bFBEUmZadUtIQWhJZ0FrTjdNT0ZuNWRiUmFF?=
- =?big5?B?WDdBa09iU2Jyb09lRnJnQTYyZm00Q2huT1hrNzFscFNLQ20rc25MMnlERkxqU1Vn?=
- =?big5?B?cFpPZTNEWTFrcFNUS1VsYTJIQ0FoTkFESDVXM2V6cnorTG8va3RkcGlwZDJsb2o1?=
- =?big5?B?YWF3cGphUklTNHNobWJDOTBUL0N4ZWF1S1hWSVN3b2ZqYkswd280ZEVHbnZLWjk5?=
- =?big5?B?NjBNVzZGbDFZOUx4cFNQRnFZNzZoRlBhK3Npa3VvelNTaDVsNmNKR1d0RURqd1NC?=
- =?big5?B?V1h5NHcxSVBnZ3FMR2JuWHpwZXEwMlVkSjdwNm1PMU1pWmVOYTNTcU1nUGF6YU5L?=
- =?big5?B?Skc0cldKVXgzOTJWYTl3RzlybGJLcUVHTENPMUdxclZUU1h3c1VtOVBERGtjRDR0?=
- =?big5?B?c2U3T3pKcVJiQlpvY0JCZy9vRUNCQ2k1VUdnTGZBTnAwSlhGSGtjNFpZUEoycG45?=
- =?big5?B?d0RJQ2NBPT0=?=
-Content-Type: text/plain; charset="big5"
-Content-Transfer-Encoding: base64
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id bad9ddcf;
+	Wed, 6 Jul 2022 17:48:26 +0000 (UTC)
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com
+ [2a00:1450:4864:20::22a])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id d54750f9
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Wed, 6 Jul 2022 17:48:24 +0000 (UTC)
+Received: by mail-lj1-x22a.google.com with SMTP id y18so8511785ljj.6
+ for <wireguard@lists.zx2c4.com>; Wed, 06 Jul 2022 10:48:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=from:date:to:cc:subject:message-id:references:mime-version
+ :content-disposition:content-transfer-encoding:in-reply-to;
+ bh=Tdf7ASxlbaDXe3UntpbJmcyMVIZx89GElFlVDq70G1E=;
+ b=av5EmNC6KScDiSo3yZRxHh1JjVtGq58I72zcmjOS/GbgnhP9d8NL1M67W6AdDXWLBO
+ smYrB5PVGshhhGcB3EOvl0VKQhQYBBZv45doGDeTc8aiualcqa94FJFkRbbZooofaXAR
+ bXGL5bjfGNorBvl4Q/qYWvyzPb6qAA2SDjlNyda8uXSK9XxPxrO58pcJ14Td10bg1KFW
+ EyHDqu5L8ZKn1kKjOWPdFbdL7k8qhfZbOZPv9OzdKlPYVeO2Q3u7kUhwgFhnQbQx+eVg
+ 9c74CIJZQE0C/YfHhRoBDFamJEMO/uldYuzvtYJC25qCRRqrPPcME4kMgAOeMfhB8wyR
+ ZbiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+ :mime-version:content-disposition:content-transfer-encoding
+ :in-reply-to;
+ bh=Tdf7ASxlbaDXe3UntpbJmcyMVIZx89GElFlVDq70G1E=;
+ b=hBzXvoKTsi/KQyA2cVCJ9mXa6c7+7EO3Rm9wqjqp30/AjgTOw07k+9XmHb1z+bZT/+
+ rCzKwmKHnl6K6+McYF2B/gFVBNYsHGX5+OenNmrhveRvRWiErVjcoScQNB7TXTzFQdLP
+ +5SSRVrVqSFikpNMQjofkIPbDIg0oslHtYZdxRKTE+C6sv1cC1a3WBokLrjxMmvj1YgD
+ +RDPfZZ6R6j3FrZFdzV+E4WNNoOF6G3ju6KE7cNUS0ystmuYt4I2Gdwrf3IRv14boplS
+ XYp8xpT75yiYyX1JQfKhd7bQo4j9tANTlei37DyYnKOEWVyR38uQ8M5vobVV5Tan90dg
+ /fUg==
+X-Gm-Message-State: AJIora+5Q5le58vWoAzyjMD64xDaihulDc/eP4fW8OtyIJD7/K+SL9A9
+ Swcah2mq8BvRUknyO38Dwac=
+X-Google-Smtp-Source: AGRyM1u1HT+sFi2wLf7fp4YNZfwAKQU6WlrA9bLDUjbi9zIEm3uBpG7mqsv2U+35d/fU8R3i17yQvA==
+X-Received: by 2002:a2e:9808:0:b0:25a:a30c:e5cb with SMTP id
+ a8-20020a2e9808000000b0025aa30ce5cbmr24645544ljj.312.1657129703858; 
+ Wed, 06 Jul 2022 10:48:23 -0700 (PDT)
+Received: from pc638.lan ([155.137.26.201]) by smtp.gmail.com with ESMTPSA id
+ c2-20020ac25f62000000b00478f3fe716asm6387536lfc.200.2022.07.06.10.48.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 06 Jul 2022 10:48:22 -0700 (PDT)
+From: Uladzislau Rezki <urezki@gmail.com>
+X-Google-Original-From: Uladzislau Rezki <urezki@pc638.lan>
+Date: Wed, 6 Jul 2022 19:48:20 +0200
+To: Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>
+Cc: Uladzislau Rezki <urezki@gmail.com>,
+ "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>, wireguard@lists.zx2c4.com,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ Joel Fernandes <joel@joelfernandes.org>, paulmck@kernel.org,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Xinhui.Pan@amd.com,
+ linux-kernel@vger.kernel.org, amd-gfx@lists.freedesktop.org,
+ Suren Baghdasaryan <surenb@google.com>, rcu@vger.kernel.org,
+ Hridya Valsaraju <hridya@google.com>,
+ Arve =?utf-8?B?SGrDuG5uZXbDpWc=?= <arve@android.com>,
+ Theodore Ts'o <tytso@mit.edu>, alexander.deucher@amd.com,
+ Todd Kjos <tkjos@android.com>, uladzislau.rezki@sony.com,
+ Martijn Coenen <maco@android.com>, Christian Brauner <christian@brauner.io>
+Subject: Re: CONFIG_ANDROID (was: rcu_sched detected expedited stalls in
+ amdgpu after suspend)
+Message-ID: <YsXK5A0MiVgHd8Je@pc638.lan>
+References: <1656357116.rhe0mufk6a.none.ref@localhost>
+ <1656357116.rhe0mufk6a.none@localhost>
+ <20220627204139.GL1790663@paulmck-ThinkPad-P17-Gen-1>
+ <1656379893.q9yb069erk.none@localhost>
+ <20220628041252.GV1790663@paulmck-ThinkPad-P17-Gen-1>
+ <1656421946.ic03168yc3.none@localhost>
+ <20220628185437.GA1790663@paulmck-ThinkPad-P17-Gen-1>
+ <1656443915.mdjoauhqe0.none@localhost> <YrtgeSmwLmpzN/zw@pc638>
+ <79c6ad70-47d9-47fe-4bb4-33fcf356dd37@amd.com>
 MIME-Version: 1.0
-X-OriginatorOrg: sct-15-20-4755-11-msonline-outlook-746f3.templateTenant
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SYBP282MB0460.AUSP282.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4985fc41-169a-4ec4-7a80-08da5e6491bf
-X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Jul 2022 08:58:46.0707 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: ME2P282MB0660
-X-Mailman-Approved-At: Tue, 05 Jul 2022 19:45:42 +0000
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <79c6ad70-47d9-47fe-4bb4-33fcf356dd37@amd.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -112,11 +95,36 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Tm8sIHByb3ZpZGluZyBtdWx0aXBsZSB2ZXJzaW9ucyBpcyBub3QgaGVscGluZy4gQmVjYXVzZSB0
-aGUgYnJlYWthZ2UgaXMgY2F1c2VkIGJ5IGtlcm5lbC00LjE4LjAtMzk0LmVsOC54ODZfNjQsIG5v
-dCB3aXJlZ3VhcmQtZGttcy0xLjAuMjAyMjA2MjctMS4gSWYgeW91IGRvIGhhdmUgdGhlIG9sZGVy
-IGtlcm5lbC00LjE4LjAtMzgzLmVsOC54ODZfNjQgaW5zdGFsbGVkLCB5b3UgY2FuIHJ1biB0aGUg
-Zm9sbG93aW5nIGNvbW1hbmQgdG8gcmVidWlsZCB0aGUgd2lyZWd1YXJkIG1vZHVsZSBzdWNjZXNz
-ZnVsbHk6CnN1ZG8gZGttcyBpbnN0YWxsIHdpcmVndWFyZC8xLjAuMjAyMjA2MjcgLWsgNC4xOC4w
-LTM4My5lbDgueDg2XzY0CgpUaGUgd2lyZWd1YXJkIG1vZHVsZSBidWlsdCBmb3IgNC4xOC4wLTM4
-My5lbDgueDg2XzY0IGNhbiBiZSB1c2VkIG9uIDQuMTguMC0zOTQuZWw4Lng4Nl82NC4=
+Hello.
+
+On Mon, Jul 04, 2022 at 01:30:50PM +0200, Christian König wrote:
+> Hi guys,
+> 
+> Am 28.06.22 um 22:11 schrieb Uladzislau Rezki:
+> > > Excerpts from Paul E. McKenney's message of June 28, 2022 2:54 pm:
+> > > > All you need to do to get the previous behavior is to add something like
+> > > > this to your defconfig file:
+> > > > 
+> > > > CONFIG_RCU_EXP_CPU_STALL_TIMEOUT=21000
+> > > > 
+> > > > Any reason why this will not work for you?
+> 
+> sorry for jumping in so later, I was on vacation for a week.
+> 
+> Well when any RCU period is longer than 20ms and amdgpu in the backtrace my
+> educated guess is that we messed up some timeout waiting for the hw.
+> 
+> We usually do wait a few us, but it can be that somebody is waiting for ms
+> instead.
+> 
+> So there are some todos here as far as I can see and It would be helpful to
+> get a cleaner backtrace if possible.
+> 
+Actually CONFIG_ANDROID looks like is going to be removed, so the CONFIG_RCU_EXP_CPU_STALL_TIMEOUT
+will not have any dependencies on the CONFIG_ANDROID anymore:
+
+https://lkml.org/lkml/2022/6/29/756
+
+--
+Uladzislau Rezki
+
