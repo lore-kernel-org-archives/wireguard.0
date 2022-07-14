@@ -4,33 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4BC0C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 14 Jul 2022 04:24:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 725CDCCA486
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 14 Jul 2022 04:24:28 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 966da1d1;
-	Thu, 14 Jul 2022 04:24:21 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 0f8c255f
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id d7477994;
+	Thu, 14 Jul 2022 04:24:27 +0000 (UTC)
+Received: from ams.source.kernel.org (ams.source.kernel.org
+ [2604:1380:4601:e00::1])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 0d8da154
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 14 Jul 2022 04:24:20 +0000 (UTC)
+ Thu, 14 Jul 2022 04:24:24 +0000 (UTC)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 9360561E90;
- Thu, 14 Jul 2022 04:24:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09E6CC341C6;
- Thu, 14 Jul 2022 04:24:16 +0000 (UTC)
+ by ams.source.kernel.org (Postfix) with ESMTPS id 2F9DBB82372;
+ Thu, 14 Jul 2022 04:24:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5688C34114;
+ Thu, 14 Jul 2022 04:24:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1657772658;
- bh=KZbsROFz/14gdWxcQ8R7J4JMxfsXF0zLuzjDa3ZmnNc=;
+ s=k20201202; t=1657772662;
+ bh=e1/bMm+v6dgLCeNOtMgPs9Ff3aMrUsI4Skj8whhOI10=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=hFOoz3x8BGHTauzufs2Xj92Pqx/UPCKGERnpdf+HYymZiv2EndcVne+HMvz4vPEnY
- Mvaajy+KX2iVm0t3o23OXcu6QOycjP3tBHM71/yjJEvKekv3RrwL9jK31sDAE0OBKS
- DDiUjERbVDyihPeHq/bvy2g2eOgFFTSReJLLo5FMJ36TdtppsvRZ/xUc/uvGN7G1UF
- R2+fgFst1fxso7tI3oy4y6X4rIgV6QJyolac/NXW2BrQJd0ZFSnjuOjglyV84KoXT1
- QZ9MmQewktLAZ5czeHsmvP3UfyuNOkfEHIH4lrHws2O9e4ktauYtIckH1wm+2dSr2R
- DvrBww6vmbZEg==
+ b=oxXdQ3yVhHof+wqAOtAbhWHn3U1iTI7+WmFKNIfz9/3RHSxgaBIYedkgqVOz839ah
+ CAYvRlMfKe/sCdj+c83922CUarGjodTK4SnrR0NJcuVf9rz0Y33/2mF71y2T2xq5n/
+ lCATvQBmqufaLLC2QcuWXYB57igE1bsvJTPyXeoWcAb33O2Lqnn42I04eXkP5xrGkV
+ YMhSNCk+0NYoqzFjmqm3omWvhPXP/qJofd/iOSBtiUQ1CZ3/1Tnlu8VUrv9VXCjN1O
+ Ia1DpFwIjbd7hY3+Z6QYLp0vQ41YxuqE4vX7ruW4r0u00oGa6CKTnVFCYTlFF+Zk4x
+ tfzHK+xMLO0PQ==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
@@ -38,10 +39,10 @@ Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, Jakub Kicinski <kuba@kernel.org>,
  Sasha Levin <sashal@kernel.org>, shuah@kernel.org,
  wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
  linux-kselftest@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.18 38/41] wireguard: selftests: set fake real time
- in init
-Date: Thu, 14 Jul 2022 00:22:18 -0400
-Message-Id: <20220714042221.281187-38-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.18 39/41] wireguard: selftests: use virt machine on
+ m68k
+Date: Thu, 14 Jul 2022 00:22:19 -0400
+Message-Id: <20220714042221.281187-39-sashal@kernel.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220714042221.281187-1-sashal@kernel.org>
 References: <20220714042221.281187-1-sashal@kernel.org>
@@ -65,150 +66,54 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 
-[ Upstream commit 829be057dbc1e71383b8d7de8edb31dcf07b4aa0 ]
+[ Upstream commit 1f2f341a62639c7066ee4c76b7d9ebe867e0a1d5 ]
 
-Not all platforms have an RTC, and rather than trying to force one into
-each, it's much easier to just set a fixed time. This is necessary
-because WireGuard's latest handshakes parameter is returned in wallclock
-time, and if the system time isn't set, and the system is really fast,
-then this returns 0, which trips the test.
-
-Turning this on requires setting CONFIG_COMPAT_32BIT_TIME=y, as musl
-doesn't support settimeofday without it.
+This should be a bit more stable hopefully.
 
 Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/wireguard/qemu/arch/arm.config  |  1 +
- .../selftests/wireguard/qemu/arch/armeb.config        |  1 +
- .../testing/selftests/wireguard/qemu/arch/i686.config |  1 +
- .../testing/selftests/wireguard/qemu/arch/m68k.config |  1 +
- .../testing/selftests/wireguard/qemu/arch/mips.config |  1 +
- .../selftests/wireguard/qemu/arch/mipsel.config       |  1 +
- .../selftests/wireguard/qemu/arch/powerpc.config      |  1 +
- tools/testing/selftests/wireguard/qemu/init.c         | 11 +++++++++++
- 8 files changed, 18 insertions(+)
+ tools/testing/selftests/wireguard/qemu/Makefile         | 5 +++--
+ tools/testing/selftests/wireguard/qemu/arch/m68k.config | 9 +++------
+ 2 files changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/tools/testing/selftests/wireguard/qemu/arch/arm.config b/tools/testing/selftests/wireguard/qemu/arch/arm.config
-index fc7959bef9c2..0579c66be83e 100644
---- a/tools/testing/selftests/wireguard/qemu/arch/arm.config
-+++ b/tools/testing/selftests/wireguard/qemu/arch/arm.config
-@@ -7,6 +7,7 @@ CONFIG_SERIAL_AMBA_PL011_CONSOLE=y
- CONFIG_VIRTIO_MENU=y
- CONFIG_VIRTIO_MMIO=y
- CONFIG_VIRTIO_CONSOLE=y
-+CONFIG_COMPAT_32BIT_TIME=y
- CONFIG_CMDLINE_BOOL=y
- CONFIG_CMDLINE="console=ttyAMA0 wg.success=vport0p1 panic_on_warn=1"
- CONFIG_FRAME_WARN=1024
-diff --git a/tools/testing/selftests/wireguard/qemu/arch/armeb.config b/tools/testing/selftests/wireguard/qemu/arch/armeb.config
-index f3066be81c19..2a3307bbe534 100644
---- a/tools/testing/selftests/wireguard/qemu/arch/armeb.config
-+++ b/tools/testing/selftests/wireguard/qemu/arch/armeb.config
-@@ -7,6 +7,7 @@ CONFIG_SERIAL_AMBA_PL011_CONSOLE=y
- CONFIG_VIRTIO_MENU=y
- CONFIG_VIRTIO_MMIO=y
- CONFIG_VIRTIO_CONSOLE=y
-+CONFIG_COMPAT_32BIT_TIME=y
- CONFIG_CMDLINE_BOOL=y
- CONFIG_CMDLINE="console=ttyAMA0 wg.success=vport0p1 panic_on_warn=1"
- CONFIG_CPU_BIG_ENDIAN=y
-diff --git a/tools/testing/selftests/wireguard/qemu/arch/i686.config b/tools/testing/selftests/wireguard/qemu/arch/i686.config
-index 6d90892a85a2..cd864b9be6fb 100644
---- a/tools/testing/selftests/wireguard/qemu/arch/i686.config
-+++ b/tools/testing/selftests/wireguard/qemu/arch/i686.config
-@@ -1,6 +1,7 @@
- CONFIG_ACPI=y
- CONFIG_SERIAL_8250=y
- CONFIG_SERIAL_8250_CONSOLE=y
-+CONFIG_COMPAT_32BIT_TIME=y
- CONFIG_CMDLINE_BOOL=y
- CONFIG_CMDLINE="console=ttyS0 wg.success=ttyS1 panic_on_warn=1"
- CONFIG_FRAME_WARN=1024
+diff --git a/tools/testing/selftests/wireguard/qemu/Makefile b/tools/testing/selftests/wireguard/qemu/Makefile
+index bca07b93eeb0..e8a82e495d2e 100644
+--- a/tools/testing/selftests/wireguard/qemu/Makefile
++++ b/tools/testing/selftests/wireguard/qemu/Makefile
+@@ -210,10 +210,11 @@ QEMU_ARCH := m68k
+ KERNEL_ARCH := m68k
+ KERNEL_BZIMAGE := $(KERNEL_BUILD_PATH)/vmlinux
+ KERNEL_CMDLINE := $(shell sed -n 's/CONFIG_CMDLINE=\(.*\)/\1/p' arch/m68k.config)
++QEMU_VPORT_RESULT := virtio-serial-device
+ ifeq ($(HOST_ARCH),$(ARCH))
+-QEMU_MACHINE := -cpu host,accel=kvm -machine q800 -append $(KERNEL_CMDLINE)
++QEMU_MACHINE := -cpu host,accel=kvm -machine virt -append $(KERNEL_CMDLINE)
+ else
+-QEMU_MACHINE := -machine q800 -smp 1 -append $(KERNEL_CMDLINE)
++QEMU_MACHINE := -machine virt -smp 1 -append $(KERNEL_CMDLINE)
+ endif
+ else ifeq ($(ARCH),riscv64)
+ CHOST := riscv64-linux-musl
 diff --git a/tools/testing/selftests/wireguard/qemu/arch/m68k.config b/tools/testing/selftests/wireguard/qemu/arch/m68k.config
-index 82c925e49beb..9639bfe06074 100644
+index 9639bfe06074..39c48cba56b7 100644
 --- a/tools/testing/selftests/wireguard/qemu/arch/m68k.config
 +++ b/tools/testing/selftests/wireguard/qemu/arch/m68k.config
-@@ -5,5 +5,6 @@ CONFIG_MAC=y
- CONFIG_SERIAL_PMACZILOG=y
- CONFIG_SERIAL_PMACZILOG_TTYS=y
- CONFIG_SERIAL_PMACZILOG_CONSOLE=y
-+CONFIG_COMPAT_32BIT_TIME=y
- CONFIG_CMDLINE="console=ttyS0 wg.success=ttyS1 panic_on_warn=1"
+@@ -1,10 +1,7 @@
+ CONFIG_MMU=y
++CONFIG_VIRT=y
+ CONFIG_M68KCLASSIC=y
+-CONFIG_M68040=y
+-CONFIG_MAC=y
+-CONFIG_SERIAL_PMACZILOG=y
+-CONFIG_SERIAL_PMACZILOG_TTYS=y
+-CONFIG_SERIAL_PMACZILOG_CONSOLE=y
++CONFIG_VIRTIO_CONSOLE=y
+ CONFIG_COMPAT_32BIT_TIME=y
+-CONFIG_CMDLINE="console=ttyS0 wg.success=ttyS1 panic_on_warn=1"
++CONFIG_CMDLINE="console=ttyGF0 wg.success=vport0p1 panic_on_warn=1"
  CONFIG_FRAME_WARN=1024
-diff --git a/tools/testing/selftests/wireguard/qemu/arch/mips.config b/tools/testing/selftests/wireguard/qemu/arch/mips.config
-index d7ec63c17b30..2a84402353ab 100644
---- a/tools/testing/selftests/wireguard/qemu/arch/mips.config
-+++ b/tools/testing/selftests/wireguard/qemu/arch/mips.config
-@@ -6,6 +6,7 @@ CONFIG_POWER_RESET=y
- CONFIG_POWER_RESET_SYSCON=y
- CONFIG_SERIAL_8250=y
- CONFIG_SERIAL_8250_CONSOLE=y
-+CONFIG_COMPAT_32BIT_TIME=y
- CONFIG_CMDLINE_BOOL=y
- CONFIG_CMDLINE="console=ttyS0 wg.success=ttyS1 panic_on_warn=1"
- CONFIG_FRAME_WARN=1024
-diff --git a/tools/testing/selftests/wireguard/qemu/arch/mipsel.config b/tools/testing/selftests/wireguard/qemu/arch/mipsel.config
-index 18a498293737..56146a101e7e 100644
---- a/tools/testing/selftests/wireguard/qemu/arch/mipsel.config
-+++ b/tools/testing/selftests/wireguard/qemu/arch/mipsel.config
-@@ -7,6 +7,7 @@ CONFIG_POWER_RESET=y
- CONFIG_POWER_RESET_SYSCON=y
- CONFIG_SERIAL_8250=y
- CONFIG_SERIAL_8250_CONSOLE=y
-+CONFIG_COMPAT_32BIT_TIME=y
- CONFIG_CMDLINE_BOOL=y
- CONFIG_CMDLINE="console=ttyS0 wg.success=ttyS1 panic_on_warn=1"
- CONFIG_FRAME_WARN=1024
-diff --git a/tools/testing/selftests/wireguard/qemu/arch/powerpc.config b/tools/testing/selftests/wireguard/qemu/arch/powerpc.config
-index 5e04882e8e35..174a9ffe2a36 100644
---- a/tools/testing/selftests/wireguard/qemu/arch/powerpc.config
-+++ b/tools/testing/selftests/wireguard/qemu/arch/powerpc.config
-@@ -4,6 +4,7 @@ CONFIG_PPC_85xx=y
- CONFIG_PHYS_64BIT=y
- CONFIG_SERIAL_8250=y
- CONFIG_SERIAL_8250_CONSOLE=y
-+CONFIG_COMPAT_32BIT_TIME=y
- CONFIG_MATH_EMULATION=y
- CONFIG_CMDLINE_BOOL=y
- CONFIG_CMDLINE="console=ttyS0 wg.success=ttyS1 panic_on_warn=1"
-diff --git a/tools/testing/selftests/wireguard/qemu/init.c b/tools/testing/selftests/wireguard/qemu/init.c
-index 2a0f48fac925..542c34b00eb0 100644
---- a/tools/testing/selftests/wireguard/qemu/init.c
-+++ b/tools/testing/selftests/wireguard/qemu/init.c
-@@ -11,6 +11,7 @@
- #include <stdlib.h>
- #include <stdbool.h>
- #include <fcntl.h>
-+#include <time.h>
- #include <sys/wait.h>
- #include <sys/mount.h>
- #include <sys/stat.h>
-@@ -67,6 +68,15 @@ static void seed_rng(void)
- 	close(fd);
- }
- 
-+static void set_time(void)
-+{
-+	if (time(NULL))
-+		return;
-+	pretty_message("[+] Setting fake time...");
-+	if (stime(&(time_t){1433512680}) < 0)
-+		panic("settimeofday()");
-+}
-+
- static void mount_filesystems(void)
- {
- 	pretty_message("[+] Mounting filesystems...");
-@@ -256,6 +266,7 @@ int main(int argc, char *argv[])
- 	print_banner();
- 	mount_filesystems();
- 	seed_rng();
-+	set_time();
- 	kmod_selftests();
- 	enable_logging();
- 	clear_leaks();
 -- 
 2.35.1
 
