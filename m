@@ -4,52 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DB16CCA486
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 14 Jul 2022 04:24:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6F19C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 14 Jul 2022 07:09:07 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 614c931c;
-	Thu, 14 Jul 2022 04:24:30 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org
- [2604:1380:4641:c500::1])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id d86366b8
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 14e8982a;
+	Thu, 14 Jul 2022 07:09:05 +0000 (UTC)
+Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com
+ [209.85.222.173])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 506f9bf7
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 14 Jul 2022 04:24:27 +0000 (UTC)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 513AC61E95;
- Thu, 14 Jul 2022 04:24:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C03A6C34114;
- Thu, 14 Jul 2022 04:24:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1657772665;
- bh=rOZ/mh+hD1fgTml8JMj+k6WIev0FFuSsCiRhCRWGv2Q=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=oIRKnGuazmHIVvEX/ADa2/AejTlvMN52BJ2yD4F0uOsW8e2oGdRie9mdhiC5MZRay
- +RTNVkwWUodj6J5BM3S16XgTi4BoRVqER1jB6cTMQb/H8GoPHdpooXLbhnsXr7W1e+
- jtWpX2mL55ryGgY18fyGCI1XChlfuq4nZq4ZLGKJswYae8uLdC5KrvZ+eeJFHb5DDX
- xYg+uOGbODlPet7VrKqRLcJhZF37HarpZ+tXWFf68nsy1CvzTPHMMU7qjUWbA1fo+f
- +yUalb+d1Pw/Yok0Ni30cnZ4GnMVXKydYHP/GwDbZZ7x/MW9ebMJ1UIrN8ffni0gT7
- 9NebhjdbeOrNw==
-From: Sasha Levin <sashal@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, Jakub Kicinski <kuba@kernel.org>,
- Sasha Levin <sashal@kernel.org>, shuah@kernel.org,
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- linux-kselftest@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.18 40/41] wireguard: selftests: always call kernel
- makefile
-Date: Thu, 14 Jul 2022 00:22:20 -0400
-Message-Id: <20220714042221.281187-40-sashal@kernel.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220714042221.281187-1-sashal@kernel.org>
-References: <20220714042221.281187-1-sashal@kernel.org>
+ Thu, 14 Jul 2022 07:09:03 +0000 (UTC)
+Received: by mail-qk1-f173.google.com with SMTP id f14so664380qkm.0
+ for <wireguard@lists.zx2c4.com>; Thu, 14 Jul 2022 00:09:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=T0TGzHJ/d88sjvucmzrmHfr2w3pyHWB6L9OYmNBsm0w=;
+ b=W5YyIB6f84m7vXR2leirsrRhoZV1jWUf2Fx1bIlNTxon1Kr0lmT2iJ016uzfqyS2lO
+ wDwN2WjHZT4RuY2U87Yg1/UQsPv1AvikNH5xT3+k6sEkdDBNCmcJt6OQIQAQpdC3Hv8i
+ thH9pVWH8Kq5Lp8CPDdn96gd2NIH6x5CsNb+GpaA6S9eZu6mkF4ZYQc01o7+Ay3kWJfG
+ NW7h2ntqELqu5+1feK09G0ZRhHi/RsRmtkGre2hFUXBAuyQFZP/i7T8tsbuHKjWLfGEO
+ /kkrAE86mF6Rm/YUjJ3hHZZi2/Jl1bLE/1BEPeKAkBn3rQhN2qLQvMUew+f2TeYmZHn1
+ G4tQ==
+X-Gm-Message-State: AJIora8hUxLM8s/JcYPMnqWxKg7b1t78Bf9vK+0yIUyHilZXbGrlILET
+ GHHDZuFpSbY29HaQGknlMcicoxrljvrnLg==
+X-Google-Smtp-Source: AGRyM1uFr+OxecM9dXeZJts4vToPyCGHcgHJ0NMlFPeW/QvbstseYzuv74H+XtWVKY9ZuHuyfrzwxA==
+X-Received: by 2002:a05:620a:2681:b0:6b5:b547:40d with SMTP id
+ c1-20020a05620a268100b006b5b547040dmr5113754qkp.34.1657782542225; 
+ Thu, 14 Jul 2022 00:09:02 -0700 (PDT)
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com.
+ [209.85.219.176]) by smtp.gmail.com with ESMTPSA id
+ g7-20020ac84807000000b0031e9ff0c44fsm807191qtq.20.2022.07.14.00.09.01
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 14 Jul 2022 00:09:01 -0700 (PDT)
+Received: by mail-yb1-f176.google.com with SMTP id 64so1683897ybt.12
+ for <wireguard@lists.zx2c4.com>; Thu, 14 Jul 2022 00:09:01 -0700 (PDT)
+X-Received: by 2002:a05:6902:a:b0:65c:b38e:6d9f with SMTP id
+ l10-20020a056902000a00b0065cb38e6d9fmr7497019ybh.36.1657782541422; Thu, 14
+ Jul 2022 00:09:01 -0700 (PDT)
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+References: <20220714042221.281187-1-sashal@kernel.org>
+ <20220714042221.281187-39-sashal@kernel.org>
+In-Reply-To: <20220714042221.281187-39-sashal@kernel.org>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Thu, 14 Jul 2022 09:08:49 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdWumKeJmsOsd7_=F-+8znY=0YtH-CbeLN7knSJ1LDOR_w@mail.gmail.com>
+Message-ID: <CAMuHMdWumKeJmsOsd7_=F-+8znY=0YtH-CbeLN7knSJ1LDOR_w@mail.gmail.com>
+Subject: Re: [PATCH AUTOSEL 5.18 39/41] wireguard: selftests: use virt machine
+ on m68k
+To: Sasha Levin <sashal@kernel.org>
+Cc: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ stable <stable@vger.kernel.org>, 
+ "Jason A. Donenfeld" <Jason@zx2c4.com>, Jakub Kicinski <kuba@kernel.org>,
+ Shuah Khan <shuah@kernel.org>, 
+ wireguard@lists.zx2c4.com, netdev <netdev@vger.kernel.org>, 
+ "open list:KERNEL SELFTEST FRAMEWORK" <linux-kselftest@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -64,45 +77,37 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Hi Sasha,
 
-[ Upstream commit 1a087eec257154e26a81a7a0a15380d7a2431765 ]
+On Thu, Jul 14, 2022 at 6:29 AM Sasha Levin <sashal@kernel.org> wrote:
+> From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+>
+> [ Upstream commit 1f2f341a62639c7066ee4c76b7d9ebe867e0a1d5 ]
+>
+> This should be a bit more stable hopefully.
+>
+> Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+> Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
 
-These selftests are used for much more extensive changes than just the
-wireguard source files. So always call the kernel's build file, which
-will do something or nothing after checking the whole tree, per usual.
+Thanks for your patch!
 
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- tools/testing/selftests/wireguard/qemu/Makefile | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+> --- a/tools/testing/selftests/wireguard/qemu/arch/m68k.config
+> +++ b/tools/testing/selftests/wireguard/qemu/arch/m68k.config
+> @@ -1,10 +1,7 @@
+>  CONFIG_MMU=y
+> +CONFIG_VIRT=y
 
-diff --git a/tools/testing/selftests/wireguard/qemu/Makefile b/tools/testing/selftests/wireguard/qemu/Makefile
-index e8a82e495d2e..fcc3f668b807 100644
---- a/tools/testing/selftests/wireguard/qemu/Makefile
-+++ b/tools/testing/selftests/wireguard/qemu/Makefile
-@@ -19,8 +19,6 @@ endif
- MIRROR := https://download.wireguard.com/qemu-test/distfiles/
- 
- KERNEL_BUILD_PATH := $(BUILD_PATH)/kernel$(if $(findstring yes,$(DEBUG_KERNEL)),-debug)
--rwildcard=$(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2) $(filter $(subst *,%,$2),$d))
--WIREGUARD_SOURCES := $(call rwildcard,$(KERNEL_PATH)/drivers/net/wireguard/,*)
- 
- default: qemu
- 
-@@ -325,8 +323,9 @@ $(KERNEL_BUILD_PATH)/.config: $(TOOLCHAIN_PATH)/.installed kernel.config arch/$(
- 	cd $(KERNEL_BUILD_PATH) && ARCH=$(KERNEL_ARCH) $(KERNEL_PATH)/scripts/kconfig/merge_config.sh -n $(KERNEL_BUILD_PATH)/.config $(KERNEL_BUILD_PATH)/minimal.config
- 	$(if $(findstring yes,$(DEBUG_KERNEL)),cp debug.config $(KERNEL_BUILD_PATH) && cd $(KERNEL_BUILD_PATH) && ARCH=$(KERNEL_ARCH) $(KERNEL_PATH)/scripts/kconfig/merge_config.sh -n $(KERNEL_BUILD_PATH)/.config debug.config,)
- 
--$(KERNEL_BZIMAGE): $(TOOLCHAIN_PATH)/.installed $(KERNEL_BUILD_PATH)/.config $(BUILD_PATH)/init-cpio-spec.txt $(IPERF_PATH)/src/iperf3 $(IPUTILS_PATH)/ping $(BASH_PATH)/bash $(IPROUTE2_PATH)/misc/ss $(IPROUTE2_PATH)/ip/ip $(IPTABLES_PATH)/iptables/xtables-legacy-multi $(NMAP_PATH)/ncat/ncat $(WIREGUARD_TOOLS_PATH)/src/wg $(BUILD_PATH)/init ../netns.sh $(WIREGUARD_SOURCES)
-+$(KERNEL_BZIMAGE): $(TOOLCHAIN_PATH)/.installed $(KERNEL_BUILD_PATH)/.config $(BUILD_PATH)/init-cpio-spec.txt $(IPERF_PATH)/src/iperf3 $(IPUTILS_PATH)/ping $(BASH_PATH)/bash $(IPROUTE2_PATH)/misc/ss $(IPROUTE2_PATH)/ip/ip $(IPTABLES_PATH)/iptables/xtables-legacy-multi $(NMAP_PATH)/ncat/ncat $(WIREGUARD_TOOLS_PATH)/src/wg $(BUILD_PATH)/init
- 	$(MAKE) -C $(KERNEL_PATH) O=$(KERNEL_BUILD_PATH) ARCH=$(KERNEL_ARCH) CROSS_COMPILE=$(CROSS_COMPILE)
-+.PHONY: $(KERNEL_BZIMAGE)
- 
- $(TOOLCHAIN_PATH)/$(CHOST)/include/linux/.installed: | $(KERNEL_BUILD_PATH)/.config $(TOOLCHAIN_PATH)/.installed
- 	rm -rf $(TOOLCHAIN_PATH)/$(CHOST)/include/linux
--- 
-2.35.1
+The m68k virt machine was introduced in v5.19-rc1, so this patch
+must not be backported to v5.18 and earlier.
 
+Gr{oetje,eeting}s,
+
+                        Geert
+
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
