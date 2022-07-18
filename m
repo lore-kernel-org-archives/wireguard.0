@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26190C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 17 Jul 2022 23:01:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F591CCA480
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Jul 2022 01:34:20 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id c1ccb5fd;
-	Sun, 17 Jul 2022 23:01:31 +0000 (UTC)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 81b5c470;
+	Mon, 18 Jul 2022 01:34:19 +0000 (UTC)
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id ab26b78d
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 6401e4bb
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 17 Jul 2022 23:01:25 +0000 (UTC)
+ Mon, 18 Jul 2022 01:34:16 +0000 (UTC)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 847CC60E65;
- Sun, 17 Jul 2022 23:01:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF23EC3411E;
- Sun, 17 Jul 2022 23:01:22 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id CE6926103A;
+ Mon, 18 Jul 2022 01:34:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DA9BC341C0;
+ Mon, 18 Jul 2022 01:34:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1658098882;
- bh=qvKpwS2oAz58xErVnVqqeNlH1V1bOLYcNo9RbFb07e8=;
+ s=k20201202; t=1658108054;
+ bh=1ihfpbcsyMcCB87E74Q1HD9BPqKPvsmbP7lNVwsxin0=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=G7yuCSMHtGjZZKlXxN4KUsT20AvUEHjAm1L1hgW1tcRVsYd9aVugALSYRtxJgfTYt
- /wXithn7iS/GJz0ArUttX4eO4a8UeWnr4Svp7wIzmR+NsvJS7Z6xiMeZA8dNCqkWhu
- h+pnz7nDPCANZd2pUTW3d+M8CatYMNmnal5rD8i7uUpxX59QN9ug+8tT6GpT4vDSOO
- kh49GdtL4Z7v3fGO6VqZvQTphXA8u2yLUfluKUMcYSafBzFz9sqffAvNQx1RRPv8KS
- GXpXKQSeLV46Av+uPTHWOCxYbqRATTXsAOuqJ+UsVD/8nLXeIbxF0Ki8Ewtvfp2xC4
- 1cVhAccOVyPIw==
-Date: Sun, 17 Jul 2022 19:01:21 -0400
+ b=hzzD1/6JYDUjHjQVe5OvTEIqCaDeVUcOtQ6oQdq+E0aCB+Lt+uA9EQS1DPwQltF+d
+ yB1pDzmucM02vDG2fYZpXAQ6OfXeTfhdrdKuXwpk1xsgAekM3DULrU9sjYxFkxAL2Z
+ 2YQbmmUtBbqNMH+orYfxnwMhPmUBKBc/7YeJ8Q8j7V6Wf6u/vyv+ZiAFpqM97EtG6D
+ kiCEcoutRP7PRE5VrET1XNxE57tYimTcerLjUKuG6IOrESP4GycvDeizsmYP4fVAxZ
+ xoyIKnLnDf92oJA7L0NacXeH+ii1xJw2FyLLIVvdQeD30ISh0Vht7T0pShl+HPdzQf
+ 0K7pghQO2zt0g==
+Date: Sun, 17 Jul 2022 21:34:12 -0400
 From: Sasha Levin <sashal@kernel.org>
 To: Geert Uytterhoeven <geert@linux-m68k.org>
 Cc: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
@@ -41,14 +41,15 @@ Cc: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
  "open list:KERNEL SELFTEST FRAMEWORK" <linux-kselftest@vger.kernel.org>
 Subject: Re: [PATCH AUTOSEL 5.18 39/41] wireguard: selftests: use virt
  machine on m68k
-Message-ID: <YtSUwWn1SK+B83v5@sashalap>
+Message-ID: <YtS4lPL9qb1M5KP/@sashalap>
 References: <20220714042221.281187-1-sashal@kernel.org>
  <20220714042221.281187-39-sashal@kernel.org>
  <CAMuHMdWumKeJmsOsd7_=F-+8znY=0YtH-CbeLN7knSJ1LDOR_w@mail.gmail.com>
+ <YtSUwWn1SK+B83v5@sashalap>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <CAMuHMdWumKeJmsOsd7_=F-+8znY=0YtH-CbeLN7knSJ1LDOR_w@mail.gmail.com>
+In-Reply-To: <YtSUwWn1SK+B83v5@sashalap>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -63,32 +64,36 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Thu, Jul 14, 2022 at 09:08:49AM +0200, Geert Uytterhoeven wrote:
->Hi Sasha,
->
->On Thu, Jul 14, 2022 at 6:29 AM Sasha Levin <sashal@kernel.org> wrote:
->> From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+On Sun, Jul 17, 2022 at 07:01:21PM -0400, Sasha Levin wrote:
+>On Thu, Jul 14, 2022 at 09:08:49AM +0200, Geert Uytterhoeven wrote:
+>>Hi Sasha,
 >>
->> [ Upstream commit 1f2f341a62639c7066ee4c76b7d9ebe867e0a1d5 ]
+>>On Thu, Jul 14, 2022 at 6:29 AM Sasha Levin <sashal@kernel.org> wrote:
+>>>From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+>>>
+>>>[ Upstream commit 1f2f341a62639c7066ee4c76b7d9ebe867e0a1d5 ]
+>>>
+>>>This should be a bit more stable hopefully.
+>>>
+>>>Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+>>>Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+>>>Signed-off-by: Sasha Levin <sashal@kernel.org>
 >>
->> This should be a bit more stable hopefully.
+>>Thanks for your patch!
 >>
->> Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
->> Signed-off-by: Jakub Kicinski <kuba@kernel.org>
->> Signed-off-by: Sasha Levin <sashal@kernel.org>
+>>>--- a/tools/testing/selftests/wireguard/qemu/arch/m68k.config
+>>>+++ b/tools/testing/selftests/wireguard/qemu/arch/m68k.config
+>>>@@ -1,10 +1,7 @@
+>>> CONFIG_MMU=y
+>>>+CONFIG_VIRT=y
+>>
+>>The m68k virt machine was introduced in v5.19-rc1, so this patch
+>>must not be backported to v5.18 and earlier.
 >
->Thanks for your patch!
->
->> --- a/tools/testing/selftests/wireguard/qemu/arch/m68k.config
->> +++ b/tools/testing/selftests/wireguard/qemu/arch/m68k.config
->> @@ -1,10 +1,7 @@
->>  CONFIG_MMU=y
->> +CONFIG_VIRT=y
->
->The m68k virt machine was introduced in v5.19-rc1, so this patch
->must not be backported to v5.18 and earlier.
+>I'll drop it, thanks!
 
-I'll drop it, thanks!
+I've clicked the wrong button and still queued it by mistake, now really
+removed :)
 
 -- 
 Thanks,
