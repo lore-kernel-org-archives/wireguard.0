@@ -4,51 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22623C00144
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Jul 2022 17:12:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9679EC00144
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Jul 2022 17:57:04 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 96223238;
-	Fri, 29 Jul 2022 17:12:27 +0000 (UTC)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id df2119d5
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 83d15ec6;
+	Fri, 29 Jul 2022 17:57:02 +0000 (UTC)
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com
+ [2a00:1450:4864:20::22a])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 40df00ba
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 29 Jul 2022 17:12:25 +0000 (UTC)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id C8CA0B828C5;
- Fri, 29 Jul 2022 17:12:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDA17C433C1;
- Fri, 29 Jul 2022 17:12:22 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="UcdCTif9"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1659114741;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=f8W1hfZRn15chVL5dmKiwzHKCpzfKbXHSxbxvCjch5Q=;
- b=UcdCTif9NJzRrVHRkfPneRnszbO5kUegmVwfm7EiEJwGUo2fGAL2GzIvEDsZFWleJDb7cf
- w2HyWVCj5nkotgH4Gk0pxYAAZAGMFvK6eC6LIg/QNiifSEPZ20+YmbPtHIQhXU0BLdA+c/
- b3vT9HW2LEEnUYV35FWqT8DCodt5L8Q=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 52aa88db
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Fri, 29 Jul 2022 17:12:20 +0000 (UTC)
-Date: Fri, 29 Jul 2022 19:12:16 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: wireguard@lists.zx2c4.com, arnd@arndb.de
-Subject: Re: Random arrays on kernel stack..
-Message-ID: <YuQU8H0UCGTt5C0I@zx2c4.com>
-References: <CAHk-=wjJZGA6w_DxA+k7Ejbqsq+uGK==koPai3sqdsfJqemvag@mail.gmail.com>
+ Fri, 29 Jul 2022 17:57:01 +0000 (UTC)
+Received: by mail-lj1-x22a.google.com with SMTP id bx8so3550681ljb.3
+ for <wireguard@lists.zx2c4.com>; Fri, 29 Jul 2022 10:57:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux-foundation.org; s=google;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc;
+ bh=mtbJI3BfmPmaqMfRhM4dg2FAE3KGVxCoTZ81hDc+/c0=;
+ b=CzlLpDkhwSO+V3LZbkmpxVSCoQThsP/QfPteXgoWXEh9dcVIeGObKqK+3+otenlvFk
+ Uw2iXYQnDRHNFxSYJeXSMREZiGuOs4lFWZwPNjjqZryGBmIG0OfjntKXGqLGAZ+0TGyD
+ xtec1bfPr+Zwi743gUoGmiAo7PqfUj96LjPDs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc;
+ bh=mtbJI3BfmPmaqMfRhM4dg2FAE3KGVxCoTZ81hDc+/c0=;
+ b=K2WrFG0Q8Y9YPD7nQqTKglvlRZpeLc3BRLl1QFPW1DGW6wL6oP0WG6U1uUKDyi8sss
+ /IPGGgpRqv6UmQOb2IRFQ88IUuq9EnpkOfT6ZBXIyINf0M8h+caETn1yeQocpumY+vaS
+ U8Cu/j82ba3ZbAJojd9Hmi7zWWRWPHSVkXj3MBWtraRmZB5c8U9OQqyPB0sJPJ4lu3Cx
+ RnJ8VNUZLiFaNgKIYe3fUMlg7zze33pY+4xdytRJqAuTUB3UDg4FmFnqyOReYaD/d/CB
+ fwckfr+5EIUZqSkVdomooY8FAJyrpxSVahiVb0tsSzzoVrPdbWyugkzvQ9ZqdouMg0Fw
+ hFcg==
+X-Gm-Message-State: AJIora/JV04xmMuHSIq86/WKd1m0OocUdOVpWHA/uLfCL5dMntCgokzM
+ 0VndiqsA/CX087F0uFMdXj+LAIUAMEdzEQA6
+X-Google-Smtp-Source: AGRyM1u7kXc97WWV0kJ0HHD6+EAW8v/9nY0NTeQ+inJ9yKYJ5BrC46X+2Ut3T6iKRuKQfifL+ULznA==
+X-Received: by 2002:a17:906:d54b:b0:72e:ece1:2956 with SMTP id
+ cr11-20020a170906d54b00b0072eece12956mr3710206ejc.156.1659117409446; 
+ Fri, 29 Jul 2022 10:56:49 -0700 (PDT)
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com.
+ [209.85.128.47]) by smtp.gmail.com with ESMTPSA id
+ k6-20020a17090632c600b0072f42ca2934sm1957711ejk.148.2022.07.29.10.56.48
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 29 Jul 2022 10:56:48 -0700 (PDT)
+Received: by mail-wm1-f47.google.com with SMTP id
+ c187-20020a1c35c4000000b003a30d88fe8eso4485531wma.2
+ for <wireguard@lists.zx2c4.com>; Fri, 29 Jul 2022 10:56:48 -0700 (PDT)
+X-Received: by 2002:a05:600c:3553:b0:3a3:2b65:299e with SMTP id
+ i19-20020a05600c355300b003a32b65299emr3494032wmq.145.1659117408359; Fri, 29
+ Jul 2022 10:56:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAHk-=wjJZGA6w_DxA+k7Ejbqsq+uGK==koPai3sqdsfJqemvag@mail.gmail.com>
+References: <CAHk-=wjJZGA6w_DxA+k7Ejbqsq+uGK==koPai3sqdsfJqemvag@mail.gmail.com>
+ <YuQU8H0UCGTt5C0I@zx2c4.com>
+In-Reply-To: <YuQU8H0UCGTt5C0I@zx2c4.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Fri, 29 Jul 2022 10:56:32 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wheoU5mkht1xk_4Tyw78oa-8iGvGE9nBdUmGqCykgo1xw@mail.gmail.com>
+Message-ID: <CAHk-=wheoU5mkht1xk_4Tyw78oa-8iGvGE9nBdUmGqCykgo1xw@mail.gmail.com>
+Subject: Re: Random arrays on kernel stack..
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: wireguard@lists.zx2c4.com, arnd@arndb.de
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -63,103 +80,34 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hey Linus,
-
-On Thu, Jul 28, 2022 at 04:51:58PM -0700, Linus Torvalds wrote:
-> So I finally have an arm64 laptop that I'm playing with, and as a
-
-Some intrepid diving into Asahi world, eh? I admit that after playing
-with the M1 and benching/optimizing some code on it, I wasn't man enough
-to daily drive the thing, and I wound up selling the (already
-second hand) Mac Mini shortly after acquiring it.
-
-> result building the kernel the way I usually do - with warnings as
-> errors.
-> 
-> And I get this:
-> 
->   drivers/net/wireguard/allowedips.c: In function ‘root_remove_peer_lists’:
->   drivers/net/wireguard/allowedips.c:77:1: error: the frame size of
-> 1040 bytes is larger than 1024 bytes [-Werror=frame-larger-than=]
->      77 | }
->         | ^
->   drivers/net/wireguard/allowedips.c: In function ‘root_free_rcu’:
->   drivers/net/wireguard/allowedips.c:64:1: error: the frame size of
-> 1040 bytes is larger than 1024 bytes [-Werror=frame-larger-than=]
->      64 | }
->         | ^
-> 
-> and clearly it only happens for me because it turns out Asahi has for
-> some odd reason picked that low CONFIG_FRAME_WARN of just 1kB.
-
-Arnd (now CC'd) and I had a discussion about this a few years ago, and
-IIRC the conclusion was that the kernel targets 1280 bytes on 64-bit
-platforms and 1024 bytes on 32-bit platforms. There's been gradual work
-done over the years to get gcc to generate code that matched this
-expectation.
-
-So root_remove_peer_lists and root_free_rcu are really nestling up
-against the boundary. We'd looked into ways of avoid that, but decided
-in the end it was fine, and probably the most okay way to implement
-those algorithms, all things considered.
-
-> But when I look at the code that generates that warning, it just
-> worries me. It has that magical constant 128.
-> 
-> Sure, that same constant is also in push_rcu().
-
-I could (should?) put it in a constant. But as context, note that it
-doesn't look _so_ magical for anyone hacking on the code. It's a trie
-for IPv4 and IPv6 addresses. If you're writing networking code, the
-128-bitness of IPv6 addresses is nearly always at the top of your brain,
-its general inconvenience an elephant not possible to ignore.
-
-I guess `sizeof(struct in6_addr) * 8` would be a more accurate
-reference.
-
->  (b) it should be documented some way as a #define
-
-Alright, will do.
-
-> And there it is randomly as a warning, and then it will happily
-> overflow the stack frame.
-> 
-> That's not ok.
+On Fri, Jul 29, 2022 at 10:12 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
 >
->  (c) push_rcu() should damn well not "warn and corrupt the stack". It
-> should warn-and-not-corrupt the stack, even if that then means that
-> the thing isn't pushed at all.
+> That's a good point. Though note that the current WARN_ON is also
+> dependent on DEBUG being set.
 
-That's a good point. Though note that the current WARN_ON is also
-dependent on DEBUG being set. The purpose is to catch errors when the
-selftest in drivers/net/wireguard/selftest/allowedips.c runs. That file
-has this snippet:
+Sure. And I think that's ok.
 
-  /* These will hit the WARN_ON(len >= 128) in free_node if something
-   * goes wrong.
-   */
-  for (i = 0; i < 128; ++i) {
-    part = cpu_to_be64(~(1LLU << (i % 64)));
-    memset(&ip, 0xff, 16);
-    memcpy((u8 *)&ip + (i < 64) * 8, &part, 8);
-    wg_allowedips_insert_v6(&t, &ip, 128, a, &mutex);
-  }
-  wg_allowedips_free(&t, &mutex);
+> >  (a) that constant should be a bit lower, so that we *can* use a 1kB
+> > stack frame warning on 64-bit architectures
+>
+> That's not so much possible. This needs to do a DFS traversal of the
+> trie, which means it can be 128 nodes deep since IPv6 addresses have
+> 128 bits.
 
-Anyway, I'll conditionalize it so the stack isn't corrupted.
+Ahh. Ok. That at least explains where the constant comes from. That
+would be a good thing to have somewhere in that definition of the
+value ;)
 
->  (a) that constant should be a bit lower, so that we *can* use a 1kB
-> stack frame warning on 64-bit architectures
+And I agree that malloc() isn't a great choice.
 
-That's not so much possible. This needs to do a DFS traversal of the
-trie, which means it can be 128 nodes deep since IPv6 addresses have
-128 bits. I could just malloc, instead, but malloc'ing in order to free
-something is kind of annoying. And it *does* fit after all. I could
-suppress that option for just that file, but that might hide other bugs.
-And there's the 1280 target I mentioned earlier, so maybe this is all
-fine? Unless you have a different suggestion?
+I don't really worry about the stack frame warning (I just raised it
+to the same 2k limit I have on my x86-64 box), so doing that 1k
+allocation is fine.
 
-I think, anyhow, this is roughly where Arnd and I left off a few years
-ago.
+And with that constant 128 explained, I don't think it's wrong to not
+even test for overflow. We don't test for things that can't happen.
 
-Jason
+But *if* you test for it for debug purposes, then at that point I
+think you need to just do the "warn and don't corrupt stack".
+
+                     Linus
