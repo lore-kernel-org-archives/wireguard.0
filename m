@@ -4,24 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98175C32772
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 23 Aug 2022 13:35:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9C57C32774
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 23 Aug 2022 13:35:57 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 79f993dc;
-	Tue, 23 Aug 2022 13:35:52 +0000 (UTC)
-Received: from janet.servers.dxld.at (mail.servers.dxld.at [5.9.225.164])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 0c9dab15
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 900bf8b5;
+	Tue, 23 Aug 2022 13:35:57 +0000 (UTC)
+Received: from mail02.noris.net (mail02.noris.net [62.128.1.232])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id dd626ab1
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 4 Jul 2022 21:52:50 +0000 (UTC)
-Received: janet.servers.dxld.at; Mon, 04 Jul 2022 23:52:49 +0200
-From: =?UTF-8?q?Daniel=20Gr=C3=B6ber?= <dxld@darkboxed.org>
-To: wireguard@lists.zx2c4.com
-Subject: [PATCH] wg: Support restricting resolved Endpoint address family
-Date: Mon,  4 Jul 2022 23:52:40 +0200
-Message-Id: <20220704215240.196594-1-dxld@darkboxed.org>
-X-Mailer: git-send-email 2.30.2
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 10 Aug 2022 13:14:01 +0000 (UTC)
+Received: from [213.95.36.38] (helo=grp03vp.funkwerk.noris.de)
+ by mail02.noris.net with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim) (envelope-from <Joerg.Schaffner@funkwerk.com>)
+ id 1oLlX7-00017b-Fw
+ for wireguard@lists.zx2c4.com; Wed, 10 Aug 2022 15:14:01 +0200
+Received: from grp03vp.funkwerk.noris.de (2001:780:202:1::5) by
+ grp03vp.funkwerk.noris.de (2001:780:202:1::5) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.9; Wed, 10 Aug 2022 15:14:01 +0200
+Received: from grp03vp.funkwerk.noris.de ([fe80::88c2:16f2:baa2:d389]) by
+ grp03vp.funkwerk.noris.de ([fe80::88c2:16f2:baa2:d389%2]) with mapi id
+ 15.01.2507.009; Wed, 10 Aug 2022 15:14:01 +0200
+From: "Schaffner, Joerg" <Joerg.Schaffner@funkwerk.com>
+To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Subject: Android App: dynamic configuration
+Thread-Topic: Android App: dynamic configuration
+Thread-Index: AdiVOKXoQe4Wfz/5TuC2tx243QVVcgXgi/yA
+Date: Wed, 10 Aug 2022 13:14:01 +0000
+Message-ID: <8714e55cc33740aab8d1ff53570dff03@funkwerk.com>
+Accept-Language: de-DE, en-US
+Content-Language: de-DE
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.160.0.9]
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-Noris-IP: 213.95.36.38
 X-Mailman-Approved-At: Tue, 23 Aug 2022 13:35:50 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -37,255 +57,19 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On IPv4-only hosts it can happen that the v6 default route pointed at a
-wireguard interface blackholes wireguard peer traffic intended for the v4
-network when the Endpoint hostname resolves to both v6 and v4 records as
-most hosts will prefer the v6 address by default. This makes using
-dual-stack dynamic-dns services for peer endpoints cumbersome.
+Hi guys,
 
-We allow users to control which address family they want with the new
-AddressFamily= config option, see wg.8 for details. We also update
-reresolve-dns to take the AddressFamily option into account.
----
- contrib/reresolve-dns/reresolve-dns.sh |  4 ++-
- src/config.c                           | 41 ++++++++++++++++++++------
- src/config.h                           |  2 +-
- src/containers.h                       |  5 ++++
- src/man/wg.8                           |  8 ++++-
- src/set.c                              |  9 +++++-
- src/setconf.c                          |  2 +-
- 7 files changed, 57 insertions(+), 14 deletions(-)
+Is there a way planned to pass a dynamically created configuration set to t=
+he wireguard android app? I have this use case as following:
 
-diff --git a/contrib/reresolve-dns/reresolve-dns.sh b/contrib/reresolve-dns/reresolve-dns.sh
-index 711c332..bdb47ac 100755
---- a/contrib/reresolve-dns/reresolve-dns.sh
-+++ b/contrib/reresolve-dns/reresolve-dns.sh
-@@ -17,7 +17,7 @@ process_peer() {
- 	[[ $PEER_SECTION -ne 1 || -z $PUBLIC_KEY || -z $ENDPOINT ]] && return 0
- 	[[ $(wg show "$INTERFACE" latest-handshakes) =~ ${PUBLIC_KEY//+/\\+}\	([0-9]+) ]] || return 0
- 	(( ($EPOCHSECONDS - ${BASH_REMATCH[1]}) > 135 )) || return 0
--	wg set "$INTERFACE" peer "$PUBLIC_KEY" endpoint "$ENDPOINT"
-+	wg set "$INTERFACE" peer "$PUBLIC_KEY" endpoint "$ENDPOINT" address-family "$FAMILY"
- 	reset_peer_section
- }
- 
-@@ -25,6 +25,7 @@ reset_peer_section() {
- 	PEER_SECTION=0
- 	PUBLIC_KEY=""
- 	ENDPOINT=""
-+	FAMILY=unspec
- }
- 
- reset_peer_section
-@@ -38,6 +39,7 @@ while read -r line || [[ -n $line ]]; do
- 		case "$key" in
- 		PublicKey) PUBLIC_KEY="$value"; continue ;;
- 		Endpoint) ENDPOINT="$value"; continue ;;
-+		AddressFamily) FAMILY="$value"; continue ;;
- 		esac
- 	fi
- done < "$CONFIG_FILE"
-diff --git a/src/config.c b/src/config.c
-index 81ccb47..e8db900 100644
---- a/src/config.c
-+++ b/src/config.c
-@@ -192,14 +192,14 @@ static inline int parse_dns_retries(void)
- 	return (int)ret;
- }
- 
--static inline bool parse_endpoint(struct sockaddr *endpoint, const char *value)
-+static inline bool parse_endpoint(struct sockaddr *endpoint, const char *value, int family)
- {
- 	char *mutable = strdup(value);
- 	char *begin, *end;
- 	int ret, retries = parse_dns_retries();
- 	struct addrinfo *resolved;
- 	struct addrinfo hints = {
--		.ai_family = AF_UNSPEC,
-+		.ai_family = family,
- 		.ai_socktype = SOCK_DGRAM,
- 		.ai_protocol = IPPROTO_UDP
- 	};
-@@ -279,6 +279,20 @@ static inline bool parse_endpoint(struct sockaddr *endpoint, const char *value)
- 	return true;
- }
- 
-+static inline bool parse_address_family(int *family, const char *value)
-+{
-+	if (strcmp(value, "inet") == 0)
-+		*family = AF_INET;
-+	else if (strcmp(value, "inet6") == 0)
-+		*family = AF_INET6;
-+	else if (strcmp(value, "unspec") == 0)
-+		*family = AF_UNSPEC;
-+	else
-+		return false;
-+
-+	return true;
-+}
-+
- static inline bool parse_persistent_keepalive(uint16_t *interval, uint32_t *flags, const char *value)
- {
- 	unsigned long ret;
-@@ -454,8 +468,10 @@ static bool process_line(struct config_ctx *ctx, const char *line)
- 			goto error;
- 	} else if (ctx->is_peer_section) {
- 		if (key_match("Endpoint"))
--			ret = parse_endpoint(&ctx->last_peer->endpoint.addr, value);
--		else if (key_match("PublicKey")) {
-+			ctx->last_peer->endpoint_value = strdup(value);
-+		else if (key_match("AddressFamily")) {
-+			ret = parse_address_family(&ctx->last_peer->addr_fam, value);
-+		} else if (key_match("PublicKey")) {
- 			ret = parse_key(ctx->last_peer->public_key, value);
- 			if (ret)
- 				ctx->last_peer->flags |= WGPEER_HAS_PUBLIC_KEY;
-@@ -527,19 +543,22 @@ bool config_read_init(struct config_ctx *ctx, bool append)
- 	return true;
- }
- 
--struct wgdevice *config_read_finish(struct config_ctx *ctx)
-+struct wgdevice *config_read_finish(struct wgdevice *device)
- {
- 	struct wgpeer *peer;
- 
--	for_each_wgpeer(ctx->device, peer) {
-+	for_each_wgpeer(device, peer) {
- 		if (!(peer->flags & WGPEER_HAS_PUBLIC_KEY)) {
- 			fprintf(stderr, "A peer is missing a public key\n");
- 			goto err;
- 		}
-+
-+		if (!parse_endpoint(&peer->endpoint.addr, peer->endpoint_value, peer->addr_fam))
-+			goto err;
- 	}
--	return ctx->device;
-+	return device;
- err:
--	free_wgdevice(ctx->device);
-+	free_wgdevice(device);
- 	return NULL;
- }
- 
-@@ -611,7 +630,11 @@ struct wgdevice *config_read_cmd(const char *argv[], int argc)
- 			argv += 1;
- 			argc -= 1;
- 		} else if (!strcmp(argv[0], "endpoint") && argc >= 2 && peer) {
--			if (!parse_endpoint(&peer->endpoint.addr, argv[1]))
-+			peer->endpoint_value = strdup(argv[1]);
-+			argv += 2;
-+			argc -= 2;
-+		} else if (!strcmp(argv[0], "address-family") && argc >= 2 && peer) {
-+			if (!parse_address_family(&peer->addr_fam, argv[1]))
- 				goto error;
- 			argv += 2;
- 			argc -= 2;
-diff --git a/src/config.h b/src/config.h
-index 443cf21..6f81da2 100644
---- a/src/config.h
-+++ b/src/config.h
-@@ -22,6 +22,6 @@ struct config_ctx {
- struct wgdevice *config_read_cmd(const char *argv[], int argc);
- bool config_read_init(struct config_ctx *ctx, bool append);
- bool config_read_line(struct config_ctx *ctx, const char *line);
--struct wgdevice *config_read_finish(struct config_ctx *ctx);
-+struct wgdevice *config_read_finish(struct wgdevice *device);
- 
- #endif
-diff --git a/src/containers.h b/src/containers.h
-index a82e8dd..c111621 100644
---- a/src/containers.h
-+++ b/src/containers.h
-@@ -52,12 +52,15 @@ struct wgpeer {
- 	uint8_t public_key[WG_KEY_LEN];
- 	uint8_t preshared_key[WG_KEY_LEN];
- 
-+	char *endpoint_value;
- 	union {
- 		struct sockaddr addr;
- 		struct sockaddr_in addr4;
- 		struct sockaddr_in6 addr6;
- 	} endpoint;
- 
-+	int addr_fam;
-+
- 	struct timespec64 last_handshake_time;
- 	uint64_t rx_bytes, tx_bytes;
- 	uint16_t persistent_keepalive_interval;
-@@ -99,6 +102,8 @@ static inline void free_wgdevice(struct wgdevice *dev)
- 	for (struct wgpeer *peer = dev->first_peer, *np = peer ? peer->next_peer : NULL; peer; peer = np, np = peer ? peer->next_peer : NULL) {
- 		for (struct wgallowedip *allowedip = peer->first_allowedip, *na = allowedip ? allowedip->next_allowedip : NULL; allowedip; allowedip = na, na = allowedip ? allowedip->next_allowedip : NULL)
- 			free(allowedip);
-+		if (peer->endpoint_value)
-+			free(peer->endpoint_value);
- 		free(peer);
- 	}
- 	free(dev);
-diff --git a/src/man/wg.8 b/src/man/wg.8
-index 7984539..fd9fde7 100644
---- a/src/man/wg.8
-+++ b/src/man/wg.8
-@@ -55,7 +55,7 @@ transfer-rx, transfer-tx, persistent-keepalive.
- Shows the current configuration of \fI<interface>\fP in the format described
- by \fICONFIGURATION FILE FORMAT\fP below.
- .TP
--\fBset\fP \fI<interface>\fP [\fIlisten-port\fP \fI<port>\fP] [\fIfwmark\fP \fI<fwmark>\fP] [\fIprivate-key\fP \fI<file-path>\fP] [\fIpeer\fP \fI<base64-public-key>\fP [\fIremove\fP] [\fIpreshared-key\fP \fI<file-path>\fP] [\fIendpoint\fP \fI<ip>:<port>\fP] [\fIpersistent-keepalive\fP \fI<interval seconds>\fP] [\fIallowed-ips\fP \fI<ip1>/<cidr1>\fP[,\fI<ip2>/<cidr2>\fP]...] ]...
-+\fBset\fP \fI<interface>\fP [\fIlisten-port\fP \fI<port>\fP] [\fIfwmark\fP \fI<fwmark>\fP] [\fIprivate-key\fP \fI<file-path>\fP] [\fIpeer\fP \fI<base64-public-key>\fP [\fIremove\fP] [\fIpreshared-key\fP \fI<file-path>\fP] [\fIendpoint\fP \fI<ip>:<port>\fP] [\fIaddress-family\fP \fI<family>\fP] [\fIpersistent-keepalive\fP \fI<interval seconds>\fP] [\fIallowed-ips\fP \fI<ip1>/<cidr1>\fP[,\fI<ip2>/<cidr2>\fP]...] ]...
- Sets configuration values for the specified \fI<interface>\fP. Multiple
- \fIpeer\fPs may be specified, and if the \fIremove\fP argument is given
- for a peer, that peer is removed, not configured. If \fIlisten-port\fP
-@@ -163,6 +163,12 @@ port number. This endpoint will be updated automatically to the most recent
- source IP address and port of correctly authenticated packets from the peer.
- Optional.
- .IP \(bu
-+AddressFamily \(em one of \fIinet\fP, \fIinet6\fP or \fIunspec\fP. When a
-+hostname is given for \fIEndpoint\fP, setting this to \fIinet\fP or
-+\fIinet6\fP will allow only addresses of the given family to be
-+used. Defaults to \fIunspec\fP, which causes the first returned address of
-+any type to be used.
-+.IP \(bu
- PersistentKeepalive \(em a seconds interval, between 1 and 65535 inclusive, of
- how often to send an authenticated empty packet to the peer for the purpose of keeping a
- stateful firewall or NAT mapping valid persistently. For example, if the interface
-diff --git a/src/set.c b/src/set.c
-index 75560fd..20ee85e 100644
---- a/src/set.c
-+++ b/src/set.c
-@@ -18,13 +18,20 @@ int set_main(int argc, const char *argv[])
- 	int ret = 1;
- 
- 	if (argc < 3) {
--		fprintf(stderr, "Usage: %s %s <interface> [listen-port <port>] [fwmark <mark>] [private-key <file path>] [peer <base64 public key> [remove] [preshared-key <file path>] [endpoint <ip>:<port>] [persistent-keepalive <interval seconds>] [allowed-ips <ip1>/<cidr1>[,<ip2>/<cidr2>]...] ]...\n", PROG_NAME, argv[0]);
-+		fprintf(stderr, "Usage: %s %s <interface> [listen-port <port>] [fwmark <mark>] [private-key <file path>] [peer <base64 public key> [remove] [preshared-key <file path>] [endpoint <ip>:<port>] [address-family <family>] [persistent-keepalive <interval seconds>] [allowed-ips <ip1>/<cidr1>[,<ip2>/<cidr2>]...] ]...\n", PROG_NAME, argv[0]);
- 		return 1;
- 	}
- 
- 	device = config_read_cmd(argv + 2, argc - 2);
- 	if (!device)
- 		goto cleanup;
-+
-+	device = config_read_finish(device);
-+	if (!device) {
-+		fprintf(stderr, "Invalid configuration\n");
-+		goto cleanup;
-+	}
-+
- 	strncpy(device->name, argv[1], IFNAMSIZ -  1);
- 	device->name[IFNAMSIZ - 1] = '\0';
- 
-diff --git a/src/setconf.c b/src/setconf.c
-index 1c5b138..c90fd30 100644
---- a/src/setconf.c
-+++ b/src/setconf.c
-@@ -127,7 +127,7 @@ int setconf_main(int argc, const char *argv[])
- 			goto cleanup;
- 		}
- 	}
--	device = config_read_finish(&ctx);
-+	device = config_read_finish(ctx.device);
- 	if (!device) {
- 		fprintf(stderr, "Invalid configuration\n");
- 		goto cleanup;
--- 
-2.30.2
+Some devices receive information about a new, dynamically established VPN a=
+nd want to connect to it. The information about the IP address, public key =
+and so on is received from another Android app. This app creates the approp=
+riate configuration set and causes the VPN to start based on this set.
 
+I have seen that triggering the VPN connection is possible. But taking over=
+ the configuration set is not possible, isn't it?
+
+best regards
+
+J=F6rg Schaffner
