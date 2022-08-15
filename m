@@ -4,62 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3619C32772
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 23 Aug 2022 13:38:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15EA7C32772
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 23 Aug 2022 13:39:47 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id e37c6859;
-	Tue, 23 Aug 2022 13:35:59 +0000 (UTC)
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com
- [2a00:1450:4864:20::636])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 6359b8db
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 5c3fda48;
+	Tue, 23 Aug 2022 13:36:00 +0000 (UTC)
+Received: from janet.servers.dxld.at (mail.servers.dxld.at [5.9.225.164])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id dd49a480
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 13 Aug 2022 13:25:58 +0000 (UTC)
-Received: by mail-ej1-x636.google.com with SMTP id uj29so6302561ejc.0
- for <wireguard@lists.zx2c4.com>; Sat, 13 Aug 2022 06:25:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=googlemail.com; s=20210112;
- h=content-transfer-encoding:mime-version:subject:message-id:to:from
- :date:from:to:cc;
- bh=Ti7I67dFIL/oYNvyyW/a9VmKJrxzdCQvTOsrdYP2Vg0=;
- b=Fn+zJyLJMoIhkbqz3oEcXJOZuxvMFG3WXFZoMufJ+J2pibYG8kdyb+vKQRinF7b8lq
- qnfKs8Fi2Ezia1hDHYteLnucl5XA4kkmGnJCGU8qdBsp2SVXevTGYRrOHJPxdCteRjDH
- 9Wmn5XwUy/fhhgQgRpxapAHBKjidCjQLlVK9iQD+AnevKZeo8nJkGPkqtJJoAvZYoDXA
- zc42Be6ehf0wYpNPOxDkpPmTpGS6bxd6500SK+9ROxZijwuExZj4n9aJH0yJao7H53mK
- 8vHCnyF+On9ONIBPR2XJqJmVtZZcQ+QZj8k13Ix7SucW5EujTxHkF1XeD7yppJyMD6Hc
- IXbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=content-transfer-encoding:mime-version:subject:message-id:to:from
- :date:x-gm-message-state:from:to:cc;
- bh=Ti7I67dFIL/oYNvyyW/a9VmKJrxzdCQvTOsrdYP2Vg0=;
- b=daELE4gbYTiRboUsMLqd3dMWYtBWE2heUPpZpC3xC3Hoiw4uMsPkzMNDKOp3U1Z1qp
- HQujX+LXu3PzcEZR8ra7UgkR9mqQVlj2iMlIMk/DQwwQs6TRRbjqSaqwe+VSocqpMzYt
- JdymGS8CQReNqcvfpSic8wYhAjwUGGOZV7eY/oNEwQ8xmxH7L9nyroV+vu9b5H7SgKzC
- QjC1mIQX2Sc4lxDt/DDA39A1igGflWOYrcD3ogrB9mfVhUNIGI0EqTZrxyqMB0HCwsqL
- KTY90MNtGYcSLKH+Uil6h3NV3fZlCw3auGfglR7akUmwa4103ZDYVPNGh6NHQMMe3Grr
- J8Tg==
-X-Gm-Message-State: ACgBeo05BmmGYQsNB56x2tcdtzaTsaGEu/XxX75kk1XujTPLtpaQo8GH
- n+b6K294+cfjyTTQF7crK35gZHooBas=
-X-Google-Smtp-Source: AA6agR5cbgmM3ZdEqvzRU93tReZOXcgsEMGgbHWGP9Waa/q0FW6VMii8ggO6te47YYUYou+1Bi+hhQ==
-X-Received: by 2002:a17:907:9619:b0:730:8ebb:9e45 with SMTP id
- gb25-20020a170907961900b007308ebb9e45mr5637138ejc.628.1660397157719; 
- Sat, 13 Aug 2022 06:25:57 -0700 (PDT)
-Received: from [127.0.0.1] (ip-109-43-51-44.web.vodafone.de. [109.43.51.44])
- by smtp.gmail.com with ESMTPSA id
- q8-20020a056402032800b00435651c4a01sm3008908edw.56.2022.08.13.06.25.56
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 13 Aug 2022 06:25:57 -0700 (PDT)
-Date: Sat, 13 Aug 2022 13:25:56 +0000 (UTC)
-From: Thomas Butz <btom1990@googlemail.com>
+ Mon, 15 Aug 2022 18:39:42 +0000 (UTC)
+Received: janet.servers.dxld.at; Mon, 15 Aug 2022 20:39:42 +0200
+From: =?UTF-8?q?Daniel=20Gr=C3=B6ber?= <dxld@darkboxed.org>
 To: wireguard@lists.zx2c4.com
-Message-ID: <61e00589-c80d-43cd-8bd4-27cde6cd936d@googlemail.com>
-Subject: Android app icon isn't displayed in F-Droid clients
+Cc: "Jason A . Donenfeld" <Jason@zx2c4.com>
+Subject: [PATCH v2] wg: Support restricting address family of DNS resolved
+ Endpoint
+Date: Mon, 15 Aug 2022 20:39:02 +0200
+Message-Id: <20220815183901.135114-1-dxld@darkboxed.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Correlation-ID: <61e00589-c80d-43cd-8bd4-27cde6cd936d@googlemail.com>
+Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Tue, 23 Aug 2022 13:35:50 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -75,4 +40,270 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-https://github.com/NeoApplications/Neo-Store/issues/273#issuecomment-1214153179
+When using wireguard tunnels for providing IPv6 connectivity to machines it
+can be important to pin which IP address family should be used.
+
+Consider a peer using a DNS name with both A/AAAA records, wg will
+currently blindly follow system policy and use the first address returned
+by getaddrinfo(). In typical deployments this will cause the IPv6 address
+of the peer to be used, however when the whole IPv6 internet is being
+routed over our wireguard all this accomplishes is a traffic black hole.
+
+Naturally this can be worked around by having different DNS names for
+v4-only / dual-stack addresses, however this may not be possible in some
+situations where, say, a dynamic-DNS service is also in use.
+
+To fix this we allow users to control which address family they want using
+the new AddressFamily= config option, see wg.8 for details. We also update
+reresolve-dns to take the AddressFamily option into account.
+
+We would like to note that the not_oif patch[1] would also alleviate this
+problem but since this never got merged it's not a workable solution.
+
+[1]: http://marc.info/?t=145452167200014&r=1&w=2
+---
+ contrib/reresolve-dns/reresolve-dns.sh |  4 ++-
+ src/config.c                           | 41 ++++++++++++++++++++------
+ src/config.h                           |  2 +-
+ src/containers.h                       |  5 ++++
+ src/man/wg.8                           |  8 ++++-
+ src/set.c                              |  9 +++++-
+ src/setconf.c                          |  2 +-
+ 7 files changed, 57 insertions(+), 14 deletions(-)
+
+--
+Changes in v2: Reword commit message
+
+diff --git a/contrib/reresolve-dns/reresolve-dns.sh b/contrib/reresolve-dns/reresolve-dns.sh
+index 711c332..bdb47ac 100755
+--- a/contrib/reresolve-dns/reresolve-dns.sh
++++ b/contrib/reresolve-dns/reresolve-dns.sh
+@@ -17,7 +17,7 @@ process_peer() {
+ 	[[ $PEER_SECTION -ne 1 || -z $PUBLIC_KEY || -z $ENDPOINT ]] && return 0
+ 	[[ $(wg show "$INTERFACE" latest-handshakes) =~ ${PUBLIC_KEY//+/\\+}\	([0-9]+) ]] || return 0
+ 	(( ($EPOCHSECONDS - ${BASH_REMATCH[1]}) > 135 )) || return 0
+-	wg set "$INTERFACE" peer "$PUBLIC_KEY" endpoint "$ENDPOINT"
++	wg set "$INTERFACE" peer "$PUBLIC_KEY" endpoint "$ENDPOINT" address-family "$FAMILY"
+ 	reset_peer_section
+ }
+ 
+@@ -25,6 +25,7 @@ reset_peer_section() {
+ 	PEER_SECTION=0
+ 	PUBLIC_KEY=""
+ 	ENDPOINT=""
++	FAMILY=unspec
+ }
+ 
+ reset_peer_section
+@@ -38,6 +39,7 @@ while read -r line || [[ -n $line ]]; do
+ 		case "$key" in
+ 		PublicKey) PUBLIC_KEY="$value"; continue ;;
+ 		Endpoint) ENDPOINT="$value"; continue ;;
++		AddressFamily) FAMILY="$value"; continue ;;
+ 		esac
+ 	fi
+ done < "$CONFIG_FILE"
+diff --git a/src/config.c b/src/config.c
+index 81ccb47..e8db900 100644
+--- a/src/config.c
++++ b/src/config.c
+@@ -192,14 +192,14 @@ static inline int parse_dns_retries(void)
+ 	return (int)ret;
+ }
+ 
+-static inline bool parse_endpoint(struct sockaddr *endpoint, const char *value)
++static inline bool parse_endpoint(struct sockaddr *endpoint, const char *value, int family)
+ {
+ 	char *mutable = strdup(value);
+ 	char *begin, *end;
+ 	int ret, retries = parse_dns_retries();
+ 	struct addrinfo *resolved;
+ 	struct addrinfo hints = {
+-		.ai_family = AF_UNSPEC,
++		.ai_family = family,
+ 		.ai_socktype = SOCK_DGRAM,
+ 		.ai_protocol = IPPROTO_UDP
+ 	};
+@@ -279,6 +279,20 @@ static inline bool parse_endpoint(struct sockaddr *endpoint, const char *value)
+ 	return true;
+ }
+ 
++static inline bool parse_address_family(int *family, const char *value)
++{
++	if (strcmp(value, "inet") == 0)
++		*family = AF_INET;
++	else if (strcmp(value, "inet6") == 0)
++		*family = AF_INET6;
++	else if (strcmp(value, "unspec") == 0)
++		*family = AF_UNSPEC;
++	else
++		return false;
++
++	return true;
++}
++
+ static inline bool parse_persistent_keepalive(uint16_t *interval, uint32_t *flags, const char *value)
+ {
+ 	unsigned long ret;
+@@ -454,8 +468,10 @@ static bool process_line(struct config_ctx *ctx, const char *line)
+ 			goto error;
+ 	} else if (ctx->is_peer_section) {
+ 		if (key_match("Endpoint"))
+-			ret = parse_endpoint(&ctx->last_peer->endpoint.addr, value);
+-		else if (key_match("PublicKey")) {
++			ctx->last_peer->endpoint_value = strdup(value);
++		else if (key_match("AddressFamily")) {
++			ret = parse_address_family(&ctx->last_peer->addr_fam, value);
++		} else if (key_match("PublicKey")) {
+ 			ret = parse_key(ctx->last_peer->public_key, value);
+ 			if (ret)
+ 				ctx->last_peer->flags |= WGPEER_HAS_PUBLIC_KEY;
+@@ -527,19 +543,22 @@ bool config_read_init(struct config_ctx *ctx, bool append)
+ 	return true;
+ }
+ 
+-struct wgdevice *config_read_finish(struct config_ctx *ctx)
++struct wgdevice *config_read_finish(struct wgdevice *device)
+ {
+ 	struct wgpeer *peer;
+ 
+-	for_each_wgpeer(ctx->device, peer) {
++	for_each_wgpeer(device, peer) {
+ 		if (!(peer->flags & WGPEER_HAS_PUBLIC_KEY)) {
+ 			fprintf(stderr, "A peer is missing a public key\n");
+ 			goto err;
+ 		}
++
++		if (!parse_endpoint(&peer->endpoint.addr, peer->endpoint_value, peer->addr_fam))
++			goto err;
+ 	}
+-	return ctx->device;
++	return device;
+ err:
+-	free_wgdevice(ctx->device);
++	free_wgdevice(device);
+ 	return NULL;
+ }
+ 
+@@ -611,7 +630,11 @@ struct wgdevice *config_read_cmd(const char *argv[], int argc)
+ 			argv += 1;
+ 			argc -= 1;
+ 		} else if (!strcmp(argv[0], "endpoint") && argc >= 2 && peer) {
+-			if (!parse_endpoint(&peer->endpoint.addr, argv[1]))
++			peer->endpoint_value = strdup(argv[1]);
++			argv += 2;
++			argc -= 2;
++		} else if (!strcmp(argv[0], "address-family") && argc >= 2 && peer) {
++			if (!parse_address_family(&peer->addr_fam, argv[1]))
+ 				goto error;
+ 			argv += 2;
+ 			argc -= 2;
+diff --git a/src/config.h b/src/config.h
+index 443cf21..6f81da2 100644
+--- a/src/config.h
++++ b/src/config.h
+@@ -22,6 +22,6 @@ struct config_ctx {
+ struct wgdevice *config_read_cmd(const char *argv[], int argc);
+ bool config_read_init(struct config_ctx *ctx, bool append);
+ bool config_read_line(struct config_ctx *ctx, const char *line);
+-struct wgdevice *config_read_finish(struct config_ctx *ctx);
++struct wgdevice *config_read_finish(struct wgdevice *device);
+ 
+ #endif
+diff --git a/src/containers.h b/src/containers.h
+index a82e8dd..c111621 100644
+--- a/src/containers.h
++++ b/src/containers.h
+@@ -52,12 +52,15 @@ struct wgpeer {
+ 	uint8_t public_key[WG_KEY_LEN];
+ 	uint8_t preshared_key[WG_KEY_LEN];
+ 
++	char *endpoint_value;
+ 	union {
+ 		struct sockaddr addr;
+ 		struct sockaddr_in addr4;
+ 		struct sockaddr_in6 addr6;
+ 	} endpoint;
+ 
++	int addr_fam;
++
+ 	struct timespec64 last_handshake_time;
+ 	uint64_t rx_bytes, tx_bytes;
+ 	uint16_t persistent_keepalive_interval;
+@@ -99,6 +102,8 @@ static inline void free_wgdevice(struct wgdevice *dev)
+ 	for (struct wgpeer *peer = dev->first_peer, *np = peer ? peer->next_peer : NULL; peer; peer = np, np = peer ? peer->next_peer : NULL) {
+ 		for (struct wgallowedip *allowedip = peer->first_allowedip, *na = allowedip ? allowedip->next_allowedip : NULL; allowedip; allowedip = na, na = allowedip ? allowedip->next_allowedip : NULL)
+ 			free(allowedip);
++		if (peer->endpoint_value)
++			free(peer->endpoint_value);
+ 		free(peer);
+ 	}
+ 	free(dev);
+diff --git a/src/man/wg.8 b/src/man/wg.8
+index 7984539..fd9fde7 100644
+--- a/src/man/wg.8
++++ b/src/man/wg.8
+@@ -55,7 +55,7 @@ transfer-rx, transfer-tx, persistent-keepalive.
+ Shows the current configuration of \fI<interface>\fP in the format described
+ by \fICONFIGURATION FILE FORMAT\fP below.
+ .TP
+-\fBset\fP \fI<interface>\fP [\fIlisten-port\fP \fI<port>\fP] [\fIfwmark\fP \fI<fwmark>\fP] [\fIprivate-key\fP \fI<file-path>\fP] [\fIpeer\fP \fI<base64-public-key>\fP [\fIremove\fP] [\fIpreshared-key\fP \fI<file-path>\fP] [\fIendpoint\fP \fI<ip>:<port>\fP] [\fIpersistent-keepalive\fP \fI<interval seconds>\fP] [\fIallowed-ips\fP \fI<ip1>/<cidr1>\fP[,\fI<ip2>/<cidr2>\fP]...] ]...
++\fBset\fP \fI<interface>\fP [\fIlisten-port\fP \fI<port>\fP] [\fIfwmark\fP \fI<fwmark>\fP] [\fIprivate-key\fP \fI<file-path>\fP] [\fIpeer\fP \fI<base64-public-key>\fP [\fIremove\fP] [\fIpreshared-key\fP \fI<file-path>\fP] [\fIendpoint\fP \fI<ip>:<port>\fP] [\fIaddress-family\fP \fI<family>\fP] [\fIpersistent-keepalive\fP \fI<interval seconds>\fP] [\fIallowed-ips\fP \fI<ip1>/<cidr1>\fP[,\fI<ip2>/<cidr2>\fP]...] ]...
+ Sets configuration values for the specified \fI<interface>\fP. Multiple
+ \fIpeer\fPs may be specified, and if the \fIremove\fP argument is given
+ for a peer, that peer is removed, not configured. If \fIlisten-port\fP
+@@ -163,6 +163,12 @@ port number. This endpoint will be updated automatically to the most recent
+ source IP address and port of correctly authenticated packets from the peer.
+ Optional.
+ .IP \(bu
++AddressFamily \(em one of \fIinet\fP, \fIinet6\fP or \fIunspec\fP. When a
++hostname is given for \fIEndpoint\fP, setting this to \fIinet\fP or
++\fIinet6\fP will allow only addresses of the given family to be
++used. Defaults to \fIunspec\fP, which causes the first returned address of
++any type to be used.
++.IP \(bu
+ PersistentKeepalive \(em a seconds interval, between 1 and 65535 inclusive, of
+ how often to send an authenticated empty packet to the peer for the purpose of keeping a
+ stateful firewall or NAT mapping valid persistently. For example, if the interface
+diff --git a/src/set.c b/src/set.c
+index 75560fd..20ee85e 100644
+--- a/src/set.c
++++ b/src/set.c
+@@ -18,13 +18,20 @@ int set_main(int argc, const char *argv[])
+ 	int ret = 1;
+ 
+ 	if (argc < 3) {
+-		fprintf(stderr, "Usage: %s %s <interface> [listen-port <port>] [fwmark <mark>] [private-key <file path>] [peer <base64 public key> [remove] [preshared-key <file path>] [endpoint <ip>:<port>] [persistent-keepalive <interval seconds>] [allowed-ips <ip1>/<cidr1>[,<ip2>/<cidr2>]...] ]...\n", PROG_NAME, argv[0]);
++		fprintf(stderr, "Usage: %s %s <interface> [listen-port <port>] [fwmark <mark>] [private-key <file path>] [peer <base64 public key> [remove] [preshared-key <file path>] [endpoint <ip>:<port>] [address-family <family>] [persistent-keepalive <interval seconds>] [allowed-ips <ip1>/<cidr1>[,<ip2>/<cidr2>]...] ]...\n", PROG_NAME, argv[0]);
+ 		return 1;
+ 	}
+ 
+ 	device = config_read_cmd(argv + 2, argc - 2);
+ 	if (!device)
+ 		goto cleanup;
++
++	device = config_read_finish(device);
++	if (!device) {
++		fprintf(stderr, "Invalid configuration\n");
++		goto cleanup;
++	}
++
+ 	strncpy(device->name, argv[1], IFNAMSIZ -  1);
+ 	device->name[IFNAMSIZ - 1] = '\0';
+ 
+diff --git a/src/setconf.c b/src/setconf.c
+index 1c5b138..c90fd30 100644
+--- a/src/setconf.c
++++ b/src/setconf.c
+@@ -127,7 +127,7 @@ int setconf_main(int argc, const char *argv[])
+ 			goto cleanup;
+ 		}
+ 	}
+-	device = config_read_finish(&ctx);
++	device = config_read_finish(ctx.device);
+ 	if (!device) {
+ 		fprintf(stderr, "Invalid configuration\n");
+ 		goto cleanup;
+-- 
+2.30.2
+
