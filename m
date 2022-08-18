@@ -4,27 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15EA7C32772
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 23 Aug 2022 13:39:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0331BC3F6B0
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 23 Aug 2022 13:48:11 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 5c3fda48;
-	Tue, 23 Aug 2022 13:36:00 +0000 (UTC)
-Received: from janet.servers.dxld.at (mail.servers.dxld.at [5.9.225.164])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id dd49a480
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 39d17193;
+	Tue, 23 Aug 2022 13:36:01 +0000 (UTC)
+Received: from EUR03-AM7-obe.outbound.protection.outlook.com
+ (mail-am7eur03on2085.outbound.protection.outlook.com [40.107.105.85])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 88b5265b
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 15 Aug 2022 18:39:42 +0000 (UTC)
-Received: janet.servers.dxld.at; Mon, 15 Aug 2022 20:39:42 +0200
-From: =?UTF-8?q?Daniel=20Gr=C3=B6ber?= <dxld@darkboxed.org>
-To: wireguard@lists.zx2c4.com
-Cc: "Jason A . Donenfeld" <Jason@zx2c4.com>
-Subject: [PATCH v2] wg: Support restricting address family of DNS resolved
- Endpoint
-Date: Mon, 15 Aug 2022 20:39:02 +0200
-Message-Id: <20220815183901.135114-1-dxld@darkboxed.org>
-X-Mailer: git-send-email 2.30.2
+ Thu, 18 Aug 2022 08:40:23 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=C8tIAdR21YR3eFhE+w8IJRvnWJK5ss9IbMP20ZFfeIaTfmfs/s99NBm0UhWIFp1D23U6W6p8V0h0DM/d2nRqXAYHUsFEPRF0ikRaQ8yssgZ/VKd8Q1ONx2KWy+n+S7lvSV4bz0oDlydFMsxnfl1WyOK9iXHIRdNjADeIwjWYmCZhJOjbcOPCt8765FuSFX0rZVbbe1lxYTD8t2mduRtO0JfL5bFlZurbW/78Nh2RE6LE5Eu5xocx72Gqj1iTxlFT5Mrsh9DAsL2dlRYvmyk+5GxPHB0Agc64gBNlFiWP+oIHzIU6q3hb/7pkPgFWrUGtLovcWOmfQ/aPTller/QQ/g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Xx5HmQvZabdZHQ0O60sc1Tj0WRthwY4K9haSHtfH7zE=;
+ b=P/SuEVHIwrHBFk9n0Q7FFaZMmIcJxhCqxMw5J7coZ9ZXd/nc8axaNWKB3orJPInhCo0zlpHuYQjwQ4/ultn6IHMmeLf4sUqBQQ00Jt2bbKN41G4DSuhvsSnzOcZS5JgZnqYuWFDCqSumc3mqaV0prnDzqOFD3VMuMN6/PCDOvTCZTivp8IyKJVoYz/h707grYnYjRh5IL9tC9ztXW1dNOeacm1PHiP7OZFctDeNXWEJZ+dgRhLeqaTFoN9tUylOj15gh1tU3lASAPRIr03DLZTW4zpEdZHhZ2FCy7Xl7BOzk6ukl48MN5JOrdWiEYINESlnPhsiBuwlT2+igPkYizg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=rte.se; dmarc=pass action=none header.from=rte.se; dkim=pass
+ header.d=rte.se; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rtesweden.onmicrosoft.com; s=selector1-rtesweden-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Xx5HmQvZabdZHQ0O60sc1Tj0WRthwY4K9haSHtfH7zE=;
+ b=YV548rEg2Ubg+eF6zAYq0dXNGSoHuuE0LCxmkTYZyO1gcMfXw3WAOaVj7F0cK6QL+8ckNllCNF4ZRGbc57aZINXJqXMT4FV0P6gq9cMbUfBezOHp0MCwVuTCxr6x2Z1vmJc3y0rD8XFt56FTfTdNjhvkddq/Rtl063SnCDeO9illEAeiWedQGcB7gmgW+3frRUOAThJgAYS3EWfcmUf9Xqz57HzuTXE1cl6XlXMttZFVTuM2i7IhEqfP6XnNZTybXt8TAzxR31IvONjgpnCcKC2C3DBuNDIy1O57difveIIRb/oRtwf8hzUUhL/NWBQe518UMh+C2zaGjznq2Na12g==
+Received: from VE1P189MB0989.EURP189.PROD.OUTLOOK.COM (2603:10a6:800:14b::14)
+ by AS1P189MB1963.EURP189.PROD.OUTLOOK.COM (2603:10a6:20b:4a1::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5504.28; Thu, 18 Aug
+ 2022 08:40:22 +0000
+Received: from VE1P189MB0989.EURP189.PROD.OUTLOOK.COM
+ ([fe80::89f7:4587:1f0d:5034]) by VE1P189MB0989.EURP189.PROD.OUTLOOK.COM
+ ([fe80::89f7:4587:1f0d:5034%9]) with mapi id 15.20.5504.027; Thu, 18 Aug 2022
+ 08:40:21 +0000
+From: Mats Loman <mats.loman@rte.se>
+To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Subject: Endpoints are not in sync (latest handshake)
+Thread-Topic: Endpoints are not in sync (latest handshake)
+Thread-Index: AQHYstzqaN50zUSMf0uspv91Jh9xxA==
+Date: Thu, 18 Aug 2022 08:40:21 +0000
+Message-ID: <VE1P189MB0989ABC50A06400CFC34F398E56D9@VE1P189MB0989.EURP189.PROD.OUTLOOK.COM>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=rte.se;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 82741ac5-9faa-4596-fd9f-08da80f549ca
+x-ms-traffictypediagnostic: AS1P189MB1963:EE_
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: xGDeksvlSpW0ePiD2v43iHeh/MVXHZNtYVKPfAaDI+dgnDSdQvaHiDO2KdUVMtvOd1i8rdEAF/3HPYxhhvusckC03rIsHJqqP8JL3ocRtt1Cvw5WMvbziyIU54KooU0PiU9aSJHsJ4nM89+ywv0qVzyOmNBpCQ/+toDeSKTXV9R2FkSeHgsORe1jT5zuz8zklHrkP+84fq0eeVTdtayfZncoqc1IN0ONnMtsQm72Ifi5Dj6dlLUO2a2EK5Zw8PT4VsIiY2wUDVRn5eDCPYC0pWKpmIvgOzaR/figAmXp8utuAFOO84LU5KI7AIa0AfCWrhgmReZS1n/H/NZgdzqD4sTaz0m1sM3SKZyWnDA1enVybXb2rw0qi9kOE48NhoBNVJCrvCfrS7wblo6ohbRLPMuQT7cULd1TDXg3D9GraFfIcZbwkjOHfZf0GkL4wOU94zcsiBwt8WxMJbxPirM1vdI/2YK/FgNo9CqunGhUD70WtxtL82JZvS7Ws5uOYHPOj87uF5HgUzqoFedIMWjTt7594dSgP2e8yzvInDuaW9og9F1GQcyARtG1TYx8ZDSSl7ktBP7tuwWv/HoMK+3ujbkMFf4cgsvtHP7Jn+Zd31L+KFYCxejmUV3MTOriUGHaCZ1XvSiDotPqOnuAGGVxyMn50SUmTGO/0aPkMiDvCfKaAGxooTGgu5f0bn4Wdmjg2/O+AJGjGiBjlbWXht7D8f5XD5AfqSrL6d3kjbwt/fVjUfjm25As4iZBhSCdMah2ffsd/iU08r1XupR8byCn9A==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:VE1P189MB0989.EURP189.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
+ SFS:(13230016)(396003)(366004)(376002)(136003)(39830400003)(346002)(55016003)(8936002)(478600001)(66946007)(52536014)(8676002)(64756008)(76116006)(66556008)(66446008)(6506007)(44832011)(86362001)(26005)(66476007)(83380400001)(186003)(7696005)(9686003)(5660300002)(91956017)(41300700001)(6916009)(33656002)(38100700002)(38070700005)(316002)(122000001)(2906002)(71200400001);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?aQxG7z4PfWzXsWIYTPlDbBxl6T9pGnpBCiqhbHtBNMxyLhNpU+BcQI70pE?=
+ =?iso-8859-1?Q?IWEorUIH5BvcgoqnabvxeLtrPVLy0/AJAXcukdVjykVUVtOYS7oiiAvlil?=
+ =?iso-8859-1?Q?uQMRTJTwYQ4yP84JQc3qM8g8yVxVemdFVE13AdHztg9OhzXdNV2gIxMrYR?=
+ =?iso-8859-1?Q?WMKzt24q2KByZphxL0UO24wubbxyYRNbim7HD5tnLpCZxloH87fm2Nq+Cy?=
+ =?iso-8859-1?Q?PLQoHXOEXuglUV+UkUBV75gaSFbtYDQIChXrs6TFhUCwv1v7viaSfdCNk/?=
+ =?iso-8859-1?Q?1/x0ftMrLZJIDPwD5EAHN9U0xu+xbN2KVb4I8ur4XoHjknK4HuY0gw/Qsa?=
+ =?iso-8859-1?Q?TlFaC07KjJCZMbkDs741C9r02QsHzAg2AG0FNjeGQG5V9XiRpwh0G3/im8?=
+ =?iso-8859-1?Q?0eQsk2GYHEn40toTxxSxOuofb2Grn667Q+F5ZGC0gdxxK6GUoWAAXYQeIS?=
+ =?iso-8859-1?Q?c6C3pVXsFm1Sne1U5AV0h+H3OWGN3V3xEPbbVCbUumlmjHAWyJIYm19cl/?=
+ =?iso-8859-1?Q?fdERV1JA9FogjF8glhCUZVJZKQlpJuSujK4zO1hJllyi7qGVyjmSsRJKBC?=
+ =?iso-8859-1?Q?5RJ4P75bxqygOTCph1DbYnbPB3oqB2qYSvUofEzQfuvEXy6BxGcXgqdZIN?=
+ =?iso-8859-1?Q?lQHF8pjnbb+s4r5tow7K7ss8CVDvOuIjVPXkRyF7yUzFkOUu0K77XThaD8?=
+ =?iso-8859-1?Q?9w5icIThqCb54boW2OqEVR81Vayuv58b/I0Hg9l/Un+TnTGGhXpbES+0/4?=
+ =?iso-8859-1?Q?r92zuCI5ffzDgtL1UeP4RarTMsY/XTjHHCh++3/62svXDwWNARVhVNkgWW?=
+ =?iso-8859-1?Q?Ak6lhB5FuvhTbHSZiJ9Ze3e/SBId86HZ+wrsC+lfc3zfoK+NjiJmk7Eikn?=
+ =?iso-8859-1?Q?Okq0zQznkr9I+oXTWMEqrj86nAYcgNQVi5SeRA/6GfjjSufkvsLtYLMS+2?=
+ =?iso-8859-1?Q?kfTh8qAwRz94ct1rudEMQ+FMSvyvj1MERLTc+AwBMYc8zVy9PfvwebLlh0?=
+ =?iso-8859-1?Q?cpJUO4xq+lGI1MddxXoddOCo09cL7v3AoOxsa50HYNZ01OQpGhUWz0Pe5q?=
+ =?iso-8859-1?Q?WaeluMSklQWpxYWLtE6KUwGOc+P4UmDSFEffqiFKk0oGQlv84SjlpT8WAk?=
+ =?iso-8859-1?Q?3g5AtDRUJ7622jVTp827g7F7LAbUT4wz4ceHMdZOfd7yzdj8hyahTmWLdH?=
+ =?iso-8859-1?Q?ProGAdml0/V4bplvTOWG+eLXVF+H8LQxoFgPA4OhdPmNJPzlvFuc7r0zM8?=
+ =?iso-8859-1?Q?1mHxpRa3yncWvlLV04WUx5E4HYyuJRMaOc0EuydOJMV/bkFuumwqqs6VcM?=
+ =?iso-8859-1?Q?U5TmLHGiwynW80m9X1dNuy4tumT1SHwmOnsLNKzeH/mIzt/0XUo5H1V4xx?=
+ =?iso-8859-1?Q?0wwQd86fpc09F7TUub1yIfWOjZBvLIPmwbidWNprW/C1z7yvSRElSzh3Ip?=
+ =?iso-8859-1?Q?2vK7xtwG5WP4oQjcpo0FZkBbOfLOymu8cyRki8VvUnPeGA9FFpPSrOqC2t?=
+ =?iso-8859-1?Q?U1yDKE6WcqWAzLvqX1bXL/RbixVQJ7kV860inTi4GGPgYUhQaif+UduucL?=
+ =?iso-8859-1?Q?RsE7iPZsDu/4+w5rq73AUVIpWr138x1Ax8tnkF+H8C5HN3WWCrJgHKYF1f?=
+ =?iso-8859-1?Q?yaqdsK6CPaqXk=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: rte.se
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: VE1P189MB0989.EURP189.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: 82741ac5-9faa-4596-fd9f-08da80f549ca
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Aug 2022 08:40:21.9260 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: cd53aeee-83dc-41cc-adaf-1e216ce7f7ba
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: OM546DmtLC1TWFBhPLdIz9JzbqXneTLPZ5UQE/wLQqD+VBBTqTAk62V6QV80SUgNaZmx9p23kLSlsV0AZbPxjQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS1P189MB1963
 X-Mailman-Approved-At: Tue, 23 Aug 2022 13:35:50 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -40,270 +121,42 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-When using wireguard tunnels for providing IPv6 connectivity to machines it
-can be important to pin which IP address family should be used.
-
-Consider a peer using a DNS name with both A/AAAA records, wg will
-currently blindly follow system policy and use the first address returned
-by getaddrinfo(). In typical deployments this will cause the IPv6 address
-of the peer to be used, however when the whole IPv6 internet is being
-routed over our wireguard all this accomplishes is a traffic black hole.
-
-Naturally this can be worked around by having different DNS names for
-v4-only / dual-stack addresses, however this may not be possible in some
-situations where, say, a dynamic-DNS service is also in use.
-
-To fix this we allow users to control which address family they want using
-the new AddressFamily= config option, see wg.8 for details. We also update
-reresolve-dns to take the AddressFamily option into account.
-
-We would like to note that the not_oif patch[1] would also alleviate this
-problem but since this never got merged it's not a workable solution.
-
-[1]: http://marc.info/?t=145452167200014&r=1&w=2
----
- contrib/reresolve-dns/reresolve-dns.sh |  4 ++-
- src/config.c                           | 41 ++++++++++++++++++++------
- src/config.h                           |  2 +-
- src/containers.h                       |  5 ++++
- src/man/wg.8                           |  8 ++++-
- src/set.c                              |  9 +++++-
- src/setconf.c                          |  2 +-
- 7 files changed, 57 insertions(+), 14 deletions(-)
-
---
-Changes in v2: Reword commit message
-
-diff --git a/contrib/reresolve-dns/reresolve-dns.sh b/contrib/reresolve-dns/reresolve-dns.sh
-index 711c332..bdb47ac 100755
---- a/contrib/reresolve-dns/reresolve-dns.sh
-+++ b/contrib/reresolve-dns/reresolve-dns.sh
-@@ -17,7 +17,7 @@ process_peer() {
- 	[[ $PEER_SECTION -ne 1 || -z $PUBLIC_KEY || -z $ENDPOINT ]] && return 0
- 	[[ $(wg show "$INTERFACE" latest-handshakes) =~ ${PUBLIC_KEY//+/\\+}\	([0-9]+) ]] || return 0
- 	(( ($EPOCHSECONDS - ${BASH_REMATCH[1]}) > 135 )) || return 0
--	wg set "$INTERFACE" peer "$PUBLIC_KEY" endpoint "$ENDPOINT"
-+	wg set "$INTERFACE" peer "$PUBLIC_KEY" endpoint "$ENDPOINT" address-family "$FAMILY"
- 	reset_peer_section
- }
- 
-@@ -25,6 +25,7 @@ reset_peer_section() {
- 	PEER_SECTION=0
- 	PUBLIC_KEY=""
- 	ENDPOINT=""
-+	FAMILY=unspec
- }
- 
- reset_peer_section
-@@ -38,6 +39,7 @@ while read -r line || [[ -n $line ]]; do
- 		case "$key" in
- 		PublicKey) PUBLIC_KEY="$value"; continue ;;
- 		Endpoint) ENDPOINT="$value"; continue ;;
-+		AddressFamily) FAMILY="$value"; continue ;;
- 		esac
- 	fi
- done < "$CONFIG_FILE"
-diff --git a/src/config.c b/src/config.c
-index 81ccb47..e8db900 100644
---- a/src/config.c
-+++ b/src/config.c
-@@ -192,14 +192,14 @@ static inline int parse_dns_retries(void)
- 	return (int)ret;
- }
- 
--static inline bool parse_endpoint(struct sockaddr *endpoint, const char *value)
-+static inline bool parse_endpoint(struct sockaddr *endpoint, const char *value, int family)
- {
- 	char *mutable = strdup(value);
- 	char *begin, *end;
- 	int ret, retries = parse_dns_retries();
- 	struct addrinfo *resolved;
- 	struct addrinfo hints = {
--		.ai_family = AF_UNSPEC,
-+		.ai_family = family,
- 		.ai_socktype = SOCK_DGRAM,
- 		.ai_protocol = IPPROTO_UDP
- 	};
-@@ -279,6 +279,20 @@ static inline bool parse_endpoint(struct sockaddr *endpoint, const char *value)
- 	return true;
- }
- 
-+static inline bool parse_address_family(int *family, const char *value)
-+{
-+	if (strcmp(value, "inet") == 0)
-+		*family = AF_INET;
-+	else if (strcmp(value, "inet6") == 0)
-+		*family = AF_INET6;
-+	else if (strcmp(value, "unspec") == 0)
-+		*family = AF_UNSPEC;
-+	else
-+		return false;
-+
-+	return true;
-+}
-+
- static inline bool parse_persistent_keepalive(uint16_t *interval, uint32_t *flags, const char *value)
- {
- 	unsigned long ret;
-@@ -454,8 +468,10 @@ static bool process_line(struct config_ctx *ctx, const char *line)
- 			goto error;
- 	} else if (ctx->is_peer_section) {
- 		if (key_match("Endpoint"))
--			ret = parse_endpoint(&ctx->last_peer->endpoint.addr, value);
--		else if (key_match("PublicKey")) {
-+			ctx->last_peer->endpoint_value = strdup(value);
-+		else if (key_match("AddressFamily")) {
-+			ret = parse_address_family(&ctx->last_peer->addr_fam, value);
-+		} else if (key_match("PublicKey")) {
- 			ret = parse_key(ctx->last_peer->public_key, value);
- 			if (ret)
- 				ctx->last_peer->flags |= WGPEER_HAS_PUBLIC_KEY;
-@@ -527,19 +543,22 @@ bool config_read_init(struct config_ctx *ctx, bool append)
- 	return true;
- }
- 
--struct wgdevice *config_read_finish(struct config_ctx *ctx)
-+struct wgdevice *config_read_finish(struct wgdevice *device)
- {
- 	struct wgpeer *peer;
- 
--	for_each_wgpeer(ctx->device, peer) {
-+	for_each_wgpeer(device, peer) {
- 		if (!(peer->flags & WGPEER_HAS_PUBLIC_KEY)) {
- 			fprintf(stderr, "A peer is missing a public key\n");
- 			goto err;
- 		}
-+
-+		if (!parse_endpoint(&peer->endpoint.addr, peer->endpoint_value, peer->addr_fam))
-+			goto err;
- 	}
--	return ctx->device;
-+	return device;
- err:
--	free_wgdevice(ctx->device);
-+	free_wgdevice(device);
- 	return NULL;
- }
- 
-@@ -611,7 +630,11 @@ struct wgdevice *config_read_cmd(const char *argv[], int argc)
- 			argv += 1;
- 			argc -= 1;
- 		} else if (!strcmp(argv[0], "endpoint") && argc >= 2 && peer) {
--			if (!parse_endpoint(&peer->endpoint.addr, argv[1]))
-+			peer->endpoint_value = strdup(argv[1]);
-+			argv += 2;
-+			argc -= 2;
-+		} else if (!strcmp(argv[0], "address-family") && argc >= 2 && peer) {
-+			if (!parse_address_family(&peer->addr_fam, argv[1]))
- 				goto error;
- 			argv += 2;
- 			argc -= 2;
-diff --git a/src/config.h b/src/config.h
-index 443cf21..6f81da2 100644
---- a/src/config.h
-+++ b/src/config.h
-@@ -22,6 +22,6 @@ struct config_ctx {
- struct wgdevice *config_read_cmd(const char *argv[], int argc);
- bool config_read_init(struct config_ctx *ctx, bool append);
- bool config_read_line(struct config_ctx *ctx, const char *line);
--struct wgdevice *config_read_finish(struct config_ctx *ctx);
-+struct wgdevice *config_read_finish(struct wgdevice *device);
- 
- #endif
-diff --git a/src/containers.h b/src/containers.h
-index a82e8dd..c111621 100644
---- a/src/containers.h
-+++ b/src/containers.h
-@@ -52,12 +52,15 @@ struct wgpeer {
- 	uint8_t public_key[WG_KEY_LEN];
- 	uint8_t preshared_key[WG_KEY_LEN];
- 
-+	char *endpoint_value;
- 	union {
- 		struct sockaddr addr;
- 		struct sockaddr_in addr4;
- 		struct sockaddr_in6 addr6;
- 	} endpoint;
- 
-+	int addr_fam;
-+
- 	struct timespec64 last_handshake_time;
- 	uint64_t rx_bytes, tx_bytes;
- 	uint16_t persistent_keepalive_interval;
-@@ -99,6 +102,8 @@ static inline void free_wgdevice(struct wgdevice *dev)
- 	for (struct wgpeer *peer = dev->first_peer, *np = peer ? peer->next_peer : NULL; peer; peer = np, np = peer ? peer->next_peer : NULL) {
- 		for (struct wgallowedip *allowedip = peer->first_allowedip, *na = allowedip ? allowedip->next_allowedip : NULL; allowedip; allowedip = na, na = allowedip ? allowedip->next_allowedip : NULL)
- 			free(allowedip);
-+		if (peer->endpoint_value)
-+			free(peer->endpoint_value);
- 		free(peer);
- 	}
- 	free(dev);
-diff --git a/src/man/wg.8 b/src/man/wg.8
-index 7984539..fd9fde7 100644
---- a/src/man/wg.8
-+++ b/src/man/wg.8
-@@ -55,7 +55,7 @@ transfer-rx, transfer-tx, persistent-keepalive.
- Shows the current configuration of \fI<interface>\fP in the format described
- by \fICONFIGURATION FILE FORMAT\fP below.
- .TP
--\fBset\fP \fI<interface>\fP [\fIlisten-port\fP \fI<port>\fP] [\fIfwmark\fP \fI<fwmark>\fP] [\fIprivate-key\fP \fI<file-path>\fP] [\fIpeer\fP \fI<base64-public-key>\fP [\fIremove\fP] [\fIpreshared-key\fP \fI<file-path>\fP] [\fIendpoint\fP \fI<ip>:<port>\fP] [\fIpersistent-keepalive\fP \fI<interval seconds>\fP] [\fIallowed-ips\fP \fI<ip1>/<cidr1>\fP[,\fI<ip2>/<cidr2>\fP]...] ]...
-+\fBset\fP \fI<interface>\fP [\fIlisten-port\fP \fI<port>\fP] [\fIfwmark\fP \fI<fwmark>\fP] [\fIprivate-key\fP \fI<file-path>\fP] [\fIpeer\fP \fI<base64-public-key>\fP [\fIremove\fP] [\fIpreshared-key\fP \fI<file-path>\fP] [\fIendpoint\fP \fI<ip>:<port>\fP] [\fIaddress-family\fP \fI<family>\fP] [\fIpersistent-keepalive\fP \fI<interval seconds>\fP] [\fIallowed-ips\fP \fI<ip1>/<cidr1>\fP[,\fI<ip2>/<cidr2>\fP]...] ]...
- Sets configuration values for the specified \fI<interface>\fP. Multiple
- \fIpeer\fPs may be specified, and if the \fIremove\fP argument is given
- for a peer, that peer is removed, not configured. If \fIlisten-port\fP
-@@ -163,6 +163,12 @@ port number. This endpoint will be updated automatically to the most recent
- source IP address and port of correctly authenticated packets from the peer.
- Optional.
- .IP \(bu
-+AddressFamily \(em one of \fIinet\fP, \fIinet6\fP or \fIunspec\fP. When a
-+hostname is given for \fIEndpoint\fP, setting this to \fIinet\fP or
-+\fIinet6\fP will allow only addresses of the given family to be
-+used. Defaults to \fIunspec\fP, which causes the first returned address of
-+any type to be used.
-+.IP \(bu
- PersistentKeepalive \(em a seconds interval, between 1 and 65535 inclusive, of
- how often to send an authenticated empty packet to the peer for the purpose of keeping a
- stateful firewall or NAT mapping valid persistently. For example, if the interface
-diff --git a/src/set.c b/src/set.c
-index 75560fd..20ee85e 100644
---- a/src/set.c
-+++ b/src/set.c
-@@ -18,13 +18,20 @@ int set_main(int argc, const char *argv[])
- 	int ret = 1;
- 
- 	if (argc < 3) {
--		fprintf(stderr, "Usage: %s %s <interface> [listen-port <port>] [fwmark <mark>] [private-key <file path>] [peer <base64 public key> [remove] [preshared-key <file path>] [endpoint <ip>:<port>] [persistent-keepalive <interval seconds>] [allowed-ips <ip1>/<cidr1>[,<ip2>/<cidr2>]...] ]...\n", PROG_NAME, argv[0]);
-+		fprintf(stderr, "Usage: %s %s <interface> [listen-port <port>] [fwmark <mark>] [private-key <file path>] [peer <base64 public key> [remove] [preshared-key <file path>] [endpoint <ip>:<port>] [address-family <family>] [persistent-keepalive <interval seconds>] [allowed-ips <ip1>/<cidr1>[,<ip2>/<cidr2>]...] ]...\n", PROG_NAME, argv[0]);
- 		return 1;
- 	}
- 
- 	device = config_read_cmd(argv + 2, argc - 2);
- 	if (!device)
- 		goto cleanup;
-+
-+	device = config_read_finish(device);
-+	if (!device) {
-+		fprintf(stderr, "Invalid configuration\n");
-+		goto cleanup;
-+	}
-+
- 	strncpy(device->name, argv[1], IFNAMSIZ -  1);
- 	device->name[IFNAMSIZ - 1] = '\0';
- 
-diff --git a/src/setconf.c b/src/setconf.c
-index 1c5b138..c90fd30 100644
---- a/src/setconf.c
-+++ b/src/setconf.c
-@@ -127,7 +127,7 @@ int setconf_main(int argc, const char *argv[])
- 			goto cleanup;
- 		}
- 	}
--	device = config_read_finish(&ctx);
-+	device = config_read_finish(ctx.device);
- 	if (!device) {
- 		fprintf(stderr, "Invalid configuration\n");
- 		goto cleanup;
--- 
-2.30.2
-
+I have two wireguard endpoints that has different opinions about when the l=
+ast handshake was made:=0A=
+=0A=
+interface: wg0=0A=
+  public key: PauftxCvmti7CDDZ9yj6EKZ+r9zQj6gjb9hvP1whzwQ=3D=0A=
+  private key: (hidden)=0A=
+  listening port: 17395=0A=
+=0A=
+peer: s5dnr91F06+AQ/3o5urOM5Dc1f0gzHOsGjwD+AEmwDA=3D=0A=
+  endpoint: 192.168.201.24:17395=0A=
+  allowed ips: 192.168.26.197/32, 192.168.201.38/32=0A=
+  latest handshake: 8 hours, 42 minutes, 30 seconds ago=0A=
+  transfer: 260.73 GiB received, 313.35 GiB sent=0A=
+=0A=
+And:=0A=
+=0A=
+interface: wg0=0A=
+  public key: s5dnr91F06+AQ/3o5urOM5Dc1f0gzHOsGjwD+AEmwDA=3D=0A=
+  private key: (hidden)=0A=
+  listening port: 17395=0A=
+=0A=
+peer: PauftxCvmti7CDDZ9yj6EKZ+r9zQj6gjb9hvP1whzwQ=3D=0A=
+  endpoint: 192.168.201.23:17395=0A=
+  allowed ips: 192.168.26.200/32, 192.168.201.249/32=0A=
+  latest handshake: 2 minutes, 15 seconds ago=0A=
+  transfer: 282.13 GiB received, 276.13 GiB sent=0A=
+=0A=
+It is not possible  to send data through the tunnel  in both directions onl=
+y in one direction.=0A=
+=0A=
+It is pretty easy to repeat this situation:=0A=
+Send UDP packets through the tunnel at a speed that wireguard cannot keep u=
+p with. I expect packet loss in this case but not that the tunnel is "parti=
+ally closed".=0A=
+=0A=
+Any ideas?=0A=
+=0A=
+Best regards,=0A=
+Mats Loman=
