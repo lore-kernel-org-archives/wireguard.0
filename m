@@ -4,68 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9679EC00144
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Jul 2022 17:57:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0F3FC32792
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 22 Aug 2022 23:40:35 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 83d15ec6;
-	Fri, 29 Jul 2022 17:57:02 +0000 (UTC)
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com
- [2a00:1450:4864:20::22a])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 40df00ba
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 68e3e288;
+	Mon, 22 Aug 2022 23:40:33 +0000 (UTC)
+Received: from NAM02-SN1-obe.outbound.protection.outlook.com
+ (mail-sn1anam02olkn2065.outbound.protection.outlook.com [40.92.44.65])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id d3eb29b0
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 29 Jul 2022 17:57:01 +0000 (UTC)
-Received: by mail-lj1-x22a.google.com with SMTP id bx8so3550681ljb.3
- for <wireguard@lists.zx2c4.com>; Fri, 29 Jul 2022 10:57:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux-foundation.org; s=google;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc;
- bh=mtbJI3BfmPmaqMfRhM4dg2FAE3KGVxCoTZ81hDc+/c0=;
- b=CzlLpDkhwSO+V3LZbkmpxVSCoQThsP/QfPteXgoWXEh9dcVIeGObKqK+3+otenlvFk
- Uw2iXYQnDRHNFxSYJeXSMREZiGuOs4lFWZwPNjjqZryGBmIG0OfjntKXGqLGAZ+0TGyD
- xtec1bfPr+Zwi743gUoGmiAo7PqfUj96LjPDs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc;
- bh=mtbJI3BfmPmaqMfRhM4dg2FAE3KGVxCoTZ81hDc+/c0=;
- b=K2WrFG0Q8Y9YPD7nQqTKglvlRZpeLc3BRLl1QFPW1DGW6wL6oP0WG6U1uUKDyi8sss
- /IPGGgpRqv6UmQOb2IRFQ88IUuq9EnpkOfT6ZBXIyINf0M8h+caETn1yeQocpumY+vaS
- U8Cu/j82ba3ZbAJojd9Hmi7zWWRWPHSVkXj3MBWtraRmZB5c8U9OQqyPB0sJPJ4lu3Cx
- RnJ8VNUZLiFaNgKIYe3fUMlg7zze33pY+4xdytRJqAuTUB3UDg4FmFnqyOReYaD/d/CB
- fwckfr+5EIUZqSkVdomooY8FAJyrpxSVahiVb0tsSzzoVrPdbWyugkzvQ9ZqdouMg0Fw
- hFcg==
-X-Gm-Message-State: AJIora/JV04xmMuHSIq86/WKd1m0OocUdOVpWHA/uLfCL5dMntCgokzM
- 0VndiqsA/CX087F0uFMdXj+LAIUAMEdzEQA6
-X-Google-Smtp-Source: AGRyM1u7kXc97WWV0kJ0HHD6+EAW8v/9nY0NTeQ+inJ9yKYJ5BrC46X+2Ut3T6iKRuKQfifL+ULznA==
-X-Received: by 2002:a17:906:d54b:b0:72e:ece1:2956 with SMTP id
- cr11-20020a170906d54b00b0072eece12956mr3710206ejc.156.1659117409446; 
- Fri, 29 Jul 2022 10:56:49 -0700 (PDT)
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com.
- [209.85.128.47]) by smtp.gmail.com with ESMTPSA id
- k6-20020a17090632c600b0072f42ca2934sm1957711ejk.148.2022.07.29.10.56.48
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 29 Jul 2022 10:56:48 -0700 (PDT)
-Received: by mail-wm1-f47.google.com with SMTP id
- c187-20020a1c35c4000000b003a30d88fe8eso4485531wma.2
- for <wireguard@lists.zx2c4.com>; Fri, 29 Jul 2022 10:56:48 -0700 (PDT)
-X-Received: by 2002:a05:600c:3553:b0:3a3:2b65:299e with SMTP id
- i19-20020a05600c355300b003a32b65299emr3494032wmq.145.1659117408359; Fri, 29
- Jul 2022 10:56:48 -0700 (PDT)
+ Mon, 22 Aug 2022 23:40:31 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=JZg77k2hIG6Nh8MCMHA8tiFxKI0cVLC/1PTVj4aQhb5/oLQj8/y/wASo3GKs4oXqGNy8rFLB4qgcn1PA3VWByUhRuqdha1oDTQLDkgub1Ap+Gw8BK2HvqcZed08NwbqcBjQQ6qDd5Z7eic1bUWlrhi0W38ncXIBKCrU2XVZ60G/StbBQ5ysryGX+rjEB7uYZu0tuW3kSigBQcPnd3nD2dCKya8hvJ9xEtqSwHpkFKkfw8+3S8Iv7w1A/aQi1UiMXq0twQNr9IiCMrzcrAQVoApO8z767KjpQz8R/msH+Kxf65QfxnfFFExeeFxCu1/w1d8qn9qf/FaMeVM9VNrUwhA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ifNwRMeq6ids55E3eE6t07hZqXx9KyrJKZkO3k9PPp8=;
+ b=CQQjzTibgpU/R6FL9anEf5Cfz7e70DzgneVzKR0eFbKKdUqEBp0Pd/R9eCzuXQkDWBMjNqRtvaxoKGm7Li2/wMkKKC+t78/992obzd7R0ezEkJAaAuE5HkC4APrWNniqhIeP0duu16kyhomsBez8vqX1VCZG2mXs0uK1jKDyA0YOFH7q15/xxcX5yPnWe1FpgXsMGTRU30MVw16Ets8PC5BUm6qgBjH7P40Vyx+EGwXKTc1k/21QbgToJeehLH6M/GiIHshWY1IHC+Sg8dYuYoCP7Na6YHeaY66ehg4dpT6yD2A158EU9Kc+SX2OAeD2I8eNF/+hXXxfOBUU3hC2UQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ifNwRMeq6ids55E3eE6t07hZqXx9KyrJKZkO3k9PPp8=;
+ b=gj+Yo89LyOFb0owaZCA5DQ2PSxJ2sPgHKzZSFmMT9tMMaTrN+ynJ+YXygmsYSoXwsfSit9d6fDYP4DeThXMKOlKyKTTMz7wt6lqu31bbhcK/YUPp/NBBO1vq0BUewfiqpfcP6yTFHOlTMbB0lIwQp+GlBJFVN/tnUEQdRM5b42MuI4lFHzKjKrgCWCKU7Z/Tb++IPIcUvfaWy/+7DEOfZiu9jHR9ijJ6iczjvEHEPZLncEHhGWoaSnieiMTGeWndAUrV9R+wnB2uc2KPBa14dhlO8CRm9WudgukGZrfLZJ+WAVVWg1ZcvI75zP2qGsZodvlSwRx6dpZ97Lmnh2pgUg==
+Received: from BY5PR04MB6833.namprd04.prod.outlook.com (2603:10b6:a03:224::13)
+ by BN7PR04MB4193.namprd04.prod.outlook.com (2603:10b6:406:ef::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5546.19; Mon, 22 Aug
+ 2022 23:40:28 +0000
+Received: from BY5PR04MB6833.namprd04.prod.outlook.com
+ ([fe80::b5c8:d4c1:a97b:b3a3]) by BY5PR04MB6833.namprd04.prod.outlook.com
+ ([fe80::b5c8:d4c1:a97b:b3a3%3]) with mapi id 15.20.5546.024; Mon, 22 Aug 2022
+ 23:40:28 +0000
+From: Kristof Mattei <kristofmattei@outlook.com>
+To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Subject: [iOS] IPv4 -> IPv6 transition
+Thread-Topic: [iOS] IPv4 -> IPv6 transition
+Thread-Index: AQHYtn3x81Ou2MSp+kKNZQJlg1kORa27k6iC
+Date: Mon, 22 Aug 2022 23:40:28 +0000
+Message-ID: <BY5PR04MB68330EBD7FBB80A11907EDA9A2719@BY5PR04MB6833.namprd04.prod.outlook.com>
+References: <DM6PR04MB6844F2C8516FF0607FF9F783A2719@DM6PR04MB6844.namprd04.prod.outlook.com>
+In-Reply-To: <DM6PR04MB6844F2C8516FF0607FF9F783A2719@DM6PR04MB6844.namprd04.prod.outlook.com>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: 
+x-ms-exchange-messagesentrepresentingtype: 1
+x-tmn: [nnbG+u5RFFd2kjoaNBRQrBm7Pct+s+KD]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 01fd7eb1-daf9-41fe-48d0-08da8497b1d4
+x-ms-traffictypediagnostic: BN7PR04MB4193:EE_
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 0vpDAQlmk2/E9fg9KHCjACFXsVICYF2XT+YF6UQW/yMGtOQraBbFlsXqB4pCqWytBVybe72NNuxHemtsLhF6+8fhxYsPtCg4CHS7fGSI026onuHEbwZ8zzfhXZ9R5dP8RnqTyGB88oupWlv+LgyHH5ZVRUAoZ/eU/HQvAeLKpFo3QqFRgui6LObo/wgpNLCQsXIpyoJFISWrvDM+OwaUb/7iaOGWuihxDDLSSV4LWyjcc7Oa0PpqGVastkkCW0AHcPPJQ6PIWNJVhVBdyGUYF1NwCRuGBc6ocCIRKIPiTBvotOs31IRzbWnRRrYLz7w29BX4xKxRh6BtNY67pZ8ADeFBqVixk/Yyu+KKHiHhWlerJHgr6xI7CLKNn8pS3W1v/ZXStOil5ldmgpI8es8WMxqMLvxcuCXn+vb1CzoJkhrb+RAjMtctbGre5ZWd16fvE9y3ZFPZ39/UqaRMN13NoJuhAdJi/SHzp/Sjhtqq3541nabEv/p8h6NQ4mLWqJp6kaBU78tAS478YK8Al2JAYUnqigyoKyU3L1b5JAnNNXD96LRZfrkmV47mwSvR9R90RvdLQUlHR49lIKDRXn3Oa3zsDiZ8ZVTbWNMqSyvoAhIzr2Ujwy7F/517pJ9u00/S
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?Windows-1252?Q?Oshurc6H+0Mqd5uKgP7DRJ4IMH4OtYxlpOW1zfRdYkw2ZRtqybWGZPoD?=
+ =?Windows-1252?Q?8ZfHHVBW25rbxO2FhCYfHG/mYPXlkJ0mmkb3stlDdKea561YptNFN58N?=
+ =?Windows-1252?Q?455YWQWhfnmuWuUcLQrxJxZMMxsIqWT4AGx4SXoxavCnOS3nSV+e5ooL?=
+ =?Windows-1252?Q?KNW8V9WqZItoNwIhT5a7QV6L4G00lB1GmTYAo4aIAsLkNVRzL/RISsIS?=
+ =?Windows-1252?Q?8JldLZNxRsX7dFNHBf61CMR4ptAR0T4osfSXYbHnQWqpC6i0mGLryffq?=
+ =?Windows-1252?Q?XmGo2au6kgCk3s81Irzka18HpIV29nZ1PCjuqeHcqLVyFcBURpDDzKCb?=
+ =?Windows-1252?Q?11uoD7PnwbeIqLfvqF2qG2BbaukM9pAyIu0H/RiSZc0pI+q33qR/kViw?=
+ =?Windows-1252?Q?nEYLX1E/aUY8o5R0QQSX7ZrY1iyNyv3bZqj/knG6jbmJu+ugZRIj5Fnh?=
+ =?Windows-1252?Q?EleNh5mkJk5ifmRQUW5DbRhw8fg396JockqUVfVaNl5tS2ms019rO9Bz?=
+ =?Windows-1252?Q?dEA2y1GGdC9nE5BA1h0O39ERZClSer49R1buD2GvLEW0R6R6nLcx3RDa?=
+ =?Windows-1252?Q?mWvDw7aIZ+Ozmw1AsPxBo0Y8cKH8VGg4wYUfjlTG+iztkLotCrs+UGAH?=
+ =?Windows-1252?Q?HBvbkos94ZjSmxoSwFz0ds3sMDqwD2njQRhZdo2fEz4cXDsaEe4McOeY?=
+ =?Windows-1252?Q?13eyqMLizBu7Ko2ULe0653H1B4Rgb0LjYqkRxpb2u8tK3hIiXpUtIp84?=
+ =?Windows-1252?Q?LV0Tn6dA8AmCmTXbpGj0gtFrUGzoesDvFf+jriSKuH937ELBz/s+aLiu?=
+ =?Windows-1252?Q?QveYyQR3vyn6DsPveh6jthpWX8rdF4/HkztLdLqE9Zred0ghZGkN32Tj?=
+ =?Windows-1252?Q?lDuIjO1JLwbd7nNPRk6cu2mMTdbdIblHCwcYSNBTAVeop7LBFFEkpYTE?=
+ =?Windows-1252?Q?4U/oNFeBbYpi6qe/rTpyP8ZnPnlsmUoD48L/u7mF6NyzdunAL2TlA0qI?=
+ =?Windows-1252?Q?mnkX/LGX7aw3oE7zjUrz9ggY9EI9BFu7TbL6PDQDIDC6gJHCmSUeRRUI?=
+ =?Windows-1252?Q?lG7CLYCI9o214anhR3BWlugcdA7LMJyYR7RewMVWFoPzH2ZJcROFeWRX?=
+ =?Windows-1252?Q?wy+Q+HPuv06p45pM2ShgFGfAAvaoXfVcR0Y3FZffIiU6XTmBN6fHWXhG?=
+ =?Windows-1252?Q?9L2E2ACg7+Y9HFyaQtNrRVSZlLrDqrIz7DJEK2G2w1AHhcYGEEVBVLZW?=
+ =?Windows-1252?Q?oTqXU5Ah8L0TI8N98xsyGpwUXmUGQ1BBAIhSZQWEX6/Rt5Lbc0u9D5Dy?=
+ =?Windows-1252?Q?sUWEee9+tkga8GhNii4EfhSbfoQETfNMoqn3Ocy757OMRyDWYzazzQIf?=
+ =?Windows-1252?Q?fRBmr8x7Fwx3YA=3D=3D?=
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-References: <CAHk-=wjJZGA6w_DxA+k7Ejbqsq+uGK==koPai3sqdsfJqemvag@mail.gmail.com>
- <YuQU8H0UCGTt5C0I@zx2c4.com>
-In-Reply-To: <YuQU8H0UCGTt5C0I@zx2c4.com>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Fri, 29 Jul 2022 10:56:32 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wheoU5mkht1xk_4Tyw78oa-8iGvGE9nBdUmGqCykgo1xw@mail.gmail.com>
-Message-ID: <CAHk-=wheoU5mkht1xk_4Tyw78oa-8iGvGE9nBdUmGqCykgo1xw@mail.gmail.com>
-Subject: Re: Random arrays on kernel stack..
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: wireguard@lists.zx2c4.com, arnd@arndb.de
-Content-Type: text/plain; charset="UTF-8"
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BY5PR04MB6833.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 01fd7eb1-daf9-41fe-48d0-08da8497b1d4
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Aug 2022 23:40:28.4597 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN7PR04MB4193
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -80,34 +111,29 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Fri, Jul 29, 2022 at 10:12 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->
-> That's a good point. Though note that the current WARN_ON is also
-> dependent on DEBUG being set.
-
-Sure. And I think that's ok.
-
-> >  (a) that constant should be a bit lower, so that we *can* use a 1kB
-> > stack frame warning on 64-bit architectures
->
-> That's not so much possible. This needs to do a DFS traversal of the
-> trie, which means it can be 128 nodes deep since IPv6 addresses have
-> 128 bits.
-
-Ahh. Ok. That at least explains where the constant comes from. That
-would be a good thing to have somewhere in that definition of the
-value ;)
-
-And I agree that malloc() isn't a great choice.
-
-I don't really worry about the stack frame warning (I just raised it
-to the same 2k limit I have on my x86-64 box), so doing that 1k
-allocation is fine.
-
-And with that constant 128 explained, I don't think it's wrong to not
-even test for overflow. We don't test for things that can't happen.
-
-But *if* you test for it for debug purposes, then at that point I
-think you need to just do the "warn and don't corrupt stack".
-
-                     Linus
+=0A=
+Hi,=0A=
+=A0=0A=
+I=92ve had a bug for the longest while when using Wireguard on T-Mobile USA=
+ (IPv6 only).=0A=
+=A0=0A=
+I have a VPN server listening to both IPv4 & IPv6. I have a DNS A and AAAA =
+set on the same domain.=0A=
+=A0=0A=
+When making a connection from an IPv4-only WiFi network with Wireguard enab=
+led and then walking away from the Wifi where we transition to a IPv6 netwo=
+rk with 464XLAT we have the issue that Wireguard does not select the AAAA o=
+n the domain. =0A=
+=A0=0A=
+It prefers IPv4, as shown here: https://git.zx2c4.com/wireguard-apple/tree/=
+Sources/WireGuardKit/DNSResolver.swift#n46 and here: https://git.zx2c4.com/=
+wireguard-apple/tree/Sources/WireGuardKit/DNSResolver.swift#n73=0A=
+=A0=0A=
+=A0=0A=
+Would it be possible to get this change to prefer to use IPv6?=0A=
+=A0=0A=
+=A0=0A=
+That said, if Wireguard has iOS development licenses, I=92d be happy to sub=
+mit a patch (my personal license doesn=92t allow me to test VPNs=85)=0A=
+=0A=
+KM=
