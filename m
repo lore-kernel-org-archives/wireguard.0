@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 754C2ECAAD2
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 29 Aug 2022 16:33:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D4F6ECAAD2
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  1 Sep 2022 05:40:24 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id c2eb0c92;
-	Mon, 29 Aug 2022 16:33:06 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 341ccfe2
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 29 Aug 2022 16:33:04 +0000 (UTC)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id A6F3161210;
- Mon, 29 Aug 2022 16:33:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EF56C433D6;
- Mon, 29 Aug 2022 16:32:59 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="kNQTi4K8"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1661790778;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3F5bs6wEmRDmdIQe96V5iwCeWjK5YoVTeKEuPdxSfN4=;
- b=kNQTi4K8egLdu1zNarBL47SQOYWe4WMkhvHrAwskcAG/1adfCVQBMB0gvduSpWFDbav2Tj
- 2LIfVOx4v++zHCwTjVPKSR+kizVUx5w5Af4coUKZm2ZWFtmVrqoa79XBz+/8OYj2RpZKfG
- GTXOi7IPk9NkM/oVEZTI4HyRLLvuSmE=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 1de32b3b
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Mon, 29 Aug 2022 16:32:58 +0000 (UTC)
-Date: Mon, 29 Aug 2022 12:32:54 -0400
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: davem@davemloft.net, netdev@vger.kernel.org, edumazet@google.com,
- pabeni@redhat.com, jiri@resnulli.us, johannes@sipsolutions.net,
- linux-block@vger.kernel.org, osmocom-net-gprs@lists.osmocom.org,
- linux-wpan@vger.kernel.org, wireguard@lists.zx2c4.com,
- linux-wireless@vger.kernel.org, linux-scsi@vger.kernel.org,
- target-devel@vger.kernel.org, linux-pm@vger.kernel.org,
- virtualization@lists.linux-foundation.org,
- linux-cifs@vger.kernel.org, cluster-devel@redhat.com,
- mptcp@lists.linux.dev, lvs-devel@vger.kernel.org,
- netfilter-devel@vger.kernel.org,
- linux-security-module@vger.kernel.org, dev@openvswitch.org,
- linux-s390@vger.kernel.org, tipc-discussion@lists.sourceforge.net
-Subject: Re: [PATCH net-next] genetlink: start to validate reserved header
- bytes
-Message-ID: <YwzqNgj/bJoawrwh@zx2c4.com>
-References: <20220825001830.1911524-1-kuba@kernel.org>
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 9536f77f;
+	Thu, 1 Sep 2022 05:40:22 +0000 (UTC)
+Received: from mail-vs1-xe35.google.com (mail-vs1-xe35.google.com
+ [2607:f8b0:4864:20::e35])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 522347df
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Thu, 1 Sep 2022 05:40:20 +0000 (UTC)
+Received: by mail-vs1-xe35.google.com with SMTP id 67so16681326vsv.2
+ for <wireguard@lists.zx2c4.com>; Wed, 31 Aug 2022 22:40:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date;
+ bh=hKuWVq3me8/d/LCtV55GFKDWCD9vC9D8uRSnU+6fZ68=;
+ b=OMH1RxztRfCFTI77W9SYppghefz9+6zrW0E1KZZLnh5qC+CtJobPgtab5Ba7faQhtN
+ kOkGJTjdas7BmcKsd/kNpTjkzzaMcc42jRv+Q9P+UvRu0yBlVDSDdlxKUakngqvtZgwG
+ 8+0BkD9doNr6i8Q1254Yw5PDJ2CbSzbHYpHLpsII9rY/Qn6nBHPKJMEsQniqbfCmctbu
+ 57baKX9128B+veMEiffmwLVqkZIkYafv8jT5TWUWRRAmpTXTHVm8TuPWIEPa7ug5f6sU
+ qJk1R577Kee3MejbTXMKDMRkID4bM5pGFyf/nFDwZf9/u2Rh4IyAJKTr95KCWFBkXmkh
+ J0CA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date;
+ bh=hKuWVq3me8/d/LCtV55GFKDWCD9vC9D8uRSnU+6fZ68=;
+ b=C5Cvk5TeUkh7BFfdHezIam8b+t/vLu/vXPdvz2mV4/WkD3UiPycLn/U3oKEaLWpDir
+ ezGP1DYRLULBxescfZyZn+HFTuK0ng9sn9oPexU2q526IJXkmdz277aGj/XAlt8Pq3NQ
+ eAXFkEdOPfKFfJZhm1r3Q61Wg2tvwkNs9rMElcly7GGCtYecpIziRZh9troA7TFlBy5j
+ Ycdr7U1QkULsv+8+9G8yViDJOh+ll4P+eucqFbdOEodw4Am+7lYyaTvUpQlVhi4zGP6K
+ 5Xh3N8SQPo7vCnJk+dLKr/2DgmbF5AkSO/93So8mrgh4cjMy1ouHSVu7C/zW5x9D25c7
+ 9Gtg==
+X-Gm-Message-State: ACgBeo2T8XFMgdU3l+57dp+NsY6F4y+Vp/WX+TlxaoZjtIFmGMsABUD3
+ 6X2BfJUBXOCvkE7+6kwwWSG5DFlL/1t6dJeGA+E=
+X-Google-Smtp-Source: AA6agR4J4x6g3CqcxTpMvHiF0WNOIWun4x+nlj+G2+InhBG69qa7JUOg0zjWbhjS0URi1wZAv5gv5Rdr0LFwNWGGPuk=
+X-Received: by 2002:a67:e083:0:b0:391:df54:ed3c with SMTP id
+ f3-20020a67e083000000b00391df54ed3cmr3773233vsl.45.1662010819458; Wed, 31 Aug
+ 2022 22:40:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20220825001830.1911524-1-kuba@kernel.org>
+References: <CAA+Mow79-=J1LmFWdFOEnVnV4QCKyWb13YsvzOrsxtWV=GgJ7A@mail.gmail.com>
+ <YwzmY6Q/lJIDZyfz@zx2c4.com>
+ <CAPyFy2DWRu+9ctBiLRpzYdzRj7+tBB_fa1RQM7kwJTz7tTtLvA@mail.gmail.com>
+In-Reply-To: <CAPyFy2DWRu+9ctBiLRpzYdzRj7+tBB_fa1RQM7kwJTz7tTtLvA@mail.gmail.com>
+From: Michael Pro <michael.adm@gmail.com>
+Date: Thu, 1 Sep 2022 08:40:07 +0300
+Message-ID: <CAA+Mow5Pq7MBUCxvnTUsdnBhwduVh-VywFLoyTNy4G65XcAyvQ@mail.gmail.com>
+Subject: Re: FreeBSD current socket-src changed. Wireguard not compiling.
+To: Ed Maste <emaste@freebsd.org>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, wireguard@lists.zx2c4.com,
+ kevans@freebsd.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -73,23 +72,22 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Jakub,
+FreeBSD Current (14.0)
+http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/14.0/
+sources from iso or github - no matther
+Changes to src are made by commit e7d02be19d40063783d6b8f1ff2bc4c7170fd434
+Author Gleb Smirnoff <glebius@FreeBSD.org> Wed, 17 Aug 2022 21:50:32
++0300 (11:50 -0700)
 
-On Wed, Aug 24, 2022 at 05:18:30PM -0700, Jakub Kicinski wrote:
-> diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlink.c
-> index d0f3b6d7f408..0c0644e762e5 100644
-> --- a/drivers/net/wireguard/netlink.c
-> +++ b/drivers/net/wireguard/netlink.c
-> @@ -621,6 +621,7 @@ static const struct genl_ops genl_ops[] = {
->  static struct genl_family genl_family __ro_after_init = {
->  	.ops = genl_ops,
->  	.n_ops = ARRAY_SIZE(genl_ops),
-> +	.resv_start_op = WG_CMD_SET_DEVICE + 1,
->  	.name = WG_GENL_NAME,
->  	.version = WG_GENL_VERSION,
->  	.maxattr = WGDEVICE_A_MAX,
-
-FWIW, I wouldn't object to just leaving this at zero. I don't know of
-any wireguard userspaces doing anything with the reserved header field.
-
-Jason
+=D1=81=D1=80, 31 =D0=B0=D0=B2=D0=B3. 2022 =D0=B3. =D0=B2 21:18, Ed Maste <e=
+maste@freebsd.org>:
+>
+> On Mon, 29 Aug 2022 at 12:18, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+> > On Tue, Aug 23, 2022 at 12:26:21PM +0300, Michael Pro wrote:
+> > > Tonight after updating kernel freebsd current I got coredump with
+> > > wireguard enabled kernel module.
+> > > ...
+> > Thanks. Is there a __FreeBSD_version__ change that corresponds?
+>
+> It is not an exact match, but was bumped to 1400066 shortly after and
+> should be a suitable value to check.
