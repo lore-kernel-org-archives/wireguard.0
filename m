@@ -4,48 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74B96C6FA82
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  4 Sep 2022 16:58:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E5F6C6FA83
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  4 Sep 2022 16:58:09 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 5d5fc909;
-	Sun, 4 Sep 2022 16:58:06 +0000 (UTC)
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com
- [209.85.215.175])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id f2c28a7a
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 836983d9;
+	Sun, 4 Sep 2022 16:58:07 +0000 (UTC)
+Received: from mail.0l.de (mail.0l.de [2a09:11c0:200:101:5054:ff:fedc:4a29])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id c0bcdd76
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 31 Aug 2022 18:18:41 +0000 (UTC)
-Received: by mail-pg1-f175.google.com with SMTP id r69so14191539pgr.2
- for <wireguard@lists.zx2c4.com>; Wed, 31 Aug 2022 11:18:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date;
- bh=r84s1trEW8U11Zt3/j+7eTVxncjeVioXnHuwfE7Ary4=;
- b=vwXtvCSsu+RN7/AYoPLfLHN829wEdxILbLCiZi2RaeAWXIM1nYt6z017uBY51SWCZo
- 5x3yqED1xXJYytSOlokAeFgo8e4aA5wx6t4JKf8NSt94jrrjzZDiALh3399UHC+X9YOs
- RvlBmdwZwHwZlzvPD1MajDU/xfrCLQB0NmeEGa61URVVHxCIEA1bLF6PU19gYEZfgJQm
- dYq7suzIAqifOyufNfr/PA1+wvpnAXuThdxixLU7vC1kbDxYjs2zMOFppTyWgjiA/0nv
- 6JP03gcnUkQg9x/Ji65AqkOu5Um1S+7f3nAfePK4B0XtbijUzg1keuDEBNHbwNwckY4Y
- FoeA==
-X-Gm-Message-State: ACgBeo2jaI7D7wElKUoWbRRpRCMM5FbT99/Z/4gMuPSQIwv5SCS8oZAJ
- zOzAPv15d4uGKnsKtQ5OInL9TIXVe3l6zjSMKdg=
-X-Google-Smtp-Source: AA6agR7C5vQuA0qTMDjqe6nLH5Z3EFhDcm7LSYESesNp/lBRmRtLweGmSpSFikvrBNJdzlVdts1dPcPx7/refs+G6OA=
-X-Received: by 2002:aa7:80d0:0:b0:52d:f9c6:bb14 with SMTP id
- a16-20020aa780d0000000b0052df9c6bb14mr27761309pfn.57.1661969919915; Wed, 31
- Aug 2022 11:18:39 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Fri, 2 Sep 2022 15:16:39 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon)
+ with ESMTPA id B18722155D27
+ for <wireguard@lists.zx2c4.com>; Fri,  2 Sep 2022 17:16:34 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=steffenvogel.de;
+ s=dkim; t=1662131794;
+ h=from:subject:date:message-id:to:mime-version:content-type; 
+ bh=1kIaOxoTlCDYWoN2F5N/QEWIAcoUY14SDFqwvEwvHDk=;
+ b=jYqZiV1kTYgn1EIRlVDsPc+jnvhGMv6IgLh+aRa2vHK1KbhAPKyU2F5fJuyPbDeuluo00p
+ xXv9jDnLX75yKP0OpLRNGSnxCxwG16/vnyS6gX3OLkjlU+k/3P7u2eEdqBbc+0LKsGmEOK
+ Zrq+V1JkLxj9o5lhU1RJlsxmGz/G4OowrQJxQxMV6N6bwlJQjfAGTWZGyV1UZEhcaott0m
+ xBIHF4kCvvh8O0APZ4Due/VsnY9Oj8jqn8LjTgwhFq6k276oxFEvLF48WtAk1WCrl0UpGU
+ QTrxbg8SuzeJu8zo5Wvp4UA5vRS+R9sc08/807KQRm0mdrw2m7zwVCE/caEaTQ==
+From: "Steffen Vogel" <post@steffenvogel.de>
+Content-Type: multipart/mixed;
+ boundary="----=_=-_OpenGroupware_org_NGMime-77-1662131794.464676-1------"
+Date: Fri, 02 Sep 2022 17:16:34 +0200
+To: wireguard@lists.zx2c4.com
 MIME-Version: 1.0
-References: <CAA+Mow79-=J1LmFWdFOEnVnV4QCKyWb13YsvzOrsxtWV=GgJ7A@mail.gmail.com>
- <YwzmY6Q/lJIDZyfz@zx2c4.com>
-In-Reply-To: <YwzmY6Q/lJIDZyfz@zx2c4.com>
-From: Ed Maste <emaste@freebsd.org>
-Date: Wed, 31 Aug 2022 14:18:27 -0400
-Message-ID: <CAPyFy2DWRu+9ctBiLRpzYdzRj7+tBB_fa1RQM7kwJTz7tTtLvA@mail.gmail.com>
-Subject: Re: FreeBSD current socket-src changed. Wireguard not compiling.
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: Michael Pro <michael.adm@gmail.com>, wireguard@lists.zx2c4.com,
- kevans@freebsd.org
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <4d-63121e80-3-6ef3e80@7869515>
+Subject: [PATCH] =?utf-8?q?wireguard-go/device=3A?= add new handshake handler
+ and keylog writer
+User-Agent: SOGoMail 5.7.0
+X-Last-TLS-Session-Version: None
 X-Mailman-Approved-At: Sun, 04 Sep 2022 16:58:02 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -61,12 +51,160 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, 29 Aug 2022 at 12:18, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> On Tue, Aug 23, 2022 at 12:26:21PM +0300, Michael Pro wrote:
-> > Tonight after updating kernel freebsd current I got coredump with
-> > wireguard enabled kernel module.
-> > ...
-> Thanks. Is there a __FreeBSD_version__ change that corresponds?
+------=_=-_OpenGroupware_org_NGMime-77-1662131794.464676-1------
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Content-Length: 787
 
-It is not an exact match, but was bumped to 1400066 shortly after and
-should be a suitable value to check.
+(This path is also tracked as PR: https://github.com/WireGuard/wireguar=
+d-go/pull/56)
+
+This change adds support for a new environment variable 'WG=5FKEYLOGFIL=
+E'
+in resemblance to the 'SSLKEYLOGFILE' environment variable used by
+curl, Chrome & Firefox to log ephemeral TLS encryption keys
+
+When set, wireguard-go will log ephemeral keys generated during
+each handshake to a file specified by the environment variable in the
+WireGuard key log format.
+
+The format used is the same as then one generated by the
+extract-handshakes.sh script.
+
+See also:
+- https://git.zx2c4.com/wireguard-tools/tree/contrib/extract-handshakes
+- https://wiki.wireshark.org/WireGuard#key-log-format
+- https://everything.curl.dev/usingcurl/tls/sslkeylogfile
+
+Signed-off-by: Steffen Vogel post@steffenvogel.de
+
+------=_=-_OpenGroupware_org_NGMime-77-1662131794.464676-1------
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="0001-device-add-new-handshake-handler-and-keylog-writer.patch"
+Content-Length: 8772
+
+RnJvbSBhYTc4NGE5ZjE1ZTc5YTMwMTFmMjVjMDgxZmI4N2Y1MjMyNmE4YWQzIE1vbiBTZXAg
+MTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBTdGVmZmVuIFZvZ2VsIDxwb3N0QHN0ZWZmZW52b2dl
+bC5kZT4KRGF0ZTogU3VuLCAyMSBBdWcgMjAyMiAxMDo1NDoyNCArMDIwMApTdWJqZWN0OiBb
+UEFUQ0hdIGRldmljZTogYWRkIG5ldyBoYW5kc2hha2UgaGFuZGxlciBhbmQga2V5bG9nIHdy
+aXRlcgoKVGhpcyBjaGFuZ2UgYWRkcyBzdXBwb3J0IGZvciBhIG5ldyBlbnZpcm9ubWVudCB2
+YXJpYWJsZSAnV0dfS0VZTE9HRklMRScKaW4gcmVzZW1ibGFuY2UgdG8gdGhlICdTU0xLRVlM
+T0dGSUxFJyBlbnZpcm9ubWVudCB2YXJpYWJsZSB1c2VkIGJ5CmN1cmwsIENocm9tZSAmIEZp
+cmVmb3ggdG8gbG9nIGVwaGVtZXJhbCBUTFMgZW5jcnlwdGlvbiBrZXlzCgpXaGVuIHNldCwg
+d2lyZWd1YXJkLWdvIHdpbGwgbG9nIGVwaGVtZXJhbCBrZXlzIGdlbmVyYXRlZCBkdXJpbmcK
+ZWFjaCBoYW5kc2hha2UgdG8gYSBmaWxlIHNwZWNpZmllZCBieSB0aGUgZW52aXJvbm1lbnQg
+dmFyaWFibGUgaW4gdGhlCldpcmVHdWFyZCBrZXkgbG9nIGZvcm1hdC4KClRoZSBmb3JtYXQg
+dXNlZCBpcyB0aGUgc2FtZSBhcyB0aGVuIG9uZSBnZW5lcmF0ZWQgYnkgdGhlCmV4dHJhY3Qt
+aGFuZHNoYWtlcy5zaCBzY3JpcHQuCgpTZWUgYWxzbzoKLSBodHRwczovL2dpdC56eDJjNC5j
+b20vd2lyZWd1YXJkLXRvb2xzL3RyZWUvY29udHJpYi9leHRyYWN0LWhhbmRzaGFrZXMKLSBo
+dHRwczovL3dpa2kud2lyZXNoYXJrLm9yZy9XaXJlR3VhcmQja2V5LWxvZy1mb3JtYXQKLSBo
+dHRwczovL2V2ZXJ5dGhpbmcuY3VybC5kZXYvdXNpbmdjdXJsL3Rscy9zc2xrZXlsb2dmaWxl
+CgpTaWduZWQtb2ZmLWJ5OiBTdGVmZmVuIFZvZ2VsIDxwb3N0QHN0ZWZmZW52b2dlbC5kZT4K
+LS0tCiBkZXZpY2UvZGV2aWNlLmdvICAgICAgICAgfCAzNyArKysrKysrKysrKysrKysrKysr
+KysrKysrKysrKysrKystLS0tCiBkZXZpY2Uvbm9pc2UtcHJvdG9jb2wuZ28gfCAgOSArKysr
+KysrKysKIGRldmljZS9ub2lzZS10eXBlcy5nbyAgICB8ICA5ICsrKysrKysrKwogbWFpbi5n
+byAgICAgICAgICAgICAgICAgIHwgMjYgKysrKysrKysrKysrKysrKysrKysrKysrKysKIHRh
+aTY0bi90YWk2NG4uZ28gICAgICAgICB8ICA2ICsrKysrLQogNSBmaWxlcyBjaGFuZ2VkLCA4
+MiBpbnNlcnRpb25zKCspLCA1IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2RldmljZS9k
+ZXZpY2UuZ28gYi9kZXZpY2UvZGV2aWNlLmdvCmluZGV4IDM2MjU2MDguLjg3MjFjNDkgMTAw
+NjQ0Ci0tLSBhL2RldmljZS9kZXZpY2UuZ28KKysrIGIvZGV2aWNlL2RldmljZS5nbwpAQCAt
+Niw2ICs2LDkgQEAKIHBhY2thZ2UgZGV2aWNlCiAKIGltcG9ydCAoCisJImVuY29kaW5nL2Jh
+c2U2NCIKKwkiZm10IgorCSJpbyIKIAkicnVudGltZSIKIAkic3luYyIKIAkic3luYy9hdG9t
+aWMiCkBAIC0xNyw2ICsyMCw4IEBAIGltcG9ydCAoCiAJImdvbGFuZy56eDJjNC5jb20vd2ly
+ZWd1YXJkL3R1biIKICkKIAordHlwZSBIYW5kc2hha2VIYW5kbGVyIGZ1bmModCB0aW1lLlRp
+bWUsIGxzIE5vaXNlUHJpdmF0ZUtleSwgcnMgTm9pc2VQdWJsaWNLZXksIGxlIE5vaXNlUHJp
+dmF0ZUtleSwgcHMgTm9pc2VQcmVzaGFyZWRLZXkpCisKIHR5cGUgRGV2aWNlIHN0cnVjdCB7
+CiAJc3RhdGUgc3RydWN0IHsKIAkJLy8gc3RhdGUgaG9sZHMgdGhlIGRldmljZSdzIHN0YXRl
+LiBJdCBpcyBhY2Nlc3NlZCBhdG9taWNhbGx5LgpAQCAtODUsNiArOTAsOCBAQCB0eXBlIERl
+dmljZSBzdHJ1Y3QgewogCQltdHUgICAgaW50MzIKIAl9CiAKKwlrZXlMb2dIYW5kbGVyIEhh
+bmRzaGFrZUhhbmRsZXIKKwogCWlwY011dGV4IHN5bmMuUldNdXRleAogCWNsb3NlZCAgIGNo
+YW4gc3RydWN0e30KIAlsb2cgICAgICAqTG9nZ2VyCkBAIC05NCwxMCArMTAxLDkgQEAgdHlw
+ZSBEZXZpY2Ugc3RydWN0IHsKIC8vIFRoZXJlIGFyZSB0aHJlZSBzdGF0ZXM6IGRvd24sIHVw
+LCBjbG9zZWQuCiAvLyBUcmFuc2l0aW9uczoKIC8vCi0vLyAgIGRvd24gLS0tLS0rCi0vLyAg
+ICAg4oaR4oaTICAgICAg4oaTCi0vLyAgICAgdXAgLT4gY2xvc2VkCi0vLworLy8JZG93biAt
+LS0tLSsKKy8vCSAg4oaR4oaTICAgICAg4oaTCisvLwkgIHVwIC0+IGNsb3NlZAogdHlwZSBk
+ZXZpY2VTdGF0ZSB1aW50MzIKIAogLy9nbzpnZW5lcmF0ZSBnbyBydW4gZ29sYW5nLm9yZy94
+L3Rvb2xzL2NtZC9zdHJpbmdlciAtdHlwZSBkZXZpY2VTdGF0ZSAtdHJpbXByZWZpeD1kZXZp
+Y2VTdGF0ZQpAQCAtNTIzLDMgKzUyOSwyNiBAQCBmdW5jIChkZXZpY2UgKkRldmljZSkgQmlu
+ZENsb3NlKCkgZXJyb3IgewogCWRldmljZS5uZXQuVW5sb2NrKCkKIAlyZXR1cm4gZXJyCiB9
+CisKK2Z1bmMgKGRldmljZSAqRGV2aWNlKSBPbkhhbmRzaGFrZShoZGxyIEhhbmRzaGFrZUhh
+bmRsZXIpIHsKKwlkZXZpY2Uua2V5TG9nSGFuZGxlciA9IGhkbHIKK30KKworZnVuYyAoZGV2
+aWNlICpEZXZpY2UpIFdyaXRlS2V5TG9nKHdyIGlvLldyaXRlcikgeworCW11IDo9IHN5bmMu
+TXV0ZXh7fQorCisJZGV2aWNlLk9uSGFuZHNoYWtlKGZ1bmModCB0aW1lLlRpbWUsIGxzIE5v
+aXNlUHJpdmF0ZUtleSwgcnMgTm9pc2VQdWJsaWNLZXksIGxlIE5vaXNlUHJpdmF0ZUtleSwg
+cHMgTm9pc2VQcmVzaGFyZWRLZXkpIHsKKwkJbXUuTG9jaygpCisJCWRlZmVyIG11LlVubG9j
+aygpCisKKwkJZm10LkZwcmludGYod3IsICJMT0NBTF9TVEFUSUNfUFJJVkFURV9LRVk9JXNc
+biIsIGJhc2U2NC5TdGRFbmNvZGluZy5FbmNvZGVUb1N0cmluZyhsc1s6XSkpCisJCWZtdC5G
+cHJpbnRmKHdyLCAiUkVNT1RFX1NUQVRJQ19QVUJMSUNfS0VZPSVzXG4iLCBiYXNlNjQuU3Rk
+RW5jb2RpbmcuRW5jb2RlVG9TdHJpbmcocnNbOl0pKQorCQlmbXQuRnByaW50Zih3ciwgIkxP
+Q0FMX0VQSEVNRVJBTF9QUklWQVRFX0tFWT0lc1xuIiwgYmFzZTY0LlN0ZEVuY29kaW5nLkVu
+Y29kZVRvU3RyaW5nKGxlWzpdKSkKKworCQlpZiAhcHMuSXNaZXJvKCkgeworCQkJZm10LkZw
+cmludGYod3IsICJQUkVTSEFSRURfS0VZPSVzXG4iLCBiYXNlNjQuU3RkRW5jb2RpbmcuRW5j
+b2RlVG9TdHJpbmcocHNbOl0pKQorCQl9CisKKwkJZGV2aWNlLmxvZy5WZXJib3NlZigiV3Jp
+dGluZyBuZXcgZXBoZW1lcmFsIGtleSB0byBrZXlsb2ciKQorCX0pCit9CmRpZmYgLS1naXQg
+YS9kZXZpY2Uvbm9pc2UtcHJvdG9jb2wuZ28gYi9kZXZpY2Uvbm9pc2UtcHJvdG9jb2wuZ28K
+aW5kZXggZmZhMDQ1Mi4uZGQ4NWJiZiAxMDA2NDQKLS0tIGEvZGV2aWNlL25vaXNlLXByb3Rv
+Y29sLmdvCisrKyBiL2RldmljZS9ub2lzZS1wcm90b2NvbC5nbwpAQCAtMjQzLDYgKzI0Mywx
+MSBAQCBmdW5jIChkZXZpY2UgKkRldmljZSkgQ3JlYXRlTWVzc2FnZUluaXRpYXRpb24ocGVl
+ciAqUGVlcikgKCpNZXNzYWdlSW5pdGlhdGlvbiwgZQogCiAJaGFuZHNoYWtlLm1peEhhc2go
+bXNnLlRpbWVzdGFtcFs6XSkKIAloYW5kc2hha2Uuc3RhdGUgPSBoYW5kc2hha2VJbml0aWF0
+aW9uQ3JlYXRlZAorCisJaWYgZGV2aWNlLmtleUxvZ0hhbmRsZXIgIT0gbmlsIHsKKwkJZ28g
+ZGV2aWNlLmtleUxvZ0hhbmRsZXIoaGFuZHNoYWtlLmxhc3RUaW1lc3RhbXAuVGltZSgpLCBk
+ZXZpY2Uuc3RhdGljSWRlbnRpdHkucHJpdmF0ZUtleSwgaGFuZHNoYWtlLnJlbW90ZVN0YXRp
+YywgaGFuZHNoYWtlLmxvY2FsRXBoZW1lcmFsLCBoYW5kc2hha2UucHJlc2hhcmVkS2V5KQor
+CX0KKwogCXJldHVybiAmbXNnLCBuaWwKIH0KIApAQCAtNDE0LDYgKzQxOSwxMCBAQCBmdW5j
+IChkZXZpY2UgKkRldmljZSkgQ3JlYXRlTWVzc2FnZVJlc3BvbnNlKHBlZXIgKlBlZXIpICgq
+TWVzc2FnZVJlc3BvbnNlLCBlcnJvcgogCiAJaGFuZHNoYWtlLnN0YXRlID0gaGFuZHNoYWtl
+UmVzcG9uc2VDcmVhdGVkCiAKKwlpZiBkZXZpY2Uua2V5TG9nSGFuZGxlciAhPSBuaWwgewor
+CQlnbyBkZXZpY2Uua2V5TG9nSGFuZGxlcihoYW5kc2hha2UubGFzdFRpbWVzdGFtcC5UaW1l
+KCksIGRldmljZS5zdGF0aWNJZGVudGl0eS5wcml2YXRlS2V5LCBoYW5kc2hha2UucmVtb3Rl
+U3RhdGljLCBoYW5kc2hha2UubG9jYWxFcGhlbWVyYWwsIGhhbmRzaGFrZS5wcmVzaGFyZWRL
+ZXkpCisJfQorCiAJcmV0dXJuICZtc2csIG5pbAogfQogCmRpZmYgLS1naXQgYS9kZXZpY2Uv
+bm9pc2UtdHlwZXMuZ28gYi9kZXZpY2Uvbm9pc2UtdHlwZXMuZ28KaW5kZXggNmU4NTBlNy4u
+ZDE3YmI5ZiAxMDA2NDQKLS0tIGEvZGV2aWNlL25vaXNlLXR5cGVzLmdvCisrKyBiL2Rldmlj
+ZS9ub2lzZS10eXBlcy5nbwpAQCAtNzYsMyArNzYsMTIgQEAgZnVuYyAoa2V5IE5vaXNlUHVi
+bGljS2V5KSBFcXVhbHModGFyIE5vaXNlUHVibGljS2V5KSBib29sIHsKIGZ1bmMgKGtleSAq
+Tm9pc2VQcmVzaGFyZWRLZXkpIEZyb21IZXgoc3JjIHN0cmluZykgZXJyb3IgewogCXJldHVy
+biBsb2FkRXhhY3RIZXgoa2V5WzpdLCBzcmMpCiB9CisKK2Z1bmMgKGtleSBOb2lzZVByZXNo
+YXJlZEtleSkgRXF1YWxzKHRhciBOb2lzZVByZXNoYXJlZEtleSkgYm9vbCB7CisJcmV0dXJu
+IHN1YnRsZS5Db25zdGFudFRpbWVDb21wYXJlKGtleVs6XSwgdGFyWzpdKSA9PSAxCit9CisK
+K2Z1bmMgKGtleSBOb2lzZVByZXNoYXJlZEtleSkgSXNaZXJvKCkgYm9vbCB7CisJdmFyIHpl
+cm8gTm9pc2VQcmVzaGFyZWRLZXkKKwlyZXR1cm4ga2V5LkVxdWFscyh6ZXJvKQorfQpkaWZm
+IC0tZ2l0IGEvbWFpbi5nbyBiL21haW4uZ28KaW5kZXggYjM1YWMyOS4uNzY5Y2JhNSAxMDA2
+NDQKLS0tIGEvbWFpbi5nbworKysgYi9tYWluLmdvCkBAIC0zMCw2ICszMCw3IEBAIGNvbnN0
+ICgKIAlFTlZfV0dfVFVOX0ZEICAgICAgICAgICAgID0gIldHX1RVTl9GRCIKIAlFTlZfV0df
+VUFQSV9GRCAgICAgICAgICAgID0gIldHX1VBUElfRkQiCiAJRU5WX1dHX1BST0NFU1NfRk9S
+RUdST1VORCA9ICJXR19QUk9DRVNTX0ZPUkVHUk9VTkQiCisJRU5WX1dHX0tFWUxPRyAgICAg
+ICAgICAgICA9ICJXR19LRVlMT0dGSUxFIgogKQogCiBmdW5jIHByaW50VXNhZ2UoKSB7CkBA
+IC0xNTIsNiArMTUzLDIyIEBAIGZ1bmMgbWFpbigpIHsKIAkJb3MuRXhpdChFeGl0U2V0dXBG
+YWlsZWQpCiAJfQogCisJLy8gb3BlbiBrZXlsb2cgZmlsZQorCisJa2V5TG9nLCBlcnIgOj0g
+ZnVuYygpICgqb3MuRmlsZSwgZXJyb3IpIHsKKwkJZm4gOj0gb3MuR2V0ZW52KEVOVl9XR19L
+RVlMT0cpCisJCWlmIGZuID09ICIiIHsKKwkJCXJldHVybiBuaWwsIG5pbAorCQl9CisKKwkJ
+cmV0dXJuIG9zLk9wZW5GaWxlKGZuLCBvcy5PX0NSRUFURXxvcy5PX0FQUEVORHxvcy5PX1dS
+T05MWSwgMDYwMCkKKwl9KCkKKwlpZiBlcnIgIT0gbmlsIHsKKwkJbG9nZ2VyLkVycm9yZigi
+ZmFpbGVkIHRvIG9wZW4ga2V5bG9nIGVycm9yOiAldiIsIGVycikKKwkJb3MuRXhpdChFeGl0
+U2V0dXBGYWlsZWQpCisJCXJldHVybgorCX0KKwogCS8vIG9wZW4gVUFQSSBmaWxlIChvciB1
+c2Ugc3VwcGxpZWQgZmQpCiAKIAlmaWxlVUFQSSwgZXJyIDo9IGZ1bmMoKSAoKm9zLkZpbGUs
+IGVycm9yKSB7CkBAIC0xNzQsNiArMTkxLDcgQEAgZnVuYyBtYWluKCkgewogCQlvcy5FeGl0
+KEV4aXRTZXR1cEZhaWxlZCkKIAkJcmV0dXJuCiAJfQorCiAJLy8gZGFlbW9uaXplIHRoZSBw
+cm9jZXNzCiAKIAlpZiAhZm9yZWdyb3VuZCB7CkBAIC0yNDgsNiArMjY2LDE0IEBAIGZ1bmMg
+bWFpbigpIHsKIAogCWxvZ2dlci5WZXJib3NlZigiVUFQSSBsaXN0ZW5lciBzdGFydGVkIikK
+IAorCS8vIHN0YXJ0IHdyaXRpbmcgaGFuZHNoYWtlcyB0byBrZXlsb2cgZmlsZQorCisJaWYg
+a2V5TG9nICE9IG5pbCB7CisJCWRldmljZS5Xcml0ZUtleUxvZyhrZXlMb2cpCisKKwkJbG9n
+Z2VyLlZlcmJvc2VmKCJLZXlsb2cgd3JpdGVyIHN0YXJ0ZWQiKQorCX0KKwogCS8vIHdhaXQg
+Zm9yIHByb2dyYW0gdG8gdGVybWluYXRlCiAKIAlzaWduYWwuTm90aWZ5KHRlcm0sIHN5c2Nh
+bGwuU0lHVEVSTSkKZGlmZiAtLWdpdCBhL3RhaTY0bi90YWk2NG4uZ28gYi90YWk2NG4vdGFp
+NjRuLmdvCmluZGV4IGRlMGY1YmYuLjk0ODRjMjYgMTAwNjQ0Ci0tLSBhL3RhaTY0bi90YWk2
+NG4uZ28KKysrIGIvdGFpNjRuL3RhaTY0bi5nbwpAQCAtMzcsNSArMzcsOSBAQCBmdW5jICh0
+MSBUaW1lc3RhbXApIEFmdGVyKHQyIFRpbWVzdGFtcCkgYm9vbCB7CiB9CiAKIGZ1bmMgKHQg
+VGltZXN0YW1wKSBTdHJpbmcoKSBzdHJpbmcgewotCXJldHVybiB0aW1lLlVuaXgoaW50NjQo
+YmluYXJ5LkJpZ0VuZGlhbi5VaW50NjQodFs6OF0pLWJhc2UpLCBpbnQ2NChiaW5hcnkuQmln
+RW5kaWFuLlVpbnQzMih0Wzg6MTJdKSkpLlN0cmluZygpCisJcmV0dXJuIHQuVGltZSgpLlN0
+cmluZygpCit9CisKK2Z1bmMgKHQgVGltZXN0YW1wKSBUaW1lKCkgdGltZS5UaW1lIHsKKwly
+ZXR1cm4gdGltZS5Vbml4KGludDY0KGJpbmFyeS5CaWdFbmRpYW4uVWludDY0KHRbOjhdKS1i
+YXNlKSwgaW50NjQoYmluYXJ5LkJpZ0VuZGlhbi5VaW50MzIodFs4OjEyXSkpKQogfQotLSAK
+Mi4zNi4wCgo=
+
+------=_=-_OpenGroupware_org_NGMime-77-1662131794.464676-1--------
+
