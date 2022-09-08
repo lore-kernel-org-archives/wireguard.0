@@ -4,68 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC263C04A95
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 28 Sep 2022 09:32:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7333EC04A95
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 28 Sep 2022 10:20:57 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 111a9126;
-	Wed, 28 Sep 2022 09:32:11 +0000 (UTC)
-Received: from sonic310-57.consmr.mail.ir2.yahoo.com
- (sonic310-57.consmr.mail.ir2.yahoo.com [77.238.177.30])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 1cc408f2
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id c47c104e;
+	Wed, 28 Sep 2022 10:20:53 +0000 (UTC)
+Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com
+ [2607:f8b0:4864:20::1134])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 75deab59
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 28 Sep 2022 09:32:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1664357528; bh=MWStikvWB2ozF0VMaHvMr0ixdv06Wkei6FO7jyd9EVk=;
- h=Date:From:To:Subject:References:From:Subject:Reply-To;
- b=Lf7+37Bz8ToiJ5IAugaXtMzu9dC37IUYY+pppV3g+zoEqS3RvmQM/+bYMxAi8ME4+sWW5IIBAKZIWlPhvfDZ7uv0SU/rwl67S7v4TsSJYD1WQoGixEBOtMvLo7PLvYvN70cH1g35DhcSso8Hsp0HcDCL0z7Gpm4WEMEhFiFGtddSo8kSQk7WG94XA3Spxi+PftX1pREcUsdkixviDFVar+24CAr+p68vZGqBhPoOAcFzdYod1ZGzAXc/89OY5BnYrkphnbuCrRfURTjrvinxnvgNX/6ZRLEM6sw0QN1BDDSD3gmeUsxYVj5o89EIw9ckQQ+yG/VBElE3+kKafaKNlg==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1664357528; bh=wCSHfSP86Nx2P/AdflxbqWfdPmb0Vbjp3R5IoEA4a+U=;
- h=X-Sonic-MF:Date:From:To:Subject:From:Subject;
- b=MeIQFYRgTxshifF2r2YE0ulqCi9Lrr/BJPK/roLUnr/wXKCdhLlEwbuNQ4PaSNZoPZ9IVUIaEOAVHNw2CYOh1iK3FX7DvWKGZbH/jV4N36GFl42XizdX9GCwfOX4vCcIdT7Kum/YFvwYfAU8Q2MpJBPGyDGLTvFfoUUZoaYwY4nwNq0i5kstiZ0MKenNeALdBRzxPnT9nTZ45AbzpTKPm7hr57sPSqajvOfnmdSnjviYUbmaVFvK9cRRgzgpOydqw1AWJWH8/v2L9CZlor79hWGOAekOBs5BQiWWn7MANXu4Sp4YCKIifZSCeEOCPBiP8JD0NzbQR34lF+CGxj5+Gw==
-X-YMail-OSG: Bfy8FG8VM1lCW422lT1tQ8m.mkcvFCvOBRf8Jm8RAbRNbLYueESpNWy_kznORk2
- n4cc0BIekotQamZ3GUojK1_kPmPFI3DUBSCAobO3oHIK1PR0zzUA0pnoQH48DJyFTwahLDrSNXga
- QU5J30_vstSKjMHBmJjUgOl49QldjdjcCAfAixs7QC3OilceXSDh92ZhwcCz21XrVI2.bEIhCuDE
- lk6gUGYIPEflyXX2drUnxwI8nkyRvheR3l.N1kQ_6IvEj13qNsm6CmlpOM7nGhn99Xo8Zv65swjD
- ZN8TiY4bFXxRe9V2lRae1zUR_gN1Gd__Qa6LF_5jniL_Ppj90id5UMT6.WdzduFd1fJCCQa2T_A5
- md7RV6NXDItcuzMYU1oXY_bFFPUNAWWTz2E.ucByOsGElqj7WiPzheeubeZyJxH0qBzxDTN6T1Sm
- yx4TOXbWz5oj71Ww3RY7WWiyCXN2gfnNRx_2GGQXBaK4ySPV41ilk98qKh_anFg3MATxrGUujW7D
- JQzUwCexl1God0vbKO0obUNgoSqwsPFAMK0r0jZh1G5lRpntMCliPQ2_aqLOMAJHq74vVjXylz34
- MzfQ_yvSAoH6CDTO6EQsoFBFEGp6TJ7_gVVVllAox.vXtirTK7duW9cu8oYbJLIjEdDpCCcGeOPY
- oX5fxFly6YrW72b15Oe7.vdenchZ0I2N1vJIpXmd6.xdprbJeanPVZeRve9rSkzeGL2qQXd1JwAv
- MCGf54udzw7zza0qDzmLT0L5wSlRGwzLdL0Smfe5lEBrgR4GhYccK0PnYOyagVPyAFljRxTDmbLR
- K5o7sArU55o0GMpLm0zqMF5KVBhkzsLM7rptqXKSynNIq6yzW9y049vdvSOvV3LC.wFW3z9vGzqe
- yXcX9vNKT3ifXLEWQm7s7HaCP90yRmvjKSIC2434LMGjbLM2lDHfY3uy.XWRQ71XdvaxDzUxuhaf
- 8jPLtA6JwEitNz9i1wNcZkfXd6HEWCSxqGt2zxtzul_2xZYYLDSp4pwyruLDlQjrIb7u9HPJrRyl
- gjIpTNaDnBNnBCGvhSWOKm7AMmETNajaW5LoayCtKVrwFsVPOvdsKbxwkRWRzDGFnfIxqs1uoEBk
- TXN_v90liskbKK4k_3NpdCFV8nIfgqv5HIktUTTo9dqv49H.MDpHNvvBgdZ13LTmqWU8XiyMjV1s
- jYpC3m0jorp2USIBSv5_5HsxjsGurfoDoYFfZczgl6pBjbQAlqrcSU6mmCYSBqKzEUjOClblllo9
- 6VQNU3zLHhHkIuvxjoxwH93B5QDNq3M2gx.k8IWk2NRwUQgyttqOlnltPvVBO3WrNSlehBwZEps_
- nfD.HUOHH1hCJdEb7b0O6mCoOCNhZg_SO.faZcD4WH5GUN_ZHN.EOAVYteyloLGK2JLmqFb4THxP
- VKbybATk58R4SSWBwmQ6Vis7IaiTAGVl.0Qc.PluET324In67qaBKc6AbzTalNyhOjUcsm2y_jRc
- bzEnWZNtlBHxZqQZfjghYqXtHLmXzb8Jh2iNBj4GHIlu5Wk4usARCj68.8mJLhkEQTPpKVDenSbO
- aNkTUveLCH4.CYblgWm4WYtPOjTETDbluH4hLKPI0Ijrkx4UjWPjcrmiT2zr_FQxhhAAWntZWTrT
- bbdCgV6yBMKDe2D333xxKaJSGcdMyjF1sMWP_QVG2JHEnfAf2jA5weVY4ryGx0AGEOM7.NxwQscv
- Ln9vkWg5w4HsxkAodz8XOQghEc5mgfooFie1eH.mhCdWitFiTVAWZRMl2eHzlw5mwELQ.z2rb0k2
- 4.w5575U1sYxEVq6Yicr1xJ.RfitfNBaUV7qVwtd8rksI8a2nkFsbcxsCEaMyIAFCk5NuKBvmpQG
- lyctTXZetO_9iQwr9x__WVoeaVWEOcs_h9AmNpyQFb1BiVgLj6RlCBwhdGINVZ0vOb94setmIvqu
- GayMlw0h_p0nRWAzR4K7VN86JvesItgxREa6xlTwUyUTrMjXTMJ1iX2yfvFw4UrLEWXkrSnv7JK2
- eqXWty1IKHc9OlhMf_7RHrDZv2IXrdBhBCnr7aK93JIJN7Wd_0eWvW1dDhxwwgQg1PRMMMY6YnAX
- NZ2ClhUs.D4TMyCKS5He8jFR_j4.I1FNTK1tIszVZ8EyC1txmk83eQ82jDaUWg02CI5CeYriGJ9g
- IeOfIl3rUMbzlfeBjepHaKojBGI5P3Hs0PTJNR4.XvwoMvq73xvAQOTmZPQ--
-X-Sonic-MF: <powergame_coder2@yahoo.com>
-Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic310.consmr.mail.ir2.yahoo.com with HTTP; Wed, 28 Sep 2022 09:32:08 +0000
-Date: Wed, 28 Sep 2022 09:32:04 +0000 (UTC)
-From: Mehdi Haghgoo <powergame_coder2@yahoo.com>
-To: WireGuard Mailing List <wireguard@lists.zx2c4.com>
-Message-ID: <561370843.2818033.1664357524603@mail.yahoo.com>
-Subject: Wireguard does not work in Iran
+ for <wireguard@lists.zx2c4.com>; Thu, 8 Sep 2022 13:50:07 +0000 (UTC)
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-346cd4c3d7aso74777167b3.8
+ for <wireguard@lists.zx2c4.com>; Thu, 08 Sep 2022 06:50:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date; bh=VbNYCuViF91bHieZPfmgFlmfCB8wGk+PuccxGUmXrQ8=;
+ b=eRdxzeBb4u/H4dAcI3xUp9WX5jSRjEafssKLkCk/8kFk6XpAEU7Na0epFDZ7AxV4Mk
+ Gx9UF/EHdv0Wo0GN92kNgD7ZrmiUJNjLzmf6Jj5gb91cn78ruIzRTYF+g3DGPX9jsQXo
+ H1PF/JtYA0PHzx4qSIgvs8IOm3y+De9ZWvbsR4JaVI6oRJtSIKbsRCK7UC9Af2IxO1lY
+ DQqrwOAwGKHTFgtY/Fz8m6bPlsLU6KmsD3Z8ZJgUBGSpc1cnA0ia+kccb5MsGMJbgi5W
+ 4EaBmT7C8qGTP4L7VDN4x632XSDDWy4l5klQk5ItPNGQmV3mJWJWqOyCJjWlA32Q6ZMT
+ jmMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date;
+ bh=VbNYCuViF91bHieZPfmgFlmfCB8wGk+PuccxGUmXrQ8=;
+ b=sb/08GzJNIuE/hVxQECTgdL+O024eWvItNMrK+2tRuG71endg51Vs/G71tCNPCbIQ2
+ EBCLCDXztiFQ4NDYVh/TCKWd3+DeeCHc3qu1pwKwfcklw1qqmQ437QvoHUcBtTlAsKmM
+ QekeUvbCOHTSsLwvghKENazBWCXtGJ8ACRnSrs5whmANIkUx0DcLcFfVU7AEH6KWKRCC
+ FgAfc8ES5+b6rEDBu3XuEnV7MMFzhORcuLzOPOpusZNNgNLmFLVKfw3TjIVuqGFywkn7
+ N5INd+znqiITijFzjR0Fli03d8IlBxJy93AuL7qO0CH7mgQSvZ2VrCK5ORGjkTUPVUSs
+ oGuQ==
+X-Gm-Message-State: ACgBeo2mDwZaJmzXDQAtgKEqV3l8NzlU6mzCbqjOUNsez2MFhzutNy7N
+ 5P3t0scj60D5hfr8hfiiYbWxoJnq0buz8QXlqn0csSRWrJs=
+X-Google-Smtp-Source: AA6agR63HpHQIUDsoBBnqGvBeaBr6x+o+jQdW5WZhYAGn/9mj0UMaA5xpwJ/8RG0Bd6GxWasA6PD6ljDJsmfJp54osw=
+X-Received: by 2002:a81:46c2:0:b0:341:a26e:9d9b with SMTP id
+ t185-20020a8146c2000000b00341a26e9d9bmr7407304ywa.336.1662645006210; Thu, 08
+ Sep 2022 06:50:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-References: <561370843.2818033.1664357524603.ref@mail.yahoo.com>
-X-Mailer: WebService/1.1.20702 YMailNorrin
+From: Michael Brookes <mgsb81@gmail.com>
+Date: Thu, 8 Sep 2022 14:49:55 +0100
+Message-ID: <CABfcST-uzN3JJ0vB04s4TSfSbz18Ngn9pn+41iN_g62XWoAtUw@mail.gmail.com>
+Subject: Constant stream of handshake for peer did not complete
+To: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
+X-Mailman-Approved-At: Wed, 28 Sep 2022 10:20:52 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -80,26 +65,41 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+Hi
 
-It seems that Wireguard does not work at all in Iran.
-I used to use it with nmcli on Linux, but recently it just does not work, even with ADSL Internet (Mobile internet is mainly shut down).
+I have one wg endpoint which is CentOS 7.9.2009
+(3.10.0-1160.71.1.el7.x86_64) with kmod-wireguard
+9:1.0.20220627-1.el7_9.elrepo installed. Has about 300ish peers.
 
-I suspect it is not because UDP is completely blocked, because I see some other VPNs are working with UDP. Could the co
+We have one, there could be more, cases of wireguard logging on the
+other peer (typically laptops, I've seen this happen on Mac using the
+app and Ubuntu)
 
-Are there any suggestions to make Wireguard work under recent harsh Internet crackdowns?
+Handshake for peer 6 ... did not complete after 5 seconds, retrying (try 4)
 
-An example of the Wireguard conf I used to import into NetworkManager is as follows:
+The handshake on the CentOS end never updates and of course the tunnel
+doesn't work on the Mac/Ubuntu laptop.
 
-[Interface]
-PrivateKey = xxxxxxxxxxxx
-Address = 10.2.0.2/32
-DNS = 10.2.0.1
+To get the tunnel working again all I do is on the CentOS end remove
+and add the peer, and the tunnel suddenly springs to life and traffic
+flows normally.
 
-[Peer]
-PublicKey = xxxxxxxxxxxxxxxx
-AllowedIPs = 0.0.0.0/0
-Endpoint = x.x.x.x:51820
+I've since enabled debug on the CentOS end and see a constant stream of:
 
-Best regards,
-M.
+Handshake for peer 6 ... did not complete after 5 seconds, retrying (try 4)
+
+Since I enabled debugging ~200 different peers have logged that.
+Also see this - invalid address - a few times too for different peers:
+
+Handshake for peer 1809 ((invalid address)) did not complete after 5
+seconds, retrying (try 5)
+
+Is this expected debug output for a setup where you have a CentOS
+server with peers which are all laptops? i.e. the CentOS end is trying
+to initiate the handshake and the laptop is off/wireguard app turned
+off.
+
+Is it down to some UDP traffic potentially being dropped? Some network
+card tweaks needed?
+
+Any help greatly appreciated
