@@ -4,51 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B010C54EE9
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 13 Sep 2022 12:42:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3260C6FA82
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 13 Sep 2022 19:51:48 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 40155d0e;
-	Tue, 13 Sep 2022 12:42:39 +0000 (UTC)
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com
- [2a00:1450:4864:20::12d])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 722daa82
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 8145fab5;
+	Tue, 13 Sep 2022 19:51:46 +0000 (UTC)
+Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
+ [209.85.166.71])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 65ffe657
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 13 Sep 2022 12:42:37 +0000 (UTC)
-Received: by mail-lf1-x12d.google.com with SMTP id i26so19865427lfp.11
- for <wireguard@lists.zx2c4.com>; Tue, 13 Sep 2022 05:42:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date; bh=zYY9tRWZnNkQnCK5AKak3uLrJEYKtrG/fMmicFwN5r0=;
- b=dOuMWCPErXZnV9uQmaEnORKTAr5+HQI7b//I90bYQ4Cm3FOCtXVxUlWrG8VHWbSVaP
- z9wyiW/o0RJc0scWGwWuQYfLB5w5lcQtbBJazIXqYUlt1CacHH8JOkoJmvni9UifcSsn
- UUegrOHVdYAqGMHjzmlRapbACkcjwSFp3XqcVwJOBB/RYx8pKdIkryPyvcUi6x96G5rA
- QnM5bK38hb2yy0E35sdY0Z1O3lSUJYnbkiAdCZLYOuBSS3wRT1EkCG6Uc7Uq1Yb793GJ
- nsaYJc8TSseIxX4X6/9rB1+2Xdo2NoOiWdiVS8qnuC1YrE8U9HNiaqeKIdnpxeS9BBXt
- i4Bw==
+ Tue, 13 Sep 2022 19:51:43 +0000 (UTC)
+Received: by mail-io1-f71.google.com with SMTP id
+ e4-20020a5d85c4000000b0068bb3c11e72so7831901ios.5
+ for <wireguard@lists.zx2c4.com>; Tue, 13 Sep 2022 12:51:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ h=to:from:subject:message-id:date:mime-version:x-gm-message-state
  :from:to:cc:subject:date;
- bh=zYY9tRWZnNkQnCK5AKak3uLrJEYKtrG/fMmicFwN5r0=;
- b=vqloBe/XraQ9flWrh1+qzWlHuxfBG+xf1ciohOdozE2oP+97+/iNSMLVH4mX3cY3X6
- vsx4KYWr9iJGagM3HHyfk8d4bBm9RKnBUu1vTsL2SY7BJ+JHjTvXWTPemp8Jk9I12KVK
- /YATpkiPYd2/CLWyJDY1+GaxZpELiw7YkHhKHUl9mD8X8cGu8aHte2Et3vIR7QqEg6YP
- q7vZ1JvxNUef4IeAjBIJ3pzldpwquO9NY82cwPGmXRzkpl/C47rKjvjmZbALY8M/Onw8
- +FJDmXS4QId80JtFDvIOzLZITqjwtCaVLD3Fun0dwqiRc4hKwN9qSipQnuhKooeKpK6y
- /9SA==
-X-Gm-Message-State: ACgBeo1ex19a//WnQZDjSPk1tpCLf8QdWqNicWxAHFd7Bahp7WwPVukW
- zj+ZJOwfnPYeOOBQKtwc7lrDZnHuCTi4wR9IaItAx/ACn5mDLg==
-X-Google-Smtp-Source: AA6agR7bHlBU8eZY94XPFOGAmZP3TGGWoAm5bsWZGaVVRcwdZ1cvObP/H20dorj1x8fsZIavW7UUDC82nKO0yoe17SU=
-X-Received: by 2002:a19:4f45:0:b0:49a:63c9:190d with SMTP id
- a5-20020a194f45000000b0049a63c9190dmr3532140lfk.61.1663072956141; Tue, 13 Sep
- 2022 05:42:36 -0700 (PDT)
+ bh=4Ja416e6EJtl4Wt4k3rSUiNYJTMdEKf5Mdz7+oJMoaM=;
+ b=xNXDeLYiJ8sVEdbUu8iP6JdteaDXtGpUqk6VR4jFCl1yg3ZiKMVaPp8FPDICrdK0uI
+ iURo4s/hcJVXpo4l94xWVaBMNShdEbHG0K5/aoY9JCLC4XZ3NhyJX5zX2Wy9VyagDnQ0
+ eEl/ejVNQAch+yb5ThGmnM5k5WgC6+aBbUzWTB7WETqZTPTi0gGqBxJJalxfzJhdYkNx
+ C6JwCgFPPpdjvwxnoKx1KK8j947Vq10cx9N8eq92PN5wQy2EvGn31SzbBsTFpy/ew2Te
+ c1UNEqlEkbAQXGTQ78qrjPgAtQpbk0F11gOZqMPlsXg8xxthiLd7Hqd1xRplieX+DqvN
+ 2uZg==
+X-Gm-Message-State: ACgBeo3h/l/GbRELQ8CF5jezkN0b1D/Q7bimEJw2VtdQmlNbAO6jeM5G
+ tOASbR2dMqK/bJAFTkTITaZTEbnAutU6rwAPtOtxaaJQb/bg
+X-Google-Smtp-Source: AA6agR7PzI68sFAEeTK6kqc/EWQIZjiO+xUlEtke6HmJMklycsbSZgPtF3Lv8oRweEc5SEqc1AMHgWLOP1OApBKLU6KC8qd3kkhg
 MIME-Version: 1.0
-From: Houman <houmie@gmail.com>
-Date: Tue, 13 Sep 2022 13:41:59 +0100
-Message-ID: <CABBZOsks3ZnpcURYHSQcaWCe8ETY21zitPY5TvtTaAm38DT5EA@mail.gmail.com>
-Subject: Wireguard iOS crashes after upgrading to XCode 14
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+X-Received: by 2002:a05:6e02:1688:b0:2f2:179b:a648 with SMTP id
+ f8-20020a056e02168800b002f2179ba648mr13182154ila.201.1663098702306; Tue, 13
+ Sep 2022 12:51:42 -0700 (PDT)
+Date: Tue, 13 Sep 2022 12:51:42 -0700
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <00000000000060a74405e8945759@google.com>
+Subject: [syzbot] linux-next test error: WARNING in set_peer
+From: syzbot <syzbot+a448cda4dba2dac50de5@syzkaller.appspotmail.com>
+To: Jason@zx2c4.com, davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+ linux-kernel@vger.kernel.org, linux-next@vger.kernel.org, 
+ netdev@vger.kernel.org, pabeni@redhat.com, sfr@canb.auug.org.au, 
+ syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -64,32 +61,81 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-My existing Wireguard iOS implementation stopped working after
-upgrading to Xcode 14 today.
-When trying to connect to servers that support only IPv4, then it's
-fine. But if the server supports both IPv6 and IPv4 then the tunnel
-crashes:
+Hello,
 
-This IPv6 extension in
-wireguard-apple/Sources/WireGuardKit/IPAddress+AddrInfo.swift crashes
-with a Fatal Error at addrInfo.ai_addr.withMemoryRebound()
+syzbot found the following issue on:
 
-The whole extension below:
+HEAD commit:    0caac1da9949 Add linux-next specific files for 20220913
+git tree:       linux-next
+console output: https://syzkaller.appspot.com/x/log.txt?x=172d78d8880000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=2fd6142ea1cf631c
+dashboard link: https://syzkaller.appspot.com/bug?extid=a448cda4dba2dac50de5
+compiler:       gcc (Debian 10.2.1-6) 10.2.1 20210110, GNU ld (GNU Binutils for Debian) 2.35.2
 
-extension IPv6Address {
-    init?(addrInfo: addrinfo) {
-        guard addrInfo.ai_family == AF_INET6 else { return nil }
+Downloadable assets:
+disk image: https://storage.googleapis.com/syzbot-assets/4916ab25f774/disk-0caac1da.raw.xz
+vmlinux: https://storage.googleapis.com/syzbot-assets/16dace3b273b/vmlinux-0caac1da.xz
 
-        let addressData = addrInfo.ai_addr.withMemoryRebound(to:
-sockaddr_in6.self, capacity: MemoryLayout<sockaddr_in6>.size) { ptr ->
-Data in
-            return Data(bytes: &ptr.pointee.sin6_addr, count:
-MemoryLayout<in6_addr>.size)
-        }
-        self.init(addressData)
-    }
-}
+IMPORTANT: if you fix the issue, please add the following tag to the commit:
+Reported-by: syzbot+a448cda4dba2dac50de5@syzkaller.appspotmail.com
 
-Has anyone else experienced this problem?
+netdevsim netdevsim0 netdevsim1: renamed from eth1
+netdevsim netdevsim0 netdevsim2: renamed from eth2
+netdevsim netdevsim0 netdevsim3: renamed from eth3
+------------[ cut here ]------------
+memcpy: detected field-spanning write (size 28) of single field "&endpoint.addr" at drivers/net/wireguard/netlink.c:446 (size 16)
+WARNING: CPU: 0 PID: 3616 at drivers/net/wireguard/netlink.c:446 set_peer+0x991/0x10c0 drivers/net/wireguard/netlink.c:446
+Modules linked in:
+CPU: 0 PID: 3616 Comm: syz-executor.0 Not tainted 6.0.0-rc5-next-20220913-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/26/2022
+RIP: 0010:set_peer+0x991/0x10c0 drivers/net/wireguard/netlink.c:446
+Code: 00 e8 63 30 b3 fc b9 10 00 00 00 48 c7 c2 00 4c 72 8a be 1c 00 00 00 48 c7 c7 60 4c 72 8a c6 05 d0 e7 02 09 01 e8 f1 d7 74 04 <0f> 0b e9 03 04 00 00 e8 33 30 b3 fc 89 ee 44 89 ef e8 79 2c b3 fc
+RSP: 0018:ffffc90003d4f540 EFLAGS: 00010282
+RAX: 0000000000000000 RBX: ffffc90003d4f6d8 RCX: 0000000000000000
+RDX: ffff888072ed57c0 RSI: ffffffff81611eb8 RDI: fffff520007a9e9a
+RBP: ffffc90003d4f5e8 R08: 0000000000000005 R09: 0000000000000000
+R10: 0000000080000000 R11: 7720676e696e6e6d R12: 000000000000001c
+R13: 0000000000000000 R14: ffff888072f1d104 R15: ffff888024cb0960
+FS:  000055555616b400(0000) GS:ffff8880b9a00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fa5644d32c0 CR3: 000000006e43c000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ wg_set_device+0x8d7/0x11b0 drivers/net/wireguard/netlink.c:589
+ genl_family_rcv_msg_doit+0x228/0x320 net/netlink/genetlink.c:731
+ genl_family_rcv_msg net/netlink/genetlink.c:778 [inline]
+ genl_rcv_msg+0x3b7/0x630 net/netlink/genetlink.c:795
+ netlink_rcv_skb+0x153/0x420 net/netlink/af_netlink.c:2540
+ genl_rcv+0x24/0x40 net/netlink/genetlink.c:806
+ netlink_unicast_kernel net/netlink/af_netlink.c:1319 [inline]
+ netlink_unicast+0x543/0x7f0 net/netlink/af_netlink.c:1345
+ netlink_sendmsg+0x917/0xe10 net/netlink/af_netlink.c:1921
+ sock_sendmsg_nosec net/socket.c:714 [inline]
+ sock_sendmsg+0xcf/0x120 net/socket.c:734
+ __sys_sendto+0x236/0x340 net/socket.c:2117
+ __do_sys_sendto net/socket.c:2129 [inline]
+ __se_sys_sendto net/socket.c:2125 [inline]
+ __x64_sys_sendto+0xdd/0x1b0 net/socket.c:2125
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+RIP: 0033:0x7fa56343c18c
+Code: fa fa ff ff 44 8b 4c 24 2c 4c 8b 44 24 20 89 c5 44 8b 54 24 28 48 8b 54 24 18 b8 2c 00 00 00 48 8b 74 24 10 8b 7c 24 08 0f 05 <48> 3d 00 f0 ff ff 77 34 89 ef 48 89 44 24 08 e8 20 fb ff ff 48 8b
+RSP: 002b:00007ffe4bc97580 EFLAGS: 00000293 ORIG_RAX: 000000000000002c
+RAX: ffffffffffffffda RBX: 00007fa5644d4320 RCX: 00007fa56343c18c
+RDX: 0000000000000170 RSI: 00007fa5644d4370 RDI: 0000000000000005
+RBP: 0000000000000000 R08: 00007ffe4bc975d4 R09: 000000000000000c
+R10: 0000000000000000 R11: 0000000000000293 R12: 0000000000000000
+R13: 00007fa5644d4370 R14: 0000000000000005 R15: 0000000000000000
+ </TASK>
 
-Thanks,
+
+---
+This report is generated by a bot. It may contain errors.
+See https://goo.gl/tpsmEJ for more information about syzbot.
+syzbot engineers can be reached at syzkaller@googlegroups.com.
+
+syzbot will keep track of this issue. See:
+https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
