@@ -4,54 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E71BCC04A95
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 28 Sep 2022 10:21:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBEDAC6FA82
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 28 Sep 2022 10:21:02 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 28f3afb2;
-	Wed, 28 Sep 2022 10:21:00 +0000 (UTC)
-Received: from sender4-of-o54.zoho.com (sender4-of-o54.zoho.com
- [136.143.188.54])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id a43b9a4a
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 88a90f52;
+	Wed, 28 Sep 2022 10:21:01 +0000 (UTC)
+Received: from mail.linux-ng.de (srv.linux-ng.de [5.9.18.165])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTP id 7aecfaee
  for <wireguard@lists.zx2c4.com>;
- Sat, 10 Sep 2022 11:34:52 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; t=1662809688; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=DJrnGUJ5PbRVVo4bqjgpF1BgZnd4qZEdaxF+LZfclPIBf8XvJ4RgmD3Xwx77GFAWnHDbAp+a2/UqTAm0gJzsq7Q0noKwU1xUlkSpgHqUpuYgwpBY9IymMF07ow5PWhI7goRoD3l/JWkJfJrPjrVAwrQl0XjJVKfZ97Ee5F8O65Y=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1662809688;
- h=Content-Type:Content-Transfer-Encoding:Date:From:MIME-Version:Message-ID:Subject:To;
- bh=3XQ70c8MDS0KCvV9xn1FIpgEebwm3bZUXhj85xTpy1c=; 
- b=LDMBpsEyAat7fMncYcXVRrLaKp6LvhhmPSr9x5lI4flQfgxeV9HD8E3I8liYXUaeQXrs3IqStnvb0nMafvfcHNWWk0VUIs0pL1s+ApZCLexwO4SJbt4huoKPNmEJFEnWRSuUEat0wAA5204uQK33TfwOFZn3C7YKZUOVOnD2O/k=
-ARC-Authentication-Results: i=1; mx.zohomail.com; dkim=pass  header.i=zoho.com;
- spf=pass  smtp.mailfrom=weichen302@zoho.com;
- dmarc=pass header.from=<weichen302@zoho.com>
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=zapps768; d=zoho.com; 
- h=date:from:to:message-id:in-reply-to:subject:mime-version:content-type:user-agent;
- b=lIxhBgyVVF0s9afpRgzDlxWCTxW6imHLvsbCfXPwqnCfU5GyD3Jw37fgQ9doeQqk47YsoC3KnPEb
- AHEPDT0/tpbtsNagd/iPAucUoboF1KFO7UfQ3XssLKJVrrnmnnY3  
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1662809688; 
- s=zm2022; d=zoho.com; i=weichen302@zoho.com;
- h=Date:Date:From:From:To:To:Message-ID:In-Reply-To:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To:Cc;
- bh=3XQ70c8MDS0KCvV9xn1FIpgEebwm3bZUXhj85xTpy1c=;
- b=FPrDRtIFQSnHE5ixYoDMY+b49zgnr82oLqQz+w6o2Zq2zzqRXk8gLADWlDGINklS
- JaHqbU3UIYagfcK4CPM2uok+64UTahG96dSOtSPlpCSmLJ40JBXqjHltV+FKTUjrcK+
- X6QHC9nX4eXiMnAXEbQkY0KBpt2v55zyteT4UJLE=
-Received: from mail.zoho.com by mx.zohomail.com
- with SMTP id 1662809682454311.518183937774;
- Sat, 10 Sep 2022 04:34:42 -0700 (PDT)
-Date: Sat, 10 Sep 2022 06:34:42 -0500
-From: Wei Chen <weichen302@zoho.com>
-To: "wireguard" <wireguard@lists.zx2c4.com>
-Message-ID: <183272e3203.12ada1173180167.8469340361616836666@zoho.com>
-In-Reply-To: 
-Subject: Iptables WireGuard obfuscation extension
+ Tue, 13 Sep 2022 19:37:33 +0000 (UTC)
+Received: from cloud.linux-ng.de (srv.linux-ng.de [IPv6:2a01:4f8:160:92e6::2])
+ by mail.linux-ng.de (Postfix) with ESMTPSA id 97D25937E23E
+ for <wireguard@lists.zx2c4.com>; Tue, 13 Sep 2022 21:37:33 +0200 (CEST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Importance: Medium
-User-Agent: Zoho Mail
-X-Mailer: Zoho Mail
+Date: Tue, 13 Sep 2022 19:37:33 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: RainLoop/1.16.0
+From: marcel@linux-ng.de
+Message-ID: <46fae16c62151cf55e7b357e8dc0df94@linux-ng.de>
+Subject: Possible performance impact of queuing?
+To: wireguard@lists.zx2c4.com
 X-Mailman-Approved-At: Wed, 28 Sep 2022 10:20:52 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -67,30 +40,34 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+Hi there,
 
-Jason once suggested use a netfilter module for obfuscation[1]. Here is one.
+I was just testing wireguard performance on a new server machine (with lo=
+ts of cores) and got lower
+performance than expected.
+However a lot of kernel processes were spawned only using CPUs up to 20% =
+(but not higher).
+That got me thinking about a possible cause.
 
-https://github.com/infinet/xt_wgobfs
+I remembered, that some time ago I noticed a similar behavior for dm-cryp=
+t and while investigating
+further I found this detailed analysis:
+https://blog.cloudflare.com/speeding-up-linux-disk-encryption/
+It showed, that the kernel internal queuing has a huge impact on throughp=
+ut and latency (and
+there's a fix/option for that in newer kernel releases, s. end of above b=
+log article (search for
+"merged")).
 
-It uses SipHash 1-2 to generate pseudo-random numbers in a reproducible way.
-Sender and receiver share a siphash secret key. Sender creates and receiver
-re-creates identical siphash output, if input is same. These siphash outputs
-are used for obfuscation.
+So I wondered if the wireguard code may face the same challenge?
+I had a quick look at the code and to me (as a non kernel developer) it l=
+ooks like it could be
+worth a try, to adapt and benchmark the changes made for dm-crypt.
 
-- The first 16 bytes of WG message is obfuscated.
-- The mac2 field is also obfuscated if it is all zeros.
-- Padding WG message with random bytes, which also has random length. They are
-  from kernel get_random_bytes_wait() though.
-- Drop 80% of keepalive message at random. Again randomness is from kernel.
-- Change the Diffserv field to zero.
+I hope someone with more knowledge about wireguard / kernel internals can=
+ comment on that.
+(I know wireguard is one of the fastest VPN solutions around, but what if=
+ it could be even faster?
+:-) )
 
-Tested working on Alpine linux kernel 5.15 and CentOS 7 kernel 3.10.
-
-Performance test in two Alpine VMs running on same host. Each VM has 1 CPU and
-256 MB RAM. Iperf3 results 1.1Gbits/s without,vs 860Mbits/s with obfuscation.
-
-
-Wei
-
-1. https://lists.zx2c4.com/pipermail/wireguard/2021-September/007155.html
+Bye, Marcel
