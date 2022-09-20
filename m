@@ -4,27 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBEDAC6FA82
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 28 Sep 2022 10:21:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B7EFC6FA82
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 28 Sep 2022 10:21:19 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 88a90f52;
-	Wed, 28 Sep 2022 10:21:01 +0000 (UTC)
-Received: from mail.linux-ng.de (srv.linux-ng.de [5.9.18.165])
- by lists.zx2c4.com (OpenSMTPD) with ESMTP id 7aecfaee
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 3917a5f7;
+	Wed, 28 Sep 2022 10:21:03 +0000 (UTC)
+Received: from a1872.mx.srv.dfn.de (a1872.mx.srv.dfn.de [194.95.232.134])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id eb8de6c6
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 13 Sep 2022 19:37:33 +0000 (UTC)
-Received: from cloud.linux-ng.de (srv.linux-ng.de [IPv6:2a01:4f8:160:92e6::2])
- by mail.linux-ng.de (Postfix) with ESMTPSA id 97D25937E23E
- for <wireguard@lists.zx2c4.com>; Tue, 13 Sep 2022 21:37:33 +0200 (CEST)
+ Tue, 20 Sep 2022 13:16:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=
+ hochschule-stralsund.de; h=content-transfer-encoding
+ :content-type:content-type:subject:subject:from:from
+ :content-language:user-agent:mime-version:date:date:message-id
+ :received; s=s1; t=1663679790; x=1665494191; bh=gSv43NADi+20FTwl
+ zJAmt9dFNdeT/62ImD95mDVIr3o=; b=jIHMKxVqWoqr98RNc01OzO45sietVyM/
+ bfld02xgJ/9I4hTJBW1NGt+BdNTKYxS3ZA+d67yzLSzTjlUaQ7r79d42w7+3X0G2
+ m4mLTmJLC1E7Y45amIbRTsaGHwC2Z+yay9IJFQO6g+cYe2E2WEsfjleGkLf+rOJV
+ Dj/Vnar9bio=
+Received: from mail.hochschule-stralsund.de (mail.hochschule-stralsund.de
+ [194.94.72.163])
+ by a1872.mx.srv.dfn.de (Postfix) with ESMTPS id E46B52A005A
+ for <wireguard@lists.zx2c4.com>; Tue, 20 Sep 2022 15:16:30 +0200 (CEST)
+Received: by smtp.hochschule-stralsund.de
+Message-ID: <4e093a02-723d-22ff-fd33-f220ac24e19e@hochschule-stralsund.de>
+Date: Tue, 20 Sep 2022 15:16:30 +0200
 MIME-Version: 1.0
-Date: Tue, 13 Sep 2022 19:37:33 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: RainLoop/1.16.0
-From: marcel@linux-ng.de
-Message-ID: <46fae16c62151cf55e7b357e8dc0df94@linux-ng.de>
-Subject: Possible performance impact of queuing?
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Content-Language: en-US
+From: Jan Petrischkeit <jan.petrischkeit@hochschule-stralsund.de>
+Subject: wireguard-windows: Wireguard does not start a previously activated
+ tunnel from time to time
 To: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Mailman-Approved-At: Wed, 28 Sep 2022 10:20:52 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -40,34 +55,43 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi there,
+Dear Wireguard Community,
 
-I was just testing wireguard performance on a new server machine (with lo=
-ts of cores) and got lower
-performance than expected.
-However a lot of kernel processes were spawned only using CPUs up to 20% =
-(but not higher).
-That got me thinking about a possible cause.
+I have the problem that Wireguard on some systems and there only from 
+time to time forgets to activate the tunnel at system startup.
+Mainly this happens after an update of the wireguard client or changes 
+to the client config. If an admin then reactivates the tunnel, it will 
+(mostly) run on the following system starts.
+My users have no way to disable the tunnel. At least in the past, but 
+the problem has come up so often now that I've started making the 
+LimitedOperatorGUI available to them to be able to activate the tunnel.
 
-I remembered, that some time ago I noticed a similar behavior for dm-cryp=
-t and while investigating
-further I found this detailed analysis:
-https://blog.cloudflare.com/speeding-up-linux-disk-encryption/
-It showed, that the kernel internal queuing has a huge impact on throughp=
-ut and latency (and
-there's a fix/option for that in newer kernel releases, s. end of above b=
-log article (search for
-"merged")).
+One user (Denis Brodbeck @ 2021-07-06 6:18 UTC) had already sent a mail 
+to this list about this problem (Title: "wireguard-windows: client 
+forgets after restart that there was an activated tunnel before and 
+won't activate said tunnel anymore"), my environment and experiences 
+pretty much match his descriptions.
+However, I am fairly unexperienced with mailing lists, so I don't know 
+how to directly reply to that entry.
 
-So I wondered if the wireguard code may face the same challenge?
-I had a quick look at the code and to me (as a non kernel developer) it l=
-ooks like it could be
-worth a try, to adapt and benchmark the changes made for dm-crypt.
+However, I have two systems so far where the tunnel never starts 
+automatically on boot. On these systems I noticed that Windows notes a 
+corresponding entry in the event viewer (translated from german to english):
 
-I hope someone with more knowledge about wireguard / kernel internals can=
- comment on that.
-(I know wireguard is one of the fastest VPN solutions around, but what if=
- it could be even faster?
-:-) )
+Event 7023, ServiceControlManager: The service 
+"WireGuardTunnel$HOST-WG2" was terminated with the following error: The 
+requested name is valid, but no data of the requested type was found.
 
-Bye, Marcel
+If I set the tunnel's service to Delayed Start, it works, but usually 
+only some time after the user logs in. It also works if I start the 
+service manually before Delayed Start becomes active.
+If I don't set the startup type of the tunnel to "Delayed start", the 
+service entry for the tunnel disappears from the services list after the 
+next restart (and the error message in the event viewer).
+
+
+Hope someone has some pointers on how to resolve this.
+
+Cheers,
+Jan Petrischkeit
+
