@@ -4,42 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B7EFC6FA82
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 28 Sep 2022 10:21:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2AB8C32771
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 28 Sep 2022 10:35:25 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 3917a5f7;
-	Wed, 28 Sep 2022 10:21:03 +0000 (UTC)
-Received: from a1872.mx.srv.dfn.de (a1872.mx.srv.dfn.de [194.95.232.134])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id eb8de6c6
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 4f3a9813;
+	Wed, 28 Sep 2022 10:21:05 +0000 (UTC)
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
+ [64.147.123.24])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 5575b1e2
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 20 Sep 2022 13:16:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=
- hochschule-stralsund.de; h=content-transfer-encoding
- :content-type:content-type:subject:subject:from:from
- :content-language:user-agent:mime-version:date:date:message-id
- :received; s=s1; t=1663679790; x=1665494191; bh=gSv43NADi+20FTwl
- zJAmt9dFNdeT/62ImD95mDVIr3o=; b=jIHMKxVqWoqr98RNc01OzO45sietVyM/
- bfld02xgJ/9I4hTJBW1NGt+BdNTKYxS3ZA+d67yzLSzTjlUaQ7r79d42w7+3X0G2
- m4mLTmJLC1E7Y45amIbRTsaGHwC2Z+yay9IJFQO6g+cYe2E2WEsfjleGkLf+rOJV
- Dj/Vnar9bio=
-Received: from mail.hochschule-stralsund.de (mail.hochschule-stralsund.de
- [194.94.72.163])
- by a1872.mx.srv.dfn.de (Postfix) with ESMTPS id E46B52A005A
- for <wireguard@lists.zx2c4.com>; Tue, 20 Sep 2022 15:16:30 +0200 (CEST)
-Received: by smtp.hochschule-stralsund.de
-Message-ID: <4e093a02-723d-22ff-fd33-f220ac24e19e@hochschule-stralsund.de>
-Date: Tue, 20 Sep 2022 15:16:30 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Content-Language: en-US
-From: Jan Petrischkeit <jan.petrischkeit@hochschule-stralsund.de>
-Subject: wireguard-windows: Wireguard does not start a previously activated
- tunnel from time to time
+ Wed, 21 Sep 2022 02:19:01 +0000 (UTC)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+ by mailout.west.internal (Postfix) with ESMTP id 06A5A32009B9
+ for <wireguard@lists.zx2c4.com>; Tue, 20 Sep 2022 22:18:58 -0400 (EDT)
+Received: from imap43 ([10.202.2.93])
+ by compute2.internal (MEProxy); Tue, 20 Sep 2022 22:18:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=elitemail.org;
+ h=cc:content-type:date:date:from:from:in-reply-to:message-id
+ :mime-version:reply-to:sender:subject:subject:to:to; s=fm2; t=
+ 1663726738; x=1663813138; bh=h3i+YfBDa9n0k5kyZqoVi2Y7ryQixStJDga
+ BbxKZZ2k=; b=TpPORzYgnoIMEvBQWX7B6fXXUHqaKodO0yYxuNUst7SfWh+Qo6F
+ xv3ZwYaibK4pS9F+1+4M2zNcsnAJ9HnijQ6wakGO+wRhGpb1evUyItdHOXb7xl2A
+ GgwqkbuQIAL3t1mQvb15tOVcFawY0G+DuS1lRSYoMHKRhlBIgMy2TzkwetwbKl/w
+ XViLpr4ujldqqTF6WGRSrU4vz8284psJwxhqRW0jeKWSucVuSAv2iJSW8O7YW5Wz
+ /wBbEYnLiiMmtOwFwep+XctaUKo2F4b5HO+NB0QLPVZ2O4EiqUC6aFqbC8NmVrFC
+ WgW6lTvxvqkSfksKUG3artG4QVOh1Fo9T5A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:date:feedback-id
+ :feedback-id:from:from:in-reply-to:message-id:mime-version
+ :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1663726738; x=
+ 1663813138; bh=h3i+YfBDa9n0k5kyZqoVi2Y7ryQixStJDgaBbxKZZ2k=; b=K
+ JI42F6btNNhWuKHqk2gkLPhQ9orL3zErVLsj2Otn8a+8fXyJWYMm/CqDu5wd27ED
+ AG1BuXHPk7EsDnZ0nUkfal20ykIFdjy9TPd5Y0VdFG3Wi9c3P+6t+hmouXorv1wP
+ psvDNEdBHQEO1nzdmn7earOOdCenZMh+hh9ToZzTbB7TrKY8naL6rUlg3ot/XTuj
+ tJWcn48Hmm79KSDYhbuNk1XWBufwJ521O5u15PDlswSX5te3gqg680QScgddbwVS
+ vtnG2j3XzJ9bMriXtlWhqc2xXXoYc9tgK1IrG5ChzaeZGqTIKQ6XAHN5jAGqF1GT
+ hbAGf7b2G4xkIxK/5xoLA==
+X-ME-Sender: <xms:knQqY_t222e5m4qohtAsP0XQ9uYOUZJJ024ppz4AF_bZPyonKArWhg>
+ <xme:knQqYwdHsQZVy2aBUkwWR9iBNRf1UaKS3j4VQr5s6tBJzptYzrluYAT2AvXshyOZ_
+ cSrcV2ru0_VwaA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrfeeftddgheelucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfffhffvufgtsehttdertd
+ erredtnecuhfhrohhmpeifihhrvghguhgrrhgusegsuhhllhgvthhinhdrvghlihhtvghm
+ rghilhdrohhrghenucggtffrrghtthgvrhhnpeeiheetgeeggfdtleffhefgtdeiveevud
+ eiveffudefgfegtdeijeegkeelteetudenucffohhmrghinheprghnughrohhiugdrtgho
+ mhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpeifih
+ hrvghguhgrrhgusegsuhhllhgvthhinhdrvghlihhtvghmrghilhdrohhrgh
+X-ME-Proxy: <xmx:knQqYyzgH6MnAbUXBSSMY_tYl2WkZviPWUhTKxcJoVUDNtbYcwXYyQ>
+ <xmx:knQqY-NmbS1I9SGSS_YZW8TTv1wxnYHPmAj2YERiRyiX5yYQuYGCLw>
+ <xmx:knQqY_-EjJH-E0uCFnW830vyUGPyhTN2UwKhwa70C846BxoswneQgQ>
+ <xmx:knQqYyKmx1UOgQY8wWAl6e_QylamS0gOC7iT2VtHPb6SGbJaBVryIA>
+Feedback-ID: i0301461f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 462302D40071; Tue, 20 Sep 2022 22:18:58 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.7.0-alpha0-935-ge4ccd4c47b-fm-20220914.001-ge4ccd4c4
+Mime-Version: 1.0
+Message-Id: <848c8979-89e7-46af-a7b2-42aec914bccf@www.fastmail.com>
+Date: Wed, 21 Sep 2022 02:18:38 +0000
+From: wireguard@bulletin.elitemail.org
 To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Subject: Android: Support for Material You Themed Icon?
+Content-Type: text/plain
 X-Mailman-Approved-At: Wed, 28 Sep 2022 10:20:52 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -55,43 +84,7 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Dear Wireguard Community,
+This would be useful for my partial color blindness (and others who are similarly color vision deficient) as it would  provide a base to improve the contrast of the icon against a light/dark theme background (a monochromatic icon layer and a touch of XML): 
 
-I have the problem that Wireguard on some systems and there only from 
-time to time forgets to activate the tunnel at system startup.
-Mainly this happens after an update of the wireguard client or changes 
-to the client config. If an admin then reactivates the tunnel, it will 
-(mostly) run on the following system starts.
-My users have no way to disable the tunnel. At least in the past, but 
-the problem has come up so often now that I've started making the 
-LimitedOperatorGUI available to them to be able to activate the tunnel.
-
-One user (Denis Brodbeck @ 2021-07-06 6:18 UTC) had already sent a mail 
-to this list about this problem (Title: "wireguard-windows: client 
-forgets after restart that there was an activated tunnel before and 
-won't activate said tunnel anymore"), my environment and experiences 
-pretty much match his descriptions.
-However, I am fairly unexperienced with mailing lists, so I don't know 
-how to directly reply to that entry.
-
-However, I have two systems so far where the tunnel never starts 
-automatically on boot. On these systems I noticed that Windows notes a 
-corresponding entry in the event viewer (translated from german to english):
-
-Event 7023, ServiceControlManager: The service 
-"WireGuardTunnel$HOST-WG2" was terminated with the following error: The 
-requested name is valid, but no data of the requested type was found.
-
-If I set the tunnel's service to Delayed Start, it works, but usually 
-only some time after the user logs in. It also works if I start the 
-service manually before Delayed Start becomes active.
-If I don't set the startup type of the tunnel to "Delayed start", the 
-service entry for the tunnel disappears from the services list after the 
-next restart (and the error message in the event viewer).
-
-
-Hope someone has some pointers on how to resolve this.
-
-Cheers,
-Jan Petrischkeit
+https://developer.android.com/develop/ui/views/launch/icon_design_adaptive
 
