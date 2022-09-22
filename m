@@ -4,59 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D4BBC6FA82
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 22 Sep 2022 11:53:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9426C6FA86
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 22 Sep 2022 11:53:04 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 068a27b4;
-	Thu, 22 Sep 2022 11:43:31 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org
- [2604:1380:4641:c500::1])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id a259993a
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id b2183785;
+	Thu, 22 Sep 2022 11:48:31 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id d7f50b6a
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 22 Sep 2022 11:43:28 +0000 (UTC)
+ Thu, 22 Sep 2022 11:48:29 +0000 (UTC)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 31E2B62C8D
- for <wireguard@lists.zx2c4.com>; Thu, 22 Sep 2022 11:43:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76CBAC433B5
- for <wireguard@lists.zx2c4.com>; Thu, 22 Sep 2022 11:43:26 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id E3D3E62D2C
+ for <wireguard@lists.zx2c4.com>; Thu, 22 Sep 2022 11:48:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB7E9C433D7
+ for <wireguard@lists.zx2c4.com>; Thu, 22 Sep 2022 11:48:26 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
  dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="OCXp7wTk"
+ header.b="FYnW9ihF"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1663847004;
+ t=1663847305;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=0o+KCVvyh10DOMoLZdqWSN9tMI8aPgznMRDlAdmm+M4=;
- b=OCXp7wTkaJ2f1uiayi6Z1as0PIxP5LPlrFeTqhLxU7LKhzarK6oo9AmflkqTAFbXcyP4+M
- fG6/wm5RMJVmyMmHCeckQkwqx89Le3NEno9gx9t7L+4sphCbt1JjoaDDUQH8K3Hiyn3caA
- e9OmG+DC36AaEJW8QkD2BqF1u5ghDYQ=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e2dad91b
+ bh=TosPzQY45bZGoFaqZcePinzv4ZXOw+khGVuMYmymYSI=;
+ b=FYnW9ihFFGdvnhJmCX4m9O91GkGZnfwp7QXP5NwkQAR/NHkT6TWequ75O6UuLNXWcvLVcq
+ 8WAgkCx309vKkgHGKUMvbTw6q3t7hMzOea7z8dK29kdwctXKWv7Aib1WNWQrhYzn4vn0VZ
+ sSlYHQxRFVa5zjhD4ZxTfUiO7x0Let0=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3559c86a
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 22 Sep 2022 11:43:24 +0000 (UTC)
-Received: by mail-vk1-f171.google.com with SMTP id s192so4755463vkb.9
- for <wireguard@lists.zx2c4.com>; Thu, 22 Sep 2022 04:43:24 -0700 (PDT)
-X-Gm-Message-State: ACrzQf3gQoQLyHeR/Jajrpn0BHeUxm+hBrPppNFIsOkCqoq7jW+Mqtfc
- G56lLpsZBgR9M7qdIISUBQeQuq+zl27mRaNeCFY=
-X-Google-Smtp-Source: AMsMyM5bFtOXcxecIDL/J1d7CI3gxYg8n//FZcjl/76ynXU2o1mMcBOoGsal6jIRcedqp0ayiKMc8hY4lxfgT+rsqnY=
-X-Received: by 2002:a1f:24b:0:b0:3a3:ad4:a3b2 with SMTP id
- 72-20020a1f024b000000b003a30ad4a3b2mr1063747vkc.13.1663847003673; 
- Thu, 22 Sep 2022 04:43:23 -0700 (PDT)
+ Thu, 22 Sep 2022 11:48:24 +0000 (UTC)
+Received: by mail-ua1-f45.google.com with SMTP id i17so3544416uaq.9
+ for <wireguard@lists.zx2c4.com>; Thu, 22 Sep 2022 04:48:24 -0700 (PDT)
+X-Gm-Message-State: ACrzQf1ucpgY8TAtRvap7eYfuEuQ0n4fzeE5sTJ3HEWIckpiTIGr66tX
+ zirTX8erbOvsBp+Lp8uo/3CoSvYBlAfaLwLGur8=
+X-Google-Smtp-Source: AMsMyM7nRutWwMORR6AtXA5wclkuXZJa3OZ+U+6/RnVZQklHWAp3eJp+/YTo2B8Rb0S9JseSlglcZ6MjNha8D5aqBIk=
+X-Received: by 2002:ab0:6154:0:b0:398:c252:23d8 with SMTP id
+ w20-20020ab06154000000b00398c25223d8mr1055744uan.65.1663847303981; Thu, 22
+ Sep 2022 04:48:23 -0700 (PDT)
 MIME-Version: 1.0
 References: <CALDyVtsgMjH1YqrTrosDVU2khC9iEgMgUYDd8D65+h-K54y2fA@mail.gmail.com>
- <CABBZOs=bkOWQv09UQJnf18xVGAq_o6O+Ar+asMKoXtghcQvnog@mail.gmail.com>
- <ee65e180-eef5-b882-58ab-8a1188a38a09@ut1.org>
-In-Reply-To: <ee65e180-eef5-b882-58ab-8a1188a38a09@ut1.org>
+In-Reply-To: <CALDyVtsgMjH1YqrTrosDVU2khC9iEgMgUYDd8D65+h-K54y2fA@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 22 Sep 2022 13:43:12 +0200
-X-Gmail-Original-Message-ID: <CAHmME9rd4g0EkPQqXX9vViHRuU8uaGkENNNa+TsBi3C_QNHbxw@mail.gmail.com>
-Message-ID: <CAHmME9rd4g0EkPQqXX9vViHRuU8uaGkENNNa+TsBi3C_QNHbxw@mail.gmail.com>
+Date: Thu, 22 Sep 2022 13:48:13 +0200
+X-Gmail-Original-Message-ID: <CAHmME9o1psix3jGC5tx81dG_7D+WVrBhjYSho-_tLGu=S7H+1Q@mail.gmail.com>
+Message-ID: <CAHmME9o1psix3jGC5tx81dG_7D+WVrBhjYSho-_tLGu=S7H+1Q@mail.gmail.com>
 Subject: Re: MacOS app update needed
-To: Bruno <bandry@ut1.org>
+To: Simon Karberg <simon.karberg@agillic.com>
 Cc: wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -73,30 +70,27 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, Sep 21, 2022 at 10:22 AM Bruno <bandry@ut1.org> wrote:
+On Wed, Sep 21, 2022 at 9:31 AM Simon Karberg <simon.karberg@agillic.com> wrote:
 >
 > Hi,
 >
-> Windows Client project don't feel alive either. Last commit has 6 months
-> and last release is 9 month old.
+> I've been testing the Domain Search functionality on all 3 OS'
+> (Windows, Mac & Linux) and the setting:
 >
-> Same, here https://git.zx2c4.com/wireguard-windows/log/ and here
-> https://github.com/WireGuard/wireguard-windows
+> DNS=<dns server>, <search domains>
+> Is only being applied on Windows & Linux.
 >
-> Version 0.5.3 works well, but I suppose it can be even better!
+> Further testing on MacOS I've found that the homebrew installation works.
+> wiregurd-go is version 0.0.20220316 and wireguard-tools is version 1.0.20210914
+>
+> The App Store app is version:
+> App: 1.0.15 (26)
+> Go backend: 2ef39d47
 
-That seems pretty uncalled for. Folks asking for a wireguard-apple
-update have good reason to do so -- there are outstanding bugs and
-pull requests. But for wireguard-windows/wireguard-nt? C'mon now --
-that's received some *extremely* active development, stabilizing after
-nearly weekly updates for some time. Are there outstanding pull
-requests for it? So your note here really isn't appreciated. The
-WireGuard project doesn't churn out code and updates just for the sake
-of writing code and doing updates. Things need to have rationale.
-There will be updates to wireguard-windows/wireguard-nt at some point
-when development makes sense there. But right now? Is there something
-pending? Instead maybe be thankful that that software has reached a
-point of stability where project development energies can go into more
-pressing tasks, such as wireguard-apple.
+Huh, that's surprising. This was added a few years ago with 9231c035
+("global: support DNS search domains"), so it definitely *should* be
+supported. Might be a bug with the network config from
+PacketTunnelSettingsGenerator. I'll look into this when circling back
+to wireguard-apple development. Thanks for mentioning it.
 
 Jason
