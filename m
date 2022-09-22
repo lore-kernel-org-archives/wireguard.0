@@ -4,45 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6423AC04A95
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 28 Sep 2022 10:35:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EC80C6FA86
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 28 Sep 2022 10:35:27 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 194d4ea7;
-	Wed, 28 Sep 2022 10:21:09 +0000 (UTC)
-Received: from mailhost.omnigroup.com (mailhost.omnigroup.com [204.128.250.1])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 52199967
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 1db238ac;
+	Wed, 28 Sep 2022 10:21:08 +0000 (UTC)
+Received: from smtp-gw.pt.net (smtp-gw.pt.net [206.210.194.15])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 9766f025
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 24 Sep 2022 01:28:35 +0000 (UTC)
-Received: from imap-bsd.omnigroup.com (imap.omnigroup.com [204.128.250.235])
- by mailhost.omnigroup.com (Postfix) with ESMTP id CE7092731526;
- Fri, 23 Sep 2022 18:28:32 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.10.3 mailhost.omnigroup.com CE7092731526
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=omnigroup.com;
- s=default; t=1663982912;
- bh=3VJfFDc9Lrt/xbc+kGf7ZcW42ruuUbskTZnWAa6SAzs=;
- h=Subject:From:In-Reply-To:Date:Cc:References:To:From;
- b=KsBIJLic7ztMeFqmk9v3ul0TLXbfxekKmmiasjObA4CpfJzfkiqK/p8Rrrqqj68pN
- Ks5+ngB2ntXmja3uN8elb+ziAW9sbG1bScwS2HkDY+UJk3uGhlp6hPlhT0R+Oe0ipv
- 12lXsebE2z7yvzxKWDSIC2YhcwIaXswPf2+CKdOc=
-Received: from smtpclient.apple (pfsense.test.omnigroup.com [204.128.250.121])
- by imap-bsd.omnigroup.com (Postfix) with ESMTPSA id 6BE9549476;
- Fri, 23 Sep 2022 18:28:32 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.200.74\))
-Subject: Re: MacOS app update needed
-From: Ken Case <kc@omnigroup.com>
-In-Reply-To: <CAHmME9o1psix3jGC5tx81dG_7D+WVrBhjYSho-_tLGu=S7H+1Q@mail.gmail.com>
-Date: Fri, 23 Sep 2022 18:28:21 -0700
-Cc: Simon Karberg <simon.karberg@agillic.com>,
- wireguard@lists.zx2c4.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <3EAF348D-C304-4048-81CC-98110AD1BCAC@omnigroup.com>
-References: <CALDyVtsgMjH1YqrTrosDVU2khC9iEgMgUYDd8D65+h-K54y2fA@mail.gmail.com>
- <CAHmME9o1psix3jGC5tx81dG_7D+WVrBhjYSho-_tLGu=S7H+1Q@mail.gmail.com>
+ Thu, 22 Sep 2022 12:04:12 +0000 (UTC)
+X-ASG-Debug-ID: 1663848249-09411a10533927e0001-KOqj8r
+Received: from mail.pt.net (mail.pt.net [206.210.194.11]) by smtp-gw.pt.net
+ with ESMTP id RSoP7FeXzA20WBsY (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384
+ bits=256 verify=NO); Thu, 22 Sep 2022 07:04:09 -0500 (CDT)
+X-Barracuda-Envelope-From: lew@donzis.com
+X-Barracuda-Effective-Source-IP: mail.pt.net[206.210.194.11]
+X-Barracuda-Apparent-Source-IP: 206.210.194.11
+Received: from localhost (localhost [IPv6:::1])
+ by mail.pt.net (Postfix) with ESMTP id 8D68A141564E;
+ Thu, 22 Sep 2022 07:04:09 -0500 (CDT)
+Received: from mail.pt.net ([IPv6:::1])
+ by localhost (mail.pt.net [IPv6:::1]) (amavisd-new, port 10032)
+ with ESMTP id 4oKtYhVrcRBM; Thu, 22 Sep 2022 07:04:09 -0500 (CDT)
+Received: from localhost (localhost [IPv6:::1])
+ by mail.pt.net (Postfix) with ESMTP id 51F18141551F;
+ Thu, 22 Sep 2022 07:04:09 -0500 (CDT)
+X-Virus-Scanned: amavisd-new at pt.net
+Received: from mail.pt.net ([IPv6:::1])
+ by localhost (mail.pt.net [IPv6:::1]) (amavisd-new, port 10026)
+ with ESMTP id sPBTaQmy51FK; Thu, 22 Sep 2022 07:04:09 -0500 (CDT)
+Received: from mail.pt.net (mail.pt.net [206.210.194.11])
+ by mail.pt.net (Postfix) with ESMTP id 3ACC4141564A;
+ Thu, 22 Sep 2022 07:04:09 -0500 (CDT)
+Date: Thu, 22 Sep 2022 07:04:09 -0500 (CDT)
+From: Lewis Donzis <lew@perftech.com>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-X-Mailer: Apple Mail (2.3731.200.74)
+Cc: Bruno <bandry@ut1.org>, wireguard@lists.zx2c4.com
+Message-ID: <1980318156.4949115.1663848249035.JavaMail.zimbra@donzis.com>
+In-Reply-To: <CAHmME9rd4g0EkPQqXX9vViHRuU8uaGkENNNa+TsBi3C_QNHbxw@mail.gmail.com>
+References: <CALDyVtsgMjH1YqrTrosDVU2khC9iEgMgUYDd8D65+h-K54y2fA@mail.gmail.com>
+ <CABBZOs=bkOWQv09UQJnf18xVGAq_o6O+Ar+asMKoXtghcQvnog@mail.gmail.com>
+ <ee65e180-eef5-b882-58ab-8a1188a38a09@ut1.org>
+ <CAHmME9rd4g0EkPQqXX9vViHRuU8uaGkENNNa+TsBi3C_QNHbxw@mail.gmail.com>
+Subject: Re: MacOS app update needed
+MIME-Version: 1.0
+X-ASG-Orig-Subj: Re: MacOS app update needed
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [206.210.194.11]
+X-Mailer: Zimbra 8.8.15_GA_4372 (ZimbraWebClient - GC105 (Mac)/8.8.15_GA_4372)
+Thread-Topic: MacOS app update needed
+Thread-Index: yQcyCBO7Uq9l/QP2juSUhx7/h3o9lQ==
+X-Barracuda-Connect: mail.pt.net[206.210.194.11]
+X-Barracuda-Start-Time: 1663848249
+X-Barracuda-Encrypted: TLS_AES_256_GCM_SHA384
+X-Barracuda-URL: https://smtp-gw.pt.net:443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at pt.net
+X-Barracuda-Scan-Msg-Size: 1796
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Spam-Score: 0.00
+X-Barracuda-Spam-Status: No, SCORE=0.00 using global scores of TAG_LEVEL=1000.0
+ QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.100960
+ Rule breakdown below
+ pts rule name              description
+ ---- ---------------------- --------------------------------------------------
 X-Mailman-Approved-At: Wed, 28 Sep 2022 10:20:52 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -58,84 +85,33 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-
-> On Sep 22, 2022, at 04:48, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->=20
-> On Wed, Sep 21, 2022 at 9:31 AM Simon Karberg =
-<simon.karberg@agillic.com> wrote:
->>=20
+----- On Sep 22, 2022, at 6:43 AM, Jason A. Donenfeld Jason@zx2c4.com wrote:
+> On Wed, Sep 21, 2022 at 10:22 AM Bruno <bandry@ut1.org> wrote:
+>>
 >> Hi,
->>=20
->> I've been testing the Domain Search functionality on all 3 OS'
->> (Windows, Mac & Linux) and the setting:
->>=20
->> DNS=3D<dns server>, <search domains>
->> Is only being applied on Windows & Linux.
->>=20
->> Further testing on MacOS I've found that the homebrew installation =
-works.
->> wiregurd-go is version 0.0.20220316 and wireguard-tools is version =
-1.0.20210914
->>=20
->> The App Store app is version:
->> App: 1.0.15 (26)
->> Go backend: 2ef39d47
->=20
-> Huh, that's surprising. This was added a few years ago with 9231c035
-> ("global: support DNS search domains"), so it definitely *should* be
-> supported. Might be a bug with the network config from
-> PacketTunnelSettingsGenerator. I'll look into this when circling back
-> to wireguard-apple development. Thanks for mentioning it.
->=20
+>>
+>> Windows Client project don't feel alive either. Last commit has 6 months
+>> and last release is 9 month old.
+>>
+>> Same, here https://git.zx2c4.com/wireguard-windows/log/ and here
+>> https://github.com/WireGuard/wireguard-windows
+>>
+>> Version 0.5.3 works well, but I suppose it can be even better!
+> 
+> That seems pretty uncalled for. Folks asking for a wireguard-apple
+> update have good reason to do so -- there are outstanding bugs and
+> pull requests. But for wireguard-windows/wireguard-nt? C'mon now --
+> that's received some *extremely* active development, stabilizing after
+> nearly weekly updates for some time. Are there outstanding pull
+> requests for it? So your note here really isn't appreciated. The
+> WireGuard project doesn't churn out code and updates just for the sake
+> of writing code and doing updates. Things need to have rationale.
+> There will be updates to wireguard-windows/wireguard-nt at some point
+> when development makes sense there. But right now? Is there something
+> pending? Instead maybe be thankful that that software has reached a
+> point of stability where project development energies can go into more
+> pressing tasks, such as wireguard-apple.
+> 
 > Jason
->=20
 
-Oh, I have a pretty simple patch that fixes this bug that I've been =
-running locally for months. I keep meaning to figure out the right place =
-to send it, but keep not having time to look up where that is. Patch =
-included below, anyone is welcome to use it (attributed or not) or to =
-direct me to send it somewhere else!
-
-				Cheers,
-				Ken
-
----
-
-Subject: [PATCH] Qualify routed DNS queries based on search domains.
-
-Rather than unconditionally routing all DNS queries through the
-associated tunnel's DNS, only route queries when no search domains
-have been specified. When search domains _have_ been specified, route
-those domains to the tunnel's DNS but let other domains continue to be
-routed to other network interfaces.
----
-Sources/WireGuardKit/PacketTunnelSettingsGenerator.swift | 8 +++++++-
-1 file changed, 7 insertions(+), 1 deletion(-)
-
-diff --git a/Sources/WireGuardKit/PacketTunnelSettingsGenerator.swift =
-b/Sources/WireGuardKit/PacketTunnelSettingsGenerator.swift
-index c53a82c..5b7f63c 100644
---- a/Sources/WireGuardKit/PacketTunnelSettingsGenerator.swift
-+++ b/Sources/WireGuardKit/PacketTunnelSettingsGenerator.swift
-@@ -88,7 +88,13 @@ class PacketTunnelSettingsGenerator {
-            let dnsSettings =3D NEDNSSettings(servers: dnsServerStrings)
-            dnsSettings.searchDomains =3D =
-tunnelConfiguration.interface.dnsSearch
-            if !tunnelConfiguration.interface.dns.isEmpty {
--                dnsSettings.matchDomains =3D [""] // All DNS queries =
-must first go through the tunnel's DNS
-+                if tunnelConfiguration.interface.dnsSearch.isEmpty {
-+                    // Since no search domains were listed, use this =
-tunnel's DNS for all queries
-+                    dnsSettings.matchDomains =3D [""]
-+                } else {
-+                    // Only use this tunnel for the listed search =
-domains
-+                    dnsSettings.matchDomains =3D =
-tunnelConfiguration.interface.dnsSearch
-+                }
-            }
-            networkSettings.dnsSettings =3D dnsSettings
-        }
---  2.37.0 (Apple Git-136)
-
+I could not agree more.  What a world we live in where code that hasn't been touched for a few months is considered stale, rather than being rewarded and appreciated for reliability and stability.  Jason, congratulations on not needing to touch that code for six months!  Much of the beauty of Wireguard is its simplicity, to the point that it can be done "right", and it really shouldn't need to be touched!
