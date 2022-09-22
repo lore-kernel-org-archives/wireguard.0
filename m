@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F3D6C6FA86
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 22 Sep 2022 11:36:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D4BBC6FA82
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 22 Sep 2022 11:53:03 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id bcecb762;
-	Thu, 22 Sep 2022 11:34:47 +0000 (UTC)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id db05f363
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 068a27b4;
+	Thu, 22 Sep 2022 11:43:31 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org
+ [2604:1380:4641:c500::1])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id a259993a
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 22 Sep 2022 11:34:44 +0000 (UTC)
+ Thu, 22 Sep 2022 11:43:28 +0000 (UTC)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id 56820B835ED
- for <wireguard@lists.zx2c4.com>; Thu, 22 Sep 2022 11:34:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C89F0C433D7
- for <wireguard@lists.zx2c4.com>; Thu, 22 Sep 2022 11:34:42 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 31E2B62C8D
+ for <wireguard@lists.zx2c4.com>; Thu, 22 Sep 2022 11:43:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76CBAC433B5
+ for <wireguard@lists.zx2c4.com>; Thu, 22 Sep 2022 11:43:26 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
  dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="WbnpDMWA"
+ header.b="OCXp7wTk"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1663846480;
+ t=1663847004;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=JKtOCHQ9Z95+IPxcxErWBTAALJ2Qt0gHIFXj0lxFs/0=;
- b=WbnpDMWAfZjf+xa1vRnHJ+eUSKW68W7mlGF1bXcFtn+ncKBWxREPxqRKMX1mqF/lNtg6i/
- 6fcmIA7WYW5Yk7GEPcFiTcTcTMAbARwayDPHpHBRDx1q3YglAM+bOO+bXC3Nkjzut5tsXx
- A67vPlnLn2rqrWUPak85301qAuUbbQw=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 86cb29f9
+ bh=0o+KCVvyh10DOMoLZdqWSN9tMI8aPgznMRDlAdmm+M4=;
+ b=OCXp7wTkaJ2f1uiayi6Z1as0PIxP5LPlrFeTqhLxU7LKhzarK6oo9AmflkqTAFbXcyP4+M
+ fG6/wm5RMJVmyMmHCeckQkwqx89Le3NEno9gx9t7L+4sphCbt1JjoaDDUQH8K3Hiyn3caA
+ e9OmG+DC36AaEJW8QkD2BqF1u5ghDYQ=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e2dad91b
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 22 Sep 2022 11:34:40 +0000 (UTC)
-Received: by mail-vs1-f48.google.com with SMTP id d187so279266vsd.6
- for <wireguard@lists.zx2c4.com>; Thu, 22 Sep 2022 04:34:40 -0700 (PDT)
-X-Gm-Message-State: ACrzQf2bdWOzqJKiHZZs9cpaju48qrHFygvQq8aaCmExxuXXqQpSH7T7
- 4CZpLiSg4M0dWSYvyf5yAI6buVrI4spWtRZGWUg=
-X-Google-Smtp-Source: AMsMyM5s17jBwnTxnWmQJ1AIXxM6c94ecT7s/iTM+c+jsXPXygpqQhI+SAbZ7Qr4nStY4tqG1bi8EokaSiZMyNfd7js=
-X-Received: by 2002:a05:6102:2908:b0:398:ac40:d352 with SMTP id
- cz8-20020a056102290800b00398ac40d352mr758507vsb.55.1663846479919; Thu, 22 Sep
- 2022 04:34:39 -0700 (PDT)
+ Thu, 22 Sep 2022 11:43:24 +0000 (UTC)
+Received: by mail-vk1-f171.google.com with SMTP id s192so4755463vkb.9
+ for <wireguard@lists.zx2c4.com>; Thu, 22 Sep 2022 04:43:24 -0700 (PDT)
+X-Gm-Message-State: ACrzQf3gQoQLyHeR/Jajrpn0BHeUxm+hBrPppNFIsOkCqoq7jW+Mqtfc
+ G56lLpsZBgR9M7qdIISUBQeQuq+zl27mRaNeCFY=
+X-Google-Smtp-Source: AMsMyM5bFtOXcxecIDL/J1d7CI3gxYg8n//FZcjl/76ynXU2o1mMcBOoGsal6jIRcedqp0ayiKMc8hY4lxfgT+rsqnY=
+X-Received: by 2002:a1f:24b:0:b0:3a3:ad4:a3b2 with SMTP id
+ 72-20020a1f024b000000b003a30ad4a3b2mr1063747vkc.13.1663847003673; 
+ Thu, 22 Sep 2022 04:43:23 -0700 (PDT)
 MIME-Version: 1.0
 References: <CALDyVtsgMjH1YqrTrosDVU2khC9iEgMgUYDd8D65+h-K54y2fA@mail.gmail.com>
  <CABBZOs=bkOWQv09UQJnf18xVGAq_o6O+Ar+asMKoXtghcQvnog@mail.gmail.com>
  <ee65e180-eef5-b882-58ab-8a1188a38a09@ut1.org>
- <235c4ba6-95cf-2532-1b7d-3754cc4f255d@aixigo.com>
-In-Reply-To: <235c4ba6-95cf-2532-1b7d-3754cc4f255d@aixigo.com>
+In-Reply-To: <ee65e180-eef5-b882-58ab-8a1188a38a09@ut1.org>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 22 Sep 2022 13:34:29 +0200
-X-Gmail-Original-Message-ID: <CAHmME9pnz8zWOLL+1zCPhEPyxiyM-mGDE9x6p_xqQ3q8CxkyMg@mail.gmail.com>
-Message-ID: <CAHmME9pnz8zWOLL+1zCPhEPyxiyM-mGDE9x6p_xqQ3q8CxkyMg@mail.gmail.com>
+Date: Thu, 22 Sep 2022 13:43:12 +0200
+X-Gmail-Original-Message-ID: <CAHmME9rd4g0EkPQqXX9vViHRuU8uaGkENNNa+TsBi3C_QNHbxw@mail.gmail.com>
+Message-ID: <CAHmME9rd4g0EkPQqXX9vViHRuU8uaGkENNNa+TsBi3C_QNHbxw@mail.gmail.com>
 Subject: Re: MacOS app update needed
-To: Harald Dunkel <harald.dunkel@aixigo.com>
+To: Bruno <bandry@ut1.org>
 Cc: wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -73,8 +73,30 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Thu, Sep 22, 2022 at 1:32 PM Harald Dunkel <harald.dunkel@aixigo.com> wrote:
-> Maybe Apple would include wireguard into MacOS' kernel as well,
-> if there is sufficient demand for this feature? Make
+On Wed, Sep 21, 2022 at 10:22 AM Bruno <bandry@ut1.org> wrote:
+>
+> Hi,
+>
+> Windows Client project don't feel alive either. Last commit has 6 months
+> and last release is 9 month old.
+>
+> Same, here https://git.zx2c4.com/wireguard-windows/log/ and here
+> https://github.com/WireGuard/wireguard-windows
+>
+> Version 0.5.3 works well, but I suppose it can be even better!
 
-I offered to do a kernel implementation for them, but they never got back to me.
+That seems pretty uncalled for. Folks asking for a wireguard-apple
+update have good reason to do so -- there are outstanding bugs and
+pull requests. But for wireguard-windows/wireguard-nt? C'mon now --
+that's received some *extremely* active development, stabilizing after
+nearly weekly updates for some time. Are there outstanding pull
+requests for it? So your note here really isn't appreciated. The
+WireGuard project doesn't churn out code and updates just for the sake
+of writing code and doing updates. Things need to have rationale.
+There will be updates to wireguard-windows/wireguard-nt at some point
+when development makes sense there. But right now? Is there something
+pending? Instead maybe be thankful that that software has reached a
+point of stability where project development energies can go into more
+pressing tasks, such as wireguard-apple.
+
+Jason
