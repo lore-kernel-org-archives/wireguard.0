@@ -4,57 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 774F1C6FA82
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 22 Sep 2022 08:56:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB77EC6FA86
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 22 Sep 2022 09:38:27 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 7071e8b0;
-	Thu, 22 Sep 2022 08:56:57 +0000 (UTC)
-Received: from mail-oa1-x2d.google.com (mail-oa1-x2d.google.com
- [2001:4860:4864:20::2d])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 8bcab42a
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 91d1416d;
+	Thu, 22 Sep 2022 09:38:25 +0000 (UTC)
+Received: from ams.source.kernel.org (ams.source.kernel.org
+ [2604:1380:4601:e00::1])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 69ab9129
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 22 Sep 2022 08:56:54 +0000 (UTC)
-Received: by mail-oa1-x2d.google.com with SMTP id
- 586e51a60fabf-1278624b7c4so12892412fac.5
- for <wireguard@lists.zx2c4.com>; Thu, 22 Sep 2022 01:56:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date;
- bh=tQdzlSDOAs34bUbDmbCyFcrRPsBn/fL1scmgIhrTxl4=;
- b=JBDMnOr2eCPO5YWMWqsjbm+/+mCdqe/LteH88jV5ZiWgbVpeXWHnUyax1jwJjJUcNL
- njKBkXOo/zOaV4+n/KlgBccklPMepV65MAaCWrY1T7avl9+bJVn0wvQbmdeVycKWpK7s
- oJ48ZIhtAoEEmJSqokVlqp/Jh41grMQ7NSymDhsYcGi8ItfC2er0jqN0jGVOEGtm6Cp4
- ugK6TdjM2780geut0qkiwJ5iNEe29g4WFoFrcAc4iM+aaPUkH+8YyTmrK/VOWDxc5rR5
- /WMmvi5c9lrFPZtXJHB58jJcRzHvv9p0SAxOy5ftJA8KQYv0GXkEWTIc/xtPZRbg+oiH
- FtjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date;
- bh=tQdzlSDOAs34bUbDmbCyFcrRPsBn/fL1scmgIhrTxl4=;
- b=yp7g//s+PXiRQylcykUtMJvTCOWOyrn6eg9uNEvEfCMHIAc0iuI+4DVCq6C7yzDvKR
- mji+gfDc+tNpQsRfTNZHnD9A7vZMTsue1W8fpY3bAxN7ApXg2sl26vJGewjuhPA0yi4N
- tFqX6c8dREfJW+jQFbIj4IC/Qf15rQSULM1IAeUtCtYeZ2qcq53lnwOUV7FslIJ/hDnI
- CX6cNsRl0ZzkE94dfBEyM2sVInZ+hB0V57uuiMJ32c7eLws15ZOD4YgfFqMiXlOb01Uh
- 24CgoPsAvSM5oy4cu1ZxWp9lYV9BdBW4Vomz14j8uWsjmr5/Z7l39YbwJrMhzuq0AzD5
- nKKQ==
-X-Gm-Message-State: ACrzQf0NwEF1rG5DX3GWAFxi36bt7eJk1tRbeCaADBt0LhEInHl6SGpV
- noXnWIeMUR/vMQsn+IkjyffGHM8mbIykACNS4y55S1RwKuUYvw==
-X-Google-Smtp-Source: AMsMyM72D1dVjbN/5MBLgSSVwxArvRgaakiRauPYvQAJD9Idi9kzpTeApwFxiQi/nBxllYau8X3J8ZrkPJwBlpTggwk=
-X-Received: by 2002:a05:6870:7390:b0:12b:e164:1249 with SMTP id
- z16-20020a056870739000b0012be1641249mr1348126oam.179.1663837013271; Thu, 22
- Sep 2022 01:56:53 -0700 (PDT)
+ Thu, 22 Sep 2022 09:38:22 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by ams.source.kernel.org (Postfix) with ESMTPS id 390AEB83576
+ for <wireguard@lists.zx2c4.com>; Thu, 22 Sep 2022 09:38:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 201CBC4314C
+ for <wireguard@lists.zx2c4.com>; Thu, 22 Sep 2022 09:38:20 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="Su+2/hZy"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1663839498;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=p8LgkG6y5S4fj+XbZj/IRVv1q3mONh8yo9atQ2MYjNs=;
+ b=Su+2/hZyFnEvM8ZDXKiL03qavjH6LfVvChosBpqFa74xeKzpAA4yXyWOjVL+XBEddxIh9q
+ uq3WwlfVrlGlB9zvaeRmfztunZFoZesqsbBpfyIQSUBetLtZUHwxev8C0AkW6AymSCUaf/
+ HZIojSHkukw9sgeRWCLGAHMo6Txcvlw=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 88ff2f34
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 22 Sep 2022 09:38:18 +0000 (UTC)
+Received: by mail-ua1-f43.google.com with SMTP id i17so3423836uaq.9
+ for <wireguard@lists.zx2c4.com>; Thu, 22 Sep 2022 02:38:18 -0700 (PDT)
+X-Gm-Message-State: ACrzQf0AJlagpxmSf4rWXm/LjRCgIHQHmTnbBkWyfiFR6SNXZuSoJ/ls
+ 2/pGTrs73RD/ko32oAYAxnr8Y7308QZPzzQ5svM=
+X-Google-Smtp-Source: AMsMyM6N6dBi5BJpmlodv4jSq5sKKIc9zeOXR8EMNehpM+sfOVPyeQFwl46OFBEfUVOVKIaydurtm6R9ycKQRoWv65Y=
+X-Received: by 2002:ab0:2b0d:0:b0:390:ed8c:c78d with SMTP id
+ e13-20020ab02b0d000000b00390ed8cc78dmr824035uar.49.1663839497444; Thu, 22 Sep
+ 2022 02:38:17 -0700 (PDT)
 MIME-Version: 1.0
+Received: by 2002:ab0:2ea6:0:b0:3ae:9878:9be with HTTP; Thu, 22 Sep 2022
+ 02:38:16 -0700 (PDT)
+In-Reply-To: <CABBZOs=9VVSDEGPw1eQWmusJotA5toLCn1-uNQeZ+moPthAOxg@mail.gmail.com>
 References: <CABBZOsks3ZnpcURYHSQcaWCe8ETY21zitPY5TvtTaAm38DT5EA@mail.gmail.com>
  <834CB179-958C-4C0E-8B17-9918C8A992FB@mullvad.net>
-In-Reply-To: <834CB179-958C-4C0E-8B17-9918C8A992FB@mullvad.net>
-From: Houman <houmie@gmail.com>
-Date: Thu, 22 Sep 2022 09:56:17 +0100
-Message-ID: <CABBZOs=9VVSDEGPw1eQWmusJotA5toLCn1-uNQeZ+moPthAOxg@mail.gmail.com>
+ <CABBZOs=9VVSDEGPw1eQWmusJotA5toLCn1-uNQeZ+moPthAOxg@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 22 Sep 2022 11:38:16 +0200
+X-Gmail-Original-Message-ID: <CAHmME9pZy+EYQbmrBi_5Ei191zJ_X3imSuZ_U766HhXp39MHbA@mail.gmail.com>
+Message-ID: <CAHmME9pZy+EYQbmrBi_5Ei191zJ_X3imSuZ_U766HhXp39MHbA@mail.gmail.com>
 Subject: Re: Wireguard iOS crashes after upgrading to XCode 14
-To: Andrej Mihajlov <and@mullvad.net>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+To: Houman <houmie@gmail.com>
+Cc: Andrej Mihajlov <and@mullvad.net>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -70,66 +76,22 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Andrej,
+On 9/22/22, Houman <houmie@gmail.com> wrote:
+> Hi Andrej,
+>
+> It works, well done!
+>
+> A strange thing though, before your patch I was still able to connect
+> to the VPN server, if I changed the schema to Release instead of
+> Debug.  Now with your patch it also works under Debug schema, which is
+> fantastic.
+> What could be the technical reason that it still worked under Release?
+>
+> And what will happen now, are you able to actually get this patch
+> released on the official repo? The repo hasn't been updated for a
+> year.  :-)
+>
 
-It works, well done!
+Yeah, I'll circle back Apple development at some point. No worries.
 
-A strange thing though, before your patch I was still able to connect
-to the VPN server, if I changed the schema to Release instead of
-Debug.  Now with your patch it also works under Debug schema, which is
-fantastic.
-What could be the technical reason that it still worked under Release?
-
-And what will happen now, are you able to actually get this patch
-released on the official repo? The repo hasn't been updated for a
-year.  :-)
-
-Thanks,
-Houman
-
-
-On Thu, 22 Sept 2022 at 09:31, Andrej Mihajlov <and@mullvad.net> wrote:
->
-> Hi,
->
-> I think we have a bug. If I am right, basically in both IPv4 and IPv6 extensions, withMemoryRebound takes capacity which is actually a number of instances of a given type (sockaddr_ variant) and not the byte size of a struct.
->
-> Could you please patch your WireGuardKit with the following commit and see if it helps?
->
-> https://git.zx2c4.com/wireguard-apple/commit/?h=am/fix-addrinfo-crash
->
-> Best regards,
-> Andrey Mikhaylov
->
-> > On 13 Sep 2022, at 14:41, Houman <houmie@gmail.com> wrote:
-> >
-> > My existing Wireguard iOS implementation stopped working after
-> > upgrading to Xcode 14 today.
-> > When trying to connect to servers that support only IPv4, then it's
-> > fine. But if the server supports both IPv6 and IPv4 then the tunnel
-> > crashes:
-> >
-> > This IPv6 extension in
-> > wireguard-apple/Sources/WireGuardKit/IPAddress+AddrInfo.swift crashes
-> > with a Fatal Error at addrInfo.ai_addr.withMemoryRebound()
-> >
-> > The whole extension below:
-> >
-> > extension IPv6Address {
-> >    init?(addrInfo: addrinfo) {
-> >        guard addrInfo.ai_family == AF_INET6 else { return nil }
-> >
-> >        let addressData = addrInfo.ai_addr.withMemoryRebound(to:
-> > sockaddr_in6.self, capacity: MemoryLayout<sockaddr_in6>.size) { ptr ->
-> > Data in
-> >            return Data(bytes: &ptr.pointee.sin6_addr, count:
-> > MemoryLayout<in6_addr>.size)
-> >        }
-> >        self.init(addressData)
-> >    }
-> > }
-> >
-> > Has anyone else experienced this problem?
-> >
-> > Thanks,
->
+Jason
