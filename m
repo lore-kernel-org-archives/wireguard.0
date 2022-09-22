@@ -4,39 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0113C32771
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 Sep 2022 08:56:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FE07C6FA8B
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 22 Sep 2022 08:32:00 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 86293963;
-	Wed, 21 Sep 2022 08:56:25 +0000 (UTC)
-Received: from iedub0.y7.hu (iedub0.y7.hu [2a05:d018:563:7900::25])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id f20f46f2
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 9b7f733d;
+	Thu, 22 Sep 2022 08:31:58 +0000 (UTC)
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com
+ [2a00:1450:4864:20::12a])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 27982570
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 21 Sep 2022 08:56:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=wg-ml-rkaofgr.redir.email; s=may2017; h=Message-ID:Content-Type:
- MIME-Version:Subject:To:From:Date:List-Unsubscribe;
- bh=ELFSAYq9tTZz4VQYsdUTkX3WMYs1JG39REolmI+wr78=; b=SzOfycZaJm1BYYKUOrCKjmolQw
- 5OXOSIU7dsCd6d80o6wa2V90YHTm53ZiNtOQU8WYAVbhU25thxmo7hGC/MlBa2RCIo2eumTxbIH3U
- VSGuBECiPGPy/20m5wgmFdS2nY8Ewaz7eiBDOjz2LZy9hYGrigqOSp0KTze5LJLLs0/ByBC2KYWjR
- 0VlCPsTp/yoSvSA7IQOHmkAqppx1ki0r7K4yfek/LFMOwkHzkkyTv6dQiDuGrWnpk02iKDtyQc8io
- 2390q0H4Bi4vIDXu0N10A/U1hlO+1ez5REQtvA6uCi4J6TWcj5+XcCA2EXZZyq6l28MTj9V9dH/Ni
- JbLzt8/w==;
-Received: from localhost ([::1]) helo=localhost by iedub0.y7.hu with ESMTPSA 
- id c0b24e8e56a672859849ebdd1563ba38 for wireguard@lists.zx2c4.com;
- Wed, 21 Sep 2022 08:56:22 +0000
-Date: Wed, 21 Sep 2022 08:56:21 +0000
-From: Endre Szabo <endre.szabo@wg-ml-rkaofgr.redir.email>
-To: wireguard@lists.zx2c4.com
-Subject: Re: WireGuard App on Android allows only one connection simultaneously
-References: <62cc526e-7b02-3529-d575-87434af15bd3@chil.at>
- <30014af580cd42edba0121c0d6b99add@rozman.si>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <30014af580cd42edba0121c0d6b99add@rozman.si>
-Message-ID: <393311a3ac9b1ed9cb909ba6eb1b364b@wg-ml-rkaofgr.redir.email>
+ Thu, 22 Sep 2022 08:31:56 +0000 (UTC)
+Received: by mail-lf1-x12a.google.com with SMTP id a8so13380152lff.13
+ for <wireguard@lists.zx2c4.com>; Thu, 22 Sep 2022 01:31:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mullvad.net; s=july2021;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date;
+ bh=NHzfNwj6PkZ8nrm/8L/3xkRKWIsLnpe+O4LdD+H9Iuc=;
+ b=B0pcW2xhZrKAF9Xqz2zHhQqTcqNKpNbKvkL1qdfXxRNhVpGH5C5x9962x4fqqPKNfI
+ vyTwVzqAIwDzQlE0lgL8ihAjhiYKYoPn9079/IF+WvlgCllcdRGdUJiM7ViIpByCQ5Xy
+ NgfkxnDKejCQFCUFAAX46n/2wb3tUvUfjCTL8oRBYqBnGc7PUzkfDF4aTJXFzjoKpJ3j
+ yhZFThjGqvFDN5WxDkMEiXCSN0ShKPeC9+9Cl9dqTIcYm1Zf9CWSdcmARcOfugllLvuK
+ ZQZYYs4vAvVmk4p0qbopB7SyfUCXjkqZq5ZMj0KFWU1IqbT50NfNPfzqNQjXjARkBe0h
+ Bv0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+ :subject:date;
+ bh=NHzfNwj6PkZ8nrm/8L/3xkRKWIsLnpe+O4LdD+H9Iuc=;
+ b=s4CYmgUrFelgks/W53MOe4U9CLqAD/xcvfBS0jA6aCn+Kz/XDt62bQC4bXbfNI5nEs
+ Sh5dpSeyd6k9z0ELLs3vjQSjQf2scuKcQHQJ8IxpHHVrOGi2gg0A4lbiqONCsdmQmHbN
+ xUEtqUgQ11IDVo8fQfmbVODN7RXk+gi7R9+ixxZBiLyKxKp3VmvTWqQlRNYRruWuNqt+
+ ePiNQa0SI3vNKU7q4HR21tcjABt1ZYW6+H4nan6yhiBdUFVVKDwehf9/wyCq+JWeZLr1
+ BlT/gRThIQUV2WAI74eyLIrx0YlwKcGDXjAc6v9YpHQVCqDDgXefhxuk0zk+aNfEMGd/
+ 1glw==
+X-Gm-Message-State: ACrzQf2OTtXMGsPsyxs76RM/fJsOkMzWpu2xmQ54+CwG1cK9JcHZoKDT
+ Tly9Zz54rYmkWD969m0Sx7wlhXVY2dmYSw==
+X-Google-Smtp-Source: AMsMyM6v1FFpecqz2pbfpBcCsEGEDyIXYUnrg/4bZwC2bvn9BgvEXc4Y3DlYNjQnI0vfxyHdozcpZQ==
+X-Received: by 2002:a05:6512:1047:b0:49f:5309:3a0c with SMTP id
+ c7-20020a056512104700b0049f53093a0cmr746705lfb.683.1663835515971; 
+ Thu, 22 Sep 2022 01:31:55 -0700 (PDT)
+Received: from smtpclient.apple (78-153-51-85.dynamic.telemach.net.
+ [78.153.51.85]) by smtp.gmail.com with ESMTPSA id
+ o9-20020a05651205c900b004979ec19387sm813834lfo.305.2022.09.22.01.31.54
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 22 Sep 2022 01:31:55 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.1\))
+Subject: Re: Wireguard iOS crashes after upgrading to XCode 14
+From: Andrej Mihajlov <and@mullvad.net>
+In-Reply-To: <CABBZOsks3ZnpcURYHSQcaWCe8ETY21zitPY5TvtTaAm38DT5EA@mail.gmail.com>
+Date: Thu, 22 Sep 2022 10:31:52 +0200
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <834CB179-958C-4C0E-8B17-9918C8A992FB@mullvad.net>
+References: <CABBZOsks3ZnpcURYHSQcaWCe8ETY21zitPY5TvtTaAm38DT5EA@mail.gmail.com>
+To: Houman <houmie@gmail.com>
+X-Mailer: Apple Mail (2.3696.120.41.1.1)
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -53,17 +80,48 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 Hi,
 
-On Wed, Sep 21, 2022 at 08:29:17+0000, Simon Rozman wrote:
-> Unfortunately, this is a limitation of Android OS supporting only 1 (one) VPN connection at a time.
-Just a theoretical thought experiment (I don't know Android arch well, I might be wrong at any of these points):
- 
-- AFAIK, having a VPN (VPN app) on an Android involves creating a tun device for that app
-- kernel RPDB mumbo-jumbo (Android has set that up) will route (all or app-specific (based on processid?) selected) traffic to that VPN app
-- the VPN app will be left with 'the default routing table' free to establish unlimited outbound unencrypted connections
-- WG on android is implemented in userspace, in the WG app (using go implementation?)
-- Since this app has unlimited/untunneled access via 'the default routing table' it is free to establish more than 1 WG sessions (of course, in-app cryptokey routing and all the usual limitations still apply)
-- Current WG app (and especially its widget) will not allow only one VPN session at a time.
- 
-Would it be possible to lift this limitation? Or is this limitation of another nature?
+I think we have a bug. If I am right, basically in both IPv4 and IPv6 =
+extensions, withMemoryRebound takes capacity which is actually a number =
+of instances of a given type (sockaddr_ variant) and not the byte size =
+of a struct.=20
 
---Endre
+Could you please patch your WireGuardKit with the following commit and =
+see if it helps?=20
+
+https://git.zx2c4.com/wireguard-apple/commit/?h=3Dam/fix-addrinfo-crash
+
+Best regards,
+Andrey Mikhaylov
+
+> On 13 Sep 2022, at 14:41, Houman <houmie@gmail.com> wrote:
+>=20
+> My existing Wireguard iOS implementation stopped working after
+> upgrading to Xcode 14 today.
+> When trying to connect to servers that support only IPv4, then it's
+> fine. But if the server supports both IPv6 and IPv4 then the tunnel
+> crashes:
+>=20
+> This IPv6 extension in
+> wireguard-apple/Sources/WireGuardKit/IPAddress+AddrInfo.swift crashes
+> with a Fatal Error at addrInfo.ai_addr.withMemoryRebound()
+>=20
+> The whole extension below:
+>=20
+> extension IPv6Address {
+>    init?(addrInfo: addrinfo) {
+>        guard addrInfo.ai_family =3D=3D AF_INET6 else { return nil }
+>=20
+>        let addressData =3D addrInfo.ai_addr.withMemoryRebound(to:
+> sockaddr_in6.self, capacity: MemoryLayout<sockaddr_in6>.size) { ptr ->
+> Data in
+>            return Data(bytes: &ptr.pointee.sin6_addr, count:
+> MemoryLayout<in6_addr>.size)
+>        }
+>        self.init(addressData)
+>    }
+> }
+>=20
+> Has anyone else experienced this problem?
+>=20
+> Thanks,
+
