@@ -4,55 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C57BC04A95
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 28 Sep 2022 17:26:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E4EAC32771
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 28 Sep 2022 18:21:03 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id f21f2e33;
-	Wed, 28 Sep 2022 17:23:36 +0000 (UTC)
-Received: from krn.amebis.si (krn.amebis.si [93.103.235.207])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id a0ec2956
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 093fe5ce;
+	Wed, 28 Sep 2022 18:17:45 +0000 (UTC)
+Received: from tempforever.com (tempforever.com [185.144.158.117])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTP id dd563818
  for <wireguard@lists.zx2c4.com>;
- Wed, 28 Sep 2022 17:23:35 +0000 (UTC)
-Received: by krn.amebis.si (Postfix, from userid 982)
- id A5B0918E8782; Wed, 28 Sep 2022 19:23:34 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rozman.si;
- s=default; t=1664385814;
- bh=uxEDlaZ2nkLKNHqFQLHZkBYVfxEVa1JA3LqV25BtRNE=;
- h=From:To:Subject:Date:References:In-Reply-To:From;
- b=kut0YiIwecMnF5iFpq1jR6FWQRrvbnf2m8UZtb4QOkNsFRuyzE0zm84BLW6lrNeCu
- oB/f0RH7l6/RerusDHhuBvuXOe1BhIIddelZ9ceuzbhRu2zwV9+D0TMH77tmcJxiPl
- j68W6TaUJW5Oj6yLZjgP1DpOc4pbeQ/CiCdansmE=
-Received: from Konj.amebis.doma (konj.amebis.doma [IPv6:2a01:260:4101:1464::4])
- by krn.amebis.si (Postfix) with ESMTPS id CAF2418E8780;
- Wed, 28 Sep 2022 19:23:32 +0200 (CEST)
-Received: from Konj.amebis.doma (2a01:260:4101:1464::4) by Konj.amebis.doma
- (2a01:260:4101:1464::4) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.12; Wed, 28 Sep
- 2022 19:23:32 +0200
-Received: from Konj.amebis.doma ([fe80::545:cd17:7444:be04]) by
- Konj.amebis.doma ([fe80::545:cd17:7444:be04%9]) with mapi id 15.02.1118.012;
- Wed, 28 Sep 2022 19:23:32 +0200
-From: Simon Rozman <simon@rozman.si>
-To: Jan Petrischkeit <jan.petrischkeit@hochschule-stralsund.de>,
- "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-Subject: RE: wireguard-windows: Wireguard does not start a previously
- activated tunnel from time to time
-Thread-Topic: wireguard-windows: Wireguard does not start a previously
- activated tunnel from time to time
-Thread-Index: AQHY0yZ6MD7GeT8XIEyWnRHRjrlx8q31FJ8Q
-Date: Wed, 28 Sep 2022 17:23:32 +0000
-Message-ID: <03b8866a0f8249c8883d9a0244ddea1b@rozman.si>
-References: <4e093a02-723d-22ff-fd33-f220ac24e19e@hochschule-stralsund.de>
-In-Reply-To: <4e093a02-723d-22ff-fd33-f220ac24e19e@hochschule-stralsund.de>
-Accept-Language: en-SI, en-GB, sl-SI, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [2a01:260:4101:140a::f]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ Wed, 28 Sep 2022 16:34:50 +0000 (UTC)
+Received: from [192.168.2.10] (unknown [192.168.2.10])
+ by tempforever.com (Postfix) with ESMTPSA id 9DB796004D
+ for <wireguard@lists.zx2c4.com>; Wed, 28 Sep 2022 12:34:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tempforever.com;
+ s=domkey; t=1664382889;
+ bh=FjTtkWObsxq0V2tQnOUcr34Oxfw9tijfvUR687GuxTw=;
+ h=Subject:To:References:From:Date:In-Reply-To:From;
+ b=A07F10ZKVdRccfUlr+XNNL9NSI88dnSeEX2SyU8QgiCMXtBM0I9tk1SnW2FK/WN6e
+ STH3spnrSbSMc4IXvDcqZ+FbIBpLI4Eipcck6UPMrrtmbjgq6Ylsk/lKH4KjYgRipq
+ CfWH1rf5kthCEYYMc/82juwT6W/3Gg7QeHtDPrAw=
+Subject: Re: APK outside of Play Store?
+To: wireguard@lists.zx2c4.com
+References: <517b5e80-d3ac-4829-9096-1415ecad5aa4@www.fastmail.com>
+From: tempforever <dev1@tempforever.com>
+Message-ID: <286505c7-67b8-29dd-3cff-570851c3169c@tempforever.com>
+Date: Wed, 28 Sep 2022 12:34:49 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Firefox/68.0 SeaMonkey/2.53.11.1
 MIME-Version: 1.0
+In-Reply-To: <517b5e80-d3ac-4829-9096-1415ecad5aa4@www.fastmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Mailman-Approved-At: Wed, 28 Sep 2022 18:17:44 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -67,19 +50,11 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-SGksDQoNCj4gRXZlbnQgNzAyMywgU2VydmljZUNvbnRyb2xNYW5hZ2VyOiBUaGUgc2VydmljZSAi
-V2lyZUd1YXJkVHVubmVsJEhPU1QtDQo+IFdHMiIgd2FzIHRlcm1pbmF0ZWQgd2l0aCB0aGUgZm9s
-bG93aW5nIGVycm9yOiBUaGUgcmVxdWVzdGVkIG5hbWUgaXMgdmFsaWQsDQo+IGJ1dCBubyBkYXRh
-IG9mIHRoZSByZXF1ZXN0ZWQgdHlwZSB3YXMgZm91bmQuDQoNClRoZSBlcnJvciBtZXNzYWdlIHlv
-dSBhcmUgbWVudGlvbmluZyBpcyBXU0FOT19EQVRBIDExMDA0IHdoaWNoIGlzIHJlbGF0ZWQgdG8g
-RE5TIHJlc29sdXRpb24gcHJvYmxlbXMuIFdoaWNoIGlzIGtpbmQgb2YgZXhwZWN0ZWQgZWFybHkg
-aW4gdGhlIGJvb3QgcHJvY2VzcyB3aGVuIHRoZSBEbnNjYWNoZSBzZXJ2aWNlIGlzIHN0YXJ0aW5n
-IGFuZC9vciBEaGNwIHNlcnZpY2UgbWlnaHQgbm90IHlldCBjb25maWd1cmVkIHRoZSBETlMuDQoN
-CkkgcHJlc3VtZSBjaGFuZ2luZyB0aGUgRW5kcG9pbnQ9IGxpbmVzIG9mIHBlZXJzIHRvIGNvbnRh
-aW4gSVBzIHJhdGhlciB0aGFuIGhvc3RuYW1lcyBjb3VsZCBzb2x2ZSB5b3VyIHByb2JsZW0uDQoN
-ClNlZSBpZiBpdCBoZWxwcy4NCg0KSWYgeW91IGNhbiBjb25maXJtIGl0LCBtYXliZSB3ZSBjYW4g
-YWRkIHNvbWUgcmV0cnkgb24gV1NBTk9fREFUQSBpbiB0aGUgd2lyZWd1YXJkLXdpbmRvd3MuIChQ
-ZXJzb25hbGx5LCBJIHdvdWxkIGF2b2lkIGFkZGluZyBoYXJkIGRlcGVuZGVuY3kgb24gRG5zY2Fj
-aGUgYW5kIERoY3Agc2VydmljZXMuIEFzIHRoZXJlIGFyZSBzaXR1YXRpb25zIHdoZXJlIHRoZXkg
-Y2FuIGJlIGRpc2FibGVkLCBwcmV2ZW50aW5nIHRoZSBXaXJlR3VhcmQgdHVubmVsIHNlcnZpY2Ug
-c3RhcnR1cCB0aGVuLikgDQoNClJlZ2FyZHMsDQpTaW1vbg0K
+wireguard@bulletin.elitemail.org wrote:
+> For users who prefer to avoid Play Store as a delivery channel, is there an official pre-built APK available? Such users are typically steered towards APKPure/APKMirror/F-Droid with questionabl authenticity and (in the case of F-Droid) the prospect of old build dependencies built on an EOL OS (Strech). Aurora is an option, though a dev provided build (with accompanying checksum/signing cert fingerprint) would be preferable. 
+>
+It's on the wireguard installation/download page
+https://www.wireguard.com/install/#android-play-store-f-droid
+
+The f-droid link is https://f-droid.org/en/packages/com.wireguard.android/
+
