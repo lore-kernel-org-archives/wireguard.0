@@ -4,81 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2BEFFA3741
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 29 Oct 2022 01:45:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78A3CC38A02
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 29 Oct 2022 01:56:48 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id b501dcae;
-	Sat, 29 Oct 2022 01:45:27 +0000 (UTC)
-Received: from mx2.freebsd.org (mx2.freebsd.org [96.47.72.81])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id b0582840
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 6e1ce26b;
+	Sat, 29 Oct 2022 01:52:45 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 96c764c3
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 29 Oct 2022 01:45:25 +0000 (UTC)
-Received: from mx1.freebsd.org (mx1.freebsd.org [96.47.72.80])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits)
- client-signature RSA-PSS (4096 bits))
- (Client CN "mx1.freebsd.org", Issuer "R3" (verified OK))
- by mx2.freebsd.org (Postfix) with ESMTPS id 4Mzj0g6wCcz3cst;
- Sat, 29 Oct 2022 01:45:23 +0000 (UTC)
- (envelope-from kevans@FreeBSD.org)
-Received: from smtp.freebsd.org (smtp.freebsd.org
- [IPv6:2610:1c1:1:606c::24b:4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
- client-signature RSA-PSS (4096 bits) client-digest SHA256)
- (Client CN "smtp.freebsd.org", Issuer "R3" (verified OK))
- by mx1.freebsd.org (Postfix) with ESMTPS id 4Mzj0g5x96z3fpN;
- Sat, 29 Oct 2022 01:45:23 +0000 (UTC)
- (envelope-from kevans@FreeBSD.org)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=freebsd.org; s=dkim;
- t=1667007923;
+ Sat, 29 Oct 2022 01:52:43 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id C617862B45
+ for <wireguard@lists.zx2c4.com>; Sat, 29 Oct 2022 01:52:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B77C433C1
+ for <wireguard@lists.zx2c4.com>; Sat, 29 Oct 2022 01:52:40 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="N6ZUtLMp"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1667008358;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=LFgsZTpMK4sBGQ6CpQUHXeOxaRHG3XNKdL0yCBHM/9g=;
- b=EUECgnDrVGnk6kMKFE+IK3iMVnsJZVsu28nG/VfRFS67/8ISwB02E1qFoAhrPCuc2Uhusc
- xeekKM+1JaesF3Luyh57vz395xygD1EmTyTmCiHiVZuJ0EDD5nEycf6C5eSFsS5M1OYBlf
- +O2v0PI58DduCEM0ntqPPLfTzlAY6PlxTuo3ZCWunqVaFnJPAdGeZ/i+WPO373bIAL1Zuf
- iWPhtJo5rDLw/QAY2+kQAz9DdMZWueAELBpMp4Coyv2KXdoRccp9DIuV0O1K8jC171GJGj
- 5UETdhgTFfQMpZUVO9pcsAFztC5tBOAXtqAGqfd6Nnv+RoV1RZKQ4FQ39sI/Wg==
-Received: from localhost.localdomain (nat-216-240-30-23.netapp.com
- [216.240.30.23])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate) (Authenticated sender: kevans)
- by smtp.freebsd.org (Postfix) with ESMTPSA id 4Mzj0g3LHRz1SSv;
- Sat, 29 Oct 2022 01:45:23 +0000 (UTC)
- (envelope-from kevans@FreeBSD.org)
-From: kevans@FreeBSD.org
-To: wireguard@lists.zx2c4.com
-Cc: Kyle Evans <kevans@FreeBSD.org>
-Subject: [PATCH] wg: freebsd: move if_wg path to reflect new in-tree location
-Date: Fri, 28 Oct 2022 20:45:05 -0500
-Message-Id: <20221029014505.2679-1-kevans@FreeBSD.org>
-X-Mailer: git-send-email 2.36.1
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=WU+J+UXTFpLG11siToNSUwJ8DNfezAQk2RcPmcREPG4=;
+ b=N6ZUtLMpdxUZoIkX25CiY7nW3I6ms9K7VoVsv5Os/Mr9byojliFQW0rO7EBOCHc2R27hBb
+ DYQwH7LHjaIe0KVFnPDx1ZNcU63rTYvA3HW+URibNF+ytMl8yRZfcCwv5ojR+3nhjCJqZ7
+ bz9ROUJad+OG/bPJEKFbaGymReDf3IE=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e22c1a14
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 29 Oct 2022 01:52:38 +0000 (UTC)
+Received: by mail-vs1-f45.google.com with SMTP id z189so6078058vsb.4
+ for <wireguard@lists.zx2c4.com>; Fri, 28 Oct 2022 18:52:38 -0700 (PDT)
+X-Gm-Message-State: ACrzQf2FkWQaAUdyiv3VGtRE5yOCnZAvVe8eKfsx5U19zkp364JwGlUV
+ 8FmHNcnlJJ7oBXKhQieDHsx8Gn8gl0KDBbMBcns=
+X-Google-Smtp-Source: AMsMyM78whTb22llkW8V9xrwPNnxpaJpon2LNncqLjr9+HdKCo3IXbXxOleZYeO6DbkyARXA4du+puVWsj9pJGwZLQ8=
+X-Received: by 2002:a67:c297:0:b0:3aa:3cac:97b6 with SMTP id
+ k23-20020a67c297000000b003aa3cac97b6mr921187vsj.76.1667008357461; Fri, 28 Oct
+ 2022 18:52:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=freebsd.org;
- s=dkim; t=1667007923;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=LFgsZTpMK4sBGQ6CpQUHXeOxaRHG3XNKdL0yCBHM/9g=;
- b=I7poN063UxHm8hv7hdKhvMi0rKfp3lpC4OQ/hp+7sTecbqmQ3qdzFr7E7w7A+P/6h/foO5
- 927Kyd/lMeX/u+Y6h5bJTolybfDsAV/NBtrxjKy04wcqNQyIHiHsjqwuI4y3DJtJd0ENvj
- nRlQSiOJsNMJjWH304bKU/285fJZ5pny/hMNxBJUngtvhi9nad4uqcEYlEwySqlQLWGgeO
- lBvDUFHsXNuSSomxHxaj7/t8MVPxuGUPFN3OJFSge3uANPJwD9xIP9oTWTtnuQmE+9sTT+
- 3a+ZB9r1xymxJFS1n0M8yKSgbFzGC/zIjWqf4B1h69ujJWFOVIio1nt51E6//w==
-ARC-Seal: i=1; s=dkim; d=freebsd.org; t=1667007923; a=rsa-sha256; cv=none;
- b=gqq9GLyMCHwZDoXJSN5KYBV/WCnRQq6ZpbXZGFrn5rUuqG6QWAiMsnppPPMOTj4kdHzJud
- /fG2CmgC9f3CBZxM5sWfBWZ5uu/LKHcrbUAvxFCM5fcLCBH1kHo9d5JBYBA22x6Njtk8Fi
- 4ruJYMx+BnGEn7ToCa13lTzDWghJI5oaPVBLmsDrOLKbSh98wgrvOl0Dt/spE/OsbTxm7I
- apTym+8zJeQXDS9FleNQCW1MkKQerlDA2wIcDmmFKenzOBP7LJBAc3hTpy995LgRouEVUP
- EZACaAAuDfbQwUOi0+PXtuJh2Iy2P+5UZ7ti8SlAsCCSsLdnL6AQPfjRz2EG6A==
-ARC-Authentication-Results: i=1;
-	mx1.freebsd.org;
-	none
+References: <20221029014505.2679-1-kevans@FreeBSD.org>
+In-Reply-To: <20221029014505.2679-1-kevans@FreeBSD.org>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sat, 29 Oct 2022 03:52:26 +0200
+X-Gmail-Original-Message-ID: <CAHmME9ohp+_kFsPrP2hJBFY32yK65Sv-Q9Jo_P99sy0-Do2W8g@mail.gmail.com>
+Message-ID: <CAHmME9ohp+_kFsPrP2hJBFY32yK65Sv-Q9Jo_P99sy0-Do2W8g@mail.gmail.com>
+Subject: Re: [PATCH] wg: freebsd: move if_wg path to reflect new in-tree
+ location
+To: kevans@freebsd.org
+Cc: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -93,38 +71,10 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-From: Kyle Evans <kevans@FreeBSD.org>
+https://git.zx2c4.com/wireguard-tools/commit/?id=7b2ae7aa2f52fbac65874a641cbfbb0182d0ba46
 
-When we re-added if_wg to the tree, we changed directories in dev to
-strip the if_ (we don't use this prefix for other interfaces'
-directories). Adjust it here as a convenience, so that when we import
-wireguard-tools to FreeBSD the path will just work as-is with our usual
-build.
+Applied, thanks!
 
-Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
----
- src/ipc-freebsd.h                          | 2 +-
- src/uapi/freebsd/dev/{if_wg => wg}/if_wg.h | 0
- 2 files changed, 1 insertion(+), 1 deletion(-)
- rename src/uapi/freebsd/dev/{if_wg => wg}/if_wg.h (100%)
+(Very excited about all this...)
 
-diff --git a/src/ipc-freebsd.h b/src/ipc-freebsd.h
-index 2c10c10..b5be15b 100644
---- a/src/ipc-freebsd.h
-+++ b/src/ipc-freebsd.h
-@@ -6,7 +6,7 @@
- 
- #include <sys/nv.h>
- #include <sys/sockio.h>
--#include <dev/if_wg/if_wg.h>
-+#include <dev/wg/if_wg.h>
- 
- #define IPC_SUPPORTS_KERNEL_INTERFACE
- 
-diff --git a/src/uapi/freebsd/dev/if_wg/if_wg.h b/src/uapi/freebsd/dev/wg/if_wg.h
-similarity index 100%
-rename from src/uapi/freebsd/dev/if_wg/if_wg.h
-rename to src/uapi/freebsd/dev/wg/if_wg.h
--- 
-2.36.1
-
+Jason
