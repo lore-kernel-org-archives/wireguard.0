@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B88EFA3742
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 31 Oct 2022 13:08:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21E23ECAAA1
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 31 Oct 2022 13:08:03 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 0ed4fcb9;
-	Mon, 31 Oct 2022 13:07:58 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id bab9d289
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id fc415132;
+	Mon, 31 Oct 2022 13:08:03 +0000 (UTC)
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com
+ [2a00:1450:4864:20::131])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id a3d88140
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 31 Oct 2022 13:07:56 +0000 (UTC)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 97EB661209;
- Mon, 31 Oct 2022 13:07:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F22ADC433C1;
- Mon, 31 Oct 2022 13:07:52 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="MmQJALq7"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1667221670;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=066nlii8sLRwns6G0fh9UJOIf7iqKUOWghwvkHsSMpc=;
- b=MmQJALq7M1//KnUb45FCh0Id62AEeZiaG4Dqtw3GetKb1Umvaf36tdyVSbuXTR91Ixco+C
- wtxRZpYn9Z5n+Fs/EfBzLhHRol8bKWTLWzg83/D2sY+Zt97Raob6jjdPR3R7ITlPUaTfGu
- hrKEEJnCZ0TZ8d4o4FFZeCp3Vxmgn+A=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 62f39b6c
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Mon, 31 Oct 2022 13:07:49 +0000 (UTC)
-Date: Mon, 31 Oct 2022 14:07:45 +0100
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
-Cc: linux-kernel@vger.kernel.org, Martin Liska <mliska@suse.cz>,
- "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org
-Subject: Re: [PATCH] wireguard (gcc13): cast enum limits members to int in
- prints
-Message-ID: <Y1/IoR44xGaVTRUf@zx2c4.com>
-References: <20221031114424.10438-1-jirislaby@kernel.org>
+ Mon, 31 Oct 2022 03:27:09 +0000 (UTC)
+Received: by mail-lf1-x131.google.com with SMTP id bp15so17303631lfb.13
+ for <wireguard@lists.zx2c4.com>; Sun, 30 Oct 2022 20:27:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=NZ95nWAy3OKMkzvpp16ZfFh0FCfnaqYgy/5vWc7AvAQ=;
+ b=FK+sNAsmaRBi6psG56Q/OmNDsYHeSkPSBIW2eMKrZOa6PjoWku1iwl3QoI10Ti/xwS
+ t+3pNiksPBf6uBkfQodvMAOg8UZfs8CaSmVS3zJh3ePORBjtA3XL/1tCPuVrgrxcZoIE
+ crWU6nLWN4E4i/Hhv/fCJJoVRmL/QvjOe82MxQKpemelHs24ez6d3EUOdlHu8S5215RL
+ wY4nUw1UJeL2nbUEx3/zgt6PhGAVfeDFq7y9UitBd8QAoWX5Mp1uB/uACLUeQFgOCQh/
+ IRUOTyOAvXYjidavmBsmMoVQKF3dLTvSEgYFyLkY87tadqbbYAEOyIrcM4jgiLC4yODX
+ oJHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=NZ95nWAy3OKMkzvpp16ZfFh0FCfnaqYgy/5vWc7AvAQ=;
+ b=eGx55767kfEpBKpXI7U2xM6kNI6C1g/qZciZe7mXpr7QYm30uLHB4PSfMa8mwbwTiW
+ SJ3CKnhy7b0y/bZhkUjyngPQHYtnKfK22ZZBGtjwjaT0cthCdMwIRYjSNiHnGbbIkzk9
+ F8d76nC5ZGflEmqGt4baZ17enRKTOu6hAHj5e3wOn87JfMj5YiTCfKNDyYI0Cu99K9Hg
+ 5I9LC+WNA0hletAUDr47CFHeJ4ayV/z/E49Vc2jrUb/an8KDV+RwB17qvDI82hdRam82
+ QurtWM2rl+NPrUIcsDc51po24v9QWNvQtX2uyCK5XhQERB+DGsIaK0CoVncWsqp/LZJL
+ WoJQ==
+X-Gm-Message-State: ACrzQf1z80I7/8jtgGNShST9A1268FBxN5VM44ajL6P90TSrHrLy3FJ5
+ GYGPzWT5q8eMVHDsLFyWfNf8btfjNZc4vjISE47i0An13nA=
+X-Google-Smtp-Source: AMsMyM4E2jKnaWseBqcepUVmVgMZmQkwzuRiRFppS6V4HFNdudyBFCuDhSIK2nTmRMlCPjNPPeBCwUcJieYHRN9mPp0=
+X-Received: by 2002:ac2:5b08:0:b0:4a6:1181:1b15 with SMTP id
+ v8-20020ac25b08000000b004a611811b15mr4448097lfn.494.1667186828570; Sun, 30
+ Oct 2022 20:27:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20221031114424.10438-1-jirislaby@kernel.org>
+From: Madars Virza <madars@gmail.com>
+Date: Sun, 30 Oct 2022 23:26:57 -0400
+Message-ID: <CAPoS0C3LWh3asNLruJNWBASrKkkrekdHWTWx3+S38usiEo+S7A@mail.gmail.com>
+Subject: WireGuard namespacing/isolation on Windows
+To: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
+X-Mailman-Approved-At: Mon, 31 Oct 2022 13:08:01 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -66,30 +66,25 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Jiri,
+Hi!
 
-On Mon, Oct 31, 2022 at 12:44:24PM +0100, Jiri Slaby (SUSE) wrote:
-> Since gcc13, each member of an enum has the same type as the enum [1]. And
-> that is inherited from its members. Provided "REKEY_AFTER_MESSAGES = 1ULL
-> << 60", the named type is unsigned long.
-> 
-> This generates warnings with gcc-13:
->   error: format '%d' expects argument of type 'int', but argument 6 has type 'long unsigned int'
-> 
-> Cast the enum members to int when printing them.
-> 
-> Alternatively, we can cast it to ulong (to silence gcc < 12) and use %lu.
-> Alternatively, we can move REKEY_AFTER_MESSAGES away from the enum.
-> 
-> [1] https://gcc.gnu.org/bugzilla/show_bug.cgi?id=36113
+Consider the following use case: preventing accidental WebRTC-style
+information leaks. These leaks used to happen because WebRTC JS API
+exposes IP enumeration even if no packets get sent over the
+corresponding interfaces (i.e., even though the default route is the
+VPN endpoint, WebRTC API would "betray" information about other
+interfaces visible to the browser.)
 
-Huh, interesting situation. It's interesting that 1<<60 even works at
-all on old gccs. I guess that in this case, it just takes the type of
-the actual constant, rather than of the enum type?
+In Linux, an elegant way around such leakage is to run your
+application in a separate network namespace a la
+https://www.wireguard.com/netns/ . For example, you can launch your
+browser/BitTorrent client/etc in a separate netns that only sees wgN
+so that even if there were WebRTC-style leaks, the application would
+not immediately see interfaces outside its network namespace.
 
-Either way, I'll apply (a version of) your patch and push it back out on
-the next wireguard fixup series.
+What would one do to achieve a similar result for WireGuard clients on Windows?
 
-Thanks for this.
+I'd be happy to write a little bit of code / accept solutions that are
+not production-grade (this is all meant for a developer workstation).
 
-Jason
+Madars
