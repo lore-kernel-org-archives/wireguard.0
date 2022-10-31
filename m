@@ -4,59 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78A3CC38A02
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 29 Oct 2022 01:56:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 376FFFA3740
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 31 Oct 2022 11:44:34 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 6e1ce26b;
-	Sat, 29 Oct 2022 01:52:45 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 96c764c3
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 0fcd9a5d;
+	Mon, 31 Oct 2022 11:44:32 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org
+ [2604:1380:4641:c500::1])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 49a1ae4e
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 29 Oct 2022 01:52:43 +0000 (UTC)
+ Mon, 31 Oct 2022 11:44:30 +0000 (UTC)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id C617862B45
- for <wireguard@lists.zx2c4.com>; Sat, 29 Oct 2022 01:52:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B77C433C1
- for <wireguard@lists.zx2c4.com>; Sat, 29 Oct 2022 01:52:40 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="N6ZUtLMp"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1667008358;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WU+J+UXTFpLG11siToNSUwJ8DNfezAQk2RcPmcREPG4=;
- b=N6ZUtLMpdxUZoIkX25CiY7nW3I6ms9K7VoVsv5Os/Mr9byojliFQW0rO7EBOCHc2R27hBb
- DYQwH7LHjaIe0KVFnPDx1ZNcU63rTYvA3HW+URibNF+ytMl8yRZfcCwv5ojR+3nhjCJqZ7
- bz9ROUJad+OG/bPJEKFbaGymReDf3IE=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e22c1a14
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Sat, 29 Oct 2022 01:52:38 +0000 (UTC)
-Received: by mail-vs1-f45.google.com with SMTP id z189so6078058vsb.4
- for <wireguard@lists.zx2c4.com>; Fri, 28 Oct 2022 18:52:38 -0700 (PDT)
-X-Gm-Message-State: ACrzQf2FkWQaAUdyiv3VGtRE5yOCnZAvVe8eKfsx5U19zkp364JwGlUV
- 8FmHNcnlJJ7oBXKhQieDHsx8Gn8gl0KDBbMBcns=
-X-Google-Smtp-Source: AMsMyM78whTb22llkW8V9xrwPNnxpaJpon2LNncqLjr9+HdKCo3IXbXxOleZYeO6DbkyARXA4du+puVWsj9pJGwZLQ8=
-X-Received: by 2002:a67:c297:0:b0:3aa:3cac:97b6 with SMTP id
- k23-20020a67c297000000b003aa3cac97b6mr921187vsj.76.1667008357461; Fri, 28 Oct
- 2022 18:52:37 -0700 (PDT)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id EB706611D3;
+ Mon, 31 Oct 2022 11:44:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7877CC433D6;
+ Mon, 31 Oct 2022 11:44:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1667216668;
+ bh=nToB1GC3IZYvNqBjpUGx00XoAWJDS1KYM7LwXh0TTXQ=;
+ h=From:To:Cc:Subject:Date:From;
+ b=XHOKN6EiXg24tI+YL5fNUQoIwWC8ToQ9v5XYBhYzBFQ5dXVhDq7TedJ+jpHoKInF1
+ hu+XjGGHhJqDa7DBprj1D+AkyhtMrccFKhSLEQdt9WHlOb5NlNvYD+bJzuIGFeJmDC
+ TBiuEha58nxC2+9v3RmYIlzY84i7N1IHV0XVw/NvUTS3+9pDpTFtDmoKokY5bDBGIi
+ ANsVKljgQMZPEniEIw+BzBkMhWbUb824VrBHjga5LWskEW22rK+TZaZ++cCDkTfyPg
+ wxGMYx2Dld/7znmv+uTqrbYdIsIGQvjmzyMSvVwPeRjEER0GFJ1eBb9Du7blIB5PhG
+ fEChIgrGSLo0Q==
+From: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
+To: Jason@zx2c4.com
+Cc: linux-kernel@vger.kernel.org, "Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+ Martin Liska <mliska@suse.cz>, "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>, wireguard@lists.zx2c4.com,
+ netdev@vger.kernel.org
+Subject: [PATCH] wireguard (gcc13): cast enum limits members to int in prints
+Date: Mon, 31 Oct 2022 12:44:24 +0100
+Message-Id: <20221031114424.10438-1-jirislaby@kernel.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-References: <20221029014505.2679-1-kevans@FreeBSD.org>
-In-Reply-To: <20221029014505.2679-1-kevans@FreeBSD.org>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sat, 29 Oct 2022 03:52:26 +0200
-X-Gmail-Original-Message-ID: <CAHmME9ohp+_kFsPrP2hJBFY32yK65Sv-Q9Jo_P99sy0-Do2W8g@mail.gmail.com>
-Message-ID: <CAHmME9ohp+_kFsPrP2hJBFY32yK65Sv-Q9Jo_P99sy0-Do2W8g@mail.gmail.com>
-Subject: Re: [PATCH] wg: freebsd: move if_wg path to reflect new in-tree
- location
-To: kevans@freebsd.org
-Cc: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -71,10 +59,74 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-https://git.zx2c4.com/wireguard-tools/commit/?id=7b2ae7aa2f52fbac65874a641cbfbb0182d0ba46
+Since gcc13, each member of an enum has the same type as the enum [1]. And
+that is inherited from its members. Provided "REKEY_AFTER_MESSAGES = 1ULL
+<< 60", the named type is unsigned long.
 
-Applied, thanks!
+This generates warnings with gcc-13:
+  error: format '%d' expects argument of type 'int', but argument 6 has type 'long unsigned int'
 
-(Very excited about all this...)
+Cast the enum members to int when printing them.
 
-Jason
+Alternatively, we can cast it to ulong (to silence gcc < 12) and use %lu.
+Alternatively, we can move REKEY_AFTER_MESSAGES away from the enum.
+
+[1] https://gcc.gnu.org/bugzilla/show_bug.cgi?id=36113
+
+Cc: Martin Liska <mliska@suse.cz>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: wireguard@lists.zx2c4.com
+Cc: netdev@vger.kernel.org
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+---
+ drivers/net/wireguard/timers.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/net/wireguard/timers.c b/drivers/net/wireguard/timers.c
+index b5706b6718b1..51081ba93609 100644
+--- a/drivers/net/wireguard/timers.c
++++ b/drivers/net/wireguard/timers.c
+@@ -46,7 +46,7 @@ static void wg_expired_retransmit_handshake(struct timer_list *timer)
+ 	if (peer->timer_handshake_attempts > MAX_TIMER_HANDSHAKES) {
+ 		pr_debug("%s: Handshake for peer %llu (%pISpfsc) did not complete after %d attempts, giving up\n",
+ 			 peer->device->dev->name, peer->internal_id,
+-			 &peer->endpoint.addr, MAX_TIMER_HANDSHAKES + 2);
++			 &peer->endpoint.addr, (int)MAX_TIMER_HANDSHAKES + 2);
+ 
+ 		del_timer(&peer->timer_send_keepalive);
+ 		/* We drop all packets without a keypair and don't try again,
+@@ -64,7 +64,7 @@ static void wg_expired_retransmit_handshake(struct timer_list *timer)
+ 		++peer->timer_handshake_attempts;
+ 		pr_debug("%s: Handshake for peer %llu (%pISpfsc) did not complete after %d seconds, retrying (try %d)\n",
+ 			 peer->device->dev->name, peer->internal_id,
+-			 &peer->endpoint.addr, REKEY_TIMEOUT,
++			 &peer->endpoint.addr, (int)REKEY_TIMEOUT,
+ 			 peer->timer_handshake_attempts + 1);
+ 
+ 		/* We clear the endpoint address src address, in case this is
+@@ -94,7 +94,8 @@ static void wg_expired_new_handshake(struct timer_list *timer)
+ 
+ 	pr_debug("%s: Retrying handshake with peer %llu (%pISpfsc) because we stopped hearing back after %d seconds\n",
+ 		 peer->device->dev->name, peer->internal_id,
+-		 &peer->endpoint.addr, KEEPALIVE_TIMEOUT + REKEY_TIMEOUT);
++		 &peer->endpoint.addr,
++		 (int)(KEEPALIVE_TIMEOUT + REKEY_TIMEOUT));
+ 	/* We clear the endpoint address src address, in case this is the cause
+ 	 * of trouble.
+ 	 */
+@@ -126,7 +127,7 @@ static void wg_queued_expired_zero_key_material(struct work_struct *work)
+ 
+ 	pr_debug("%s: Zeroing out all keys for peer %llu (%pISpfsc), since we haven't received a new one in %d seconds\n",
+ 		 peer->device->dev->name, peer->internal_id,
+-		 &peer->endpoint.addr, REJECT_AFTER_TIME * 3);
++		 &peer->endpoint.addr, (int)REJECT_AFTER_TIME * 3);
+ 	wg_noise_handshake_clear(&peer->handshake);
+ 	wg_noise_keypairs_clear(&peer->keypairs);
+ 	wg_peer_put(peer);
+-- 
+2.38.1
+
