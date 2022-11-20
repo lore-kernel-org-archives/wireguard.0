@@ -4,36 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB9EEC4332F
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 10 Nov 2022 20:41:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52DF1C4332F
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 20 Nov 2022 22:46:24 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ace791b3;
-	Thu, 10 Nov 2022 20:41:23 +0000 (UTC)
-Received: from quad.pendre.co.uk (quad.pendre.co.uk [92.27.241.245])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 55e0d679
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4770925b;
+	Sun, 20 Nov 2022 22:46:21 +0000 (UTC)
+Received: from janet.servers.dxld.at (mail.servers.dxld.at [5.9.225.164])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7dc4082d
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 10 Nov 2022 20:41:21 +0000 (UTC)
-Received: from localhost (localhost [127.0.0.1])
- by quad.pendre.co.uk (Postfix) with ESMTP id DFB129600E2;
- Thu, 10 Nov 2022 20:41:20 +0000 (GMT)
-Received: from quad.pendre.co.uk ([127.0.0.1])
- by localhost (quad.pendre.co.uk [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id 6CmXt0D7U65I; Thu, 10 Nov 2022 20:41:20 +0000 (GMT)
-Received: from [192.168.0.1] (quad.pendre.co.uk [192.168.0.1])
- by quad.pendre.co.uk (Postfix) with ESMTPS id 7C1E79600AF;
- Thu, 10 Nov 2022 20:41:20 +0000 (GMT)
-Message-ID: <306f35dc-5101-35f0-a466-ee5cee758d07@elrepo.org>
-Date: Thu, 10 Nov 2022 20:41:20 +0000
+ Sun, 20 Nov 2022 22:46:20 +0000 (UTC)
+Received: janet.servers.dxld.at; Sun, 20 Nov 2022 23:46:19 +0100
+From: =?UTF-8?q?Daniel=20Gr=C3=B6ber?= <dxld@darkboxed.org>
+To: wireguard@lists.zx2c4.com
+Cc: "Jason A . Donenfeld" <Jason@zx2c4.com>,
+ =?UTF-8?q?Daniel=20Gr=C3=B6ber?= <dxld@darkboxed.org>
+Subject: [PATCH] wg: Allow config to read private key from file
+Date: Sun, 20 Nov 2022 23:46:01 +0100
+Message-Id: <20221120224601.77300-1-dxld@darkboxed.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Content-Language: en-US
-To: wireguard@lists.zx2c4.com, "Jason A. Donenfeld" <Jason@wireguard.com>
-From: Phil Perry <pperry@elrepo.org>
-Subject: compat: update for RHEL 8.7
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -48,39 +39,51 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Update for release of RHEL 8.7, which now backports 
-ktime_get_coarse_boottime_ns()
+This adds a new config key PrivateKeyFile= that simply hooks up the
+existing code for the `wg set ... private-key /file` codepath.
 
-Signed-off-by: Philip J. Perry <phil@elrepo.org>
+Using this new option the interface configs can be much easier to deploy in
+an automated fashion as they don't contain secrets anymore. The private key
+can easily be provisioned out of band or using a one-time provisioning step
+instead.
 
+Before this patch we were using a neat hack: it's possible to simply omit
+PrivateKey= and set it using PostUp= wg set %i private-key /some/file.
+However this breaks when we try to use setconf or synconf as
+they will (rightly) unset the private key instead of leaving it as-is.
+---
+ src/config.c | 4 ++++
+ src/man/wg.8 | 2 ++
+ 2 files changed, 6 insertions(+)
 
-diff -Naurp wireguard-linux-compat-1.0.20220627.orig/src/compat/compat.h 
-wireguard-linux-compat-1.0.20220627/src/compat/compat.h
---- a/src/compat/compat.h        2022-06-27 11:54:37.000000000 +0100
-+++ b/src/compat/compat.h     2022-11-10 19:55:49.653581044 +0000
-@@ -16,7 +16,7 @@
-  #define ISRHEL7
-  #elif RHEL_MAJOR == 8
-  #define ISRHEL8
--#if RHEL_MINOR >= 6
-+#if RHEL_MINOR >= 7
-  #define ISCENTOS8S
-  #endif
-  #endif
-@@ -412,6 +412,7 @@ static inline u64 __compat_jiffies64_to_
-  }
-  #define jiffies64_to_nsecs __compat_jiffies64_to_nsecs
-  #endif
-+#if !defined(ISRHEL8)
-  static inline u64 ktime_get_coarse_boottime_ns(void)
-  {
-  #if LINUX_VERSION_CODE < KERNEL_VERSION(3, 17, 0)
-@@ -423,6 +424,7 @@ static inline u64 ktime_get_coarse_boott
-  #endif
-  }
-  #endif
-+#endif
-
-  #if LINUX_VERSION_CODE < KERNEL_VERSION(3, 14, 0)
-  #include <linux/inetdevice.h>
+diff --git a/src/config.c b/src/config.c
+index e8db900..49cbb07 100644
+--- a/src/config.c
++++ b/src/config.c
+@@ -464,6 +464,10 @@ static bool process_line(struct config_ctx *ctx, const char *line)
+ 			ret = parse_key(ctx->device->private_key, value);
+ 			if (ret)
+ 				ctx->device->flags |= WGDEVICE_HAS_PRIVATE_KEY;
++		} else if (key_match("PrivateKeyFile")) {
++			ret = parse_keyfile(ctx->device->private_key, value);
++			if (ret)
++				ctx->device->flags |= WGDEVICE_HAS_PRIVATE_KEY;
+ 		} else
+ 			goto error;
+ 	} else if (ctx->is_peer_section) {
+diff --git a/src/man/wg.8 b/src/man/wg.8
+index fd9fde7..1d37338 100644
+--- a/src/man/wg.8
++++ b/src/man/wg.8
+@@ -134,6 +134,8 @@ The \fIInterface\fP section may contain the following fields:
+ .IP \(bu
+ PrivateKey \(em a base64 private key generated by \fIwg genkey\fP. Required.
+ .IP \(bu
++PrivateKeyFile \(em path to a file containing base64 private key. May be used instead of \fIPrivateKey\fP. Optional.
++.IP \(bu
+ ListenPort \(em a 16-bit port for listening. Optional; if not specified, chosen
+ randomly.
+ .IP \(bu
+-- 
+2.30.2
 
