@@ -4,26 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52DF1C4332F
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 20 Nov 2022 22:46:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73EBFC433FE
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 21 Nov 2022 06:31:48 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4770925b;
-	Sun, 20 Nov 2022 22:46:21 +0000 (UTC)
-Received: from janet.servers.dxld.at (mail.servers.dxld.at [5.9.225.164])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7dc4082d
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 15d33a74;
+	Mon, 21 Nov 2022 06:31:45 +0000 (UTC)
+Received: from isrv.corpit.ru (isrv.corpit.ru [86.62.121.231])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4122cefe
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 20 Nov 2022 22:46:20 +0000 (UTC)
-Received: janet.servers.dxld.at; Sun, 20 Nov 2022 23:46:19 +0100
-From: =?UTF-8?q?Daniel=20Gr=C3=B6ber?= <dxld@darkboxed.org>
-To: wireguard@lists.zx2c4.com
-Cc: "Jason A . Donenfeld" <Jason@zx2c4.com>,
- =?UTF-8?q?Daniel=20Gr=C3=B6ber?= <dxld@darkboxed.org>
-Subject: [PATCH] wg: Allow config to read private key from file
-Date: Sun, 20 Nov 2022 23:46:01 +0100
-Message-Id: <20221120224601.77300-1-dxld@darkboxed.org>
-X-Mailer: git-send-email 2.30.2
+ Mon, 21 Nov 2022 06:31:43 +0000 (UTC)
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 621834033F;
+ Mon, 21 Nov 2022 09:31:42 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 00ED46B;
+ Mon, 21 Nov 2022 09:31:41 +0300 (MSK)
+Message-ID: <bd851ce5-c45b-b6ed-986e-4d9f3cf54494@msgid.tls.msk.ru>
+Date: Mon, 21 Nov 2022 09:31:41 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [PATCH] wg: Allow config to read private key from file
+Content-Language: en-US
+To: =?UTF-8?Q?Daniel_Gr=c3=b6ber?= <dxld@darkboxed.org>,
+ wireguard@lists.zx2c4.com
+Cc: "Jason A . Donenfeld" <Jason@zx2c4.com>
+References: <20221120224601.77300-1-dxld@darkboxed.org>
+From: Michael Tokarev <mjt@tls.msk.ru>
+In-Reply-To: <20221120224601.77300-1-dxld@darkboxed.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -39,51 +49,34 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This adds a new config key PrivateKeyFile= that simply hooks up the
-existing code for the `wg set ... private-key /file` codepath.
+21.11.2022 01:46, Daniel Gröber wrote:
+> This adds a new config key PrivateKeyFile= that simply hooks up the
+> existing code for the `wg set ... private-key /file` codepath.
+> 
+> Using this new option the interface configs can be much easier to deploy in
+> an automated fashion as they don't contain secrets anymore. The private key
+> can easily be provisioned out of band or using a one-time provisioning step
+> instead.
 
-Using this new option the interface configs can be much easier to deploy in
-an automated fashion as they don't contain secrets anymore. The private key
-can easily be provisioned out of band or using a one-time provisioning step
-instead.
+This is definitely a very welcome option in my PoV.
 
-Before this patch we were using a neat hack: it's possible to simply omit
-PrivateKey= and set it using PostUp= wg set %i private-key /some/file.
-However this breaks when we try to use setconf or synconf as
-they will (rightly) unset the private key instead of leaving it as-is.
----
- src/config.c | 4 ++++
- src/man/wg.8 | 2 ++
- 2 files changed, 6 insertions(+)
+Add my
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/src/config.c b/src/config.c
-index e8db900..49cbb07 100644
---- a/src/config.c
-+++ b/src/config.c
-@@ -464,6 +464,10 @@ static bool process_line(struct config_ctx *ctx, const char *line)
- 			ret = parse_key(ctx->device->private_key, value);
- 			if (ret)
- 				ctx->device->flags |= WGDEVICE_HAS_PRIVATE_KEY;
-+		} else if (key_match("PrivateKeyFile")) {
-+			ret = parse_keyfile(ctx->device->private_key, value);
-+			if (ret)
-+				ctx->device->flags |= WGDEVICE_HAS_PRIVATE_KEY;
- 		} else
- 			goto error;
- 	} else if (ctx->is_peer_section) {
-diff --git a/src/man/wg.8 b/src/man/wg.8
-index fd9fde7..1d37338 100644
---- a/src/man/wg.8
-+++ b/src/man/wg.8
-@@ -134,6 +134,8 @@ The \fIInterface\fP section may contain the following fields:
- .IP \(bu
- PrivateKey \(em a base64 private key generated by \fIwg genkey\fP. Required.
- .IP \(bu
-+PrivateKeyFile \(em path to a file containing base64 private key. May be used instead of \fIPrivateKey\fP. Optional.
-+.IP \(bu
- ListenPort \(em a 16-bit port for listening. Optional; if not specified, chosen
- randomly.
- .IP \(bu
--- 
-2.30.2
+for this.
 
+> Before this patch we were using a neat hack: it's possible to simply omit
+> PrivateKey= and set it using PostUp= wg set %i private-key /some/file.
+
+Well, this isn't really neat, it is a hackish workaround for the missing
+functionality ;)
+
+On a side, note, almost a year ago I sent a patch for wg utility to recognize
+and discard some keywords which are processed by wg-quick script - like,
+Address=. This way, there's no need to pre-process the config file anymore,
+and in order to recognize more peers, one doesn't have to restart the
+tunnel interface, instead, a regular wg syncconf wgif.conf is sufficient,
+and many things can be simplified too (removing the preprocessing).
+I've never got any reply for these patches.
+
+/mjt
