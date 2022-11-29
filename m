@@ -4,53 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B0F2C47090
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  1 Dec 2022 13:11:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB411C4708E
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  1 Dec 2022 13:15:15 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 62266301;
-	Thu, 1 Dec 2022 13:09:22 +0000 (UTC)
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com
- [2607:f8b0:4864:20::32c])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id dfc23bc7
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e9a654cb;
+	Thu, 1 Dec 2022 13:09:24 +0000 (UTC)
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com
+ [2607:f8b0:4864:20::62c])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e98a7b06
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 24 Nov 2022 10:03:27 +0000 (UTC)
-Received: by mail-ot1-x32c.google.com with SMTP id
- t19-20020a9d7753000000b0066d77a3d474so635389otl.10
- for <wireguard@lists.zx2c4.com>; Thu, 24 Nov 2022 02:03:27 -0800 (PST)
+ Tue, 29 Nov 2022 01:53:51 +0000 (UTC)
+Received: by mail-pl1-x62c.google.com with SMTP id j12so11987711plj.5
+ for <wireguard@lists.zx2c4.com>; Mon, 28 Nov 2022 17:53:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=BkgAx4gVoeJBEYX6EB2lkEpCk3WN+Nu60lwY9qDEkI4=;
- b=hYpbihpgEmTfp2kmwBhSzdEvF9CMgX92E0rfEkst0yl2tjQuBu3k/1oMrqQeQxlK0Z
- FUugr5aSxVngfYR32U7cOYPw+BFqe6QkrtE9lXdBsHQkG+pSqeUOAYLL/F2E8BEjl/m7
- lDNg4jfSJT498U098B1j78FND1e3qSAmbJLeD19cWfw90bDqmQ+TmVFUwP7Z/C4dpGKf
- WDv/FRTbROJjeBm+mn5jR3mYvuFaBzs291vv2ZI0FB/PoMLs5TXvWSs/DNuln66xTNRf
- 1X37B7papURBC5TYHoPRfaYzB9HnYwTxByS8ctUGPYBzezlinQ39Tz1eDL5zMyVjnZNg
- iZnA==
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=a9reBu0taGCxqZ043K7WK3aJv4Sy6fkO7qsFC4V8f/U=;
+ b=ZMiayX89I0dnRAbq195UF0fk2ft0S4h2jBMhSe2oGWhSbNjSP6bKTo+u6fAVQgqAu+
+ CQ9wSIrWk5R9FZMlIOrGBa8SMCcFNJp9itBS9apzq3Ki/SSdyMMvI6dTba3FoEIKjIit
+ zlZpjvnFvMi2InrDQjlsI/TMrBdErkOaYT4zak31VL//JLvLhtzJWZLJ52x3VallLo9t
+ 9Y2vO0HCl0GyUFv4n02iuJg1G//CyAg1DFhVSSrQzOL9xjyeGqYlvYGig49wlAlaPGOO
+ UB8SwhQ09aJA70A4j2hxO06xudHFF5W8RPT4fyZ5xBF9Kx8j+9qitf/aYSde+EKCWXU6
+ Ammg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=BkgAx4gVoeJBEYX6EB2lkEpCk3WN+Nu60lwY9qDEkI4=;
- b=IcMhLyP4mLohmPshbKelUelPEpQGgv/GN9FVKDn/zmllR7V6aHdzffIRuwHuZdESl4
- VnoxoR4RBo/F+qJodMgRwPejTc/DX/dwr/8V2NH9jGKPxuKi3d6xhT66E3wDreGoLBUu
- MeTXpChAOwE1h1u6F9UUnNFHE0CccTw9MUtUrmn+olyizoz5BaTAdJ+8ELOOuF/mN3cS
- HX5xmQrjfWOefDxyidzHBVB7KwSYUmdOAt6NAp0LCqcriLJUQOhWryj82Rr8GqwHrbc9
- 6yW9tCY2dFCey83XhmsUiEzmGiCtYW1ZFBz4aa7qqHR/Mm829i7nQAafgdHcfW5F4QA1
- /kmg==
-X-Gm-Message-State: ANoB5pk4QGnx2/Ve30fkvVg84BsCM8npP2Kzgvik/N7xdkeYoke8TBdH
- Ep6TRPXvQTGj5uAQ/CHLKpirJm+t3yMc06UlrmrVWrEyPWo8W5BO
-X-Google-Smtp-Source: AA0mqf4JtyJCxzXYNSBeDYapRL0Ke80xxqC/0ff6PT9l6hStSsU/TU2vzqxIejyYXOi6sDiN8/1a2+o3Dyk3mCfOiIk=
-X-Received: by 2002:a9d:5913:0:b0:65b:ce9d:197e with SMTP id
- t19-20020a9d5913000000b0065bce9d197emr6104410oth.167.1669284205669; Thu, 24
- Nov 2022 02:03:25 -0800 (PST)
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=a9reBu0taGCxqZ043K7WK3aJv4Sy6fkO7qsFC4V8f/U=;
+ b=ZwB7A+2g57yogWtVD7+dPb/Rdliiy0goSK5EtdZOpmFsijtDqQWgylN+PM7jEP2Oeu
+ lwOAQZ3vYYhTL5ce69VGrhGHjlzZdGnEv3RABiGvZih/nJRQWZ2ZmGhRJd+hop64uKgz
+ rZnAoaNIg7akqPALN95Uik+Sj+BWKqfJc0ROtlmruZkQxr5jiCyIsZsZ6ySSx2exvBju
+ j1G+C2Vjj3Fwev5oE5UDv3BrnlNTsjYpoG++d8IMNC3Xe1agxfNpNUwSe2y4c0fGxzdb
+ 3Rc7f4yMHl1jU5UVG6Op5jPWvTz0ErxO/nwA7K0hcphed7KwCiZcp+hdb3PAt53/SDR/
+ qakw==
+X-Gm-Message-State: ANoB5pnq5sBPkfwrHIzs5kriThSaxpIwKSyVUpdkkclelO2kwHnaMvTt
+ AFSByzIge1ifqgpi6ZMqczifLHKt+B8fzkLE/jzyJ4jeQHo=
+X-Google-Smtp-Source: AA0mqf50wZeFOqqGPf817jqRinDhbBuIduwOrDYTzOw2qTSBCr6/iWepo5Z4a24FjdHITT6jfJgfj7hMBMOAO9IAuIU=
+X-Received: by 2002:a17:902:ba87:b0:189:1890:77c3 with SMTP id
+ k7-20020a170902ba8700b00189189077c3mr42646416pls.138.1669686829998; Mon, 28
+ Nov 2022 17:53:49 -0800 (PST)
 MIME-Version: 1.0
-From: =?UTF-8?Q?Ond=C5=99ej_Grover?= <ondrej.grover@gmail.com>
-Date: Thu, 24 Nov 2022 11:03:14 +0100
-Message-ID: <CAOyjJOLRZb7BuGBQAK6_bKBCcLOkQnHQ7FcZuaLy0=_+EsJXeg@mail.gmail.com>
-Subject: DNS endpoint resolution in container namespace
-To: wireguard@lists.zx2c4.com
+References: <CAHx9mse-qPN6L4F7wKRA31J0rHQ9_g533KPS-OTAnTeRHF11ag@mail.gmail.com>
+ <15709745-61e4-5aef-200d-4e3802718c7b@noc23.de>
+In-Reply-To: <15709745-61e4-5aef-200d-4e3802718c7b@noc23.de>
+From: Omkhar Arasaratnam <omkhar@gmail.com>
+Date: Mon, 28 Nov 2022 20:53:38 -0500
+Message-ID: <CAHx9msc_DKa5gcUFDPH4DTvuhF4L6cfRACK4x3wywd=Zu+nqHQ@mail.gmail.com>
+Subject: Re: Wireguard - no logs iOS 16.1
+To: Ulrich Kalloch <ulli@noc23.de>
+Cc: wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
 X-Mailman-Approved-At: Thu, 01 Dec 2022 13:09:15 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -67,36 +71,24 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+Agreed, Save and Read do work.
 
-I tried to follow the example here
-https://www.wireguard.com/netns/#ordinary-containerization
-but I found out that the DNS endpoint resolution through
+--oa
 
-ip netns exec container wg setconf wg0 /etc/wireguard/wg0.conf
-
-won't work, because it is run in the new container namespace not yet
-capable of DNS resolution.
-Looking at the source code here
-https://git.zx2c4.com/wireguard-tools/tree/src/config.c#n242
-confirmed my suspicion that the DNS resolution is done by the wg tool
-in the container namespace rather than in the original namespace.
-
-In an ideal world the DNS resolution should IMHO happen in the
-original namespace capable of DNS resolution where the world-facing
-UDP socket using that endpoint IP is anyway.
-Often one could use just a hard-coded IP (that's indeed what I
-resorted to in the end, or  perform DNS resolution at container
-provisioning time as suggested by mrngm in IRC) for the wg0.conf in
-the container, but with DynDNS and similar setups this may not be
-possible.
-
-But since that might require significant changes (e.g. requesting DNS
-resolution in the original namespace through the kernel?), perhaps at
-least in the short term I would  recommend that this caveat is
-mentioned on the webpage and/or perhaps in the example the `wg
-setconf` step would be run in the original namespace (unless there is
-some repercussion to that I did not consider).
-
-Best wishes and thanks for all your work making wireguard what it is today,
-Ondrej G.
+On Mon, Nov 28, 2022 at 12:59 PM Ulrich Kalloch <ulli@noc23.de> wrote:
+>
+> Am 05.11.22 um 23:20 schrieb Omkhar Arasaratnam:
+> > Wireguard 1.0.15 (26)
+> > Wireguard Go backend 2ef39d47
+> >
+> > I am unable to view logs. Clicking on the view log button momentarily
+> > renders text, then it goes blank. Tried this on two different phones
+> > (iPhone 11 pro max, iPhone 13 Pro)
+> >
+> > --oa
+>
+> Same here.
+>
+> But Save and Read in Notes Works.
+>
+> Best
