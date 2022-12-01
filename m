@@ -4,59 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB411C4708E
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  1 Dec 2022 13:15:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EBA5C43217
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  1 Dec 2022 14:53:43 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e9a654cb;
-	Thu, 1 Dec 2022 13:09:24 +0000 (UTC)
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com
- [2607:f8b0:4864:20::62c])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e98a7b06
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6f96eda8;
+	Thu, 1 Dec 2022 14:53:40 +0000 (UTC)
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com
+ [2607:f8b0:4864:20::1035])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ff555776
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 29 Nov 2022 01:53:51 +0000 (UTC)
-Received: by mail-pl1-x62c.google.com with SMTP id j12so11987711plj.5
- for <wireguard@lists.zx2c4.com>; Mon, 28 Nov 2022 17:53:51 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Thu, 1 Dec 2022 14:26:44 +0000 (UTC)
+Received: by mail-pj1-x1035.google.com with SMTP id
+ w4-20020a17090ac98400b002186f5d7a4cso5425264pjt.0
+ for <wireguard@lists.zx2c4.com>; Thu, 01 Dec 2022 06:26:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=a9reBu0taGCxqZ043K7WK3aJv4Sy6fkO7qsFC4V8f/U=;
- b=ZMiayX89I0dnRAbq195UF0fk2ft0S4h2jBMhSe2oGWhSbNjSP6bKTo+u6fAVQgqAu+
- CQ9wSIrWk5R9FZMlIOrGBa8SMCcFNJp9itBS9apzq3Ki/SSdyMMvI6dTba3FoEIKjIit
- zlZpjvnFvMi2InrDQjlsI/TMrBdErkOaYT4zak31VL//JLvLhtzJWZLJ52x3VallLo9t
- 9Y2vO0HCl0GyUFv4n02iuJg1G//CyAg1DFhVSSrQzOL9xjyeGqYlvYGig49wlAlaPGOO
- UB8SwhQ09aJA70A4j2hxO06xudHFF5W8RPT4fyZ5xBF9Kx8j+9qitf/aYSde+EKCWXU6
- Ammg==
+ bh=3pExKTiZKQ+qAB0RE07gBOMN+F5kJNMDB+C4LtR7+GU=;
+ b=MjsSUJJQ11xm3/l8xt5PEr8QiuYAPlZMUT5cXd5e4K2j7f718r9xOsIr0O6+sXPvTR
+ UnXvKQw7MmSuQsyk/pe8N5nuWFTVXUp7oWWHENJ5KXH9M7S0vLiUvz4rj54egRcZBMjB
+ Ja/7UvHVvjmgAtJyuNaNieo4EOqKX8DO6P7aCnWYKTCE3s1WLdmxMus4/9hJ5tlKd0DY
+ US8B36ns7Rgy5i8w5n1iTfkKmLjiU+RgWv1OGAveC6s5O1+JztnofQAIqijPXg3cGCcF
+ cwnll2mOP7QjtjM8KHyKC3Xwqe15LubZJZc6Ce+Caq7afaz8QLT2eYxcfcmOeYtqekEY
+ v8hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=a9reBu0taGCxqZ043K7WK3aJv4Sy6fkO7qsFC4V8f/U=;
- b=ZwB7A+2g57yogWtVD7+dPb/Rdliiy0goSK5EtdZOpmFsijtDqQWgylN+PM7jEP2Oeu
- lwOAQZ3vYYhTL5ce69VGrhGHjlzZdGnEv3RABiGvZih/nJRQWZ2ZmGhRJd+hop64uKgz
- rZnAoaNIg7akqPALN95Uik+Sj+BWKqfJc0ROtlmruZkQxr5jiCyIsZsZ6ySSx2exvBju
- j1G+C2Vjj3Fwev5oE5UDv3BrnlNTsjYpoG++d8IMNC3Xe1agxfNpNUwSe2y4c0fGxzdb
- 3Rc7f4yMHl1jU5UVG6Op5jPWvTz0ErxO/nwA7K0hcphed7KwCiZcp+hdb3PAt53/SDR/
- qakw==
-X-Gm-Message-State: ANoB5pnq5sBPkfwrHIzs5kriThSaxpIwKSyVUpdkkclelO2kwHnaMvTt
- AFSByzIge1ifqgpi6ZMqczifLHKt+B8fzkLE/jzyJ4jeQHo=
-X-Google-Smtp-Source: AA0mqf50wZeFOqqGPf817jqRinDhbBuIduwOrDYTzOw2qTSBCr6/iWepo5Z4a24FjdHITT6jfJgfj7hMBMOAO9IAuIU=
-X-Received: by 2002:a17:902:ba87:b0:189:1890:77c3 with SMTP id
- k7-20020a170902ba8700b00189189077c3mr42646416pls.138.1669686829998; Mon, 28
- Nov 2022 17:53:49 -0800 (PST)
+ bh=3pExKTiZKQ+qAB0RE07gBOMN+F5kJNMDB+C4LtR7+GU=;
+ b=zCKifFBrx5hIvJ0FaWBJln35ls++hxPpUW20afB0EL1e0qdh0apj9meHQMFJYxgHcw
+ DHAtUR1q4LEUwVH0QoFVmErqXGvamSOWaSi34giUERus86rpwKi9RHUGF5SBeQ32Ju0t
+ fb1eunwgtvlHjc1tZPJ9tOmNQGUKv/XRs6WbUyBelmdtPbPHRnvY9+F1xsMnUSoyBLQ/
+ hgm4ZRWdIkT/VpXy5cR4+dE3IHBJOrkm70Ij6+gPUTLIOlNJCNW/0V282oRJqiTv8fjv
+ wRi2T9ByxQsGNnoaUoVON2v566mUjMoBnjL7NLjmSDdrEvgDJbZfNG+LntaUEmLDCaGH
+ hArQ==
+X-Gm-Message-State: ANoB5pmoB4ExBU1jpDatJpIILul4M2StaANn7CLuQwtO9x6Vx5sq7ERf
+ nteo2kRnRKWvicFYGNl+5HGwgOYpJnnRIhLzE4g=
+X-Google-Smtp-Source: AA0mqf6sP78RlrDGgpZwDpG7CpdbWUv30hxr1vA959sIqv/slu/J6RcQRHn4jg9/n/L/SJ/DLFTLGneNfV/A0xA3n0c=
+X-Received: by 2002:a17:903:22c4:b0:187:4ace:e1fd with SMTP id
+ y4-20020a17090322c400b001874acee1fdmr48542352plg.54.1669904803131; Thu, 01
+ Dec 2022 06:26:43 -0800 (PST)
 MIME-Version: 1.0
-References: <CAHx9mse-qPN6L4F7wKRA31J0rHQ9_g533KPS-OTAnTeRHF11ag@mail.gmail.com>
- <15709745-61e4-5aef-200d-4e3802718c7b@noc23.de>
-In-Reply-To: <15709745-61e4-5aef-200d-4e3802718c7b@noc23.de>
-From: Omkhar Arasaratnam <omkhar@gmail.com>
-Date: Mon, 28 Nov 2022 20:53:38 -0500
-Message-ID: <CAHx9msc_DKa5gcUFDPH4DTvuhF4L6cfRACK4x3wywd=Zu+nqHQ@mail.gmail.com>
-Subject: Re: Wireguard - no logs iOS 16.1
-To: Ulrich Kalloch <ulli@noc23.de>
-Cc: wireguard@lists.zx2c4.com
+References: <0ac435a3-95f4-c005-9834-ffb44360536c@tootai.net>
+ <Y4inPePWAWCQ/Ejp@zx2c4.com>
+In-Reply-To: <Y4inPePWAWCQ/Ejp@zx2c4.com>
+From: Luna Jernberg <droidbittin@gmail.com>
+Date: Thu, 1 Dec 2022 15:26:29 +0100
+Message-ID: <CADo9pHij0DqLsHswwquhesi3N1L8v1n7-eaCjNQ=rV1vgO_Y-A@mail.gmail.com>
+Subject: Re: Wireguard on Asahi Debian
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ Luna Jernberg <droidbittin@gmail.com>
+Cc: Daniel <tech@tootai.net>, wireguard <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
-X-Mailman-Approved-At: Thu, 01 Dec 2022 13:09:15 +0000
+X-Mailman-Approved-At: Thu, 01 Dec 2022 14:53:39 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -71,24 +72,21 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Agreed, Save and Read do work.
+Thats Asahi with Arch Linux however and not Debian
 
---oa
-
-On Mon, Nov 28, 2022 at 12:59 PM Ulrich Kalloch <ulli@noc23.de> wrote:
+On Thu, Dec 1, 2022 at 2:10 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
 >
-> Am 05.11.22 um 23:20 schrieb Omkhar Arasaratnam:
-> > Wireguard 1.0.15 (26)
-> > Wireguard Go backend 2ef39d47
+> On Thu, Dec 01, 2022 at 01:24:07PM +0100, Daniel wrote:
+> > Hi All,
 > >
-> > I am unable to view logs. Clicking on the view log button momentarily
-> > renders text, then it goes blank. Tried this on two different phones
-> > (iPhone 11 pro max, iPhone 13 Pro)
+> > I installed Asahi/Debian Bookworm from
 > >
-> > --oa
+> > https://git.zerfleddert.de/cgi-bin/gitweb.cgi/m1-debian/
+> >
+> > and face a problem: installing wireguard shipped the Debian arm kernel
+> > and I can't get wg to work.
+> >
+> > Is there a solution for this ?
 >
-> Same here.
->
-> But Save and Read in Notes Works.
->
-> Best
+> Appears to be available in Asahi's kernel:
+> https://github.com/AsahiLinux/PKGBUILDs/blob/9fb6fddfdd388190c099a723f046acf7b8b6bd39/linux-asahi/config#L2462
