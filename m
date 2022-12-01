@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81D30C43217
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  1 Dec 2022 13:06:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1E8DC43217
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  1 Dec 2022 13:11:45 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6b1e1bac;
-	Thu, 1 Dec 2022 13:06:56 +0000 (UTC)
-Received: from tootai.net (mail1.tootai.net [213.239.227.108])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8703e6d7
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 1 Dec 2022 13:06:55 +0000 (UTC)
-Received: from tootai.net (localhost [127.0.0.1])
- by mail1.tootai.net (Postfix) with ESMTP id 4A108608251A
- for <wireguard@lists.zx2c4.com>; Thu,  1 Dec 2022 14:06:54 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=tootai.net; s=mail;
- t=1669900014; bh=O2RbL6/+sFx/R6gGNQ9JeFmURNmakYEQNSML+WCYRPE=;
- h=Date:Subject:From:To:References:In-Reply-To:From;
- b=k7i9c7lIwXwuE8LVGifezu6z0ChEuHLRmFIeOJVXLMTKZMTWaYs00gertwhubs31d
- wn2Qxn8WCjt3vcImWAH9NcBgIe3wlLaZzRiMIMlVWekwJ3Mc8NX4GFLLjI9apuGQbo
- QzaLlgN+zGNk3zWi8ShQvWGCavI7+LYhETQKdlTk=
-Received: from [IPV6:fd99:1234:beef:cafe::24] (unknown
- [IPv6:fd99:1234:beef:cafe::24])
- by mail1.tootai.net (Postfix) with ESMTPA id F27676000086
- for <wireguard@lists.zx2c4.com>; Thu,  1 Dec 2022 14:06:53 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=tootai.net; s=mail;
- t=1669900014; bh=O2RbL6/+sFx/R6gGNQ9JeFmURNmakYEQNSML+WCYRPE=;
- h=Date:Subject:From:To:References:In-Reply-To:From;
- b=k7i9c7lIwXwuE8LVGifezu6z0ChEuHLRmFIeOJVXLMTKZMTWaYs00gertwhubs31d
- wn2Qxn8WCjt3vcImWAH9NcBgIe3wlLaZzRiMIMlVWekwJ3Mc8NX4GFLLjI9apuGQbo
- QzaLlgN+zGNk3zWi8ShQvWGCavI7+LYhETQKdlTk=
-Message-ID: <8941df6b-2935-ef5c-a4b3-15a715258ef2@tootai.net>
-Date: Thu, 1 Dec 2022 14:06:53 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c8a28a2f;
+	Thu, 1 Dec 2022 13:08:22 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5c4bf313
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Thu, 1 Dec 2022 13:08:20 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 48C8B61FF6;
+ Thu,  1 Dec 2022 13:08:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D1FDC433D6;
+ Thu,  1 Dec 2022 13:08:18 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="oHMRsg2o"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1669900095;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NvVqm7jcdF+mHvfBEhWPoX+WiaRjBdkYIS+w+Av7JuY=;
+ b=oHMRsg2ophAPhSwCV17t6W2HlYAqGR/jggth9NiWwQIT9QO7Ny3WHU9UJ0nJpz6vvid0AW
+ 0KjgsBdnbi/lcDNpt/seSTXcw13oXjZ95iHpDOpYgRFW05iUOuxJUZXTthG6ZOZ+rWovSf
+ DA2ch1V94fAMsN83Z8vZy4MoA1dcG5Y=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 6b0afdad
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Thu, 1 Dec 2022 13:08:15 +0000 (UTC)
+Date: Thu, 1 Dec 2022 14:08:13 +0100
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Daniel <tech@tootai.net>
+Cc: wireguard <wireguard@lists.zx2c4.com>
 Subject: Re: Wireguard on Asahi Debian
-Content-Language: fr-FR
-From: Daniel <tech@tootai.net>
-To: wireguard <wireguard@lists.zx2c4.com>
+Message-ID: <Y4inPePWAWCQ/Ejp@zx2c4.com>
 References: <0ac435a3-95f4-c005-9834-ffb44360536c@tootai.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 In-Reply-To: <0ac435a3-95f4-c005-9834-ffb44360536c@tootai.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: ClamAV using ClamSMTP
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -60,9 +60,7 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-OK, wg is in the kernel, sorry to have bother you.
-
-Le 01/12/2022 à 13:24, Daniel a écrit :
+On Thu, Dec 01, 2022 at 01:24:07PM +0100, Daniel wrote:
 > Hi All,
 > 
 > I installed Asahi/Debian Bookworm from
@@ -74,7 +72,5 @@ Le 01/12/2022 à 13:24, Daniel a écrit :
 > 
 > Is there a solution for this ?
 
--- 
-Daniel Huhardeaux
-+33.368460088@tootai.net	      sip:820@sip.tootai.net
-+41.445532125@swiss-itech.ch		    tootaiNET
+Appears to be available in Asahi's kernel:
+https://github.com/AsahiLinux/PKGBUILDs/blob/9fb6fddfdd388190c099a723f046acf7b8b6bd39/linux-asahi/config#L2462
