@@ -4,63 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC03AC47088
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  1 Dec 2022 14:53:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CA9EC4332F
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Dec 2022 17:15:50 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ef7ceb98;
-	Thu, 1 Dec 2022 14:53:44 +0000 (UTC)
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com
- [2607:f8b0:4864:20::102a])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6cd9fcdb
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ed8c1fef;
+	Mon, 5 Dec 2022 17:15:48 +0000 (UTC)
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com
+ [2a00:1450:4864:20::636])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 62f097e7
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 1 Dec 2022 14:51:18 +0000 (UTC)
-Received: by mail-pj1-x102a.google.com with SMTP id
- w4-20020a17090ac98400b002186f5d7a4cso5490049pjt.0
- for <wireguard@lists.zx2c4.com>; Thu, 01 Dec 2022 06:51:18 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Mon, 5 Dec 2022 17:15:46 +0000 (UTC)
+Received: by mail-ej1-x636.google.com with SMTP id x22so62632ejs.11
+ for <wireguard@lists.zx2c4.com>; Mon, 05 Dec 2022 09:15:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=content-transfer-encoding:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hDAa0kKSqqV8mXtqj34qGPM9gY4UZ1/nRGkIoZZHSrs=;
- b=O0zKSgCAr5xDAxd2KZrCuA4WwXyeOsR9IRfu0RKE5bXyHfr5Lon/JQGp8W9seHdP9l
- pk1VkPZaT1o0YXENxMl1PT3wZMefkbbKsSbeLZWXlL16GvX43yTrCytfKMfKsIfj5Jbb
- NOVf7PhVwI4Fqeg5qfbFH3QbYkmS6Om3RgkHj1L+lLgurvHSvIOKgFsNwhZGCM6bAZgz
- /6JapS4n/asB5mU0R3Q8JsqheyCn/RFSqjow1ZMioYBuNcpJ02MzH83XQNeXfV39nHdA
- +SzMzaYHOxjE1dQ/aPznym+kfFFsb+odKPmNszGEO4WyWhP+pSFXBYPHiQ9U2TenU44Q
- Sh+Q==
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=YMGRCPfEFbclnUll8KLGsoB68L/AJJnDEUstiScUDbs=;
+ b=G23AYJHTOdEw7EppIckMCYG0c08nClsX66VPXk1hdWSM+rU27w3LvqSkJSkcZ4SOPT
+ V1cEwxY5DG3BR3XfwQrYKrYn6en3XC3TTKJxrfezIqnwcxitrN9dsSGaErOJIVwQKkMw
+ RB1Duvm3xXgs81ubwrnT/jYWvSST47FmIUnQcI4erOovrtBRVLiJNOOMTwlTFwU+VL3t
+ zXqFrws9cAN03y6FDSTcfkpnNr7U4bv/WDyvlMV+oX6L0W+Zuu+8562fqgEbuZyahPv7
+ oczxi2hz0NRcqCc6GDX/0oVaGY1SZDuEKJI1l28T0wOMziplX5s467SGGD9UqOBdRDsD
+ ErQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=content-transfer-encoding:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=hDAa0kKSqqV8mXtqj34qGPM9gY4UZ1/nRGkIoZZHSrs=;
- b=74hv6AzDt5UK1LQN6O5ubup1ccjUS1lb8QKfPLmRhX/XuQsYd1VqzXITWDuBPxMpyW
- O+sqDU8aFd44QZ2EmBh3UECBmd9MCzsiUlIWlsbIixTQS3d62KHwDiK+FJ1DgWcUTvPb
- 34U50N80o9Sr7FIYsxB73IXqkvz39xGwBdbl8ndYXt1h4vu8lz69op4wKX9CdEYGLDBx
- QVjdJTOZLEyb0vyQ/IVi3Bxlxu3as9YpJYrfdxlNa0FrZ5vti1kPXJL/FQctF1vC3sfS
- 5z/vzQr/2ocMALts9YO3QzDemQqg+NLPH2OID6gXFdVBBG5nAPNghpO1qEM2m68H4a2m
- xeTA==
-X-Gm-Message-State: ANoB5pl7kOuOSre2JMpHhStqjbbLusTFkX0apYNn3tANMHXablkLV9sn
- Hh4Ejl98W2OyUoUmCDeLUXDwyAW2RrlEBQSeV28/bh3fz8M=
-X-Google-Smtp-Source: AA0mqf41uIJNbh5MT8caLnoNOSspT+AdtqoSc6ZRAEIikBMGOYilxWj5DfGJhr0UFqQbNW7UNpAXqeQnlIcXmBgXDW4=
-X-Received: by 2002:a17:902:7c0e:b0:189:907c:8390 with SMTP id
- x14-20020a1709027c0e00b00189907c8390mr19386697pll.126.1669906277209; Thu, 01
- Dec 2022 06:51:17 -0800 (PST)
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=YMGRCPfEFbclnUll8KLGsoB68L/AJJnDEUstiScUDbs=;
+ b=Y7bjSgi2r+BNTkzM0mvWWFPBOMPsvsWJaJz4cAEkGpwzhCyKGkOPUDv5qEEwnKE2hD
+ PSCxqo0nQTBzUneCWjZWvwGZ5CqCPfFidZF753iIFLAYfjunjGZ/knMxN90oX3MEE7UD
+ o4agc26sIfx/tCejZc+hVE9ubV5CG7mOiywX+5BYft99BevlDSPhns4c9Bn2Wlh912hu
+ QrEKxeVDchGoY6CXQ7qNI3/9pZSS4zDrPYFqeqZiKSRuaW8Qq5qYy3MxBM+kyelIuzkA
+ SAbFb7eUIifHYcmDDhams3K++0aaSvHRbIRquEOUxD5wRY3s1pEaZafXKyET2uyNXT+R
+ j/HQ==
+X-Gm-Message-State: ANoB5pknwWm7VLZ7APJYrl1HMyIPF989Bbc9J/L+79NFAU7UJmm1jsxW
+ zVJ2jiPcUIDu1kmPbMZZ/1B1cmJhDpuZHBF3N3o=
+X-Google-Smtp-Source: AA0mqf7Ch+pTulmhjv9zKGSWtbt18J3zSZcAizV2FN4dVrOm2f14cT2dhEyM/BVlXFPJCXM0jIBn06FBajLwt/NskyM=
+X-Received: by 2002:a17:907:1dc6:b0:78d:8533:be13 with SMTP id
+ og6-20020a1709071dc600b0078d8533be13mr69114462ejc.716.1670260545596; Mon, 05
+ Dec 2022 09:15:45 -0800 (PST)
 MIME-Version: 1.0
-References: <0ac435a3-95f4-c005-9834-ffb44360536c@tootai.net>
- <Y4inPePWAWCQ/Ejp@zx2c4.com>
- <CADo9pHij0DqLsHswwquhesi3N1L8v1n7-eaCjNQ=rV1vgO_Y-A@mail.gmail.com>
- <104a34b9-f27e-0daa-4ef2-d5e71af65639@tootai.net>
-In-Reply-To: <104a34b9-f27e-0daa-4ef2-d5e71af65639@tootai.net>
-From: Luna Jernberg <droidbittin@gmail.com>
-Date: Thu, 1 Dec 2022 15:51:06 +0100
-Message-ID: <CADo9pHi_42SWhMBTzWDfxeWO+pVr5kniXOBELOjwyzUdk2jLwg@mail.gmail.com>
-Subject: Re: Wireguard on Asahi Debian
-To: Daniel <tech@tootai.net>, wireguard <wireguard@lists.zx2c4.com>, 
- "Jason A. Donenfeld" <Jason@zx2c4.com>
+References: <CABBZOsks3ZnpcURYHSQcaWCe8ETY21zitPY5TvtTaAm38DT5EA@mail.gmail.com>
+ <834CB179-958C-4C0E-8B17-9918C8A992FB@mullvad.net>
+ <CABBZOs=9VVSDEGPw1eQWmusJotA5toLCn1-uNQeZ+moPthAOxg@mail.gmail.com>
+ <CAHmME9pZy+EYQbmrBi_5Ei191zJ_X3imSuZ_U766HhXp39MHbA@mail.gmail.com>
+In-Reply-To: <CAHmME9pZy+EYQbmrBi_5Ei191zJ_X3imSuZ_U766HhXp39MHbA@mail.gmail.com>
+From: Houman <houmie@gmail.com>
+Date: Mon, 5 Dec 2022 17:15:09 +0000
+Message-ID: <CABBZOs=yZj7R1oWrj9EUDk8QSGfbhNSjBLmhOtqAPrT5Esrh7A@mail.gmail.com>
+Subject: Re: Wireguard iOS crashes after upgrading to XCode 14
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: Andrej Mihajlov <and@mullvad.net>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailman-Approved-At: Thu, 01 Dec 2022 14:53:39 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -75,34 +72,40 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Ah i see
+Hi Jason,
 
-On Thu, Dec 1, 2022 at 3:49 PM Daniel <tech@tootai.net> wrote:
+I was wondering if there are still any plans to focus on the Apple
+development and bring the repo more up-to-date, please.
+
+Since the latest major development on the Wireguard Linux repo seems
+to have finished by 31st October, I was wondering if Apple dev could
+be prioritised next, please.
+
+I can see there was an update to the License file a couple of weeks
+ago. But the last real commit on Apple repo is from Sep 2021.
+
+Many Thanks,
+Houman
+
+
+On Thu, 22 Sept 2022 at 10:38, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
 >
->
-> Le 01/12/2022 =C3=A0 15:26, Luna Jernberg a =C3=A9crit :
-> > Thats Asahi with Arch Linux however and not Debian
-> https://git.zerfleddert.de/cgi-bin/gitweb.cgi/m1-debian/
+> On 9/22/22, Houman <houmie@gmail.com> wrote:
+> > Hi Andrej,
 > >
-> > On Thu, Dec 1, 2022 at 2:10 PM Jason A. Donenfeld <Jason@zx2c4.com> wro=
-te:
-> >> On Thu, Dec 01, 2022 at 01:24:07PM +0100, Daniel wrote:
-> >>> Hi All,
-> >>>
-> >>> I installed Asahi/Debian Bookworm from
-> >>>
-> >>> https://git.zerfleddert.de/cgi-bin/gitweb.cgi/m1-debian/
-> >>>
-> >>> and face a problem: installing wireguard shipped the Debian arm kerne=
-l
-> >>> and I can't get wg to work.
-> >>>
-> >>> Is there a solution for this ?
-> >> Appears to be available in Asahi's kernel:
-> >> https://github.com/AsahiLinux/PKGBUILDs/blob/9fb6fddfdd388190c099a723f=
-046acf7b8b6bd39/linux-asahi/config#L2462
+> > It works, well done!
+> >
+> > A strange thing though, before your patch I was still able to connect
+> > to the VPN server, if I changed the schema to Release instead of
+> > Debug.  Now with your patch it also works under Debug schema, which is
+> > fantastic.
+> > What could be the technical reason that it still worked under Release?
+> >
+> > And what will happen now, are you able to actually get this patch
+> > released on the official repo? The repo hasn't been updated for a
+> > year.  :-)
+> >
 >
-> --
-> Daniel Huhardeaux
-> +33.368460088@tootai.net              sip:820@sip.tootai.net
-> +41.445532125@swiss-itech.ch                tootaiNET
+> Yeah, I'll circle back Apple development at some point. No worries.
+>
+> Jason
