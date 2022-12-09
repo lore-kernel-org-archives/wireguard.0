@@ -4,27 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D63A6C352A1
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  7 Dec 2022 18:04:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D624AC4332F
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  9 Dec 2022 19:40:08 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 44ee0cd1;
-	Wed, 7 Dec 2022 18:02:30 +0000 (UTC)
-Received: from janet.servers.dxld.at (mail.servers.dxld.at [5.9.225.164])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a9e11d1b
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 460a66a7;
+	Fri, 9 Dec 2022 19:40:05 +0000 (UTC)
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com
+ [2a00:1450:4864:20::52f])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id bf973503
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 7 Dec 2022 18:02:29 +0000 (UTC)
-Received: janet.servers.dxld.at; Wed, 07 Dec 2022 19:02:28 +0100
-From: =?UTF-8?q?Daniel=20Gr=C3=B6ber?= <dxld@darkboxed.org>
-To: wireguard@lists.zx2c4.com
-Cc: "Jason A . Donenfeld" <Jason@zx2c4.com>,
- =?UTF-8?q?Daniel=20Gr=C3=B6ber?= <dxld@darkboxed.org>
-Subject: [PATCH] wg-quick: Allow setting iface VRF in PreUp hook
-Date: Wed,  7 Dec 2022 19:00:31 +0100
-Message-Id: <20221207180031.301766-1-dxld@darkboxed.org>
-X-Mailer: git-send-email 2.30.2
+ for <wireguard@lists.zx2c4.com>; Fri, 9 Dec 2022 19:40:04 +0000 (UTC)
+Received: by mail-ed1-x52f.google.com with SMTP id a16so4486369edb.9
+ for <wireguard@lists.zx2c4.com>; Fri, 09 Dec 2022 11:40:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=ey0LZJzlvHDRlouFvt2LI2hhONU8NWMtSWETLgyi72Y=;
+ b=DZ3XeEzgb99rF5wYggtVQCsvhBjlrKCoL6bv9rp4gf3jaQlkfh+IWBkvcdL6jt63V2
+ zp+bBT9MeaU/s/3TSlKTVBAMYiS1LBWzUvnGUfMfxXIDhdoaDOCV2wR+yF1YdWhIOgEK
+ Hb4Gj6cCImRGSIQipEFr1uvC+zFdu9x/tlGr8oinbt0eFB2pY1Q5xdanljuYjnH44EZq
+ HmoQ5nNxw2X/8texxQQECLdAX5MOgzfSpC1VS+TH3obH/SXOB42g0omjz8Myk4zLQTRB
+ h1No8ylXjipIWUZoteN/j4NPIHG/xMsvTW+M6p/CX6c4dv5KQxzoptLuNlwhuSD22t0p
+ +iyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ey0LZJzlvHDRlouFvt2LI2hhONU8NWMtSWETLgyi72Y=;
+ b=VaEbOOu/KV+BJAYul28H5Ilw6v7bCpWLJcenSc4UjPqln1eYLSAXtZOZep4QU32geU
+ NWzWwvcbp2X4+12RU+VnSpWdNH2a/RCrgyVdTp3Gk/KB5mJih2T1OG9OzK1RqfgNea9R
+ 2ThZzTNW/Z070QH8JUTNH0DL3hQVq7oA3mtvRtNxoW7hoBVZ2vI40rCnmOeQvmPDKdHg
+ 5OdcPM3Y1u3pBRWv4cpBUbSLOAglZSkSwe6mAdk5JUhWcz08i1e5nnr8syBjn89GP7R3
+ C56Y6uw+9DDjXX8Myj0LhxAZBBQ6DvH4W+w2Doz464YWMa66jBzPPC7XapqgTUBnF3cR
+ 8Ccw==
+X-Gm-Message-State: ANoB5pkwPLSArFBcH6xL8zIUzrKp6i1roH6lm90qQGSOw8K5JjrfY80T
+ AFKgL4mLGsJiyUwF8u1we/Yk0UEx5oaHyLzoVWCy6LdDgmvDtw==
+X-Google-Smtp-Source: AA0mqf4Jxk5hRC2YJ2GEYyHE/Zr7gWVEa/rBxB0DDj/LV9cvBscdmXGNDD2IJOJhxK9YaGo1JFK9v4g57jqb7tuhMn0=
+X-Received: by 2002:a05:6402:2da:b0:46e:8f95:2b49 with SMTP id
+ b26-20020a05640202da00b0046e8f952b49mr172278edx.74.1670614803584; Fri, 09 Dec
+ 2022 11:40:03 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From: Houman <houmie@gmail.com>
+Date: Fri, 9 Dec 2022 19:39:27 +0000
+Message-ID: <CABBZOs=pDoCAOdwBxRtzU5Bs__QA-pbc1mYqUddLT379BKw0kg@mail.gmail.com>
+Subject: Can Wireguard-tools be installed with Checkinstall?
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -39,94 +64,39 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Currently PreUp hooks run before the wireguard device is created. This is
-problematic for moving the device into a Linux VRFs as this will currently
-clear all assigned IPv6 addressess (possibly a bug), so if we did this in
-PostUp (i.e. before add_addr) we'll have to manually re-add all assigned
-addresses. This is obviously less than ideal.
+I would like to have an option to uninstall Wireguard, compile the
+latest and reinstall again.
+But I can't see "make uninstall" to be implemented. So what are my
+options to get a clean reinstallation of Wireguard?
 
-Instead create the wg device just before running PreUp hooks. We apply this
-to all platforms for consistency.
+I was playing with Checkinstall to install it as a package instead.
 
-Test case:
+git clone https://git.zx2c4.com/wireguard-tools
+make -C wireguard-tools/src -j$(nproc)
+cd ~/wireguard-tools/src/
+sudo checkinstall -y
 
-    $ ip link add vrf-test type vrf table 1234
-    $ ip link add wg-test type wireguard
-    $ ip addr add dev wg-test 192.168.42.42/24
-    $ ip addr add dev wg-test fe80::/64
+But even though the package is created and installed, it doesn't
+behave the same way as if I installed it with "make install".
+For example there is no /etc/wireguard, even though it said it created it:
 
-    $ ip -br addr show wg-test
-    wg-test          DOWN           192.168.42.42/24 fe80::/64
+========================= Installation results ===========================
+'wg' -> '/usr/bin/wg'
+'man/wg.8' -> '/usr/share/man/man8/wg.8'
+'completion/wg.bash-completion' -> '/usr/share/bash-completion/completions/wg'
+'wg-quick/linux.bash' -> '/usr/bin/wg-quick'
+install: creating directory '/etc/wireguard'
+'man/wg-quick.8' -> '/usr/share/man/man8/wg-quick.8'
+'completion/wg-quick.bash-completion' ->
+'/usr/share/bash-completion/completions/wg-quick'
+'systemd/wg-quick.target' -> '/lib/systemd/system/wg-quick.target'
+'systemd/wg-quick@.service' -> '/lib/systemd/system/wg-quick@.service'
 
-    $ ip link set dev wg-test master vrf-test
+======================== Installation successful ==========================
 
-    $ ip -br addr show wg-test
-    wg-test          DOWN           192.168.42.42/32
+Is Wireguard not compatible with Checkinstall?  Have I missed
+anything? Is there a better way to uninstall the compiled version of
+Wireguard cleanly without using checkinstall?
 
-Signed-off-by: Daniel Gröber <dxld@darkboxed.org>
----
- src/wg-quick/darwin.bash  | 2 +-
- src/wg-quick/freebsd.bash | 2 +-
- src/wg-quick/linux.bash   | 2 +-
- src/wg-quick/openbsd.bash | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/src/wg-quick/darwin.bash b/src/wg-quick/darwin.bash
-index 8e46818..c938112 100755
---- a/src/wg-quick/darwin.bash
-+++ b/src/wg-quick/darwin.bash
-@@ -452,8 +452,8 @@ cmd_up() {
- 	local i
- 	get_real_interface && die "\`$INTERFACE' already exists as \`$REAL_INTERFACE'"
- 	trap 'del_if; del_routes; exit' INT TERM EXIT
--	execute_hooks "${PRE_UP[@]}"
- 	add_if
-+	execute_hooks "${PRE_UP[@]}"
- 	set_config
- 	for i in "${ADDRESSES[@]}"; do
- 		add_addr "$i"
-diff --git a/src/wg-quick/freebsd.bash b/src/wg-quick/freebsd.bash
-index b529ab2..f72daf6 100755
---- a/src/wg-quick/freebsd.bash
-+++ b/src/wg-quick/freebsd.bash
-@@ -420,8 +420,8 @@ cmd_up() {
- 	local i
- 	[[ -z $(ifconfig "$INTERFACE" 2>/dev/null) ]] || die "\`$INTERFACE' already exists"
- 	trap 'del_if; del_routes; clean_temp; exit' INT TERM EXIT
--	execute_hooks "${PRE_UP[@]}"
- 	add_if
-+	execute_hooks "${PRE_UP[@]}"
- 	set_config
- 	for i in "${ADDRESSES[@]}"; do
- 		add_addr "$i"
-diff --git a/src/wg-quick/linux.bash b/src/wg-quick/linux.bash
-index 69e5bef..4193ce5 100755
---- a/src/wg-quick/linux.bash
-+++ b/src/wg-quick/linux.bash
-@@ -327,8 +327,8 @@ cmd_up() {
- 	local i
- 	[[ -z $(ip link show dev "$INTERFACE" 2>/dev/null) ]] || die "\`$INTERFACE' already exists"
- 	trap 'del_if; exit' INT TERM EXIT
--	execute_hooks "${PRE_UP[@]}"
- 	add_if
-+	execute_hooks "${PRE_UP[@]}"
- 	set_config
- 	for i in "${ADDRESSES[@]}"; do
- 		add_addr "$i"
-diff --git a/src/wg-quick/openbsd.bash b/src/wg-quick/openbsd.bash
-index 2adfe46..b58ecf5 100755
---- a/src/wg-quick/openbsd.bash
-+++ b/src/wg-quick/openbsd.bash
-@@ -417,8 +417,8 @@ cmd_up() {
- 	local i
- 	get_real_interface && die "\`$INTERFACE' already exists as \`$REAL_INTERFACE'"
- 	trap 'del_if; del_routes; exit' INT TERM EXIT
--	execute_hooks "${PRE_UP[@]}"
- 	add_if
-+	execute_hooks "${PRE_UP[@]}"
- 	set_config
- 	for i in "${ADDRESSES[@]}"; do
- 		add_addr "$i"
--- 
-2.30.2
-
+Many Thanks,
+Houman
