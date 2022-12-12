@@ -4,52 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D624AC4332F
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  9 Dec 2022 19:40:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E36BC4167B
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 12 Dec 2022 11:47:23 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 460a66a7;
-	Fri, 9 Dec 2022 19:40:05 +0000 (UTC)
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com
- [2a00:1450:4864:20::52f])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id bf973503
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 9 Dec 2022 19:40:04 +0000 (UTC)
-Received: by mail-ed1-x52f.google.com with SMTP id a16so4486369edb.9
- for <wireguard@lists.zx2c4.com>; Fri, 09 Dec 2022 11:40:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=ey0LZJzlvHDRlouFvt2LI2hhONU8NWMtSWETLgyi72Y=;
- b=DZ3XeEzgb99rF5wYggtVQCsvhBjlrKCoL6bv9rp4gf3jaQlkfh+IWBkvcdL6jt63V2
- zp+bBT9MeaU/s/3TSlKTVBAMYiS1LBWzUvnGUfMfxXIDhdoaDOCV2wR+yF1YdWhIOgEK
- Hb4Gj6cCImRGSIQipEFr1uvC+zFdu9x/tlGr8oinbt0eFB2pY1Q5xdanljuYjnH44EZq
- HmoQ5nNxw2X/8texxQQECLdAX5MOgzfSpC1VS+TH3obH/SXOB42g0omjz8Myk4zLQTRB
- h1No8ylXjipIWUZoteN/j4NPIHG/xMsvTW+M6p/CX6c4dv5KQxzoptLuNlwhuSD22t0p
- +iyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ey0LZJzlvHDRlouFvt2LI2hhONU8NWMtSWETLgyi72Y=;
- b=VaEbOOu/KV+BJAYul28H5Ilw6v7bCpWLJcenSc4UjPqln1eYLSAXtZOZep4QU32geU
- NWzWwvcbp2X4+12RU+VnSpWdNH2a/RCrgyVdTp3Gk/KB5mJih2T1OG9OzK1RqfgNea9R
- 2ThZzTNW/Z070QH8JUTNH0DL3hQVq7oA3mtvRtNxoW7hoBVZ2vI40rCnmOeQvmPDKdHg
- 5OdcPM3Y1u3pBRWv4cpBUbSLOAglZSkSwe6mAdk5JUhWcz08i1e5nnr8syBjn89GP7R3
- C56Y6uw+9DDjXX8Myj0LhxAZBBQ6DvH4W+w2Doz464YWMa66jBzPPC7XapqgTUBnF3cR
- 8Ccw==
-X-Gm-Message-State: ANoB5pkwPLSArFBcH6xL8zIUzrKp6i1roH6lm90qQGSOw8K5JjrfY80T
- AFKgL4mLGsJiyUwF8u1we/Yk0UEx5oaHyLzoVWCy6LdDgmvDtw==
-X-Google-Smtp-Source: AA0mqf4Jxk5hRC2YJ2GEYyHE/Zr7gWVEa/rBxB0DDj/LV9cvBscdmXGNDD2IJOJhxK9YaGo1JFK9v4g57jqb7tuhMn0=
-X-Received: by 2002:a05:6402:2da:b0:46e:8f95:2b49 with SMTP id
- b26-20020a05640202da00b0046e8f952b49mr172278edx.74.1670614803584; Fri, 09 Dec
- 2022 11:40:03 -0800 (PST)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e8c79ea8;
+	Mon, 12 Dec 2022 11:47:21 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1aaef889
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 12 Dec 2022 11:47:19 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 9D13160F98;
+ Mon, 12 Dec 2022 11:47:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0E18C433EF;
+ Mon, 12 Dec 2022 11:47:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1670845637;
+ bh=lWioGeYIzIqesYApk/JLuJOXnJyD7SbY2I0mQPcKIf4=;
+ h=From:To:Cc:Subject:Date:From;
+ b=q2dVmV6WTikcdIc/5QOlHYjekbmceuvLBIbn/4dUN2RrdzUR9NuvOsOv0wuCX7s1w
+ d/yIWo7deyNFS6gFnNcLw2VUtIymGjxptAA2rp3KR10Qs0aAJOb7Fio46OxFaHTmJu
+ wqh6b0toEmp8bdm0rVHZgDdRdVRjuVyfCqtLEpoov1bbjYMcWH05MXb8eWgoHnS67+
+ k2viP/B7jHJIBKzgNMuj58+5bCz1kM92RcH7HsCBUG+MwR206G1lMi1x7vQIF1PoGI
+ dnqKB7pjkb+y0u5ob1RinY8P4T2H90caG1gcEPj9SK9Aaa6ZaL/qc1BBxtu/6D/hUW
+ hi+2lwA2vH4QA==
+From: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
+To: Jason@zx2c4.com
+Cc: linux-kernel@vger.kernel.org, "Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+ Martin Liska <mliska@suse.cz>, "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>, wireguard@lists.zx2c4.com,
+ netdev@vger.kernel.org
+Subject: [PATCH v2] wireguard (gcc13): move ULLs limits away from enum
+Date: Mon, 12 Dec 2022 12:47:12 +0100
+Message-Id: <20221212114712.11802-1-jirislaby@kernel.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-From: Houman <houmie@gmail.com>
-Date: Fri, 9 Dec 2022 19:39:27 +0000
-Message-ID: <CABBZOs=pDoCAOdwBxRtzU5Bs__QA-pbc1mYqUddLT379BKw0kg@mail.gmail.com>
-Subject: Can Wireguard-tools be installed with Checkinstall?
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -64,39 +58,56 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-I would like to have an option to uninstall Wireguard, compile the
-latest and reinstall again.
-But I can't see "make uninstall" to be implemented. So what are my
-options to get a clean reinstallation of Wireguard?
+Since gcc13, each member of an enum has the same type as the enum [1]. And
+that is inherited from its members. Provided these two:
+  REKEY_AFTER_MESSAGES = 1ULL << 60
+  REJECT_AFTER_MESSAGES = U64_MAX - COUNTER_WINDOW_SIZE - 1
+the named type is unsigned long.
 
-I was playing with Checkinstall to install it as a package instead.
+This generates warnings with gcc-13:
+  error: format '%d' expects argument of type 'int', but argument 6 has type 'long unsigned int'
 
-git clone https://git.zx2c4.com/wireguard-tools
-make -C wireguard-tools/src -j$(nproc)
-cd ~/wireguard-tools/src/
-sudo checkinstall -y
+Define such high values as macros instead of in the enum. Note that
+enums are not guaranteed to hold unsigned longs in any way.
 
-But even though the package is created and installed, it doesn't
-behave the same way as if I installed it with "make install".
-For example there is no /etc/wireguard, even though it said it created it:
+And use BIT_ULL() for REKEY_AFTER_MESSAGES.
 
-========================= Installation results ===========================
-'wg' -> '/usr/bin/wg'
-'man/wg.8' -> '/usr/share/man/man8/wg.8'
-'completion/wg.bash-completion' -> '/usr/share/bash-completion/completions/wg'
-'wg-quick/linux.bash' -> '/usr/bin/wg-quick'
-install: creating directory '/etc/wireguard'
-'man/wg-quick.8' -> '/usr/share/man/man8/wg-quick.8'
-'completion/wg-quick.bash-completion' ->
-'/usr/share/bash-completion/completions/wg-quick'
-'systemd/wg-quick.target' -> '/lib/systemd/system/wg-quick.target'
-'systemd/wg-quick@.service' -> '/lib/systemd/system/wg-quick@.service'
+[1] https://gcc.gnu.org/bugzilla/show_bug.cgi?id=36113
 
-======================== Installation successful ==========================
+Cc: Martin Liska <mliska@suse.cz>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: wireguard@lists.zx2c4.com
+Cc: netdev@vger.kernel.org
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+---
 
-Is Wireguard not compatible with Checkinstall?  Have I missed
-anything? Is there a better way to uninstall the compiled version of
-Wireguard cleanly without using checkinstall?
+Notes:
+    [v2] move the constant out of enum (David)
 
-Many Thanks,
-Houman
+ drivers/net/wireguard/messages.h | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/net/wireguard/messages.h b/drivers/net/wireguard/messages.h
+index 208da72673fc..048125bdcd23 100644
+--- a/drivers/net/wireguard/messages.h
++++ b/drivers/net/wireguard/messages.h
+@@ -37,9 +37,10 @@ enum counter_values {
+ 	COUNTER_WINDOW_SIZE = COUNTER_BITS_TOTAL - COUNTER_REDUNDANT_BITS
+ };
+ 
++#define REKEY_AFTER_MESSAGES	BIT_ULL(60)
++#define REJECT_AFTER_MESSAGES	(U64_MAX - COUNTER_WINDOW_SIZE - 1)
++
+ enum limits {
+-	REKEY_AFTER_MESSAGES = 1ULL << 60,
+-	REJECT_AFTER_MESSAGES = U64_MAX - COUNTER_WINDOW_SIZE - 1,
+ 	REKEY_TIMEOUT = 5,
+ 	REKEY_TIMEOUT_JITTER_MAX_JIFFIES = HZ / 3,
+ 	REKEY_AFTER_TIME = 120,
+-- 
+2.38.1
+
