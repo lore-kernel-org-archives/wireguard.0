@@ -4,46 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E36BC4167B
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 12 Dec 2022 11:47:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C62EC4167B
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 12 Dec 2022 14:23:49 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e8c79ea8;
-	Mon, 12 Dec 2022 11:47:21 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7a9e3c75;
+	Mon, 12 Dec 2022 14:23:47 +0000 (UTC)
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1aaef889
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 191641de
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 12 Dec 2022 11:47:19 +0000 (UTC)
+ Mon, 12 Dec 2022 14:23:44 +0000 (UTC)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 9D13160F98;
- Mon, 12 Dec 2022 11:47:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0E18C433EF;
- Mon, 12 Dec 2022 11:47:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1670845637;
- bh=lWioGeYIzIqesYApk/JLuJOXnJyD7SbY2I0mQPcKIf4=;
- h=From:To:Cc:Subject:Date:From;
- b=q2dVmV6WTikcdIc/5QOlHYjekbmceuvLBIbn/4dUN2RrdzUR9NuvOsOv0wuCX7s1w
- d/yIWo7deyNFS6gFnNcLw2VUtIymGjxptAA2rp3KR10Qs0aAJOb7Fio46OxFaHTmJu
- wqh6b0toEmp8bdm0rVHZgDdRdVRjuVyfCqtLEpoov1bbjYMcWH05MXb8eWgoHnS67+
- k2viP/B7jHJIBKzgNMuj58+5bCz1kM92RcH7HsCBUG+MwR206G1lMi1x7vQIF1PoGI
- dnqKB7pjkb+y0u5ob1RinY8P4T2H90caG1gcEPj9SK9Aaa6ZaL/qc1BBxtu/6D/hUW
- hi+2lwA2vH4QA==
-From: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
-To: Jason@zx2c4.com
-Cc: linux-kernel@vger.kernel.org, "Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
- Martin Liska <mliska@suse.cz>, "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, wireguard@lists.zx2c4.com,
- netdev@vger.kernel.org
-Subject: [PATCH v2] wireguard (gcc13): move ULLs limits away from enum
-Date: Mon, 12 Dec 2022 12:47:12 +0100
-Message-Id: <20221212114712.11802-1-jirislaby@kernel.org>
-X-Mailer: git-send-email 2.38.1
+ by dfw.source.kernel.org (Postfix) with ESMTPS id A8C0D61053;
+ Mon, 12 Dec 2022 14:23:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA159C433EF;
+ Mon, 12 Dec 2022 14:23:40 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="jWEad5U3"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1670855017;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=EI3qlxgvMnT5OMYlRkhJ0Uy1WA8fWwEgE1pf1UuYfLA=;
+ b=jWEad5U3zCZw+p1vKs1Thrb5KqB1Y7zb5iO1bjGmVU/XDI6V5zJrLjRTnPBM+nPEJy69bi
+ EqF7CmUU03Phf+ktr+ubN8FH9Oykn3w8xX0H458rWKncg6hTdZz7+ttMrP5k8l7widxzzF
+ ReZo17nkwnJzZnZppkCfy9a9StejSVM=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 8f7b6bc2
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Mon, 12 Dec 2022 14:23:37 +0000 (UTC)
+Date: Mon, 12 Dec 2022 15:23:34 +0100
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
+Cc: linux-kernel@vger.kernel.org, Martin Liska <mliska@suse.cz>,
+ "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ wireguard@lists.zx2c4.com, netdev@vger.kernel.org
+Subject: Re: [PATCH v2] wireguard (gcc13): move ULLs limits away from enum
+Message-ID: <Y5c5ZtXy2nQzBmGC@zx2c4.com>
+References: <20221212114712.11802-1-jirislaby@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20221212114712.11802-1-jirislaby@kernel.org>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -58,56 +65,9 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Since gcc13, each member of an enum has the same type as the enum [1]. And
-that is inherited from its members. Provided these two:
-  REKEY_AFTER_MESSAGES = 1ULL << 60
-  REJECT_AFTER_MESSAGES = U64_MAX - COUNTER_WINDOW_SIZE - 1
-the named type is unsigned long.
+I have this queued up already as:
+https://git.zx2c4.com/wireguard-linux/commit/?id=3d9d8bba03db21f3276324cdba43c82be5d60729
 
-This generates warnings with gcc-13:
-  error: format '%d' expects argument of type 'int', but argument 6 has type 'long unsigned int'
+I liked this variant better.
 
-Define such high values as macros instead of in the enum. Note that
-enums are not guaranteed to hold unsigned longs in any way.
-
-And use BIT_ULL() for REKEY_AFTER_MESSAGES.
-
-[1] https://gcc.gnu.org/bugzilla/show_bug.cgi?id=36113
-
-Cc: Martin Liska <mliska@suse.cz>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: wireguard@lists.zx2c4.com
-Cc: netdev@vger.kernel.org
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
----
-
-Notes:
-    [v2] move the constant out of enum (David)
-
- drivers/net/wireguard/messages.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/net/wireguard/messages.h b/drivers/net/wireguard/messages.h
-index 208da72673fc..048125bdcd23 100644
---- a/drivers/net/wireguard/messages.h
-+++ b/drivers/net/wireguard/messages.h
-@@ -37,9 +37,10 @@ enum counter_values {
- 	COUNTER_WINDOW_SIZE = COUNTER_BITS_TOTAL - COUNTER_REDUNDANT_BITS
- };
- 
-+#define REKEY_AFTER_MESSAGES	BIT_ULL(60)
-+#define REJECT_AFTER_MESSAGES	(U64_MAX - COUNTER_WINDOW_SIZE - 1)
-+
- enum limits {
--	REKEY_AFTER_MESSAGES = 1ULL << 60,
--	REJECT_AFTER_MESSAGES = U64_MAX - COUNTER_WINDOW_SIZE - 1,
- 	REKEY_TIMEOUT = 5,
- 	REKEY_TIMEOUT_JITTER_MAX_JIFFIES = HZ / 3,
- 	REKEY_AFTER_TIME = 120,
--- 
-2.38.1
-
+Jason
