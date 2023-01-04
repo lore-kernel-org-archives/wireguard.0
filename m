@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 271FAC4332F
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  4 Jan 2023 16:42:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D4EDC46467
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  4 Jan 2023 23:41:20 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c2e2c7d2;
-	Wed, 4 Jan 2023 16:42:13 +0000 (UTC)
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com
- [2607:f8b0:4864:20::1032])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0f8b4259
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cd755ec8;
+	Wed, 4 Jan 2023 23:41:18 +0000 (UTC)
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com
+ [2a00:1450:4864:20::32a])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4ca5b3a8
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 4 Jan 2023 16:42:11 +0000 (UTC)
-Received: by mail-pj1-x1032.google.com with SMTP id n12so23767699pjp.1
- for <wireguard@lists.zx2c4.com>; Wed, 04 Jan 2023 08:42:10 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Wed, 4 Jan 2023 23:41:16 +0000 (UTC)
+Received: by mail-wm1-x32a.google.com with SMTP id m3so17940953wmq.0
+ for <wireguard@lists.zx2c4.com>; Wed, 04 Jan 2023 15:41:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=p37Hhkc2jhfwO2pNpqFsklfZydjbD0Bz259pcBvbbzg=;
- b=X988S4cnp6J1eOGE2KQ8r3vCAO+DSDG2/5YypoerulyfiU4Omo/14zcafjE4hCrHhy
- eE8b51Mc6a61q9ANKlXMIfNnvqoUf4HHXo2Mzb/uZ9xb/+UFXqLxCennSUdwpXEiJf9e
- dZzf7rrLsxibCcMAvoRh/W2d4ZZeZQDAHjBmn/P3kaD00cfep4xopzLZybIKdQgyQ59s
- hp09djD3N2TxnPm8S1lrHg9g/PcD1IuSwZM7La1AslZ3KpqxnHSo9AP28y36BrX4UmTB
- qxYdw3CJXDSxWMiSvxl0cdOzSgMABWbdZYXcCW+3XrFTNuAEoHKX3GlX6V9ObdUNklGo
- ZOhw==
+ bh=J7Y9rTfsAnYJPlrUdLUuRDaL1SAu/rQiHP4iWQR2BuQ=;
+ b=R5+F3LB6tu2rWtS16jIbbB2BTFUDkh6cle+6MTHYzcKPHxEBQGk8heNw+kA2DjfcL/
+ g/suYBdLqMxLpr1YNgROb+Qzp3cZbQZSzNY7X7FXGr6GMtgOKZnOGwY4zTD8jSIoRhZc
+ La5v5qgZ37R9J0a3h6j4EIP+ImLGEP+wG8bsj3J88XN8PE0kqaq5Cqu8BDdyG3SQayS+
+ rZpndMahQjrkRKP+iHvxuUu1hgMBFlGk16HzLDU9UtWXLmFALK5px6IGPN2Zc+/eklix
+ Nxf2hGmKFQwwCRbE7onBgZYFPsF66341cAi9FhnLVj+Wze80VYIWThjOB1tHRVOfDXmS
+ l5jQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=p37Hhkc2jhfwO2pNpqFsklfZydjbD0Bz259pcBvbbzg=;
- b=OPfuFiOdAviSh62q5N1FPHfbnvwlBu9Vl25undo2fKQEOhkAepNSmp69h4OZC897tX
- Q104XA0jmdWG+UDCfiS0G116SxEZXF46FnQL2MdkcIhUkiHv917R18g2koPMRnokH5fQ
- tW7oT7JYEEI+K1rURq3Plzrst6+wb+NFPkY+RFGZGKJGfQoIrYw5N268dhh3bwRwwmm3
- Qz5caD2JNPntsgdlD+2ANo3VyNAkh1Gj3/hnj8pkxD6cha1UhV7UKm+3+juIk4bDBld/
- bXbPud5sVD6mcpGuS0Of+SJ2hAfq1zmWBH+qbUNJaLh7ItakT42nIgCp195ayzNdvZsq
- c+jQ==
-X-Gm-Message-State: AFqh2kpQE2w/dmIjmdU+tuiWBiOlk4DIHkmG3Y6AY8NZo/udMPGc7823
- oR812lqQYdPSRFoRPgEme7Jy4ga/GmxvBHzvEY8=
-X-Google-Smtp-Source: AMrXdXsjO9gJaYFuzHAoYoxojB5ZFmQnDWehv8Ajt9bKU3E1f1w/i+d9XujC56tPN3R8fBEd1nGX1yuj1ZLt1/s/g2s=
-X-Received: by 2002:a17:90a:e38b:b0:219:4ae8:1d9b with SMTP id
- b11-20020a17090ae38b00b002194ae81d9bmr4054474pjz.147.1672850529190; Wed, 04
- Jan 2023 08:42:09 -0800 (PST)
+ bh=J7Y9rTfsAnYJPlrUdLUuRDaL1SAu/rQiHP4iWQR2BuQ=;
+ b=jj+w7UQgjEhQGga79M5xYnq4AepiT+2m/jAY22GXYzmgewCGMFaodZQWwOA1UOoukT
+ ct61SjEYp4XM1wvAULJ605EXZg4R2kD7btdk8fxEkKGAYSa/IcbAILoVy2ajJVLIsMK+
+ ihTgYS6kzJAzwyvS1kGKu/W6fafKbCfBuUznjtPAdqxl7yWHovf5jCayvJUuxDlLmZrH
+ m55p6PZ0OrsGxb16dINSP3xijs8O4rx/meZAsg5ZrqMFZbdYJ4oAhJ+s6tM++fMDdBgi
+ kC7VPpkm/bcIjtVYv6A+i61K5l/7LZN9THyP32t8+aGemws2I5kOFpJhsrPzQuOfSBO3
+ E45Q==
+X-Gm-Message-State: AFqh2ko+jiyHeMk6z6qqsBaPfCzjppR/Q+DnvapPK2+WdZSiGXTKuPg7
+ Emm7KJBHjs923WgyPOTAM7+qOJnEU+k8TMIhyoE=
+X-Google-Smtp-Source: AMrXdXtRBqYsnNQDHwheNMcLVNlnfK27Ej0S3aAniwX6bIWtj4c6qs4k8/bBE8C4eIJmjc9O7L520L5NzO+ncRxKR44=
+X-Received: by 2002:a05:600c:1d1d:b0:3d3:5737:3afc with SMTP id
+ l29-20020a05600c1d1d00b003d357373afcmr2931597wms.202.1672875676130; Wed, 04
+ Jan 2023 15:41:16 -0800 (PST)
 MIME-Version: 1.0
 References: <8798af73660eb86c6fd661be90af8b73@skidrow.la>
 In-Reply-To: <8798af73660eb86c6fd661be90af8b73@skidrow.la>
-From: Szymon Nowak <szymonn841@gmail.com>
-Date: Wed, 4 Jan 2023 17:41:59 +0100
-Message-ID: <CA+hy6dt_ovauoKPJpELD+sv6OUFx1zLHofMyuMroxg4=vuOa5Q@mail.gmail.com>
+From: Omkhar Arasaratnam <omkhar@gmail.com>
+Date: Wed, 4 Jan 2023 18:41:04 -0500
+Message-ID: <CAHx9msfDB5G7s=greo-7AxsgN463NQQsC7rmcR=ZhRSCJLHXYw@mail.gmail.com>
 Subject: Re: Prevent all traffic from going through the WG tunnel
 To: Jeremy Hansen <jeremy@skidrow.la>
 Cc: wireguard@lists.zx2c4.com
@@ -68,11 +68,15 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Correct settings
+Are your NAT rules necessary? They seem to be forcing *everything* through
 
-AllowedIPs = 10.10.10.10/32, 192.168.128.0/17, ::/1, 8000::/1
+--oa
 
-On Wed, Jan 4, 2023 at 2:48 PM Jeremy Hansen <jeremy@skidrow.la> wrote:
+
+--oa
+
+
+On Wed, Jan 4, 2023 at 8:50 AM Jeremy Hansen <jeremy@skidrow.la> wrote:
 >
 > I have a remote network that I've tied in to my WG server.  I'm noticing
 > that all traffic from this remote network that goes outbound to the
