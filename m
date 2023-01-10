@@ -4,43 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A28B2C46467
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Jan 2023 00:40:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C609C54EBC
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Jan 2023 00:40:30 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b5997566;
-	Thu, 12 Jan 2023 00:36:36 +0000 (UTC)
-Received: from mxint.skidrow.la (mxint.skidrow.la [45.79.85.189])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ace83e71
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fe8cad74;
+	Thu, 12 Jan 2023 00:36:40 +0000 (UTC)
+Received: from midgard.reox.at (midgard.reox.at [2a01:4f8:151:1288::2])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7e465d1e
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 4 Jan 2023 17:01:21 +0000 (UTC)
-Received: from mxint.skidrow.intra (mxint.skidrow.intra [192.168.177.206])
- by mxint.skidrow.la (Postfix) with ESMTPSA id B9099209AC;
- Wed,  4 Jan 2023 17:01:18 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mxint.skidrow.la B9099209AC
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=skidrow.la;
- s=20200308; t=1672851678;
- bh=CyhinR71Igor3qpPh2WBDDVmpsqeqb3LiGexJZehSYw=;
- h=Date:From:To:Subject:In-Reply-To:References:From;
- b=JKjUG8vS7Qpty7Kuni5+CTTN0hQDCZyYphwCMQ73qhTkF35ymeY3Y82i7FVHSeUTv
- waHXvlVOaBLIjkjYmuFbO6y/jX4u+aSs4771jI9X7/beUd8tUYNV6LQeRnyuwkUkZV
- c/H2vOTY/xzAGo7bY+bVo6osBnZ5z/D3ypSzerY9Si8Is6pcDtz5bywDZwL7FWU7Ko
- LrY6bxdnC6Qv0+uLcrFDxrGW9GmtR2N8DROsjHYEaaO82T2TNs720KTm/wVCdzl8cr
- hl2jneCNU3V3f79p/PDs0+YJ9OQaSsDrW1OwGGOUdvoGw1JTGPlO8qu0qRHY6svpBn
- k1gQTSvmB5HNw==
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 10 Jan 2023 09:44:45 +0000 (UTC)
+Received: from 127.0.0.1 (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (P-384) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ by midgard.reox.at (Postfix) with ESMTPSA id 2DA161200E6
+ for <wireguard@lists.zx2c4.com>; Tue, 10 Jan 2023 10:44:44 +0100 (CET)
+Message-ID: <fc9bde3b-2366-b9f2-3a90-aacf5890c9f4@reox.at>
+Date: Tue, 10 Jan 2023 10:44:43 +0100
 MIME-Version: 1.0
-Date: Wed, 04 Jan 2023 09:01:18 -0800
-From: Jeremy Hansen <jeremy@skidrow.la>
-To: "Contact@nagel-mail.com" <contact@nagel-mail.com>, Wireguard
- <wireguard@lists.zx2c4.com>
-Subject: Re: Prevent all traffic from going through the WG tunnel
-In-Reply-To: <C52E1F98-95C4-41C4-BF67-10618CDF0AEB@nagel-mail.com>
-References: <8798af73660eb86c6fd661be90af8b73@skidrow.la>
- <C52E1F98-95C4-41C4-BF67-10618CDF0AEB@nagel-mail.com>
-Message-ID: <d57da2b0589d47af917132a1342a9480@skidrow.la>
-X-Sender: jeremy@skidrow.la
-Organization: Skidrow
-Content-Type: multipart/signed; protocol="application/pgp-signature";
- boundary="=_2ab95b4adaee65f7a6f9fcc84dc063ac"; micalg=pgp-sha256
+From: reox <mailinglist@reox.at>
+Subject: Re: Connection hangs over CGNAT (Starlink)
+Content-Language: en-GB
+To: wireguard@lists.zx2c4.com
+References: <CALGY4fuH9oXpa34nzyj+jc94sS+ZQ5MaJUktFJF2A2-p213vEQ@mail.gmail.com>
+ <CA+hy6dtEXTG9wQJ0Cb=2iEgZd6bOpCghBinawgS5UPCQ+95sGA@mail.gmail.com>
+In-Reply-To: <CA+hy6dtEXTG9wQJ0Cb=2iEgZd6bOpCghBinawgS5UPCQ+95sGA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Mailman-Approved-At: Thu, 12 Jan 2023 00:36:34 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -56,190 +47,90 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+Interesting, because I was going to post a similar question here - but 
+would not have thought about multi-network.
+For me, this happens on my Android phone, where I use WG to route DNS 
+traffic to my own server.
+In some wifi networks, I get this issue that after some time (sometimes 
+only minutes, sometimes hours), that for example K9mail is unable to 
+fetch mails because it presumably runs into a DNS timeout (it cannot be 
+a connection timeout to the mail server, because that is not routed via WG)
+Toggling Wifi, switching to mobile network only, or toggling wireguard 
+solves the issue.
+I had this problem, however, also rarely in other wifis. Before that, I 
+thought that the wifi network itself was the culprit, but as it happens 
+also on other occasions, thus I thought it might be a combination of 
+specific wifi setup and my server setup.
+However, I have no idea how I could debug this, especially as DNS 
+requests using termux and dig work flawlessly, even though at the same 
+time k9mail hangs.
+Using KeepAlive did not work so far.
+I wanted to debug this further by running tcpdump on the server, but 
+unfortunately, I have right now no wifi where I can trigger this bug 
+reliably. In my own wifi, it happens every now and then - typically only 
+once a month or less...
 
---=_2ab95b4adaee65f7a6f9fcc84dc063ac
-Content-Type: multipart/mixed;
- boundary="=_fd5ae5900cd5d853b9480db49355851d"
+Best,
+Sebastian
 
---=_fd5ae5900cd5d853b9480db49355851d
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-
-
-Thank you for all who answered.  This is working as expected now and I 
-have a better understanding of how the AllowedIPs config works as well.
-
--jeremy
-
-On 2023-01-04 06:47, Contact@nagel-mail.com wrote:
-> Hello,
-> As I understand your question, you are trying to accomplish, that only
-> your WireGuard network ( extracted from your config some 10.0.0.0/8
-> network. The 192.168.128.0/17 would be a home network?)
-> Will be routed from your client to your WireGuard server. The rest
-> should just leave your client network card and routed from your local
-> network. For that you simply have to set: AllowedIPs = 10.10.10.1/32
-> Or the whole 10.x/x Network you are using.
-> Hope I understood your question correctly.
+On 17.12.2022 23:15, Szymon Nowak wrote:
+> I've noticed the same thing on a WIndows client, it happens when you
+> provide internet from two sources, e.g. Wifi and mobile network or
+> Wifi and LAN in case of computer, When one of these sources has a
+> problem and internet is not available on it. Then Wireguard stops
+> working even though it doesn't break the tunnel. Completely
+> disconnecting the faulty connection and reconnecting the tunleu solves
+> this problem. I don't know why they don't work even though the tunnel
+> is connected
 > 
-> Mit freundlichen Grüßen / best regards
-> 
-> J. Nagel
-> Fachinformatiker Systemintegration
-> 
-> Contact@Nagel-Mail.com
-> 
->> Am 04.01.2023 um 14:47 schrieb Jeremy Hansen <jeremy@skidrow.la>:
->> 
->> ﻿I have a remote network that I've tied in to my WG server.  I'm 
->> noticing that all traffic from this remote network that goes outbound 
->> to the internet is getting routed through my wireguard server.
->> 
->> Client config:
->> [Interface]
->> PrivateKey = XXXX
->> Address = 10.10.10.10/32
->> ListenPort = 51821
->> 
->> [Peer]
->> PublicKey = XXXX
->> Endpoint = 11.11.11.11:51821 <- IP of the WG server.
->> AllowedIPs = 0.0.0.0/0, ::/0
->> PersistentKeepAlive=25
->> 
->> 
->> Server config:
->> [Interface]
->> PrivateKey = XXXX
->> Address = 10.10.10.1/32
->> ListenPort = 51821
->> 
->> PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o 
->> %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eno1 -j MASQUERADE
->> PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o 
->> %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eno1 -j MASQUERADE
->> 
->> # IP forwarding
->> PreUp = sysctl -w net.ipv4.ip_forward=1
->> 
->> [Peer]
->> PublicKey = XXXX
->> AllowedIPs = 10.10.10.10/32, 192.168.128.0/17 <- Client's internal 
->> network.
->> 
->> 
->> My goal is that regular outbound traffic just goes out the client 
->> node's outside routable interface and traffic between the internal 
->> networks goes through wireguard.
->> 
->> For example, I'm seeing email being sent through the MTA I have 
->> configured on the "client" is showing up as originating from the 
->> outbound IP of the "server".
->> 
+> On Sat, Dec 17, 2022 at 11:05 PM Nikolay Martynov <mar.kolya@gmail.com> wrote:
+>>
+>> Hi!
+>>
+>> I'm experiencing strange behaviour with wireguard: from time to time
+>> connection 'freezes'.
+>> Most often I'm observing this on an Android phone when connected from
+>> my home over Starlink.
+>> Server: latest Openwrt, Client: latest Android app.
+>> The connection establishes and works fine for some time. After some
+>> time the client still shows connection is established, but no incoming
+>> data is coming.
+>> On a server side 'latest handshake' goes into hours/days.
+>> The freeze happens randomly, for no apparent reason and I think only
+>> over starlink. I do not think I have ever observed this problem on
+>> cell networks.
+>>
+>> Reconnection solves the problem immediately.
+>> I did some tcpdumping when the problem was present and found the following:
+>> * Server side sees incoming traffic from the client and sends responses.
+>> * On my own router connected to Starlink (i.e. interface between my
+>> router and Starlink router) I see data going from the client to the
+>> server - but no packets coming back.
+>>
+>> So my 'hypothesis' is that somehow Starlink's CGNAT 'forgets' one side
+>> of the connection - and so data continues to go in one direction, but
+>> it doesn't come back. The thing with the wireguard is that it looks
+>> like it doesn't change the outgoing port when it attempts to do
+>> another handshake. This means that it continues using the same 'half
+>> broken' connection forever.
+>>
+>> I think the same happens to me at least once on a Linux client - but
+>> the difference with the phone is that the phone is always on and
+>> therefore the duration of the connection is much longer.
+>>
+>> I tried experimenting with keepalive messages - but it looks like they
+>> make no difference. Once connection freezes I see keepalived arriving
+>> onto the server, server sending reply - but that reply never arrives
+>> to the client.
+>>
+>> It looks like the solution to this problem would be for the client to
+>> use a different outgoing port when sending a handshake but I was not
+>> able to find an option for that.
+>>
+>> Is this something that is possible to do?
 >> Thanks!
->> <0x1BF1B863.asc>
-
---=_fd5ae5900cd5d853b9480db49355851d
-Content-Transfer-Encoding: 7bit
-Content-Type: application/pgp-keys;
- name=0x1BF1B863.asc
-Content-Disposition: attachment;
- filename=0x1BF1B863.asc;
- size=3959
-
------BEGIN PGP PUBLIC KEY BLOCK-----
-
-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
-=WcFU
------END PGP PUBLIC KEY BLOCK-----
-
---=_fd5ae5900cd5d853b9480db49355851d--
-
-
---=_2ab95b4adaee65f7a6f9fcc84dc063ac
-Content-Type: application/pgp-signature;
- name=signature.asc
-Content-Disposition: attachment;
- filename=signature.asc;
- size=833
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEE6ymR/mT7hGiXMC8qMnfv/BvxuGMFAmO1sN4ACgkQMnfv/Bvx
-uGMffQ/9FfxTS/cVMdNB2vqSoTRo+gEThegzZHGUMJmpkzDI4jLOpVmUOJ1ZkSyp
-EqXju88OoNwGNJTVvsg3d1StfMq7hLYEa+SFCCBVZZR9mdGnT4g4LuA05J73RMX2
-L2HmihD3Ry0b6QPOWYt224cXw0w4/D9Kt11pafrLFrxwP5rx80PTEYVLoEMoriGt
-2sgN2jUA4SOsiQYvf9uCZL+I2NZcJuRIt85OMEJ8ZIy5dXmdeCxgZ66ZjUu4lExI
-qn80cCes19eg82CpxUAFkW6YkwtXxWY8YWvFRjk+pRkQFT26BbfmhPQVJEV4UKOy
-oSbwuCJLuOvmdW72EBiOZU7vALPeRJborLJt/NJqEBV2l4q3ivYrNEhUK9BGBWSV
-v44zUe1x3uK3/cRUrocSNRbLkn9gP5rNc5mNVlIjawGXSyJrCDyyYEfF16IvL4EA
-uJ7JvpF5z9ri+6Zip+6sojrg8RXepzkOZBHIClGGoNtVLOgTljcLIP3Oja8/k+zW
-r3NKWVB/2KePGUgpZ8mua8nHwYpOiRzud2SXaC11OQN+pETgQjJ3JXCz6ODuEJoh
-gg1QHXh5mO9bHQOXhnqE7pHpmQ6NsGsqJj1xKOmGDP6nOvmChqmEVIL9RGEatcf/
-wdoSz0CNr74zJmcKcWa8YXTyK2zDQ6Wsq3/WhyKsTL7A5sS0Y7U=
-=tCdv
------END PGP SIGNATURE-----
-
---=_2ab95b4adaee65f7a6f9fcc84dc063ac--
+>>
+>>
+>> --
+>> Martynov Nikolay.
+>> Email: mar.kolya@gmail.com
