@@ -4,47 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA0A8C38142
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 27 Jan 2023 23:35:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB23AC636CC
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  7 Feb 2023 04:32:59 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bd42a6bb;
-	Fri, 27 Jan 2023 23:35:23 +0000 (UTC)
-Received: from mail.onetrix.net (eleanor.onetrix.net [86.59.13.171])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3b202144
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6bec46b0;
+	Tue, 7 Feb 2023 04:29:36 +0000 (UTC)
+Received: from mx.mokrynskyi.com (mx.mokrynskyi.com [46.4.12.50])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1730f936
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 27 Jan 2023 23:35:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=chil.at;
- s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
- References:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:Cc:
- Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=bX3rajYrXnRy3LYJ7J6ccAn17VxmopJsY91TXpkG+Aw=; b=JDR/amw+sWV4byledJjwlYZkAN
- wMrls4Xp0OoUb7SpmHwXtofqg4WBgyz6gFvMu1/TBrgVns7lNrJAjkcHYaB34xlGW17z6w6R6N3cj
- mPiaGkH0qxGPX+fYiIYZSkYsjvPSDhBVhm1A5o0fa7YYPUmKSb/uoy2ZfjJEhZ8Y2a+g=;
-Received: from [10.5.44.225] (port=30154 helo=mail.onetrix.net)
- by mail.onetrix.net with esmtps (TLS1) tls TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
- (Exim 4.96) (envelope-from <mail@chil.at>) id 1pLYFB-0002VX-2B
- for wireguard@lists.zx2c4.com; Sat, 28 Jan 2023 00:35:13 +0100
-Received: from [172.27.0.87] (10.5.44.244) by mail.onetrix.net (10.5.44.225)
- with Microsoft SMTP Server (TLS) id 14.1.438.0; Sat, 28 Jan 2023 00:34:53
- +0100
-Message-ID: <373d9237-1b23-93cd-fa4e-b5fc14e6007b@chil.at>
-Date: Sat, 28 Jan 2023 00:34:53 +0100
+ Sat, 21 Jan 2023 13:22:38 +0000 (UTC)
+Received: from localhost (localhost [127.0.0.1])
+ by mx.mokrynskyi.com (Postfix) with ESMTP id 2604532D476
+ for <wireguard@lists.zx2c4.com>; Sat, 21 Jan 2023 13:22:38 +0000 (UTC)
+Authentication-Results: mx.mokrynskyi.com (amavisd-new);
+ dkim=pass (1024-bit key) reason="pass (just generated, assumed good)"
+ header.d=mokrynskyi.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mokrynskyi.com;
+ h=content-transfer-encoding:content-type:content-type:subject
+ :subject:from:from:content-language:to:user-agent:mime-version
+ :date:date:message-id; s=dkim; t=1674307356; x=1675171357; bh=pB
+ kgYdcjwLEoZKDgXdrPDZPJiGP7CU+ToTh+ri9Y0tQ=; b=t2LWayYtzrpJFk8c6k
+ Kk8SbRpLNxzbC2dFepdJYn6/p3Z/SNfM8TSft2INMeJlv8kFqixn1Q9JR8h/yoLm
+ k3sy6AkHsmogIX2/8urUTLD0CuLa4ev74jodzfAfKf5iwgkS6SXgJZYyV/OiBsab
+ 32KCMNEgpUfPFnkPApZjlFwQc=
+X-Virus-Scanned: Debian amavisd-new at mx.mokrynskyi.com
+Received: from mx.mokrynskyi.com ([127.0.0.1])
+ by localhost (mx.mokrynskyi.com [127.0.0.1]) (amavisd-new, port 10026)
+ with ESMTP id wgiosSenJwZo for <wireguard@lists.zx2c4.com>;
+ Sat, 21 Jan 2023 13:22:36 +0000 (UTC)
+Received: from [192.168.1.2] (unknown [176.100.4.39])
+ by mx.mokrynskyi.com (Postfix) with ESMTPSA id E5DE932D474
+ for <wireguard@lists.zx2c4.com>; Sat, 21 Jan 2023 13:22:35 +0000 (UTC)
+Message-ID: <5e029a99-a860-0ae0-be72-df53cf82d0ce@mokrynskyi.com>
+Date: Sat, 21 Jan 2023 15:22:35 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: User on mailinglist that collects addresses to send spam?
-To: <wireguard@lists.zx2c4.com>
-References: <5d0d60df-ee8c-87ab-379b-31ed33675668@chil.at>
- <Y8Zr+l4j2oqjLqLP@mail.kent-dobias.com>
- <f982e6d1-902f-d698-892d-54c5bb041844@chil.at>
-From: Christoph Loesch <wireguard-mail@chil.at>
-In-Reply-To: <f982e6d1-902f-d698-892d-54c5bb041844@chil.at>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101
+ Thunderbird/109.0
+To: wireguard@lists.zx2c4.com
+Content-Language: ru
+From: Nazar Mokrynskyi <nazar@mokrynskyi.com>
+Subject: Allow client-side encrypted backups for Android app
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.5.44.244]
+X-Mailman-Approved-At: Tue, 07 Feb 2023 04:29:34 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -59,37 +62,13 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+Basically this: https://github.com/seedvault-app/seedvault/wiki/FAQ#why-do-some-apps-not-allow-to-get-backed-up
 
-wouldn't it be a consideration worth to hide or at least obfuscate mail addresses a bit more in mailman on this list here?
-Mailman is able to obfuscate this better, see for example on lists.funkfeuer.at
+I'm moving to non-rooted ROM for the first time in many years (GrapheneOS) and it is a major pain to configure all the apps manually when apps deliberately disable backups in their apps.
 
-Since I wrote the first time here about the "offer" I got, I'm getting more and more "spam" in the last weeks on the address I registered here on this list.
+According to following example provided it is trivial to do: https://github.com/grote/Transportr/commit/4dc38f429f75909a088d8bd8a5b3b5ddd8030f71
 
-How do you work with this situation? Update/add rules in Mailfilter until the next mail comes through? Cat and mouse game? ;)
+-- 
+Sincerely, Nazar Mokrynskyi
+github.com/nazar-pc
 
-Kind regards,
-
-Am 17.01.2023 um 19:42 schrieb Christoph Loesch:
-> Hi,
->
-> thank you for the for explanation.
->
-> Interesting, some months ago I wanted to lookup something in the archive and couldn't access it, so I assumed since then that the archive is not publicly available.
-> Was maybe some hickup or temporary issue...
->
-> Well, that explains it then..
->
-> Thanks and kind regards!
->
-> Am 17.01.2023 um 10:35 schrieb Jaron Kent-Dobias:
->> Hello,
->>
->> On Tuesday, 17 January 2023 at 00:45 (+0100), Christoph Loesch wrote:
->>> I use a separate mail-address for every site/contact who wants my mail-address. Just checked my spam-folder and what do I see? a mail from janisa@onertronics.com to my wireguard mail-address which I use only for this mailinglist. So I guess janisa@onertronics.com is collecting mail-addresses here and then sending unwanted spam-mails.
->>
->> It's nothing so complicated: the wireguard list is publicly archived online, addresses included (with minor obfuscation).
->>
->> An example: https://lists.zx2c4.com/pipermail/wireguard/2019-July/004276.html
->>
->> Jaron
