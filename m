@@ -4,65 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B07D9C636D4
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  7 Feb 2023 04:33:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FEBBC636CD
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  7 Feb 2023 04:33:01 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5095d81c;
-	Tue, 7 Feb 2023 04:29:42 +0000 (UTC)
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com
- [2a00:1450:4864:20::62a])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0f9f4e5c
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id afd50038;
+	Tue, 7 Feb 2023 04:29:45 +0000 (UTC)
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com
+ [2607:f8b0:4864:20::32f])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id caa96a9c
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 25 Jan 2023 09:28:39 +0000 (UTC)
-Received: by mail-ej1-x62a.google.com with SMTP id mg12so45929233ejc.5
- for <wireguard@lists.zx2c4.com>; Wed, 25 Jan 2023 01:28:39 -0800 (PST)
+ Wed, 25 Jan 2023 16:13:48 +0000 (UTC)
+Received: by mail-ot1-x32f.google.com with SMTP id
+ 39-20020a9d032a000000b006884aad0b15so1430250otv.12
+ for <wireguard@lists.zx2c4.com>; Wed, 25 Jan 2023 08:13:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=content-transfer-encoding:subject:from:content-language:to
- :user-agent:mime-version:date:message-id:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4vcw7yO7blJOgy8OSXYi46oJi3qabDRPz4k/+Dgmjn8=;
- b=Q4yjqg18jeAoTY+sRRJoIkbrZZyF51y/QFGuTG+O9h+u0LSoy1LOGnKoF9E1rzQX+/
- vtLBmOjc3hQj1aVZqilWYAeJpnjTsotKiOQt4LKyTaKhT11/bVVftbIVE5t1hw85dO9g
- 5reVGB5mhVgr+68+glxW8fjIXgbEOCUp2D4JhwYZtuAKR/VogkfkJKNsIkX1oC9ZlKIr
- Su7chg5ZcsnAyKTZJq57IMMjHvOpcKhk163vmqHzBlVerJMql913zGhcj42kVVR0guIG
- ALoLIa7owbmPQP73z2dFkJMkotssojSdnyX/5XpHA5vF7WgdVkhNA8QOwWfBab+vc4eJ
- t5UA==
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=NIo3UxTnmfivJFlEKzzWu/L9/ZBKXUAEAwDFxvMOsVs=;
+ b=Yqu6kRWJOBKPm98ofrbBm14VoHdNUSIM1zn0KDUQ/b6goY+y9iwv5VW7pSdXn6V33U
+ xEA8Demn6mIvPssjPZOz9SSsC16kMy2SpNz6F+nhNpQNyIq9MfQhthYyIimSeTo0vo1G
+ LFZ7Yegx1IkfadB3El71ir2bg+ZZhUSThV/hawGpJ8bl1e9Mb48BXDVlIAO65cPTVunp
+ 2ZLSHpPnZAiCm9Uc1QUGUMTqYvQUePLpyF//Pc1vk+U20mzmBny/zF9VVmgYkWsBaOWw
+ xAAqFhM9MHP8k6pzxoXXlrzu5gQiSKwy24wKoPBKfzNbwERGTWGTIb5dSVEcZjQfbqc+
+ 6bnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=content-transfer-encoding:subject:from:content-language:to
- :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=4vcw7yO7blJOgy8OSXYi46oJi3qabDRPz4k/+Dgmjn8=;
- b=C5YMN1RmS7bCYpP7WnlsdxLbDL3ooeBCF4Po24v0bpCR6E88lfe4Yq5p8BM5Api2WY
- dvqy4yboa/mzoBcFPZJjK4i6NScEiewylDsqLMrTmFa9Nd8NU7iBBrPGENd8scVYDTFi
- GqZ9QSpSL1y+CedCrVcVsMdAKotvm/tEpTS7Re25ZnVugAiz8wYTa6bEfq/WI+7SLj5c
- g7eus34pzpRlWDHErH4Cmae6gTkjZcATBwZ+sYf2095H1QzqNMxUTtdeVLfqWl9SZmDU
- dpW4Ohqf7GbJxQpNzNjbpaMAQ6R8vXbJyK7eYOLY67A26KpekGwtnC9HhA6Om2Zzoxj4
- ZKcg==
-X-Gm-Message-State: AFqh2kqRb+6CAXyV3iNUr6dPNyvO7y4Jv8YpN96DRxesAhvCf7VdIsFv
- HaMRgqqvDz3baLN9O6aMbGqWBnOG9xc=
-X-Google-Smtp-Source: AMrXdXuoriZVaVulJQlIMQgLg01Odaq0bajcir4kkWzMbDhQ68F5whUhfWaqes76+ueepRM8p3mEGA==
-X-Received: by 2002:a17:906:70c7:b0:84c:a863:ebe6 with SMTP id
- g7-20020a17090670c700b0084ca863ebe6mr26025673ejk.43.1674638918992; 
- Wed, 25 Jan 2023 01:28:38 -0800 (PST)
-Received: from [192.168.0.40] (a89-182-222-194.net-htp.de. [89.182.222.194])
- by smtp.gmail.com with ESMTPSA id
- fx35-20020a1709069ea300b0085d6bfc6201sm2092110ejc.86.2023.01.25.01.28.38
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Jan 2023 01:28:38 -0800 (PST)
-Message-ID: <d9bf06e6-ded9-e857-5713-566bdcbd4e8c@gmail.com>
-Date: Wed, 25 Jan 2023 10:28:37 +0100
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=NIo3UxTnmfivJFlEKzzWu/L9/ZBKXUAEAwDFxvMOsVs=;
+ b=6XVZbw6ciKuhThSh6K/K+6BiHIZwD1BksTqL+Sw8NqkEaX6TwaI7S1a42DDw5kLfaE
+ ov6dNu+epN/rOKHjj1Vo9XF+HHVPlqajADFtsWrfrc81HKKHJ+QIwosz1CyePHeiPICo
+ 5a64DAZOuoZ3nftp+eEU7fUszJtqfcc9j9fcgdHOBsZ6+Mp8ezy83JCaBkYCMAr5zbew
+ wEY0bAzd+96bZarCmte95IazzEOGT3xVBqvEGzb3Epfzlc9wWln4LIVgcnrmjpVjedTN
+ TSLpdSSNJqGqEX3Oqu/xQEiS9pBrWtdrd07KJwmvAW4/qGH7lkiNIbWgWwHnIZxh/y++
+ 9nZQ==
+X-Gm-Message-State: AFqh2kraXdkiCDqw1Wly+H+7ncYK7PwEaocQ3lH7UKer7+BEZr7qA/4T
+ rgAGbbqWrbH761d2qCr8cmu67GXxHwN8dwE/k8SRtqIbmjA=
+X-Google-Smtp-Source: AMrXdXsW6HrqGl3VVUWHFuaJovbaZbS1Fm4ow7pJn9Bowcud89Qd23GG6s2WKKYWgYLcxKh7sk2jimTELxZGCWqnTwo=
+X-Received: by 2002:a9d:333:0:b0:684:c520:d7a3 with SMTP id
+ 48-20020a9d0333000000b00684c520d7a3mr1695972otv.126.1674663226526; Wed, 25
+ Jan 2023 08:13:46 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
+From: Andy Xheli <andyxheli@gmail.com>
+Date: Wed, 25 Jan 2023 10:13:36 -0600
+Message-ID: <CAPJ9KJ89+xZMs9uc2bVZWU=FpDoJSygJ3QCWr5qv5-x3=VOJdA@mail.gmail.com>
+Subject: VPN Client don't not disconnect while server is offline
 To: wireguard@lists.zx2c4.com
-Content-Language: de-DE, en-US
-From: Andre Heider <a.heider@gmail.com>
-Subject: android and endpoint dyndns
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="UTF-8"
 X-Mailman-Approved-At: Tue, 07 Feb 2023 04:29:34 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -78,43 +67,17 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi all,
+Hi All,
 
-I'm using wireguard on android, and it works just fine.
+So I noticed that when I bring down the WireGuard server all the
+clients still show as connected\active. I noticed it because I brought
+the server down and I was not able to get out to the internet. I'm
+doing a split tunnel. I only route my internal network via wireguard
+and I have set it to use the dns server on my internal network. Looks
+like it is still trying to use the DNS server via vpn client even if
+the server is off. I think there should be a better way to handle the
+connections if the server is offline. The client should not show
+connected\active or try not to use dns via wiregaurd if the server is
+offline.
 
-The wg endpoint also has it's own dns server, which I too configured on 
-the wg droid app, so I can reach my network boxes with their internal 
-domain names.
-
-I also enabled "Always-on VPN" and "Block connections without VPN" on 
-the phone's system settings, so everything goes through the wg 
-interface. When it's not up nothing gets in or out - just as desired.
-
-Unfortunately I have to live with a changing ip on the server/endpoint. 
-Which is why I use a dyndns hostname as wg endpoint.
-
-Now, if I set "Private DNS" on the droid's system settings to a specific 
-*public* server ("Private DNS provider hostname"), it even works if the 
-ip of my wg server changes! Meaning the wg vpn setup automagically picks 
-up the new ip. (How, btw? Is that an android feature or implemented on 
-the wg app?).
-
-But using a public server there obviously breaks reaching my internal 
-boxes using their domain names, since those are only provided by my own 
-dns server. And for that, I have to set "Private DNS" to "Automatic". 
-But that in return breaks the wg setup if my endpoint's ip changes, I 
-have to manually dis/reenable the wg interface then. The workflow/around 
-then becomes:
-- set "Private DNS" to "Automatic"
-- disable wg interface
-- enable wg interface
-- set "Private DNS" to "Private DNS provider hostname"
-
-Which gets really annoying as you can imagine.
-
-Is there a solution to this? I guess if the wg app would use a specific 
-dns server to just resolve the endpoint's hostname it should work? Is 
-that possible?
-
-Thanks,
-Andre
+What do you all think?
