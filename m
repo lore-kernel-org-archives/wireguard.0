@@ -4,54 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FEBBC636CD
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  7 Feb 2023 04:33:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74A57C6379F
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  7 Feb 2023 04:33:02 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id afd50038;
-	Tue, 7 Feb 2023 04:29:45 +0000 (UTC)
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com
- [2607:f8b0:4864:20::32f])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id caa96a9c
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 303079e8;
+	Tue, 7 Feb 2023 04:29:46 +0000 (UTC)
+Received: from einhorn-mail-out.in-berlin.de (einhorn.in-berlin.de
+ [192.109.42.8])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 65d6d33f
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 25 Jan 2023 16:13:48 +0000 (UTC)
-Received: by mail-ot1-x32f.google.com with SMTP id
- 39-20020a9d032a000000b006884aad0b15so1430250otv.12
- for <wireguard@lists.zx2c4.com>; Wed, 25 Jan 2023 08:13:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=NIo3UxTnmfivJFlEKzzWu/L9/ZBKXUAEAwDFxvMOsVs=;
- b=Yqu6kRWJOBKPm98ofrbBm14VoHdNUSIM1zn0KDUQ/b6goY+y9iwv5VW7pSdXn6V33U
- xEA8Demn6mIvPssjPZOz9SSsC16kMy2SpNz6F+nhNpQNyIq9MfQhthYyIimSeTo0vo1G
- LFZ7Yegx1IkfadB3El71ir2bg+ZZhUSThV/hawGpJ8bl1e9Mb48BXDVlIAO65cPTVunp
- 2ZLSHpPnZAiCm9Uc1QUGUMTqYvQUePLpyF//Pc1vk+U20mzmBny/zF9VVmgYkWsBaOWw
- xAAqFhM9MHP8k6pzxoXXlrzu5gQiSKwy24wKoPBKfzNbwERGTWGTIb5dSVEcZjQfbqc+
- 6bnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=NIo3UxTnmfivJFlEKzzWu/L9/ZBKXUAEAwDFxvMOsVs=;
- b=6XVZbw6ciKuhThSh6K/K+6BiHIZwD1BksTqL+Sw8NqkEaX6TwaI7S1a42DDw5kLfaE
- ov6dNu+epN/rOKHjj1Vo9XF+HHVPlqajADFtsWrfrc81HKKHJ+QIwosz1CyePHeiPICo
- 5a64DAZOuoZ3nftp+eEU7fUszJtqfcc9j9fcgdHOBsZ6+Mp8ezy83JCaBkYCMAr5zbew
- wEY0bAzd+96bZarCmte95IazzEOGT3xVBqvEGzb3Epfzlc9wWln4LIVgcnrmjpVjedTN
- TSLpdSSNJqGqEX3Oqu/xQEiS9pBrWtdrd07KJwmvAW4/qGH7lkiNIbWgWwHnIZxh/y++
- 9nZQ==
-X-Gm-Message-State: AFqh2kraXdkiCDqw1Wly+H+7ncYK7PwEaocQ3lH7UKer7+BEZr7qA/4T
- rgAGbbqWrbH761d2qCr8cmu67GXxHwN8dwE/k8SRtqIbmjA=
-X-Google-Smtp-Source: AMrXdXsW6HrqGl3VVUWHFuaJovbaZbS1Fm4ow7pJn9Bowcud89Qd23GG6s2WKKYWgYLcxKh7sk2jimTELxZGCWqnTwo=
-X-Received: by 2002:a9d:333:0:b0:684:c520:d7a3 with SMTP id
- 48-20020a9d0333000000b00684c520d7a3mr1695972otv.126.1674663226526; Wed, 25
- Jan 2023 08:13:46 -0800 (PST)
-MIME-Version: 1.0
-From: Andy Xheli <andyxheli@gmail.com>
-Date: Wed, 25 Jan 2023 10:13:36 -0600
-Message-ID: <CAPJ9KJ89+xZMs9uc2bVZWU=FpDoJSygJ3QCWr5qv5-x3=VOJdA@mail.gmail.com>
-Subject: VPN Client don't not disconnect while server is offline
+ Sat, 28 Jan 2023 13:20:17 +0000 (UTC)
+X-Envelope-From: philipp@tiesel.net
+X-Envelope-To: <wireguard@lists.zx2c4.com>
+Received: from x-berg.in-berlin.de (x-change.in-berlin.de [217.197.86.40])
+ by einhorn.in-berlin.de  with ESMTPS id 30SDKHei709770
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT)
+ for <wireguard@lists.zx2c4.com>; Sat, 28 Jan 2023 14:20:17 +0100
+Received: from [2a0a:4580:1018:451:9c90:3f7b:265d:f1cf] (helo=smtpclient.apple)
+ by x-berg.in-berlin.de with esmtpsa (TLS1.2) tls
+ TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <philipp@tiesel.net>) id 1pLl7w-0003Xj-Q8
+ for wireguard@lists.zx2c4.com; Sat, 28 Jan 2023 14:20:16 +0100
+From: "Philipp S. Tiesel" <philipp@tiesel.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.300.101.1.3\))
+Subject: Wireguard packets over IPv6 are not fragmented to path MTU 
+Message-Id: <CA8508EC-5233-4DA4-B9FC-0301C2BA9593@tiesel.net>
+Date: Sat, 28 Jan 2023 14:20:06 +0100
 To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Apple Mail (2.3731.300.101.1.3)
 X-Mailman-Approved-At: Tue, 07 Feb 2023 04:29:34 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -67,17 +51,41 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi All,
+Hi,
 
-So I noticed that when I bring down the WireGuard server all the
-clients still show as connected\active. I noticed it because I brought
-the server down and I was not able to get out to the internet. I'm
-doing a split tunnel. I only route my internal network via wireguard
-and I have set it to use the dns server on my internal network. Looks
-like it is still trying to use the DNS server via vpn client even if
-the server is off. I think there should be a better way to handle the
-connections if the server is offline. The client should not show
-connected\active or try not to use dns via wiregaurd if the server is
-offline.
+I have an issue with Wireguard and IPv6 fragmentation where the kernel =
+implementation keeps constantly emitting UDP packets which are too large =
+for the path-MTU despite I see a correct path-MTU in the route cache.
 
-What do you all think?
+Setup details:
+- Tunnel endpoint A has an interface MTU of 9000
+- Path between A and B does not block ICMPv6
+- Path MTU is 1500
+- First hop on the way from A to B hats an MTU of 9000 and correctly =
+emits ICMPv6 Packet Too Big
+- Tunnel endpoint B has an interface MTU of 1500
+
+As I have some customer traffic through the tunnel that requires an MTU =
+of 1500, I would like to have the tunnel endpoints to correctly fragment =
+packets. This works as long as the interface MTU is equal to the path =
+MTU, but fails otherwise.
+If I switch from the Linux-kernel to the Go implementation, =
+fragmentation also works as expected.
+
+Does anyone have hint where to start digging why the Linux =
+implementation does not correctly fragment the UDP frames of the =
+Wireguard tunnel if the path-MTU is smaller than the interface-MTU?
+
+Software version on endpoint A:
+- Debian Bookworm
+- Debian Kernel 6.1.0-1-cloud-amd64
+- wireguard-tools v1.0.20210914
+
+AVE!
+  Philipp S. Tiesel
+-- =20
+Philipp S. Tiesel
+https://philipp.tiesel.net/
+
+
+
