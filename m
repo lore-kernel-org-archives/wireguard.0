@@ -4,53 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A9EDC636CD
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  7 Feb 2023 04:35:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCD24C6379F
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  7 Feb 2023 04:45:13 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2502c550;
-	Tue, 7 Feb 2023 04:29:51 +0000 (UTC)
-Received: from mail-vs1-xe2f.google.com (mail-vs1-xe2f.google.com
- [2607:f8b0:4864:20::e2f])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 83233b8f
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 67ee142b;
+	Tue, 7 Feb 2023 04:29:53 +0000 (UTC)
+Received: from mx4.ernw.net (mx4.ernw.net [185.144.92.199])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c6d8ff72
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 31 Jan 2023 18:20:40 +0000 (UTC)
-Received: by mail-vs1-xe2f.google.com with SMTP id j7so16973667vsl.11
- for <wireguard@lists.zx2c4.com>; Tue, 31 Jan 2023 10:20:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=t00AMxA1YEQ1+EyJvUWc8f/qjPS1NxycftZqnyHpQ4Q=;
- b=ft6xwKKW0AlJTO5Me88j8YC1ST/AiAjVZnhPXkG/xyqNFCkZHHZv6aek+pMcfYsa64
- A3AFt6Soa9m8PxtbH86zjBlnjtBsFUmDm3FLMpz2sN6CkJkHIKGS9/92C5oIaQtDnLLG
- pwzgTa2x48IXfrq0fvAZFQbEIFIe9U6bptgVNeNuD/M6lBySzJUimPbPlrySsPKWmzvH
- Q8vjG9HgSdu6xqw9looEmXKZsby89xzqvDsjO7vRBUg+IK0BEGaMgLbw/saS4A7Ri/4d
- RSSnyTxYnxPPniz/hsIBI5acW+vvE4LIvIsMXVTVF5MuUD4/G//CNZ8RzY0dUTuh8cxf
- Cy5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=t00AMxA1YEQ1+EyJvUWc8f/qjPS1NxycftZqnyHpQ4Q=;
- b=7NvabyLXLkXDeW/eyb7BvMsM8F4GJ/8rvuHbPN1FUBlddagGfk8RmY7mcAiv9Wc6yU
- 3TavvnuEki+LCqkTmS7ouLhdf/ETILulGobi6C0DO2wGw1gyPcZWGlkf7Ddl3xvTBLAB
- Br9DiRmb3NZgFKjuU6/TWI0Lb0k2Hlz64pqfwDFKW13bcj+oaN/r5HjyGi+MU8hDYdeC
- 0zXI7e2w2/YeFJ/XDfHJ0/WCmv96DkV1eCcyCIIB2BEClYHx47NJkz37NDDCm+weT7k4
- cMuu6FBsxNMhcHnj9e7uxZwW2mhe0GE6ANX92TsItt41o+K1trDLjPHk/gt1Fnrlqwnt
- U+eg==
-X-Gm-Message-State: AFqh2krz6DEsuLzA6Xo2y9eI49k1uXtZP/FjijtgzyarksIdvtta2Eb5
- mzkXzdc/a44OWrXP5v/DgnKVLrQz0griKiPA11DWYWrnkEJn8w==
-X-Google-Smtp-Source: AMrXdXuP2omXatlQNZKRaYLfS8XihAOftbPmienVLy05xu9JAp2wkELu8/xsVoqNnORKtGeP+cDt7GxX3OWJVW7KEyA=
-X-Received: by 2002:a67:fb42:0:b0:3d0:d3fe:3d48 with SMTP id
- e2-20020a67fb42000000b003d0d3fe3d48mr6714892vsr.32.1675189239487; Tue, 31 Jan
- 2023 10:20:39 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Sun, 5 Feb 2023 19:19:21 +0000 (UTC)
+Received: from mail1.ernw.net (mail1.ernw.net [172.31.1.30])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (P-384) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256 client-signature RSA-PSS (2048 bits) client-digest SHA256)
+ (Client CN "mail1.ernw.net", Issuer "ernw ca1" (verified OK))
+ by mx4.ernw.net (Postfix) with ESMTPS id C6DCB34D6
+ for <wireguard@lists.zx2c4.com>; Sun,  5 Feb 2023 20:19:21 +0100 (CET)
+Received: from [IPV6:fd00:2001:0:cf20::1017] (unknown
+ [IPv6:fd00:2001:0:cf20::1017])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256
+ client-signature RSA-PSS (4096 bits) client-digest SHA256)
+ (Client CN "Florian Bausch",
+ Issuer "SwissSign Personal Gold CA 2014 - G22" (verified OK))
+ by mail1.ernw.net (Postfix) with ESMTPSA id 8FDBC23F850
+ for <wireguard@lists.zx2c4.com>; Sun,  5 Feb 2023 20:19:21 +0100 (CET)
+Message-ID: <90cadce0-51e9-d9f3-4b27-084f49e99f1c@ernw.de>
+Date: Sun, 5 Feb 2023 20:19:20 +0100
 MIME-Version: 1.0
-From: =?UTF-8?Q?Berkant_=C4=B0pek?= <berkant.ipek@gmail.com>
-Date: Tue, 31 Jan 2023 21:20:28 +0300
-Message-ID: <CANAp0rHRK_p+VEJ=6wEUu63XbwS2n_9zLBeOgcWOEONVB__Xog@mail.gmail.com>
-Subject: Encapsulation support in wireguard-go
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
 To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Subject: [PATCH] wg-tools: Fix too strict file permissions on resolv.conf
+Content-Language: en-US
+From: Florian Bausch <fbausch@ernw.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Mailman-Approved-At: Tue, 07 Feb 2023 04:29:34 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -68,9 +57,36 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 Hi,
 
-Does wireguard-go provide any facility in order to encapsulate and
-decapsulate WireGuard packets as they leave for and arrive from the
-remote peer? Or, am I just better off to use kernel implementation
-with a TUN device to handle en- and decapsulation and relaying?
+I hardened my system by setting a strict umask of 077 in 
+/etc/login.defs. However, this breaks DNS as soon as wg-quick is used to 
+bring up a WireGuard tunnel. This is, because the strict umask value 
+will be applied to /etc/resolv.conf (at least if the DNS hatchet is 
+used) and therefore, unprivileged processes are not able to read 
+/etc/resolv.conf.
 
-Cheers.
+While the behavior can be worked around by setting umask in other 
+places, the fix below would prevent this behavior to occur. The umask 
+022 is applied before creating the new /etc/resolv.conf in the DNS hatchet.
+
+Kind regards
+
+---
+  contrib/dns-hatchet/hatchet.bash | 1 +
+  1 file changed, 1 insertion(+)
+
+diff --git a/contrib/dns-hatchet/hatchet.bash 
+b/contrib/dns-hatchet/hatchet.bash
+index bc4d090..807a14a 100644
+--- a/contrib/dns-hatchet/hatchet.bash
++++ b/contrib/dns-hatchet/hatchet.bash
+@@ -20,6 +20,7 @@ set_dns() {
+  		[[ ${#DNS_SEARCH[@]} -eq 0 ]] || printf 'search %s\n' "${DNS_SEARCH[*]}"
+  		} | unshare -m --propagation shared bash -c "$(cat <<-_EOF
+  			set -e
++			umask 022
+  			context="\$(stat -c %C /etc/resolv.conf 2>/dev/null)" || unset context
+  			mount --make-private /dev/shm
+  			mount -t tmpfs none /dev/shm
+-- 
+2.39.1
+
