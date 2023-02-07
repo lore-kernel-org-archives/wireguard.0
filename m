@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BB40C636D4
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  7 Feb 2023 23:00:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E49DC6379F
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  7 Feb 2023 23:00:09 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id aef3a9c0;
-	Tue, 7 Feb 2023 22:57:02 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org
- [2604:1380:4641:c500::1])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b7d6b71d
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 909ea5b1;
+	Tue, 7 Feb 2023 22:54:39 +0000 (UTC)
+Received: from ams.source.kernel.org (ams.source.kernel.org
+ [2604:1380:4601:e00::1])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1357ecfd
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 7 Feb 2023 22:57:00 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Tue, 7 Feb 2023 22:54:37 +0000 (UTC)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 5DCDD611E7
- for <wireguard@lists.zx2c4.com>; Tue,  7 Feb 2023 22:56:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D605C4339B
- for <wireguard@lists.zx2c4.com>; Tue,  7 Feb 2023 22:56:58 +0000 (UTC)
+ by ams.source.kernel.org (Postfix) with ESMTPS id B65B0B81B35
+ for <wireguard@lists.zx2c4.com>; Tue,  7 Feb 2023 22:54:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08B21C4339E
+ for <wireguard@lists.zx2c4.com>; Tue,  7 Feb 2023 22:54:34 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
  dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="I91Te4w+"
+ header.b="o+9rKhWo"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1675810617;
+ t=1675810473;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
  bh=XZQszJl6Wy3unWW5shRFKEY0SnIj1Z2g7uZvWygPpWI=;
- b=I91Te4w+wS9brssum+6C4fvt/5Bnjk+cVD6/VBaE3hXHUy4sNVYok8FTLLGSLDKtO7OA0N
- yR2uvBcOZDb2wHHmJgiLsDnNUQDmzWGE5EZNybqoZPELJ8adSWfxLqtUPToLs7BJZuK8qf
- Pz6p56kqO0yZNgYLuVE7P1fMR7HTtZs=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 73dd3e27
+ b=o+9rKhWophrrESOv+yML8y2F0/mNvBC5GczJeSi/eqBHXO/HvI5BVfkKIeuiWi+F0JufIK
+ gN+iFeLbMJmO2ht/VcfHj4l1fOWy1Km+vHz3rLTG2e8fuAOw7kfKwi+UQBvW+e0T44tiEd
+ LjJPdSbTBunW82YKskaUr1iJS5dq5KU=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2f8ac078
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 7 Feb 2023 22:56:56 +0000 (UTC)
-Received: by mail-ed1-f51.google.com with SMTP id m8so18187336edd.10
- for <wireguard@lists.zx2c4.com>; Tue, 07 Feb 2023 14:56:56 -0800 (PST)
-X-Gm-Message-State: AO0yUKUgyCxbF4/AEOHZbFf+U6hjktQju70LwktQD00D/znf2iY/P6Na
- 1EKl86Lthpqp53m/7ueV+W1Cp7+B3VxYdr4qbt8=
-X-Google-Smtp-Source: AK7set9tNLa1cYIHLxFF7Bhs7hWxPSnSiHmU8MBYAqJ38YkTEN2MS020dsueIjrz0UvNXBxlgb0/UVjeFa7Y+H7YNko=
+ for <wireguard@lists.zx2c4.com>; Tue, 7 Feb 2023 22:54:32 +0000 (UTC)
+Received: by mail-ed1-f51.google.com with SMTP id u21so18214816edv.3
+ for <wireguard@lists.zx2c4.com>; Tue, 07 Feb 2023 14:54:32 -0800 (PST)
+X-Gm-Message-State: AO0yUKUp1gxMflHEBmMH3Mr5mYTIXBwSaOYJa+im5oVofi9soNUdB3m7
+ tnd71+CF9eR7TbGAeyJ9TndfyR3TevtsucMH+fg=
+X-Google-Smtp-Source: AK7set8zMEynWhW/IoXPgyOFQFz2LbHWViZB1OhMatkwgJ3atOxmzaUE6v6iQR8MN190Q+ZzjkglD3+dB7cPF/9hw+M=
 X-Received: by 2002:a50:cc92:0:b0:4ab:554:37e3 with SMTP id
- q18-20020a50cc92000000b004ab055437e3mr68405edi.8.1675810615700; Tue, 07 Feb
- 2023 14:56:55 -0800 (PST)
+ q18-20020a50cc92000000b004ab055437e3mr67142edi.8.1675810471699; Tue, 07 Feb
+ 2023 14:54:31 -0800 (PST)
 MIME-Version: 1.0
-References: <11c3d877-2d92-8593-0a9f-e2c918a791c3@gmail.com>
-In-Reply-To: <11c3d877-2d92-8593-0a9f-e2c918a791c3@gmail.com>
+References: <90cadce0-51e9-d9f3-4b27-084f49e99f1c@ernw.de>
+In-Reply-To: <90cadce0-51e9-d9f3-4b27-084f49e99f1c@ernw.de>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 7 Feb 2023 19:56:43 -0300
-X-Gmail-Original-Message-ID: <CAHmME9o-TTYatnRfPGOviU4++T-yxLzNN+tytTs+oZBT7qF_nQ@mail.gmail.com>
-Message-ID: <CAHmME9o-TTYatnRfPGOviU4++T-yxLzNN+tytTs+oZBT7qF_nQ@mail.gmail.com>
-Subject: Re: [PATCH] wg: Fix show all endpoints output
-To: Dmitry Selivanov <dseliv@gmail.com>
+Date: Tue, 7 Feb 2023 19:54:19 -0300
+X-Gmail-Original-Message-ID: <CAHmME9pd1W2sbY7FXMad2Qb_dh=f3307ACKOr9hAS5zfjRUEHQ@mail.gmail.com>
+Message-ID: <CAHmME9pd1W2sbY7FXMad2Qb_dh=f3307ACKOr9hAS5zfjRUEHQ@mail.gmail.com>
+Subject: Re: [PATCH] wg-tools: Fix too strict file permissions on resolv.conf
+To: fbausch@ernw.de
 Cc: wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
