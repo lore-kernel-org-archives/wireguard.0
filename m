@@ -4,44 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4CCDC05027
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  8 Feb 2023 12:41:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B67D4C05027
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  8 Feb 2023 14:00:16 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 97c1c547;
-	Wed, 8 Feb 2023 12:38:19 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8e686949;
+	Wed, 8 Feb 2023 14:00:14 +0000 (UTC)
 Received: from mail.mokrynskyi.com (mail.mokrynskyi.com [46.4.12.50])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c05c0613
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a4257326
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 8 Feb 2023 12:38:18 +0000 (UTC)
-Message-ID: <e9f33d60-4553-0795-16d8-83b54b7822d0@mokrynskyi.com>
+ for <wireguard@lists.zx2c4.com>; Wed, 8 Feb 2023 14:00:12 +0000 (UTC)
+Message-ID: <918a6ce2-436e-3b98-de88-0c4735163830@mokrynskyi.com>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mokrynskyi.com;
- s=dkim; t=1675859897;
+ s=dkim; t=1675864811;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=fy0jVKSWV1n6s0EOcW0uDjLs6gIxc7D0MNutCMICR4M=;
- b=Kzg18/aO939fNSehy4I7tX99IxxqOmAV2ktoMrJ47d2bpUSz+0iss8zq/Pr9VG95q9JTO9
- mFnC5H2DEAPTAQ/ZcoUYkuXvcXARgWfJqlkl0rmx7q7y6icIPSLDLGIRkQCOGd3Ejuy0PN
- FtohtJCkCuruGVps4TOCYSJbJk1DgRFl1qrI7DKXYYPxg6QGyowhc6MuU1NMmjWyBnDsAC
- uYJoPIVMy8K75AAonoyaNan5kITsj2pdySgg/Zs6llLEq3+7gfatU4Z0JsAiBZaIN/GNn+
- pAj9htIJu1tZ4Gv0gFROIkEwSq89zRoyGSsBUloC/FC4DG9oHQaNre0+g/aqJw==
-Date: Wed, 8 Feb 2023 14:38:16 +0200
+ bh=poWsdyhtZsb6xWY457/ooTc4PYcPcITdRc/KkJxMI28=;
+ b=EUnRxn297otd9j37v3oW1AIfetjHzPAj519+7egN5UxCTcxGg3U5b88zrXnQb6fUfWZC3r
+ tfxZuuPFwABgZFg+T6TxNwgEx6Ys1gSlerTW/e2AHObXyKwOr0g0r05LU//5fazWL+2iMW
+ UQaSVnKIm8C/TwAkeMI/uffv2UA683oYL62B53GkW+LVhfR0KXMtExgmaTTTgJP82mfRWL
+ gyaK7hk4x7qzsyHd0cR2ioI2sha4xEISwL7NP3Vn2lRv2MvWHgYFH0uCRfkvgXUrGi0ER4
+ 3sF1cPJERnk5D9fHzAOsxfzvNik7Lfh9MQsDPimDXGGxtPe8J1kG8BCo4hwxbQ==
+Date: Wed, 8 Feb 2023 16:00:09 +0200
 MIME-Version: 1.0
-Content-Language: ru, en-US
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: wireguard@lists.zx2c4.com, David Cowden <dcow@pm.me>
+Content-Language: ru
+To: John Sahhar <john@entropy.xyz>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, wireguard@lists.zx2c4.com,
+ David Cowden <dcow@pm.me>
 References: <5e029a99-a860-0ae0-be72-df53cf82d0ce@mokrynskyi.com>
  <CAHmME9oBexy2JahGPbbgxHBcuiGdc1u4JeCoxtYDRPJkJWZ55w@mail.gmail.com>
  <7SV3pRtTQ0fygsJjyhdMRte9uso_M0G_jTfDeqnELBrym4Z_3NeGeIvgNYpEdXttpmafNk_A2NqH26O6VF_8pgrXjzUOmrCVPehRX7Iu_eE=@pm.me>
+ <e9f33d60-4553-0795-16d8-83b54b7822d0@mokrynskyi.com>
+ <CALuYY17r9eh_eAc2KRUnQXS1Fd9rCqVJR4aNaupL=W8P710qVA@mail.gmail.com>
 From: Nazar Mokrynskyi <nazar@mokrynskyi.com>
 Subject: Re: Allow client-side encrypted backups for Android app
-In-Reply-To: <7SV3pRtTQ0fygsJjyhdMRte9uso_M0G_jTfDeqnELBrym4Z_3NeGeIvgNYpEdXttpmafNk_A2NqH26O6VF_8pgrXjzUOmrCVPehRX7Iu_eE=@pm.me>
+In-Reply-To: <CALuYY17r9eh_eAc2KRUnQXS1Fd9rCqVJR4aNaupL=W8P710qVA@mail.gmail.com>
 Content-Type: multipart/signed; micalg=pgp-sha256;
  protocol="application/pgp-signature";
- boundary="------------0p4hpRULpgm9vWSHYigiRZJn"
+ boundary="------------QlE0pwjhpJRIJUcCmTRE1Qbs"
 Authentication-Results: mail.mokrynskyi.com;
  auth=pass smtp.mailfrom=nazar@mokrynskyi.com
-X-Spamd-Bar: --
+X-Spamd-Bar: /
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -57,72 +60,100 @@ Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------0p4hpRULpgm9vWSHYigiRZJn
-Content-Type: multipart/mixed; boundary="------------c00pEpSaF2E60XtCivh44zww";
+--------------QlE0pwjhpJRIJUcCmTRE1Qbs
+Content-Type: multipart/mixed; boundary="------------iDCfuRmirvBoF0T0iU7z6SGw";
  protected-headers="v1"
 From: Nazar Mokrynskyi <nazar@mokrynskyi.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: wireguard@lists.zx2c4.com, David Cowden <dcow@pm.me>
-Message-ID: <e9f33d60-4553-0795-16d8-83b54b7822d0@mokrynskyi.com>
+To: John Sahhar <john@entropy.xyz>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, wireguard@lists.zx2c4.com,
+ David Cowden <dcow@pm.me>
+Message-ID: <918a6ce2-436e-3b98-de88-0c4735163830@mokrynskyi.com>
 Subject: Re: Allow client-side encrypted backups for Android app
 References: <5e029a99-a860-0ae0-be72-df53cf82d0ce@mokrynskyi.com>
  <CAHmME9oBexy2JahGPbbgxHBcuiGdc1u4JeCoxtYDRPJkJWZ55w@mail.gmail.com>
  <7SV3pRtTQ0fygsJjyhdMRte9uso_M0G_jTfDeqnELBrym4Z_3NeGeIvgNYpEdXttpmafNk_A2NqH26O6VF_8pgrXjzUOmrCVPehRX7Iu_eE=@pm.me>
-In-Reply-To: <7SV3pRtTQ0fygsJjyhdMRte9uso_M0G_jTfDeqnELBrym4Z_3NeGeIvgNYpEdXttpmafNk_A2NqH26O6VF_8pgrXjzUOmrCVPehRX7Iu_eE=@pm.me>
+ <e9f33d60-4553-0795-16d8-83b54b7822d0@mokrynskyi.com>
+ <CALuYY17r9eh_eAc2KRUnQXS1Fd9rCqVJR4aNaupL=W8P710qVA@mail.gmail.com>
+In-Reply-To: <CALuYY17r9eh_eAc2KRUnQXS1Fd9rCqVJR4aNaupL=W8P710qVA@mail.gmail.com>
 
---------------c00pEpSaF2E60XtCivh44zww
-Content-Type: multipart/mixed; boundary="------------zwmV70DpWJ1As0DzCpvA01If"
+--------------iDCfuRmirvBoF0T0iU7z6SGw
+Content-Type: multipart/mixed; boundary="------------qKYAXs1d6CvBZlcKtuD7DNkK"
 
---------------zwmV70DpWJ1As0DzCpvA01If
+--------------qKYAXs1d6CvBZlcKtuD7DNkK
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-I know there is an export feature in the app and I used it successfully, =
-but it doesn't make much sense to me to have that and disable OS backups =
-at the same time.
-There are use cases for one-off copying of things for which exporting as =
-zip is great, but there are also others.
-
-I don't want to have set a reminder and regularly go though every single =
-app manually, use their flavor of backup feature (that doesn't necessaril=
-y store everything BTW, including in Wireguard), then collect the files s=
-omehow, encrypt them and send to the destination.
-
-What I want is automation: configure the tool (SeedVault in my case) to c=
-reate backups of all apps every day and store them in encrypted form on m=
-y private Nextcloud instance with ability to restore backups easily later=
- on.
-The issue is that some apps like Wireguard prevent me from enjoying that =
-workflow fully and right now I don't see why would it be beneficial for W=
-ireguard to intentionally prevent that.
-
-With that context I hope it is clearer why I'd appreciate for current des=
-ign decision around that to be re-evaluated.
+No, I'm requesting for Wireguard Android app to stop intentionally disall=
+owing backups:
+https://git.zx2c4.com/wireguard-android/tree/ui/src/main/AndroidManifest.=
+xml?id=3D713947e432126e0e29dcf497960e5fa0f6301e2b#n36
 
 Sincerely, Nazar Mokrynskyi
 github.com/nazar-pc
 
-08.02.23 04:19, David Cowden =D0=BF=D0=B8=D1=88=D0=B5:
-> On Android 12+ you can configure which files are backed up (among other=
- things) at runtime using the BackupAgent API https://developer.android.c=
-om/guide/topics/data/autobackup. Would you be opposed to this being a con=
-figurable option that defaults to off?
+08.02.23 15:34, John Sahhar =D0=BF=D0=B8=D1=88=D0=B5:
+> I missed the intro to this thread, but if I'm understanding correctly
+> you need a safe way to back up your wg keys/configs? I wrote a bash
+> script a few years ago which I use for that, perhaps a starting place
+> for what you're trying to accomplish.
 >
-> David
->
-> ------- Original Message -------
-> On Tuesday, February 7th, 2023 at 7:03 PM, Jason A. Donenfeld <Jason@zx=
-2c4.com> wrote:
->
->
->>
->> I think I'd prefer to still keep this a bit more locked down. There is=
+> https://github.com/ok-john/wireguard-tools/tree/master/contrib/key-grid=
 
->> the "export tunnels as zip" feature (which requires an explicit
->> authentication step each time), which you can use for backup/restore.
+> https://syscall.network/releases/key-grid.svg
+>
+> --
+> Regards,
+> John Sahhar
+> Cryptographer @ Entropy
+>
+> On Wed, Feb 8, 2023 at 12:44 PM Nazar Mokrynskyi <nazar@mokrynskyi.com>=
+ wrote:
+>> I know there is an export feature in the app and I used it successfull=
+y, but it doesn't make much sense to me to have that and disable OS backu=
+ps at the same time.
+>> There are use cases for one-off copying of things for which exporting =
+as zip is great, but there are also others.
 >>
->> Jason
---------------zwmV70DpWJ1As0DzCpvA01If
+>> I don't want to have set a reminder and regularly go though every sing=
+le app manually, use their flavor of backup feature (that doesn't necessa=
+rily store everything BTW, including in Wireguard), then collect the file=
+s somehow, encrypt them and send to the destination.
+>>
+>> What I want is automation: configure the tool (SeedVault in my case) t=
+o create backups of all apps every day and store them in encrypted form o=
+n my private Nextcloud instance with ability to restore backups easily la=
+ter on.
+>> The issue is that some apps like Wireguard prevent me from enjoying th=
+at workflow fully and right now I don't see why would it be beneficial fo=
+r Wireguard to intentionally prevent that.
+>>
+>> With that context I hope it is clearer why I'd appreciate for current =
+design decision around that to be re-evaluated.
+>>
+>> Sincerely, Nazar Mokrynskyi
+>> github.com/nazar-pc
+>>
+>> 08.02.23 04:19, David Cowden =D0=BF=D0=B8=D1=88=D0=B5:
+>>> On Android 12+ you can configure which files are backed up (among oth=
+er things) at runtime using the BackupAgent API https://developer.android=
+=2Ecom/guide/topics/data/autobackup. Would you be opposed to this being a=
+ configurable option that defaults to off?
+>>>
+>>> David
+>>>
+>>> ------- Original Message -------
+>>> On Tuesday, February 7th, 2023 at 7:03 PM, Jason A. Donenfeld <Jason@=
+zx2c4.com> wrote:
+>>>
+>>>
+>>>> I think I'd prefer to still keep this a bit more locked down. There =
+is
+>>>> the "export tunnels as zip" feature (which requires an explicit
+>>>> authentication step each time), which you can use for backup/restore=
+=2E
+>>>>
+>>>> Jason
+--------------qKYAXs1d6CvBZlcKtuD7DNkK
 Content-Type: application/pgp-keys; name="OpenPGP_0x8CF6D73DB34AAFEA.asc"
 Content-Disposition: attachment; filename="OpenPGP_0x8CF6D73DB34AAFEA.asc"
 Content-Description: OpenPGP public key
@@ -204,29 +235,29 @@ Tmqx2wwyMTl444HpUOdfNWvIdeftQEI9uQhe9FY0psYGpA=3D=3D
 =3DOe+F
 -----END PGP PUBLIC KEY BLOCK-----
 
---------------zwmV70DpWJ1As0DzCpvA01If--
+--------------qKYAXs1d6CvBZlcKtuD7DNkK--
 
---------------c00pEpSaF2E60XtCivh44zww--
+--------------iDCfuRmirvBoF0T0iU7z6SGw--
 
---------------0p4hpRULpgm9vWSHYigiRZJn
+--------------QlE0pwjhpJRIJUcCmTRE1Qbs
 Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="OpenPGP_signature"
 
 -----BEGIN PGP SIGNATURE-----
 
-wsF5BAABCAAjFiEERsBQp7B9wt91PKHZjPbXPbNKr+oFAmPjl7gFAwAAAAAACgkQjPbXPbNKr+oy
-8Q//SPh+gyVveT+2XY2WSNgHVvZValucLIlcBpFoOexnvSMVRm5SYuexlTCDGqGh8H4Oyu2WKkOs
-5wE7i32lNpo3Amdpb9j7pUP23kwkOGhvKRGTqt9FuAFkAwWT3V1Jn+ff0q64FlT/VBM7i6wzu58h
-8iPmspgqInKGtuJqJxuxeCA1FkbT5DWZe26UZyyAo6hsme44LYaJXvcTejlOawk2zd2INThPs1br
-4N8C0fgZAHGO2A7I8iL/7Fb9BNDllw6Jeip3ndR9cZOHUgb7RtByCFBKnHPm347IWXncep/RHyA+
-OjdbVAJ+4R1DqePvLYiQ2hTr7s7kfayFPxblYuvN9ZvAughz2sd1daV9VGOXSn8hWFKIV7UhA5R9
-WyP1CFhN+N5XZLQJjDMqB9RyJ1vvft+lhIAnryvdY/B/RMwMe8I0CUDLvC3K2NxXX0mlOa9PJyah
-IYoyQIdFz+2Q9F5gTCCGAQW+e9la9P80fn2W55R6ASstPvwO1OKbxAB+Fr71Qd9LacMuT7jS36zC
-WtkzT17sm4U2VR4Bk/ITs8aNrddsxZGUJO1mjXoAJCSs7/42cHVrUgy0exXUjdew8+1ouON6+rwg
-0G2/Euq2EjhbCoZX2OV4Hwq0SiHydROPVJFAETmXFYVpmxA0EdRfrpszAN1/oLWohebd0NBfuNW+
-LEg=
-=7ll1
+wsF5BAABCAAjFiEERsBQp7B9wt91PKHZjPbXPbNKr+oFAmPjqukFAwAAAAAACgkQjPbXPbNKr+qn
+mxAAoQSAdozuEOopCm7OubyTL4ht07NME8H2k6AlWL8PZ46RKSgmd7B2xYpDgp14N/m6yQBYAytL
+KflWN8zcpGqUPgw5FYddaT2UHec9ElfHj0cN64WEb49BOW7fEMX+cWj+2zO+NCmJfNvZqhBywny2
+JZgVeT9dNXXo8zJJwzEjcgjya4ZMnmxvZGhVkNr9sIsa83IkT+X8cDsvZJP2+SSfMTRSU074Biqx
+O4JYffyYqxgU5lHFTZCoJxO1ARi0CLCfGcnaB8CGatL9oTO8PzATAKBDW3+8JSjqBPVlCtugfc2u
+NjfgFuprJXkkKVWnVLo8HWxczZz3HSN6S8ELcWpjNpRjZN/qyCfHgWBykQLv7NtfLdOr9b3W6v+W
+MI/MqPALfHUEF4pSCEDLUfORVUXJPdrHINGRXlz5HWBdXi466/zCM3+8+VhMdV9cy1sNVGrgHBL2
+zYIzd2hm4FpIMk+JJPJIXDRQpH8usMDLi3bf8rwYXBd4BqhmwZNnGI3j0zkct7nE0/rSDAaBCvtL
+3HMzKEXsr60lGg+dLB9LuWVLvGZOPWgvXq6i4YUbJi0uymg49cq0Z8GjkganUIGxTLQ/62lxrK7e
+eSB8teDfHkXA9b6L2AfITucGo2RoZ7nrYzwzrADxxFcngRu2dxclOm74tGIEPif5IbxZTi7cq21E
+9lM=
+=9yPk
 -----END PGP SIGNATURE-----
 
---------------0p4hpRULpgm9vWSHYigiRZJn--
+--------------QlE0pwjhpJRIJUcCmTRE1Qbs--
