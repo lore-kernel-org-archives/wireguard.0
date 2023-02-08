@@ -4,56 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95571C636CD
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  8 Feb 2023 02:06:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 459A4C636CC
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  8 Feb 2023 02:22:32 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 958a8718;
-	Wed, 8 Feb 2023 02:04:16 +0000 (UTC)
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a98d11c0
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 8 Feb 2023 02:04:15 +0000 (UTC)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by sin.source.kernel.org (Postfix) with ESMTPS id 291D0CE0DA3
- for <wireguard@lists.zx2c4.com>; Wed,  8 Feb 2023 02:04:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6775BC433EF
- for <wireguard@lists.zx2c4.com>; Wed,  8 Feb 2023 02:04:09 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="bbPNgp0w"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1675821847;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0WC3RWiNgyFw0WReI/GQn5s+1VZV5zVdLSqq8Ectkf0=;
- b=bbPNgp0w1Icn2q8ZkgiW/n+3shO20qpoG8CCb3ZOY/WuhqXPachjxVC7OkY09t5c1db4KL
- 4d6PRAUvBr44SLqyuM9pSp8O/NT0voXBsNWP8ztd40kpDJnJ4Nm1swP6qCYDwRm9eutiSE
- tICW38r2aLl8S054tSznEblRjfaxCgY=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 948d61e8
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0ce8e28c;
+	Wed, 8 Feb 2023 02:19:49 +0000 (UTC)
+Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c9645e51
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 8 Feb 2023 02:04:07 +0000 (UTC)
-Received: by mail-ej1-f48.google.com with SMTP id gr7so47621699ejb.5
- for <wireguard@lists.zx2c4.com>; Tue, 07 Feb 2023 18:04:07 -0800 (PST)
-X-Gm-Message-State: AO0yUKUpvAvyXQ+1KQBs2dG2d5StyLYXMdpmf8nQcGwIvNZba2MpDABN
- XhcLP+0j/8sdf46BeliXR16GFGD1kvdbwq1G7Fg=
-X-Google-Smtp-Source: AK7set/z9oYkC2/ZClhbss6XJT+FocY0CuqnBPSYkRjtDwVNYqh1vdm+a0TQAjQwOOfQ+SXuDUNseR7wDkd/K5V8MZg=
-X-Received: by 2002:a17:906:e24c:b0:89c:7298:2de4 with SMTP id
- gq12-20020a170906e24c00b0089c72982de4mr1165131ejb.91.1675821846376; Tue, 07
- Feb 2023 18:04:06 -0800 (PST)
-MIME-Version: 1.0
-References: <5e029a99-a860-0ae0-be72-df53cf82d0ce@mokrynskyi.com>
-In-Reply-To: <5e029a99-a860-0ae0-be72-df53cf82d0ce@mokrynskyi.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 7 Feb 2023 23:03:54 -0300
-X-Gmail-Original-Message-ID: <CAHmME9oBexy2JahGPbbgxHBcuiGdc1u4JeCoxtYDRPJkJWZ55w@mail.gmail.com>
-Message-ID: <CAHmME9oBexy2JahGPbbgxHBcuiGdc1u4JeCoxtYDRPJkJWZ55w@mail.gmail.com>
+ for <wireguard@lists.zx2c4.com>; Wed, 8 Feb 2023 02:19:48 +0000 (UTC)
+Date: Wed, 08 Feb 2023 02:19:42 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+ s=protonmail3; t=1675822788; x=1676081988;
+ bh=PG1zfNKa8XzvJF0bA1tLHGAToyetVWrwMM7qYCrqy1g=;
+ h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+ Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+ Message-ID:BIMI-Selector;
+ b=oBH/GF082bho2D+N+PMc+QgTbijWw9JyLBU/z/Be8on9vwKTSEJVXZcZ05Qmi69Fp
+ INNI0Uf2yfUDGHGmhDzjgFaeM77T0tJL12p+u5Wwq/fo5Zi+z3QMFKIWi1NPRIjnsi
+ QqU1E+1hE8fAL0WPWQTB+Wdix+uKE7TAmJ1RH70jqlULAS/NBLowncXjDkcTNJhLMl
+ iKro6h+W6Nn48Fw2tTMBI6Z9M7tW1mls7oAvxRmoCXTGERF8eRR+VXSEPTYE4Q4Zi5
+ WUH7ecK/lY/952aZGbqgMGdrjuO8L5r6WGVOTSfk9tAniOawv3XZMT0xa7DRXvCW2Y
+ FRY4d+Dejxb1Q==
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+From: David Cowden <dcow@pm.me>
+Cc: Nazar Mokrynskyi <nazar@mokrynskyi.com>, wireguard@lists.zx2c4.com
 Subject: Re: Allow client-side encrypted backups for Android app
-To: Nazar Mokrynskyi <nazar@mokrynskyi.com>
-Cc: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <7SV3pRtTQ0fygsJjyhdMRte9uso_M0G_jTfDeqnELBrym4Z_3NeGeIvgNYpEdXttpmafNk_A2NqH26O6VF_8pgrXjzUOmrCVPehRX7Iu_eE=@pm.me>
+In-Reply-To: <CAHmME9oBexy2JahGPbbgxHBcuiGdc1u4JeCoxtYDRPJkJWZ55w@mail.gmail.com>
+References: <5e029a99-a860-0ae0-be72-df53cf82d0ce@mokrynskyi.com>
+ <CAHmME9oBexy2JahGPbbgxHBcuiGdc1u4JeCoxtYDRPJkJWZ55w@mail.gmail.com>
+Feedback-ID: 9064091:user:proton
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -68,8 +52,22 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-I think I'd prefer to still keep this a bit more locked down. There is
-the "export tunnels as zip" feature (which requires an explicit
-authentication step each time), which you can use for backup/restore.
+On Android 12+ you can configure which files are backed up (among other thi=
+ngs) at runtime using the BackupAgent API https://developer.android.com/gui=
+de/topics/data/autobackup. Would you be opposed to this being a configurabl=
+e option that defaults to off?
 
-Jason
+David
+
+------- Original Message -------
+On Tuesday, February 7th, 2023 at 7:03 PM, Jason A. Donenfeld <Jason@zx2c4.=
+com> wrote:
+
+
+>=20
+>=20
+> I think I'd prefer to still keep this a bit more locked down. There is
+> the "export tunnels as zip" feature (which requires an explicit
+> authentication step each time), which you can use for backup/restore.
+>=20
+> Jason
