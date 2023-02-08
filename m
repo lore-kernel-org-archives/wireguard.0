@@ -4,40 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 459A4C636CC
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  8 Feb 2023 02:22:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97150C636CC
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  8 Feb 2023 06:30:30 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0ce8e28c;
-	Wed, 8 Feb 2023 02:19:49 +0000 (UTC)
-Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c9645e51
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id aff78b67;
+	Wed, 8 Feb 2023 06:30:28 +0000 (UTC)
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com
+ [2a00:1450:4864:20::631])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d4b727be
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 8 Feb 2023 02:19:48 +0000 (UTC)
-Date: Wed, 08 Feb 2023 02:19:42 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
- s=protonmail3; t=1675822788; x=1676081988;
- bh=PG1zfNKa8XzvJF0bA1tLHGAToyetVWrwMM7qYCrqy1g=;
- h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
- Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
- Message-ID:BIMI-Selector;
- b=oBH/GF082bho2D+N+PMc+QgTbijWw9JyLBU/z/Be8on9vwKTSEJVXZcZ05Qmi69Fp
- INNI0Uf2yfUDGHGmhDzjgFaeM77T0tJL12p+u5Wwq/fo5Zi+z3QMFKIWi1NPRIjnsi
- QqU1E+1hE8fAL0WPWQTB+Wdix+uKE7TAmJ1RH70jqlULAS/NBLowncXjDkcTNJhLMl
- iKro6h+W6Nn48Fw2tTMBI6Z9M7tW1mls7oAvxRmoCXTGERF8eRR+VXSEPTYE4Q4Zi5
- WUH7ecK/lY/952aZGbqgMGdrjuO8L5r6WGVOTSfk9tAniOawv3XZMT0xa7DRXvCW2Y
- FRY4d+Dejxb1Q==
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-From: David Cowden <dcow@pm.me>
-Cc: Nazar Mokrynskyi <nazar@mokrynskyi.com>, wireguard@lists.zx2c4.com
-Subject: Re: Allow client-side encrypted backups for Android app
-Message-ID: <7SV3pRtTQ0fygsJjyhdMRte9uso_M0G_jTfDeqnELBrym4Z_3NeGeIvgNYpEdXttpmafNk_A2NqH26O6VF_8pgrXjzUOmrCVPehRX7Iu_eE=@pm.me>
-In-Reply-To: <CAHmME9oBexy2JahGPbbgxHBcuiGdc1u4JeCoxtYDRPJkJWZ55w@mail.gmail.com>
-References: <5e029a99-a860-0ae0-be72-df53cf82d0ce@mokrynskyi.com>
- <CAHmME9oBexy2JahGPbbgxHBcuiGdc1u4JeCoxtYDRPJkJWZ55w@mail.gmail.com>
-Feedback-ID: 9064091:user:proton
+ for <wireguard@lists.zx2c4.com>; Wed, 8 Feb 2023 06:30:26 +0000 (UTC)
+Received: by mail-ej1-x631.google.com with SMTP id p9so2730240ejj.1
+ for <wireguard@lists.zx2c4.com>; Tue, 07 Feb 2023 22:30:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=za5/mK2R9sVRog8rSWauZWIHIMmJ4pHlct8YMpK9zVM=;
+ b=GHt0stW951p8Mf1zB8Ofp6D4H0J89Bbcg2LqKCPmpVYqog+qx6qfeKXMooFdZKHABW
+ ElVCP/fbGJ8MqjNGEk3NINu9m75C4nprqi6sAzVWIW1DdAkmnZJ6eAiZETp53ucOAo+M
+ rLB6dkVL8GEChVZzvRIiLgK38wthLuwqYY/q9SI4Eg/xguRdE30o8vxZG4o3sBmWROQd
+ Y+2gXriWRpZyyfi1zSDET7PAruk8dJAbtinKT5SRG/08EmMoPEMkFOat69u9W/TzQTFt
+ 8PZDZh0c4pz+eKNc/hLch+IjYMXx9BNSjy14m3Ec1x45PdYHgfa8PA7pAEHsqTBVsiwl
+ ZXtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=za5/mK2R9sVRog8rSWauZWIHIMmJ4pHlct8YMpK9zVM=;
+ b=ycQl/zonNSw7L1k/9DovPMfTrP/D1LFk7WG5raSmgHkTbli9eba/Y/ZUJUN77sDKCm
+ X7RMRaDpq8VOHDUTx8ClOQaqP+j87e7baC7l3nO1p/2lZY0zWcX2qlEUjJytEdV6zwOO
+ vh2rwYWbg+bEdbkGvEoou3LwCEmLBAwKH8CECLA4jJdj2R22Hw1cIS2BHYWDKxYm7hR7
+ a/F5fhCbaGXlDuBwXaAVF+y457dmdkjeaMX4Wwz92kPx9nJYl13oEM80Lgh3eV+PFcuk
+ ow5muFXKwB5iQBBPTj0vpogsfGq6Pn2CgvQ4CjXzSWv7v/biTq2ED56gu3m6PYOz/q8R
+ +cdg==
+X-Gm-Message-State: AO0yUKWVV8K91SRh2FIBq2zoo/Itzq0IYUNwuN3NfOY93Mj+2DBmv2tI
+ ABwyrvU/s6do8tErSBhYYZZBgLADIIRvxZU4
+X-Google-Smtp-Source: AK7set+YkCIbm1Db5xfcONGppPJlmefTCJ1GDTrrR3FtQxsNeQIATwWMkSZCtqWMzBD9uCM5N86y/w==
+X-Received: by 2002:a17:906:2b0e:b0:7d3:c516:6ef4 with SMTP id
+ a14-20020a1709062b0e00b007d3c5166ef4mr7139871ejg.20.1675837826226; 
+ Tue, 07 Feb 2023 22:30:26 -0800 (PST)
+Received: from localhost ([45.9.46.147]) by smtp.gmail.com with ESMTPSA id
+ ot17-20020a170906ccd100b0088272bac7c5sm7802428ejb.121.2023.02.07.22.30.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 07 Feb 2023 22:30:25 -0800 (PST)
+Message-ID: <2166b145-1508-b407-da27-93393989d209@gmail.com>
+Date: Wed, 8 Feb 2023 09:30:16 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH] wg: Fix show all endpoints output
+Content-Language: ru, en-US
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: wireguard@lists.zx2c4.com
+References: <11c3d877-2d92-8593-0a9f-e2c918a791c3@gmail.com>
+ <CAHmME9o-TTYatnRfPGOviU4++T-yxLzNN+tytTs+oZBT7qF_nQ@mail.gmail.com>
+From: Dmitry Selivanov <dseliv@gmail.com>
+In-Reply-To: <CAHmME9o-TTYatnRfPGOviU4++T-yxLzNN+tytTs+oZBT7qF_nQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -52,22 +78,29 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Android 12+ you can configure which files are backed up (among other thi=
-ngs) at runtime using the BackupAgent API https://developer.android.com/gui=
-de/topics/data/autobackup. Would you be opposed to this being a configurabl=
-e option that defaults to off?
+Currently "wg show all endpoints" prints interface name only once
+while other "show all" commands print it on each line as man says.
 
-David
+Signed-off-by: Dmitry Selivanov <dseliv@gmail.com>
+---
+ src/show.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-------- Original Message -------
-On Tuesday, February 7th, 2023 at 7:03 PM, Jason A. Donenfeld <Jason@zx2c4.=
-com> wrote:
-
-
->=20
->=20
-> I think I'd prefer to still keep this a bit more locked down. There is
-> the "export tunnels as zip" feature (which requires an explicit
-> authentication step each time), which you can use for backup/restore.
->=20
-> Jason
+diff --git a/src/show.c b/src/show.c
+index 3fd3d9e..13777cf 100644
+--- a/src/show.c
++++ b/src/show.c
+@@ -312,9 +312,9 @@ static bool ugly_print(struct wgdevice *device, const char *param, bool with_int
+ 		else
+ 			printf("off\n");
+ 	} else if (!strcmp(param, "endpoints")) {
+-		if (with_interface)
+-			printf("%s\t", device->name);
+ 		for_each_wgpeer(device, peer) {
++			if (with_interface)
++				printf("%s\t", device->name);
+ 			printf("%s\t", key(peer->public_key));
+ 			if (peer->endpoint.addr.sa_family == AF_INET || peer->endpoint.addr.sa_family == AF_INET6)
+ 				printf("%s\n", endpoint(&peer->endpoint.addr));
+-- 
+2.30.2
