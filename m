@@ -4,47 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F96EC636CC
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 15 Feb 2023 12:58:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86E16C636CC
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 16 Feb 2023 14:52:34 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 94976f69;
-	Wed, 15 Feb 2023 12:55:50 +0000 (UTC)
-Received: from mx4.ernw.net (mx4.ernw.net [185.144.92.199])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id bfc1f043
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 98d1f80d;
+	Thu, 16 Feb 2023 14:52:31 +0000 (UTC)
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0c6b937b
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 15 Feb 2023 12:55:48 +0000 (UTC)
-Received: from mail1.ernw.net (mail1.ernw.net [IPv6:fd00:2001:0:d001::30])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-384) server-signature RSA-PSS (2048 bits)
- client-signature RSA-PSS (2048 bits))
- (Client CN "mail1.ernw.net", Issuer "ernw ca1" (verified OK))
- by mx4.ernw.net (Postfix) with ESMTPS id 2B6014437
- for <wireguard@lists.zx2c4.com>; Wed, 15 Feb 2023 13:55:48 +0100 (CET)
-Received: from [IPV6:fd00:2001:0:cf20::1017] (unknown
- [IPv6:fd00:2001:0:cf20::1017])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256
- client-signature RSA-PSS (4096 bits) client-digest SHA256)
- (Client CN "Florian Bausch",
- Issuer "SwissSign Personal Gold CA 2014 - G22" (verified OK))
- by mail1.ernw.net (Postfix) with ESMTPSA id 07A6B331FFF
- for <wireguard@lists.zx2c4.com>; Wed, 15 Feb 2023 13:55:48 +0100 (CET)
-Message-ID: <9191bd2e-5d28-fee3-7fab-246050f20b56@ernw.de>
-Date: Wed, 15 Feb 2023 13:55:47 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Subject: Re: [PATCH] wg-tools: Fix too strict file permissions on resolv.conf
-Content-Language: en-US
-From: Florian Bausch <fbausch@ernw.de>
+ Sat, 11 Feb 2023 15:39:34 +0000 (UTC)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+ by mailout.nyi.internal (Postfix) with ESMTP id CC7D45C00C8
+ for <wireguard@lists.zx2c4.com>; Sat, 11 Feb 2023 10:39:32 -0500 (EST)
+Received: from imap42 ([10.202.2.92])
+ by compute1.internal (MEProxy); Sat, 11 Feb 2023 10:39:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unexpl0.red; h=
+ cc:content-type:date:date:from:from:in-reply-to:message-id
+ :mime-version:reply-to:sender:subject:subject:to:to; s=fm1; t=
+ 1676129972; x=1676216372; bh=HLS9csEARpDqZX036Shk+DAgoyt+s+IfV7/
+ 5fqGqPsw=; b=wyMKM0zhTKKTlvviCZxAfhVqsQuizQpPyY/XReiz8j5Nnc5H+Ba
+ rkFvNOIefQIYur0VBw27Rj6tLqC/QhVcLTjjVwKbwMNk9jf18rYmRmJrAlog72nT
+ WLeIX4WbFyYllMS+EVI+jqRdhbYVgkwcldpa4pSTd2p8CRPtIet3vrb6nplxaf0a
+ SjPHOVb8E6L9tHkhoOQJgTyWceKarZ4a/Z1/nlt1QyMlZTvf2+eH0WqVm7Qb3ebg
+ C33TU1wppm7moZcQ49oI4PZZSGiFrgAgCF9fzTOwM+7BD0FWbLFZPm2Tn+kW6Qjk
+ pc+RnXfoPawqy33hSUTlB3XOlPTf6t/1YaA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:date:feedback-id
+ :feedback-id:from:from:in-reply-to:message-id:mime-version
+ :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1676129972; x=
+ 1676216372; bh=HLS9csEARpDqZX036Shk+DAgoyt+s+IfV7/5fqGqPsw=; b=H
+ jhgATjYs4NLEFOdSPMoAyV9ojeElv6TXcV3eWhMvF9tE4zF58IWiE3PX4k9vw3cU
+ sGrWhgYB8MheYP6HOaTFcD2BkyKG7u04CiCpjzBnwCLDk3sDvFmb3RZsI7/be7N2
+ HgFCvn5LIn6tnYgUUCLo0trit42jgNB8XVlP9fN9ohRK3m5RFD4dHjbXhA3fHUiq
+ p8fxcFPUK2MFI/ZlrUvhOTOf7n6jCwifc/cGZeMp2rhxkrGGEUka0u/HZML3u2nD
+ oakSlni5rm1EbPluhGoE6jHsuW7CSYFmb9L+1H34ooguS2+ZisEczvanrminEN9A
+ bl6qbjKIT7NeCcF4WoLAg==
+X-ME-Sender: <xms:tLbnY7I0vWKVg_AnxvQgZlJ38ieblzmZuSe8M69I82wvtEys4ugY2g>
+ <xme:tLbnY_J39T-GFKaCKqhP2oE5LogrQG9kZbh-MXfNhyZuNhQXjaYy0MlzcW-FMSCp4
+ 7ss6jKZxdAa-_6vg9k>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudehjedgjeekucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfffhffvufgtsehttdertd
+ erredtnecuhfhrohhmpeiiuceougiimhesuhhnvgigphhltddrrhgvugeqnecuggftrfgr
+ thhtvghrnhepteeghfekudekieegtdejteeihfdthfejtefgfeeuvedvgefhtdevveduke
+ dvheeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
+ ugiimhesuhhnvgigphhltddrrhgvug
+X-ME-Proxy: <xmx:tLbnYzvWvys4Jqx8HeVSS-1sG8DYqGlNrqDDTtVz2wDD2mV1C51zXA>
+ <xmx:tLbnY0albuhsfsHobDVcvd9TETWIEQyprhA6RHS7c_jcjiS9b86TBw>
+ <xmx:tLbnYyYHZay_KptWQlrekNgHjpbA4lQ6qWCw3z3ZskJZoF-F3RbtJQ>
+ <xmx:tLbnY7nDKPbvIBrxPx-Bo5Odp0g8d0qZZu947Mpu8Y9H2cpyYHUjhA>
+Feedback-ID: i0fcc46dd:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 91997BC0078; Sat, 11 Feb 2023 10:39:32 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-156-g081acc5ed5-fm-20230206.001-g081acc5e
+Mime-Version: 1.0
+Message-Id: <0685312b-2d0f-495b-b321-80d46326b764@app.fastmail.com>
+Date: Sat, 11 Feb 2023 15:39:12 +0000
+From: z <dzm@unexpl0.red>
 To: wireguard@lists.zx2c4.com
-References: <90cadce0-51e9-d9f3-4b27-084f49e99f1c@ernw.de>
- <CAHmME9pd1W2sbY7FXMad2Qb_dh=f3307ACKOr9hAS5zfjRUEHQ@mail.gmail.com>
- <5dd37668-9c40-38a9-4655-199d0f11b4d9@ernw.de>
-In-Reply-To: <5dd37668-9c40-38a9-4655-199d0f11b4d9@ernw.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Subject: Noise Protocol Question
+Content-Type: text/plain
+X-Mailman-Approved-At: Thu, 16 Feb 2023 14:52:30 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -59,41 +83,27 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-(This time without signature)
 Hi,
 
-I hardened my system by setting a strict umask of 077 in
-/etc/login.defs. However, this breaks DNS as soon as wg-quick is used to
-bring up a WireGuard tunnel. This is, because the strict umask value
-will be applied to /etc/resolv.conf (at least if the DNS hatchet is
-used) and therefore, unprivileged processes are not able to read
-/etc/resolv.conf.
+I was reading over the source code for wireguard-go, and I noticed something in the device/noise-protocol.go file that I didn't understand.
 
-While the behavior can be worked around by setting umask in other
-places, the fix below would prevent this behavior to occur. The umask
-022 is applied before creating the new /etc/resolv.conf in the DNS hatchet.
+There are six invocations of the sharedSecret() function, which performs the X25519 operation on a local private key and a remote public key as part of an ECDH key agreement. 
 
-Kind regards
+The first two invocations check for an all zero ECDH result.  a.la
+ss := pk.sharedSecret(pubkey)
+if isZero(ss) {
+    return nil, errZeroECDHResult
+}
 
-Signed-off-by: Florian Bausch <fbausch@ernw.de>
----
-  contrib/dns-hatchet/hatchet.bash | 1 +
-  1 file changed, 1 insertion(+)
+If the result is zero, the operation is aborted.  The subsequent 4 invocations, however, don't check for zero on the output of sharedSecret(), and continue processing regardless.
 
-diff --git a/contrib/dns-hatchet/hatchet.bash 
-b/contrib/dns-hatchet/hatchet.bash
-index bc4d090..807a14a 100644
---- a/contrib/dns-hatchet/hatchet.bash
-+++ b/contrib/dns-hatchet/hatchet.bash
-@@ -20,6 +20,7 @@ set_dns() {
-          [[ ${#DNS_SEARCH[@]} -eq 0 ]] || printf 'search %s\n' 
-"${DNS_SEARCH[*]}"
-          } | unshare -m --propagation shared bash -c "$(cat <<-_EOF
-              set -e
-+            umask 022
-              context="\$(stat -c %C /etc/resolv.conf 2>/dev/null)" || 
-unset context
-              mount --make-private /dev/shm
-              mount -t tmpfs none /dev/shm
--- 
-2.39.1
+In two of the 4 cases, I think I get why it isn't necessary, because the sharedSecret is used as input into an aead.Open, which would simply fail if the ECDH got zero'd out somehow.
+
+However the remaining two calls are associated with an aead.Seal, which would succeed, no matter what the shared secret is.
+
+
+TL;DR  Why is wireguard go not calling isZero() on the output of the ECDH key agreement every time?
+
+Thanks,
+
+dzm
