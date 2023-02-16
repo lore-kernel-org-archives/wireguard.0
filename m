@@ -4,71 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86E16C636CC
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 16 Feb 2023 14:52:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77A42C61DA4
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 16 Feb 2023 15:39:49 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 98d1f80d;
-	Thu, 16 Feb 2023 14:52:31 +0000 (UTC)
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
- [66.111.4.26])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0c6b937b
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d655ecfa;
+	Thu, 16 Feb 2023 15:39:46 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org
+ [2604:1380:4641:c500::1])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d73a8046
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 11 Feb 2023 15:39:34 +0000 (UTC)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
- by mailout.nyi.internal (Postfix) with ESMTP id CC7D45C00C8
- for <wireguard@lists.zx2c4.com>; Sat, 11 Feb 2023 10:39:32 -0500 (EST)
-Received: from imap42 ([10.202.2.92])
- by compute1.internal (MEProxy); Sat, 11 Feb 2023 10:39:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unexpl0.red; h=
- cc:content-type:date:date:from:from:in-reply-to:message-id
- :mime-version:reply-to:sender:subject:subject:to:to; s=fm1; t=
- 1676129972; x=1676216372; bh=HLS9csEARpDqZX036Shk+DAgoyt+s+IfV7/
- 5fqGqPsw=; b=wyMKM0zhTKKTlvviCZxAfhVqsQuizQpPyY/XReiz8j5Nnc5H+Ba
- rkFvNOIefQIYur0VBw27Rj6tLqC/QhVcLTjjVwKbwMNk9jf18rYmRmJrAlog72nT
- WLeIX4WbFyYllMS+EVI+jqRdhbYVgkwcldpa4pSTd2p8CRPtIet3vrb6nplxaf0a
- SjPHOVb8E6L9tHkhoOQJgTyWceKarZ4a/Z1/nlt1QyMlZTvf2+eH0WqVm7Qb3ebg
- C33TU1wppm7moZcQ49oI4PZZSGiFrgAgCF9fzTOwM+7BD0FWbLFZPm2Tn+kW6Qjk
- pc+RnXfoPawqy33hSUTlB3XOlPTf6t/1YaA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:date:feedback-id
- :feedback-id:from:from:in-reply-to:message-id:mime-version
- :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1676129972; x=
- 1676216372; bh=HLS9csEARpDqZX036Shk+DAgoyt+s+IfV7/5fqGqPsw=; b=H
- jhgATjYs4NLEFOdSPMoAyV9ojeElv6TXcV3eWhMvF9tE4zF58IWiE3PX4k9vw3cU
- sGrWhgYB8MheYP6HOaTFcD2BkyKG7u04CiCpjzBnwCLDk3sDvFmb3RZsI7/be7N2
- HgFCvn5LIn6tnYgUUCLo0trit42jgNB8XVlP9fN9ohRK3m5RFD4dHjbXhA3fHUiq
- p8fxcFPUK2MFI/ZlrUvhOTOf7n6jCwifc/cGZeMp2rhxkrGGEUka0u/HZML3u2nD
- oakSlni5rm1EbPluhGoE6jHsuW7CSYFmb9L+1H34ooguS2+ZisEczvanrminEN9A
- bl6qbjKIT7NeCcF4WoLAg==
-X-ME-Sender: <xms:tLbnY7I0vWKVg_AnxvQgZlJ38ieblzmZuSe8M69I82wvtEys4ugY2g>
- <xme:tLbnY_J39T-GFKaCKqhP2oE5LogrQG9kZbh-MXfNhyZuNhQXjaYy0MlzcW-FMSCp4
- 7ss6jKZxdAa-_6vg9k>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudehjedgjeekucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfffhffvufgtsehttdertd
- erredtnecuhfhrohhmpeiiuceougiimhesuhhnvgigphhltddrrhgvugeqnecuggftrfgr
- thhtvghrnhepteeghfekudekieegtdejteeihfdthfejtefgfeeuvedvgefhtdevveduke
- dvheeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
- ugiimhesuhhnvgigphhltddrrhgvug
-X-ME-Proxy: <xmx:tLbnYzvWvys4Jqx8HeVSS-1sG8DYqGlNrqDDTtVz2wDD2mV1C51zXA>
- <xmx:tLbnY0albuhsfsHobDVcvd9TETWIEQyprhA6RHS7c_jcjiS9b86TBw>
- <xmx:tLbnYyYHZay_KptWQlrekNgHjpbA4lQ6qWCw3z3ZskJZoF-F3RbtJQ>
- <xmx:tLbnY7nDKPbvIBrxPx-Bo5Odp0g8d0qZZu947Mpu8Y9H2cpyYHUjhA>
-Feedback-ID: i0fcc46dd:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 91997BC0078; Sat, 11 Feb 2023 10:39:32 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-156-g081acc5ed5-fm-20230206.001-g081acc5e
-Mime-Version: 1.0
-Message-Id: <0685312b-2d0f-495b-b321-80d46326b764@app.fastmail.com>
-Date: Sat, 11 Feb 2023 15:39:12 +0000
-From: z <dzm@unexpl0.red>
-To: wireguard@lists.zx2c4.com
-Subject: Noise Protocol Question
-Content-Type: text/plain
-X-Mailman-Approved-At: Thu, 16 Feb 2023 14:52:30 +0000
+ Thu, 16 Feb 2023 15:39:44 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id D39E3614E2;
+ Thu, 16 Feb 2023 15:39:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99177C433EF;
+ Thu, 16 Feb 2023 15:39:41 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="LxyCaTFP"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1676561979;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=CVSBQr9y+4axrXxhcbbr4/cPgSLwcPx7E51y/mrxzws=;
+ b=LxyCaTFPGmRn6fF1J8pprSeqi/Ab8zo6l3v4nS6/NddBc9kf3mgTLd/DWMNSjs+PesNc1R
+ nyIgzaljPBaLqtUScMiGEfP9OdWxfCa9ymvcuwBVWVk0BGZKN3OBuLTGyshc4+0fO6wBOM
+ pyCpzGeu3chHCNIvUboyWMxs4pEbYyE=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 45caa685
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Thu, 16 Feb 2023 15:39:39 +0000 (UTC)
+Date: Thu, 16 Feb 2023 16:39:35 +0100
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: z <dzm@unexpl0.red>
+Cc: wireguard@lists.zx2c4.com, mathias@hall-andersen.dk
+Subject: Re: Noise Protocol Question
+Message-ID: <Y+5ONw070fwcUIec@zx2c4.com>
+References: <0685312b-2d0f-495b-b321-80d46326b764@app.fastmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <0685312b-2d0f-495b-b321-80d46326b764@app.fastmail.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -83,27 +62,17 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+On Sat, Feb 11, 2023 at 03:39:12PM +0000, z wrote:
+> TL;DR  Why is wireguard go not calling isZero() on the output of the ECDH key agreement every time?
 
-I was reading over the source code for wireguard-go, and I noticed something in the device/noise-protocol.go file that I didn't understand.
+Good question. AFAICT, this was something I had noticed back when this
+code was in development, but then zero checking only got added to the
+initiation side, not the response side, in 8c34c4c ("First set of code
+review patches"). I don't know whether this was a mistake or if there
+was a rationale at the time.
 
-There are six invocations of the sharedSecret() function, which performs the X25519 operation on a local private key and a remote public key as part of an ECDH key agreement. 
+Fortunately, there aren't really any real consequences. But I did fix it
+up, so thanks very much for reporting this:
+https://git.zx2c4.com/wireguard-go/commit/?id=c7b76d3d9ecdc2ffde80decadda88c0c7cdfeedf
 
-The first two invocations check for an all zero ECDH result.  a.la
-ss := pk.sharedSecret(pubkey)
-if isZero(ss) {
-    return nil, errZeroECDHResult
-}
-
-If the result is zero, the operation is aborted.  The subsequent 4 invocations, however, don't check for zero on the output of sharedSecret(), and continue processing regardless.
-
-In two of the 4 cases, I think I get why it isn't necessary, because the sharedSecret is used as input into an aead.Open, which would simply fail if the ECDH got zero'd out somehow.
-
-However the remaining two calls are associated with an aead.Seal, which would succeed, no matter what the shared secret is.
-
-
-TL;DR  Why is wireguard go not calling isZero() on the output of the ECDH key agreement every time?
-
-Thanks,
-
-dzm
+Jason
