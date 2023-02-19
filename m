@@ -4,29 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EF20C61DA4
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Feb 2023 18:24:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11B4DC05027
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Feb 2023 18:36:00 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f3489446;
-	Sun, 19 Feb 2023 18:24:09 +0000 (UTC)
-Received: from janet.servers.dxld.at (mail.servers.dxld.at [5.9.225.164])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1162622c
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e26a85a8;
+	Sun, 19 Feb 2023 18:31:23 +0000 (UTC)
+Received: from len.romanrm.net (len.romanrm.net [91.121.86.59])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 72b425e0
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 19 Feb 2023 18:24:07 +0000 (UTC)
-Received: janet.servers.dxld.at; Sun, 19 Feb 2023 19:24:06 +0100
-From: =?UTF-8?q?Daniel=20Gr=C3=B6ber?= <dxld@darkboxed.org>
-To: wireguard@lists.zx2c4.com
-Cc: "Jason A . Donenfeld" <Jason@zx2c4.com>,
- =?UTF-8?q?Daniel=20Gr=C3=B6ber?= <dxld@darkboxed.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH v2] wg: Allow config to read secret keys from file
-Date: Sun, 19 Feb 2023 19:23:57 +0100
-Message-Id: <20230219182357.444395-1-dxld@darkboxed.org>
-X-Mailer: git-send-email 2.30.2
+ Sun, 19 Feb 2023 18:31:20 +0000 (UTC)
+Received: from nvm (nvm.home.romanrm.net [IPv6:fd39::101])
+ by len.romanrm.net (Postfix) with SMTP id 3566D4017B;
+ Sun, 19 Feb 2023 18:31:19 +0000 (UTC)
+Date: Sun, 19 Feb 2023 23:31:18 +0500
+From: Roman Mamedov <rm@romanrm.net>
+To: Daniel =?UTF-8?B?R3LDtmJlcg==?= <dxld@darkboxed.org>
+Cc: wireguard@lists.zx2c4.com, "Jason A . Donenfeld" <Jason@zx2c4.com>
+Subject: Re: [RESEND PATCH v3] wg: Support restricting address family of DNS
+ resolved Endpoint
+Message-ID: <20230219233118.2d9654f9@nvm>
+In-Reply-To: <20230219180428.438453-1-dxld@darkboxed.org>
+References: <20230219180428.438453-1-dxld@darkboxed.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -41,77 +43,28 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This adds two new config keys PrivateKeyFile= and PresharedKeyFile= that
-simply hook up the existing code for the `wg set ... private-key /file`
-codepath.
+On Sun, 19 Feb 2023 19:04:28 +0100
+Daniel Gr=C3=B6ber <dxld@darkboxed.org> wrote:
 
-By using the new options wireguard configs can become a lot easier to
-manage and deploy as we don't have to treat them as secrets anymore. This
-way they can, for example, be tracked in public git repos while the secret
-keys can be provisioned using an out of band system or with a manual
-one-time step instead.
+> +static inline bool parse_address_family(int *family, const char *value)
+> +{
+> +	if (strcmp(value, "inet") =3D=3D 0)
+> +		*family =3D AF_INET;
+> +	else if (strcmp(value, "inet6") =3D=3D 0)
+> +		*family =3D AF_INET6;
 
-Before this patch we were using an ugly hack: it's possible to simply omit
-PrivateKey= and set it using `PostUp = wg set %i private-key /some/file`.
-However this breaks when we try to use setconf or synconf as they
-will (rightly) unset the private key when it's missing in the underlying
-config file breaking connectivity.
+Wouldn't the first condition match "inet6" as well, not ever checking the
+second condition?
 
-Reviewed-By: Michael Tokarev <mjt@tls.msk.ru>
-Signed-off-by: Daniel Gröber <dxld@darkboxed.org>
----
- src/config.c | 8 ++++++++
- src/man/wg.8 | 4 ++++
- 2 files changed, 12 insertions(+)
+> +	else if (strcmp(value, "unspec") =3D=3D 0)
+> +		*family =3D AF_UNSPEC;
+> +	else
+> +		return false;
+> +
+> +	return true;
+> +}
 
-diff --git a/src/config.c b/src/config.c
-index e8db900..f9980fe 100644
---- a/src/config.c
-+++ b/src/config.c
-@@ -464,6 +464,10 @@ static bool process_line(struct config_ctx *ctx, const char *line)
- 			ret = parse_key(ctx->device->private_key, value);
- 			if (ret)
- 				ctx->device->flags |= WGDEVICE_HAS_PRIVATE_KEY;
-+		} else if (key_match("PrivateKeyFile")) {
-+			ret = parse_keyfile(ctx->device->private_key, value);
-+			if (ret)
-+				ctx->device->flags |= WGDEVICE_HAS_PRIVATE_KEY;
- 		} else
- 			goto error;
- 	} else if (ctx->is_peer_section) {
-@@ -483,6 +487,10 @@ static bool process_line(struct config_ctx *ctx, const char *line)
- 			ret = parse_key(ctx->last_peer->preshared_key, value);
- 			if (ret)
- 				ctx->last_peer->flags |= WGPEER_HAS_PRESHARED_KEY;
-+		} else if (key_match("PresharedKeyFile")) {
-+			ret = parse_keyfile(ctx->last_peer->preshared_key, value);
-+			if (ret)
-+				ctx->last_peer->flags |= WGPEER_HAS_PRESHARED_KEY;
- 		} else
- 			goto error;
- 	} else
-diff --git a/src/man/wg.8 b/src/man/wg.8
-index fd9fde7..48f084d 100644
---- a/src/man/wg.8
-+++ b/src/man/wg.8
-@@ -134,6 +134,8 @@ The \fIInterface\fP section may contain the following fields:
- .IP \(bu
- PrivateKey \(em a base64 private key generated by \fIwg genkey\fP. Required.
- .IP \(bu
-+PrivateKeyFile \(em path to a file containing a base64 private key. May be used instead of \fIPrivateKey\fP. Optional.
-+.IP \(bu
- ListenPort \(em a 16-bit port for listening. Optional; if not specified, chosen
- randomly.
- .IP \(bu
-@@ -151,6 +153,8 @@ and may be omitted. This option adds an additional layer of symmetric-key
- cryptography to be mixed into the already existing public-key cryptography,
- for post-quantum resistance.
- .IP \(bu
-+PresharedKeyFile \(em path to a file containing a base64 preshared key. May be used instead of \fIPresharedKey\fP. Optional.
-+.IP \(bu
- AllowedIPs \(em a comma-separated list of IP (v4 or v6) addresses with
- CIDR masks from which incoming traffic for this peer is allowed and to
- which outgoing traffic for this peer is directed. The catch-all
--- 
-2.30.2
 
+--=20
+With respect,
+Roman
