@@ -4,48 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFC9FC61DA4
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Feb 2023 14:39:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC808C64EC4
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Feb 2023 16:32:40 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2f225f8d;
-	Sun, 19 Feb 2023 14:39:53 +0000 (UTC)
-Received: from mail.onetrix.net (eleanor.onetrix.net [86.59.13.171])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6e3d4d9d
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0abf6f64;
+	Sun, 19 Feb 2023 16:32:38 +0000 (UTC)
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com
+ [209.85.208.182])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 87d2031e
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 19 Feb 2023 14:39:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=chil.at;
- s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
- References:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:Cc:
- Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=Vy9AZ9TP7k6Ky83hDI2uR9VCD1VUj+295RVGhF5LCTc=; b=WUSb2s3+zqSI+TmjJuSn84W+cU
- xjJOjPgUdMy9PHEjSzNxjcMb6HtssLSMcpAwnQF/IZze1XPC7tSgPTYuYm2bDEOShclaGUYO6cOz0
- djHbSBT/KL3fIFkD1zah/GOG1xJbdMvDWu/ZIBjQkEQbZtCWrU9rfoM2IAYETs+GN0lI=;
-Received: from [10.5.44.225] (port=27936 helo=mail.onetrix.net)
- by mail.onetrix.net with esmtps (TLS1) tls TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
- (Exim 4.96) (envelope-from <mail@chil.at>) id 1pTkqW-0000Ck-1o
- for wireguard@lists.zx2c4.com; Sun, 19 Feb 2023 15:39:40 +0100
-Received: from [172.27.0.87] (10.5.44.244) by mail.onetrix.net (10.5.44.225)
- with Microsoft SMTP Server (TLS) id 14.1.438.0; Sun, 19 Feb 2023 15:39:20
- +0100
-Message-ID: <7d7bc930-65d9-f13e-cedc-e0451407be85@chil.at>
-Date: Sun, 19 Feb 2023 15:39:20 +0100
+ Sun, 19 Feb 2023 16:32:35 +0000 (UTC)
+Received: by mail-lj1-f182.google.com with SMTP id b33so887994ljr.1
+ for <wireguard@lists.zx2c4.com>; Sun, 19 Feb 2023 08:32:35 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=vzdSMrZbm07naQfhdQ1Pat8xDfy4PXAtP/BOdu7R4WM=;
+ b=Axpt7o5m1kUT+rOFaZFztVC8QzIxgCydSvAXNXknX2YLT7UsOIDVpq8C/e6uduufrd
+ VthUvKGPCKz5tERCN9hyOdf9pnedUgyyfqjANZJLbU5mm3tKLVgdjdz2/VLOOLLlv1WO
+ apDrYz80prI5ubjqdFuZOw28XnITqTetAhYjv12l/xDExFf3Tcat7uq03Dp924+NM1cL
+ VhoHzKlHLQgPCvbymFVOzfDBoDOy2rnaZeLYhCCicSI6v2lrWbh8MulDUnQx0OXWyY3t
+ I7vWRb3+YfcOOxVxYe5LoFBeWpJTapNYM4NwhxTG3qlcuy1JMNRBk9jYRnZSnmVzjWo5
+ vl8A==
+X-Gm-Message-State: AO0yUKW/s06KZU8RodAGSIgBK/ts92ubmPQjji55qrgJ562PoSTitRoR
+ jf3j3VqLdZwvsA0EwMuDrbRe3FO0fLFlh6SGHqtDOJWU8JA6xufHgm+23A==
+X-Google-Smtp-Source: AK7set8hER13EBWsA1Bbwc1DYi5xCa2NLkhUlFn4JZ7OfwYsyUVe0nqBPXYxD2gI87ptA1bzeAs1wrjDtThDcCaVQdA=
+X-Received: by 2002:a05:651c:49d:b0:293:5359:bf56 with SMTP id
+ s29-20020a05651c049d00b002935359bf56mr559112ljc.2.1676824354411; Sun, 19 Feb
+ 2023 08:32:34 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Subject: Re: Source IP incorrect on multi homed systems
-Content-Language: de-AT
-To: <wireguard@lists.zx2c4.com>
 References: <875yby83n2.fsf@ungleich.ch>
  <2ed829aaed9fec59ac2a9b32c4ce0a9005b8d8b850be81c81a226791855fe4eb@mu.id>
- <87ttzhc0jt.fsf@ungleich.ch>
-From: Christoph Loesch <wireguard-mail@chil.at>
-In-Reply-To: <87ttzhc0jt.fsf@ungleich.ch>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.5.44.244]
+ <87ttzhc0jt.fsf@ungleich.ch> <7d7bc930-65d9-f13e-cedc-e0451407be85@chil.at>
+In-Reply-To: <7d7bc930-65d9-f13e-cedc-e0451407be85@chil.at>
+From: David Kerr <david@kerr.net>
+Date: Sun, 19 Feb 2023 11:32:23 -0500
+Message-ID: <CAJJxGdGSYR_mofRVpZDQsifjZJXXSNNsPqUV-RfWDMO0N2P2dQ@mail.gmail.com>
+Subject: Re: Source IP incorrect on multi homed systems
+To: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -60,45 +59,72 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+Without getting into the debate of whether wireguard is acting
+correctly or not, I think there is a possible workaround.
 
-I don't think no one wants to fix it, there are several users having this issue. I rather guess no one could find a suitable solution to fix it.
+1. In the iptables mangle table PREROUTING, match the incoming
+interface and destination address and --set-xmark a firewall MARK
+unique to this interface/destination
+2. Create a new ip route table that sets the default route to go out
+on the interface with the source address you want (same as destination
+address in iptables)
+3. Create a new ip rule that sends all packets with firewall mark set
+in iptables to the routing table you just created
 
-@Nico: did you try to delete the affected route and add it again with the correct source IP ?
+Repeat above for each interface/address you need to mangle, with a
+unique firewall mark and routing table for each.
 
-as I mentioned it in https://lists.zx2c4.com/pipermail/wireguard/2021-November/007324.html
+It may be necessary to use CONNMARK in PREROUTING and OUTPUT to
+--restore_mark.  I can't remember if this is needed or not, its been a
+while since I configured iptables with this.
 
-ip route del <NET>
-ip route add <NET> dev <ALIAS_DEV> src <SRC_IP>
+This should ensure that any packet that comes into an
+interface/address is replied to from the same interface/address.
 
-This way I was able to (at least temporary) fix this issue on multi homed systems.
+David
 
-Kind regards,
-Christoph
 
-Am 19.02.2023 um 13:13 schrieb Nico Schottelius:
-> Hey Sebastian,
+On Sun, Feb 19, 2023 at 9:44 AM Christoph Loesch <wireguard-mail@chil.at> wrote:
 >
-> Sebastian Hyrwall <sh@keff.org> writes:
+> Hi,
 >
->> It is kinda. It's been mentioned multiple times over the years but no one seems to want to fix it. Atleast you should be able to specify bind/src ip in the
->> config. I gave up WG because of it. Wasn't accepted by my projects security policy since src ip could not be configured.
->>
->> There is an unofficial patch however,
->>
->> https://github.com/torvalds/linux/commit/5fa98082093344c86345f9f63305cae9d5f9f281
-> the binding is somewhat related to this issue and I was looking for that
-> feature some time ago, too. While it is correlated and I would really
-> appreciate binding support, I am not sure whether the linked patch does
-> actually fix the problem I am seeing in multi homed devices.
+> I don't think no one wants to fix it, there are several users having this issue. I rather guess no one could find a suitable solution to fix it.
 >
-> As long as wireguard does not reply with the same IP address it was
-> contacted with, packets will get dropped on stateful firewalls, because
-> the returning packet does not match the state session database.
+> @Nico: did you try to delete the affected route and add it again with the correct source IP ?
 >
-> Best regards,
+> as I mentioned it in https://lists.zx2c4.com/pipermail/wireguard/2021-November/007324.html
 >
-> Nico
+> ip route del <NET>
+> ip route add <NET> dev <ALIAS_DEV> src <SRC_IP>
 >
-> --
-> Sustainable and modern Infrastructures by ungleich.ch
+> This way I was able to (at least temporary) fix this issue on multi homed systems.
+>
+> Kind regards,
+> Christoph
+>
+> Am 19.02.2023 um 13:13 schrieb Nico Schottelius:
+> > Hey Sebastian,
+> >
+> > Sebastian Hyrwall <sh@keff.org> writes:
+> >
+> >> It is kinda. It's been mentioned multiple times over the years but no one seems to want to fix it. Atleast you should be able to specify bind/src ip in the
+> >> config. I gave up WG because of it. Wasn't accepted by my projects security policy since src ip could not be configured.
+> >>
+> >> There is an unofficial patch however,
+> >>
+> >> https://github.com/torvalds/linux/commit/5fa98082093344c86345f9f63305cae9d5f9f281
+> > the binding is somewhat related to this issue and I was looking for that
+> > feature some time ago, too. While it is correlated and I would really
+> > appreciate binding support, I am not sure whether the linked patch does
+> > actually fix the problem I am seeing in multi homed devices.
+> >
+> > As long as wireguard does not reply with the same IP address it was
+> > contacted with, packets will get dropped on stateful firewalls, because
+> > the returning packet does not match the state session database.
+> >
+> > Best regards,
+> >
+> > Nico
+> >
+> > --
+> > Sustainable and modern Infrastructures by ungleich.ch
