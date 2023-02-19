@@ -4,38 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E8B9C636CC
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Feb 2023 09:19:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A392C636CC
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Feb 2023 12:10:17 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4dc6cf88;
-	Sun, 19 Feb 2023 09:19:45 +0000 (UTC)
-Received: from smtp3.m7n.se (smtp3.m7n.se [2a03:94e0:255d:2a01:8ce9::4])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6010fe6e
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id de28fa07;
+	Sun, 19 Feb 2023 12:10:15 +0000 (UTC)
+Received: from smtp.ungleich.ch (smtp.ungleich.ch [185.203.114.86])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 91ea5dce
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 19 Feb 2023 09:19:42 +0000 (UTC)
-Received: from [IPv6:::1] (unknown [IPv6:2001:470:de6f:1240::101])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp3.m7n.se (Postfix) with ESMTPSA id 7106E3565C10;
- Sun, 19 Feb 2023 09:19:40 +0000 (UTC)
-Date: Sun, 19 Feb 2023 10:19:39 +0100
-From: Mikma <mikma.wg@lists.m7n.se>
-To: wireguard@lists.zx2c4.com, Nico Schottelius <nico.schottelius@ungleich.ch>,
- Mike O'Connor <mike@pineview.net>
-CC: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: Source IP incorrect on multi homed systems
-User-Agent: K-9 Mail for Android
-In-Reply-To: <875yby83n2.fsf@ungleich.ch>
+ Sun, 19 Feb 2023 12:10:13 +0000 (UTC)
+Received: from blind.localdomain (localhost [IPv6:::1])
+ by smtp.ungleich.ch (Postfix) with ESMTP id C17441FDCB;
+ Sun, 19 Feb 2023 13:09:53 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ungleich.ch;
+ s=202201; t=1676808593;
+ bh=gh/xhcoK/qNZpYY8V7P5lkXZD8cPYyg058cSkEzTeOs=;
+ h=References:From:To:Cc:Subject:Date:In-reply-to:From;
+ b=iX6H3cCaw3TCnusvDTr/ZvJuHfyIxVamnmb6bYzywnKtMfCottjfbwi0qAi243xkq
+ RZkKyw/SIdSgPfoQYX2bF2OI1ETKBfKTyHrRdhkJB6HXdL2a/SebLTaoHipjWOri3x
+ z+2EJo4giT1jRhKzeSvv+rdpQgH6JPSck5q2il5BHMe0zV8XTiP51G96gsrO9aGG+I
+ PlcHpNMGaXs435AJBo2mPIbuqN7mgkPaw6+54K9B6yHXGn2PVZTIPAat4YuWdOKzXA
+ AhOJxKdkmqyxMvyF9q82gGUytsKDDV1wtJMlsEMmjnUq/DG2dkSsKfmQ+wFLX1EfvF
+ uHDgkYV+yGwSA==
+Received: by blind.localdomain (Postfix, from userid 1000)
+ id AF3D413A11F1; Sun, 19 Feb 2023 13:10:12 +0100 (CET)
 References: <87bklqd7vb.fsf@ungleich.ch>
  <c83fee12-bef7-d09f-0cc5-d0a193d783c5@pineview.net>
  <875yby83n2.fsf@ungleich.ch>
-Message-ID: <60C522A0-DFAA-4A25-9E6C-8C4AF0962F5B@lists.m7n.se>
+ <60C522A0-DFAA-4A25-9E6C-8C4AF0962F5B@lists.m7n.se>
+User-agent: mu4e 1.7.26; emacs 28.2
+From: Nico Schottelius <nico.schottelius@ungleich.ch>
+To: Mikma <mikma.wg@lists.m7n.se>
+Cc: Nico Schottelius <nico.schottelius@ungleich.ch>, Mike O'Connor
+ <mike@pineview.net>, WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: Source IP incorrect on multi homed systems
+Date: Sun, 19 Feb 2023 13:04:39 +0100
+In-reply-to: <60C522A0-DFAA-4A25-9E6C-8C4AF0962F5B@lists.m7n.se>
+Message-ID: <873571dfff.fsf@ungleich.ch>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -50,38 +58,41 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Have you tried setting the preferred src address of the route(s) to the add=
-resses you desire?
 
-From=20"man ip":
+Hello Mikma,
 
-> src ADDRESS the source address to prefer when sending to the destination=
-s covered by the route prefix=2E=20
+Mikma <mikma.wg@lists.m7n.se> writes:
 
-On 19 February 2023 09:01:31 CET, Nico Schottelius <nico=2Eschottelius@ung=
-leich=2Ech> wrote:
+> Have you tried setting the preferred src address of the route(s) to the addresses you desire?
 >
->Let me rephrase the problem statement:
+> From "man ip":
 >
->    - ping and http calls to the multi homed machine work correctly:
->      I can ping 147=2E78=2E195=2E254 and the reply contains the same add=
-ress=2E
->      I can ping 195=2E141=2E200=2E73 and the reply contains the same add=
-ress=2E
->      I can curl 147=2E78=2E195=2E254 and the reply contains the same add=
-ress=2E
->      I can curl 195=2E141=2E200=2E73 and the reply contains the same add=
-ress=2E
->
->    - wireguard does NOT work because it changes the reply address:
->      A packet sent to 147=2E78=2E195=2E254 is being replied with 195=2E1=
-41=2E200=2E73
->
->In general, processes reply with the IP address that was used to contact
->them and not with the outgoing interface address, which would also break
->adding IP addresses to the loopback interface=2E
->
->For full detail, see ip addresses [0] and routing below [1] and tests
->executed [2]=2E
->
->I believe that this is a bug in wireguard=2E
+>> src ADDRESS the source address to prefer when sending to the destinations covered by the route prefix.
+
+unfortunately this does not solve the problem. The expected behaviour of
+wireguard is to reply with the same IP address, like nginx and the
+kernel ICMP handler do, not with a route based outgoing interface IP address.
+
+In a BGP based environment the route can vary dynamically and I showed a
+stripped down version to make it easier to understand. In practices,
+many of our systems have 4-7 different upstreams and the packet can come
+in on any interface and should leave the machine on the current correct
+interface depending on the route import.
+
+In no case however, wireguard should change the response address,
+because this breaks stateful firewalls.
+
+As demonstrated in my last email, both the in-kernel ICMP handler as
+well as user space applications like nginx behave correctly on the same
+machine.
+
+I briefly checked the wireguard source code and I did not right away
+spot the network handling part that sets the source IP, so I am
+wondering if this bug is due to wireguard not handling it at all?
+
+Best regards,
+
+Nico
+
+--
+Sustainable and modern Infrastructures by ungleich.ch
