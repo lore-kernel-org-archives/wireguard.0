@@ -4,39 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3861C636CC
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Feb 2023 20:23:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5EC0C636CC
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Feb 2023 20:26:25 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ad00cccd;
-	Sun, 19 Feb 2023 20:18:49 +0000 (UTC)
-Received: from isrv.corpit.ru (isrv.corpit.ru [86.62.121.231])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id bb124258
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d9ee634b;
+	Sun, 19 Feb 2023 20:24:23 +0000 (UTC)
+Received: from smtp.ungleich.ch (smtp.ungleich.ch
+ [2a0a:e5c0:2:2:0:c8ff:fe68:bf1c])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9430b654
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 19 Feb 2023 20:18:48 +0000 (UTC)
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C195E400BA;
- Sun, 19 Feb 2023 23:18:48 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3683DF;
- Sun, 19 Feb 2023 23:18:47 +0300 (MSK)
-Message-ID: <24c6fa52-a512-a01e-5351-90cb33a32a3f@msgid.tls.msk.ru>
-Date: Sun, 19 Feb 2023 23:18:47 +0300
+ Sun, 19 Feb 2023 20:24:21 +0000 (UTC)
+Received: from nb3.localdomain (localhost [IPv6:::1])
+ by smtp.ungleich.ch (Postfix) with ESMTP id 144311FEAC;
+ Sun, 19 Feb 2023 21:24:02 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ungleich.ch;
+ s=202201; t=1676838242;
+ bh=AR8hZViDqytqURjkIvle9A5XOb6AXBJufv/qtUNjhLE=;
+ h=References:From:To:Cc:Subject:Date:In-reply-to:From;
+ b=Yjo0TiLjdgTBWFfmrV082Wpilvr8ZtHeWw5PH1LN160vCo+S3ZQBFY+aNBqNxmJP4
+ HwjAtDFwmrGlNxav1vM48+STKqM4bO+kvRxTRq3+DIGy4uIYL7TXyo0f6XpmxuMikm
+ jTvdn+6tUMOuEbAQ4zFA5mQLRLteLC09DpboBDMBqmO99W0qdjmpY7c+qsdtLpzu1s
+ SWzx14ou70rg6PvNa2PcrZS0KvlMrQOB/pYQ3uO/bmsrVHdo4DgrsD4RQ6zysOUWV0
+ yMPHK0Jw6tTG30OszgjID/djsKvbacsDO+yLExuYUNlK6TMXsfKEFi9CJd4FfVwqAH
+ qCaKRs1HJBshg==
+Received: by nb3.localdomain (Postfix, from userid 1000)
+ id 3343A14C0119; Sun, 19 Feb 2023 21:24:21 +0100 (CET)
+References: <875yby83n2.fsf@ungleich.ch>
+ <2ed829aaed9fec59ac2a9b32c4ce0a9005b8d8b850be81c81a226791855fe4eb@mu.id>
+ <87ttzhc0jt.fsf@ungleich.ch>
+ <7d7bc930-65d9-f13e-cedc-e0451407be85@chil.at>
+ <CAJJxGdGSYR_mofRVpZDQsifjZJXXSNNsPqUV-RfWDMO0N2P2dQ@mail.gmail.com>
+ <bdeefdd3-d821-591f-b5fc-701be0e345fb@yahoo.com>
+ <c2bc4ed2-e8c5-ff68-9fe8-c59c8be2804c@yahoo.com>
+User-agent: mu4e 1.8.9; emacs 28.2
+From: Nico Schottelius <nico.schottelius@ungleich.ch>
+To: tlhackque <tlhackque@yahoo.com>
+Cc: wireguard@lists.zx2c4.com
+Subject: Re: Source IP incorrect on multi homed systems
+Date: Sun, 19 Feb 2023 21:18:34 +0100
+In-reply-to: <c2bc4ed2-e8c5-ff68-9fe8-c59c8be2804c@yahoo.com>
+Message-ID: <87o7pp76a2.fsf@ungleich.ch>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [RESEND PATCH v3] wg: Support restricting address family of DNS
- resolved Endpoint
-To: Roman Mamedov <rm@romanrm.net>, =?UTF-8?Q?Daniel_Gr=c3=b6ber?=
- <dxld@darkboxed.org>
-Cc: wireguard@lists.zx2c4.com, "Jason A . Donenfeld" <Jason@zx2c4.com>
-References: <20230219180428.438453-1-dxld@darkboxed.org>
- <20230219233118.2d9654f9@nvm>
-Content-Language: en-US
-From: Michael Tokarev <mjt@tls.msk.ru>
-In-Reply-To: <20230219233118.2d9654f9@nvm>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -51,20 +61,36 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-19.02.2023 21:31, Roman Mamedov пишет:
-> On Sun, 19 Feb 2023 19:04:28 +0100
-> Daniel Gröber <dxld@darkboxed.org> wrote:
-> 
->> +static inline bool parse_address_family(int *family, const char *value)
->> +{
->> +	if (strcmp(value, "inet") == 0)
->> +		*family = AF_INET;
->> +	else if (strcmp(value, "inet6") == 0)
->> +		*family = AF_INET6;
-> 
-> Wouldn't the first condition match "inet6" as well, not ever checking the
-> second condition?
 
-No.  It is not memcmp.
+tlhackque <tlhackque@yahoo.com> writes:
+>> [...]
+>> 4.1 <https://www.rfc-editor.org/rfc/rfc2181.html#section-4.1>. UDP
+>> Source Address Selection
+>>
+>>     ***To avoid these problems, servers when responding to queries
+>> using UDP _must _cause the reply to be sent with the source address
+>> field in the IP header set to the address that was in the
+>> destination address field of the IP header of the packet containing
+>> the query causing the response.** *
 
-/mjt
+OMG, we really have seen everything already, haven't we?
+
+Jason, what do you think about adopting the RFC2181 Source Address
+Selection algorithm for wireguard?
+
+If I am not mistaken that would mean in practice:
+
+   if orignal_pkg.ip_dst == one_of_my_ips then
+      return_pkg.ip.src = orignal_pkg.ip_dst
+      return_pkg.ip.dst = orignal_pkg.ip_src
+   fi
+
+For me that sounds like a sane approach (aside from
+my very simplified algorithm).
+
+Best regards,
+
+Nico
+
+--
+Sustainable and modern Infrastructures by ungleich.ch
