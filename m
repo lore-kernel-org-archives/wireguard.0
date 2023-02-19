@@ -4,81 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB734C61DA4
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Feb 2023 17:07:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A0D4C61DA4
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Feb 2023 18:07:01 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 372849c9;
-	Sun, 19 Feb 2023 17:05:23 +0000 (UTC)
-Received: from sonic301-32.consmr.mail.ne1.yahoo.com
- (sonic301-32.consmr.mail.ne1.yahoo.com [66.163.184.201])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 03457738
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8dcf90fb;
+	Sun, 19 Feb 2023 18:05:05 +0000 (UTC)
+Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com
+ [2607:f8b0:4864:20::531])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2eb388fe
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 19 Feb 2023 17:05:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1676826318; bh=6t73ePuMUi4P247lfbsUZFhrmAkLNgUpfvPEWdc/7Eo=;
- h=Date:From:Subject:To:References:In-Reply-To:From:Subject:Reply-To;
- b=KHv1OXrk/Xcz+7tl2Ik6OqCXXcekHdLZHfKlSCZKPqyrJGmNaRUoWMAUMLIhuf4LNh0jQ2UHKLKnSqQLnqcutWxD3KeUq0QK+Jfn4FkamI3SbgIbsKDf6fu9v431E2zTdA0Y0GJvouDLJU/ihR15ABQTfcT03BIi/ahkyBJVpT1OcZJa6dx+Yr61VQxXkEXezhfQSIzol16mjMcawfm8sJTciW6FafJJTkadEstwXb+s060ja6b1ZKOXT+hrHZAC6al+AeypMLXUKRL+MGhmY7SiO/E0pCGk3wfLlqlM594UYMVJ1wLmwXTysnoCWSI4a2ZHtIMxfyoNGWfbEWu9oQ==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1676826318; bh=UIeBFOeghEzSSuBKcdJnSWFYs2sK2NGp6PpgAOO4xqj=;
- h=X-Sonic-MF:Date:From:Subject:To:From:Subject;
- b=btnO1qcxiNGGAjPvYi78L189vp5xzSlAyh+W8OH0zjzM5OXCTf5Sv/9r8FHzY7MN0SbhuwvCPQ9S/Dtt4xP+/K5isqK2WZXwsUM3Q74UhFrikP2iFfx2qBQYjp4GROQ4OLeUJd59q4TTYaXry3bZtgovZPpYgbSGM41YdFwliasLQQw89uLC1BJkASEHRDTAcDNo97o0ZFJAIvB23rbX6FZEY1uEPJswqqJ/VBivubDG2OtxnDHa1r128uEbk3F2Z11cRbfFnno5iagmXKiJAICzz6ZQ/bjDfHSHvFLJ4ixxve5wXc+D82qXGgiOW4DceiChi5c2qBomkdpwD4prSg==
-X-YMail-OSG: meFta14VM1k6.k87kAjvybG8NPsvbYaiaowey2ncOJgwiItP2mkbtaKVjwJYIcT
- HfgCsI4gw_r_0jR7oh21aWEOjsdLn9OjoFLgkUPsMXAP.NIt1n4AGV7GJZrHIvP2LZJvxikPNPL3
- BTYdNSN7oHqQmzztubX6YDN.IQiWPPpflkmNLGDrLnjklQOcSUstATrDgRPC_WhFg1KH4FguUuI9
- az_84feeUSOoGNnByUPrMB2NulHmPVEKt366CJ7.j7Z5UJsaWpaAvOmWv5wGCpkfyVv9jcf_TLvj
- v.ab6jgsXivKrmmN1TtnH.f2KRzoVTMx08BQQtWv4x65ZHXBCBX.et2jl0VY0gmbURYkex.qK3y.
- t8i32JvWwwc9sJWuWoy2nmvuigoVOM8f2nwZhJFEiiQdTAKNNIoB8ZrF4uLZ5Joql9sPGi_6WUJH
- ue3p.pSBN5mtf11rb5vfB8EKrLDfvtuMchfGx6DOhVf1teXe8H3ntJEwbHVvW13dpMQppywvJLFF
- 5TopOi4m6nGkqKp8VHNCDngSYWR9R7Gb2KhSeUxpt6vOnMG4OlNP0LDhgfx4Ld9bEgy1kLitxKdK
- 217gFifoRYMiQ_Ud8PHv5Z7Z8eJizYla0V3BDLYp3WHOcA_UcpUtI9PNMd8rLXApH7u7vyd_dVC1
- Sd9ZjOuQ2urvd4qDiphsYSowRwCf07N_IuYP4jpsh6Y5vD6GuwAuF9fR1fth_1BGHiFtLaPiWmsL
- z8diYhGMNVq9zk2bWavyL_HzqYhGWfuID8xXsXRCtM6cZlPiDK9DAtybTheid3G.yRHZvXUsp9aZ
- 1S592Rg1hMsno4P6aVY3q_xUAA2fTYhasPPwgODpvQ_aoU062rpW.dsldSgISUan3LxydmuRB74j
- 2ZxOLoWYqbPwsOavlOgkd3KFKY5BSN.aZ_7S2Nh3rMyKtLtbP_ul2LTXukt6wOEnuWZn42RkmipQ
- A3OTokDRzq2BK8OXvaglBoyM6HyTdv9FK4ALk_UwgWOKP7XO5hA5pSg0Zh2gxh3IHQV0M_aC.cG0
- vANufnTNQseAONcdr8SFkSQy_EH3Fg6qvTM0JNKbxkG0TM5s2q9TxVCt6GOzK9ok6qFQJrtIr2Kg
- JkjSfqa2hU7OHXIJfcZcE97SxYWX5o5yXOYiF6Ajcj0lTMXdFl_4yi3kziLryarYMj95JiPXNvqk
- .8nzvO5QJUQ6WlBh0u6k8MQXvsll9DUWJY7ENsOEAJjHlpLRsULGKOGsFsbjd1hg1U8HwITLHjZa
- HQL5GywGq2O3MbeNgb4ExmAfSa4LpB3TCWItrYvFse2pOmj5F2F2iypsNi6zRKqpNqGIQuFr3Z0Y
- dweugf3449SOrWEnG5zxxe8_CUCSV.7KT2aR2w3tV_HYnvzsocrdZpP0vlvcvJUWAYIDkC5Q_mQI
- MPEGjFtmTHeutsunBqLQ7e_1Nrz24xQrsuBliAp0Jco5jyMFjAXOAvg43olmK.0L1H8vmImxpyZS
- VmMIqc0o3q8JOmisVYGnAlYB03c4kj_sP9F3o_RSck1jABM71nUtGJB5c6CRlEhBEB2OBRniY4nw
- .bh5olkXVjtKo2MBrKikStXgfC8j2.CWYBPvKMXztsFRiiD3Mzxneab4UGE9rkbL9qn37z8MaUmw
- mAjnPidH04caHVVBxbGgFQcWEVp0Xy3z_G.jbUwSBEuQKsWZ16gPAh_BBXGpyw_xodAJrXUwA2aE
- _uUuYilJvjOZDKNDvBMwDOTkU.X9nefhWaPl_86EQ67rD54wf4L8GoZbL4U37CujRPgyhvz3WJSb
- 268PTxKl0to3OqHIYv9LNKOj_87vo2Z.60ndyg7ibak4MNXbJr7BU_oL6mzjSFTa2ZzhGy3YVPDD
- dNDE9dWlNj8BV4h5dbwhE3YqpgXhbaE_NgkoDi_vkoNu_S4_kjb1i01_vBFnhd4UfsIUFTmOGPHC
- xJKJWB5PCr5HthbaAx2ivW5SruMElRcja8.Pga6ORdgLFwLncrS0sgJKYshBFfLOiCm5O2T3VFmA
- HpiqPeBLZgagSKAOhZOGHF8k_W8NdPNqRKptaf..T0thW.10oPEg6tFErw10AA1J41eJbAuOGjtx
- 7sXTvzM.VsaDfZtl5CzL2B7dqAJPWdKUHI.n_EQCtGZBfmt_5bXMQrXy8QEWxToo1zk58WUfiHwN
- 4A8Xy.3E7dp7u5yZ7RDtPqp.arWLXcIEqRzd54WUzhOwD3Cj6J1EnFwOpY6efGZH_KA9UJe.lC9W
- IQuMCNe5ZrLZaZ9L75jW6HQ--
-X-Sonic-MF: <tlhackque@yahoo.com>
-Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic301.consmr.mail.ne1.yahoo.com with HTTP; Sun, 19 Feb 2023 17:05:18 +0000
-Received: by hermes--production-bf1-57c96c66f6-7qgxj (Yahoo Inc. Hermes SMTP
- Server) with ESMTPA ID 2072e5ceb8b564b8f3b98cf320eb4dfe; 
- Sun, 19 Feb 2023 17:05:14 +0000 (UTC)
-Message-ID: <bdeefdd3-d821-591f-b5fc-701be0e345fb@yahoo.com>
-Date: Sun, 19 Feb 2023 12:05:11 -0500
+ Sun, 19 Feb 2023 18:05:03 +0000 (UTC)
+Received: by mail-pg1-x531.google.com with SMTP id j5so769990pgt.3
+ for <wireguard@lists.zx2c4.com>; Sun, 19 Feb 2023 10:05:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=OZXvaLzFoh7l6/fk/sjoPtm0hW+BF0mt3qb9iUyVK0s=;
+ b=MPa8qSITK1+SXW7ZkwS/KuSQew/8n2jaeuKH848j9649stOicptdes65BsFze9tpNo
+ c0mBreOoExtb1p/xnHrL7jN3TWcIIVD/VLZUYJ8sVezohVM8EqBRAzjgWqYeXonda3C4
+ 45Vpn1IyAq4GFuDy+FY5DYK1eyeOAjxdtViEOQxtuLg+h6fZ1zNLB+l6XBotPL9Ch/DJ
+ UFEFcDzTwcidfCVOxOzSmd1dbh/8bgI6IG3nmbgXaXlNFgJ9hDsX6BrfYeXF7Butc7VI
+ YnYOMhTdrc3bvgcXU0WY9g4uGfco+n/VBksDYL8bZ3EwDR/exdauytvZgr3ncW5n6byC
+ grPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=OZXvaLzFoh7l6/fk/sjoPtm0hW+BF0mt3qb9iUyVK0s=;
+ b=VWLCldWeVOXlYsKQ9iEaGeRSQHQXdW3ikpmnCPBKCXNz45b1V+80mwp/srHZWZkjDC
+ XrlheVCV5PNkgUBNAnlX68tjv6ZBunSZHZPF6bLjie8H+wC9z4I9JKlcR5HU04UBl0ZR
+ LVxfMryjXr4VfgsZRgs9/rcnBx6qnm7WWmcyEgR8uPEVK0DbbxSxe2MxsiMokhKDgWCz
+ nMl8tWniKzb3k9EsWZC9rvA3A2Oen2W+hRZ0b+XLUlbrVZTd3z4wnUPOD/JclCdexRUe
+ 1KbAZyD9tyCAKhO1fuuKBHiiCsWr3vbIWB/tKZEHiGlvTo3wCftNXmlV4k8OSjnej9os
+ zNKg==
+X-Gm-Message-State: AO0yUKXXOm6ABqwJQJqjuAQOV3fjjZyFnBuCFiIc2IgGbYvWZF20901l
+ 7k2pe2C8UZROok87ffCpCg6dUPEKmbao1P1HpN5EO49vQj8=
+X-Google-Smtp-Source: AK7set+7y3vuVJQhIbe2AqdUaTZOtF/FQe6o6hzQtj0tIlqK0hM1XzGMywYOnE0hSBat18Y8v8PbJB6OXssOR2QvgrQ=
+X-Received: by 2002:a05:6a02:20a:b0:4fb:323f:d661 with SMTP id
+ bh10-20020a056a02020a00b004fb323fd661mr55993pgb.6.1676829900975; Sun, 19 Feb
+ 2023 10:05:00 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-From: tlhackque <tlhackque@yahoo.com>
-Subject: Re: Source IP incorrect on multi homed systems
-To: wireguard@lists.zx2c4.com
 References: <875yby83n2.fsf@ungleich.ch>
  <2ed829aaed9fec59ac2a9b32c4ce0a9005b8d8b850be81c81a226791855fe4eb@mu.id>
  <87ttzhc0jt.fsf@ungleich.ch> <7d7bc930-65d9-f13e-cedc-e0451407be85@chil.at>
  <CAJJxGdGSYR_mofRVpZDQsifjZJXXSNNsPqUV-RfWDMO0N2P2dQ@mail.gmail.com>
-Content-Language: en-US
-In-Reply-To: <CAJJxGdGSYR_mofRVpZDQsifjZJXXSNNsPqUV-RfWDMO0N2P2dQ@mail.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------QpA6ltZrMleAMA9OGy58TeFr"
-X-Mailer: WebService/1.1.21183
- mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
+ <00b94fdf-22d5-00ad-e068-30ad4a453236@keff.org>
+In-Reply-To: <00b94fdf-22d5-00ad-e068-30ad4a453236@keff.org>
+From: Janne Johansson <icepic.dz@gmail.com>
+Date: Sun, 19 Feb 2023 19:04:49 +0100
+Message-ID: <CAA6-MF9q68pdBZDojmA+DOsH-WOckyv+J4jD+T6zBZot2Grz6g@mail.gmail.com>
+Subject: Re: Source IP incorrect on multi homed systems
+To: Sebastian Hyrvall <sh@keff.org>
+Cc: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -93,118 +75,21 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------QpA6ltZrMleAMA9OGy58TeFr
-Content-Type: multipart/mixed; boundary="------------KeGWOp3ylFMiTB5cj9p9N0YK";
- protected-headers="v1"
-From: tlhackque <tlhackque@yahoo.com>
-To: wireguard@lists.zx2c4.com
-Message-ID: <bdeefdd3-d821-591f-b5fc-701be0e345fb@yahoo.com>
-Subject: Re: Source IP incorrect on multi homed systems
-References: <875yby83n2.fsf@ungleich.ch>
- <2ed829aaed9fec59ac2a9b32c4ce0a9005b8d8b850be81c81a226791855fe4eb@mu.id>
- <87ttzhc0jt.fsf@ungleich.ch> <7d7bc930-65d9-f13e-cedc-e0451407be85@chil.at>
- <CAJJxGdGSYR_mofRVpZDQsifjZJXXSNNsPqUV-RfWDMO0N2P2dQ@mail.gmail.com>
-In-Reply-To: <CAJJxGdGSYR_mofRVpZDQsifjZJXXSNNsPqUV-RfWDMO0N2P2dQ@mail.gmail.com>
+Den s=C3=B6n 19 feb. 2023 kl 18:06 skrev Sebastian Hyrvall <sh@keff.org>:
+>
+> You should get into that debate. Proposing firewall workarounds is not a
+> correct solution so please don't do it. It needs to be fixed. It's an
+> immature VPN solution that always just proposed a workaround instead of
+> fixing the problem.
 
---------------KeGWOp3ylFMiTB5cj9p9N0YK
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+I would make sure that you are not mis-ascribing the problem* to "an
+immature VPN" and not what the default UDP behaviour of the kernel is,
+to pick a working interface to send packets from based on the routing
+table, in which any/all udp based tunnel would suffer the same
+problem. If you google it, you may find that other udp transports face
+the same "problem".
 
-RldJVywgd2hpbGUgY2xldmVyLCBJIGRvbid0IHRoaW5rIHRoYXQgaXB0YWJsZXMgbWFyayBz
-b2x2ZXMgYWxsIGNhc2VzLsKgIA0KRS5nLiwgY29uc2lkZXIgYW4gaW50ZXJmYWNlIHdpdGgg
-bXVsdGlwbGUgYWRkcmVzc2VzLCB3aGVyZSBhIHBhY2tldCANCmNvbWVzIGluIG9uIGEgc2Vj
-b25kYXJ5IGFkZHJlc3MuwqAgVGhlIHByb3Bvc2VkIHJ1bGUgd291bGQgc2VuZCBpdCBvdXQg
-DQp0aGUgcmlnaHQgaW50ZXJmYWNlLCBidXQgc3RpbGwgd2l0aCB0aGUgd3JvbmcgKHByaW1h
-cnkpIGFkZHJlc3MgcGlja2VkIA0KZnJvbSB0aGUgaW50ZXJmYWNlLi4uDQoNCldpdGggSVB2
-NiBpdCdzIGNvbW1vbiB0byBhc3NpZ24gYW4gYWRkcmVzcyB0byBhIHNlcnZpY2UgcmF0aGVy
-IHRoYW4gYSANCmhvc3Qgc28gc2VydmljZXMgY2FuIG1vdmUgZWFzaWx5LsKgIFNvIG11bHRp
-cGxlIGFkZHJlc3NlcyBwZXIgaW50ZXJmYWNlIA0KYXJlIHRoZSBydWxlLCBub3QgdGhlIGV4
-Y2VwdGlvbi4NCg0KSSBkbyB0aGUgc2FtZSB3aXRoIElQdjQgaW5zaWRlIGFkZHJlc3Nlcywg
-dGhvdWdoIHRoZXNlIGRheXMgcHVibGljIElQdjQgDQphZGRyZXNzZXMgYXJlIHNjYXJjZSBl
-bm91Z2ggdGhhdCBpdCdzIG5vdCBjb21tb24gZm9yIHB1YmxpYyBJUHMuwqAgSXQgDQphbW91
-bnRzIHRvIHRoZSBzYW1lIGlzc3VlIC0gdGhlIE5BVCB0cmFja2luZyBpcyBzdGF0ZWZ1bC4N
-Cg0KVHJ5aW5nIHRvIHdvcmsgYXJvdW5kIHRoaXMgd2l0aCByb3V0aW5nIHNlZW1zIGxpa2Ug
-YSBtYXplIG9mIHR3aXN0eSANCnBhc3NhZ2VzIC0gc28gSSBhZ3JlZSB0aGF0IHRoZSByaWdo
-dCBzb2x1dGlvbiBpcyBmb3IgV0cgdG8gcmVzcG9uZCBmcm9tIA0KdGhlIGFkZHJlc3MgdGhh
-dCByZWNlaXZlcyBhIHBhY2tldC4NCg0KT24gMTktRmViLTIzIDExOjMyLCBEYXZpZCBLZXJy
-IHdyb3RlOg0KPiBXaXRob3V0IGdldHRpbmcgaW50byB0aGUgZGViYXRlIG9mIHdoZXRoZXIg
-d2lyZWd1YXJkIGlzIGFjdGluZw0KPiBjb3JyZWN0bHkgb3Igbm90LCBJIHRoaW5rIHRoZXJl
-IGlzIGEgcG9zc2libGUgd29ya2Fyb3VuZC4NCj4NCj4gMS4gSW4gdGhlIGlwdGFibGVzIG1h
-bmdsZSB0YWJsZSBQUkVST1VUSU5HLCBtYXRjaCB0aGUgaW5jb21pbmcNCj4gaW50ZXJmYWNl
-IGFuZCBkZXN0aW5hdGlvbiBhZGRyZXNzIGFuZCAtLXNldC14bWFyayBhIGZpcmV3YWxsIE1B
-UksNCj4gdW5pcXVlIHRvIHRoaXMgaW50ZXJmYWNlL2Rlc3RpbmF0aW9uDQo+IDIuIENyZWF0
-ZSBhIG5ldyBpcCByb3V0ZSB0YWJsZSB0aGF0IHNldHMgdGhlIGRlZmF1bHQgcm91dGUgdG8g
-Z28gb3V0DQo+IG9uIHRoZSBpbnRlcmZhY2Ugd2l0aCB0aGUgc291cmNlIGFkZHJlc3MgeW91
-IHdhbnQgKHNhbWUgYXMgZGVzdGluYXRpb24NCj4gYWRkcmVzcyBpbiBpcHRhYmxlcykNCj4g
-My4gQ3JlYXRlIGEgbmV3IGlwIHJ1bGUgdGhhdCBzZW5kcyBhbGwgcGFja2V0cyB3aXRoIGZp
-cmV3YWxsIG1hcmsgc2V0DQo+IGluIGlwdGFibGVzIHRvIHRoZSByb3V0aW5nIHRhYmxlIHlv
-dSBqdXN0IGNyZWF0ZWQNCj4NCj4gUmVwZWF0IGFib3ZlIGZvciBlYWNoIGludGVyZmFjZS9h
-ZGRyZXNzIHlvdSBuZWVkIHRvIG1hbmdsZSwgd2l0aCBhDQo+IHVuaXF1ZSBmaXJld2FsbCBt
-YXJrIGFuZCByb3V0aW5nIHRhYmxlIGZvciBlYWNoLg0KPg0KPiBJdCBtYXkgYmUgbmVjZXNz
-YXJ5IHRvIHVzZSBDT05OTUFSSyBpbiBQUkVST1VUSU5HIGFuZCBPVVRQVVQgdG8NCj4gLS1y
-ZXN0b3JlX21hcmsuICBJIGNhbid0IHJlbWVtYmVyIGlmIHRoaXMgaXMgbmVlZGVkIG9yIG5v
-dCwgaXRzIGJlZW4gYQ0KPiB3aGlsZSBzaW5jZSBJIGNvbmZpZ3VyZWQgaXB0YWJsZXMgd2l0
-aCB0aGlzLg0KPg0KPiBUaGlzIHNob3VsZCBlbnN1cmUgdGhhdCBhbnkgcGFja2V0IHRoYXQg
-Y29tZXMgaW50byBhbg0KPiBpbnRlcmZhY2UvYWRkcmVzcyBpcyByZXBsaWVkIHRvIGZyb20g
-dGhlIHNhbWUgaW50ZXJmYWNlL2FkZHJlc3MuDQo+DQo+IERhdmlkDQo+DQo+DQo+IE9uIFN1
-biwgRmViIDE5LCAyMDIzIGF0IDk6NDQgQU0gQ2hyaXN0b3BoIExvZXNjaDx3aXJlZ3VhcmQt
-bWFpbEBjaGlsLmF0PiAgd3JvdGU6DQo+PiBIaSwNCj4+DQo+PiBJIGRvbid0IHRoaW5rIG5v
-IG9uZSB3YW50cyB0byBmaXggaXQsIHRoZXJlIGFyZSBzZXZlcmFsIHVzZXJzIGhhdmluZyB0
-aGlzIGlzc3VlLiBJIHJhdGhlciBndWVzcyBubyBvbmUgY291bGQgZmluZCBhIHN1aXRhYmxl
-IHNvbHV0aW9uIHRvIGZpeCBpdC4NCj4+DQo+PiBATmljbzogZGlkIHlvdSB0cnkgdG8gZGVs
-ZXRlIHRoZSBhZmZlY3RlZCByb3V0ZSBhbmQgYWRkIGl0IGFnYWluIHdpdGggdGhlIGNvcnJl
-Y3Qgc291cmNlIElQID8NCj4+DQo+PiBhcyBJIG1lbnRpb25lZCBpdCBpbmh0dHBzOi8vbGlz
-dHMuengyYzQuY29tL3BpcGVybWFpbC93aXJlZ3VhcmQvMjAyMS1Ob3ZlbWJlci8wMDczMjQu
-aHRtbA0KPj4NCj4+IGlwIHJvdXRlIGRlbCA8TkVUPg0KPj4gaXAgcm91dGUgYWRkIDxORVQ+
-IGRldiA8QUxJQVNfREVWPiBzcmMgPFNSQ19JUD4NCj4+DQo+PiBUaGlzIHdheSBJIHdhcyBh
-YmxlIHRvIChhdCBsZWFzdCB0ZW1wb3JhcnkpIGZpeCB0aGlzIGlzc3VlIG9uIG11bHRpIGhv
-bWVkIHN5c3RlbXMuDQo+Pg0KPj4gS2luZCByZWdhcmRzLA0KPj4gQ2hyaXN0b3BoDQo+Pg0K
-Pj4gQW0gMTkuMDIuMjAyMyB1bSAxMzoxMyBzY2hyaWViIE5pY28gU2Nob3R0ZWxpdXM6DQo+
-Pj4gSGV5IFNlYmFzdGlhbiwNCj4+Pg0KPj4+IFNlYmFzdGlhbiBIeXJ3YWxsPHNoQGtlZmYu
-b3JnPiAgd3JpdGVzOg0KPj4+DQo+Pj4+IEl0IGlzIGtpbmRhLiBJdCdzIGJlZW4gbWVudGlv
-bmVkIG11bHRpcGxlIHRpbWVzIG92ZXIgdGhlIHllYXJzIGJ1dCBubyBvbmUgc2VlbXMgdG8g
-d2FudCB0byBmaXggaXQuIEF0bGVhc3QgeW91IHNob3VsZCBiZSBhYmxlIHRvIHNwZWNpZnkg
-YmluZC9zcmMgaXAgaW4gdGhlDQo+Pj4+IGNvbmZpZy4gSSBnYXZlIHVwIFdHIGJlY2F1c2Ug
-b2YgaXQuIFdhc24ndCBhY2NlcHRlZCBieSBteSBwcm9qZWN0cyBzZWN1cml0eSBwb2xpY3kg
-c2luY2Ugc3JjIGlwIGNvdWxkIG5vdCBiZSBjb25maWd1cmVkLg0KPj4+Pg0KPj4+PiBUaGVy
-ZSBpcyBhbiB1bm9mZmljaWFsIHBhdGNoIGhvd2V2ZXIsDQo+Pj4+DQo+Pj4+IGh0dHBzOi8v
-Z2l0aHViLmNvbS90b3J2YWxkcy9saW51eC9jb21taXQvNWZhOTgwODIwOTMzNDRjODYzNDVm
-OWY2MzMwNWNhZTlkNWY5ZjI4MQ0KPj4+IHRoZSBiaW5kaW5nIGlzIHNvbWV3aGF0IHJlbGF0
-ZWQgdG8gdGhpcyBpc3N1ZSBhbmQgSSB3YXMgbG9va2luZyBmb3IgdGhhdA0KPj4+IGZlYXR1
-cmUgc29tZSB0aW1lIGFnbywgdG9vLiBXaGlsZSBpdCBpcyBjb3JyZWxhdGVkIGFuZCBJIHdv
-dWxkIHJlYWxseQ0KPj4+IGFwcHJlY2lhdGUgYmluZGluZyBzdXBwb3J0LCBJIGFtIG5vdCBz
-dXJlIHdoZXRoZXIgdGhlIGxpbmtlZCBwYXRjaCBkb2VzDQo+Pj4gYWN0dWFsbHkgZml4IHRo
-ZSBwcm9ibGVtIEkgYW0gc2VlaW5nIGluIG11bHRpIGhvbWVkIGRldmljZXMuDQo+Pj4NCj4+
-PiBBcyBsb25nIGFzIHdpcmVndWFyZCBkb2VzIG5vdCByZXBseSB3aXRoIHRoZSBzYW1lIElQ
-IGFkZHJlc3MgaXQgd2FzDQo+Pj4gY29udGFjdGVkIHdpdGgsIHBhY2tldHMgd2lsbCBnZXQg
-ZHJvcHBlZCBvbiBzdGF0ZWZ1bCBmaXJld2FsbHMsIGJlY2F1c2UNCj4+PiB0aGUgcmV0dXJu
-aW5nIHBhY2tldCBkb2VzIG5vdCBtYXRjaCB0aGUgc3RhdGUgc2Vzc2lvbiBkYXRhYmFzZS4N
-Cj4+Pg0KPj4+IEJlc3QgcmVnYXJkcywNCj4+Pg0KPj4+IE5pY28NCj4+Pg0KPj4+IC0tDQo+
-Pj4gU3VzdGFpbmFibGUgYW5kIG1vZGVybiBJbmZyYXN0cnVjdHVyZXMgYnkgdW5nbGVpY2gu
-Y2gNCg0K
+*) https://en.wiktionary.org/wiki/Chesterton%27s_fence
 
---------------KeGWOp3ylFMiTB5cj9p9N0YK--
-
---------------QpA6ltZrMleAMA9OGy58TeFr
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
-
------BEGIN PGP SIGNATURE-----
-
-wsF5BAABCAAjFiEEhUZRCZitYt5SlPbZ3PhOoB301mYFAmPyVscFAwAAAAAACgkQ3PhOoB301mZU
-bw/+O4CThH9bYAyp8IgGiqWpvBn/FmlKJETLDfYb3Tz/C7TFELwurUQfoQyclM9bfPZik0dhR2ZU
-t2oQjMf4ALwDKxUiacK+/Er/8yyDr0M7bah0FOb6bxd50mmQ5DD5u4WfH9OkqytYC1ynVfRX0xbT
-vqCVsapMxri3XXikDW8PV7Ye7h8ppfZsWY6r7TfwAHmK3ml8PLFis/ubtOw3IkeeLXJVjQpsN6ww
-0VZ1boC1znVlXogpQKYNTCoMuWfbGwFNe/fUD9n7V/y6k+NZq67Iq4am7tSRQwpWfZQ1ke0cKekD
-z+H6hf8NHqD/sLmQ0HrTI/U6x/I7rFx4nFNKq2Cd7rgUsPDf29VrekwwiL3RFLbliR6yydjl1KIl
-QbqdqNl8KWSyuk8DOBfAYyhTyyab8OIl7oMFP4sAl05a1W7LKQJvsAhB+04b7PiD1MRdD9gxke4e
-3wKcqV+mJ1w4xKL8MRP1/B8T9nRrql4WbbHnksPyDtTBEthj58XeZQvzjL0GWMVbGzZI9wwscPWt
-g+Vngq1JM5sxBy0cCThWmgDHt9J2170MxVuNdy2VxFlDwG5IExvk54LLlSsYk4s7bbTTfz04OQh8
-zzWIR9vvbfkLm6zCJB6AkEqGFjl7r3bLlGduIA6nWjcvN3Fb+8RzjRZheO1V7dvp2Lq0GX2W4cYl
-AZU=
-=PczU
------END PGP SIGNATURE-----
-
---------------QpA6ltZrMleAMA9OGy58TeFr--
+--=20
+May the most significant bit of your life be positive.
