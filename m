@@ -4,49 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45AE5C61DA4
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Feb 2023 18:39:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02537C05027
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Feb 2023 18:45:30 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4a7e15f1;
-	Sun, 19 Feb 2023 18:38:07 +0000 (UTC)
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com
- [209.85.167.53])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6668cc51
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4f140928;
+	Sun, 19 Feb 2023 18:42:13 +0000 (UTC)
+Received: from sonic307-9.consmr.mail.ne1.yahoo.com
+ (sonic307-9.consmr.mail.ne1.yahoo.com [66.163.190.32])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 31db42b4
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 19 Feb 2023 18:38:04 +0000 (UTC)
-Received: by mail-lf1-f53.google.com with SMTP id c2so1290475lfp.6
- for <wireguard@lists.zx2c4.com>; Sun, 19 Feb 2023 10:38:04 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LB93YBVA5j2JQzH9KFzG2WCvP+JNgfjvNSZqsxBVcFY=;
- b=PWYp4hGq0vlWPVfI/XcKqAMZWTzDOvn4jvbGXX9dP5ss4EX9ZAUvG0N9T9QZCZhuiu
- KsXSaYvvpx/7xHibOjssXgOdKHEDpShtwSj7cWUrVNz3++8Vb9Lx7sevJ/VxTzUZWuLo
- OVf9N2k4WsOS2bOiQ+g/mlrn/xfn+6u07m0iHJyhAQf70eUmTSH4tvC3X7q3F24E+C+r
- vHCTRr+sTSZz1t3aQNp9iSshuYQwMJJ1HXeUSrr6wNfVUXlKIML22g35mwQXfCXNsoPC
- 0EQNgKjUSQTnWLMmOPgJsNsNQA0uIgEugYk94e0gDpanLs1egn6UhNYohXIsp3q11K0o
- fI8Q==
-X-Gm-Message-State: AO0yUKVluf8t7mSpbu/6qwoSgp0Oykq81f6BdjcvrIzbiCN5s7Rz+46J
- Ha2b2oxkHTLHiAP5XgMkCaSg3SkeNJ1N1/9JB7qj0bD/006ip2YiRwA=
-X-Google-Smtp-Source: AK7set/yr76Z9tDOSRpeoSikZuLd1WISiVQ1UFAgFKcAMKIiGu5dyhHPYcP1Eb/mu/9Yd5HwD/Ye8u+mXnQTIEFt9JI=
-X-Received: by 2002:ac2:43d5:0:b0:4d5:ca32:697f with SMTP id
- u21-20020ac243d5000000b004d5ca32697fmr642391lfl.9.1676831883447; Sun, 19 Feb
- 2023 10:38:03 -0800 (PST)
+ Sun, 19 Feb 2023 18:42:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
+ t=1676832127; bh=N0H27dPDng/4pq4IPOocnN+plNIj8275lu9CCdBlC0I=;
+ h=Date:To:References:From:Subject:In-Reply-To:From:Subject:Reply-To;
+ b=JW/li86bVA8ZcoUS4Z5aut6DzSgrhOvmwcgFsjnKhB5TqINsJ/6KSb+1EQiUl3tQqfBNjPROp5N8D4DFNsO8fsTaBJ/UidJUCAK+sLQkl2dG/dYsd6Bc/xjqZ8rXzy8drrd38aJBpPniTXsq/iqXHZPSC2Z7JqrDq9JO1S1/auLZAbynunI7nesne11RCspHh+A6ULiq5AbzY6TvPMzs1r+igtXJGgrxrIHk4OyMyCG1LCwCaUqBx6uyOnGdShfmRHBPe/gKrHFS7xBVIOL1iAqVVYfyqGzHONbVke5UVLUZ/M9w9y6qbil18jH9OFDRlruezvPD4Io/0b3aQ3n+Vw==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
+ t=1676832127; bh=Cs2ytGrGGgb/2xhiinPnietsimjb8dYP0ph53BJ3WKI=;
+ h=X-Sonic-MF:Date:To:From:Subject:From:Subject;
+ b=pt3RKrUwDV2VmX2g4RlL6IRqMq84z1njSdJUHSqEGCjurEJ7OtcZhoQuBhS1KNyEci5WZawjsGv+t5jySpQNqgmYk/Hlsewti7Cj7cmAJ1px6ldf2QsBGqYduWfbUqwkD6muHCl57lIn5dyl19L8DTXZxke3QSEC/tXkjsavglA9xL8bf2euvfWKgrlnaavFz1Cu8ZPf/mNX4l537cb3lcaImhklxKipPLFzGobJSSCu5FMZ+Nn745BNkM/79K/alcTxm4xtQUoxo69MjDbF/g7J06A8CfSMGR7HnL7SdppJRxszZuVRsfgpHBcFvbbFfCke7pkXX9UcnFG930zjlQ==
+X-YMail-OSG: coiLNuIVM1kXLaR41IWAyQJNoT5vkfh657vpCpFeYKTr4oDo2UOdR8vs1DIaycF
+ Z55st7EyIIHtWPoMEu2W5_LdUNtXwp6r7nyGl8ISaXJS18MajOPXxk_6o9ZbiN2zsi.Gj1hOH1zy
+ Rxrmv9aAoDSYLl4vTDzTnRRm6xw0x2oBw6wHuG8R66OvxQmsU7jibywASXiqRSO1MV1hWxVUfxLn
+ C_T7erV0q0CSlKoLzKJeutyhNuWCifsa5uOMOqVGrqAmSmlAiUqPWQGLgSc0UI.G.FvCTiUUdH32
+ RFg9e1HbWJr8s95WSaTNzshdxaCxX6XANEhlEyOmWoPugVkeDsQ_3IgenieNE7W9L_IcFqdrnD26
+ HOm8.BLMLUs8Bcn4H1GT88pXEJEALAhkboOf1YFTA.pQL8dctgLNBMsfy.QyBWccRJjwF8agdJKP
+ FpRmiNkEpI_byWPJ.8jpAWwWJ96lzHvfL30QI1QB1ofy.e7e5Zx2YNRWZSm5khXIxaiNw_UaoZ2G
+ QSY2VMvIdk2UDodzHKACoiby.Go3OBuGQpmzFMiOVmCkxHlQ5ylypb.CQRH8fp30E6FMv7Wu.GYO
+ ZkWHr8Jzj8oQAFzJbm._HO.xuhVgbAY8ENpshE4kKgL2k.FyJMA3UelFZtegS.O.V.FgpLl_ULKU
+ EpTyzO2m3sVS8Su7XbKCpsXBbmFE2gGap_S_RZ4_9MfQgPJ9YhcDw0n6pYoOyE.4oabPIyoxcG1K
+ o4lLJ5eTSQHzJhqbs0YOK.Gpx_nnd1QtlfIpVHaswvBCBE.nxBKk8hiMon6RWXgbPa2HQSkom6EH
+ 5Exb.Pjbv9el57lfWjnDcU1788VbbazuZODYP3X3NqL9g7RWL5dI3vpk0oLvI.9x.b915cew0QMD
+ cSrwLNSfz3Q7RZu1YDSphFNyw36KaMRqpZuRqG1sXbkibvpqFaRVTz2Pejsx4mWWYUSiQHAJooe.
+ XRq5sI_FNclhC9shcK0Cps9Are_6LpV18VjFi2ul8EEFfJqg6Lwxes7y0amQKwIerX2uZHupYXp6
+ RciTj0bXWgaCZuBjvz.80QK5Art.K8Lw4m6yeOLSvuLy1Pb76zMH.rhSE.ejR93BQl3gVhW_V8Fc
+ C3PosHoPGdnVAf0XowbZ9B5ohNYgN1qRfUiV0zrL8BNenxK2BlWtHuNsgk5lsv4uv05AwVUWldas
+ X2KleayOPBYyeWYpBN5w3Il4_Elpc0T6UevI8UT7nxN1FDRH1W4prbNvUuyb5581e.4owMQTObTL
+ TK2ZgnxcXWxz7FP_qd3JkmuzFgiKRr909WUNCU4bKLWKaGcpzfD87bj.wMXb5mg.L23qk0Neov9D
+ fIwje61IxtezBVwjHsEQFApr8r4LQbFVZwR0GbgVMnkWHye6RZeA.Jj9Jc75Z3femzanl3cuyjxb
+ WYp8FmyCBLy6swaWyo52ko..cPhTydFDkxrdAeQwuTS6_VbKyI6E_A3SZd.kfp2qZnHzsCpkIygz
+ MVnpn30y2HwFF2WxaOuKmDZyck2Iuv1BSdevIeVPfFBVyJimeWp2pngkHKJMU9GwmeMwdSUJk5nf
+ USvhhtyeCMsjT75N7MenE6IBUBheF.VDZzAk4beEUBUrGhektOhkZhu6acSpoQ1zgqWNxEwkwTZh
+ jx_MeLO6xMXxkhuuLCuGVyIAXVOwcOTbf9Y7DuMhnhwzb_PCWT4.xGIC3Bt1DDvv5XKzDfWZW0Bo
+ I6fBUwWMbkWYE.mU_QAXHXAX9KkZA3cSfNU3rSu8CeRgo1.MNcFwn2BgNs..umAFQAdCrhWfSEjS
+ ueGuo29chJPtUAnTgLPss341SYBYQx5uYKpzAa.rL0l5uFb5h27mUV0Jzc_e9_VbhFlPJzr1a9hW
+ jYweG2W5T_mvLamwVboEZrmHKIEcxR7seLWOi_r92oE2FTUNw8s.b5jQNWEqNJjrn8tTbaZCHE77
+ wz0Vt8KZGiT_VJM565g955GpxrGQy0GokEXA7LPZOgAUOYEND6PnK_hRCGbMB_jdVKd4LrsCxmI7
+ 7fiDv.GoIYJbI.oOMFgSdAOOU1flTgK3NmlJHnH937Pp0FA0KZ4.c5LAQurcPf5mQyjDyZ.tgLnt
+ iqQgpTsIDs77oa3skUo3.02pxHWaWN8Zr5KqWY74eTR13kYnICccNy1Vs7qJJqibDGg8JfSE2nuX
+ CUoEjzch52zo9DKqKwB5uodXxStITdAoXnFbEeLe6hVrcSEzqeFQd2NCPFCJflG61ByNEimqI1HH
+ hxjLcQLGXTLXpKl6X8dgca_CF
+X-Sonic-MF: <tlhackque@yahoo.com>
+Received: from sonic.gate.mail.ne1.yahoo.com by
+ sonic307.consmr.mail.ne1.yahoo.com with HTTP; Sun, 19 Feb 2023 18:42:07 +0000
+Received: by hermes--production-bf1-57c96c66f6-76kbw (Yahoo Inc. Hermes SMTP
+ Server) with ESMTPA ID 640d405a33f32c4f6025372597955fe0; 
+ Sun, 19 Feb 2023 18:42:06 +0000 (UTC)
+Message-ID: <c2bc4ed2-e8c5-ff68-9fe8-c59c8be2804c@yahoo.com>
+Date: Sun, 19 Feb 2023 13:42:02 -0500
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.2
+Content-Language: en-US
+To: wireguard@lists.zx2c4.com
 References: <875yby83n2.fsf@ungleich.ch>
  <2ed829aaed9fec59ac2a9b32c4ce0a9005b8d8b850be81c81a226791855fe4eb@mu.id>
  <87ttzhc0jt.fsf@ungleich.ch> <7d7bc930-65d9-f13e-cedc-e0451407be85@chil.at>
  <CAJJxGdGSYR_mofRVpZDQsifjZJXXSNNsPqUV-RfWDMO0N2P2dQ@mail.gmail.com>
  <bdeefdd3-d821-591f-b5fc-701be0e345fb@yahoo.com>
-In-Reply-To: <bdeefdd3-d821-591f-b5fc-701be0e345fb@yahoo.com>
-From: David Kerr <david@kerr.net>
-Date: Sun, 19 Feb 2023 13:37:52 -0500
-Message-ID: <CAJJxGdGjQ_m4LYWgvX4TEB=KsRWSM3oSM8dqVjL8wMkBvonqOQ@mail.gmail.com>
+From: tlhackque <tlhackque@yahoo.com>
 Subject: Re: Source IP incorrect on multi homed systems
-To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <bdeefdd3-d821-591f-b5fc-701be0e345fb@yahoo.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------bOj8LdE72TJWgJL1Nao4EnFw"
+X-Mailer: WebService/1.1.21183
+ mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -61,103 +94,167 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-My proposed workaround specifically stated to match on both the
-interface and destination address, and to set a route with both
-interface and [source] address.  This allows for multiple IP addresses
-on the same interface -- which you can do with both IPv4 and IPv6.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------bOj8LdE72TJWgJL1Nao4EnFw
+Content-Type: multipart/mixed; boundary="------------dBcX3lQhJ8K1o5pyMYNg0BWh";
+ protected-headers="v1"
+From: tlhackque <tlhackque@yahoo.com>
+To: wireguard@lists.zx2c4.com
+Message-ID: <c2bc4ed2-e8c5-ff68-9fe8-c59c8be2804c@yahoo.com>
+Subject: Re: Source IP incorrect on multi homed systems
+References: <875yby83n2.fsf@ungleich.ch>
+ <2ed829aaed9fec59ac2a9b32c4ce0a9005b8d8b850be81c81a226791855fe4eb@mu.id>
+ <87ttzhc0jt.fsf@ungleich.ch> <7d7bc930-65d9-f13e-cedc-e0451407be85@chil.at>
+ <CAJJxGdGSYR_mofRVpZDQsifjZJXXSNNsPqUV-RfWDMO0N2P2dQ@mail.gmail.com>
+ <bdeefdd3-d821-591f-b5fc-701be0e345fb@yahoo.com>
+In-Reply-To: <bdeefdd3-d821-591f-b5fc-701be0e345fb@yahoo.com>
 
-But yes, it is a nasty hack.  You really need to understand what is
-going on between the firewall and routing tables/rules and it is easy
-to get confused.
+--------------dBcX3lQhJ8K1o5pyMYNg0BWh
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
+QlRXLCBETlMgaXMgYSBjb21tb24gVURQICh3ZWxsLCBtb3N0bHkpIHByb3RvY29sIHRoYXQg
+ZW5jb3VudGVyZWQgdGhlIA0Kc2FtZSBpc3N1ZS4NClNlZSBSRkMgMjE4MSA8aHR0cHM6Ly93
+d3cucmZjLWVkaXRvci5vcmcvcmZjL3JmYzIxODEuaHRtbD4gKDE5OTcpLCB3aGVyZSANCnlv
+dSdsbCBmaW5kIChlbXBoYXNpcyBhZGRlZCk6DQo+IDQgPGh0dHBzOi8vd3d3LnJmYy1lZGl0
+b3Iub3JnL3JmYy9yZmMyMTgxLmh0bWwjc2VjdGlvbi00Pi4gU2VydmVyIA0KPiBSZXBseSBT
+b3VyY2UgQWRkcmVzcyBTZWxlY3Rpb24NCj4NCj4gICAgIE1vc3QsIGlmIG5vdCBhbGwsIERO
+UyBjbGllbnRzLCBleHBlY3QgdGhlIGFkZHJlc3MgZnJvbSB3aGljaCBhIHJlcGx5DQo+ICAg
+ICBpcyByZWNlaXZlZCB0byBiZSB0aGUgc2FtZSBhZGRyZXNzIGFzIHRoYXQgdG8gd2hpY2gg
+dGhlIHF1ZXJ5DQo+ICAgICBlbGljaXRpbmcgdGhlIHJlcGx5IHdhcyBzZW50LiAgVGhpcyBp
+cyB0cnVlIGZvciBzZXJ2ZXJzIGFjdGluZyBhcw0KPiAgICAgY2xpZW50cyBmb3IgdGhlIHB1
+cnBvc2VzIG9mIHJlY3Vyc2l2ZSBxdWVyeSByZXNvbHV0aW9uLCBhcyB3ZWxsIGFzDQo+ICAg
+ICBzaW1wbGUgcmVzb2x2ZXIgY2xpZW50cy4gIFRoZSBhZGRyZXNzLCBhbG9uZyB3aXRoIHRo
+ZSBpZGVudGlmaWVyIChJRCkNCj4gICAgIGluIHRoZSByZXBseSBpcyB1c2VkIGZvciBkaXNh
+bWJpZ3VhdGluZyByZXBsaWVzLCBhbmQgZmlsdGVyaW5nDQo+ICAgICBzcHVyaW91cyByZXNw
+b25zZXMuICBUaGlzIG1heSwgb3IgbWF5IG5vdCwgaGF2ZSBiZWVuIGludGVuZGVkIHdoZW4N
+Cj4gICAgIHRoZSBETlMgd2FzIGRlc2lnbmVkLCBidXQgaXMgbm93IGEgZmFjdCBvZiBsaWZl
+Lg0KPg0KPiAgICAgU29tZSBtdWx0aS1ob21lZCBob3N0cyBydW5uaW5nIEROUyBzZXJ2ZXJz
+IGdlbmVyYXRlIGEgcmVwbHkgdXNpbmcgYQ0KPiAgICAgc291cmNlIGFkZHJlc3MgdGhhdCBp
+cyBub3QgdGhlIHNhbWUgYXMgdGhlIGRlc3RpbmF0aW9uIGFkZHJlc3MgZnJvbQ0KPiAgICAg
+dGhlIGNsaWVudCdzIHJlcXVlc3QgcGFja2V0Lg0KDQo+IF8qKlN1Y2ggcmVwbGllcyB3aWxs
+IGJlIGRpc2NhcmRlZCBieSB0aGUgY2xpZW50IGJlY2F1c2UgdGhlIHNvdXJjZSANCj4gYWRk
+cmVzcyBvZiB0aGUgcmVwbHkgZG9lcyBub3QgbWF0Y2ggdGhhdCBvZiBhIGhvc3QgdG8gd2hp
+Y2ggdGhlIGNsaWVudCANCj4gc2VudCB0aGUgb3JpZ2luYWwgcmVxdWVzdC4qKiBfICBUaGF0
+IGlzLCBpdA0KPiAgICAgYXBwZWFycyB0byBiZSBhbiB1bnNvbGljaXRlZCByZXNwb25zZS4N
+Cj4NCj4gNC4xIDxodHRwczovL3d3dy5yZmMtZWRpdG9yLm9yZy9yZmMvcmZjMjE4MS5odG1s
+I3NlY3Rpb24tNC4xPi4gVURQIA0KPiBTb3VyY2UgQWRkcmVzcyBTZWxlY3Rpb24NCj4NCj4g
+ICAgICoqKlRvIGF2b2lkIHRoZXNlIHByb2JsZW1zLCBzZXJ2ZXJzIHdoZW4gcmVzcG9uZGlu
+ZyB0byBxdWVyaWVzIHVzaW5nIA0KPiBVRFAgX211c3QgX2NhdXNlIHRoZSByZXBseSB0byBi
+ZSBzZW50IHdpdGggdGhlIHNvdXJjZSBhZGRyZXNzIGZpZWxkIGluIA0KPiB0aGUgSVAgaGVh
+ZGVyIHNldCB0byB0aGUgYWRkcmVzcyB0aGF0IHdhcyBpbiB0aGUgZGVzdGluYXRpb24gYWRk
+cmVzcyANCj4gZmllbGQgb2YgdGhlIElQIGhlYWRlciBvZiB0aGUgcGFja2V0IGNvbnRhaW5p
+bmcgdGhlIHF1ZXJ5IGNhdXNpbmcgdGhlIA0KPiByZXNwb25zZS4qKiAqICANCg0KPiBJZiB0
+aGlzIHdvdWxkIGNhdXNlIHRoZSByZXNwb25zZSB0byBiZSBzZW50IGZyb20gYW4gSVANCj4g
+ICAgIGFkZHJlc3MgdGhhdCBpcyBub3QgcGVybWl0dGVkIGZvciB0aGlzIHB1cnBvc2UsIHRo
+ZW4gdGhlIHJlc3BvbnNlIG1heQ0KPiAgICAgYmUgc2VudCBmcm9tIGFueSBsZWdhbCBJUCBh
+ZGRyZXNzIGFsbG9jYXRlZCB0byB0aGUgc2VydmVyLiAgVGhhdA0KPiAgICAgYWRkcmVzcyBz
+aG91bGQgYmUgY2hvc2VuIHRvIG1heGltaXNlIHRoZSBwb3NzaWJpbGl0eSB0aGF0IHRoZSBj
+bGllbnQNCj4gICAgIHdpbGwgYmUgYWJsZSB0byB1c2UgaXQgZm9yIGZ1cnRoZXIgcXVlcmll
+cy4gIFNlcnZlcnMgY29uZmlndXJlZCBpbg0KPiAgICAgc3VjaCBhIHdheSB0aGF0IG5vdCBh
+bGwgdGhlaXIgYWRkcmVzc2VzIGFyZSBlcXVhbGx5IHJlYWNoYWJsZSBmcm9tDQo+ICAgICBh
+bGwgcG90ZW50aWFsIGNsaWVudHMgbmVlZCB0YWtlIHBhcnRpY3VsYXIgY2FyZSB3aGVuIHJl
+c3BvbmRpbmcgdG8NCj4gICAgIHF1ZXJpZXMgc2VudCB0byBhbnljYXN0LCBtdWx0aWNhc3Qs
+IG9yIHNpbWlsYXIsIGFkZHJlc3Nlcy4NCj4NCg0KDQpPbiAxOS1GZWItMjMgMTI6MDUsIHRs
+aGFja3F1ZSB3cm90ZToNCj4gRldJVywgd2hpbGUgY2xldmVyLCBJIGRvbid0IHRoaW5rIHRo
+YXQgaXB0YWJsZXMgbWFyayBzb2x2ZXMgYWxsIGNhc2VzLiANCj4gRS5nLiwgY29uc2lkZXIg
+YW4gaW50ZXJmYWNlIHdpdGggbXVsdGlwbGUgYWRkcmVzc2VzLCB3aGVyZSBhIHBhY2tldCAN
+Cj4gY29tZXMgaW4gb24gYSBzZWNvbmRhcnkgYWRkcmVzcy7CoCBUaGUgcHJvcG9zZWQgcnVs
+ZSB3b3VsZCBzZW5kIGl0IG91dCANCj4gdGhlIHJpZ2h0IGludGVyZmFjZSwgYnV0IHN0aWxs
+IHdpdGggdGhlIHdyb25nIChwcmltYXJ5KSBhZGRyZXNzIHBpY2tlZCANCj4gZnJvbSB0aGUg
+aW50ZXJmYWNlLi4uDQo+DQo+IFdpdGggSVB2NiBpdCdzIGNvbW1vbiB0byBhc3NpZ24gYW4g
+YWRkcmVzcyB0byBhIHNlcnZpY2UgcmF0aGVyIHRoYW4gYSANCj4gaG9zdCBzbyBzZXJ2aWNl
+cyBjYW4gbW92ZSBlYXNpbHkuwqAgU28gbXVsdGlwbGUgYWRkcmVzc2VzIHBlciBpbnRlcmZh
+Y2UgDQo+IGFyZSB0aGUgcnVsZSwgbm90IHRoZSBleGNlcHRpb24uDQo+DQo+IEkgZG8gdGhl
+IHNhbWUgd2l0aCBJUHY0IGluc2lkZSBhZGRyZXNzZXMsIHRob3VnaCB0aGVzZSBkYXlzIHB1
+YmxpYyANCj4gSVB2NCBhZGRyZXNzZXMgYXJlIHNjYXJjZSBlbm91Z2ggdGhhdCBpdCdzIG5v
+dCBjb21tb24gZm9yIHB1YmxpYyBJUHMuwqAgDQo+IEl0IGFtb3VudHMgdG8gdGhlIHNhbWUg
+aXNzdWUgLSB0aGUgTkFUIHRyYWNraW5nIGlzIHN0YXRlZnVsLg0KPg0KPiBUcnlpbmcgdG8g
+d29yayBhcm91bmQgdGhpcyB3aXRoIHJvdXRpbmcgc2VlbXMgbGlrZSBhIG1hemUgb2YgdHdp
+c3R5IA0KPiBwYXNzYWdlcyAtIHNvIEkgYWdyZWUgdGhhdCB0aGUgcmlnaHQgc29sdXRpb24g
+aXMgZm9yIFdHIHRvIHJlc3BvbmQgDQo+IGZyb20gdGhlIGFkZHJlc3MgdGhhdCByZWNlaXZl
+cyBhIHBhY2tldC4NCj4NCj4gT24gMTktRmViLTIzIDExOjMyLCBEYXZpZCBLZXJyIHdyb3Rl
+Og0KPj4gV2l0aG91dCBnZXR0aW5nIGludG8gdGhlIGRlYmF0ZSBvZiB3aGV0aGVyIHdpcmVn
+dWFyZCBpcyBhY3RpbmcNCj4+IGNvcnJlY3RseSBvciBub3QsIEkgdGhpbmsgdGhlcmUgaXMg
+YSBwb3NzaWJsZSB3b3JrYXJvdW5kLg0KPj4NCj4+IDEuIEluIHRoZSBpcHRhYmxlcyBtYW5n
+bGUgdGFibGUgUFJFUk9VVElORywgbWF0Y2ggdGhlIGluY29taW5nDQo+PiBpbnRlcmZhY2Ug
+YW5kIGRlc3RpbmF0aW9uIGFkZHJlc3MgYW5kIC0tc2V0LXhtYXJrIGEgZmlyZXdhbGwgTUFS
+Sw0KPj4gdW5pcXVlIHRvIHRoaXMgaW50ZXJmYWNlL2Rlc3RpbmF0aW9uDQo+PiAyLiBDcmVh
+dGUgYSBuZXcgaXAgcm91dGUgdGFibGUgdGhhdCBzZXRzIHRoZSBkZWZhdWx0IHJvdXRlIHRv
+IGdvIG91dA0KPj4gb24gdGhlIGludGVyZmFjZSB3aXRoIHRoZSBzb3VyY2UgYWRkcmVzcyB5
+b3Ugd2FudCAoc2FtZSBhcyBkZXN0aW5hdGlvbg0KPj4gYWRkcmVzcyBpbiBpcHRhYmxlcykN
+Cj4+IDMuIENyZWF0ZSBhIG5ldyBpcCBydWxlIHRoYXQgc2VuZHMgYWxsIHBhY2tldHMgd2l0
+aCBmaXJld2FsbCBtYXJrIHNldA0KPj4gaW4gaXB0YWJsZXMgdG8gdGhlIHJvdXRpbmcgdGFi
+bGUgeW91IGp1c3QgY3JlYXRlZA0KPj4NCj4+IFJlcGVhdCBhYm92ZSBmb3IgZWFjaCBpbnRl
+cmZhY2UvYWRkcmVzcyB5b3UgbmVlZCB0byBtYW5nbGUsIHdpdGggYQ0KPj4gdW5pcXVlIGZp
+cmV3YWxsIG1hcmsgYW5kIHJvdXRpbmcgdGFibGUgZm9yIGVhY2guDQo+Pg0KPj4gSXQgbWF5
+IGJlIG5lY2Vzc2FyeSB0byB1c2UgQ09OTk1BUksgaW4gUFJFUk9VVElORyBhbmQgT1VUUFVU
+IHRvDQo+PiAtLXJlc3RvcmVfbWFyay7CoCBJIGNhbid0IHJlbWVtYmVyIGlmIHRoaXMgaXMg
+bmVlZGVkIG9yIG5vdCwgaXRzIGJlZW4gYQ0KPj4gd2hpbGUgc2luY2UgSSBjb25maWd1cmVk
+IGlwdGFibGVzIHdpdGggdGhpcy4NCj4+DQo+PiBUaGlzIHNob3VsZCBlbnN1cmUgdGhhdCBh
+bnkgcGFja2V0IHRoYXQgY29tZXMgaW50byBhbg0KPj4gaW50ZXJmYWNlL2FkZHJlc3MgaXMg
+cmVwbGllZCB0byBmcm9tIHRoZSBzYW1lIGludGVyZmFjZS9hZGRyZXNzLg0KPj4NCj4+IERh
+dmlkDQo+Pg0KPj4NCj4+IE9uIFN1biwgRmViIDE5LCAyMDIzIGF0IDk6NDQgQU0gQ2hyaXN0
+b3BoIA0KPj4gTG9lc2NoPHdpcmVndWFyZC1tYWlsQGNoaWwuYXQ+wqAgd3JvdGU6DQo+Pj4g
+SGksDQo+Pj4NCj4+PiBJIGRvbid0IHRoaW5rIG5vIG9uZSB3YW50cyB0byBmaXggaXQsIHRo
+ZXJlIGFyZSBzZXZlcmFsIHVzZXJzIGhhdmluZyANCj4+PiB0aGlzIGlzc3VlLiBJIHJhdGhl
+ciBndWVzcyBubyBvbmUgY291bGQgZmluZCBhIHN1aXRhYmxlIHNvbHV0aW9uIHRvIA0KPj4+
+IGZpeCBpdC4NCj4+Pg0KPj4+IEBOaWNvOiBkaWQgeW91IHRyeSB0byBkZWxldGUgdGhlIGFm
+ZmVjdGVkIHJvdXRlIGFuZCBhZGQgaXQgYWdhaW4gDQo+Pj4gd2l0aCB0aGUgY29ycmVjdCBz
+b3VyY2UgSVAgPw0KPj4+DQo+Pj4gYXMgSSBtZW50aW9uZWQgaXQgDQo+Pj4gaW5odHRwczov
+L2xpc3RzLnp4MmM0LmNvbS9waXBlcm1haWwvd2lyZWd1YXJkLzIwMjEtTm92ZW1iZXIvMDA3
+MzI0Lmh0bWwNCj4+Pg0KPj4+IGlwIHJvdXRlIGRlbCA8TkVUPg0KPj4+IGlwIHJvdXRlIGFk
+ZCA8TkVUPiBkZXYgPEFMSUFTX0RFVj4gc3JjIDxTUkNfSVA+DQo+Pj4NCj4+PiBUaGlzIHdh
+eSBJIHdhcyBhYmxlIHRvIChhdCBsZWFzdCB0ZW1wb3JhcnkpIGZpeCB0aGlzIGlzc3VlIG9u
+IG11bHRpIA0KPj4+IGhvbWVkIHN5c3RlbXMuDQo+Pj4NCj4+PiBLaW5kIHJlZ2FyZHMsDQo+
+Pj4gQ2hyaXN0b3BoDQo+Pj4NCj4+PiBBbSAxOS4wMi4yMDIzIHVtIDEzOjEzIHNjaHJpZWIg
+TmljbyBTY2hvdHRlbGl1czoNCj4+Pj4gSGV5IFNlYmFzdGlhbiwNCj4+Pj4NCj4+Pj4gU2Vi
+YXN0aWFuIEh5cndhbGw8c2hAa2VmZi5vcmc+wqAgd3JpdGVzOg0KPj4+Pg0KPj4+Pj4gSXQg
+aXMga2luZGEuIEl0J3MgYmVlbiBtZW50aW9uZWQgbXVsdGlwbGUgdGltZXMgb3ZlciB0aGUg
+eWVhcnMgYnV0IA0KPj4+Pj4gbm8gb25lIHNlZW1zIHRvIHdhbnQgdG8gZml4IGl0LiBBdGxl
+YXN0IHlvdSBzaG91bGQgYmUgYWJsZSB0byANCj4+Pj4+IHNwZWNpZnkgYmluZC9zcmMgaXAg
+aW4gdGhlDQo+Pj4+PiBjb25maWcuIEkgZ2F2ZSB1cCBXRyBiZWNhdXNlIG9mIGl0LiBXYXNu
+J3QgYWNjZXB0ZWQgYnkgbXkgcHJvamVjdHMgDQo+Pj4+PiBzZWN1cml0eSBwb2xpY3kgc2lu
+Y2Ugc3JjIGlwIGNvdWxkIG5vdCBiZSBjb25maWd1cmVkLg0KPj4+Pj4NCj4+Pj4+IFRoZXJl
+IGlzIGFuIHVub2ZmaWNpYWwgcGF0Y2ggaG93ZXZlciwNCj4+Pj4+DQo+Pj4+PiBodHRwczov
+L2dpdGh1Yi5jb20vdG9ydmFsZHMvbGludXgvY29tbWl0LzVmYTk4MDgyMDkzMzQ0Yzg2MzQ1
+ZjlmNjMzMDVjYWU5ZDVmOWYyODEgDQo+Pj4+Pg0KPj4+PiB0aGUgYmluZGluZyBpcyBzb21l
+d2hhdCByZWxhdGVkIHRvIHRoaXMgaXNzdWUgYW5kIEkgd2FzIGxvb2tpbmcgZm9yIA0KPj4+
+PiB0aGF0DQo+Pj4+IGZlYXR1cmUgc29tZSB0aW1lIGFnbywgdG9vLiBXaGlsZSBpdCBpcyBj
+b3JyZWxhdGVkIGFuZCBJIHdvdWxkIHJlYWxseQ0KPj4+PiBhcHByZWNpYXRlIGJpbmRpbmcg
+c3VwcG9ydCwgSSBhbSBub3Qgc3VyZSB3aGV0aGVyIHRoZSBsaW5rZWQgcGF0Y2ggDQo+Pj4+
+IGRvZXMNCj4+Pj4gYWN0dWFsbHkgZml4IHRoZSBwcm9ibGVtIEkgYW0gc2VlaW5nIGluIG11
+bHRpIGhvbWVkIGRldmljZXMuDQo+Pj4+DQo+Pj4+IEFzIGxvbmcgYXMgd2lyZWd1YXJkIGRv
+ZXMgbm90IHJlcGx5IHdpdGggdGhlIHNhbWUgSVAgYWRkcmVzcyBpdCB3YXMNCj4+Pj4gY29u
+dGFjdGVkIHdpdGgsIHBhY2tldHMgd2lsbCBnZXQgZHJvcHBlZCBvbiBzdGF0ZWZ1bCBmaXJl
+d2FsbHMsIA0KPj4+PiBiZWNhdXNlDQo+Pj4+IHRoZSByZXR1cm5pbmcgcGFja2V0IGRvZXMg
+bm90IG1hdGNoIHRoZSBzdGF0ZSBzZXNzaW9uIGRhdGFiYXNlLg0KPj4+Pg0KPj4+PiBCZXN0
+IHJlZ2FyZHMsDQo+Pj4+DQo+Pj4+IE5pY28NCj4+Pj4NCj4+Pj4gLS0gDQo+Pj4+IFN1c3Rh
+aW5hYmxlIGFuZCBtb2Rlcm4gSW5mcmFzdHJ1Y3R1cmVzIGJ5IHVuZ2xlaWNoLmNoDQo+DQoN
+Ci0tIA0KVGhpcyBjb21tdW5pY2F0aW9uIG1heSBub3QgcmVwcmVzZW50IG15IGVtcGxveWVy
+J3Mgdmlld3MsDQppZiBhbnksIG9uIHRoZSBtYXR0ZXJzIGRpc2N1c3NlZC4NCg0K
 
-On Sun, Feb 19, 2023 at 12:10 PM tlhackque <tlhackque@yahoo.com> wrote:
->
-> FWIW, while clever, I don't think that iptables mark solves all cases.
-> E.g., consider an interface with multiple addresses, where a packet
-> comes in on a secondary address.  The proposed rule would send it out
-> the right interface, but still with the wrong (primary) address picked
-> from the interface...
->
-> With IPv6 it's common to assign an address to a service rather than a
-> host so services can move easily.  So multiple addresses per interface
-> are the rule, not the exception.
->
-> I do the same with IPv4 inside addresses, though these days public IPv4
-> addresses are scarce enough that it's not common for public IPs.  It
-> amounts to the same issue - the NAT tracking is stateful.
->
-> Trying to work around this with routing seems like a maze of twisty
-> passages - so I agree that the right solution is for WG to respond from
-> the address that receives a packet.
->
-> On 19-Feb-23 11:32, David Kerr wrote:
-> > Without getting into the debate of whether wireguard is acting
-> > correctly or not, I think there is a possible workaround.
-> >
-> > 1. In the iptables mangle table PREROUTING, match the incoming
-> > interface and destination address and --set-xmark a firewall MARK
-> > unique to this interface/destination
-> > 2. Create a new ip route table that sets the default route to go out
-> > on the interface with the source address you want (same as destination
-> > address in iptables)
-> > 3. Create a new ip rule that sends all packets with firewall mark set
-> > in iptables to the routing table you just created
-> >
-> > Repeat above for each interface/address you need to mangle, with a
-> > unique firewall mark and routing table for each.
-> >
-> > It may be necessary to use CONNMARK in PREROUTING and OUTPUT to
-> > --restore_mark.  I can't remember if this is needed or not, its been a
-> > while since I configured iptables with this.
-> >
-> > This should ensure that any packet that comes into an
-> > interface/address is replied to from the same interface/address.
-> >
-> > David
-> >
-> >
-> > On Sun, Feb 19, 2023 at 9:44 AM Christoph Loesch<wireguard-mail@chil.at>  wrote:
-> >> Hi,
-> >>
-> >> I don't think no one wants to fix it, there are several users having this issue. I rather guess no one could find a suitable solution to fix it.
-> >>
-> >> @Nico: did you try to delete the affected route and add it again with the correct source IP ?
-> >>
-> >> as I mentioned it inhttps://lists.zx2c4.com/pipermail/wireguard/2021-November/007324.html
-> >>
-> >> ip route del <NET>
-> >> ip route add <NET> dev <ALIAS_DEV> src <SRC_IP>
-> >>
-> >> This way I was able to (at least temporary) fix this issue on multi homed systems.
-> >>
-> >> Kind regards,
-> >> Christoph
-> >>
-> >> Am 19.02.2023 um 13:13 schrieb Nico Schottelius:
-> >>> Hey Sebastian,
-> >>>
-> >>> Sebastian Hyrwall<sh@keff.org>  writes:
-> >>>
-> >>>> It is kinda. It's been mentioned multiple times over the years but no one seems to want to fix it. Atleast you should be able to specify bind/src ip in the
-> >>>> config. I gave up WG because of it. Wasn't accepted by my projects security policy since src ip could not be configured.
-> >>>>
-> >>>> There is an unofficial patch however,
-> >>>>
-> >>>> https://github.com/torvalds/linux/commit/5fa98082093344c86345f9f63305cae9d5f9f281
-> >>> the binding is somewhat related to this issue and I was looking for that
-> >>> feature some time ago, too. While it is correlated and I would really
-> >>> appreciate binding support, I am not sure whether the linked patch does
-> >>> actually fix the problem I am seeing in multi homed devices.
-> >>>
-> >>> As long as wireguard does not reply with the same IP address it was
-> >>> contacted with, packets will get dropped on stateful firewalls, because
-> >>> the returning packet does not match the state session database.
-> >>>
-> >>> Best regards,
-> >>>
-> >>> Nico
-> >>>
-> >>> --
-> >>> Sustainable and modern Infrastructures by ungleich.ch
->
+--------------dBcX3lQhJ8K1o5pyMYNg0BWh--
+
+--------------bOj8LdE72TJWgJL1Nao4EnFw
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+wsF5BAABCAAjFiEEhUZRCZitYt5SlPbZ3PhOoB301mYFAmPybXoFAwAAAAAACgkQ3PhOoB301maU
+xg/+Lsqscc8D9D0VzteZdfMxnS2WsNyTEmz8DM4+uO6sG2VzUN70laAjoT7UtkJWMCwA7xcR4A9I
+2d+s3DaazjVJ9WT83NDc6FwFj+e1k+hw7O/8NxHrdwNiVkvuk6Q+BjbF9tw9JmUtUq40xZbaisVU
+QSYySOhixklxwUC7QL8n75yDO0Gp0gmjpcz2U647vqjbQ2JGo6qT5/lXbMEzJLx1lJ8aAuj4aOfl
+TCGHdpLczwPxHZXa0R0g2hMTWYN+iq1RLNLFB0nCLEPIXxMUAry0gwBV99DdSVgi05flLob7OGu8
++ggG4LtBkg0BpyYSTanearjHq0wqjUvyxxQfLZl3TtbS+LB1ire95ZiihR6mntE3boeLEdNOS0/c
+2txM64EeDIPxrZMty4o59DsXDlqBG7xzluNQKAMlHiqGQyh6J2RyiyqPBNtMJ7VpSSSXDWEZJIKZ
+MfOHnQYskg0TKwnR4lPrqK0kE4tlNnyf62Bp67g3Emvr1LwUSAkfaYem4ZRwPSf+nFl6vD5Agby+
+afxmBLVz2XtyNffLXyKCLQtlQh74oywUTdkCmZoyXlX5WZ02YmRts/C07sZm9UnMfcZFZDRfVaT7
+9owx9gn2Kq0lL4YLDx58DzySjE28V/zAO6RNrzFL1hbz+eNXH8DzRyeSADIZW11/ZXRUjXwpXYLn
+CXs=
+=q2XD
+-----END PGP SIGNATURE-----
+
+--------------bOj8LdE72TJWgJL1Nao4EnFw--
