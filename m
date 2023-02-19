@@ -4,51 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10B86C636CC
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Feb 2023 21:50:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B48AEC05027
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Feb 2023 22:06:58 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 19522865;
-	Sun, 19 Feb 2023 21:49:00 +0000 (UTC)
-Received: from smtp.ungleich.ch (smtp.ungleich.ch
- [2a0a:e5c0:2:2:0:c8ff:fe68:bf1c])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e46622ae
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6fdc5138;
+	Sun, 19 Feb 2023 22:06:56 +0000 (UTC)
+Received: from sonic311-24.consmr.mail.ne1.yahoo.com
+ (sonic311-24.consmr.mail.ne1.yahoo.com [66.163.188.205])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f4136f8c
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 19 Feb 2023 21:48:56 +0000 (UTC)
-Received: from nb3.localdomain (localhost [IPv6:::1])
- by smtp.ungleich.ch (Postfix) with ESMTP id 656841FDCB;
- Sun, 19 Feb 2023 22:48:36 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ungleich.ch;
- s=202201; t=1676843316;
- bh=itLcksUeOXhOAPLVnd4DJvkcNoRW8+Gq2jyNDLIoNNk=;
- h=References:From:To:Cc:Subject:Date:In-reply-to:From;
- b=ksqSfTGUjddPpaPBH9hlu2xGsB19JcYVCCSL+/VkyzBPrj5j29M4azoQcl0gJGUmM
- EqfGEyLhty3iCIRfwHKp9M80gNinJIUlQ64M3MHhFB8tmD0+2Whpc8k24C9seGttNv
- SQZpMpn6VaoJZEzjCJc6XfNj5QAdkXMFE2pbH1wo0e2+QEGOuxWZ1X9XJHCzhXxaRO
- QVITOjLIQzNgPe6hOYyUnHT/CNJCPA/DxwGvctFM1F9s2PNZSm7/OzdLb4/+5MEDyt
- pqH9C5sC4OBQPq27CWKY6qYX+Na5xoDOUatO+tnjAuXjytupkpU/OeWD4v2AtLjEV0
- R6z50JUXXQAcA==
-Received: by nb3.localdomain (Postfix, from userid 1000)
- id 8893614C0119; Sun, 19 Feb 2023 22:48:55 +0100 (CET)
+ Sun, 19 Feb 2023 22:06:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
+ t=1676844410; bh=XuM9f/klHOqv5MkgDPSD/JlQBnMQxAzNm3cyVMnHZ4g=;
+ h=Date:From:Subject:To:References:In-Reply-To:From:Subject:Reply-To;
+ b=izzhaAJ0xTGaXMB34VHLSuNQcYvNZYBL9PqrPpDc/c83izsQm3lr2bdbkXmOCiC6KgogqFzzUiuX658tcg34EM07nwKsaD9JJvgNSCxIMOHbUZKU/vzVWU5w2FUguZQPzmZ1xE2gWrRaQdvEi4+OZc2ueOvhvCERtvcu9GyQIlc2zAoeKJzHM3Yc1H1i0tzMZE/CGlK6aW5CDkVeXVniWoUsHEbDbCDMF+6uc+JSTZGZJ1GQBVRno9gy/qZAtuHMNnuJpDNF510CC0VMZwdWHdIh6TLfRRXzI31y6/iQXGfo9giBewnW5vrnzQRdbDKeZJXcgLm2yJukVqADlYg2Sw==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
+ t=1676844410; bh=7QZHQNrX0Pq8y95CIYd6p02g7SthEGX8/D9fBw9ul9+=;
+ h=X-Sonic-MF:Date:From:Subject:To:From:Subject;
+ b=nyvbkMxhsadCUp7bceIhb9bpt4b/qQR9ErPrLMug4/pwFdKXz96zCXuY326iFZT85cE9qUtKd4afQ/Ms5Zbh3to2UnhvhQW0XcAkrf3GMQFuOp/JPghDl2ngBoQ2IPSxpt03W6piFgoPN7nf/X+5GQJxZnQlju8NQuw7MdvTXSfr2KDEi9ON4ebNim0I2gyzm3EABS0mjHX1LWV5uFQPMn0BJ4zspn5N+Oq5kDGh50D64pUCQm1BBUJzxGFtl98STLJ9iFp8dO4iRhj0ehgMd56Z1XNOgDnh7gOJwCqTxv0cQpbkyvPOqVyC2JuEoVuW8UpZBFe16a5P5mftDuHKGA==
+X-YMail-OSG: kRYbfJkVM1mnl5ByGh6.ftSblgvGi5I9JgprZH7pJXE6wDp5_tAF74Qp8hJrMO9
+ O8H0gUcikJnKtxTlcVQuI5XraFhAITX.6NmBDyB5TiujPrCcFbYX_jRbJUb_r7XQE0u9mu6Gyc6R
+ 6RN3sGGVaU1URKSHP5qa4VFrnr_dN2xmt2so_clivlG_vBnx33at7Jp_xkNpW6R.hVtRGzXApYsL
+ M1MFV0KFVUhPGKa.Bbvg95Q3REAEgA46UXqahBA4P3c4dTaL._g.8udeCr4Elv7P_cebu9vg8O66
+ l_CzC360Po3fVVyFpgzFxQQ_WlmDKOzYG8Q.Si_TZEqSEA.qvxuaBLUwKSTkN2cwzNvSL60cUIR_
+ aWcB7ILl8ofMNgN6jTg.QbjPIu.57NuS_6ZKuyK4O5BGufigsoTtSHg__UBQ8PTj87D37x6P1389
+ dUocRAXUcnIrGj5nxEmRME2.DXGEvG9UhvN5iIQKjuV68rVgInvsIc15RE3_z2QCGo_5MXknmFmY
+ kWq43UNi34NyT_ZMUg1fs.ZxRx8cxp7_WPxwlbHRoa9WLZPd8VJxh4kH7ea7PKwxhjQY1dGF4DW9
+ 5gtenV8Rb_i2WloqP18XCItlhq_6hyzxlfXjFAK26Ei0b40YToy8UYuKsjL9ipyrgwvoP8.mCCii
+ Qvdb9p9UyJXZqRn0Y5PGwXyynMj9tJKoebinXI04y3cqiYhFsxSgich_vEZEQT8XQc30RUADaTVc
+ T7WossBlm84ru9jB9Cn5aiho2RxwvMoXfbjPlKH.dspaSqD3L.WcCsDE0fwqSOml6IZ5PmW_1585
+ QBDz5a5Qn_jdLa4a.NtxwHS6vMVvufYTblTQ966GCytsT73ETZk73MUdepJbauajFHIL2Y85Vwl8
+ W1QpRxTHuhA_eQ50g.v0xQNc.hT0BNBK5ZNk5udUM0d20B1XjIIsDT46DhFBhCIlrtEoSXp_tnMG
+ gI1i.Ouni7dDJDiSkiIdQ3p1FWdeQDWpOyy9AfWFPHcCedC3fLaALMWgp4AWXO0YyUD4FixTKN4B
+ QmiDBiFCrd.57dpzymHCMBZLuNpiSp9VRn2T67kFBHmtXl6Amsfselpwlng5ue9y2AhgsFdmzZyb
+ dFHHx0QLrPneWdMzLscPnGvFYKJsXMVsDA2xswaw94ADLF1KZxA.iSD5ILsh13oLctKuS_cpgc0G
+ NUovsTEFaenRTczxlMv_6Vt5to4yU8BcCM_OeqgNygUf.xbs_WBvkLr3HzC7WqTphDPHa4I5c.Nn
+ cDdFPK1hN0_HWRRLMOcS9BqlfWIr0OY_H8bpCTXs.ebP7uUjEDyrviuna2b9j.CLVPa1bg3fzJV_
+ qMTV0Aqh_IiUS1Euuj4CoDfAPZNA0sqyhc2YULXRi_0MOJgEGSxPJzf7C3HSoLjHNOoj1va.xYrw
+ 75ATH1E444gzX0crPSIGAQvn49riyPZtWuVLoJhJuTRXokhLHyX6Hc3Jaty2MGq5lmk6pbo_zCSp
+ X1xa3ucmr3aZ72u1dua_QWJEHyFbdnz4Ugp89g2OuVFxI2fsWTlAniM4KV1oCBLYhXPu7eIqen9Z
+ _XtsIIUJ5c_xc0Jnf1cztm9t53HQX4Yn5WFrwpkSrn37YR4lRvhud93GJv58UlroU5JcDZLphLDB
+ SDRvuFAbyVN45L0rVT0O_TgIR1r1a4EMR06ySTSzRETW78pxkbRIDyXlEvUDOBfLbSGGY6yhu1Ix
+ .LQqBndMyLjYWr61eGAWJA8vvREFsW8fAnp1WneWm9gqAs0g9e3.bMbFxJgzbv3T4TKtlea6EvlG
+ Ayklou6n6BTvdJ1k54p_GGTNyWCjLXTFOyHECL4rIs4v_9YGJjByBjiej5h22ofcaA7QLaZzatOC
+ iBcAQuNLt3lMiOVR5aTmntH3tkvmEx6kmmTTwL0ZUGoZ1VEUui4TIh6uueDEWe7Iudb.NGVJHvhT
+ 4iI_mSmGYwjwpOGwmZTgQHcBg4zFjBy7OfxHzDABGnZMZNI7PsEksBsvLFAmAVmJBDztG3dv2CKK
+ HxdWo477hiEfPpIpFUsEq3XD08nOKi4TwTDMDicOWO.2j8gl4KiSpKFtQs2P.BDv4Dl8QXEIoTHD
+ TgxbIkOMKFTZqJV3kj1H1Z6SpesCYVn0wScSD3WWa_wKCpqx.hDDPmtHRqHgWPi_IPlCKrGOpLYu
+ YaIeeJCa3M9P1ycN0KzBsAGtl1wWF4.ARXlacxpK6pZc9csLgq84spEVZkZiRwOa0bssVFn6VOCX
+ HSPS5VUvBcJjVSQU07R4ocfVa
+X-Sonic-MF: <tlhackque@yahoo.com>
+Received: from sonic.gate.mail.ne1.yahoo.com by
+ sonic311.consmr.mail.ne1.yahoo.com with HTTP; Sun, 19 Feb 2023 22:06:50 +0000
+Received: by hermes--production-gq1-655ddccc9-h558d (Yahoo Inc. Hermes SMTP
+ Server) with ESMTPA ID d111cd3eeec5662761bcc1063d80f433; 
+ Sun, 19 Feb 2023 22:06:46 +0000 (UTC)
+Message-ID: <48ed189f-3b11-7649-8d0a-fbef3f788bdc@yahoo.com>
+Date: Sun, 19 Feb 2023 17:06:44 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.2
+From: tlhackque <tlhackque@yahoo.com>
+Subject: Re: Source IP incorrect on multi homed systems
+To: WireGuard Mailing list <wireguard@lists.zx2c4.com>
 References: <875yby83n2.fsf@ungleich.ch>
  <2ed829aaed9fec59ac2a9b32c4ce0a9005b8d8b850be81c81a226791855fe4eb@mu.id>
- <87ttzhc0jt.fsf@ungleich.ch>
- <7d7bc930-65d9-f13e-cedc-e0451407be85@chil.at>
+ <87ttzhc0jt.fsf@ungleich.ch> <7d7bc930-65d9-f13e-cedc-e0451407be85@chil.at>
  <CAJJxGdGSYR_mofRVpZDQsifjZJXXSNNsPqUV-RfWDMO0N2P2dQ@mail.gmail.com>
  <bdeefdd3-d821-591f-b5fc-701be0e345fb@yahoo.com>
- <c2bc4ed2-e8c5-ff68-9fe8-c59c8be2804c@yahoo.com>
- <87o7pp76a2.fsf@ungleich.ch> <20230220014252.21178988@nvm>
-User-agent: mu4e 1.8.9; emacs 28.2
-From: Nico Schottelius <nico.schottelius@ungleich.ch>
-To: Roman Mamedov <rm@romanrm.net>
-Cc: Nico Schottelius <nico.schottelius@ungleich.ch>, tlhackque
- <tlhackque@yahoo.com>, wireguard@lists.zx2c4.com
-Subject: Re: Source IP incorrect on multi homed systems
-Date: Sun, 19 Feb 2023 22:19:23 +0100
-In-reply-to: <20230220014252.21178988@nvm>
-Message-ID: <87h6vh72d4.fsf@ungleich.ch>
-MIME-Version: 1.0
-Content-Type: text/plain
+ <c2bc4ed2-e8c5-ff68-9fe8-c59c8be2804c@yahoo.com> <87o7pp76a2.fsf@ungleich.ch>
+ <20230220014252.21178988@nvm> <87h6vh72d4.fsf@ungleich.ch>
+Content-Language: en-US
+In-Reply-To: <87h6vh72d4.fsf@ungleich.ch>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------BoDHg94kH1tepEVFMoI9JDHq"
+X-Mailer: WebService/1.1.21183
+ mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -63,55 +96,62 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------BoDHg94kH1tepEVFMoI9JDHq
+Content-Type: multipart/mixed; boundary="------------ywWpEmawXd0ONp7Zp0g0UAbk";
+ protected-headers="v1"
+From: tlhackque <tlhackque@yahoo.com>
+To: WireGuard Mailing list <wireguard@lists.zx2c4.com>
+Message-ID: <48ed189f-3b11-7649-8d0a-fbef3f788bdc@yahoo.com>
+Subject: Re: Source IP incorrect on multi homed systems
+References: <875yby83n2.fsf@ungleich.ch>
+ <2ed829aaed9fec59ac2a9b32c4ce0a9005b8d8b850be81c81a226791855fe4eb@mu.id>
+ <87ttzhc0jt.fsf@ungleich.ch> <7d7bc930-65d9-f13e-cedc-e0451407be85@chil.at>
+ <CAJJxGdGSYR_mofRVpZDQsifjZJXXSNNsPqUV-RfWDMO0N2P2dQ@mail.gmail.com>
+ <bdeefdd3-d821-591f-b5fc-701be0e345fb@yahoo.com>
+ <c2bc4ed2-e8c5-ff68-9fe8-c59c8be2804c@yahoo.com> <87o7pp76a2.fsf@ungleich.ch>
+ <20230220014252.21178988@nvm> <87h6vh72d4.fsf@ungleich.ch>
+In-Reply-To: <87h6vh72d4.fsf@ungleich.ch>
 
-Hey Roman,
+--------------ywWpEmawXd0ONp7Zp0g0UAbk
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-Roman Mamedov <rm@romanrm.net> writes:
+T24gMTktRmViLTIzIDE2OjE5LCBOaWNvIFNjaG90dGVsaXVzIHdyb3RlOg0KPiBTbyBmYXIg
+dGhpcyBzaXR1YXRpb24gZG9lc24ndCBleGlzdCBmb3IgdXMsIGJlY2F1c2Ugb25seSBzZXJ2
+ZXJzIGFyZQ0KPiBtdWx0aSBob21lZC4NCg0KSXQncyBub3QgdGhhdCB1bmNvbW1vbjsgY29u
+c2lkZXIgYSBkb2NrZWQgbm90ZWJvb2sgdGhhdCBoYXMgYSBXaUZpIA0KYWRkcmVzcyBhbmQg
+YW4gRXRoZXJuZXQgYWRkcmVzcyBvbiB0aGUgc2FtZSBzdWJuZXQuDQoNCldoaWxlIHR5cGlj
+YWxseSB0aGUgcm91dGluZyBwcmlvcml0aWVzIGZhdm9yIHRoZSBFdGhlcm5ldCwgdGhlIG1v
+YmlsZSANCndpbGwgaGF2ZSBib3RoIGFkZHJlc3Nlcy4NCg0KSW4gYSBjYXIsIHlvdSBjYW4g
+aGF2ZSBXaUZpIHRocnUgdGhlIGNhciBhbmQgbW9iaWxlIGRhdGEuwqAgKE5vdCBzYXlpbmcg
+SSANCmxpa2UgdGhpcywgYnV0IC4uKQ0KDQpUaGVyZSBhcmUgcHJvYmFibHkgb3RoZXIgY2Fz
+ZXMsIGJ1dCBJIHdvdWxkbid0IGFzc3VtZSBpdCdzIG9ubHkgYSBzZXJ2ZXIgDQppc3N1ZS4N
+Cg0KQXMgSSBhbHNvIG5vdGVkIGluIGFub3RoZXIgbm90ZTogdHdvIHNlcnZlcnMgY2FuIGhh
+dmUgdGhlIHNhbWUgaXNzdWUsIGlmIA0KYm90aCBhcmUgbXVsdGktaG9tZWQuDQoNClRoZSBz
+b2x1dGlvbiByZWFsbHkgbmVlZHMgdG8gYmUgc3ltbWV0cmljLg0KDQoNCg==
 
-> On Sun, 19 Feb 2023 21:18:34 +0100
-> Nico Schottelius <nico.schottelius@ungleich.ch> wrote:
->
->> If I am not mistaken that would mean in practice:
->>
->>    if orignal_pkg.ip_dst == one_of_my_ips then
->>       return_pkg.ip.src = orignal_pkg.ip_dst
->>       return_pkg.ip.dst = orignal_pkg.ip_src
->>    fi
->>
->> For me that sounds like a sane approach (aside from
->> my very simplified algorithm).
->
-> Except there is no request and response in WG, and as such no original or
-> return packet. Another peer contacts you, then some time later you contact the
-> other peer. Or the other way round.
->
-> WG-wise what will need to be done is to store in the each peer's information
-> structure the local IP that we are supposed to use for communication with that
-> peer; and updating it when receiving packets from the peer, using the
-> destination of those. So you would see a "Local IP" in each "peer" section
-> when doing a "wg show".
+--------------ywWpEmawXd0ONp7Zp0g0UAbk--
 
-That is very interesting, thanks for the insight. Reading above
-paragraph, I was having a very similar thought that we need to record
-the local IP.
+--------------BoDHg94kH1tepEVFMoI9JDHq
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
 
-> Also, until there is such IP initially stored, it will have to be some default
-> outgoing IP of the system towards that peer. BTW, how would this work in your
-> setup, what if not the peer contacts you first, but your machine needs to
-> contact the peer?
+-----BEGIN PGP SIGNATURE-----
 
-So far this situation doesn't exist for us, because only servers are
-multi homed.
+wsF5BAABCAAjFiEEhUZRCZitYt5SlPbZ3PhOoB301mYFAmPynXQFAwAAAAAACgkQ3PhOoB301mbR
+sg//XQ6nP6fgKb4bUKtCFU1AnWUVEnrOWIir6JX9XnrCBrMIAL5qXHKkAMUFEzkLBIv07W9ZrjfO
+OHqf/aV8kcnrS2J+qAinNHhjWW1nVcTQODqHOFeCPkYpF2miD5cEwAoPuB+wvdyADb02xjoCQnJn
+Noy+uMIZvKyfkk73pMQ8N7Qn91g84bAL1uXZyxzu+HbKQ49u3FzWr570v4McRidJUwNxx8yPmmTg
+kQ26af3IoZ2jaWPEMBw2Y/yOr8AKl448VJgQP0JPlqUt4tvTSRSkzNsxREQR+cldGXgmJkp3R+ZG
+sVv76zTpV90408ukxeGJYBoKVoFz6GDeycl3IOmmozAt5np+7nH+8isHroO4Q6wuBtAq9l9HXDCg
++oybjXtwoTNtPh3N/4sbHuyRYjutLEBfg09jyBdzo7+xphKV8uRSfQY0k+PQNieIL7D8Wqvk+erU
+6u7TUlvevHAazdi+7UawkCdf4z4oCQIRfU2cm5m1ie1GzifDBgArrpdbRzzi2LM/6XhaKNuZr4Lj
+Mk9iz5zYiW0oSJrsCDbKFwVbK8HHeU8UROmVbZTYe3hmOgLQ9mO3XBc4YJbNMmE/lSZUl4iI40Ly
+7YJWCnfk65cd7M0e9Xhd5zutKajNjbsT13QndQE7XwJ4s59uOq85kCpJvi+PEyxFp0O4WmT25TLt
+GNE=
+=4IB3
+-----END PGP SIGNATURE-----
 
-However, having an option to specify something a local address in each peer
-section would probably be a good solution to disambiguate it and if not
-specified, use the default, as in whatever other processes are using
-that don't define it explicitly - i.e. follow the process of least
-surprise.
-
-Best regards,
-
-Nico
-
---
-Sustainable and modern Infrastructures by ungleich.ch
+--------------BoDHg94kH1tepEVFMoI9JDHq--
