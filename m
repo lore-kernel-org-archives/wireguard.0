@@ -4,84 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ABBAC636CC
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Feb 2023 22:29:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4965AC636CC
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Feb 2023 22:42:07 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f0a43bdf;
-	Sun, 19 Feb 2023 22:29:02 +0000 (UTC)
-Received: from sonic317-33.consmr.mail.ne1.yahoo.com
- (sonic317-33.consmr.mail.ne1.yahoo.com [66.163.184.44])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f1d767ff
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 33c0f8b8;
+	Sun, 19 Feb 2023 22:42:05 +0000 (UTC)
+Received: from janet.servers.dxld.at (mail.servers.dxld.at [5.9.225.164])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e79c7d2c
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 19 Feb 2023 22:28:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1676845737; bh=KFUTivurqbnAcue2MWuvPISv9BSHQWe1Mf3yIjuUCbM=;
- h=Date:To:Cc:References:From:Subject:In-Reply-To:From:Subject:Reply-To;
- b=UHPCGLAxhX/T9IOVudpPhR6jkUtKLnat21txhvAz1vvKRL9iq/qjbjNoDlH7xaUjljXFgVqbaCpfdjpKgHVtq6x2o/uPD8+PyimtOLDtwhAEdc0lMIVKOwkf9f8I37La94m3pK3xQa8b2lJSCCT8XQQcVpCobi8ZIILtTkE9D4n9Jgq14vvb8uNrwxWTTEgltg0qFdXUgyd0rSdm19SAQBzryu+R4ZW8abzB4TlFLQFFxznDzSCtcdY1YF0thKiq50bfkb65N0of/wR1bPKS/Z+4+rN9qaBb8hJMUK950ZCBLCfEVMMQkFRYKLXJ8nMdswzGrDxQ7OV+ytdIH7xWhQ==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1676845737; bh=Y86NKtxOyu00Hyxrg454c0TdmxqloZyPCg4cnDXB6yj=;
- h=X-Sonic-MF:Date:To:From:Subject:From:Subject;
- b=b8WqyQdK0HhZjAHaG9ZbiYtopng8OgKYIs2H2MUQ1HOD9+ltaL6PnnuGiN4QSvM01kfGBJ+CYeJcSMb4MuLmKp/OcVZt2nZTBxqKnS6J+HmpN0HMp66QyfzbNIUTOq28YRtcK6/oTgX7zhjiRxw3MwZDljLV+Dw5IL1u9G8HRRynkvGR2gorpqiqZ+ekvnrqjcm7ayzUjfjNGRmVliNesW4AGa2cC7EOzZnTCo+a6zT06GUwt1uOwuGil9QVx3y0Yo8nAPoWg9hIWaBW1SfGTCGx9Qb4277nCs4DbXYiu++LLxKoOh4S0Yqg3E8R0M5Dhtqt0pBHmxHnoxo91IphKQ==
-X-YMail-OSG: 9nZKhW8VM1lsCaBXetbjywGy0xJUlSqawUSIPwTuuLPhD1HoQXEsT995mckMkkG
- x4_wcxp1qSZ80fEltsi1WaTYUebwqUppdCVOvhCFi3Xzf5HvMQBvk9ohDeoPFDpVy0j7_kog5x.m
- oJ1_iyG9aUkCDEKqBisxiUQhRgq1iOEUI5ComCW9gfwtKD3O7Opk2NPiJMhLmyaZyUUbfOAJTixA
- .WXrKqUYZ45fyQepFC4TvM1iFgWzT9IuGGy0RQ059Zw_wY62.gXuVKfPwVTqW0s1NyBburtWI30r
- aDGYR1WHBrycr3NaGWhdjGK3ICBtgegGJzuKF475m5yPOLyqcR0olLnyJrSvhQFWtW0nGyyenJj0
- ny7e.IbPWYm_kwhaCkzfwLqx9GQujpNBf9nFl6aX.wdoRc1mLtlDU2FYA4QSPOIS7JkVP3FBviDA
- hGTSJvjWgK3I4ZrZkPNc1nK3osxRTLjouoF8zvBtWrFej16tzAgVeu6HP3D4k.CXCmuyK5seF_rw
- dHOVDShA8Lm_UiQAilfxeyIeKryxepXFBe4jfb.fbyhqyh0Cr5c255ggbt5J0QYqluAkoPYVWqOO
- ikBstO7G9CkVmQtperYvVlBqmHrKFWME5YyTjmbaVVYM6FVb68kKmP1gXoBO7J7pJEvZxxHni5wF
- V.6Bs5_e8J00IUJnElRCzqMHdZXslng.MzLCZtq6X03JNFpyU0jNc0IyfCel3JTJTL8PktG0PF_e
- BeJeB66ZRAssZDYYRAbRUvd3KUAD3bIeQMDUuaUHd38oXFgNL4K3jKZ7ltl7b.t8qOwjc9ADPveC
- 3hmNoZOhzHqEbDP0zYONLxqHuSoNGXf6htAkVaji1TulcGFaAEFfcm1O_1MsxPynAxsGJjCS4GII
- V8J7ABl8c1yOC_6mqUheYGJiR0jUbSkYzMk1ss2N8cwgAR8FV7648HgEhShjEdyU4oEPRrWEYH1F
- Je2BjzDhRhmVYsO9cs9hmM8Iuiu0m0.Zd5Rg68rnOJLAKIi3OBhXW4Wh9x_ZdLUBRyqgZyfQa0Yu
- 14__i.ALkY4k9QmRilyZHs9zAtMPEUtpgSPO2ng39JWU5aNx64F_Zrlyk7m38DnE_4aZD1AMZNWt
- nTVhul5sO.1sCKanIJ.0xBFZ3wDY3trAGbhTw95vdtPiwSMtpMnmJB66Cr_8qIC_Pd4rxMaSaoTf
- dPZycLBQtNMfgttAgyQhIwlAhYgf2c4HdxgyknxOe7B8UvD1MI9jUAERCqFEDsYXRKt6MVNcLh_5
- LQUZs5N5vfq_VmtBGDyVt.yaiMogLFM6LY9BWGc3PxQbk3kLYQcX.sTnMpXUvBmgeM5Ce5alCrK3
- twfOTsvWcb21rKb8yGfvl0StuCLsYbmfvyqaXEveunV_Txk06sLyYsTD09HzbLmI2gAycqnLe7x5
- NY7VJTZX9KZi6qy3f8qek46CTwIemR4F3.RQ0zMf6_sQIT8pvyVZCn4Pp41yOkrxHvW6tx8v.1Cx
- AwPGmtaFIFig_9U9KhFWKgo17Fyi7w2CHcUmODESzKjdR7.7GrEOZlRTE3oJ1opbC0Iq_jTfYZ.b
- BSjlDk7ASFTOox47q7OGqVmFxwrpG6Hyk0bgAw8ccIokge5IPeQMEneuGPg6PehGX_fKdzzCe39W
- Vg.Z6b6bO2J72B4EQpOYpHjSlSeU6HrJZ7va30HCzDMm8tPhWejhPwPPuovxZhm9NjebGRQ.KWBF
- NQb9WVHL1bSBaG1Onh26heNK3YZzbspUNukmeJSbdDvB7JkyG770RTaBcOmpuQL48ylrTFvq7ntk
- PuaKYlu.SFu15ePAr6Eehsj.Uw2tGfmSlh3D0gnI3ZYT2nL9H4xtJiaIcYkVd8n3qezloA6VBAP7
- BgdHB3kDTSOn_eA8HPuKAiKztD5LFgqSCLtPji2Be37vLlr7RhUhz99UOqY5PMD6ybT5zAtWB1oF
- zcPJVCfzsiiRlZvSO1jOV6.Ij67M5zmVIj55NplDdclHer0ndDTFZBqP6CxJzgTwBMdrVoKk_RbS
- iindpbTGozqyd72ClNmyy2Kl6hATOMuBrmnzqT0llNY4b9PAS.TGPC6C6mijU.3xyLFIfAqggsOD
- 4X_Da8NFeXCfLKt8WDoIEjcN_TlPCcrC30YXlblC2_cUvwkR.jqL_3JG4K7p4zOdtJVdLjDNGg6e
- Sk6iZFpF3iOpEvxA0UDmKxx8e_xQD74ZPXf9vWoDp74RK6n9R1SrXlpTpj9OJRUausy6ejMzpe8R
- rtrsDbVh_16CE.8voTa8GHzidlnz.XPcH.HA79X3P
-X-Sonic-MF: <tlhackque@yahoo.com>
-Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic317.consmr.mail.ne1.yahoo.com with HTTP; Sun, 19 Feb 2023 22:28:57 +0000
-Received: by hermes--production-gq1-655ddccc9-j6kw5 (Yahoo Inc. Hermes SMTP
- Server) with ESMTPA ID c3e69cc6d432fc37b63904e04d4f63ed; 
- Sun, 19 Feb 2023 22:28:51 +0000 (UTC)
-Message-ID: <f9cdf498-d29d-7dae-3e47-8c53435933ea@yahoo.com>
-Date: Sun, 19 Feb 2023 17:28:48 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Content-Language: en-US
-To: John Lauro <johnalauro@gmail.com>
-Cc: wireguard@lists.zx2c4.com
+ Sun, 19 Feb 2023 22:42:04 +0000 (UTC)
+Received: janet.servers.dxld.at; Sun, 19 Feb 2023 23:42:01 +0100
+Date: Sun, 19 Feb 2023 23:42:00 +0100
+From: Daniel =?utf-8?Q?Gr=C3=B6ber?= <dxld@darkboxed.org>
+To: Nico Schottelius <nico.schottelius@ungleich.ch>
+Cc: Roman Mamedov <rm@romanrm.net>, tlhackque <tlhackque@yahoo.com>,
+ wireguard@lists.zx2c4.com
+Subject: Src addr code review (Was: Source IP incorrect on multi homed systems)
+Message-ID: <20230219224200.g5mwcaybee4hujov@House.clients.dxld.at>
 References: <875yby83n2.fsf@ungleich.ch>
  <2ed829aaed9fec59ac2a9b32c4ce0a9005b8d8b850be81c81a226791855fe4eb@mu.id>
- <87ttzhc0jt.fsf@ungleich.ch> <7d7bc930-65d9-f13e-cedc-e0451407be85@chil.at>
+ <87ttzhc0jt.fsf@ungleich.ch>
+ <7d7bc930-65d9-f13e-cedc-e0451407be85@chil.at>
  <CAJJxGdGSYR_mofRVpZDQsifjZJXXSNNsPqUV-RfWDMO0N2P2dQ@mail.gmail.com>
  <bdeefdd3-d821-591f-b5fc-701be0e345fb@yahoo.com>
- <CADGd2DoE6TCtCxxWL7JWyNW5+yy_Pe+9MNzHznbudMWLTXQreA@mail.gmail.com>
-From: tlhackque <tlhackque@yahoo.com>
-Subject: Re: Source IP incorrect on multi homed systems
-In-Reply-To: <CADGd2DoE6TCtCxxWL7JWyNW5+yy_Pe+9MNzHznbudMWLTXQreA@mail.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------DFqrjLd6N901uhUDAjVpQzO7"
-X-Mailer: WebService/1.1.21183
- mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
+ <c2bc4ed2-e8c5-ff68-9fe8-c59c8be2804c@yahoo.com>
+ <87o7pp76a2.fsf@ungleich.ch> <20230220014252.21178988@nvm>
+ <87h6vh72d4.fsf@ungleich.ch>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87h6vh72d4.fsf@ungleich.ch>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -96,190 +49,57 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------DFqrjLd6N901uhUDAjVpQzO7
-Content-Type: multipart/mixed; boundary="------------Dh0mL9rA7EHqiS52oyaoGyAF";
- protected-headers="v1"
-From: tlhackque <tlhackque@yahoo.com>
-To: John Lauro <johnalauro@gmail.com>
-Cc: wireguard@lists.zx2c4.com
-Message-ID: <f9cdf498-d29d-7dae-3e47-8c53435933ea@yahoo.com>
-Subject: Re: Source IP incorrect on multi homed systems
-References: <875yby83n2.fsf@ungleich.ch>
- <2ed829aaed9fec59ac2a9b32c4ce0a9005b8d8b850be81c81a226791855fe4eb@mu.id>
- <87ttzhc0jt.fsf@ungleich.ch> <7d7bc930-65d9-f13e-cedc-e0451407be85@chil.at>
- <CAJJxGdGSYR_mofRVpZDQsifjZJXXSNNsPqUV-RfWDMO0N2P2dQ@mail.gmail.com>
- <bdeefdd3-d821-591f-b5fc-701be0e345fb@yahoo.com>
- <CADGd2DoE6TCtCxxWL7JWyNW5+yy_Pe+9MNzHznbudMWLTXQreA@mail.gmail.com>
-In-Reply-To: <CADGd2DoE6TCtCxxWL7JWyNW5+yy_Pe+9MNzHznbudMWLTXQreA@mail.gmail.com>
+Hi,
 
---------------Dh0mL9rA7EHqiS52oyaoGyAF
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+I though it might be useful to do some quick and dirty code review instead
+of speculating wildly to figure out where these source IP selection
+problems could be coming from ;)
 
-QWN0dWFsbHkgaW4gbXkgY2FzZSAoSSdtIG5vdCB0aGUgb3JpZ2luYXRvciBvZiB0aGlzIHRo
-cmVhZCksIEkgZG9uJ3QgcnVuIA0KQkdQLsKgIEJ1dCBJIGRvIGhhdmUgYm90aCBzaXRlLXNp
-dGUgYW5kIG1vYmlsZS1zaXRlIGNsaWVudHMuwqAgTXVjaCANCnNpbXBsZXIgZW52aXJvbm1l
-bnQsIGJ1dCBzYW1lIGlzc3VlLg0KDQpJIGRvIHVuZGVyc3RhbmQgVURQLg0KDQpBcyBJJ3Zl
-IG5vdGVkLCBETlMgVURQIGhhcyB0aGUgc2FtZSBpc3N1ZSwgYW5kIGFuIFJGQyB3YXMgaXNz
-dWVkIHRvIA0KY2xhcmlmeSB0aGF0IHJlc3BvbnNlcyBNVVNUIGNvbWUgZnJvbSB0aGUgYWRk
-cmVzcyBvbiB3aGljaCBhIHF1ZXJ5IGlzIA0KcmVjZWl2ZWQuDQoNCldHIGlzbid0IHF1aXRl
-IHRoZSBzYW1lLCBhcyBpdCBpc24ndCBhIHJlcXVlc3QvcmVzcG9uc2UgcHJvdG9jb2wuwqAg
-QnV0IA0KaXQgaXMgYSBmbG93IGJldHdlZW4gdHdvIGVuZHBvaW50cywgYW5kIE5BVC9maXJl
-d2FsbHMgd2lsbCBvcGVuIGEgDQpwaW5ob2xlIGZvciBpbmNvbWluZyBwYWNrZXRzIHdoZW4g
-dGhleSBzZWUgYW4gb3V0Ym91bmQgcGFja2V0Lg0KDQpPbmUgb2YgdGhlIG5pY2UgdGhpbmdz
-IGFib3V0IFdHIGlzIHRoYXQgZXhjZXB0IGZvciB0aGlzIGlzc3VlLCBpdCBoYXMgbm8gDQpk
-ZXBlbmRlbmNpZXMgb24gY3VzdG9tIHJvdXRpbmcgKG9yIGFueXRoaW5nIGJ1dCBVRFApIGFu
-ZCAianVzdCB3b3JrcyIuwqAgDQpJdCBzaG91bGQgImp1c3Qgd29yayIgb24gbXVsdGlob21l
-ZCBob3N0cywgd2l0aG91dCBoYW5kc3RhbmRzLCBCR1AgDQpyb3V0aW5nLCBkaWZmZXJlbnQg
-cG9ydHMsIGFuZCB0aGUgbGlrZS7CoCBJdCBhbHNvIG5lZWRzIHRvIHdvcmsgd2hlcmUgDQpp
-dCdzIG5vdCBmZWFzaWJsZSB0byBsYXllciBvbiB3b3JrLWFyb3VuZHMsIHN1Y2ggYXMgVlBT
-cyB3aGVyZSB5b3UgZG9uJ3QgDQpnZXQgdG8gcGljayB5b3VyIGtlcm5lbC4uLm9yIHlvdXIg
-ZmlyZXdhbGwuDQoNClBpY2tpbmcgc3RhYmxlIGVuZHBvaW50IGFkZHJlc3NlcyB3b3VsZCBt
-YWtlIHRoZSB0cmFmZmljIGxvb2sgbGlrZSB0aGUgDQpraW5kIG9mIGZsb3cgdGhhdCB0aGVz
-ZSBtaWRkbGVib3hlcyByZWNvZ25pemUsIGFuZCB0aGluZ3Mgd291bGQgImp1c3QgDQp3b3Jr
-Ii4NCg0KT24gMTktRmViLTIzIDEzOjI1LCBKb2huIExhdXJvIHdyb3RlOg0KPiBJIHRoaW5r
-IHRoZSBpcCByb3V0ZSB3aXRoIHNyYyB3b3VsZCB3b3JrLCBidXQgb25seSBhcyBhIHNob3J0
-IGxpdmVkIA0KPiB3b3JrIGFyb3VuZC7CoCBUaGUgcHJvYmxlbSB3aXRoIHRoYXQgaXMgaWYg
-ZGVhbGluZyB3aXRoIGR5bmFtaWMgcm91dGVzIA0KPiBpcyBpdCBjb3VsZCBnbyBhIHdheSB3
-aGVuIGEgbGluayBpcyBkb3duIGFuZCB0aGVuIGNvbWUgYmFjayBhbmQgdGhlIA0KPiBzcmMg
-c2V0dGluZyB3b3VsZCBiZSBsb3N0LsKgIFlvdSB3b3VsZCBuZWVkIHRoZSBiZ3Agc29mdHdh
-cmUgdG8gYWRkIHRoZSANCj4gc3JjLg0KPg0KPiBVRFAgaXMgY29ubmVjdGlvbmxlc3MuwqAg
-U2VuZGluZyBiYWNrIG91dCB0aGUgc2FtZSBhcyBpdCdzIGNvbWluZyBpbiANCj4gaXNuJ3Qg
-c3RyaWN0bHkgdGhlIHNhbWUuwqAgVGhlIHN0cmVhbXMgYXJlIG5vdCBhdHRhY2hlZCB0aGUg
-c2FtZSBhcyANCj4gdGhleSB3b3VsZCBiZSB3aXRoIFRDUCBvbiBuZ2lueCBvciBhIHJlcGx5
-IHdpdGggaWNtcC4gWW91IHNob3VsZCBiZSANCj4gYWJsZSB0byB3aGl0ZWxpc3QgdGhlIHVk
-cCBwb3J0IG9uIHRoZSBOQVQgZGV2aWNlcywgYXMgaXQgc2hvdWxkbid0IHVzZSANCj4gc3Rh
-dGUgaW5mby4NCj4NCj4gSSBhbSBub3Qgc3VyZSBpZiB5b3UgYXJlIGF0dGVtcHRpbmcgdG8g
-ZG8gc2l0ZSB0byBzaXRlIG9yIGNsaWVudCB0byANCj4gc2VydmVyL3NpdGUgYW5kIHdoaWNo
-IGVuZCBoYXMgdGhlIE5BVCAob3IgYm90aCkuIFdoYXQgSSBkbyBmb3Igc2l0ZSB0byANCj4g
-c2l0ZSBpcyB1c2UgYSBkaWZmZXJlbnQgcG9ydCBmb3IgZWFjaCBjb25uZWN0aW9uIGFuZCBo
-YXZlIGEgc2VwYXJhdGUgDQo+IEJHUCBjb25uZWN0aW9uIGZvciBlYWNoIHBvc3NpYmxlIGNv
-bm5lY3Rpb24gKGllOiBkaWZmZXJlbnQgb25lIGZvciANCj4gZGlmZmVyZW50IG5ldHdvcmsg
-cHJvdmlkZXJzKS7CoCBIYXZlIGEgZnVsbCBtZXNoIHdpdGggOCBzaXRlcyBhbmQgdXB0byAN
-Cj4gMyBwcm92aWRlcnMgcGVyIHNpdGUuDQo+DQo+IFRoYXQgc2FpZCwgeW91IHByb2JhYmx5
-IGhhdmUgZmxvYXRpbmcgSVBzIG9uIHRoZSBjbGllbnQgc2lkZSwgYW5kIA0KPiBkb24ndCB3
-YW50IHRvIGxvY2sgaW4gYSBzaW5nbGUgSVAgb24gdGhlIG11bHRpLWhvbWVkIHNlcnZlciBz
-aWRlP8KgIFlvdSANCj4gY291bGQgbmF0IHRoZSBpbmNvbWluZyBJUHMgb24gdGhlIGJvcmRl
-ciBmcm9tIGFuIGludGVybmFsIElQIGFuZCB0aGVuIA0KPiB0aGVuIGxvY2sgdG8gYSBzaW5n
-bGUgcHJpdmF0ZSBJUCBvbiB0aGUgd2lyZWd1YXJkIHNlcnZlciBmb3IgaW4vb3V0IA0KPiBh
-bmQgdGhhdCBib3JkZXIgbmF0IHdvdWxkIGZvcmNlIHRoZSByZXBseSBiYWNrIHRvIHRoZSBz
-YW1lIGdhdGV3YXkgaXQgDQo+IGNhbWUgaW4gZnJvbS4NCj4NCj4gSSBrbm93LCB5b3UgZG9u
-J3Qgd2FudCB3b3JrIGFyb3VuZHMsIGp1c3Qgd2FudCB0byBtZW50aW9uIGl0J3Mgbm90IHRo
-ZSANCj4gc2FtZSBhcyBjb21wYXJpbmcgYSBzaW5nbGUgc3RyZWFtIHRvIHNvbWV0aGluZyB0
-aGF0IGhhbmRsZXMgcm91dGluZyANCj4gdGhvdWdoIGl0LsKgIEFzIHlvdSBhcmUgZG9pbmcg
-YmdwIGFuZCByZWR1bmRhbnQgcm91dGVzIEkgYXNzdW1lIHlvdSANCj4gYWxzbyByZXNldCBy
-cF9maWx0ZXIgb24gYWxsIG5hdC93aXJlZ3VhcmQvcm91dGVycyBzbyB0aGUgcm91dGVycyB3
-aWxsIA0KPiBhbGxvdyBwYWNrZXRzIHRvIGNvbWUgZnJvbSBkaWZmZXJlbnQgc291cmNlcy4N
-Cj4NCj4gT24gU3VuLCBGZWIgMTksIDIwMjMgYXQgMTI6MDcgUE0gdGxoYWNrcXVlIDx0bGhh
-Y2txdWVAeWFob28uY29tPiB3cm90ZToNCj4NCj4gICAgIEZXSVcsIHdoaWxlIGNsZXZlciwg
-SSBkb24ndCB0aGluayB0aGF0IGlwdGFibGVzIG1hcmsgc29sdmVzIGFsbA0KPiAgICAgY2Fz
-ZXMuDQo+ICAgICBFLmcuLCBjb25zaWRlciBhbiBpbnRlcmZhY2Ugd2l0aCBtdWx0aXBsZSBh
-ZGRyZXNzZXMsIHdoZXJlIGEgcGFja2V0DQo+ICAgICBjb21lcyBpbiBvbiBhIHNlY29uZGFy
-eSBhZGRyZXNzLsKgIFRoZSBwcm9wb3NlZCBydWxlIHdvdWxkIHNlbmQgaXQgb3V0DQo+ICAg
-ICB0aGUgcmlnaHQgaW50ZXJmYWNlLCBidXQgc3RpbGwgd2l0aCB0aGUgd3JvbmcgKHByaW1h
-cnkpIGFkZHJlc3MNCj4gICAgIHBpY2tlZA0KPiAgICAgZnJvbSB0aGUgaW50ZXJmYWNlLi4u
-DQo+DQo+ICAgICBXaXRoIElQdjYgaXQncyBjb21tb24gdG8gYXNzaWduIGFuIGFkZHJlc3Mg
-dG8gYSBzZXJ2aWNlIHJhdGhlciB0aGFuIGENCj4gICAgIGhvc3Qgc28gc2VydmljZXMgY2Fu
-IG1vdmUgZWFzaWx5LsKgIFNvIG11bHRpcGxlIGFkZHJlc3NlcyBwZXINCj4gICAgIGludGVy
-ZmFjZQ0KPiAgICAgYXJlIHRoZSBydWxlLCBub3QgdGhlIGV4Y2VwdGlvbi4NCj4NCj4gICAg
-IEkgZG8gdGhlIHNhbWUgd2l0aCBJUHY0IGluc2lkZSBhZGRyZXNzZXMsIHRob3VnaCB0aGVz
-ZSBkYXlzIHB1YmxpYw0KPiAgICAgSVB2NA0KPiAgICAgYWRkcmVzc2VzIGFyZSBzY2FyY2Ug
-ZW5vdWdoIHRoYXQgaXQncyBub3QgY29tbW9uIGZvciBwdWJsaWMgSVBzLsKgIEl0DQo+ICAg
-ICBhbW91bnRzIHRvIHRoZSBzYW1lIGlzc3VlIC0gdGhlIE5BVCB0cmFja2luZyBpcyBzdGF0
-ZWZ1bC4NCj4NCj4gICAgIFRyeWluZyB0byB3b3JrIGFyb3VuZCB0aGlzIHdpdGggcm91dGlu
-ZyBzZWVtcyBsaWtlIGEgbWF6ZSBvZiB0d2lzdHkNCj4gICAgIHBhc3NhZ2VzIC0gc28gSSBh
-Z3JlZSB0aGF0IHRoZSByaWdodCBzb2x1dGlvbiBpcyBmb3IgV0cgdG8gcmVzcG9uZA0KPiAg
-ICAgZnJvbQ0KPiAgICAgdGhlIGFkZHJlc3MgdGhhdCByZWNlaXZlcyBhIHBhY2tldC4NCj4N
-Cj4gICAgIE9uIDE5LUZlYi0yMyAxMTozMiwgRGF2aWQgS2VyciB3cm90ZToNCj4gICAgID4g
-V2l0aG91dCBnZXR0aW5nIGludG8gdGhlIGRlYmF0ZSBvZiB3aGV0aGVyIHdpcmVndWFyZCBp
-cyBhY3RpbmcNCj4gICAgID4gY29ycmVjdGx5IG9yIG5vdCwgSSB0aGluayB0aGVyZSBpcyBh
-IHBvc3NpYmxlIHdvcmthcm91bmQuDQo+ICAgICA+DQo+ICAgICA+IDEuIEluIHRoZSBpcHRh
-YmxlcyBtYW5nbGUgdGFibGUgUFJFUk9VVElORywgbWF0Y2ggdGhlIGluY29taW5nDQo+ICAg
-ICA+IGludGVyZmFjZSBhbmQgZGVzdGluYXRpb24gYWRkcmVzcyBhbmQgLS1zZXQteG1hcmsg
-YSBmaXJld2FsbCBNQVJLDQo+ICAgICA+IHVuaXF1ZSB0byB0aGlzIGludGVyZmFjZS9kZXN0
-aW5hdGlvbg0KPiAgICAgPiAyLiBDcmVhdGUgYSBuZXcgaXAgcm91dGUgdGFibGUgdGhhdCBz
-ZXRzIHRoZSBkZWZhdWx0IHJvdXRlIHRvIGdvIG91dA0KPiAgICAgPiBvbiB0aGUgaW50ZXJm
-YWNlIHdpdGggdGhlIHNvdXJjZSBhZGRyZXNzIHlvdSB3YW50IChzYW1lIGFzDQo+ICAgICBk
-ZXN0aW5hdGlvbg0KPiAgICAgPiBhZGRyZXNzIGluIGlwdGFibGVzKQ0KPiAgICAgPiAzLiBD
-cmVhdGUgYSBuZXcgaXAgcnVsZSB0aGF0IHNlbmRzIGFsbCBwYWNrZXRzIHdpdGggZmlyZXdh
-bGwNCj4gICAgIG1hcmsgc2V0DQo+ICAgICA+IGluIGlwdGFibGVzIHRvIHRoZSByb3V0aW5n
-IHRhYmxlIHlvdSBqdXN0IGNyZWF0ZWQNCj4gICAgID4NCj4gICAgID4gUmVwZWF0IGFib3Zl
-IGZvciBlYWNoIGludGVyZmFjZS9hZGRyZXNzIHlvdSBuZWVkIHRvIG1hbmdsZSwgd2l0aCBh
-DQo+ICAgICA+IHVuaXF1ZSBmaXJld2FsbCBtYXJrIGFuZCByb3V0aW5nIHRhYmxlIGZvciBl
-YWNoLg0KPiAgICAgPg0KPiAgICAgPiBJdCBtYXkgYmUgbmVjZXNzYXJ5IHRvIHVzZSBDT05O
-TUFSSyBpbiBQUkVST1VUSU5HIGFuZCBPVVRQVVQgdG8NCj4gICAgID4gLS1yZXN0b3JlX21h
-cmsuwqAgSSBjYW4ndCByZW1lbWJlciBpZiB0aGlzIGlzIG5lZWRlZCBvciBub3QsIGl0cw0K
-PiAgICAgYmVlbiBhDQo+ICAgICA+IHdoaWxlIHNpbmNlIEkgY29uZmlndXJlZCBpcHRhYmxl
-cyB3aXRoIHRoaXMuDQo+ICAgICA+DQo+ICAgICA+IFRoaXMgc2hvdWxkIGVuc3VyZSB0aGF0
-IGFueSBwYWNrZXQgdGhhdCBjb21lcyBpbnRvIGFuDQo+ICAgICA+IGludGVyZmFjZS9hZGRy
-ZXNzIGlzIHJlcGxpZWQgdG8gZnJvbSB0aGUgc2FtZSBpbnRlcmZhY2UvYWRkcmVzcy4NCj4g
-ICAgID4NCj4gICAgID4gRGF2aWQNCj4gICAgID4NCj4gICAgID4NCj4gICAgID4gT24gU3Vu
-LCBGZWIgMTksIDIwMjMgYXQgOTo0NCBBTSBDaHJpc3RvcGgNCj4gICAgIExvZXNjaDx3aXJl
-Z3VhcmQtbWFpbEBjaGlsLmF0PiB3cm90ZToNCj4gICAgID4+IEhpLA0KPiAgICAgPj4NCj4g
-ICAgID4+IEkgZG9uJ3QgdGhpbmsgbm8gb25lIHdhbnRzIHRvIGZpeCBpdCwgdGhlcmUgYXJl
-IHNldmVyYWwgdXNlcnMNCj4gICAgIGhhdmluZyB0aGlzIGlzc3VlLiBJIHJhdGhlciBndWVz
-cyBubyBvbmUgY291bGQgZmluZCBhIHN1aXRhYmxlDQo+ICAgICBzb2x1dGlvbiB0byBmaXgg
-aXQuDQo+ICAgICA+Pg0KPiAgICAgPj4gQE5pY286IGRpZCB5b3UgdHJ5IHRvIGRlbGV0ZSB0
-aGUgYWZmZWN0ZWQgcm91dGUgYW5kIGFkZCBpdA0KPiAgICAgYWdhaW4gd2l0aCB0aGUgY29y
-cmVjdCBzb3VyY2UgSVAgPw0KPiAgICAgPj4NCj4gICAgID4+IGFzIEkgbWVudGlvbmVkIGl0
-DQo+ICAgICBpbmh0dHBzOi8vbGlzdHMuengyYzQuY29tL3BpcGVybWFpbC93aXJlZ3VhcmQv
-MjAyMS1Ob3ZlbWJlci8wMDczMjQuaHRtbA0KPiAgICAgPGh0dHA6Ly9saXN0cy56eDJjNC5j
-b20vcGlwZXJtYWlsL3dpcmVndWFyZC8yMDIxLU5vdmVtYmVyLzAwNzMyNC5odG1sPg0KPiAg
-ICAgPj4NCj4gICAgID4+IGlwIHJvdXRlIGRlbCA8TkVUPg0KPiAgICAgPj4gaXAgcm91dGUg
-YWRkIDxORVQ+IGRldiA8QUxJQVNfREVWPiBzcmMgPFNSQ19JUD4NCj4gICAgID4+DQo+ICAg
-ICA+PiBUaGlzIHdheSBJIHdhcyBhYmxlIHRvIChhdCBsZWFzdCB0ZW1wb3JhcnkpIGZpeCB0
-aGlzIGlzc3VlIG9uDQo+ICAgICBtdWx0aSBob21lZCBzeXN0ZW1zLg0KPiAgICAgPj4NCj4g
-ICAgID4+IEtpbmQgcmVnYXJkcywNCj4gICAgID4+IENocmlzdG9waA0KPiAgICAgPj4NCj4g
-ICAgID4+IEFtIDE5LjAyLjIwMjMgdW0gMTM6MTMgc2NocmllYiBOaWNvIFNjaG90dGVsaXVz
-Og0KPiAgICAgPj4+IEhleSBTZWJhc3RpYW4sDQo+ICAgICA+Pj4NCj4gICAgID4+PiBTZWJh
-c3RpYW4gSHlyd2FsbDxzaEBrZWZmLm9yZz7CoCB3cml0ZXM6DQo+ICAgICA+Pj4NCj4gICAg
-ID4+Pj4gSXQgaXMga2luZGEuIEl0J3MgYmVlbiBtZW50aW9uZWQgbXVsdGlwbGUgdGltZXMg
-b3ZlciB0aGUNCj4gICAgIHllYXJzIGJ1dCBubyBvbmUgc2VlbXMgdG8gd2FudCB0byBmaXgg
-aXQuIEF0bGVhc3QgeW91IHNob3VsZCBiZQ0KPiAgICAgYWJsZSB0byBzcGVjaWZ5IGJpbmQv
-c3JjIGlwIGluIHRoZQ0KPiAgICAgPj4+PiBjb25maWcuIEkgZ2F2ZSB1cCBXRyBiZWNhdXNl
-IG9mIGl0LiBXYXNuJ3QgYWNjZXB0ZWQgYnkgbXkNCj4gICAgIHByb2plY3RzIHNlY3VyaXR5
-IHBvbGljeSBzaW5jZSBzcmMgaXAgY291bGQgbm90IGJlIGNvbmZpZ3VyZWQuDQo+ICAgICA+
-Pj4+DQo+ICAgICA+Pj4+IFRoZXJlIGlzIGFuIHVub2ZmaWNpYWwgcGF0Y2ggaG93ZXZlciwN
-Cj4gICAgID4+Pj4NCj4gICAgID4+Pj4NCj4gICAgIGh0dHBzOi8vZ2l0aHViLmNvbS90b3J2
-YWxkcy9saW51eC9jb21taXQvNWZhOTgwODIwOTMzNDRjODYzNDVmOWY2MzMwNWNhZTlkNWY5
-ZjI4MQ0KPiAgICAgPj4+IHRoZSBiaW5kaW5nIGlzIHNvbWV3aGF0IHJlbGF0ZWQgdG8gdGhp
-cyBpc3N1ZSBhbmQgSSB3YXMNCj4gICAgIGxvb2tpbmcgZm9yIHRoYXQNCj4gICAgID4+PiBm
-ZWF0dXJlIHNvbWUgdGltZSBhZ28sIHRvby4gV2hpbGUgaXQgaXMgY29ycmVsYXRlZCBhbmQg
-SSB3b3VsZA0KPiAgICAgcmVhbGx5DQo+ICAgICA+Pj4gYXBwcmVjaWF0ZSBiaW5kaW5nIHN1
-cHBvcnQsIEkgYW0gbm90IHN1cmUgd2hldGhlciB0aGUgbGlua2VkDQo+ICAgICBwYXRjaCBk
-b2VzDQo+ICAgICA+Pj4gYWN0dWFsbHkgZml4IHRoZSBwcm9ibGVtIEkgYW0gc2VlaW5nIGlu
-IG11bHRpIGhvbWVkIGRldmljZXMuDQo+ICAgICA+Pj4NCj4gICAgID4+PiBBcyBsb25nIGFz
-IHdpcmVndWFyZCBkb2VzIG5vdCByZXBseSB3aXRoIHRoZSBzYW1lIElQIGFkZHJlc3MNCj4g
-ICAgIGl0IHdhcw0KPiAgICAgPj4+IGNvbnRhY3RlZCB3aXRoLCBwYWNrZXRzIHdpbGwgZ2V0
-IGRyb3BwZWQgb24gc3RhdGVmdWwNCj4gICAgIGZpcmV3YWxscywgYmVjYXVzZQ0KPiAgICAg
-Pj4+IHRoZSByZXR1cm5pbmcgcGFja2V0IGRvZXMgbm90IG1hdGNoIHRoZSBzdGF0ZSBzZXNz
-aW9uIGRhdGFiYXNlLg0KPiAgICAgPj4+DQo+ICAgICA+Pj4gQmVzdCByZWdhcmRzLA0KPiAg
-ICAgPj4+DQo+ICAgICA+Pj4gTmljbw0KPiAgICAgPj4+DQo+ICAgICA+Pj4gLS0NCj4gICAg
-ID4+PiBTdXN0YWluYWJsZSBhbmQgbW9kZXJuIEluZnJhc3RydWN0dXJlcyBieSB1bmdsZWlj
-aC5jaA0KPiAgICAgPGh0dHA6Ly91bmdsZWljaC5jaD4NCj4NCg0K
+From previous code deep dives I know the udp_tunnel_xmit_skb function is
+where tunnel packets get handed off to the kernel. So in
+net/wireguard/socket.c:send4 we have:
 
---------------Dh0mL9rA7EHqiS52oyaoGyAF--
+	udp_tunnel_xmit_skb(rt, sock, skb, fl.saddr, fl.daddr, ds,
+			    ip4_dst_hoplimit(&rt->dst), 0, fl.fl4_sport,
+			    fl.fl4_dport, false, false);
 
---------------DFqrjLd6N901uhUDAjVpQzO7
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
+Where fl.saddr is the source address that's supposedly wrong (sometimes? I
+guess?) Where does that come from?
 
------BEGIN PGP SIGNATURE-----
+Let's look at the code (heavily culled):
 
-wsF5BAABCAAjFiEEhUZRCZitYt5SlPbZ3PhOoB301mYFAmPyoqAFAwAAAAAACgkQ3PhOoB301mZw
-YA//ZDFXryOZd4hKt/fopyZtpO508KPOHczAXdRzMcA9V7Ic/qWl3YURb3W4MvYlvgIwBz05VIXK
-GhcrRw5o+YaOzhjPIvQZ9ISH01AIowbZ0Ieqr6WFryFUkjE/BebPpj5uHdnYEZ4ng3OtVOY3P/Qj
-TYHoT6j2YA7MaecHs44Ow/uznPitbyzahie6zXlQeOfsAAKZFO08wR3MHVLIORU7Nt+f477eMaaO
-3+Ve9VidkelypFAHOqzxSDk8eTgsfgn+7RgDPRxAVR17a60Z0EtP1awevDInR3UAyOyY4e03iaaC
-yzjl0CfmCq5XB14m2ZN9ND75JLSmqHKPlBl9eMAc0HVQnq0tumHKaYH1UXeBjkY7RsdncVAhqHKW
-zKU0lgkVeRU0VDsen07wzh756rh8edj+F9IQK7JjeDg1M50P/BLudZGqk/GKshHWz8JbActSosby
-96lWS8chvmVo96n+yXy1Hxfo1o79y9pFvvAElqRf5hqIkZO/yfSjiXR11ZYQ7NPDXaQB8NXTvKeD
-5iqssxsdy10IOg5q+YzgjiRLamrOUKXtRV2JtyDZRUZxxTk9x+fU2JebDhPd3AuODpoqjRSg6J/d
-vXgwr/xYt8z4ERPeSDgKrd+N5V/l7kZXJpkCOYKfs54ni3RHwBHop8ST6lvGsTbLKN2L+5v4l0Rk
-DQY=
-=oixT
------END PGP SIGNATURE-----
+	struct flowi4 fl = {
+		.saddr = endpoint->src4.s_addr,
+	};
+	if (cache)
+		rt = dst_cache_get_ip4(cache, &fl.saddr);
+	if (!rt) {
+		if (unlikely(!inet_confirm_addr(sock_net(sock), NULL, 0,
+						fl.saddr, RT_SCOPE_HOST)))
+			fl.saddr = 0;
+		if (unlikely(endpoint->src_if4 && ((IS_ERR(rt) &&
+			     PTR_ERR(rt) == -EINVAL) || (!IS_ERR(rt) &&
+			     rt->dst.dev->ifindex != endpoint->src_if4))))
+			fl.saddr = 0;
 
---------------DFqrjLd6N901uhUDAjVpQzO7--
+Well it's initialized from endpoint->src4.s_addr, overwritten with zero in
+some cases, which I believe lets the kernel do it's regular source addr
+selection, and populated from something called dst_cache at some callsites.
+
+@Nico could it perhaps simply be that you're hitting one of these zero'ing
+cases and that's why it's using regular kernel src addr selection instead
+of the cached endpoint src4 address?
+
+The first case !inet_confirm_addr(..., RT_SCOPE_HOST) ought to confirm that
+the saddr is actually still a local address. Makes sens if the address we
+remembered was removed from the interface we can't use it anymore.
+
+The second case looks like it's checking if the (sometimes cached) src_if4
+interface index is still what the route we're about to use points to.
+
+If neither of those seem likely we can keep reading :)
+
+--Daniel
+
+
+
