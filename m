@@ -4,60 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3B26C05027
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 20 Feb 2023 11:37:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1FA0C636CC
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 20 Feb 2023 11:37:55 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 14e837fa;
-	Mon, 20 Feb 2023 11:37:49 +0000 (UTC)
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com
- [2a00:1450:4864:20::534])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c786f2e6
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 34050873;
+	Mon, 20 Feb 2023 11:37:55 +0000 (UTC)
+Received: from a3i216.smtp2go.com (a3i216.smtp2go.com [203.31.36.216])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 393d29a3
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 19 Feb 2023 18:32:06 +0000 (UTC)
-Received: by mail-ed1-x534.google.com with SMTP id s24so4010581edw.2
- for <wireguard@lists.zx2c4.com>; Sun, 19 Feb 2023 10:32:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ifjveaRNm6Yo9cXrk/fmqQMST4Zhci6bpoq7yM7ab28=;
- b=qOUK6tYZYIvKSCCO+MQSXN9/k7Ykmh+aIOws798mKLCD4x091wv57Ij5UlD5MmJfxZ
- UhqOliXo8u+xynLcyoI+nidGDlcLBpPPe6QnXdok2HP8xL8u0hBnv3LtiNfRmC4Ndiyp
- SCC3gsBjs+6mEDg5665/5o96rwJvQaoB/aiBf8rm47U5Tb0phzAF2dpy1EIzGc3qfjfP
- Med9zbrKdJkLsf28BuC/Pi9BGuCKd9azlG8uacxdlcIxCAnUK1m1EkhozB2CoyHfsX4l
- 2tVQ0on9TZJoqoBH1qS/UntWIIoQJ1UZvzgTDiTy8AKRxplbMIAsN+OHbdiOMb3jSsdz
- SnKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ifjveaRNm6Yo9cXrk/fmqQMST4Zhci6bpoq7yM7ab28=;
- b=OAG8ikKSSPL+ezAOSSqViTW7OR99xyUmQyv5qhN4XhjbFKw5SdS0W8vO1OgFiRq0ta
- +AiJ0yE3nwEejS3UC02RVyksNYg9h+dx5d3zVGxysZuXy4lunm06L96kf9k0asj2mzq1
- P+b/z3u/5OTTfkJkUYnAhNys3WdX63RJzzoojhy7X1i/WCk3ubraPNm4sc8S26ORRmZE
- znqqHnC+g9P/1vifFNmQe71CyuyIemrSHSSgswAf3xqdbWgOudIM3aL/VvZ9gU4Ezq3T
- 3rSCQMQWFLPhRlrwOKgiFqF4+6rvL01FmWiH39eZDOW/iaxnKugOX9TrlLAwebzCV+eU
- 5b/g==
-X-Gm-Message-State: AO0yUKWfLZ3BaTOzOO4xUbkA7NEeipFxDNAmM3ZiAR/IDtTpt8s7e8tz
- s9jbnp23ZBWE0VBKvyayWedh4tpzChm/kDMo8j6i4Rhf
-X-Google-Smtp-Source: AK7set/ucc1Oh65Vana3uMyDAsQ3RZOxgZz0M0FDEVDCunn6TlvUofgxTpYi+u63qbID2GmhMWR/qMeDwaDVzFHWXdE=
-X-Received: by 2002:a17:906:aac6:b0:8b2:fa6d:45e3 with SMTP id
- kt6-20020a170906aac600b008b2fa6d45e3mr3431128ejb.1.1676831526134; Sun, 19 Feb
- 2023 10:32:06 -0800 (PST)
-MIME-Version: 1.0
-References: <875yby83n2.fsf@ungleich.ch>
- <2ed829aaed9fec59ac2a9b32c4ce0a9005b8d8b850be81c81a226791855fe4eb@mu.id>
- <87ttzhc0jt.fsf@ungleich.ch> <7d7bc930-65d9-f13e-cedc-e0451407be85@chil.at>
- <CAJJxGdGSYR_mofRVpZDQsifjZJXXSNNsPqUV-RfWDMO0N2P2dQ@mail.gmail.com>
- <bdeefdd3-d821-591f-b5fc-701be0e345fb@yahoo.com>
- <CADGd2DoE6TCtCxxWL7JWyNW5+yy_Pe+9MNzHznbudMWLTXQreA@mail.gmail.com>
-In-Reply-To: <CADGd2DoE6TCtCxxWL7JWyNW5+yy_Pe+9MNzHznbudMWLTXQreA@mail.gmail.com>
-From: John Lauro <johnalauro@gmail.com>
-Date: Sun, 19 Feb 2023 13:30:42 -0500
-Message-ID: <CADGd2DoGhYw1YHLu6e=-weWQhWMccbKS=UKbS7Z_LnvNZm+65g@mail.gmail.com>
-Subject: Fwd: Source IP incorrect on multi homed systems
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+ Sun, 19 Feb 2023 18:41:44 +0000 (UTC)
+Received: from [10.68.162.240] (helo=smtpclient.apple)
+ by smtpcorp.com with esmtpsa
+ (TLS1.2:ECDHE_SECP256R1__RSA_SHA256__AES_256_GCM:256) (Exim 4.96-S2G)
+ (envelope-from <karog@jgibbons.com>) id 1pTod3-Ibk3Vy-1t;
+ Sun, 19 Feb 2023 18:41:41 +0000
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.400.51.1.1\))
+Subject: Re: [PATCH v2] Allow config to read secret keys from file
+From: karog <karog@jgibbons.com>
+In-Reply-To: <20230219182357.444395-1-dxld@darkboxed.org>
+Date: Sun, 19 Feb 2023 13:41:27 -0500
+Cc: wireguard@lists.zx2c4.com, "Jason A . Donenfeld" <Jason@zx2c4.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <0EB0C3F5-AB25-4E14-9390-7FE24CAD7BB8@jgibbons.com>
+References: <20230219182357.444395-1-dxld@darkboxed.org>
+To: =?utf-8?Q?Daniel_Gr=C3=B6ber?= <dxld@darkboxed.org>
+X-Mailer: Apple Mail (2.3731.400.51.1.1)
+X-Report-Abuse: Please forward a copy of this message, including all headers,
+ to <abuse-report@smtp2go.com>
+Feedback-ID: 390576m:390576aPfCV0U:390576s5Ejb87OJR
+X-smtpcorp-track: 1pTod3mPk3Vy1t.8q1n95MVT6XM7
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=smtpcorp.com;
+ i=@smtpcorp.com; q=dns/txt; s=a1-4; t=1676832102; h=feedback-id :
+ x-smtpcorp-track : date : message-id : to : subject : from : reply-to
+ : sender : list-unsubscribe;
+ bh=xSME+wocQeflRZ3hU6JzO5niGQY7nh6yDajs/scT4sQ=;
+ b=syUPrRWTcDh7uzDSCEqYbF5xdh/GfZAnGtI98SmI5vVmcA4aGMbKi90g2aZLygmY5vJD2
+ o2HpVTz5NTYTKxSvXdOC2Z5ABive74IxTQ80BhdsjlrTKMyrgF1fPVImgCBR+Jxsi79EsS7
+ CLoYp4irEV1/7ltIGk3JEItTJm4vVM3qJGjNCDOHuW5iSJAMjWP1AtciRqOay1bxx2oioC6
+ PDCYsfbMgd+lTD4whUmii8QO49XGRQAv6Br7qObJGKLRL+nRqFfaHKUwFq0kXTWosRPE69Y
+ u/h21nGdaQQkLF8V8pAxWPR2wftI/rpy8B5rDn+BN9sECm4FsEVDlvZFioig==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jgibbons.com;
+ i=@jgibbons.com; q=dns/txt; s=s390576; t=1676832102; h=from : subject
+ : to : message-id : date;
+ bh=xSME+wocQeflRZ3hU6JzO5niGQY7nh6yDajs/scT4sQ=;
+ b=aDrvBtQDqqIsJ7xb5iOG3Y8qeBAxqNN+Sp6PLttAacEZj2N6OQnuFLQYKXsxGGmCupR98
+ h9Cf0OIA4vvX9g6BHPj0a8N5aC+0vQVS31/l7bwC3mX/BLkGgRWGHAj84eRf5NCRQibcvyG
+ 4eXQYmYPIQ++HZJX3dgBgbPLm4WnJDnyW2F+q+XUIJNx+OPfgcfGsvWCGOozTLQHkheEKmY
+ l8IoIpqMfFPxLwmtywCXYXl04M2MZr0x5thX67+Bxgj6L4lD/ZcMK9FpFvpwSJ/VJWVo5Ce
+ HWdTbBf/qPj7e68xrcjiIKLThYQXM2OMEp/epNfgxnf9DhMPBVkjcxHOInYA==
 X-Mailman-Approved-At: Mon, 20 Feb 2023 11:37:48 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -73,54 +71,118 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-I think the ip route with src would work, but only as a short lived
-work around.  The problem with it is if dealing with dynamic routes is
-it could go a way when a link is down and then come back and the src
-setting would be lost.  You would need the bgp software to add the
-src.
+Instead of using new config keys, did you consider using special values =
+for this case like
 
-UDP is connectionless.  Sending back out the same as it's coming in
-isn't strictly the same.  The streams are not attached the same as
-they would be with TCP on nginx or a reply with icmp. You should be
-able to whitelist the udp port on the NAT devices, as it shouldn't use
-state info.
+PrivateKey=3Dfile:/path/to/key
+PresharedKey=3Dfile:/path/to/preshared
 
-I am not sure if you are attempting to do site to site or client to
-server/site and which end has the NAT (or both).  What I do for site
-to site is use a different port for each connection and have a
-separate BGP connection for each possible connection (ie: different
-one for different network providers).  Have a full mesh with 8 sites
-and upto 3 providers per site.
+In addition to not proliferating new config keys, it also prevents the =
+possibility of erring by including both PrivateKey and PrivateKeyFile
 
-That said, you probably have floating IPs on the client side, and
-don't want to lock in a single IP on the multi-homed server side?  You
-could nat the incoming IPs on the border from an internal IP and then
-then lock to a single private IP on the wireguard server for in/out
-and that border nat would force the reply back to the same gateway it
-came in from.
+This kind of syntax is used in systemd service files for things like =
+StandardOut and StandardError
 
-I know, you don't want work arounds, just want to mention it's not the
-same as comparing a single stream to something that handles routing
-though it.  As you are doing bgp and redundant routes I assume you
-also reset rp_filter on all nat/wireguard/routers so the routers will
-allow packets to come from different sources.
+karog
 
-On Sun, Feb 19, 2023 at 12:07 PM tlhackque <tlhackque@yahoo.com> wrote:
->
-> FWIW, while clever, I don't think that iptables mark solves all cases.
-> E.g., consider an interface with multiple addresses, where a packet
-> comes in on a secondary address.  The proposed rule would send it out
-> the right interface, but still with the wrong (primary) address picked
-> from the interface...
->
-> With IPv6 it's common to assign an address to a service rather than a
-> host so services can move easily.  So multiple addresses per interface
-> are the rule, not the exception.
->
-> I do the same with IPv4 inside addresses, though these days public IPv4
-> addresses are scarce enough that it's not common for public IPs.  It
-> amounts to the same issue - the NAT tracking is stateful.
->
-> Trying to work around this with routing seems like a maze of twisty
-> passages - so I agree that the right solution is for WG to respond from
-> the address that receives a packet.
+> On Feb 19, 2023, at 1:23 PM, Daniel Gr=C3=B6ber <dxld@darkboxed.org> =
+wrote:
+>=20
+> This adds two new config keys PrivateKeyFile=3D and PresharedKeyFile=3D =
+that
+> simply hook up the existing code for the `wg set ... private-key =
+/file`
+> codepath.
+>=20
+> By using the new options wireguard configs can become a lot easier to
+> manage and deploy as we don't have to treat them as secrets anymore. =
+This
+> way they can, for example, be tracked in public git repos while the =
+secret
+> keys can be provisioned using an out of band system or with a manual
+> one-time step instead.
+>=20
+> Before this patch we were using an ugly hack: it's possible to simply =
+omit
+> PrivateKey=3D and set it using `PostUp =3D wg set %i private-key =
+/some/file`.
+> However this breaks when we try to use setconf or synconf as they
+> will (rightly) unset the private key when it's missing in the =
+underlying
+> config file breaking connectivity.
+>=20
+> Reviewed-By: Michael Tokarev <mjt@tls.msk.ru>
+> Signed-off-by: Daniel Gr=C3=B6ber <dxld@darkboxed.org>
+> ---
+> src/config.c | 8 ++++++++
+> src/man/wg.8 | 4 ++++
+> 2 files changed, 12 insertions(+)
+>=20
+> diff --git a/src/config.c b/src/config.c
+> index e8db900..f9980fe 100644
+> --- a/src/config.c
+> +++ b/src/config.c
+> @@ -464,6 +464,10 @@ static bool process_line(struct config_ctx *ctx, =
+const char *line)
+> 			ret =3D parse_key(ctx->device->private_key, =
+value);
+> 			if (ret)
+> 				ctx->device->flags |=3D =
+WGDEVICE_HAS_PRIVATE_KEY;
+> +		} else if (key_match("PrivateKeyFile")) {
+> +			ret =3D parse_keyfile(ctx->device->private_key, =
+value);
+> +			if (ret)
+> +				ctx->device->flags |=3D =
+WGDEVICE_HAS_PRIVATE_KEY;
+> 		} else
+> 			goto error;
+> 	} else if (ctx->is_peer_section) {
+> @@ -483,6 +487,10 @@ static bool process_line(struct config_ctx *ctx, =
+const char *line)
+> 			ret =3D parse_key(ctx->last_peer->preshared_key, =
+value);
+> 			if (ret)
+> 				ctx->last_peer->flags |=3D =
+WGPEER_HAS_PRESHARED_KEY;
+> +		} else if (key_match("PresharedKeyFile")) {
+> +			ret =3D =
+parse_keyfile(ctx->last_peer->preshared_key, value);
+> +			if (ret)
+> +				ctx->last_peer->flags |=3D =
+WGPEER_HAS_PRESHARED_KEY;
+> 		} else
+> 			goto error;
+> 	} else
+> diff --git a/src/man/wg.8 b/src/man/wg.8
+> index fd9fde7..48f084d 100644
+> --- a/src/man/wg.8
+> +++ b/src/man/wg.8
+> @@ -134,6 +134,8 @@ The \fIInterface\fP section may contain the =
+following fields:
+> .IP \(bu
+> PrivateKey \(em a base64 private key generated by \fIwg genkey\fP. =
+Required.
+> .IP \(bu
+> +PrivateKeyFile \(em path to a file containing a base64 private key. =
+May be used instead of \fIPrivateKey\fP. Optional.
+> +.IP \(bu
+> ListenPort \(em a 16-bit port for listening. Optional; if not =
+specified, chosen
+> randomly.
+> .IP \(bu
+> @@ -151,6 +153,8 @@ and may be omitted. This option adds an additional =
+layer of symmetric-key
+> cryptography to be mixed into the already existing public-key =
+cryptography,
+> for post-quantum resistance.
+> .IP \(bu
+> +PresharedKeyFile \(em path to a file containing a base64 preshared =
+key. May be used instead of \fIPresharedKey\fP. Optional.
+> +.IP \(bu
+> AllowedIPs \(em a comma-separated list of IP (v4 or v6) addresses with
+> CIDR masks from which incoming traffic for this peer is allowed and to
+> which outgoing traffic for this peer is directed. The catch-all
+> --=20
+> 2.30.2
+
