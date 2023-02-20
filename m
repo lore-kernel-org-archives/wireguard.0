@@ -4,43 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5D48C6379F
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 20 Feb 2023 11:37:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3A48C636D6
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 20 Feb 2023 20:43:56 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7e3fde26;
-	Mon, 20 Feb 2023 11:37:56 +0000 (UTC)
-Received: from mail.aes.pm (mail.aes.pm [51.89.244.14])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 332d1998
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6778bbcc;
+	Mon, 20 Feb 2023 20:43:54 +0000 (UTC)
+Received: from janet.servers.dxld.at (mail.servers.dxld.at [5.9.225.164])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4a63aa59
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 20 Feb 2023 11:29:22 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon)
- with ESMTPSA id 0B5101C0128; Mon, 20 Feb 2023 11:29:21 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fingerlessgloves.me;
- s=mailcow; t=1676892562;
- h=from:subject:date:message-id:to:cc:mime-version:content-type:
- content-transfer-encoding:in-reply-to:references;
- bh=32fxd3WhLaJQ+0GdbbGnJTplZSGIWNsQrGlNXuJA8Lc=;
- b=JLMnzj6TU0vKwVH+0Tj3ra4+55YCAmjL/G/EaoL84Yzn4XKNiRjyx455HxpOGSaNioKAyI
- L+hGP9wQblY8AYrW81Ejxx/qm1hGnQGQlM5ebnDmTp3NhQOdRcdxUArCrl/ybGoVR7iX5D
- 9Tj5kJM5n8HpaJJuG+MqAybO+yOU/hXx8/LjIYVyqRQP64+ppnco1X3wpwaG1ckxy/fGUW
- +aiUlLnF9ioR49uJtMx3Mqzc/OcvyKiApTw49JSqgTtQ51VDptyAV30q3kr2FgcXmz71uK
- mCx4uJlrxEuo9ERWShO9znXChaBS7rMaa9PMQYDOstXIL4PbKGlO9ID/rmZ8ZQ==
+ Mon, 20 Feb 2023 20:43:52 +0000 (UTC)
+Received: janet.servers.dxld.at; Mon, 20 Feb 2023 21:43:50 +0100
+Date: Mon, 20 Feb 2023 21:43:47 +0100
+From: dxld@darkboxed.org
+To: Nico Schottelius <nico.schottelius@ungleich.ch>
+Cc: Roman Mamedov <rm@romanrm.net>, tlhackque <tlhackque@yahoo.com>,
+ wireguard@lists.zx2c4.com
+Subject: Re: Src addr code review (Was: Source IP incorrect on multi homed
+ systems)
+Message-ID: <20230220204347.nqeusqotqtxbjiw2@House.clients.dxld.at>
+References: <87ttzhc0jt.fsf@ungleich.ch>
+ <7d7bc930-65d9-f13e-cedc-e0451407be85@chil.at>
+ <CAJJxGdGSYR_mofRVpZDQsifjZJXXSNNsPqUV-RfWDMO0N2P2dQ@mail.gmail.com>
+ <bdeefdd3-d821-591f-b5fc-701be0e345fb@yahoo.com>
+ <c2bc4ed2-e8c5-ff68-9fe8-c59c8be2804c@yahoo.com>
+ <87o7pp76a2.fsf@ungleich.ch> <20230220014252.21178988@nvm>
+ <87h6vh72d4.fsf@ungleich.ch>
+ <20230219224200.g5mwcaybee4hujov@House.clients.dxld.at>
+ <87leksbr5n.fsf@ungleich.ch>
 MIME-Version: 1.0
-Date: Mon, 20 Feb 2023 11:29:21 +0000
-From: FingerlessGloves <me@FingerlessGloves.me>
-To: Daniel <tech@tootai.net>
-Cc: wireguard@lists.zx2c4.com
-Subject: Re: Wish - Add PostUp/PostDown per peer section
-In-Reply-To: <ce7c0c0c-f1a8-f4f1-bde3-184ad66b48cb@tootai.net>
-References: <ce7c0c0c-f1a8-f4f1-bde3-184ad66b48cb@tootai.net>
-Message-ID: <538cc161fec50f06cffcc0d0e08b0a10@FingerlessGloves.me>
-X-Sender: me@FingerlessGloves.me
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Last-TLS-Session-Version: TLSv1.3
-X-Mailman-Approved-At: Mon, 20 Feb 2023 11:37:48 +0000
+In-Reply-To: <87leksbr5n.fsf@ungleich.ch>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -55,19 +51,51 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This would be very handy.
+Hi Nico,
 
-Currently we have a python script that reads in the peers and 
-add/removes ARP entries from the physical interface, which runs as a 
-service and checks WireGuard every 10 seconds 😅.
-
----
-FingerlessGloves
-
-On 2023-02-20 09:33 AM, Daniel wrote:
-> Hello. Would it be possible to add the PostUp and PostDown commands in 
-> peer section ?
+On Mon, Feb 20, 2023 at 10:47:36AM +0100, Nico Schottelius wrote:
+> Daniel Gröber <dxld@darkboxed.org> writes:
+> > Let's look at the code (heavily culled):
+> >
+> > 	struct flowi4 fl = {
+> > 		.saddr = endpoint->src4.s_addr,
+> > 	};
+> > 	if (cache)
+> > 		rt = dst_cache_get_ip4(cache, &fl.saddr);
 > 
-> Ex. of use case: dynamically add route when a peer connect
+> What I am wondering is, how did it get into the cache in the first place?
+
+Right so, endpoint->src4 is set in wg_socket_set_peer_endpoint, which is
+called either trough through wg_socket_endpoint_from_skb in the handshake
+receive code or wg_socket_set_peer_endpoint in the data path.
+
+The _from_skb variant also calls wg_socket_endpoint_from_skb. Here we're
+remembering the src addr of the (received) packet in addr4 and the dst addr
+we're going to use for sending as src4 as you'd expect:
+
+	endpoint->addr4.sin_family = AF_INET;
+	endpoint->addr4.sin_port = udp_hdr(skb)->source;
+	endpoint->addr4.sin_addr.s_addr = ip_hdr(skb)->saddr;
+	endpoint->src4.s_addr = ip_hdr(skb)->daddr;
+	endpoint->src_if4 = skb->skb_iif;
+
+The dst_cache is set just after those zero'ing conditionals we were looking
+at before. It's cleared whenever the endpoint/port changes or one of those
+cases is hit. Note the dst_cache is only used for data packets, so
+handshakes would be unaffected if it was the cause of your woes.
+
+> > @Nico could it perhaps simply be that you're hitting one of these zero'ing
+> > cases and that's why it's using regular kernel src addr selection instead
+> > of the cached endpoint src4 address?
 > 
-> Have a nice day
+> That could absolutely be the case. What is funky is that I see the
+> problem on two very different systems
+>
+> Both systems exhibit the behaviour, but maybe it's better to focus on
+> System A first, as this seems to be more the "upstream" source.
+
+It is weird indeed, but yeah. One thing at a time.
+
+BTW, what kernel version/distro are we dealing with?
+
+--Daniel
