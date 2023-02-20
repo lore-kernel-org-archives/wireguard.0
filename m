@@ -4,54 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65F42C636CC
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 20 Feb 2023 11:09:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A264CC05027
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 20 Feb 2023 11:21:16 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4cab1bd5;
-	Mon, 20 Feb 2023 11:09:41 +0000 (UTC)
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com
- [2607:f8b0:4864:20::102e])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 12cddf03
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 745cc9d2;
+	Mon, 20 Feb 2023 11:21:14 +0000 (UTC)
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com
+ [2a00:1450:4864:20::52c])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ddfc9e7a
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 20 Feb 2023 11:09:38 +0000 (UTC)
-Received: by mail-pj1-x102e.google.com with SMTP id
- na9-20020a17090b4c0900b0023058bbd7b2so945837pjb.0
- for <wireguard@lists.zx2c4.com>; Mon, 20 Feb 2023 03:09:38 -0800 (PST)
+ Mon, 20 Feb 2023 11:21:12 +0000 (UTC)
+Received: by mail-ed1-x52c.google.com with SMTP id h32so3469226eda.2
+ for <wireguard@lists.zx2c4.com>; Mon, 20 Feb 2023 03:21:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=content-transfer-encoding:to:subject:message-id:date:from
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=tWVTt3yfVCq77ETaQgG/PBduDQvU7FJD0ps7Evgbeug=;
- b=frbeeVChfKveMGhxg2fEYuupgjDDQSIPfcTpXEmjxouGftgJ5H6k5n6B4zb/YE71Dm
- tTgm+KtUhLmZxa7iq6564SoWJzTpl597y1P73FUFXEp5QO03wxEbn/v2RfNlWTIaobF/
- 6VngzkwXSC1/ZLqM8+tN76wuRnKtikXh/GC+/z6obSQd7Ie9VobfdIFUlexwu47KimrI
- 6Ya4d4hp7QNpQva+UkYrXsqPAxZkrlNrdVzqJPNlFwongMLXwDhU3hfOmZFo67LUr2xj
- puLs8t3YAoxDijtNnOWmZuEZqtZK7ABjcCDTqzdj3OIIG+5RBUSs7az/ZDORnOMAUubp
- MeQw==
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Pg4TW+9K98UvR/mFnPpocCzv2/yMBuKAP/7WBvgbIhI=;
+ b=HBh/NKLg34FghiUgn+6IqydxHCE/Q1h+PeAkkYZxYSKehnY1D9oWeyP4BAVJGdqc3F
+ bDw0hKO0SElKAUY8kKMuXOG2nBokUJmpkcPMba4bjo18qIn11rQLORCLO5m/PHnjOdE2
+ kVoaYZGiAbQ5XjglhHihYbEludEJVzqDfkGNj5oJUi5iplx+VYUf4krNO19XuIpkJI8D
+ LFAGXXcDLyVYTdOEQI9dsqTPaVA42BBgU5XEIb51LhnuFD8tLRj58zJuxOrVOysYO/oP
+ U3nYNyzAP7eAXzeReSCt2+E2KgJ76nZBmwO/vsEv2hnShyKyaIo0BGXSCLRxW57h9SdF
+ BHEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=content-transfer-encoding:to:subject:message-id:date:from
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=tWVTt3yfVCq77ETaQgG/PBduDQvU7FJD0ps7Evgbeug=;
- b=AYxA61xKuFuw4H6F3FPGwQMBPCoW9LQoGYJOLqyUQkfIfjqG4GHPKF42s5agVennR5
- xLH9KyIoNN8XTOGbou9v26YnfovEtQSPJdlYPj/ltuIMkipo5FA0qXHIPhAp/mG8nOVg
- gEHWl7MiGQ6hxXJhUeCr19yatffIc5ZezlZu59Kbh/mPNv125XxiZMhKJd9BLdnp/rLO
- R/2DjTASfINxP7j+fKiB3hAhyxnXLUxKM42gcFlHUjVpGzTfIrwpCiYRf2BAxAYJE/mf
- +hl639OlXF577Xl50dQiJuzH7OXcBJFyCIY12il1YUjp2LT6HE1BKLFqJCljN6voeOLW
- JW7g==
-X-Gm-Message-State: AO0yUKWZzPcCKT3kaNQIwcKsPWpNaIuzfmYU/QjuKeMHjFQKz2Si6sfx
- 4fvhApIsG/Kj04gl2djhZWrXdxYG4UE2ZxPJjQhp1CUG
-X-Google-Smtp-Source: AK7set8Sb0LXTN5PTkkcim89G6I/lPgN67GAYkbTeYQZR0lbOebvdVBrjXUmSpzOmwAs4CZJMBTutITQYvJgieYGudU=
-X-Received: by 2002:a17:90b:1a8d:b0:234:1670:e678 with SMTP id
- ng13-20020a17090b1a8d00b002341670e678mr1237201pjb.117.1676891376269; Mon, 20
- Feb 2023 03:09:36 -0800 (PST)
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Pg4TW+9K98UvR/mFnPpocCzv2/yMBuKAP/7WBvgbIhI=;
+ b=sIAGH8ypRTzjzFDwFutE071As3N52dqkRX+PcR9s5srrc0BNIl3/MmGRo0snR+9K7W
+ tEwHjIQ6++c1nsEHJo2sTVdZ2IWbCn5WRM3SKbFqGo8qTUA2VFo07Ry1sDw0pDMFjV7L
+ cPhGo8rhmthZkg01L4oiMbMlDSm27LS4wUzCRW066+LPscuQPA79PKZcPjKjVgBeECQ7
+ O+aJOthQZPpo62gwSmkj//9TQtVjLTqAxXlxymLgHF44hhsB26T9Su0cKq1XKCqFm3rb
+ 2ar/ouVzVWoX0B72eoPvQSCOM3Cp7IsKhgv2QpzucWKm6zXH6l5dO4jAz8xwHlXQFInx
+ Mu6w==
+X-Gm-Message-State: AO0yUKXeLQ1yBrKoVoU+YpSWwinWqebH1w6xVBOJSrXtUWWlBV5M/Q5U
+ KIGH2Lan2AXb+AuWU9qWbMPEtwh6ftKgRTJxW57poJnnDFg=
+X-Google-Smtp-Source: AK7set9IVLuj1saFVV3uRJ6Yg+A6IzMU2NlyMsP2s/sfsw0HmmQNzkEb4BynrXmqjHYeB82ru6zTr3bovf/luophQqk=
+X-Received: by 2002:a50:bb09:0:b0:4ab:49b9:686d with SMTP id
+ y9-20020a50bb09000000b004ab49b9686dmr2963ede.1.1676892072147; Mon, 20 Feb
+ 2023 03:21:12 -0800 (PST)
 MIME-Version: 1.0
-From: Janne Johansson <icepic.dz@gmail.com>
-Date: Mon, 20 Feb 2023 12:09:25 +0100
-Message-ID: <CAA6-MF8wNMCDkfWiB96W5pwL+YwMgPCCOn1s1B2YQ_zy_V6U-A@mail.gmail.com>
-Subject: Re: Source IP incorrect on multi homed systems
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <875yby83n2.fsf@ungleich.ch>
+ <2ed829aaed9fec59ac2a9b32c4ce0a9005b8d8b850be81c81a226791855fe4eb@mu.id>
+ <87ttzhc0jt.fsf@ungleich.ch> <7d7bc930-65d9-f13e-cedc-e0451407be85@chil.at>
+ <CAJJxGdGSYR_mofRVpZDQsifjZJXXSNNsPqUV-RfWDMO0N2P2dQ@mail.gmail.com>
+ <bdeefdd3-d821-591f-b5fc-701be0e345fb@yahoo.com>
+ <c2bc4ed2-e8c5-ff68-9fe8-c59c8be2804c@yahoo.com>
+ <87o7pp76a2.fsf@ungleich.ch> <20230220014252.21178988@nvm>
+ <87h6vh72d4.fsf@ungleich.ch>
+ <20230219224200.g5mwcaybee4hujov@House.clients.dxld.at>
+ <CACu-5+0+7h5XjM1xVjK+frwF=dOteoa+wuw_vhesJ7_ek1vfjQ@mail.gmail.com>
+ <87sff0oc06.fsf@ungleich.ch>
+In-Reply-To: <87sff0oc06.fsf@ungleich.ch>
+From: =?UTF-8?B?5pu554Wc?= <cao88yu@gmail.com>
+Date: Mon, 20 Feb 2023 19:21:07 +0800
+Message-ID: <CACu-5+1sJV9wLN_unK_C4GK32sOjmqaB0MK1vbw__GaNFLZgPQ@mail.gmail.com>
+Subject: Re: Src addr code review (Was: Source IP incorrect on multi homed
+ systems)
+To: Nico Schottelius <nico.schottelius@ungleich.ch>
+Cc: =?UTF-8?Q?Daniel_Gr=C3=B6ber?= <dxld@darkboxed.org>, 
+ Roman Mamedov <rm@romanrm.net>, tlhackque <tlhackque@yahoo.com>,
+ wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -68,81 +84,111 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-rewriting for the lists, managed to bold some pasted text and hence
-get blocked due to html-mails not allowed on list.
+Hi Nico,
+That issue was closed by myself, but the patch didn't get applied
+cause the issue was came from wireguard itself, and the maintener told
+me that I should send my patch to wireguard upstream (but I just gave
+up for sending it to wireguard team).
 
-Den s=C3=B6n 19 feb. 2023 kl 21:17 skrev Nico Schottelius
-<nico.schottelius@ungleich.ch>:
-> Janne Johansson <icepic.dz@gmail.com> writes:
-> > *) https://en.wiktionary.org/wiki/Chesterton%27s_fence
+Nico Schottelius <nico.schottelius@ungleich.ch> =E4=BA=8E2023=E5=B9=B42=E6=
+=9C=8820=E6=97=A5=E5=91=A8=E4=B8=80 18:41=E5=86=99=E9=81=93=EF=BC=9A
 >
-> I am happy to have learned a new principle today, thanks for that.
 >
-> And to be sure that everyone is on the same page:
+> Hello =E6=9B=B9=E7=85=9C,
 >
->     Wireguard should reply by default with the source address that
->     used to be the destination address, but at the moment wireguard is no=
-t
->     doing that at the moment.
+> on github it seems your patch was applied / the issue was closed - is
+> that the correct current status?
 >
-> If anyone disagrees with above statement, please let me know.
-
-I disagree, but perhaps only because that statement is slightly too short.
-
-Let's assume I have two ISPs and hence a multihomed wg peer, with ip
-A.x.x.x from isp A, and ip B.x.x.x from isp B. For some reason, this
-box has a routing table that says "prefer link A to reach the
-internet", but I set up client C to set up wireguard to B.1.2.3 and
-client C sends it udp packet with src ip C and dest IP B.x.x.x. Since
-UDP is stateless, the "response" from the multihomed server is created
-"out of thin air" as a random UDP packet destined for C. We don't feel
-it is unrelated to the previous received packet, but from the tcp
-stack perspective it is.
-
-The routing table now decides that interface A will be the awesomest
-for sending UDP to C, and therefore creates a packet with source ip
-A.x.x.x and dest ip C.x.x.x and sends it off. This surprise seems to
-be the main issue in this thread. Perhaps we see this multihomed box
-as slightly misconfigured as far as wireguard goes, perhaps it should
-have posted A.x.x.x instead of B.x.x.x as the wg endpoint to the
-client or whatever, but the facts remain.
-
-Now, in your above statement you hope to get everyone to agree on,
-this would need to also include "sending it back on interface B, to
-the gw used by interface B to ISP B if there is one" or else isp A
-might drop the packet as being sent from a "forged" address since it
-looks like a fake source ip from isp As perspective. The routing
-lookups - before any applied tricks - will look at destination IPs
-only and make the decision based on that.
-
-I think the proposed solution, while attractive at first glance, may
-be trading one kind of "surprise" behaviour to another where the
-interface B might be less useful than A which would explain why the
-default route is set to use A. If you look at the many posts on the
-internet over many years about "why udp source ip got chosen wrong on
-multihomed boxes" you see answers like:
-"You either bind(2) to each interface address and manage multiple
-sockets, or let the kernel do the implicit source IP assignment with
-INADDR_ANY. There is no other way."
-( https://stackoverflow.com/questions/3062205/setting-the-source-ip-for-a-u=
-dp-socket
-, not about vpns and lots older than wireguard)
-
-What this means is that if you have a box where links and interfaces
-come and go (usb wifi dongles, tethered cell phones..) then wireguard
-now has to make a lot of extra work, trying to keep tabs on what
-interfaces exist or not, instead of just binding to port 0 and letting
-the kernel handle this by itself in the normal but to some, surprising
-way for udp packets.
-
-My gut feeling is that if you have a setup like this example
-multihomed peer, you get to do some extra steps, which may include the
-aforementioned firewall mark "tricks", use VRFs/Namespaced
-interfaces/routing domains, add a specific route to client C ip over
-link B, bind wg to a loopback interface or source-nat on outgoing wg
-traffic or something along those lines in order to have a wg endpoint
-on a less-preferred interface and not cause issues with
-stateful-nat-gws at client C.
-
---
-May the most significant bit of your life be positive.
+> Best regards,
+>
+> Nico
+>
+> =E6=9B=B9=E7=85=9C <cao88yu@gmail.com> writes:
+>
+> > Hi all,
+> > I've hacked that source code myself months ago, and it works well on
+> > my use case (I have 4 dual stack pppoe wan set on my openwrt router,
+> > and seted a wireguard sever on it), my hack will pickup the dst_addr
+> > from incoming handshake packet in kernel sk_buff, and then use that
+> > addr as src_addr to reply.
+> > I'm not good at source code, and I know that my hack may be ugly, but
+> > it works, hope this patch can help:
+> > https://github.com/openwrt/packages/issues/9538#issuecomment-1150592803
+> >
+> > Daniel Gr=C3=B6ber <dxld@darkboxed.org> =E4=BA=8E2023=E5=B9=B42=E6=9C=
+=8820=E6=97=A5=E5=91=A8=E4=B8=80 06:42=E5=86=99=E9=81=93=EF=BC=9A
+> >>
+> >> Hi,
+> >>
+> >> I though it might be useful to do some quick and dirty code review ins=
+tead
+> >> of speculating wildly to figure out where these source IP selection
+> >> problems could be coming from ;)
+> >>
+> >> From previous code deep dives I know the udp_tunnel_xmit_skb function =
+is
+> >> where tunnel packets get handed off to the kernel. So in
+> >> net/wireguard/socket.c:send4 we have:
+> >>
+> >>         udp_tunnel_xmit_skb(rt, sock, skb, fl.saddr, fl.daddr, ds,
+> >>                             ip4_dst_hoplimit(&rt->dst), 0, fl.fl4_spor=
+t,
+> >>                             fl.fl4_dport, false, false);
+> >>
+> >> Where fl.saddr is the source address that's supposedly wrong (sometime=
+s? I
+> >> guess?) Where does that come from?
+> >>
+> >> Let's look at the code (heavily culled):
+> >>
+> >>         struct flowi4 fl =3D {
+> >>                 .saddr =3D endpoint->src4.s_addr,
+> >>         };
+> >>         if (cache)
+> >>                 rt =3D dst_cache_get_ip4(cache, &fl.saddr);
+> >>         if (!rt) {
+> >>                 if (unlikely(!inet_confirm_addr(sock_net(sock), NULL, =
+0,
+> >>                                                 fl.saddr, RT_SCOPE_HOS=
+T)))
+> >>                         fl.saddr =3D 0;
+> >>                 if (unlikely(endpoint->src_if4 && ((IS_ERR(rt) &&
+> >>                              PTR_ERR(rt) =3D=3D -EINVAL) || (!IS_ERR(r=
+t) &&
+> >>                              rt->dst.dev->ifindex !=3D endpoint->src_i=
+f4))))
+> >>                         fl.saddr =3D 0;
+> >>
+> >> Well it's initialized from endpoint->src4.s_addr, overwritten with zer=
+o in
+> >> some cases, which I believe lets the kernel do it's regular source add=
+r
+> >> selection, and populated from something called dst_cache at some calls=
+ites.
+> >>
+> >> @Nico could it perhaps simply be that you're hitting one of these zero=
+'ing
+> >> cases and that's why it's using regular kernel src addr selection inst=
+ead
+> >> of the cached endpoint src4 address?
+> >>
+> >> The first case !inet_confirm_addr(..., RT_SCOPE_HOST) ought to confirm=
+ that
+> >> the saddr is actually still a local address. Makes sens if the address=
+ we
+> >> remembered was removed from the interface we can't use it anymore.
+> >>
+> >> The second case looks like it's checking if the (sometimes cached) src=
+_if4
+> >> interface index is still what the route we're about to use points to.
+> >>
+> >> If neither of those seem likely we can keep reading :)
+> >>
+> >> --Daniel
+> >>
+> >>
+> >>
+>
+>
+> --
+> Sustainable and modern Infrastructures by ungleich.ch
