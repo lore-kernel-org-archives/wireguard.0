@@ -4,39 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3A48C636D6
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 20 Feb 2023 20:43:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DC08C64EC4
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  6 Mar 2023 16:45:06 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6778bbcc;
-	Mon, 20 Feb 2023 20:43:54 +0000 (UTC)
-Received: from janet.servers.dxld.at (mail.servers.dxld.at [5.9.225.164])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4a63aa59
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fe7f8fa6;
+	Mon, 6 Mar 2023 16:45:04 +0000 (UTC)
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3f32002d
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Mon, 6 Mar 2023 16:45:02 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by ams.source.kernel.org (Postfix) with ESMTPS id 61F11B80FC9
+ for <wireguard@lists.zx2c4.com>; Mon,  6 Mar 2023 16:45:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD575C433A4
+ for <wireguard@lists.zx2c4.com>; Mon,  6 Mar 2023 16:45:00 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="b0w1TNIo"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1678121095;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=l0IN1VirqLiMA24UJjnZzI6umrNwjSsL7ENm7zhRfEY=;
+ b=b0w1TNIoPxRb/tqmpTMDkJV/IIjtMlC60HNjPPB7h8foPuYnyLmyxd7C2pa9vZNTpjUbiS
+ Isw6vNwX93UAeJ/eHpghfRROCnUGn/o+U+l+SYnJXPaCe9/WoipnfzL4qnrv/RI/9HylVK
+ oC3KxzsgMZNSN9ww4dNrCmQvx4hdWh4=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 18693d75
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 20 Feb 2023 20:43:52 +0000 (UTC)
-Received: janet.servers.dxld.at; Mon, 20 Feb 2023 21:43:50 +0100
-Date: Mon, 20 Feb 2023 21:43:47 +0100
-From: dxld@darkboxed.org
-To: Nico Schottelius <nico.schottelius@ungleich.ch>
-Cc: Roman Mamedov <rm@romanrm.net>, tlhackque <tlhackque@yahoo.com>,
- wireguard@lists.zx2c4.com
-Subject: Re: Src addr code review (Was: Source IP incorrect on multi homed
- systems)
-Message-ID: <20230220204347.nqeusqotqtxbjiw2@House.clients.dxld.at>
-References: <87ttzhc0jt.fsf@ungleich.ch>
- <7d7bc930-65d9-f13e-cedc-e0451407be85@chil.at>
- <CAJJxGdGSYR_mofRVpZDQsifjZJXXSNNsPqUV-RfWDMO0N2P2dQ@mail.gmail.com>
- <bdeefdd3-d821-591f-b5fc-701be0e345fb@yahoo.com>
- <c2bc4ed2-e8c5-ff68-9fe8-c59c8be2804c@yahoo.com>
- <87o7pp76a2.fsf@ungleich.ch> <20230220014252.21178988@nvm>
- <87h6vh72d4.fsf@ungleich.ch>
- <20230219224200.g5mwcaybee4hujov@House.clients.dxld.at>
- <87leksbr5n.fsf@ungleich.ch>
+ for <wireguard@lists.zx2c4.com>; Mon, 6 Mar 2023 16:44:55 +0000 (UTC)
+Received: by mail-yb1-f176.google.com with SMTP id 82so8784697ybn.6
+ for <wireguard@lists.zx2c4.com>; Mon, 06 Mar 2023 08:44:54 -0800 (PST)
+X-Gm-Message-State: AO0yUKUWBnpGlUbxxyVhuOpkMImF1F2Qnjk2E8SGiz6tfnxHXS+4urcb
+ SIjRzLU1UnT9mZ6qEWf/mlRnZSI8LbkLn+EoZVk=
+X-Google-Smtp-Source: AK7set9CK46/v8qFmWbdZ/4F4SRDr5QbKoIrAv/Wae6SuQP8a65V94c1vPHoCPtLR3gHjN4UILUiQdF7vxmAXeMOPdQ=
+X-Received: by 2002:a25:7808:0:b0:a4a:a708:2411 with SMTP id
+ t8-20020a257808000000b00a4aa7082411mr6622201ybc.10.1678121092709; Mon, 06 Mar
+ 2023 08:44:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87leksbr5n.fsf@ungleich.ch>
+References: <20230306160651.2016767-1-vernon2gm@gmail.com>
+ <20230306160651.2016767-6-vernon2gm@gmail.com>
+ <ZAYXJ2E+JHcp2kD/@yury-laptop>
+In-Reply-To: <ZAYXJ2E+JHcp2kD/@yury-laptop>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 6 Mar 2023 17:44:41 +0100
+X-Gmail-Original-Message-ID: <CAHmME9r_JXNCVVCNxZRQkafA=eOOu5k0+AweRDor3tNu283bdg@mail.gmail.com>
+Message-ID: <CAHmME9r_JXNCVVCNxZRQkafA=eOOu5k0+AweRDor3tNu283bdg@mail.gmail.com>
+Subject: Re: [PATCH 5/5] cpumask: fix comment of cpumask_xxx
+To: Yury Norov <yury.norov@gmail.com>
+Cc: Vernon Yang <vernon2gm@gmail.com>, torvalds@linux-foundation.org,
+ tytso@mit.edu, 
+ davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, 
+ jejb@linux.ibm.com, martin.petersen@oracle.com, 
+ andriy.shevchenko@linux.intel.com, linux@rasmusvillemoes.dk, 
+ james.smart@broadcom.com, dick.kennedy@broadcom.com, 
+ linux-kernel@vger.kernel.org, wireguard@lists.zx2c4.com, 
+ netdev@vger.kernel.org, linux-scsi@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -51,51 +79,44 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Nico,
-
-On Mon, Feb 20, 2023 at 10:47:36AM +0100, Nico Schottelius wrote:
-> Daniel Gröber <dxld@darkboxed.org> writes:
-> > Let's look at the code (heavily culled):
-> >
-> > 	struct flowi4 fl = {
-> > 		.saddr = endpoint->src4.s_addr,
-> > 	};
-> > 	if (cache)
-> > 		rt = dst_cache_get_ip4(cache, &fl.saddr);
-> 
-> What I am wondering is, how did it get into the cache in the first place?
-
-Right so, endpoint->src4 is set in wg_socket_set_peer_endpoint, which is
-called either trough through wg_socket_endpoint_from_skb in the handshake
-receive code or wg_socket_set_peer_endpoint in the data path.
-
-The _from_skb variant also calls wg_socket_endpoint_from_skb. Here we're
-remembering the src addr of the (received) packet in addr4 and the dst addr
-we're going to use for sending as src4 as you'd expect:
-
-	endpoint->addr4.sin_family = AF_INET;
-	endpoint->addr4.sin_port = udp_hdr(skb)->source;
-	endpoint->addr4.sin_addr.s_addr = ip_hdr(skb)->saddr;
-	endpoint->src4.s_addr = ip_hdr(skb)->daddr;
-	endpoint->src_if4 = skb->skb_iif;
-
-The dst_cache is set just after those zero'ing conditionals we were looking
-at before. It's cleared whenever the endpoint/port changes or one of those
-cases is hit. Note the dst_cache is only used for data packets, so
-handshakes would be unaffected if it was the cause of your woes.
-
-> > @Nico could it perhaps simply be that you're hitting one of these zero'ing
-> > cases and that's why it's using regular kernel src addr selection instead
-> > of the cached endpoint src4 address?
-> 
-> That could absolutely be the case. What is funky is that I see the
-> problem on two very different systems
+On Mon, Mar 6, 2023 at 5:39=E2=80=AFPM Yury Norov <yury.norov@gmail.com> wr=
+ote:
 >
-> Both systems exhibit the behaviour, but maybe it's better to focus on
-> System A first, as this seems to be more the "upstream" source.
+> On Tue, Mar 07, 2023 at 12:06:51AM +0800, Vernon Yang wrote:
+> > After commit 596ff4a09b89 ("cpumask: re-introduce constant-sized cpumas=
+k
+> > optimizations"), the cpumask size is divided into three different case,
+> > so fix comment of cpumask_xxx correctly.
+> >
+> > Signed-off-by: Vernon Yang <vernon2gm@gmail.com>
+> > ---
+> >  include/linux/cpumask.h | 46 ++++++++++++++++++++---------------------
+> >  1 file changed, 23 insertions(+), 23 deletions(-)
+> >
+> > diff --git a/include/linux/cpumask.h b/include/linux/cpumask.h
+> > index 8fbe76607965..248bdb1c50dc 100644
+> > --- a/include/linux/cpumask.h
+> > +++ b/include/linux/cpumask.h
+> > @@ -155,7 +155,7 @@ static __always_inline unsigned int cpumask_check(u=
+nsigned int cpu)
+> >   * cpumask_first - get the first cpu in a cpumask
+> >   * @srcp: the cpumask pointer
+> >   *
+> > - * Returns >=3D nr_cpu_ids if no cpus set.
+> > + * Returns >=3D small_cpumask_bits if no cpus set.
+>
+> There's no such thing like small_cpumask_bits. Here and everywhere,
+> nr_cpu_ids must be used.
+>
+> Actually, before 596ff4a09b89 nr_cpumask_bits was deprecated, and it
+> must be like that for all users even now.
+>
+> nr_cpumask_bits must be considered as internal cpumask parameter and
+> never referenced outside of cpumask code.
 
-It is weird indeed, but yeah. One thing at a time.
+What's the right thing I should do, then, for wireguard's usage and
+for random.c's usage? It sounds like you object to this patchset, but
+if the problem is real, it sounds like I should at least fix the two
+cases I maintain. What's the right check?
 
-BTW, what kernel version/distro are we dealing with?
-
---Daniel
+Jason
