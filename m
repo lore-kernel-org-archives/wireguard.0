@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07558C64EC4
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  6 Mar 2023 18:09:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0423C61DA4
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  6 Mar 2023 18:36:38 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0b998ad0;
-	Mon, 6 Mar 2023 18:09:38 +0000 (UTC)
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com
- [2a00:1450:4864:20::531])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0a4e92c8
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id af00fc34;
+	Mon, 6 Mar 2023 18:34:24 +0000 (UTC)
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com
+ [2a00:1450:4864:20::52e])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c90f583d
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 6 Mar 2023 18:09:37 +0000 (UTC)
-Received: by mail-ed1-x531.google.com with SMTP id i34so42342774eda.7
- for <wireguard@lists.zx2c4.com>; Mon, 06 Mar 2023 10:09:37 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Mon, 6 Mar 2023 18:34:21 +0000 (UTC)
+Received: by mail-ed1-x52e.google.com with SMTP id s11so42592764edy.8
+ for <wireguard@lists.zx2c4.com>; Mon, 06 Mar 2023 10:34:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux-foundation.org; s=google; t=1678126176;
+ d=linux-foundation.org; s=google; t=1678127661;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nHiIbvE8ZF8yskiSHfLDDBQes7IipQHv7U2Dux2wiEU=;
- b=LGP4vhz5ZhY21ExJkBOM3qVXoQ/zBEw7SK1zZIs9c4YhagfkqfBN4St+eG2t/XBLcf
- JvcR78A3GjOr86YJSe2T6Dmr/QU+I/HpY7tkSSCqdFUbIwhSnnAkCzl/TOBt4L8ExhCl
- hLxHuPuUn4s1ZQlD8kYYwRBMuXtxofrUZU5KE=
+ bh=jUkuyszYTAoQtNUlKsSSIkY0E3vOhynrc0QM2L0Yxu4=;
+ b=ApSrgLIXz4JjA09pC4lJ23b/ViBE9xa/BHSWJAYZZt9VJxMEzUQO12mOvi/25MWpyr
+ v/oArdsyZA1V7cJArI270gsaf3V1GgsFiM0ij+oMDX7nfvEIOrZeVjdE/R+9p9P7Exwa
+ gl3Vd+wv89xHSW03UrJuYFJ3rJBzUkE9sx9q8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112; t=1678126176;
+ d=1e100.net; s=20210112; t=1678127661;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nHiIbvE8ZF8yskiSHfLDDBQes7IipQHv7U2Dux2wiEU=;
- b=qkQ/mDuT5CvcCTXvZT9SiHsAM7xW4reW/zy64l1J5aBQSi4nfBo9jZfMmqTSHfLeHK
- Qyi+k+r4Vo7GjUcqxIMOLjm/NGbtk1YSQ366FsHIL9fJTcppAByRGU8wgwyOVUR3SALN
- 5flXTy+I8uutCbkJn4WTt/zFK1Q8/8mC6V5inXaG7XdM6rtsL+SKlDXzjWcakmXUAhOv
- mPiL7B5obn32haiW2VqXheI4C7LEkmSX5n6PoXnZTZLBW8X8bWKNFXOfVTqQEeIXQG72
- 5STBBaV4GIo0jFIqdEAFFrY1q8TjB3MzC3MinXH8VaogzbWMYMl4CD4XIXQ0vG3bTer4
- VPmQ==
-X-Gm-Message-State: AO0yUKUZMYsAj+l7tnhSrwf9hb4ZPEYM7IUYz2YQKWTM5R6kNxxiuH48
- gDBcezmVln2Ok/m2/udRbDrYw8Xju9ZdxZUva8/5IA==
-X-Google-Smtp-Source: AK7set+CfJe5sjCHWjWvwc8k7S7qpF5kKftqR3FdMk2IlhX4ln7pymrhA/8LL0vs2wTnSpYmTvd0xQ==
-X-Received: by 2002:a17:907:86a6:b0:84d:3403:f4f2 with SMTP id
- qa38-20020a17090786a600b0084d3403f4f2mr15003669ejc.62.1678126176496; 
- Mon, 06 Mar 2023 10:09:36 -0800 (PST)
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com.
- [209.85.208.44]) by smtp.gmail.com with ESMTPSA id
- ay24-20020a170906d29800b0090953b9da51sm4862259ejb.194.2023.03.06.10.09.36
+ bh=jUkuyszYTAoQtNUlKsSSIkY0E3vOhynrc0QM2L0Yxu4=;
+ b=Qsn5poipDQ1MS2rEfs/9z8I9CRPvpM/DEOuyP8i924E8Xf3mETcIgLG+RLVUh3Opxx
+ ETfgTLErwcHmaQQvRYyfJofdvCezAROJ4jDRDIHnZMUsJBUAWBAP3nlTdI7Vm0OJDt8h
+ YGbkCVB83c0yD2Wk8vtGFf+t9aCXXk2pDDIky6pivPDuOPZid1ABFSMyDb5NR4YkGHXe
+ sawbkvZxOUmC2Vx/ZBVNcEUK0C7FdWpcFObACN+I4h2IxI/kjgBFVg1lh+S1wWXo55Ld
+ Me7bZOEZlN/6WfwBf95CEHbF7xFRqRTC3TFH+nPViyrNhdCp+4BLDFD6Oi0vz1FPYLf2
+ anQg==
+X-Gm-Message-State: AO0yUKW266yd/ojLUyJzoggJftpN4wIb5UNle0sOEPpgJLPpwQ8VWD+o
+ CcE2gO9K0wc08I7i3+rQFQ/DtNiPUa75tjO+SZBgeA==
+X-Google-Smtp-Source: AK7set+70sS+q7i/ya896NDuoVUiCgNjZdkKBuPV//hAs6ctsjlpRDiTES6/tTrfW9bmmzDQqiwA8w==
+X-Received: by 2002:a17:906:304a:b0:8b1:4051:6d2c with SMTP id
+ d10-20020a170906304a00b008b140516d2cmr11825601ejd.19.1678127661351; 
+ Mon, 06 Mar 2023 10:34:21 -0800 (PST)
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com.
+ [209.85.208.52]) by smtp.gmail.com with ESMTPSA id
+ ga1-20020a170906b84100b008b17879ec95sm4878078ejb.22.2023.03.06.10.34.19
  for <wireguard@lists.zx2c4.com>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Mar 2023 10:09:36 -0800 (PST)
-Received: by mail-ed1-f44.google.com with SMTP id cw28so42368359edb.5
- for <wireguard@lists.zx2c4.com>; Mon, 06 Mar 2023 10:09:36 -0800 (PST)
-X-Received: by 2002:a50:9fa8:0:b0:4ae:e5f1:7c50 with SMTP id
- c37-20020a509fa8000000b004aee5f17c50mr6466912edf.5.1678125764592; Mon, 06 Mar
- 2023 10:02:44 -0800 (PST)
+ Mon, 06 Mar 2023 10:34:20 -0800 (PST)
+Received: by mail-ed1-f52.google.com with SMTP id da10so42702337edb.3
+ for <wireguard@lists.zx2c4.com>; Mon, 06 Mar 2023 10:34:19 -0800 (PST)
+X-Received: by 2002:a50:8711:0:b0:4bb:d098:2138 with SMTP id
+ i17-20020a508711000000b004bbd0982138mr6329093edb.5.1678127659323; Mon, 06 Mar
+ 2023 10:34:19 -0800 (PST)
 MIME-Version: 1.0
 References: <20230306160651.2016767-1-vernon2gm@gmail.com>
  <20230306160651.2016767-6-vernon2gm@gmail.com>
  <CAHk-=whVnaTBt2Xm-A+8SMc5-q5CuZBDU6rUZ8yC8GoAnbTBvw@mail.gmail.com>
- <CAHk-=witXXeQuP9fgs4dDL2Ex0meXQiHJs+3JEfNdaPwngMVEg@mail.gmail.com>
-In-Reply-To: <CAHk-=witXXeQuP9fgs4dDL2Ex0meXQiHJs+3JEfNdaPwngMVEg@mail.gmail.com>
+ <ZAYtRcbMeRUQFUw/@vernon-pc>
+In-Reply-To: <ZAYtRcbMeRUQFUw/@vernon-pc>
 From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Mon, 6 Mar 2023 10:02:27 -0800
-X-Gmail-Original-Message-ID: <CAHk-=wj5hFp39ZM7fEtmctwkWdHHnx0X7c2j5Z8L+b18jUgcMQ@mail.gmail.com>
-Message-ID: <CAHk-=wj5hFp39ZM7fEtmctwkWdHHnx0X7c2j5Z8L+b18jUgcMQ@mail.gmail.com>
+Date: Mon, 6 Mar 2023 10:34:02 -0800
+X-Gmail-Original-Message-ID: <CAHk-=whA2kEBk3ibg3mrxpuXOAJKdM_MC4MQ8gLmxerZ5URfvg@mail.gmail.com>
+Message-ID: <CAHk-=whA2kEBk3ibg3mrxpuXOAJKdM_MC4MQ8gLmxerZ5URfvg@mail.gmail.com>
 Subject: Re: [PATCH 5/5] cpumask: fix comment of cpumask_xxx
 To: Vernon Yang <vernon2gm@gmail.com>
 Cc: tytso@mit.edu, Jason@zx2c4.com, davem@davemloft.net, edumazet@google.com, 
@@ -89,48 +89,21 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, Mar 6, 2023 at 9:47=E2=80=AFAM Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
+On Mon, Mar 6, 2023 at 10:13=E2=80=AFAM Vernon Yang <vernon2gm@gmail.com> w=
+rote:
 >
-> The drivers/char/random.c code is very wrong, and does
->
->              if (cpu =3D=3D nr_cpumask_bits)
->                              cpu =3D cpumask_first(&timer_cpus);
->
-> which fails miserably exactly because it doesn't use ">=3D".
+> I also just see nr_cpumask_size exposed to outside, so...
 
-Turns out this "cpu =3D=3D nr_cpumask_bits" pattern exists in a couple of
-other places too.
+Yeah, it's not great.
 
-It was always wrong, but it always just happened to work. The lpfc
-SCSI driver in particular seems to *love* this pattern:
+nr_cpumask_bits came out of the exact same "this is an internal value
+that we use for optimized cpumask accesses", and existed exactly
+because it *might* be the same as 'nr_cpu_ids', but it might also be a
+simpler "small constant that is big enough" case.
 
-        start_cpu =3D cpumask_next(new_cpu, cpu_present_mask);
-        if (start_cpu =3D=3D nr_cpumask_bits)
-                start_cpu =3D first_cpu;
+It just depended on the exact kernel config which one was used.
 
-and has repeated it multiple times, all incorrect.
+But clearly that internal value then spread outside, and that then
+caused problems when the internal implementation changed.
 
-We do have "cpumask_next_wrap()", and that *seems* to be what the lpcf
-driver actually wants to do.
-
-.. and then we have kernel/sched/fair.c, which is actually not buggy,
-just odd. It uses nr_cpumask_bits too, but it uses it purely for its
-own internal nefarious reasons - it's not actually related to the
-cpumask functions at all, its just used as a "not valid CPU number".
-
-I think that scheduler use is still very *wrong*, but it doesn't look
-actively buggy.
-
-The other cases all look very buggy indeed, but yes, they happened to
-work, and now they don't. So commit 596ff4a09b89 ("cpumask:
-re-introduce constant-sized cpumask optimizations") did break them.
-
-I'd rather fix these bad users than revert, but there does seem to be
-an alarming number of these things, which worries me:
-
-     git grep '=3D=3D nr_cpumask_bits'
-
-and that's just checking for this *exact* thing.
-
-                Linus
+            Linus
