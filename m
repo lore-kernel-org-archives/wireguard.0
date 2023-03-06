@@ -4,76 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9E52C61DA4
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  6 Mar 2023 18:50:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8EAAC64EC4
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  6 Mar 2023 23:10:51 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e3d563ad;
-	Mon, 6 Mar 2023 18:48:24 +0000 (UTC)
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com
- [2a00:1450:4864:20::533])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7066313e
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5a812fc0;
+	Mon, 6 Mar 2023 23:06:38 +0000 (UTC)
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com
+ [2607:f8b0:4864:20::1031])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 921681ff
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 6 Mar 2023 18:48:22 +0000 (UTC)
-Received: by mail-ed1-x533.google.com with SMTP id o12so42704654edb.9
- for <wireguard@lists.zx2c4.com>; Mon, 06 Mar 2023 10:48:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux-foundation.org; s=google; t=1678128502;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=m+AuRXdo16JeR9PnbP32vE+RmxUJH9KHyOeCFYJO9N8=;
- b=cfLBMhsxEmyjxzpNdu5x3WI0oXcOEnEr8VoAG5m38Cw4/kQTo9PWxpACKwcyjytSKD
- ydU9ygHtlfqv6Q6/ugWeApD883giDkCXBpD8NOvECUqwxj4akokkyUxVfHre/EMVa2oa
- 4SHO37wicSka3vGgpwhCmiBzDQRvxlNbPRHeQ=
+ for <wireguard@lists.zx2c4.com>; Mon, 6 Mar 2023 09:51:54 +0000 (UTC)
+Received: by mail-pj1-x1031.google.com with SMTP id y2so9177674pjg.3
+ for <wireguard@lists.zx2c4.com>; Mon, 06 Mar 2023 01:51:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=to:from:subject:message-id:date:content-transfer-encoding
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=xMXRHI84JSPk4z74OaLOhRJQpX/uyvfnUtKjII8tYF8=;
+ b=Md1iuCx5vIPlvuybDg+Td4+CtY0z7tYZhkk6DOr/BX9aEjm8JwAtt9gVNtDiSBOW+U
+ PDZdf2Z/TYZlHE7Ym3HtmMBNLB9oYjLTH/qYryhBMw9f3jUxihlHHbnF5xZ0RkEfp5ul
+ 5TcYDfXthEPpoUcBsIgpxAIFoSYCI6ipyJn1OtbOhxJv043Iu5ykcrIKKjcDK9NKyu8l
+ kcBdBscJEybyzcfx/P04t/GuIkHP5G/wy3xqV6OFx1idMsMsoQXBG7W0z1FCUnWgpbmO
+ Sn1xeEZM0v63V8BzGR9vRPAHpz2FM5w2cTub74bY0OX4yQNlHxmcAAA2ehHgDOqr3B4J
+ ytkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112; t=1678128502;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=m+AuRXdo16JeR9PnbP32vE+RmxUJH9KHyOeCFYJO9N8=;
- b=8RsIrTgJ/LH41s2LW/ryXAMZvJ3wQRlKlW10yWeJ+u8cntxD3zWSmwnfY2qEEpoMp7
- 4lDIlkz+jE2OnlqHppNaQ3B55TqNmv3SuG1a9HG45u/jmF75wFuQxXpc2YUFtqc86ikX
- mV5f7ZOKTHQwURV64kW3BrSaUEhn+MwENkqiUvw29C8jjJn2P4iaRBabTsU8slK+HTvk
- r1QBchqWRBHdf/yo4EwlwA1QaE3skdY+/jlWtQEdTd10q7lrkYNgwDnxb9MkJdQk/2t8
- Ah4l5MvtnzF9K+E2/nhliWT/T4mtN+oOPtsgkxpmXxhdIq5eVR4Jb8fnVjJu2EuHp5Rt
- NRkQ==
-X-Gm-Message-State: AO0yUKUcUVugc99rtn6xIk6qwXQ1dnJrmjXPhVvUqmsks0u3Gka6UOiU
- QfXUoKrQ05sJHw2V92YyLC8tlTidN4gAZvWipaOrTw==
-X-Google-Smtp-Source: AK7set96VI4HRMTevKY5MS/wjEAwprb7RdDZMn0YCn5LeFsW9nYx+XjgVPgPeary3Dqdw+Sw5znhcQ==
-X-Received: by 2002:a50:ee8c:0:b0:4bb:83eb:1b46 with SMTP id
- f12-20020a50ee8c000000b004bb83eb1b46mr9042937edr.23.1678128501913; 
- Mon, 06 Mar 2023 10:48:21 -0800 (PST)
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com.
- [209.85.208.46]) by smtp.gmail.com with ESMTPSA id
- v15-20020a50954f000000b004c09527d62dsm5551019eda.30.2023.03.06.10.48.21
+ d=1e100.net; s=20210112;
+ h=to:from:subject:message-id:date:content-transfer-encoding
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xMXRHI84JSPk4z74OaLOhRJQpX/uyvfnUtKjII8tYF8=;
+ b=UexzxyQ5TMjOBEsEBDjs8FEYsXu+oE1RhUBPg8iXCKe6jpsSSEvyxLTCRAjFUDCbD9
+ WJjQqCtFCrkUZScjv8isQUOf/OiKXpEitcl51XDsnafl9hJ9+N3wRdx1m2MXO1SeTNqn
+ JZyp3pZ+bG64UwfePrWivpdxHO5ag04r2qaGb+p6NnwJwKEsTgEN2xGVjAh41zWbByzl
+ erTP1qtQwPbaK68XstqGiZIwgrxviI716HNNm/jVlUV2QjWASJL9mTczNkKPmGRmU/gZ
+ JUnnpksWTtF29Qw5bX3ptqslDqdUd+Xkn6NqJJS4chBUAaktZp8QwxL8HtPA/Nh9hNsr
+ nbjQ==
+X-Gm-Message-State: AO0yUKWSHZD3/VAxqvsWKGUt0P2VOeSkifHy08E5pzsbIOIIsrIMYnhe
+ fS0UXCtjkmm1kozSkKjzu0gIDT9MCKU=
+X-Google-Smtp-Source: AK7set937BZ4psQvNsO50CTQardfqWKwgwCFML7mMnx3N51abRtaXZjrYDcsMIUM9psxMMDLNq+j5g==
+X-Received: by 2002:a17:902:d506:b0:19e:2717:3de9 with SMTP id
+ b6-20020a170902d50600b0019e27173de9mr13426230plg.52.1678096312654; 
+ Mon, 06 Mar 2023 01:51:52 -0800 (PST)
+Received: from localhost ([203.221.182.107]) by smtp.gmail.com with ESMTPSA id
+ p18-20020a170902e75200b00194c2f78581sm6220590plf.199.2023.03.06.01.51.51
  for <wireguard@lists.zx2c4.com>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 06 Mar 2023 10:48:21 -0800 (PST)
-Received: by mail-ed1-f46.google.com with SMTP id cw28so42799431edb.5
- for <wireguard@lists.zx2c4.com>; Mon, 06 Mar 2023 10:48:21 -0800 (PST)
-X-Received: by 2002:a50:cd15:0:b0:4c1:1555:152f with SMTP id
- z21-20020a50cd15000000b004c11555152fmr6419391edi.5.1678128500729; Mon, 06 Mar
- 2023 10:48:20 -0800 (PST)
-MIME-Version: 1.0
-References: <20230306160651.2016767-1-vernon2gm@gmail.com>
- <20230306160651.2016767-4-vernon2gm@gmail.com>
-In-Reply-To: <20230306160651.2016767-4-vernon2gm@gmail.com>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Mon, 6 Mar 2023 10:48:04 -0800
-X-Gmail-Original-Message-ID: <CAHk-=wj73=Os1p=W7D2va=Rd81ZKvjb35yWgXQNgn1hXNRpAbw@mail.gmail.com>
-Message-ID: <CAHk-=wj73=Os1p=W7D2va=Rd81ZKvjb35yWgXQNgn1hXNRpAbw@mail.gmail.com>
-Subject: Re: [PATCH 3/5] scsi: lpfc: fix lpfc_cpu_affinity_check() if no
- further cpus set
-To: Vernon Yang <vernon2gm@gmail.com>
-Cc: tytso@mit.edu, Jason@zx2c4.com, davem@davemloft.net, edumazet@google.com, 
- kuba@kernel.org, pabeni@redhat.com, jejb@linux.ibm.com, 
- martin.petersen@oracle.com, yury.norov@gmail.com, 
- andriy.shevchenko@linux.intel.com, linux@rasmusvillemoes.dk, 
- james.smart@broadcom.com, dick.kennedy@broadcom.com, 
- linux-kernel@vger.kernel.org, wireguard@lists.zx2c4.com, 
- netdev@vger.kernel.org, linux-scsi@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+ Mon, 06 Mar 2023 01:51:52 -0800 (PST)
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 06 Mar 2023 20:51:54 +1100
+Message-Id: <CQZ7HWJCK18F.1AUR9FMHKPOXB@crawfs>
+Subject: Possible regression between 5.18.2 and 6.2.1
+From: "Dan Crawford" <dnlcrwfrd@gmail.com>
+To: <wireguard@lists.zx2c4.com>
+X-Mailer: aerc 0.14.0
+X-Mailman-Approved-At: Mon, 06 Mar 2023 23:06:36 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -88,33 +73,41 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, Mar 6, 2023 at 8:07=E2=80=AFAM Vernon Yang <vernon2gm@gmail.com> wr=
-ote:
->
-> -                               if (new_cpu =3D=3D nr_cpumask_bits)
-> +                               if (new_cpu >=3D nr_cpumask_bits)
+I recently updated a server from kernel version 5.18.2 to 6.2.1 and
+discovered that WG clients could no longer connect; there were no
+changes to configs. Reverting to 5.18.2 resolves the issue.
 
-This all should use "nr_cpu_ids", not "nr_cpumask_bits".
+My server config looks something like
 
-But I really suspect that it should all be rewritten to not do that
-thing over and over, but just use a helper function for it.
+[Interface]
+Address =3D 192.168.1.0/24
+ListenPort =3D 51820
+PrivateKey =3D XXX
+PostUp =3D iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -=
+j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+PostDown =3D iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i=
+ -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
 
-  int lpfc_next_present_cpu(int n, int alternate)
-  {
-        n =3D cpumask_next(n, cpu_present_mask);
-        if (n >=3D nr_cpu_ids)
-                n =3D alternate;
-        return n;
-  }
+[Peer]
+PublicKey =3D XXX
+AllowedIPs =3D 192.168.1.3/32
 
-and then you could just use
+and my client config looks something like
 
-        start_cpu =3D lpfc_next_present_cpu(new_cpu, first_cpu);
 
-or similar.
+[Interface]
+Address =3D 192.168.1.3/32
+DNS =3D 1.1.1.1
+PrivateKey =3D XXX
 
-              Linus
+[Peer]
+AllowedIPs =3D 0.0.0.0/0
+Endpoint =3D example.com:51820
+PublicKey =3D XXX
 
-PS. We "kind of" already have a helper function for this:
-cpumask_next_wrap(). But it's really meant for a different pattern
-entirely, so let's not confuse things.
+On the server I get mysterious "packet has unallowed src ip" errors.
+Playing around with various combinations of subnets and iptables
+invocations doesn't seem to help. Was there a change to the config spec
+that I missed? Or otherwise any other ideas what might be going on?
+
+Thanks.
