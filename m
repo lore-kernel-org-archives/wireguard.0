@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21FE9C61DA4
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  6 Mar 2023 23:58:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65D4FC61DA4
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  7 Mar 2023 00:05:59 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4321c57f;
-	Mon, 6 Mar 2023 23:07:09 +0000 (UTC)
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com
- [2607:f8b0:4864:20::433])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5ecf1e27
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 580e19b4;
+	Mon, 6 Mar 2023 23:07:11 +0000 (UTC)
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com
+ [2607:f8b0:4864:20::534])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3390e186
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 6 Mar 2023 21:03:49 +0000 (UTC)
-Received: by mail-pf1-x433.google.com with SMTP id ay18so6761509pfb.2
- for <wireguard@lists.zx2c4.com>; Mon, 06 Mar 2023 13:03:49 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Mon, 6 Mar 2023 21:03:54 +0000 (UTC)
+Received: by mail-pg1-x534.google.com with SMTP id 130so6417180pgg.3
+ for <wireguard@lists.zx2c4.com>; Mon, 06 Mar 2023 13:03:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20210112; t=1678136628;
+ d=gmail.com; s=20210112; t=1678136633;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MGmtZmnDs5ASNE58FlHEoRflz4j5hRXcFcWdJp13C10=;
- b=EzJCZDBXCZQBtCcs+i2Sd8VIIl3ZxMoIHVX47PVzHkX/80N6AnpWho3ip+JfnBNkcU
- DRhP9WEmyqgTb7amsutb8jjVfZKWRhNRIMWGGgmyyhv9j8c2hrsORGdruJ0fVdMJWBgb
- 54pxkz2GPiUV5Nqz4U8SiiVXj4uu2mBEyUAnWR30Zr73qhKA+PGvs3PHaehLzCVwJojn
- K7uwJxuujTPDCN0YMmOI2hZ+jbdZibY7uHOme+hcHCxERz8ZbNdHj1XJisFrX+r9OfRl
- rC3DrdZJO9MyRn7lS6cz6LFV2u5iTdJLlqy2n3bEQThJca7tcLrCPHdznlHVWZJn1WsI
- 9e6g==
+ bh=owzTi2WIrDoJ2tUDhRyb29KrwMVbrS1C/TJgwosgU78=;
+ b=YjMSjNXKfSQ5CrOSsj61TknVLEJ2Ck8oiqxUfixqm9jTDETQ3EcQrRCUDZ8tnIfw98
+ JQymHl5Buh+924x8uGeQddKpVyL5EVQGBiw4/MN4Pslp2/TCR+RT1ofy/cfWTSTo95ZJ
+ dK1BzqKLyktWh29KorGBUrSMOv4M7GerwtKm0pZ/6HylKW6/EWoYF78GdMGf2XlGs2MV
+ ttdtwZFbh1OebAVywUYYgwFaA6kRa3lE6TaNOr4b8NcFIjoDo6VcjqoaCLlCgPF6LzU/
+ FH//CMZdP0c9oXOerTrS3BZ3qh2Z7lE+Bqeomv5K/np2eKkQ5S/ENAbC0ZGI5EQDwVm0
+ qPFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112; t=1678136628;
+ d=1e100.net; s=20210112; t=1678136633;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MGmtZmnDs5ASNE58FlHEoRflz4j5hRXcFcWdJp13C10=;
- b=HYFBB0vq1jt/zkjEGvLUA1U5BwoEqL+7WjtaFYe/ZukHjqVm98IlsyeFGpx5/t1OUz
- xi2vGozeFa+cJbKrAsk2iqoEbY6qEaEI52izXWjSCiIkFUUB9MDawHM6JBgsZzsZkZDA
- VfuFRMLCXPH7YixoeItdz1chEKY7Bafb158ifJmt5bsY7M1kYfrYZyoyB0DhM9nOHme8
- gEI3wxa3Hqdgz/l3jZoClqsu9OBR1x8PUeXtT56+DGr3fvVjCHQtUwODCbtpY0FNWx8R
- dkvJZEzzw501eBVMkzQuSAiik+0aaCJ8wEH1FPobp8b3PD3bbkzWaD3XUyg2EOZPhFyO
- jOqg==
-X-Gm-Message-State: AO0yUKXjdcth95NH6IRmtHKtL3iSKh4D9vq4qyGJttaY66CWWUo0fAnq
- mjEiQHvPvnc653OZUWn7XfE=
-X-Google-Smtp-Source: AK7set9SgjU99y7UTZCA7R51uGEBr/FGuhsJ2xk/AqVt+5KthhS3T7GPuQ5t/T6C74NazCaB8bgX8g==
-X-Received: by 2002:a62:844c:0:b0:5db:db1c:37f9 with SMTP id
- k73-20020a62844c000000b005dbdb1c37f9mr13680453pfd.10.1678136627797; 
- Mon, 06 Mar 2023 13:03:47 -0800 (PST)
+ bh=owzTi2WIrDoJ2tUDhRyb29KrwMVbrS1C/TJgwosgU78=;
+ b=caf+fIkn+ZrKyD5IpAfShJrrX+1fyzOwA6fJKUq9Cfy1FbJdHVpOKm33wdBgrlz4WT
+ 0Bu4yIXCFKgb7p29gUbKPX4iFFyIsimLdf517NmQtKESeYFLVWIYvcT4mbxMJWnh8oH4
+ h1xHucS7pf4pqv6P+YSY0Sq1tW48BCad+l/NJ5w74+p8W+Jz7QW22DSpgE4gYYKrAJs+
+ PqkYFIKFLmUwQmu8RJwD8CcQ6OIk+DcHrZa7T0ychdqpVrE9PefP8gPgsrpA3jlIhWNP
+ xGsIWELd/IHwlj4X+K2o8nsH/okOLP3F5/MEbodVfkpbhBZgIm+gnkRLlRgR53nYgKZm
+ A1DQ==
+X-Gm-Message-State: AO0yUKW8RsSbIOpNreszaVzOXUF66lXFm1g7C6ZQiuN4MtVyGO0eMs2N
+ ygLqSb/sklfmDpiGkaxWYSA=
+X-Google-Smtp-Source: AK7set9i2UM7diB4lzv9/1oeYY77meyAKEBYgbqmgaG7P75rOHMznZ36mGqdngTWVMk9b212VmLlLA==
+X-Received: by 2002:a62:8453:0:b0:60a:e919:51ef with SMTP id
+ k80-20020a628453000000b0060ae91951efmr13232719pfd.9.1678136632678; 
+ Mon, 06 Mar 2023 13:03:52 -0800 (PST)
 Received: from vernon-pc.. ([49.67.2.142]) by smtp.gmail.com with ESMTPSA id
- 3-20020aa79143000000b005810c4286d6sm6706760pfi.0.2023.03.06.13.03.42
+ 3-20020aa79143000000b005810c4286d6sm6706760pfi.0.2023.03.06.13.03.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Mar 2023 13:03:47 -0800 (PST)
+ Mon, 06 Mar 2023 13:03:52 -0800 (PST)
 From: Vernon Yang <vernon2gm@gmail.com>
 To: torvalds@linux-foundation.org, tytso@mit.edu, Jason@zx2c4.com,
  davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
@@ -60,10 +60,10 @@ To: torvalds@linux-foundation.org, tytso@mit.edu, Jason@zx2c4.com,
 Cc: linux-kernel@vger.kernel.org, wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org, linux-scsi@vger.kernel.org,
  Vernon Yang <vernon2gm@gmail.com>
-Subject: [PATCH v2 2/4] wireguard: fix wg_cpumask_choose_online() if no
+Subject: [PATCH v2 3/4] scsi: lpfc: fix lpfc_cpu_affinity_check() if no
  further cpus set
-Date: Tue,  7 Mar 2023 05:03:10 +0800
-Message-Id: <20230306210312.2614988-3-vernon2gm@gmail.com>
+Date: Tue,  7 Mar 2023 05:03:11 +0800
+Message-Id: <20230306210312.2614988-4-vernon2gm@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230306210312.2614988-1-vernon2gm@gmail.com>
 References: <20230306210312.2614988-1-vernon2gm@gmail.com>
@@ -98,22 +98,112 @@ correctly.
 
 Signed-off-by: Vernon Yang <vernon2gm@gmail.com>
 ---
- drivers/net/wireguard/queueing.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/lpfc/lpfc_init.c | 43 ++++++++++++++++-------------------
+ 1 file changed, 20 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/net/wireguard/queueing.h b/drivers/net/wireguard/queueing.h
-index 583adb37ee1e..125284b346a7 100644
---- a/drivers/net/wireguard/queueing.h
-+++ b/drivers/net/wireguard/queueing.h
-@@ -106,7 +106,7 @@ static inline int wg_cpumask_choose_online(int *stored_cpu, unsigned int id)
- {
- 	unsigned int cpu = *stored_cpu, cpu_index, i;
+diff --git a/drivers/scsi/lpfc/lpfc_init.c b/drivers/scsi/lpfc/lpfc_init.c
+index 61958a24a43d..acfffdbe9ba1 100644
+--- a/drivers/scsi/lpfc/lpfc_init.c
++++ b/drivers/scsi/lpfc/lpfc_init.c
+@@ -12473,6 +12473,16 @@ lpfc_hba_eq_hdl_array_init(struct lpfc_hba *phba)
+ 	}
+ }
  
--	if (unlikely(cpu == nr_cpumask_bits ||
-+	if (unlikely(cpu >= nr_cpu_ids ||
- 		     !cpumask_test_cpu(cpu, cpu_online_mask))) {
- 		cpu_index = id % cpumask_weight(cpu_online_mask);
- 		cpu = cpumask_first(cpu_online_mask);
++static inline int lpfc_next_present_cpu(int n, int first_cpu)
++{
++	n = cpumask_next(n, cpu_present_mask);
++
++	if (n >= nr_cpu_ids)
++		n = first_cpu;
++
++	return n;
++}
++
+ /**
+  * lpfc_cpu_affinity_check - Check vector CPU affinity mappings
+  * @phba: pointer to lpfc hba data structure.
+@@ -12561,10 +12571,8 @@ lpfc_cpu_affinity_check(struct lpfc_hba *phba, int vectors)
+ 				    (new_cpup->eq != LPFC_VECTOR_MAP_EMPTY) &&
+ 				    (new_cpup->phys_id == cpup->phys_id))
+ 					goto found_same;
+-				new_cpu = cpumask_next(
+-					new_cpu, cpu_present_mask);
+-				if (new_cpu == nr_cpumask_bits)
+-					new_cpu = first_cpu;
++
++				new_cpu = lpfc_next_present_cpu(new_cpu, first_cpu);
+ 			}
+ 			/* At this point, we leave the CPU as unassigned */
+ 			continue;
+@@ -12576,9 +12584,7 @@ lpfc_cpu_affinity_check(struct lpfc_hba *phba, int vectors)
+ 			 * chance of having multiple unassigned CPU entries
+ 			 * selecting the same IRQ.
+ 			 */
+-			start_cpu = cpumask_next(new_cpu, cpu_present_mask);
+-			if (start_cpu == nr_cpumask_bits)
+-				start_cpu = first_cpu;
++			start_cpu = lpfc_next_present_cpu(new_cpu, first_cpu);
+ 
+ 			lpfc_printf_log(phba, KERN_INFO, LOG_INIT,
+ 					"3337 Set Affinity: CPU %d "
+@@ -12611,10 +12617,8 @@ lpfc_cpu_affinity_check(struct lpfc_hba *phba, int vectors)
+ 				if (!(new_cpup->flag & LPFC_CPU_MAP_UNASSIGN) &&
+ 				    (new_cpup->eq != LPFC_VECTOR_MAP_EMPTY))
+ 					goto found_any;
+-				new_cpu = cpumask_next(
+-					new_cpu, cpu_present_mask);
+-				if (new_cpu == nr_cpumask_bits)
+-					new_cpu = first_cpu;
++
++				new_cpu = lpfc_next_present_cpu(new_cpu, first_cpu);
+ 			}
+ 			/* We should never leave an entry unassigned */
+ 			lpfc_printf_log(phba, KERN_ERR, LOG_INIT,
+@@ -12630,9 +12634,7 @@ lpfc_cpu_affinity_check(struct lpfc_hba *phba, int vectors)
+ 			 * chance of having multiple unassigned CPU entries
+ 			 * selecting the same IRQ.
+ 			 */
+-			start_cpu = cpumask_next(new_cpu, cpu_present_mask);
+-			if (start_cpu == nr_cpumask_bits)
+-				start_cpu = first_cpu;
++			start_cpu = lpfc_next_present_cpu(new_cpu, first_cpu);
+ 
+ 			lpfc_printf_log(phba, KERN_INFO, LOG_INIT,
+ 					"3338 Set Affinity: CPU %d "
+@@ -12703,9 +12705,8 @@ lpfc_cpu_affinity_check(struct lpfc_hba *phba, int vectors)
+ 			    new_cpup->core_id == cpup->core_id) {
+ 				goto found_hdwq;
+ 			}
+-			new_cpu = cpumask_next(new_cpu, cpu_present_mask);
+-			if (new_cpu == nr_cpumask_bits)
+-				new_cpu = first_cpu;
++
++			new_cpu = lpfc_next_present_cpu(new_cpu, first_cpu);
+ 		}
+ 
+ 		/* If we can't match both phys_id and core_id,
+@@ -12718,9 +12719,7 @@ lpfc_cpu_affinity_check(struct lpfc_hba *phba, int vectors)
+ 			    new_cpup->phys_id == cpup->phys_id)
+ 				goto found_hdwq;
+ 
+-			new_cpu = cpumask_next(new_cpu, cpu_present_mask);
+-			if (new_cpu == nr_cpumask_bits)
+-				new_cpu = first_cpu;
++			new_cpu = lpfc_next_present_cpu(new_cpu, first_cpu);
+ 		}
+ 
+ 		/* Otherwise just round robin on cfg_hdw_queue */
+@@ -12729,9 +12728,7 @@ lpfc_cpu_affinity_check(struct lpfc_hba *phba, int vectors)
+ 		goto logit;
+  found_hdwq:
+ 		/* We found an available entry, copy the IRQ info */
+-		start_cpu = cpumask_next(new_cpu, cpu_present_mask);
+-		if (start_cpu == nr_cpumask_bits)
+-			start_cpu = first_cpu;
++		start_cpu = lpfc_next_present_cpu(new_cpu, first_cpu);
+ 		cpup->hdwq = new_cpup->hdwq;
+  logit:
+ 		lpfc_printf_log(phba, KERN_INFO, LOG_INIT,
 -- 
 2.34.1
 
