@@ -4,71 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A57DC61DA4
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  6 Mar 2023 23:34:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69296C678D4
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  6 Mar 2023 23:35:00 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7d45dc6e;
-	Mon, 6 Mar 2023 23:06:56 +0000 (UTC)
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com
- [2607:f8b0:4864:20::102a])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 02e17d76
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5eee131c;
+	Mon, 6 Mar 2023 23:06:58 +0000 (UTC)
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com
+ [2607:f8b0:4864:20::1035])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3915e4e2
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 6 Mar 2023 17:45:22 +0000 (UTC)
-Received: by mail-pj1-x102a.google.com with SMTP id
- 6-20020a17090a190600b00237c5b6ecd7so13898394pjg.4
- for <wireguard@lists.zx2c4.com>; Mon, 06 Mar 2023 09:45:22 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Mon, 6 Mar 2023 18:13:33 +0000 (UTC)
+Received: by mail-pj1-x1035.google.com with SMTP id
+ qa18-20020a17090b4fd200b0023750b675f5so13989489pjb.3
+ for <wireguard@lists.zx2c4.com>; Mon, 06 Mar 2023 10:13:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20210112; t=1678124721;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=F8jEnuaODHkIgm3QXsy3NxYaf9Twek/6N1cAGCi4cq8=;
- b=gLXj/9ELW4hDPJYzjYYPm7rcW4EBxHVxreG9wJ+ygD2ziX4jcK3Fk77fqWfxfJdCEy
- UtI8NqCy4w8Sr+gM15dCWcFwCZxK+my98RKUM4DNL80X36xywZF2J+ls+36gXglvw0aw
- J4maDik894B2wi0/FI5nOAa7bF6dZtl95gZ2QvjJ/7zJiD6kmltlRT28TLq7Engimb56
- SsU+/JLA+S1P95giqlnpBlycbcmxT6oYT6evAm13H9arBp1kpl4YbORrEwzUkP96tF6v
- Cgv2dTAt6zXOh/3Wcq9nhlVe6heo3jWjSK/ckJLHWWBUnwgmIzbj8plYzdts7TOtdi+W
- FpLw==
+ d=gmail.com; s=20210112; t=1678126412;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=nVDRLydRone1J93o9oyayT1ixn2USWzwJPhyrHw1GAs=;
+ b=K0ohwVvtpaqIM1ff7KNQ9iqtOS8LvwFVSwAlfsHNWS+XjLRUXy+7LqEMHc6UcjJooC
+ FXfafhU/B3oMyaN3xDuDn75iDeDIkapf8UmM5Ftc2Nlx2D+6wSo/5OKDbsQyvGp3xaaj
+ /lFsvPnIJSQu3+SzJMD6Svu5gzZvneVauDck+s0/+HezZ6a3r8VUUtZoxrz4bey7u6Jq
+ KjC5m8XXbsrDJD7zTOh0IXffYxdKDgw+0gSOuHO5Hpl0PK/XIUSd6iVQ8JHdD9Q2O+e6
+ cYJs0DaF4TwIsYLLVBx5k16xkzyxKmRl3WziS2Q+dqrKfFNMB8zdfO8XP5/SByNcBQ+S
+ Jtfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112; t=1678124721;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=F8jEnuaODHkIgm3QXsy3NxYaf9Twek/6N1cAGCi4cq8=;
- b=c0TL3JKf44PNXLUC759wDHByANhOcGH7Orxp1Oabz+sSSMapddrsTOboDAx6a8V/38
- +63OT3gWb4B/yYORqUSknCOxqOsB5gVv3+ItTJ0osjy95hz/SMgrjwsF5BwnkwN8jEmA
- eNqtP4ohWImFeqJlo/gxxjVGtXH6//iK4y7DjB4VrxFFRcPV/nkJYdPQ3Sx071ZcfYwl
- iTYMOKPIQkjj5N30yRPvtdWZxpu0gfDKrW3Z+eu8zSUHd7XwMdBFOOAzPwOL84gOZPGS
- yqIE/7QkcBQAiqlNyOIgxIQQ1+MruihciVU4cJooi3bGQ7IidsjzCD7X+LlvnEOVeCHi
- y2mg==
-X-Gm-Message-State: AO0yUKX78rtE1ONq2JQq0xyeQBCFgfX4kTuf8/9gx5PzXlGAQUayF8TE
- ruTtq5Evq0A4HQDWLPNTbpY=
-X-Google-Smtp-Source: AK7set+KGmAg/YZWyh+KxC/W4tyYr0Aryv8jvoRETy0kJlnidI1W8lj1sOCa4lJP/6kpyiVCRbmEOA==
-X-Received: by 2002:a05:6a20:6aa8:b0:cb:ac6c:13ba with SMTP id
- bi40-20020a056a206aa800b000cbac6c13bamr10389268pzb.25.1678124720753; 
- Mon, 06 Mar 2023 09:45:20 -0800 (PST)
+ d=1e100.net; s=20210112; t=1678126412;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=nVDRLydRone1J93o9oyayT1ixn2USWzwJPhyrHw1GAs=;
+ b=PuZ3UevJahlvVFvus7pX6mqx7fdwUOGgr1CmdjuW1QobHMzFodDeKPyEodxWbdw9a/
+ zLKjEWTEzoKlohdni2F2AwYFUxo83FMfk1GkvFWSyqfb/1ncPi9JmCQm0E0NLyOQvWUD
+ TVgGe6pQwtGgXQT9+Oo+foOLWMrsod66bXXO8/sKqDlH9XIxZIXCmnvIINQbxPPl/2Lh
+ FLDGVn/mOXUpLdsn2Rtjux93C1CZKC6WUkVXLi+U3jZ6mHoTtpUYetF0guD1Rgsnrquy
+ tcq8aC8gfNvXyrGMyOJUcXIt9/koXESllVOjeB7PAPje3cXYoJEcsUJ1rx/+WbZpM1OT
+ CL+Q==
+X-Gm-Message-State: AO0yUKXMzohiFHnvuFBZRufzR+ft4srRgaqInvAOLTisYOh29g71Ekoc
+ zdY+S0BN2pBVrJGgWb62Gtw=
+X-Google-Smtp-Source: AK7set8JSu5HH2SYYBQFO2nNfsP5nq/yMAXfZHaMuGcyFct+Bv6s3IpIB0hslTUQT9wBsrFGbwUhWg==
+X-Received: by 2002:a17:90b:3812:b0:237:b702:49ac with SMTP id
+ mq18-20020a17090b381200b00237b70249acmr12565429pjb.17.1678126412292; 
+ Mon, 06 Mar 2023 10:13:32 -0800 (PST)
 Received: from vernon-pc ([49.67.2.142]) by smtp.gmail.com with ESMTPSA id
- k15-20020aa792cf000000b005ac8a51d591sm6516741pfa.21.2023.03.06.09.45.16
+ p26-20020a634f5a000000b00502e6c22c42sm6628207pgl.59.2023.03.06.10.13.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Mar 2023 09:45:20 -0800 (PST)
-Date: Tue, 7 Mar 2023 01:45:13 +0800
+ Mon, 06 Mar 2023 10:13:32 -0800 (PST)
+Date: Tue, 7 Mar 2023 02:13:25 +0800
 From: Vernon Yang <vernon2gm@gmail.com>
-To: Yury Norov <yury.norov@gmail.com>
-Cc: torvalds@linux-foundation.org, tytso@mit.edu, Jason@zx2c4.com,
- davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
- pabeni@redhat.com, jejb@linux.ibm.com, martin.petersen@oracle.com,
- andriy.shevchenko@linux.intel.com, linux@rasmusvillemoes.dk,
- james.smart@broadcom.com, dick.kennedy@broadcom.com,
- linux-kernel@vger.kernel.org, wireguard@lists.zx2c4.com,
- netdev@vger.kernel.org, linux-scsi@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: tytso@mit.edu, Jason@zx2c4.com, davem@davemloft.net,
+ edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+ jejb@linux.ibm.com, martin.petersen@oracle.com,
+ yury.norov@gmail.com, andriy.shevchenko@linux.intel.com,
+ linux@rasmusvillemoes.dk, james.smart@broadcom.com,
+ dick.kennedy@broadcom.com, linux-kernel@vger.kernel.org,
+ wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
+ linux-scsi@vger.kernel.org
 Subject: Re: [PATCH 5/5] cpumask: fix comment of cpumask_xxx
-Message-ID: <ZAYmqVmeYdDPVpLZ@vernon-pc>
+Message-ID: <ZAYtRcbMeRUQFUw/@vernon-pc>
 References: <20230306160651.2016767-1-vernon2gm@gmail.com>
  <20230306160651.2016767-6-vernon2gm@gmail.com>
- <ZAYXJ2E+JHcp2kD/@yury-laptop>
+ <CAHk-=whVnaTBt2Xm-A+8SMc5-q5CuZBDU6rUZ8yC8GoAnbTBvw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZAYXJ2E+JHcp2kD/@yury-laptop>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAHk-=whVnaTBt2Xm-A+8SMc5-q5CuZBDU6rUZ8yC8GoAnbTBvw@mail.gmail.com>
 X-Mailman-Approved-At: Mon, 06 Mar 2023 23:06:36 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -84,39 +87,58 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, Mar 06, 2023 at 08:39:03AM -0800, Yury Norov wrote:
-> On Tue, Mar 07, 2023 at 12:06:51AM +0800, Vernon Yang wrote:
+On Mon, Mar 06, 2023 at 09:29:10AM -0800, Linus Torvalds wrote:
+> On Mon, Mar 6, 2023 at 8:07 AM Vernon Yang <vernon2gm@gmail.com> wrote:
+> >
 > > After commit 596ff4a09b89 ("cpumask: re-introduce constant-sized cpumask
 > > optimizations"), the cpumask size is divided into three different case,
 > > so fix comment of cpumask_xxx correctly.
-> >
-> > Signed-off-by: Vernon Yang <vernon2gm@gmail.com>
-> > ---
-> >  include/linux/cpumask.h | 46 ++++++++++++++++++++---------------------
-> >  1 file changed, 23 insertions(+), 23 deletions(-)
-> >
-> > diff --git a/include/linux/cpumask.h b/include/linux/cpumask.h
-> > index 8fbe76607965..248bdb1c50dc 100644
-> > --- a/include/linux/cpumask.h
-> > +++ b/include/linux/cpumask.h
-> > @@ -155,7 +155,7 @@ static __always_inline unsigned int cpumask_check(unsigned int cpu)
-> >   * cpumask_first - get the first cpu in a cpumask
-> >   * @srcp: the cpumask pointer
-> >   *
-> > - * Returns >= nr_cpu_ids if no cpus set.
-> > + * Returns >= small_cpumask_bits if no cpus set.
 >
-> There's no such thing like small_cpumask_bits. Here and everywhere,
-> nr_cpu_ids must be used.
+> No no.
 >
-> Actually, before 596ff4a09b89 nr_cpumask_bits was deprecated, and it
-> must be like that for all users even now.
+> Those three cases are meant to be entirely internal optimizations.
+> They are literally just "preferred sizes".
 >
-> nr_cpumask_bits must be considered as internal cpumask parameter and
-> never referenced outside of cpumask code.
+> The correct thing to do is always that
+>
+>    * Returns >= nr_cpu_ids if no cpus set.
+>
+> because nr_cpu_ids is always the *smallest* of the access sizes.
+>
+> That's exactly why it's a ">=". The CPU mask stuff has always
+> historically potentially used a different size than the actual
+> nr_cpu_ids, in that it could do word-sized scans even when the machine
+> might only have a smaller set of CPUs.
+>
+> So the whole "small" vs "large" should be seen entirely internal to
+> cpumask.h. We should not expose it outside (sadly, that already
+> happened with "nr_cpumask_size", which also was that kind of thing.
 
-OK, I remove this path for next version.
+I also just see nr_cpumask_size exposed to outside, so... Sorry.
 
 >
-> Thansk,
-> Yury
+> So no, this patch is wrong. If anything, the comments should be strengthened.
+>
+> Of course, right now Guenter seems to be reporting a problem with that
+> optimization, so unless I figure out what is going on I'll just need
+> to revert it anyway.
+
+Yes, cause is the cpumask_next() calls find_next_bit(..., size, ...), and
+find_next_bit(..., size, ...) if no bits are set, returns @size.
+
+@size was a nr_cpumask_bits variable before, now it is small_cpumask_bits, and
+when NR_CPUS < = BITS_PER_LONG, small_cpumask_bits is a macro, which is
+replaced with NR_CPUS at compile, so only the NR_CPUS is returned when it no
+further cpus set.
+
+But before nr_cpumask_bits variable, it was read while running, and it was
+mutable.
+
+The random.c try_to_generate_entropy() to get first cpu by
+`if (cpu == nr_cpumask_bits)`, but cpumask_next() alway return NR_CPUS,
+nr_cpumask_bits is nr_cpu_ids, so pass NR_CPUS to add_timer_on(),
+
+>
+>                 Linus
+>
+>                 Linus
