@@ -4,44 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D82B6C74A5B
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 17 Mar 2023 19:44:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72CD5C74A5B
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 17 Mar 2023 19:57:26 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 32bd291f;
-	Fri, 17 Mar 2023 19:44:08 +0000 (UTC)
-Received: from anamika.lostca.se (anamika.lostca.se [65.21.75.227])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3723319a
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a69955f4;
+	Fri, 17 Mar 2023 19:54:58 +0000 (UTC)
+Received: from len.romanrm.net (len.romanrm.net [91.121.86.59])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id eef34979
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 17 Mar 2023 19:44:07 +0000 (UTC)
-Received: from email.lostca.se (localhost [IPv6:::1])
- by anamika.lostca.se (Postfix) with ESMTP id 10175C946;
- Fri, 17 Mar 2023 19:43:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lostca.se; s=anamika; 
- t=1679082247;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qQC6Zvhkzxy9q+gsuuRHFiK2BCkaFyddPKhmnDHTAeM=;
- b=ZAujfCHNprgsVoHGIkFT31BwJJnWVzITpel1sVZOVPAL4DnuGJh0HAn4hif787pswlcZ1K
- mlxgQ7xaleF7+rVHeJfW1EMjnE4ZDL37JHUXzAnUTOGzyxnzzEgMhz7T6tTR8dpO5/3D78
- XgqHOrlefIitiXrwzx83ffU+kZ0/AQY=
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Date: Sat, 18 Mar 2023 01:13:53 +0530
-From: Ashish SHUKLA <ashish.is@lostca.se>
-To: Roman Mamedov <rm@romanrm.net>
+ Fri, 17 Mar 2023 19:54:53 +0000 (UTC)
+Received: from nvm (nvm2.home.romanrm.net [IPv6:fd39::4a:3cff:fe57:d6b5])
+ by len.romanrm.net (Postfix) with SMTP id 3CE834031A;
+ Fri, 17 Mar 2023 19:54:52 +0000 (UTC)
+Date: Sat, 18 Mar 2023 00:54:51 +0500
+From: Roman Mamedov <rm@romanrm.net>
+To: Ashish SHUKLA <ashish.is@lostca.se>
 Cc: wireguard@lists.zx2c4.com
 Subject: Re: Force a specific IP for outgoing WG traffic with SNAT?
-In-Reply-To: <20230217000747.0825b2e9@nvm>
+Message-ID: <20230318005451.7212e6c9@nvm>
+In-Reply-To: <e4f7dc477cd14e14a75e304878e6cb05@lostca.se>
 References: <20230217000747.0825b2e9@nvm>
-User-Agent: Roundcube Webmail/1.4.13
-Message-ID: <e4f7dc477cd14e14a75e304878e6cb05@lostca.se>
-X-Sender: ashish.is@lostca.se
+ <e4f7dc477cd14e14a75e304878e6cb05@lostca.se>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -53,58 +40,39 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Reply-To: ashish.is@lostca.se
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 2023-02-17 00:37, Roman Mamedov wrote:
-> Hello,
-> 
-> I'm trying to move all my WG communication with peers to a non-primary
-> IP of my server.
-> 
-> It has IPs added like this:
-> 
->     inet6 2001:db8::ca6c/128 scope global deprecated
->        valid_lft forever preferred_lft 0sec
->     inet6 2001:db8::1/128 scope global nodad
->        valid_lft forever preferred_lft forever
-> 
-> What I tried:
-> 
->   ip6tables -t nat -I POSTROUTING -d 2000::/3 -p udp --dport 51820 -j
-> SNAT --to-source 2001:db8::ca6c
-> 
-> Also tried to filter by --sport, and also briefly without a port filter 
-> at all.
-> 
-> This has zero effect, as shown by tcpdump all the WG traffic still
-> originates from 2001:db8::1
-> 
-> Does anyone have an idea why is that? Thanks
+On Sat, 18 Mar 2023 01:13:53 +0530
+Ashish SHUKLA <ashish.is@lostca.se> wrote:
 
-Did you try filtering based on fwmark ?
+> Did you try filtering based on fwmark ?
+>=20
+>      CONFIGURATION FILE FORMAT
+>             The configuration file format is based on INI. There are two=
+=20
+> top level sections -- Interface and Peer. Multiple Peer sections may be=20
+> specified, but only one Interface section may be specified.
+>=20
+>             The Interface section may contain the following fields:
+>=20
+>             =E2=80=A2      PrivateKey =E2=80=94 a base64 private key gene=
+rated by wg=20
+> genkey. Required.
+>=20
+>             =E2=80=A2      ListenPort =E2=80=94 a 16-bit port for listeni=
+ng. Optional; if=20
+> not specified, chosen randomly.
+>=20
+>             =E2=80=A2      FwMark =E2=80=94 a 32-bit fwmark for outgoing =
+packets. If set=20
+> to 0 or "off", this option is disabled. May be specified in hexadecimal=20
+> by prepending "0x". Optional.
 
-     CONFIGURATION FILE FORMAT
-            The configuration file format is based on INI. There are two 
-top level sections -- Interface and Peer. Multiple Peer sections may be 
-specified, but only one Interface section may be specified.
+I was not aware there was such an option. For now the task described in the
+original message is no longer required, I will try fwmark next time when it
+might be. Thanks!
 
-            The Interface section may contain the following fields:
-
-            •      PrivateKey — a base64 private key generated by wg 
-genkey. Required.
-
-            •      ListenPort — a 16-bit port for listening. Optional; if 
-not specified, chosen randomly.
-
-            •      FwMark — a 32-bit fwmark for outgoing packets. If set 
-to 0 or "off", this option is disabled. May be specified in hexadecimal 
-by prepending "0x". Optional.
-
-HTH
--- 
-Ashish
-
-"It could be that the purpose of your life is only to serve as a warning 
-to others." (Ashleigh Brilliant)
+--=20
+With respect,
+Roman
