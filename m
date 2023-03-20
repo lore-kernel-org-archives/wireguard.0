@@ -4,66 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C0E8C6FD1F
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Mar 2023 16:45:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94BDAC6FD1F
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 20 Mar 2023 00:54:56 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 737608e9;
-	Sun, 19 Mar 2023 16:45:07 +0000 (UTC)
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com
- [2a00:1450:4864:20::42b])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0c2f6b7d
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f82ec09d;
+	Mon, 20 Mar 2023 00:53:28 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org
+ [2604:1380:4641:c500::1])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 63436fb9
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 19 Mar 2023 16:45:05 +0000 (UTC)
-Received: by mail-wr1-x42b.google.com with SMTP id v1so2234003wrv.1
- for <wireguard@lists.zx2c4.com>; Sun, 19 Mar 2023 09:45:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20210112; t=1679244304;
- h=content-transfer-encoding:to:content-language:subject:from
- :user-agent:mime-version:date:message-id:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sgyNiwdaretRp+J/2Wl0Xlve2a0IvWJhl+PDMNYPjxE=;
- b=h5ZFr6KfC1sfZ95OL1FB4nl7JyNZt93Y0uJuN1TRHg/tBHwJulaznEXY2xcek0mhFE
- fOkwQnTb0cMwDUACa1TQXoecLORAgrJReCdSPe72vZfKL6qY+GK1uxDmE4EhUL1McWND
- MFFsfok9YymYbNXoV2yBd18X+NtBVeDDQy+mewzaRU+V5a8F6NzlGUDucRJebMH6Db4t
- xpy56fPAeLHbGZENF+5PvqbKmDYrLEMsLll4bfhmIcAxmM5ZjJr8JHInyJTYVoenQMD6
- KFPEE0Tozg/0kCp0p2cJvNhnZlGsIgFtPKvoD8chBjJSPo8DCBNnmnmqm6Fz/K32XeAi
- i3Og==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112; t=1679244304;
- h=content-transfer-encoding:to:content-language:subject:from
- :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=sgyNiwdaretRp+J/2Wl0Xlve2a0IvWJhl+PDMNYPjxE=;
- b=sW7xlJEKaAhJO1W9sX33qefYXENh1NVyBiIVfzb8rjErVuwr/+2eFSlQrFTPDZXaSv
- GgAq/F3d1kiIV/BnSSsb1FiuI9iDNhzN11h895jGd5asDbkCsQxWtpDoE2l85DEHPDbV
- VtUjdtppYlnuI/mW0kEQWiky+ClnOBRf607WHasXTM/rdOCbLpbub2GTD08yMA0Cz/Cy
- VtmYa1z0B6kKz5tlmzthg8EVartApglT4PVdiu7B3QRtEFEPMaPQoZON4n+PKngN/ee/
- hcDnR6fL1cF+BCxPgCsIQio+TG890ImnVo8ChO9YTu/n/P1aNQn6iUcCYMltzhSOBf2t
- QXYA==
-X-Gm-Message-State: AO0yUKVELGV8BJOmLr90VX0LizKseIKQdQCIJFFht1OR8ucghqTPl2Z0
- 3MupbmCc2614+C3SL8zi144SAsFXii0=
-X-Google-Smtp-Source: AK7set+WcJiznnN8UOh6iI+IDAiM7Fz9lxEF1AMhM7rBIMSUoAQW03/gzjgqCg+5MfyZv7mDI8bHag==
-X-Received: by 2002:a5d:65c4:0:b0:2cf:f30f:cdb3 with SMTP id
- e4-20020a5d65c4000000b002cff30fcdb3mr12049037wrw.32.1679244304398; 
- Sun, 19 Mar 2023 09:45:04 -0700 (PDT)
-Received: from localhost ([45.9.46.147]) by smtp.gmail.com with ESMTPSA id
- z15-20020a5d44cf000000b002ce9f0e4a8fsm6921447wrr.84.2023.03.19.09.45.03
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 19 Mar 2023 09:45:03 -0700 (PDT)
-Message-ID: <316d48cc-6abc-ede1-5344-26fb81d19439@gmail.com>
-Date: Sun, 19 Mar 2023 19:43:57 +0300
+ Mon, 20 Mar 2023 00:53:25 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 953D5611DE;
+ Mon, 20 Mar 2023 00:53:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95958C433EF;
+ Mon, 20 Mar 2023 00:53:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1679273603;
+ bh=ymHo4xqSlXI+y30Wq1XO9baK0xek3CKTl4Oe3cPo/Ks=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=d2T/btNrq2Wj3/sywSmTC9zHKsJ+Ki1bl50OYgVREYSv/7OuHmAcr0E1jWfPzoQjK
+ WpoLLxtAV53BZsyN+h4L0vvYxsp0TVyn43Q+k8paX+ne43WFoHjfJM2ZBx/1K5krGS
+ Gchb8nq69dtgveO7WLqkERFehRssqI4kQPQB3J+ycOn4uo6Zzk7qZQdfPjZPHnzBuJ
+ Y7It0yXqGlZ0FIMAsBXNaNj8C0xGKgYafilUHANKLmIgQM/nkj4Ixr/3nNBbjim4Jz
+ l20NKLIX8Nqd/uJA8M40oXGuL6gFdS4NiwJs1CiE87EawLjd+xhu1s+8CGZBxgD47C
+ gS55hnXJRI2cQ==
+From: Sasha Levin <sashal@kernel.org>
+To: linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+ Guenter Roeck <linux@roeck-us.net>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ Vernon Yang <vernon2gm@gmail.com>, Yury Norov <yury.norov@gmail.com>,
+ "Jason A . Donenfeld" <Jason@zx2c4.com>, Sasha Levin <sashal@kernel.org>,
+ mpe@ellerman.id.au, tytso@mit.edu, davem@davemloft.net,
+ edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+ james.smart@broadcom.com, dick.kennedy@broadcom.com, jejb@linux.ibm.com,
+ martin.petersen@oracle.com, christophe.leroy@csgroup.eu, npiggin@gmail.com,
+ dmitry.osipenko@collabora.com, joel@jms.id.au, nathanl@linux.ibm.com,
+ gustavoars@kernel.org, naveen.n.rao@linux.vnet.ibm.com,
+ linuxppc-dev@lists.ozlabs.org, wireguard@lists.zx2c4.com,
+ netdev@vger.kernel.org, linux-scsi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.2 09/30] cpumask: fix incorrect cpumask scanning
+ result checks
+Date: Sun, 19 Mar 2023 20:52:34 -0400
+Message-Id: <20230320005258.1428043-9-sashal@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230320005258.1428043-1-sashal@kernel.org>
+References: <20230320005258.1428043-1-sashal@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-From: Dmitry Selivanov <dseliv@gmail.com>
-Subject: [PATCH] wg-quick: add possibility to force use userspace
- implementation
-Content-Language: ru, en-US
-To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -78,66 +73,187 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This patch allows to use userspace implementation with 
-"WG_QUICK_USERSPACE_IMPLEMENTATION" env variable even if kernel
-driver is installed. Quotes around program name are removed 
-to run like this:
-WG_QUICK_USERSPACE_IMPLEMENTATION="setfib 1 wireguard-go" wg-quick up wg0
-on FreeBSD or with "ip netns exec" on Linux. This can move
-wireguard traffic to non-default routing table or namespace.
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-Signed-off-by: Dmitry Selivanov <dseliv@gmail.com>
+[ Upstream commit 8ca09d5fa3549d142c2080a72a4c70ce389163cd ]
+
+It turns out that commit 596ff4a09b89 ("cpumask: re-introduce
+constant-sized cpumask optimizations") exposed a number of cases of
+drivers not checking the result of "cpumask_next()" and friends
+correctly.
+
+The documented correct check for "no more cpus in the cpumask" is to
+check for the result being equal or larger than the number of possible
+CPU ids, exactly _because_ we've always done those constant-sized
+cpumask scans using a widened type before.  So the return value of a
+cpumask scan should be checked with
+
+	if (cpu >= nr_cpu_ids)
+		...
+
+because the cpumask scan did not necessarily stop exactly *at* that
+maximum CPU id.
+
+But a few cases ended up instead using checks like
+
+	if (cpu == nr_cpumask_bits)
+		...
+
+which used that internal "widened" number of bits.  And that used to
+work pretty much by accident (ok, in this case "by accident" is simply
+because it matched the historical internal implementation of the cpumask
+scanning, so it was more of a "intentionally using implementation
+details rather than an accident").
+
+But the extended constant-sized optimizations then did that internal
+implementation differently, and now that code that did things wrong but
+matched the old implementation no longer worked at all.
+
+Which then causes subsequent odd problems due to using what ends up
+being an invalid CPU ID.
+
+Most of these cases require either unusual hardware or special uses to
+hit, but the random.c one triggers quite easily.
+
+All you really need is to have a sufficiently small CONFIG_NR_CPUS value
+for the bit scanning optimization to be triggered, but not enough CPUs
+to then actually fill that widened cpumask.  At that point, the cpumask
+scanning will return the NR_CPUS constant, which is _not_ the same as
+nr_cpumask_bits.
+
+This just does the mindless fix with
+
+   sed -i 's/== nr_cpumask_bits/>= nr_cpu_ids/'
+
+to fix the incorrect uses.
+
+The ones in the SCSI lpfc driver in particular could probably be fixed
+more cleanly by just removing that repeated pattern entirely, but I am
+not emptionally invested enough in that driver to care.
+
+Reported-and-tested-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/lkml/481b19b5-83a0-4793-b4fd-194ad7b978c3@roeck-us.net/
+Reported-and-tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/lkml/CAMuHMdUKo_Sf7TjKzcNDa8Ve+6QrK+P8nSQrSQ=6LTRmcBKNww@mail.gmail.com/
+Reported-by: Vernon Yang <vernon2gm@gmail.com>
+Link: https://lore.kernel.org/lkml/20230306160651.2016767-1-vernon2gm@gmail.com/
+Cc: Yury Norov <yury.norov@gmail.com>
+Cc: Jason A. Donenfeld <Jason@zx2c4.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- src/wg-quick/freebsd.bash | 6 +++++-
- src/wg-quick/linux.bash   | 8 ++++++--
- 2 files changed, 11 insertions(+), 3 deletions(-)
+ arch/powerpc/xmon/xmon.c         |  2 +-
+ drivers/char/random.c            |  2 +-
+ drivers/net/wireguard/queueing.h |  2 +-
+ drivers/scsi/lpfc/lpfc_init.c    | 14 +++++++-------
+ 4 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/src/wg-quick/freebsd.bash b/src/wg-quick/freebsd.bash
-index b529ab2..663af48 100755
---- a/src/wg-quick/freebsd.bash
-+++ b/src/wg-quick/freebsd.bash
-@@ -116,6 +116,10 @@ auto_su() {
+diff --git a/arch/powerpc/xmon/xmon.c b/arch/powerpc/xmon/xmon.c
+index 0da66bc4823d4..3b4e2475fc4ef 100644
+--- a/arch/powerpc/xmon/xmon.c
++++ b/arch/powerpc/xmon/xmon.c
+@@ -1277,7 +1277,7 @@ static int xmon_batch_next_cpu(void)
+ 	while (!cpumask_empty(&xmon_batch_cpus)) {
+ 		cpu = cpumask_next_wrap(smp_processor_id(), &xmon_batch_cpus,
+ 					xmon_batch_start_cpu, true);
+-		if (cpu == nr_cpumask_bits)
++		if (cpu >= nr_cpu_ids)
+ 			break;
+ 		if (xmon_batch_start_cpu == -1)
+ 			xmon_batch_start_cpu = cpu;
+diff --git a/drivers/char/random.c b/drivers/char/random.c
+index ce3ccd172cc86..253f2ddb89130 100644
+--- a/drivers/char/random.c
++++ b/drivers/char/random.c
+@@ -1311,7 +1311,7 @@ static void __cold try_to_generate_entropy(void)
+ 			/* Basic CPU round-robin, which avoids the current CPU. */
+ 			do {
+ 				cpu = cpumask_next(cpu, &timer_cpus);
+-				if (cpu == nr_cpumask_bits)
++				if (cpu >= nr_cpu_ids)
+ 					cpu = cpumask_first(&timer_cpus);
+ 			} while (cpu == smp_processor_id() && num_cpus > 1);
  
- add_if() {
- 	local ret rc
-+	if [[ -n $WG_QUICK_USERSPACE_IMPLEMENTATION ]]; then
-+		cmd $WG_QUICK_USERSPACE_IMPLEMENTATION "$INTERFACE"
-+		return
-+	fi
- 	if ret="$(cmd ifconfig wg create name "$INTERFACE" 2>&1 >/dev/null)"; then
- 		return 0
- 	fi
-@@ -125,7 +129,7 @@ add_if() {
- 		return $rc
- 	fi
- 	echo "[!] Missing WireGuard kernel support ($ret). Falling back to slow userspace implementation." >&3
--	cmd "${WG_QUICK_USERSPACE_IMPLEMENTATION:-wireguard-go}" "$INTERFACE"
-+	cmd wireguard-go "$INTERFACE"
- }
+diff --git a/drivers/net/wireguard/queueing.h b/drivers/net/wireguard/queueing.h
+index 583adb37ee1e3..125284b346a77 100644
+--- a/drivers/net/wireguard/queueing.h
++++ b/drivers/net/wireguard/queueing.h
+@@ -106,7 +106,7 @@ static inline int wg_cpumask_choose_online(int *stored_cpu, unsigned int id)
+ {
+ 	unsigned int cpu = *stored_cpu, cpu_index, i;
  
- del_routes() {
-diff --git a/src/wg-quick/linux.bash b/src/wg-quick/linux.bash
-index 69e5bef..a883df9 100755
---- a/src/wg-quick/linux.bash
-+++ b/src/wg-quick/linux.bash
-@@ -87,11 +87,15 @@ auto_su() {
+-	if (unlikely(cpu == nr_cpumask_bits ||
++	if (unlikely(cpu >= nr_cpu_ids ||
+ 		     !cpumask_test_cpu(cpu, cpu_online_mask))) {
+ 		cpu_index = id % cpumask_weight(cpu_online_mask);
+ 		cpu = cpumask_first(cpu_online_mask);
+diff --git a/drivers/scsi/lpfc/lpfc_init.c b/drivers/scsi/lpfc/lpfc_init.c
+index 25ba20e428255..3fbd3bec26fc1 100644
+--- a/drivers/scsi/lpfc/lpfc_init.c
++++ b/drivers/scsi/lpfc/lpfc_init.c
+@@ -12507,7 +12507,7 @@ lpfc_cpu_affinity_check(struct lpfc_hba *phba, int vectors)
+ 					goto found_same;
+ 				new_cpu = cpumask_next(
+ 					new_cpu, cpu_present_mask);
+-				if (new_cpu == nr_cpumask_bits)
++				if (new_cpu >= nr_cpu_ids)
+ 					new_cpu = first_cpu;
+ 			}
+ 			/* At this point, we leave the CPU as unassigned */
+@@ -12521,7 +12521,7 @@ lpfc_cpu_affinity_check(struct lpfc_hba *phba, int vectors)
+ 			 * selecting the same IRQ.
+ 			 */
+ 			start_cpu = cpumask_next(new_cpu, cpu_present_mask);
+-			if (start_cpu == nr_cpumask_bits)
++			if (start_cpu >= nr_cpu_ids)
+ 				start_cpu = first_cpu;
  
- add_if() {
- 	local ret
-+	if [[ -n $WG_QUICK_USERSPACE_IMPLEMENTATION ]]; then
-+		cmd $WG_QUICK_USERSPACE_IMPLEMENTATION "$INTERFACE"
-+		return
-+	fi
- 	if ! cmd ip link add "$INTERFACE" type wireguard; then
- 		ret=$?
--		[[ -e /sys/module/wireguard ]] || ! command -v "${WG_QUICK_USERSPACE_IMPLEMENTATION:-wireguard-go}" >/dev/null && exit $ret
-+		[[ -e /sys/module/wireguard ]] || ! command -v "wireguard-go" >/dev/null && exit $ret
- 		echo "[!] Missing WireGuard kernel module. Falling back to slow userspace implementation." >&2
--		cmd "${WG_QUICK_USERSPACE_IMPLEMENTATION:-wireguard-go}" "$INTERFACE"
-+		cmd wireguard-go "$INTERFACE"
- 	fi
- }
+ 			lpfc_printf_log(phba, KERN_INFO, LOG_INIT,
+@@ -12557,7 +12557,7 @@ lpfc_cpu_affinity_check(struct lpfc_hba *phba, int vectors)
+ 					goto found_any;
+ 				new_cpu = cpumask_next(
+ 					new_cpu, cpu_present_mask);
+-				if (new_cpu == nr_cpumask_bits)
++				if (new_cpu >= nr_cpu_ids)
+ 					new_cpu = first_cpu;
+ 			}
+ 			/* We should never leave an entry unassigned */
+@@ -12575,7 +12575,7 @@ lpfc_cpu_affinity_check(struct lpfc_hba *phba, int vectors)
+ 			 * selecting the same IRQ.
+ 			 */
+ 			start_cpu = cpumask_next(new_cpu, cpu_present_mask);
+-			if (start_cpu == nr_cpumask_bits)
++			if (start_cpu >= nr_cpu_ids)
+ 				start_cpu = first_cpu;
  
+ 			lpfc_printf_log(phba, KERN_INFO, LOG_INIT,
+@@ -12648,7 +12648,7 @@ lpfc_cpu_affinity_check(struct lpfc_hba *phba, int vectors)
+ 				goto found_hdwq;
+ 			}
+ 			new_cpu = cpumask_next(new_cpu, cpu_present_mask);
+-			if (new_cpu == nr_cpumask_bits)
++			if (new_cpu >= nr_cpu_ids)
+ 				new_cpu = first_cpu;
+ 		}
+ 
+@@ -12663,7 +12663,7 @@ lpfc_cpu_affinity_check(struct lpfc_hba *phba, int vectors)
+ 				goto found_hdwq;
+ 
+ 			new_cpu = cpumask_next(new_cpu, cpu_present_mask);
+-			if (new_cpu == nr_cpumask_bits)
++			if (new_cpu >= nr_cpu_ids)
+ 				new_cpu = first_cpu;
+ 		}
+ 
+@@ -12674,7 +12674,7 @@ lpfc_cpu_affinity_check(struct lpfc_hba *phba, int vectors)
+  found_hdwq:
+ 		/* We found an available entry, copy the IRQ info */
+ 		start_cpu = cpumask_next(new_cpu, cpu_present_mask);
+-		if (start_cpu == nr_cpumask_bits)
++		if (start_cpu >= nr_cpu_ids)
+ 			start_cpu = first_cpu;
+ 		cpup->hdwq = new_cpup->hdwq;
+  logit:
 -- 
-2.30.2
+2.39.2
 
