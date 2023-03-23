@@ -4,83 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E327C6FD1F
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 20 Mar 2023 01:59:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2986C6FD1D
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 23 Mar 2023 09:01:56 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4f948053;
-	Mon, 20 Mar 2023 01:59:47 +0000 (UTC)
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com
- [2a00:1450:4864:20::12e])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e772690a
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6db55b3c;
+	Thu, 23 Mar 2023 09:01:54 +0000 (UTC)
+Received: from wnew1-smtp.messagingengine.com (wnew1-smtp.messagingengine.com
+ [64.147.123.26])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 98c6dbb3
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 20 Mar 2023 01:59:46 +0000 (UTC)
-Received: by mail-lf1-x12e.google.com with SMTP id h25so1404761lfv.6
- for <wireguard@lists.zx2c4.com>; Sun, 19 Mar 2023 18:59:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux-foundation.org; s=google; t=1679277585;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=veHR4OeBVdmMM7ZoMMD2LEaF+ZQb01kUcsthEQZ+G8o=;
- b=SNcJ+0V8W1TJ4MntzJ+tWV7MHo4J3GQzdu8n70Frwh9hfIq8QJeAepOPu8iQN8X+PI
- 718jEIJg59mxJDYCZRplEWtR5a0GmEVRh4EPAtJkC6Hq5jJlDEALE1binS+iGalKfCmv
- EGPciyy8uyBqEs3OImQsnGjVKl5PsCY2jrNl8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112; t=1679277585;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=veHR4OeBVdmMM7ZoMMD2LEaF+ZQb01kUcsthEQZ+G8o=;
- b=LWQTwvQROf8yyWkwPCeqpY95LT5m5SsENyXVCdw9JIWAvkB+6loTh4K8tieW31+2NV
- 30urO2BXVek6gVJNkcRuplEf0V8cdgDo1WdxoMX0jyBbm6sxzi2h+JLxfTBRsxr57fEJ
- G5fMn4fWExVW7wpH+6BNkKLoVjkY1FlJ8dpaSYXcKbbZ2/s2E2/0OhG63cOcdunZeAiD
- RmjN7GNz/HW6OS0GHxx0z9zCz8kU8eClViXyyiRShHlqg9uwsTOgKzTT7DC3Q2McWl36
- aRe6jJmacOmexLEU9r2Y7PjBzvR5icFpnnwetbN00AZSywn8tHxVJMBDJaIn4MtaWvJP
- 2tOA==
-X-Gm-Message-State: AO0yUKXF+v4ku0TEWyt8fYlXweklR5Hc7wZL1Icv7Y0qa1iuQjzv/317
- U9eVDPwLJ/hCqNhlrc9P1R6+MgZqmLB369MO/CfjwQ==
-X-Google-Smtp-Source: AK7set+trbbuZZQu5CCCQoIWN2hoVouYwfgAUMQVnkQ7MHXjeuz4NOVn1/iPaUrJ9WBDE0eOrX5Gvw==
-X-Received: by 2002:a05:6512:4dc:b0:4dd:a4e1:4869 with SMTP id
- w28-20020a05651204dc00b004dda4e14869mr6431108lfq.43.1679277585088; 
- Sun, 19 Mar 2023 18:59:45 -0700 (PDT)
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com.
- [209.85.167.42]) by smtp.gmail.com with ESMTPSA id
- t8-20020a19ad08000000b004a9b9ccfbe6sm1495546lfc.51.2023.03.19.18.59.44
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 19 Mar 2023 18:59:44 -0700 (PDT)
-Received: by mail-lf1-f42.google.com with SMTP id b10so11891285lfb.9
- for <wireguard@lists.zx2c4.com>; Sun, 19 Mar 2023 18:59:44 -0700 (PDT)
-X-Received: by 2002:a17:906:2294:b0:927:912:6baf with SMTP id
- p20-20020a170906229400b0092709126bafmr2817236eja.15.1679277564111; Sun, 19
- Mar 2023 18:59:24 -0700 (PDT)
+ Thu, 23 Mar 2023 09:01:52 +0000 (UTC)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+ by mailnew.west.internal (Postfix) with ESMTP id 0A87C2B06689;
+ Thu, 23 Mar 2023 05:01:49 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute2.internal (MEProxy); Thu, 23 Mar 2023 05:01:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lv6.tw; h=cc:cc
+ :content-transfer-encoding:content-type:content-type:date:date
+ :from:from:in-reply-to:message-id:mime-version:reply-to:sender
+ :subject:subject:to:to; s=fm1; t=1679562109; x=1679565709; bh=vV
+ t6J0m0Ioj2/SAFplMswEnZnuDJMznKHesKUw8PIAg=; b=S9lriLejI48XrtiYlb
+ 2gjl/82n6kAPUIG8vpdpb5ugMMcCFdKiVAnP9/V46OFiX1GZ3n+ZS9eaQo4lbM9R
+ TifpCcABE9lu1lbh4+jpNaE3F08NLp1S5qqOloQfZ3r7tuI8nD35SLw+wmLK8UnZ
+ 7nBx4yQihY/WpZMnRxZCdpvcdSsxmy5uF7PxO7EDkb/oV4MA31y8BCZ++lD0Tbco
+ arWTPLDgmYVCPUCneNkJ5UmTlyedP+Hnvpkl3s1KJGD4+9Se51NjipHC5eZ0MTxX
+ 4/Am2UPmbanwPwLQuz6pVR5r+Dh3d6f+BXyVfIVFIUl4PAONL06lQ20HvWFy6ukH
+ BXEw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:message-id:mime-version:reply-to:sender
+ :subject:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender
+ :x-me-sender:x-sasl-enc; s=fm2; t=1679562109; x=1679565709; bh=v
+ Vt6J0m0Ioj2/SAFplMswEnZnuDJMznKHesKUw8PIAg=; b=tFn2LNIwc8MEgIz+7
+ P45dbeGO8XLYOsb7TuXOm9jLNMU65PJBHU6g9tHZ90T2OfCYaIDqzH5kP3qlWO8j
+ r/kelqAd9BkkFd3mboeR6eHGo5oOHDrHPrsjEav+hkhLH7njc2nV0HYbWjk7xikd
+ 0Y6DeG9bedh5GMp8hJWYeJiVXCVzgHNUlVxbbQNIRGH1SV/K1lNUq87s/Iq1JIZL
+ zOBGnUHWBAgaCCoqCelYyBccNooWKFi56nHMEJ1VoefmNm2l/+pHV08TJ24L1hbM
+ JonpJid18NEHMY5OiNCbeViISkFC4r+7hnSqfSlz4PornibHAAZqL2y+BmsBbbd/
+ HpVsw==
+X-ME-Sender: <xms:fBUcZBQlHJU7SFyGX4SEOACutX65b61CM2aQGXAONGX__l8lD9Z3pg>
+ <xme:fBUcZKzdsZRoGzbG-8DPiYqqG7i2DAsrh-LyroxjnwW2lRuieHcdzoguHTB92uGPI
+ L8QtwS1FdLii7WyveQ>
+X-ME-Received: <xmr:fBUcZG1C1JYVpV7IyFlpctDATxYskcRyiq6bcjuN1o4mYKC2Ci9t4MfK6LWc-IHbrfrSiP5pnouTiJfnGe69IFLViNo9IUGNQB8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdegfedguddviecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+ necuuegrihhlohhuthemuceftddtnecunecujfgurhepkfffgggfhfevvffutgfgsehtje
+ ertddtfeejnecuhfhrohhmpehlshgtuceolhhstgeslhhviedrthifqeenucggtffrrght
+ thgvrhhnpeeigedvfeeiheettdeuuefgffejleeuudeugedtleehhedvtdehheetkefhfe
+ eitdenucffohhmrghinhepiiigvdgtgedrtghomhenucevlhhushhtvghrufhiiigvpedt
+ necurfgrrhgrmhepmhgrihhlfhhrohhmpehlshgtsehlvheirdhtfi
+X-ME-Proxy: <xmx:fBUcZJCibfPmEO52Ew3iKh1yOsBLu2kgWjvYo3rlBzGu4mOwfzoWXg>
+ <xmx:fBUcZKhbvx6qWMqsKYaqAscSKDJNVy3-pVxUoNmECmwnDMgfOD4dew>
+ <xmx:fBUcZNqSmbP1g5j1YOdAYfgiiOP7a3-l8BSmPEKPMgVxr8pbI9gdXw>
+ <xmx:fRUcZNs1qyTIwmjwmMWXYjXcaMurU1krRANrriAcj8ZvuvjMJpqWF66_E_g>
+Feedback-ID: i36d94643:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 23 Mar 2023 05:01:47 -0400 (EDT)
+Message-ID: <ac87f86f-6837-4e0e-ec34-1df35f52540e@lv6.tw>
+Date: Thu, 23 Mar 2023 17:01:42 +0800
 MIME-Version: 1.0
-References: <20230320005258.1428043-1-sashal@kernel.org>
- <20230320005258.1428043-9-sashal@kernel.org>
-In-Reply-To: <20230320005258.1428043-9-sashal@kernel.org>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Sun, 19 Mar 2023 18:59:07 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wgpK-Gm-nOybRKs1LTD5yb7rPHQ4+=PCDvq61mUpBskYw@mail.gmail.com>
-Message-ID: <CAHk-=wgpK-Gm-nOybRKs1LTD5yb7rPHQ4+=PCDvq61mUpBskYw@mail.gmail.com>
-Subject: Re: [PATCH AUTOSEL 6.2 09/30] cpumask: fix incorrect cpumask scanning
- result checks
-To: Sasha Levin <sashal@kernel.org>
-Cc: linux-kernel@vger.kernel.org, stable@vger.kernel.org, 
- Guenter Roeck <linux@roeck-us.net>,
- Geert Uytterhoeven <geert+renesas@glider.be>, 
- Vernon Yang <vernon2gm@gmail.com>, Yury Norov <yury.norov@gmail.com>, 
- "Jason A . Donenfeld" <Jason@zx2c4.com>, mpe@ellerman.id.au, tytso@mit.edu,
- davem@davemloft.net, 
- edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, 
- james.smart@broadcom.com, dick.kennedy@broadcom.com, jejb@linux.ibm.com, 
- martin.petersen@oracle.com, christophe.leroy@csgroup.eu, npiggin@gmail.com, 
- dmitry.osipenko@collabora.com, joel@jms.id.au, nathanl@linux.ibm.com, 
- gustavoars@kernel.org, naveen.n.rao@linux.vnet.ibm.com, 
- linuxppc-dev@lists.ozlabs.org, wireguard@lists.zx2c4.com, 
- netdev@vger.kernel.org, linux-scsi@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Content-Language: en-US
+From: lsc <lsc@lv6.tw>
+Cc: jordan@tailscale.com, james@tailscale.com, Jason@zx2c4.com
+To: wireguard@lists.zx2c4.com
+Subject: wireguard-go: data race introduced in recent commit 9e2f386
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -95,30 +88,80 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Sun, Mar 19, 2023 at 5:53=E2=80=AFPM Sasha Levin <sashal@kernel.org> wro=
-te:
->
-> [ Upstream commit 8ca09d5fa3549d142c2080a72a4c70ce389163cd ]
+Hi,
 
-These are technically real fixes, but they are really just "documented
-behavior" fixes, and don't actually matter unless you also have
-596ff4a09b89 ("cpumask: re-introduce constant-sized cpumask
-optimizations"), which doesn't look like stable material.
+Not sure if this is the correct place for bug reports, hope it's okay :)
 
-And if somebody *does* decide to backport commit 596ff4a09b89, you
-should then backport all of
+I found my wireguard-go server (built from current ToT 1417a47) always 
+panicking when I ran speedtest on a client via the server. I rebuilt the 
+server with data race detector (`go build -race`) and got the following 
+trace:
 
-  6015b1aca1a2 sched_getaffinity: don't assume 'cpumask_size()' is
-fully initialized
-  e7304080e0e5 cpumask: relax sanity checking constraints
-  63355b9884b3 cpumask: be more careful with 'cpumask_setall()'
-  8ca09d5fa354 cpumask: fix incorrect cpumask scanning result checks
+==================
+WARNING: DATA RACE
+Read at 0x00c00043b2f8 by goroutine 49:
+   golang.zx2c4.com/wireguard/conn.setSrcControl()
+       /home/lsc36/wireguard-go/conn/sticky_linux.go:76 +0x8c
+   golang.zx2c4.com/wireguard/conn.(*StdNetBind).send4()
+       /home/lsc36/wireguard-go/conn/bind_std.go:346 +0x174
+   golang.zx2c4.com/wireguard/conn.(*StdNetBind).Send()
+       /home/lsc36/wireguard-go/conn/bind_std.go:332 +0x1d4
+   golang.zx2c4.com/wireguard/device.(*Peer).SendBuffers()
+       /home/lsc36/wireguard-go/device/peer.go:126 +0x18c
+   golang.zx2c4.com/wireguard/device.(*Peer).RoutineSequentialSender()
+       /home/lsc36/wireguard-go/device/send.go:519 +0x458
+   golang.zx2c4.com/wireguard/device.(*Peer).Start.func2()
+       /home/lsc36/wireguard-go/device/peer.go:198 +0x40
 
-but again, none of these matter as long as the constant-sized cpumask
-optimized case doesn't exist.
+Previous write at 0x00c00043b2f8 by goroutine 47:
+   golang.zx2c4.com/wireguard/conn.(*StdNetEndpoint).ClearSrc()
+       /home/lsc36/wireguard-go/conn/bind_std.go:100 +0x48
+   golang.zx2c4.com/wireguard/conn.getSrcFromControl()
+       /home/lsc36/wireguard-go/conn/sticky_linux.go:18 +0x3c
+   golang.zx2c4.com/wireguard/conn.(*StdNetBind).makeReceiveIPv4.func1()
+       /home/lsc36/wireguard-go/conn/bind_std.go:232 +0x350
+   golang.zx2c4.com/wireguard/device.(*Device).RoutineReceiveIncoming()
+       /home/lsc36/wireguard-go/device/receive.go:107 +0x3ac
+   golang.zx2c4.com/wireguard/device.(*Device).BindUpdate.func3()
+       /home/lsc36/wireguard-go/device/device.go:530 +0x4c
 
-(Technically, FORCE_NR_CPUS also does the constant-size optimizations
-even before, but that will complain loudly if that constant size then
-doesn't match nr_cpu_ids, so ..).
+Goroutine 49 (running) created at:
+   golang.zx2c4.com/wireguard/device.(*Peer).Start()
+       /home/lsc36/wireguard-go/device/peer.go:198 +0x300
+   golang.zx2c4.com/wireguard/device.(*ipcSetPeer).handlePostConfig()
+       /home/lsc36/wireguard-go/device/uapi.go:268 +0x164
+   golang.zx2c4.com/wireguard/device.(*Device).IpcSetOperation()
+       /home/lsc36/wireguard-go/device/uapi.go:160 +0x35c
+   golang.zx2c4.com/wireguard/device.(*Device).IpcHandle()
+       /home/lsc36/wireguard-go/device/uapi.go:428 +0x248
+   main.main.func4.1()
+       /home/lsc36/wireguard-go/main.go:245 +0x4c
 
-                   Linus
+Goroutine 47 (running) created at:
+   golang.zx2c4.com/wireguard/device.(*Device).BindUpdate()
+       /home/lsc36/wireguard-go/device/device.go:530 +0x4b8
+   golang.zx2c4.com/wireguard/device.(*Device).handleDeviceLine()
+       /home/lsc36/wireguard-go/device/uapi.go:223 +0x45c
+   golang.zx2c4.com/wireguard/device.(*Device).IpcSetOperation()
+       /home/lsc36/wireguard-go/device/uapi.go:183 +0x210
+   golang.zx2c4.com/wireguard/device.(*Device).IpcHandle()
+       /home/lsc36/wireguard-go/device/uapi.go:428 +0x248
+   main.main.func4.1()
+       /home/lsc36/wireguard-go/main.go:245 +0x4c
+==================
+
+The bug looks introduced by a recent commit 9e2f386 "conn, device, tun: 
+implement vectorized I/O on Linux". Without much knowledge to the 
+codebase, it seems to me that Endpoint is supposed to be guarded by the 
+RWMutex embedded in Peer, yet the change introduced a write without 
+locking the mutex (`ep.ClearSrc()` called from sticky_linux.go:18).
+
+In addition, I found it weird that Endpoint objects are reused via 
+`endpointPool`. The docstring suggests "Endpoints are immutable, so we 
+can re-use them" but that doesn't seem true.
+
+Added authors/reviewers of 9e2f386 to cc. Would you take a look?
+
+Regards,
+SC
+
