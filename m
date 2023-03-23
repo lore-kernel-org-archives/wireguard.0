@@ -4,76 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2986C6FD1D
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 23 Mar 2023 09:01:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41B4FC6FD1C
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 23 Mar 2023 14:20:12 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6db55b3c;
-	Thu, 23 Mar 2023 09:01:54 +0000 (UTC)
-Received: from wnew1-smtp.messagingengine.com (wnew1-smtp.messagingengine.com
- [64.147.123.26])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 98c6dbb3
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9582c811;
+	Thu, 23 Mar 2023 14:20:11 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5865c948
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 23 Mar 2023 09:01:52 +0000 (UTC)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
- by mailnew.west.internal (Postfix) with ESMTP id 0A87C2B06689;
- Thu, 23 Mar 2023 05:01:49 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute2.internal (MEProxy); Thu, 23 Mar 2023 05:01:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lv6.tw; h=cc:cc
- :content-transfer-encoding:content-type:content-type:date:date
- :from:from:in-reply-to:message-id:mime-version:reply-to:sender
- :subject:subject:to:to; s=fm1; t=1679562109; x=1679565709; bh=vV
- t6J0m0Ioj2/SAFplMswEnZnuDJMznKHesKUw8PIAg=; b=S9lriLejI48XrtiYlb
- 2gjl/82n6kAPUIG8vpdpb5ugMMcCFdKiVAnP9/V46OFiX1GZ3n+ZS9eaQo4lbM9R
- TifpCcABE9lu1lbh4+jpNaE3F08NLp1S5qqOloQfZ3r7tuI8nD35SLw+wmLK8UnZ
- 7nBx4yQihY/WpZMnRxZCdpvcdSsxmy5uF7PxO7EDkb/oV4MA31y8BCZ++lD0Tbco
- arWTPLDgmYVCPUCneNkJ5UmTlyedP+Hnvpkl3s1KJGD4+9Se51NjipHC5eZ0MTxX
- 4/Am2UPmbanwPwLQuz6pVR5r+Dh3d6f+BXyVfIVFIUl4PAONL06lQ20HvWFy6ukH
- BXEw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:message-id:mime-version:reply-to:sender
- :subject:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm2; t=1679562109; x=1679565709; bh=v
- Vt6J0m0Ioj2/SAFplMswEnZnuDJMznKHesKUw8PIAg=; b=tFn2LNIwc8MEgIz+7
- P45dbeGO8XLYOsb7TuXOm9jLNMU65PJBHU6g9tHZ90T2OfCYaIDqzH5kP3qlWO8j
- r/kelqAd9BkkFd3mboeR6eHGo5oOHDrHPrsjEav+hkhLH7njc2nV0HYbWjk7xikd
- 0Y6DeG9bedh5GMp8hJWYeJiVXCVzgHNUlVxbbQNIRGH1SV/K1lNUq87s/Iq1JIZL
- zOBGnUHWBAgaCCoqCelYyBccNooWKFi56nHMEJ1VoefmNm2l/+pHV08TJ24L1hbM
- JonpJid18NEHMY5OiNCbeViISkFC4r+7hnSqfSlz4PornibHAAZqL2y+BmsBbbd/
- HpVsw==
-X-ME-Sender: <xms:fBUcZBQlHJU7SFyGX4SEOACutX65b61CM2aQGXAONGX__l8lD9Z3pg>
- <xme:fBUcZKzdsZRoGzbG-8DPiYqqG7i2DAsrh-LyroxjnwW2lRuieHcdzoguHTB92uGPI
- L8QtwS1FdLii7WyveQ>
-X-ME-Received: <xmr:fBUcZG1C1JYVpV7IyFlpctDATxYskcRyiq6bcjuN1o4mYKC2Ci9t4MfK6LWc-IHbrfrSiP5pnouTiJfnGe69IFLViNo9IUGNQB8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdegfedguddviecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
- necuuegrihhlohhuthemuceftddtnecunecujfgurhepkfffgggfhfevvffutgfgsehtje
- ertddtfeejnecuhfhrohhmpehlshgtuceolhhstgeslhhviedrthifqeenucggtffrrght
- thgvrhhnpeeigedvfeeiheettdeuuefgffejleeuudeugedtleehhedvtdehheetkefhfe
- eitdenucffohhmrghinhepiiigvdgtgedrtghomhenucevlhhushhtvghrufhiiigvpedt
- necurfgrrhgrmhepmhgrihhlfhhrohhmpehlshgtsehlvheirdhtfi
-X-ME-Proxy: <xmx:fBUcZJCibfPmEO52Ew3iKh1yOsBLu2kgWjvYo3rlBzGu4mOwfzoWXg>
- <xmx:fBUcZKhbvx6qWMqsKYaqAscSKDJNVy3-pVxUoNmECmwnDMgfOD4dew>
- <xmx:fBUcZNqSmbP1g5j1YOdAYfgiiOP7a3-l8BSmPEKPMgVxr8pbI9gdXw>
- <xmx:fRUcZNs1qyTIwmjwmMWXYjXcaMurU1krRANrriAcj8ZvuvjMJpqWF66_E_g>
-Feedback-ID: i36d94643:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 23 Mar 2023 05:01:47 -0400 (EDT)
-Message-ID: <ac87f86f-6837-4e0e-ec34-1df35f52540e@lv6.tw>
-Date: Thu, 23 Mar 2023 17:01:42 +0800
+ Thu, 23 Mar 2023 14:20:09 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id D651462670;
+ Thu, 23 Mar 2023 14:20:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CAC9C433D2;
+ Thu, 23 Mar 2023 14:20:06 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="iAvGtKIh"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1679581203;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=s6+xdLTbapnWkgsW7EozVwLRORONjfmL95XQwljG6l8=;
+ b=iAvGtKIh27IEjOBMB6mSve6aO5RDutAB85Tn1lGTpf1SLfAfXOGEyVofdhAFVHRKqfU0La
+ g993F4mWH1kVBY3GL34w4levO/CpLuzhCQLmTDEAjgxuKwPjG8l1f+5XnQz06vqQcYeFJ7
+ j38zO1H3wDEjNdSQlfUkZqHguf4KPKI=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c4e2264b
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Thu, 23 Mar 2023 14:20:03 +0000 (UTC)
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: samuel@sholland.org,
+	me@msfjarvis.dev,
+	wireguard@lists.zx2c4.com
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [PATCH android] ui: set selected tunnel after creating fragments
+Date: Thu, 23 Mar 2023 15:19:57 +0100
+Message-Id: <20230323141957.3200896-1-Jason@zx2c4.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Content-Language: en-US
-From: lsc <lsc@lv6.tw>
-Cc: jordan@tailscale.com, james@tailscale.com, Jason@zx2c4.com
-To: wireguard@lists.zx2c4.com
-Subject: wireguard-go: data race introduced in recent commit 9e2f386
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -88,80 +60,57 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+I'm not sure why that comment (Samuel's) was there saying it was
+necessary. Given it's been async for a long while, this wasn't
+guaranteed anyway. So let's get rid of it and see what happens. Screen
+rotation seems fine thus far.
 
-Not sure if this is the correct place for bug reports, hope it's okay :)
+Cc: Samuel Holland <samuel@sholland.org>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+---
+Samuel -- CC'ing this to you in case you remember anything.
 
-I found my wireguard-go server (built from current ToT 1417a47) always 
-panicking when I ran speedtest on a client via the server. I rebuilt the 
-server with data race detector (`go build -race`) and got the following 
-trace:
+ .../com/wireguard/android/activity/BaseActivity.kt    | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-==================
-WARNING: DATA RACE
-Read at 0x00c00043b2f8 by goroutine 49:
-   golang.zx2c4.com/wireguard/conn.setSrcControl()
-       /home/lsc36/wireguard-go/conn/sticky_linux.go:76 +0x8c
-   golang.zx2c4.com/wireguard/conn.(*StdNetBind).send4()
-       /home/lsc36/wireguard-go/conn/bind_std.go:346 +0x174
-   golang.zx2c4.com/wireguard/conn.(*StdNetBind).Send()
-       /home/lsc36/wireguard-go/conn/bind_std.go:332 +0x1d4
-   golang.zx2c4.com/wireguard/device.(*Peer).SendBuffers()
-       /home/lsc36/wireguard-go/device/peer.go:126 +0x18c
-   golang.zx2c4.com/wireguard/device.(*Peer).RoutineSequentialSender()
-       /home/lsc36/wireguard-go/device/send.go:519 +0x458
-   golang.zx2c4.com/wireguard/device.(*Peer).Start.func2()
-       /home/lsc36/wireguard-go/device/peer.go:198 +0x40
-
-Previous write at 0x00c00043b2f8 by goroutine 47:
-   golang.zx2c4.com/wireguard/conn.(*StdNetEndpoint).ClearSrc()
-       /home/lsc36/wireguard-go/conn/bind_std.go:100 +0x48
-   golang.zx2c4.com/wireguard/conn.getSrcFromControl()
-       /home/lsc36/wireguard-go/conn/sticky_linux.go:18 +0x3c
-   golang.zx2c4.com/wireguard/conn.(*StdNetBind).makeReceiveIPv4.func1()
-       /home/lsc36/wireguard-go/conn/bind_std.go:232 +0x350
-   golang.zx2c4.com/wireguard/device.(*Device).RoutineReceiveIncoming()
-       /home/lsc36/wireguard-go/device/receive.go:107 +0x3ac
-   golang.zx2c4.com/wireguard/device.(*Device).BindUpdate.func3()
-       /home/lsc36/wireguard-go/device/device.go:530 +0x4c
-
-Goroutine 49 (running) created at:
-   golang.zx2c4.com/wireguard/device.(*Peer).Start()
-       /home/lsc36/wireguard-go/device/peer.go:198 +0x300
-   golang.zx2c4.com/wireguard/device.(*ipcSetPeer).handlePostConfig()
-       /home/lsc36/wireguard-go/device/uapi.go:268 +0x164
-   golang.zx2c4.com/wireguard/device.(*Device).IpcSetOperation()
-       /home/lsc36/wireguard-go/device/uapi.go:160 +0x35c
-   golang.zx2c4.com/wireguard/device.(*Device).IpcHandle()
-       /home/lsc36/wireguard-go/device/uapi.go:428 +0x248
-   main.main.func4.1()
-       /home/lsc36/wireguard-go/main.go:245 +0x4c
-
-Goroutine 47 (running) created at:
-   golang.zx2c4.com/wireguard/device.(*Device).BindUpdate()
-       /home/lsc36/wireguard-go/device/device.go:530 +0x4b8
-   golang.zx2c4.com/wireguard/device.(*Device).handleDeviceLine()
-       /home/lsc36/wireguard-go/device/uapi.go:223 +0x45c
-   golang.zx2c4.com/wireguard/device.(*Device).IpcSetOperation()
-       /home/lsc36/wireguard-go/device/uapi.go:183 +0x210
-   golang.zx2c4.com/wireguard/device.(*Device).IpcHandle()
-       /home/lsc36/wireguard-go/device/uapi.go:428 +0x248
-   main.main.func4.1()
-       /home/lsc36/wireguard-go/main.go:245 +0x4c
-==================
-
-The bug looks introduced by a recent commit 9e2f386 "conn, device, tun: 
-implement vectorized I/O on Linux". Without much knowledge to the 
-codebase, it seems to me that Endpoint is supposed to be guarded by the 
-RWMutex embedded in Peer, yet the change introduced a write without 
-locking the mutex (`ep.ClearSrc()` called from sticky_linux.go:18).
-
-In addition, I found it weird that Endpoint objects are reused via 
-`endpointPool`. The docstring suggests "Endpoints are immutable, so we 
-can re-use them" but that doesn't seem true.
-
-Added authors/reviewers of 9e2f386 to cc. Would you take a look?
-
-Regards,
-SC
+diff --git a/ui/src/main/java/com/wireguard/android/activity/BaseActivity.kt b/ui/src/main/java/com/wireguard/android/activity/BaseActivity.kt
+index 204a5a80..8f0855ea 100644
+--- a/ui/src/main/java/com/wireguard/android/activity/BaseActivity.kt
++++ b/ui/src/main/java/com/wireguard/android/activity/BaseActivity.kt
+@@ -7,9 +7,7 @@ package com.wireguard.android.activity
+ import android.os.Bundle
+ import androidx.databinding.CallbackRegistry
+ import androidx.databinding.CallbackRegistry.NotifierCallback
+-import androidx.lifecycle.Lifecycle
+ import androidx.lifecycle.lifecycleScope
+-import androidx.lifecycle.repeatOnLifecycle
+ import com.wireguard.android.Application
+ import com.wireguard.android.model.ObservableTunnel
+ import kotlinx.coroutines.launch
+@@ -33,6 +31,8 @@ abstract class BaseActivity : ThemeChangeAwareActivity() {
+     }
+ 
+     override fun onCreate(savedInstanceState: Bundle?) {
++        super.onCreate(savedInstanceState)
++
+         // Restore the saved tunnel if there is one; otherwise grab it from the arguments.
+         val savedTunnelName = when {
+             savedInstanceState != null -> savedInstanceState.getString(KEY_SELECTED_TUNNEL)
+@@ -41,13 +41,8 @@ abstract class BaseActivity : ThemeChangeAwareActivity() {
+         }
+         if (savedTunnelName != null)
+             lifecycleScope.launch {
+-                repeatOnLifecycle(Lifecycle.State.CREATED) {
+-                    selectedTunnel = Application.getTunnelManager().getTunnels()[savedTunnelName]
+-                }
++                selectedTunnel = Application.getTunnelManager().getTunnels()[savedTunnelName]
+             }
+-
+-        // The selected tunnel must be set before the superclass method recreates fragments.
+-        super.onCreate(savedInstanceState)
+     }
+ 
+     override fun onSaveInstanceState(outState: Bundle) {
+-- 
+2.40.0
 
