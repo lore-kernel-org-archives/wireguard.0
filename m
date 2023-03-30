@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3680C6FD1D
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Mar 2023 14:16:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C375C761A6
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Mar 2023 14:27:05 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 126326b4;
-	Thu, 30 Mar 2023 14:16:26 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ef39e748;
+	Thu, 30 Mar 2023 14:24:03 +0000 (UTC)
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e6660857
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a93d0a9e
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Mar 2023 14:16:23 +0000 (UTC)
+ Thu, 30 Mar 2023 14:24:01 +0000 (UTC)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id E77A461F3C
- for <wireguard@lists.zx2c4.com>; Thu, 30 Mar 2023 14:16:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9CC7C4339E
- for <wireguard@lists.zx2c4.com>; Thu, 30 Mar 2023 14:16:20 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 797F662097
+ for <wireguard@lists.zx2c4.com>; Thu, 30 Mar 2023 14:24:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F1AC4339C
+ for <wireguard@lists.zx2c4.com>; Thu, 30 Mar 2023 14:23:59 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
  dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="B4uZ8BWL"
+ header.b="YIyaOFZ8"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1680185778;
+ t=1680186238;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=viNgEZFEn6veGKFigilnWYOPVmCcl66+Oq6gcIS6oQY=;
- b=B4uZ8BWLoKIwnfM1WA8vO8F7wM9yfTiqYpwlcFW0+IUDKB14LehL2Ni97r7kAjlmH0a0rV
- COLzy+yN75M47WwH2AYduIEPdW65jqRUNUrEuW25kFqcXTOGSMFztY0bNIuLKc8qi1fxGM
- Jdd50DQctKKvayKSbi7XPED4LNxdXt4=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 447c3051
+ bh=m5Vimitj0qOVnIkj9xX+DcHv5RVc3wYHUI9usWSPnso=;
+ b=YIyaOFZ89YEugB0QS/RFalbDf5ahuitUenSq+Uf8D1PSWfFzKeN/FrT3SCJjkC3uYGEPZD
+ jmaFAxvC3t+1GXAUm3I7ynze4tvahLl2A64c95X+Uyttck9wfGIamu092+IZOvPnmEnkVf
+ 9wIFevSJzfEH3NRKNkNfUZoTki2QJOE=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id d18b2032
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Mar 2023 14:16:18 +0000 (UTC)
-Received: by mail-vs1-f52.google.com with SMTP id c1so16372458vsk.2
- for <wireguard@lists.zx2c4.com>; Thu, 30 Mar 2023 07:16:18 -0700 (PDT)
-X-Gm-Message-State: AAQBX9fzExyXuZzMIJcVPDwKEs3XdgG6HO4ntUO4JTm9/0W/DBZAf0FD
- 4IK1bpMKc2SSqAc5aex6Omh1fxe7r5YmOBf25Nc=
-X-Google-Smtp-Source: AKy350aeH8jyDW9uVrSrstpeAityaWv4HK3hcg8e1fWSNski1XutDwc/oO9TCX0qM/rAleOyh3mGo5ZiRIffmMusCnU=
-X-Received: by 2002:a67:d88e:0:b0:426:3a3d:180b with SMTP id
- f14-20020a67d88e000000b004263a3d180bmr12398506vsj.5.1680185777630; Thu, 30
- Mar 2023 07:16:17 -0700 (PDT)
+ Thu, 30 Mar 2023 14:23:57 +0000 (UTC)
+Received: by mail-ua1-f48.google.com with SMTP id n17so13907202uaj.10
+ for <wireguard@lists.zx2c4.com>; Thu, 30 Mar 2023 07:23:57 -0700 (PDT)
+X-Gm-Message-State: AAQBX9eczGfZHyH7zrcp9XJAYNT3EqHrmGNONPgFZl8dlqzvGdnr9L4m
+ bS6nc/opJP2No8O25CgXDbPhbBQGGJzHD/iReUU=
+X-Google-Smtp-Source: AKy350YSsjvAwd9WUNdiEGNBmY9QK0x20n3kbVjZNTkbwWDKwutPds/hj76/UAIXl9i8Ts4tuhrigt8bfitHrz2STj4=
+X-Received: by 2002:a05:6130:a01:b0:68b:817b:eec8 with SMTP id
+ bx1-20020a0561300a0100b0068b817beec8mr14241636uab.0.1680186237257; Thu, 30
+ Mar 2023 07:23:57 -0700 (PDT)
 MIME-Version: 1.0
 References: <CA+CGqoKvx-Yeh6zP1_9goVFaPMKaVPQUij2UrO9B9Ea8cRd7iQ@mail.gmail.com>
-In-Reply-To: <CA+CGqoKvx-Yeh6zP1_9goVFaPMKaVPQUij2UrO9B9Ea8cRd7iQ@mail.gmail.com>
+ <CAHmME9pXvghVW7RUD3gMRR4R9bAfS9YZ7kbt+27m2tnbGtjXFQ@mail.gmail.com>
+In-Reply-To: <CAHmME9pXvghVW7RUD3gMRR4R9bAfS9YZ7kbt+27m2tnbGtjXFQ@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 30 Mar 2023 16:16:06 +0200
-X-Gmail-Original-Message-ID: <CAHmME9pXvghVW7RUD3gMRR4R9bAfS9YZ7kbt+27m2tnbGtjXFQ@mail.gmail.com>
-Message-ID: <CAHmME9pXvghVW7RUD3gMRR4R9bAfS9YZ7kbt+27m2tnbGtjXFQ@mail.gmail.com>
+Date: Thu, 30 Mar 2023 16:23:46 +0200
+X-Gmail-Original-Message-ID: <CAHmME9rTgQKn54SDO+JDNYVYiSFuaV+wjN2yNNNOSw43P6KiKQ@mail.gmail.com>
+Message-ID: <CAHmME9rTgQKn54SDO+JDNYVYiSFuaV+wjN2yNNNOSw43P6KiKQ@mail.gmail.com>
 Subject: Re: Nw Android version crashes on Android TV / Google TV
 To: Kai Haberzettl <khaberz@gmail.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
@@ -70,5 +71,5 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Already fixed and just waiting on Google to approve the app:
-https://git.zx2c4.com/wireguard-android/commit/?id=b734f44200c40fb630fbc566dd245693145f93ec
+Or if you can't wait for the update approval, here's the Play Store-signed APK:
+https://data.zx2c4.com/wireguard-496-81ed97b6-5d27-466d-a966-f3c7b498ffdb-delete-me-in-two-weeks.apk
