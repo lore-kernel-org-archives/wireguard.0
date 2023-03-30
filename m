@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFB0DC76196
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  3 Apr 2023 22:41:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3A7EC761AF
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  3 Apr 2023 22:41:03 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c00e6a08;
-	Mon, 3 Apr 2023 22:39:04 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 89cddc39;
+	Mon, 3 Apr 2023 22:39:29 +0000 (UTC)
 Received: from mail.redxen.eu (chisa.nurnberg.hetzner.redxen.eu
- [2a01:4f8:c2c:b2fc::1])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 547cbdc2
+ [157.90.22.104])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 09c9a7a0
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 2 Apr 2023 12:57:52 +0000 (UTC)
-Received: from localhost (karu.nurnberg.hetzner.redxen.eu [157.90.160.106])
- by mail.redxen.eu (RedXen Mail Postfix) with ESMTPSA id 2DD185FA63
- for <wireguard@lists.zx2c4.com>; Sun,  2 Apr 2023 12:57:52 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 30 Mar 2023 07:16:44 +0000 (UTC)
+Received: from localhost (p578bcf22.dip0.t-ipconnect.de [87.139.207.34])
+ by mail.redxen.eu (RedXen Mail Postfix) with ESMTPSA id BD60C5FA60
+ for <wireguard@lists.zx2c4.com>; Thu, 30 Mar 2023 07:16:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=redxen.eu;
- s=2021.05.31.01-mail; t=1680440272;
- bh=aYiMpv9KtF0gshYdl59/LDU2Nfkar0BhFVfRsJojQ6A=;
+ s=2021.05.31.01-mail; t=1680160603;
+ bh=TmdwgmSTcNTaaMIswDXgIEP965TEQnBmTFtiIa006hg=;
  h=Date:To:Subject:From;
- b=n8VIjJQS4rGLJRVTuBna9wpe3Q/5vHkq1J8ogkB+tpig9UruVM8F50tZv7U6G2hjn
- rOk9IlhPS0takQmmqVWY8mDXPDOepwfsa89dHmQC6B2Yr4mGgsfoWrVMtn1setZ9Lc
- DRFJ9UpvhrScljUmDz8Wk1E56BHtieYWNqVyj/K8DZ5Ivx+7qFwAfCR/a7AbYY6XWt
- HD4Faky1l3/pmhWStAQ77otYwsYQY2MMmw8gKaOd2O3vOmqIWVF1J+9U0KR1i2PIVb
- g271cpWvgSsM4ReJMa88jUb/pRSYO+XsEKGhEK5YyJysrXGfaG8QlCK5AQX69okwA8
- nBMsWFeFr5lqA==
+ b=YN+/Qq9N/ZRb50A569qlfPrLF2jLSi9dYOK74x2np41wjwyI+d9VGb5uWSy8XKfpH
+ L4K+ZLX7AuUbKDZWuRCU9g6gpWY8YJbCUTUW53iKqlb33sCxnx4Ly6bcK565DOZv0+
+ 48Tmlq+YlkrRcuwvArk4CtYcnOdejEGSix2kghsHcGa7knBGn/9YWAJdkAdqcv5k7I
+ O05a4+3NKda5Hp2P1s6TOhFhSIHroifLo622m3WaI4r2D+r0IS5PMgXbgJxiScgEok
+ dnPwkHQ7vLFMhwafFvymjPphyCcmujthb+SAl7sjN9CXtbZBX8SndK4zSwZ3uIj8CB
+ mSY7EMgKQwSeQ==
 Authentication-Results: mail.redxen.eu;
  auth=pass smtp.auth=caskd smtp.mailfrom=caskd@redxen.eu
-Date: Sun, 02 Apr 2023 12:54:12 +0000
+Date: Thu, 30 Mar 2023 07:16:42 +0000
 To: wireguard@lists.zx2c4.com
-Subject: Race condition/no locking on configuration load
+Subject: wg config and interface address
 From: caskd <caskd@redxen.eu>
-Message-Id: <3ADWX816HB4BO.3EX0UVUOJ70FG@unix.is.love.unix.is.life>
+Message-Id: <21QN43YXI27DJ.3G5P6T4FS5WOA@unix.is.love.unix.is.life>
 User-Agent: mblaze/20220328-3140-g8658ea6aef
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg="pgp-sha1";
  protocol="application/pgp-signature";
- boundary="----_=_521c75be4fad84127b8bc015_=_"
-X-Mailman-Approved-At: Mon, 03 Apr 2023 22:39:03 +0000
+ boundary="----_=_489befd066338cde7cbde644_=_"
+X-Mailman-Approved-At: Mon, 03 Apr 2023 22:39:27 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -56,67 +57,54 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 This is a multipart message in MIME format.
 
-------_=_521c75be4fad84127b8bc015_=_
+------_=_489befd066338cde7cbde644_=_
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="----_=_795f82f472eebc601b4ec0db_=_"
+Content-Type: multipart/mixed; boundary="----_=_09f3164d1990032f3a3b9739_=_"
 
 This is a multipart message in MIME format.
 
-------_=_795f82f472eebc601b4ec0db_=_
+------_=_09f3164d1990032f3a3b9739_=_
 Content-Type: text/plain; charset=UTF-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hello everyone,
+Hello,
 
-i've hit a weird edgecase where the wireguard config gets loaded and during=
- the load the interface gets a address assigned which just disappears. Here=
-'s how i replicate it.
-
-ip link add $IFNAME type wireguard
-wg setconf $IFNAME $CONFIG #-- while this runs, run the command below in pa=
-rallel
-ip -6 address add $ADDR dev $IFNAME
-
-Following this, the added interface address doesn't persist, yet no error i=
-s returned by either iproute2 or wireguard-tools.
-
-Using:
-iproute2 6.2.0
-Linux 6.1.9
-wireguard-tools 1.0.20210914
-
-Is this a known problem? I assume it has to do with no locking being done o=
-r similar but i haven't looked deeper into it.
+i've run into a interesting edgecase where if the wireguard config is loade=
+d with `wg setconf` at the same time as a address is added via iproute2's `=
+ip` tool, the address simply disappears without any notice or error. The ad=
+dress addition "succeeds" but is not persisted. I've been able to semi-pers=
+istently replicate it but the scheduler gets in the way. Is this a known is=
+sue?
 
 --=20
 Alex D.
 RedXen System & Infrastructure Administration
 https://redxen.eu/
 
-------_=_795f82f472eebc601b4ec0db_=_--
+------_=_09f3164d1990032f3a3b9739_=_--
 
-------_=_521c75be4fad84127b8bc015_=_
+------_=_489befd066338cde7cbde644_=_
 Content-Disposition: attachment; filename=signature.asc
 Content-Type: application/pgp-signature
 Content-Transfer-Encoding: 7bit
 
 -----BEGIN PGP SIGNATURE-----
 
-iQJEBAABCgAuFiEE2k4nnbsAOnatJfEW+SuoX2H0wXMFAmQpe8sQHGNhc2tkQHJl
-ZHhlbi5ldQAKCRD5K6hfYfTBc62TD/9QEpAJw+4d/wDvwcYqokz6OIzxIxZ1WUJY
-66PDoJOWqzCFOgnvr5QtmLVEqmrRaJL2cZOZ4IKXXWe+6WDLiz7iZn0Ig9b1DKiv
-yNb3nyh90VnXUbUYZfYiWIpv0JtRvz3991dt8trumUp+0mRupvIObj4UdiL/LYWS
-2xS68D0rLIAsj1YDe5Wsjz4EEVqJZ/t8IthaljyOabrVoaSSz6gSCnbbZMr3du74
-IBcy6q5GEXwDX3IQkMsp4qWq994D5G9zTxoxbw/oeNOzMKAn20NnpQR3pdFihAej
-SSHYu6gM10SV18aDVlEKrfMhcvKnTKyco3SUpIK6wdbuESR3xIfiguYy7H7Dd6J+
-v51NvSCtXmdXxK5fdVyyDG6Zg9gJnZXvpL/3+m+o9GPpm6T7MyCSMdy6GdEnAGyH
-W8oKEVA4wQ6Vt2jArHknUO74lmZ/k7VChla24q3afXNu81VfJKJe1a/V1cvf2ayV
-nLCRTmVpF6dVQL0renVhPuhB+hkZJnIWMDwbcD3jTIsxUnALormV/nqAlLOKJ73/
-BwGMvM0MS6rU+NkUHgCatH0up6AXuZTJaUYTsQVspVBeL9oTx5y0fF63FrpgWOMW
-HxUD+1KI35TNeyL8gOtcS07sClQpIVCIQ17q+8v9ztETwchgNFjYJfXlVrOAd06z
-Q1WLomZJ+w==
-=GjW3
+iQJEBAABCgAuFiEE2k4nnbsAOnatJfEW+SuoX2H0wXMFAmQlN1gQHGNhc2tkQHJl
+ZHhlbi5ldQAKCRD5K6hfYfTBczXcD/4+7HxnlaLN0wyVlmQynP8f4TCJBIHizxyZ
+jg1W7hXl3t3tFZMOovLUvDrBWw6GG4Gy/XiPD3h1poDLJgHGBfARyhK9RnnzHUjc
+nXo/b8dwXc68mG1VwXC5yQ8YlM3W/jE98kHzHQUFZxIWZ2yszRGcBw8FajynkFFM
+qt8oHVugxKd0z0Ts0IureGrzMCw7CAQ+4SY/1vtPO770rO7W7Cb/uniGIalNZBBi
+L5CmW5Wg0OSZg6cKJTPkfUT45RIeww+itb084gbDDDpPWPtaFtzy3kdODT2qcypZ
+LEm5LOYO6DDZTzoc4Vk0keJrymMbB36vvKFZ7SpxC/LdEEWozP8XSx6qJB+VyJZ9
+Itt6PugdTXq7vExjgQi/keN9mOc3J3xUvLzkNkXTvGkV+G28mo+PJ6Sp+MsB8gkt
+4RYE+5U7fIJo2TztWWQUDH4VLn6LkE/j647SKEjw4Zitjy+kjp7G3yhqFRSj8OG+
+kL4hzSZkZx4QNMUAJgu0KYAnyTOJTsW9sFLMRm3Iq1DDKCivFzvS7226pJ7fY+7L
+nPl96rPlCWfPPwVYbG0PGAL3OQLSTHVb0S2U7SWdlE7VMJD0Kh1tDQA6IGd+SV7L
+F+8f4mvqiOggW5pQs/EaKMNsFfPmE8DkRSYulpLwzAKB64z0cik1SEbQo9sCvs9M
+hh97pOe2Kg==
+=//fP
 -----END PGP SIGNATURE-----
 
-------_=_521c75be4fad84127b8bc015_=_--
+------_=_489befd066338cde7cbde644_=_--
