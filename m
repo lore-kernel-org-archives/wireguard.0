@@ -4,56 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6884DC761A6
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Mar 2023 13:27:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3680C6FD1D
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Mar 2023 14:16:27 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 99de84e5;
-	Thu, 30 Mar 2023 13:25:13 +0000 (UTC)
-Received: from mail-il1-x132.google.com (mail-il1-x132.google.com
- [2607:f8b0:4864:20::132])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4794b6a7
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 126326b4;
+	Thu, 30 Mar 2023 14:16:26 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e6660857
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 30 Mar 2023 14:16:23 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id E77A461F3C
+ for <wireguard@lists.zx2c4.com>; Thu, 30 Mar 2023 14:16:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9CC7C4339E
+ for <wireguard@lists.zx2c4.com>; Thu, 30 Mar 2023 14:16:20 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="B4uZ8BWL"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1680185778;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=viNgEZFEn6veGKFigilnWYOPVmCcl66+Oq6gcIS6oQY=;
+ b=B4uZ8BWLoKIwnfM1WA8vO8F7wM9yfTiqYpwlcFW0+IUDKB14LehL2Ni97r7kAjlmH0a0rV
+ COLzy+yN75M47WwH2AYduIEPdW65jqRUNUrEuW25kFqcXTOGSMFztY0bNIuLKc8qi1fxGM
+ Jdd50DQctKKvayKSbi7XPED4LNxdXt4=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 447c3051
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Mar 2023 13:25:11 +0000 (UTC)
-Received: by mail-il1-x132.google.com with SMTP id o12so4773994ilh.13
- for <wireguard@lists.zx2c4.com>; Thu, 30 Mar 2023 06:25:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20210112; t=1680182710;
- h=content-transfer-encoding:to:subject:message-id:date:from
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=av9qMQufqg9b0rEkxuFI5+zLgwKJz0B1O+8RCZ2/4PM=;
- b=TxGJ7fdx9BpA8LCIT38M7LOQBp3mzslvjSE+y21yL9u+9kVosc8IQO4NwOggkHyOrH
- GdZjvLX/mW3srMn+6RB8kjZECAqSCFeQmDkPMl4ER4x95GSzhSLHyV3jsf/8FGMam7bS
- AZcOfqE4APXJUSpAPiMVxrD6gPm3n5+dL9kQ2nIdfqwMXXnxCQM/FjbYHveUIsSuaPPl
- vXk6Sn0j+1pMAAsRzC3xKU3sVftHL4EpFkQCU3AtBff7gIdgz+kvhR0wAg4bZt08QHhL
- UEzuXiEhK2oHkE9NTA6ER3sd4PeDa0T+81Bbg7ifjjBQMmzUA9Y5dpRNS1YlXkzQGMYN
- P+9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112; t=1680182710;
- h=content-transfer-encoding:to:subject:message-id:date:from
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=av9qMQufqg9b0rEkxuFI5+zLgwKJz0B1O+8RCZ2/4PM=;
- b=a5bxvXU3gsQxcL5D9XY08cic6Ys0OdJGekPcQXt3w8pR7AYBluwpVNBgOfwHbWCWGh
- V6qAuilq5lzchg3bbwcyRJ5NExmcczrTv0fWHe/gvy+IyrJSv7ZVqsE1EExEH62+vlVq
- nGX7Hf2JyzglUCuCiTmCEbLr9aYhn0YpSL7JnS/GQJcVi3exUfztO1iuma1P2NFHeVzq
- xmWB2zM14O+RH/+QdDaxDGy4KEAHwE6AKjHGT+7Cxlih/urPL8qthkqhnhR/Tank7iiw
- p60QOGJ1T8P1jRtjWWls0lbWRg0qAFmCcXRGRX8WZNditdUZSShuiCyHLS0DQdhiQB/T
- Hznw==
-X-Gm-Message-State: AAQBX9cOhBdEPG7RKp6+8qRFRathYrn/WiNrZtVKNof7m3t6SYs1GmSQ
- WxOV0ctJnXIPynvvSBVLjmZ4onsXtUewBPvZXEjNr5ZdVwMspdfH
-X-Google-Smtp-Source: AKy350bbdDQwy2r2nZNxoY6X7na0xU11z5QmA1+qhsRHMNOO50zcwZE2OQmYww9YDRpv4cZ4GCQ2GT2cK0jszUUH+VU=
-X-Received: by 2002:a05:6e02:1be1:b0:325:e0bd:d1c7 with SMTP id
- y1-20020a056e021be100b00325e0bdd1c7mr10931994ilv.2.1680182710003; Thu, 30 Mar
- 2023 06:25:10 -0700 (PDT)
+ Thu, 30 Mar 2023 14:16:18 +0000 (UTC)
+Received: by mail-vs1-f52.google.com with SMTP id c1so16372458vsk.2
+ for <wireguard@lists.zx2c4.com>; Thu, 30 Mar 2023 07:16:18 -0700 (PDT)
+X-Gm-Message-State: AAQBX9fzExyXuZzMIJcVPDwKEs3XdgG6HO4ntUO4JTm9/0W/DBZAf0FD
+ 4IK1bpMKc2SSqAc5aex6Omh1fxe7r5YmOBf25Nc=
+X-Google-Smtp-Source: AKy350aeH8jyDW9uVrSrstpeAityaWv4HK3hcg8e1fWSNski1XutDwc/oO9TCX0qM/rAleOyh3mGo5ZiRIffmMusCnU=
+X-Received: by 2002:a67:d88e:0:b0:426:3a3d:180b with SMTP id
+ f14-20020a67d88e000000b004263a3d180bmr12398506vsj.5.1680185777630; Thu, 30
+ Mar 2023 07:16:17 -0700 (PDT)
 MIME-Version: 1.0
-From: Kai Haberzettl <khaberz@gmail.com>
-Date: Thu, 30 Mar 2023 15:24:59 +0200
-Message-ID: <CA+CGqoKvx-Yeh6zP1_9goVFaPMKaVPQUij2UrO9B9Ea8cRd7iQ@mail.gmail.com>
-Subject: Nw Android version crashes on Android TV / Google TV
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <CA+CGqoKvx-Yeh6zP1_9goVFaPMKaVPQUij2UrO9B9Ea8cRd7iQ@mail.gmail.com>
+In-Reply-To: <CA+CGqoKvx-Yeh6zP1_9goVFaPMKaVPQUij2UrO9B9Ea8cRd7iQ@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 30 Mar 2023 16:16:06 +0200
+X-Gmail-Original-Message-ID: <CAHmME9pXvghVW7RUD3gMRR4R9bAfS9YZ7kbt+27m2tnbGtjXFQ@mail.gmail.com>
+Message-ID: <CAHmME9pXvghVW7RUD3gMRR4R9bAfS9YZ7kbt+27m2tnbGtjXFQ@mail.gmail.com>
+Subject: Re: Nw Android version crashes on Android TV / Google TV
+To: Kai Haberzettl <khaberz@gmail.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -68,9 +70,5 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-The new Android version Version 1.0.20230328 crashes upon startup on
-Android TV - in my case on a Google Chromecast with Google TV (others
-appear to see the same per reports on reddit).  If I can provide
-additional debug Information, please let me know how and I=E2=80=99ll be ha=
-ppy
-to.
+Already fixed and just waiting on Google to approve the app:
+https://git.zx2c4.com/wireguard-android/commit/?id=b734f44200c40fb630fbc566dd245693145f93ec
