@@ -4,45 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24285C77B6F
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 11 Apr 2023 10:27:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1BA9C76196
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 11 Apr 2023 10:30:28 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 07a9d486;
-	Tue, 11 Apr 2023 10:27:36 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id aa6aea23
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 11 Apr 2023 10:27:34 +0000 (UTC)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 3183061ACE
- for <wireguard@lists.zx2c4.com>; Tue, 11 Apr 2023 10:27:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41CCEC433D2
- for <wireguard@lists.zx2c4.com>; Tue, 11 Apr 2023 10:27:32 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="SCqjIMtt"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1681208848;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type;
- bh=QlSTrmMe32ZyHtdQOVBcwM8f4hG9XvrbaYZGwvT1w6Y=;
- b=SCqjIMttXuStW7DtJ1QTQoc+jOc0uU0AugSCsPgEtrp1yjBkqcUq/aGDqA53B5FQWys2ut
- LllpConMjZn69vT5tV2FuD892pSu2mTuDFs71kqUhpuheeGykKKegB/O9bEJATM3EoAn8Y
- agjm8CdEmUKprx6nHEJiXR6liF7NPqM=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 86793f09
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 627489a5;
+	Tue, 11 Apr 2023 10:27:59 +0000 (UTC)
+Received: from mail-vs1-xe2e.google.com (mail-vs1-xe2e.google.com
+ [2607:f8b0:4864:20::e2e])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5b33fecd
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 11 Apr 2023 10:27:24 +0000 (UTC)
-Date: Tue, 11 Apr 2023 12:27:21 +0200
-Message-ID: <c77bea9c315db7b4e2373b790bd43427.Jason@zx2c4.com>
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-From: Jason A. Donenfeld <Jason@zx2c4.com>
-Subject: Android Reproducible Builds & Signing Key Changes
+ for <wireguard@lists.zx2c4.com>; Fri, 7 Apr 2023 20:26:51 +0000 (UTC)
+Received: by mail-vs1-xe2e.google.com with SMTP id h15so37797077vsh.0
+ for <wireguard@lists.zx2c4.com>; Fri, 07 Apr 2023 13:26:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=hiramchirino-com.20210112.gappssmtp.com; s=20210112; t=1680899210;
+ x=1683491210; 
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=BtswLEcQ6fv0qr60w80NJt6lEV+Z8BvcP5M8/Tt1rN0=;
+ b=gt5vbFB3Lpg3OZxL1zIo1l4kSHTe+hr3tOc8M3RmN82Xzhk4CEbyNXNOThIUIuCRsu
+ TyBUqT6xneyGHS019EGadlhPG7+nqaRRl0IqhuYK27fFfR5rCPwdinVYO6lj0xr8nS8y
+ AM7U8IaP8BOdvgcbM3Pf+bEZU44iO7FJ0DHzMub8bcmDUrNhnm8X4Ya59Ms/Z9FNaAf0
+ REVGFuDzPFZGFyfZ8+LjhNcGO3WxpwQBXuzxLyf9tt9FVxsIUHHoOjCJY5dP+3qupma1
+ nxLL6wowlHWkPBaz0NiE9XGmsQ8A8yoZ5YGOj8c9PIFcd36Dq4FQor3U+BnyGrPioOie
+ 24sA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112; t=1680899210; x=1683491210;
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=BtswLEcQ6fv0qr60w80NJt6lEV+Z8BvcP5M8/Tt1rN0=;
+ b=MgbXRQLRRElcROJef5R7YIQMRwyljUJzvyy7JnOgU8SlSGZEp+BdZAeWTbTSF9iz//
+ xjDxIbPOCLCimIf4qY2fsNLPiJnmRD9zdkVbSP8C2E9+4Vhmj1/5HS2NS5dJIrL8x/Gb
+ tUgeVQZwoS8iU1/0UckeVJyPgvfV2kMB+6w+giunyF3DpSfTno0APrghHTB2cCkeH+Zf
+ RtkMmmKS+WKI1uSZNVDGW8D55VKFkE1UaGEde+KRky6DuYVHvIpmyXknjVXNQDAxHOOx
+ JXIRIUDd7763hz6wPPJ8/7DczNoEGQ7xfsY7mNo845sZ2y0kGxRySqXvgN3iHe9bzLBa
+ 53Dg==
+X-Gm-Message-State: AAQBX9fHibdLN/+f/BOvYioQZvlJvQjUCohpaycY42GyjwgfL+sVSItf
+ OhGvwoY30ffzqmaj6UUw+QapHNGxc2fJSPvKixOKhJp3AzI=
+X-Google-Smtp-Source: AKy350ZZC0qrw8EXcvuuCGmgd2IYwn7ecrearQQRoyedQzyvWoCAN3ToinNQm59L3V0+vXSuEfIeFiVQhm7TrzbiKEs=
+X-Received: by 2002:a67:d38e:0:b0:425:d39f:3882 with SMTP id
+ b14-20020a67d38e000000b00425d39f3882mr131716vsj.3.1680899209538; Fri, 07 Apr
+ 2023 13:26:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: Hiram Chirino <hiram@hiramchirino.com>
+Date: Fri, 7 Apr 2023 16:26:38 -0400
+Message-ID: <CAGZ-RDJVoCz++x9XV3QhcY3zmfJtc7+6kxN2YeY9+3dpzasVeA@mail.gmail.com>
+Subject: [PATCH] conn: set the SO_REUSEADDR and SO_REUSEPORT socket options
+To: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailman-Approved-At: Tue, 11 Apr 2023 10:27:59 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -57,80 +69,91 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Setting the SO_REUSEADDR and SO_REUSEPORT socket options allows other
+applications to reuse the wg UDP port. This can be super handy to do
+Things like sending stun requests to stun servers from the wg port.
+This lets you discover the wg=E2=80=99s public IP:port mapping if you're be=
+hind a
+NAT router.
 
-Hi folks,
+Signed-off-by: Hiram Chirino <hiram@hiramchirino.com>
+---
+conn/controlfns_reuseport_unix.go | 32 ++++++++++++++++++++++++++++
+conn/controlfns_reuseport_windows.go | 24 +++++++++++++++++++++
+2 files changed, 56 insertions(+)
+create mode 100644 conn/controlfns_reuseport_unix.go
+create mode 100644 conn/controlfns_reuseport_windows.go
 
-The WireGuard Android app can now be reproducibly built, so that its contents
-can be publicly verified. The F-Droid project now does this verification, by
-comparing their build of WireGuard to the build that the WireGuard project
-publishes. When they match, the new version becomes available. This is very
-positive news.
-
-As part of this development, we're taking the opportunity to unify the signing
-keys used for WireGuard builds by F-Droid, the Google Play Store, and
-elsewhere. Previously, F-Droid would release builds using their own signing
-key [1], and the Google Play Store would release builds using yet a different
-signing key [2]. Moving forward, both F-Droid and the Google Play Store will
-release builds using the same signing key that the WireGuard project uses [3].
-(That signing key is held in an HSM, details for which I dumped here [4].)
-
-This means that it will be trivial to switch between F-Droid and the Google
-Play Store as a source for downloading WireGuard, as well as for receiving
-APKs directly from the WireGuard project, should we ever move to provide that.
-It will also let the app be bundled with ROMs more easily and still be
-updatable through any channel. And because the builds are reproducible,
-interested parties will be able to verify that they're receiving the same code
-from all places.
-
-However, since the signing key is changing from the respective app store keys
-to the WireGuard project key, a subset of users will need to remove and
-re-install the app using this basic procedure:
-
-    1. ⋮ -> Export tunnels to zip file.
-    2. Uninstall the WireGuard app entirely.
-    3. Reinstall the WireGuard app from the Google Play Store or F-Droid.
-       * Be sure to install version ≥ 1.0.20230405.
-    4. + -> Import from file or archive -> Downloads/wireguard-export.zip
-    5. File Manager -> delete Downloads/wireguard-export.zip
-
-But most users do not need to do this. Specifically:
-
-  - Google Play Store users who do not care about interoperability with
-    F-Droid or other app sources do *not* need carry out the above steps, as
-    the Google Play Store will continue serving updates using the old key.
-
-  - All F-Droid users (and users of alternative Google Play Store frontends,
-    such as Aurora) with WireGuard below version 1.0.20230405 *must* carry out
-    the above in order to continue receiving updates from anywhere.
-
-Hopefully this is relatively straight-forward and not too much of an
-inconvenience by those who care. I assume that F-Droid users are in general a
-more technical crowd, and should be able to manage. Please let me know if you
-have any questions or concerns.
-
-Regards,
-Jason
-
-[1] Old F-Droid signing key: d2ccbdf13c52e8905b02d9770dabae0b9d76ecdfe7533814134273ba959e2d3f
-[2] Old Play Store signing key: 79758d2ae9cd8b9107c0f6e67ff9ff02d255f9191c5e83202129ec081b4960fd
-[3] New WireGuard Project signing key: 84a13fa2c4e0064b0c11654b8a86574b7a9b9352a3834cee32455b061c3d4127
-[4] YubiHSM APK signing details: https://github.com/Yubico/yubihsm-shell/issues/329
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAmQ0GNsACgkQSfxwEqXe
-A64uLhAAgNf96W4ogBcx31JJ+jtwrPB2J22hY+K4K5enBX2Jk0J9j9Kgq3SB74sl
-3eg+X1OYypwkKhJMVhBh9LEdaqGCJHYUXc3B/tG0r9XXlYiMaOwry3GA72mPyOaQ
-vCgDA6t0a3WkUdib1sArL6Gn+T4w83I3GwbvvkQ1ooidHUtYJ8PsBw5619JSk/fC
-MfuPekg5+qfkTcd6dsWzK9O1GTEYO0c4NYubEva5d4VDU2V/cIbfWUCDi3+rMFgx
-F1dKMnZK0BWHc6AR7CcFFz1PHGUAPN8plZ2nObVsB9PW2wFq9hOXDJDI+5Sc8XjF
-FvG94yoiy7a/iWUfl7e7rllOanXPWdoiUKhX6j5Wsj6N+5+E039TpBN9LWtax7ES
-ms1NsbycV0bde+oh6rJud9RcrjXGbN8X/LdYYbZ/Z0F2B84fwzkSC+63EEHpeKOj
-uK6Ztc40yWLSJg6YnE4rn0hRfT+jsINXtCV/UcXk+4/asQC6O2EALMTQ83Wc6ONY
-MwAPIOFmtUKwgtOBcgsN6RCfyTYLUp+/fz17UtUShUnaK+Zl9NDuRuqLPdKn4mRc
-qLm/hBXA8FuqeVdMeQJfw/Xsffij3Yi+ILkBWfw8FqYJ6EUxOk49q0Sx0xF2GrzO
-sQfBLh75qJYlRaUhk/WtP3FSWbWbk90j5GcFU7OB4o2X8PKs91A=
-=huxB
------END PGP SIGNATURE-----
+diff --git a/conn/controlfns_reuseport_unix.go
+b/conn/controlfns_reuseport_unix.go
+new file mode 100644
+index 0000000..44d617b
+--- /dev/null
++++ b/conn/controlfns_reuseport_unix.go
+@@ -0,0 +1,32 @@
++//go:build !plan9 && !windows && !wasm && !js
++
++/* SPDX-License-Identifier: MIT
++ *
++ * Copyright (C) 2017-2023 WireGuard LLC. All Rights Reserved.
++ */
++
++package conn
++
++import (
++ "golang.org/x/sys/unix"
++ "syscall"
++)
++
++func init() {
++
++ controlFns =3D append(controlFns,
++ func(network, address string, c syscall.RawConn) error {
++ return c.Control(func(fd uintptr) {
++ _ =3D unix.SetsockoptInt(int(fd), unix.SOL_SOCKET, unix.SO_REUSEADDR, 1)
++ })
++ },
++ )
++ controlFns =3D append(controlFns,
++ func(network, address string, c syscall.RawConn) error {
++ return c.Control(func(fd uintptr) {
++ _ =3D unix.SetsockoptInt(int(fd), unix.SOL_SOCKET, unix.SO_REUSEPORT, 1)
++ })
++ },
++ )
++
++}
+diff --git a/conn/controlfns_reuseport_windows.go
+b/conn/controlfns_reuseport_windows.go
+new file mode 100644
+index 0000000..2f8a7bf
+--- /dev/null
++++ b/conn/controlfns_reuseport_windows.go
+@@ -0,0 +1,24 @@
++//go:build windows
++
++/* SPDX-License-Identifier: MIT
++ *
++ * Copyright (C) 2017-2023 WireGuard LLC. All Rights Reserved.
++ */
++
++package conn
++
++import (
++ "syscall"
++
++ "golang.org/x/sys/windows"
++)
++
++func init() {
++ controlFns =3D append(controlFns,
++ func(network, address string, c syscall.RawConn) error {
++ return c.Control(func(fd uintptr) {
++ _ =3D windows.SetsockoptInt(windows.Handle(fd), windows.SOL_SOCKET,
+windows.SO_REUSEADDR, 1)
++ })
++ },
++ )
++}
+--=20
+2.37.1 (Apple Git-137.1)
