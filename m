@@ -4,48 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D31FAC4167B
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 11 Dec 2023 10:52:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D605CC3DA6E
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 Dec 2023 04:58:47 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9d561545;
-	Mon, 11 Dec 2023 10:52:12 +0000 (UTC)
-Received: from mout.kundenserver.de (mout.kundenserver.de [217.72.192.74])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f5fa8e25
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 539eb5c6;
+	Wed, 20 Dec 2023 04:58:45 +0000 (UTC)
+Received: from w4.tutanota.de (w4.tutanota.de [81.3.6.165])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6b608025
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 11 Dec 2023 10:52:10 +0000 (UTC)
-Received: from [192.168.151.34] ([79.229.44.197]) by mrelayeu.kundenserver.de
- (mreue108 [212.227.15.183]) with ESMTPSA (Nemesis) id
- 1MsZ3N-1rVx3q3iwd-00tyNw for <wireguard@lists.zx2c4.com>; Mon, 11 Dec 2023
- 11:52:09 +0100
-Message-ID: <b0022d92-ce31-4858-aa5d-9b5a6222b733@online.de>
-Date: Mon, 11 Dec 2023 11:52:09 +0100
+ for <wireguard@lists.zx2c4.com>; Sat, 8 Apr 2023 13:04:34 +0000 (UTC)
+Received: from tutadb.w10.tutanota.de (unknown [192.168.1.10])
+ by w4.tutanota.de (Postfix) with ESMTP id 74D9110602D8
+ for <wireguard@lists.zx2c4.com>; Sat,  8 Apr 2023 13:04:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1680959074; 
+ s=s1; d=tutamail.com;
+ h=From:From:To:To:Subject:Subject:Content-Description:Content-ID:Content-Type:Content-Type:Content-Transfer-Encoding:Content-Transfer-Encoding:Cc:Date:Date:In-Reply-To:MIME-Version:MIME-Version:Message-ID:Message-ID:Reply-To:References:Sender;
+ bh=BUxtINg/O8hpBW8EYnduGU5HTHmZzPo90ymB3Y3yXpY=;
+ b=cLKLZ5iFKogf/kR83BOJIXcGS/MqFMwmUiGyTWyp2pfzM7i4pK618cvVyZftAyg2
+ QjrzBOB5ET3AWjWUTR+dj3F1NaWI0x3mIPEVUoNjpPkTBXxQT0ClXZAnUZNjoFTa3w4
+ tpNgzxKIUfdGmBCqj1KdP90JovBuwyZE6BbfEEjFauonesrEehLQm3wZq+rd+hmDuCB
+ IPictQSulapp9Nq0lyewiEYZPaOql6qYImqoyv7wdnm1/sox9eyPcLtEeXl43G9Y/27
+ Yf8GgvtapopDUe/wZGyhz0FGiQxWEcxcQNBFT3tSUm/AvI97uSILMDjXN0rAlRhOhm3
+ 6QL7HrH02A==
+Date: Sat, 8 Apr 2023 15:04:34 +0200 (CEST)
+From: "Leon J. Brits" <ljbrits@tutamail.com>
+To: Wireguard <wireguard@lists.zx2c4.com>
+Message-ID: <NSVxyu4--3-9@tutamail.com>
+Subject: Multiple peers with one down
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: wireguard@lists.zx2c4.com
-Content-Language: en-US
-From: Max Schulze <max.schulze@online.de>
-Subject: wireguard.exe /ui using lots of RAM (>5GB)
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:jNbW7cBX2kdspFgHnrewyYPRNnxDkPiIXPGbVZFvMUyJwsA/b1C
- 1gI1wwj5rQKpNgVJwLVheK49rDIgMVni+1VVy3V1j3XFn5migom/GjW8dX9xb699M73trrZ
- xd3+c9mgDV2KZ7vehHNJib9iUVBw2EIhY24MNjgS1a6S/EHQooWUMk0qSVBkES77UputTSD
- WaInz8dIhbgBb3WpNmmmQ==
-UI-OutboundReport: notjunk:1;M01:P0:UhvHJ/ka0fY=;p7YL9oYA2uvb8cG4G545C84vW2d
- nfOasU46MAjGZurOSOVp6Qc4cnidjkA66bq09NHsDrrK/Z8Rc5V0aMvPX09Wy/X1i7fsbFs5K
- +ozFHnnIX+xFogMsbC/4Q9mK+iGzyUEf1uKRiO3+xQMnZ2Mm1Y1ndl2WFOergrlpcNBHb/4w3
- AXhILS9e+SjgP0A3iSxdgYDjATm88NDph+JcZ//XN9sOFhArUhL4gAeAXrWdDrnM9XQoAf9Yh
- 7esiA+JZuMUSdcHfN9rYJX4Ee2R1juPiDDdy/mcbL/VsobmPl5aPvNlVWOSyQUmHWZYBwNgKP
- pEALOz7M0wGuXwbi7d70Ng7/rZfdoROr6DkTnXoPWSotW2IN8NR71xYMLpKSjsonJnRO/LxZN
- A6i/a0dcb0VSqC0gMWexwLucKL8+MH6kZulfdN6/xkxCE0cC2p4WO02brNqu89dz5JKuJyfc8
- /UMYQyRlQYs6eD8hqAb/uSy15vKTiph1uOYc0ZfsgRddDZZFy9vVHMIlSumAVMe1DiN58JB2i
- neNPQNCtRsNsEnXzal1Cz+JSJ4fduZuSIYf6qg63b8ZbMOQMgJ9WtXzJ5fl9TsptGoJdkg834
- NKxaM26ZnSe/MJNJ0tvq1Wq6laOO4jwNDWPhvu2FoVtdzpV6OLc2BrSm2i0RbGfS5EZa/kTQC
- mVIjD8oTzpGRqEMiMEvGU7Bep8gNNPrwdhvUtDuJlMgJwREI37re8JZawMO+COVMKesj/jmVj
- WweISqLRPUWEtQTbR3RggjzOhLi/exfun+ETGUdcC5XxMpg4ofu7bqDPPA694+zxeHA0zZ9M3
- HgdmxbudqdrGn2VMCQDrt7yDsw+5hu5o3ihW9lRX4PY8TsH22FXnaiZ/LuATsBg9R3+KkAR4t
- aDZlxJrPTqNAvIw==
+Content-Transfer-Encoding: quoted-printable
+X-Mailman-Approved-At: Wed, 20 Dec 2023 04:58:44 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -60,30 +49,24 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
 
+Hi all,=C2=B7
 
-today, I saw a long-running (possibly 90+ days) "wireguard.exe /ui" process using 5Gb of RAM (nearly the limit of the machine). Normal operation is around 14 Mb.
+I have a setup where a client connects to multiple peers. By accident one o=
+f the pees (a VM) was down and caused the client to connect to none of them=
+, and showed the error:
+=C2=A0 =C2=A0 Device or resource busy: `<blah>:<port>`. Trying again in <x>=
+ seconds...
+for (about) 15 times with increased timeout between tries.
 
-WireGuard/0.5.3 (Windows 10.0.17763; amd64) Using WireGuardNT/0.10
+Eventually it fails and deletes the whole wiregaurd interface with all succ=
+essfull connections.
+I would like it to succeed and keep the successful connections and ignore t=
+he unsuccessful one.
+How do I do that?
 
+Thanks for your time
+Leon
 
-
-I did a wireguard.exe /dumplog, but it only shows "handshake/keepalive" every two minutes like clockwork.
-
-
-The wireguard tray Icon was possibly there (empty box) and did not react.
-
-Starting wireguard.exe /ui from the command line did nothing.
-
-
-I killed the process in windows explorer and restarted.
-
-
-What can I do next time to gather more useful info?
-
-
-Best,
-
-M
-
+--=20
+ Sent with Tutanota, enjoy secure & ad-free emails.
