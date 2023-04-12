@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1BA9C76196
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 11 Apr 2023 10:30:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71763C7618E
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 22 Apr 2023 11:14:35 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 627489a5;
-	Tue, 11 Apr 2023 10:27:59 +0000 (UTC)
-Received: from mail-vs1-xe2e.google.com (mail-vs1-xe2e.google.com
- [2607:f8b0:4864:20::e2e])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5b33fecd
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 30b66584;
+	Sat, 22 Apr 2023 11:14:33 +0000 (UTC)
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com
+ [2a00:1450:4864:20::634])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3350d90a
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 7 Apr 2023 20:26:51 +0000 (UTC)
-Received: by mail-vs1-xe2e.google.com with SMTP id h15so37797077vsh.0
- for <wireguard@lists.zx2c4.com>; Fri, 07 Apr 2023 13:26:51 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 12 Apr 2023 12:39:29 +0000 (UTC)
+Received: by mail-ej1-x634.google.com with SMTP id xi5so28455711ejb.13
+ for <wireguard@lists.zx2c4.com>; Wed, 12 Apr 2023 05:39:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=hiramchirino-com.20210112.gappssmtp.com; s=20210112; t=1680899210;
- x=1683491210; 
+ d=googlemail.com; s=20221208; t=1681303168; x=1683895168;
  h=content-transfer-encoding:to:subject:message-id:date:from
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=BtswLEcQ6fv0qr60w80NJt6lEV+Z8BvcP5M8/Tt1rN0=;
- b=gt5vbFB3Lpg3OZxL1zIo1l4kSHTe+hr3tOc8M3RmN82Xzhk4CEbyNXNOThIUIuCRsu
- TyBUqT6xneyGHS019EGadlhPG7+nqaRRl0IqhuYK27fFfR5rCPwdinVYO6lj0xr8nS8y
- AM7U8IaP8BOdvgcbM3Pf+bEZU44iO7FJ0DHzMub8bcmDUrNhnm8X4Ya59Ms/Z9FNaAf0
- REVGFuDzPFZGFyfZ8+LjhNcGO3WxpwQBXuzxLyf9tt9FVxsIUHHoOjCJY5dP+3qupma1
- nxLL6wowlHWkPBaz0NiE9XGmsQ8A8yoZ5YGOj8c9PIFcd36Dq4FQor3U+BnyGrPioOie
- 24sA==
+ bh=RXTLEzpHfbOKryrtmH5cPvKRUcr+pR3BU5nZjDRi1qI=;
+ b=YPbBWPIYg6y0hTbpyRGBLEoIKAWgF4RKGNnH5uwQn32/Wc3P6wEWG5AkZleBzETq/8
+ pFKwwj/4f2DOMY+04sntVANUtJpwXDS0p+ZHXRGGYM+4W0qkIZDRtFYXNo5ZV7qHsI8e
+ UJh5aXkUhBFUGyQfNY7yfQQiYTaC50xzlpZ5fcobYJG6Wzp93Kle2ErtqaU7KeS5SjoT
+ pZwS3HQCALdHlpAy41iuzXlk6Zf8naHq05Uh/1t/ARcv6lqysEMR8XPqhOP3B9ODECIF
+ Se8OUYoFB7DtNnUMySkWTlcYfQocHH/d0jFPu4j953Z4NR/oV9OLRHlRdybOt9OS7sR2
+ ajPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112; t=1680899210; x=1683491210;
+ d=1e100.net; s=20210112; t=1681303168; x=1683895168;
  h=content-transfer-encoding:to:subject:message-id:date:from
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=BtswLEcQ6fv0qr60w80NJt6lEV+Z8BvcP5M8/Tt1rN0=;
- b=MgbXRQLRRElcROJef5R7YIQMRwyljUJzvyy7JnOgU8SlSGZEp+BdZAeWTbTSF9iz//
- xjDxIbPOCLCimIf4qY2fsNLPiJnmRD9zdkVbSP8C2E9+4Vhmj1/5HS2NS5dJIrL8x/Gb
- tUgeVQZwoS8iU1/0UckeVJyPgvfV2kMB+6w+giunyF3DpSfTno0APrghHTB2cCkeH+Zf
- RtkMmmKS+WKI1uSZNVDGW8D55VKFkE1UaGEde+KRky6DuYVHvIpmyXknjVXNQDAxHOOx
- JXIRIUDd7763hz6wPPJ8/7DczNoEGQ7xfsY7mNo845sZ2y0kGxRySqXvgN3iHe9bzLBa
- 53Dg==
-X-Gm-Message-State: AAQBX9fHibdLN/+f/BOvYioQZvlJvQjUCohpaycY42GyjwgfL+sVSItf
- OhGvwoY30ffzqmaj6UUw+QapHNGxc2fJSPvKixOKhJp3AzI=
-X-Google-Smtp-Source: AKy350ZZC0qrw8EXcvuuCGmgd2IYwn7ecrearQQRoyedQzyvWoCAN3ToinNQm59L3V0+vXSuEfIeFiVQhm7TrzbiKEs=
-X-Received: by 2002:a67:d38e:0:b0:425:d39f:3882 with SMTP id
- b14-20020a67d38e000000b00425d39f3882mr131716vsj.3.1680899209538; Fri, 07 Apr
- 2023 13:26:49 -0700 (PDT)
+ bh=RXTLEzpHfbOKryrtmH5cPvKRUcr+pR3BU5nZjDRi1qI=;
+ b=awU2AD5LmOhyy/J5nRKk7rcIQlbdzKnUp1OqAW2pj3l6gRqnO0aYZquZREp3h1C77A
+ 1O5RKgOg1Sgrt0lm4yb9u7vv98qNu9HFlRW+/HtBaSUWdIxQY71OiNJW1ExlW6JR3l+t
+ pjMWFhv4QieG8jPGKBv8PV30nmCEWNO8RHwtRBIJX3YDg3VIAHaSI9uKOaVM0fOPikjL
+ 2ZIRtC52gWS/pQ3/9QIc8Ho2YgDci6LCqfziNkuJYORvjlUm3VGLf7AAgrrtUUc4t2Qa
+ 2jzSLMCAg7fcp3M3MPO4eGvv6fYBUOX0CG4PqknTR6eyKyic5DjS1DxgrY36bZdIDvjR
+ lZ1w==
+X-Gm-Message-State: AAQBX9efEuBTawGfn0crWj84yyxIx7UEPPiiqpJp3mJHruZ2ilFjWuyb
+ NqxasqBn6NtVBRZcFn2bs1q3BmVCTna80AYqZBDTq3eDe3xAXw==
+X-Google-Smtp-Source: AKy350Z6vVRcU9lUI0SkaLr+vDTAuo2dRRVTjndPGfkyew0+dtCl/QGBoENsv5Q1YKrXKNm4tQOrBiQd6nszMiXlcXk=
+X-Received: by 2002:a17:906:6a22:b0:932:1bdf:be3e with SMTP id
+ qw34-20020a1709066a2200b009321bdfbe3emr1192540ejc.0.1681303168271; Wed, 12
+ Apr 2023 05:39:28 -0700 (PDT)
 MIME-Version: 1.0
-From: Hiram Chirino <hiram@hiramchirino.com>
-Date: Fri, 7 Apr 2023 16:26:38 -0400
-Message-ID: <CAGZ-RDJVoCz++x9XV3QhcY3zmfJtc7+6kxN2YeY9+3dpzasVeA@mail.gmail.com>
-Subject: [PATCH] conn: set the SO_REUSEADDR and SO_REUSEPORT socket options
+From: Anton <jnashicq@googlemail.com>
+Date: Wed, 12 Apr 2023 16:39:00 +0400
+Message-ID: <CAG_zMNJto2a5Et3-8MDLuDUon1W=Y4_em8vtP3vzg6Okb+uJ+A@mail.gmail.com>
+Subject: Wireguard-go on Android 11+
 To: wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Mailman-Approved-At: Tue, 11 Apr 2023 10:27:59 +0000
+X-Mailman-Approved-At: Sat, 22 Apr 2023 11:14:31 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -69,91 +69,33 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Setting the SO_REUSEADDR and SO_REUSEPORT socket options allows other
-applications to reuse the wg UDP port. This can be super handy to do
-Things like sending stun requests to stun servers from the wg port.
-This lets you discover the wg=E2=80=99s public IP:port mapping if you're be=
-hind a
-NAT router.
+Hi all,
 
-Signed-off-by: Hiram Chirino <hiram@hiramchirino.com>
----
-conn/controlfns_reuseport_unix.go | 32 ++++++++++++++++++++++++++++
-conn/controlfns_reuseport_windows.go | 24 +++++++++++++++++++++
-2 files changed, 56 insertions(+)
-create mode 100644 conn/controlfns_reuseport_unix.go
-create mode 100644 conn/controlfns_reuseport_windows.go
+I'm porting a Golang-based program [1] to Android11+ (API level 30)
+and I've faced a problem,as the getifaddrs function is not available
+for apps and other restrictions.
 
-diff --git a/conn/controlfns_reuseport_unix.go
-b/conn/controlfns_reuseport_unix.go
-new file mode 100644
-index 0000000..44d617b
---- /dev/null
-+++ b/conn/controlfns_reuseport_unix.go
-@@ -0,0 +1,32 @@
-+//go:build !plan9 && !windows && !wasm && !js
-+
-+/* SPDX-License-Identifier: MIT
-+ *
-+ * Copyright (C) 2017-2023 WireGuard LLC. All Rights Reserved.
-+ */
-+
-+package conn
-+
-+import (
-+ "golang.org/x/sys/unix"
-+ "syscall"
-+)
-+
-+func init() {
-+
-+ controlFns =3D append(controlFns,
-+ func(network, address string, c syscall.RawConn) error {
-+ return c.Control(func(fd uintptr) {
-+ _ =3D unix.SetsockoptInt(int(fd), unix.SOL_SOCKET, unix.SO_REUSEADDR, 1)
-+ })
-+ },
-+ )
-+ controlFns =3D append(controlFns,
-+ func(network, address string, c syscall.RawConn) error {
-+ return c.Control(func(fd uintptr) {
-+ _ =3D unix.SetsockoptInt(int(fd), unix.SOL_SOCKET, unix.SO_REUSEPORT, 1)
-+ })
-+ },
-+ )
-+
-+}
-diff --git a/conn/controlfns_reuseport_windows.go
-b/conn/controlfns_reuseport_windows.go
-new file mode 100644
-index 0000000..2f8a7bf
---- /dev/null
-+++ b/conn/controlfns_reuseport_windows.go
-@@ -0,0 +1,24 @@
-+//go:build windows
-+
-+/* SPDX-License-Identifier: MIT
-+ *
-+ * Copyright (C) 2017-2023 WireGuard LLC. All Rights Reserved.
-+ */
-+
-+package conn
-+
-+import (
-+ "syscall"
-+
-+ "golang.org/x/sys/windows"
-+)
-+
-+func init() {
-+ controlFns =3D append(controlFns,
-+ func(network, address string, c syscall.RawConn) error {
-+ return c.Control(func(fd uintptr) {
-+ _ =3D windows.SetsockoptInt(windows.Handle(fd), windows.SOL_SOCKET,
-windows.SO_REUSEADDR, 1)
-+ })
-+ },
-+ )
-+}
---=20
-2.37.1 (Apple Git-137.1)
+From Android developer documentation [2]:
+>
+> In addition, non-privileged apps can't access the device's MAC address; o=
+nly network interfaces with an IP address are visible. This impacts the get=
+ifaddrs() and   NetworkInterface.getHardwareAddress() methods, as well as s=
+ending RTM_GETLINK Netlink messages.
+>   The following is a list of the ways that apps are affected by this chan=
+ge:
+>   NetworkInterface.getHardwareAddress() returns null for every interface.
+>   Apps cannot use the bind() function on NETLINK_ROUTE sockets.
+>   The ip command does not return information about interfaces.
+>   Apps cannot send RTM_GETLINK messages.
+>
+
+I came up with a workaround [3], and now my app works OK.
+
+External references:
+https://github.com/mysteriumnetwork/node
+https://developer.android.com/training/articles/user-data-ids#mac-11-plus
+https://github.com/mysteriumnetwork/wireguard-go/pull/5/files
+
+--
+best regards,
+  Anton
