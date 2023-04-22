@@ -4,57 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 029C2C6FD18
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 22 Apr 2023 11:59:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2B49C6FD18
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 22 Apr 2023 12:11:15 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4771f85c;
-	Sat, 22 Apr 2023 11:59:50 +0000 (UTC)
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com
- [2607:f8b0:4864:20::b35])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5fa3ddfe
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b28be821;
+	Sat, 22 Apr 2023 12:03:53 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org
+ [2604:1380:4641:c500::1])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 79863c61
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 22 Apr 2023 12:03:49 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id B19EF60C78
+ for <wireguard@lists.zx2c4.com>; Sat, 22 Apr 2023 12:03:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD01EC433D2
+ for <wireguard@lists.zx2c4.com>; Sat, 22 Apr 2023 12:03:46 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="D0IgICDv"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1682165024;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VsSKUocff+ly5u/th0tvOFoSoCyTkKtC2vjGNEmrQK8=;
+ b=D0IgICDvEzUuSKmX3DfmGsGicuLUkkQnBA7Uwn4idQL3QZ8z1G5Oxi/zmB9S9YxyjsBY1I
+ rbibAr/gayuThRvs0deA0IK/wHc0P8QCwaM1+v1D/q2rT6M4KQ4n1dWkppS8hNUEDw6rt5
+ akqZ2oDHXxAW/wtzLSyqlxGfmUOnzfM=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id dcf16ef1
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 20 Apr 2023 19:58:59 +0000 (UTC)
-Received: by mail-yb1-xb35.google.com with SMTP id
- 3f1490d57ef6-b98d4cacf6aso102602276.0
- for <wireguard@lists.zx2c4.com>; Thu, 20 Apr 2023 12:58:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sidebranch-com.20221208.gappssmtp.com; s=20221208; t=1682020738; x=1684612738;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=IEgQ7/G1V1blUU8ytN+MqWPL/DgjB2ueIhuZOQp7jVE=;
- b=WumYaKp+P6dGnijHky+ffa9hsH+33YFoqgJ66zBhuxztxAIsRF7MtzT8Tf18+UGu17
- T/7xu5Um+iQiSfBsqxqURu8uUoTU+/9JgzBMU+nkWcE9Gglpy1MczankYwJGHd1zfn8c
- 3+LGM+MWMrkEsV6Vgb0TM9v2pGowQ3sWMVFAyOgSyQZKIoN4EPAfsPBAjGcP6/2ZTDtv
- GD48hQf4m0R2T3t9xSBVjRjSGZxzaWsIU4YL4+AHF5vZO7vFES4t53iSoYzpy+Bgwiy6
- r7b/GhSw6rZ58yVitVreY0b3+lvgi+x09OGG36wir9Cb0+InldBWFR8sRvfL96yOBIXj
- uJhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20221208; t=1682020738; x=1684612738;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=IEgQ7/G1V1blUU8ytN+MqWPL/DgjB2ueIhuZOQp7jVE=;
- b=j/QE8DdTKHUCO23TBDtpOUn7JvmJKhOVVMhfLS4dTbzJHjBo/DRHyRTsn/o3/rn78K
- Ghzj/DtHxGWvEfoQhrjbfwrT7efwvhawOjo/MGrkZ83KS8hVOyF/uLtebYOpMOUTqbHm
- WU2gEKJR4RjbOWNmA7fY1xBNl5Cys3w3W8/MyuiLThj0IXuu7FB6LmWWu2dpUXZllA8I
- fH5iXAzaK+AtONLBO6TApy0Fmtt3UxxyRMvzW8djCQWa+Bt/Afri7q2mFMlcnuVoBIjg
- AIc6E2V0MH8r5Ivqb3XI6pO8IHvw43YdBta3BzxAebV69Cyu1ziRlaZexaRWGEDMWEGB
- UpVg==
-X-Gm-Message-State: AAQBX9fgP9ExUFQzLtRU2MNEhA/IDEm8qahyNSdMgyhD3bktPFaEyoDp
- 9ttLj+ve7qfGBFF+FDqE6T3lwCMcE05n6kS5b3aFACyJLrtQcHUwrqg=
-X-Google-Smtp-Source: AKy350ad2Hw1q5iQPhPTlV0Ex5JMZPWU0mNZWL/h0mvhR9pm/byp4KlmUl3l4aCy+ydiRqxTDC2Mz78IhSU1ZI0foOo=
-X-Received: by 2002:a25:40e:0:b0:b8f:502c:64a0 with SMTP id
- 14-20020a25040e000000b00b8f502c64a0mr127352ybe.37.1682020737547; Thu, 20 Apr
- 2023 12:58:57 -0700 (PDT)
+ Sat, 22 Apr 2023 12:03:43 +0000 (UTC)
+Received: by mail-ua1-f41.google.com with SMTP id
+ a1e0cc1a2514c-77858d8dcb5so11280865241.1
+ for <wireguard@lists.zx2c4.com>; Sat, 22 Apr 2023 05:03:43 -0700 (PDT)
+X-Gm-Message-State: AAQBX9caf1iW8aergaBhFz4mNvlHqAJf/1nkaqqm8Kuo1Glv2pyWVvnp
+ uPq9qT6XIO72P/JMtacrI7PlIKDVnRdfRViOoog=
+X-Google-Smtp-Source: AKy350aCm+uTDm6YiahVqrg+nwssvEOT7m8DCsXqQ3tnsPMrbwDM+S05ckl6CqlvAmsEHzL5reDjv3R+v+qTHUvVbsQ=
+X-Received: by 2002:a05:6122:d02:b0:440:54e1:5bf7 with SMTP id
+ az2-20020a0561220d0200b0044054e15bf7mr2773691vkb.4.1682165022869; Sat, 22 Apr
+ 2023 05:03:42 -0700 (PDT)
 MIME-Version: 1.0
-From: Leon Woestenberg <leon@sidebranch.com>
-Date: Thu, 20 Apr 2023 21:58:46 +0200
-Message-ID: <CAMjhiJimUHUVjTybh0kfMUWHgVv0n7qJKQU+Ac3kabdtdRMt3Q@mail.gmail.com>
-Subject: Linux counter_validate() RFC6479 replay detection modifies bitmap
+Received: by 2002:ab0:7656:0:b0:75c:e750:ab with HTTP; Sat, 22 Apr 2023
+ 05:03:42 -0700 (PDT)
+In-Reply-To: <CAMjhiJimUHUVjTybh0kfMUWHgVv0n7qJKQU+Ac3kabdtdRMt3Q@mail.gmail.com>
+References: <CAMjhiJimUHUVjTybh0kfMUWHgVv0n7qJKQU+Ac3kabdtdRMt3Q@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sat, 22 Apr 2023 14:03:42 +0200
+X-Gmail-Original-Message-ID: <CAHmME9ruzmKH=u-kS0b0rXJx1zXppGS32zCsOUrqSgMtiNsPUA@mail.gmail.com>
+Message-ID: <CAHmME9ruzmKH=u-kS0b0rXJx1zXppGS32zCsOUrqSgMtiNsPUA@mail.gmail.com>
+Subject: Re: Linux counter_validate() RFC6479 replay detection modifies bitmap
  before authentication?
-To: wireguard@lists.zx2c4.com
+To: Leon Woestenberg <leon@sidebranch.com>
+Cc: wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
-X-Mailman-Approved-At: Sat, 22 Apr 2023 11:59:49 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -69,16 +75,15 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello all,
+On 4/20/23, Leon Woestenberg <leon@sidebranch.com> wrote:
+> Hello all,
+>
+> I am trying to understand a few details in WireGuard protocol, looking
+> at the Linux kernel WireGuard implementation if I am unsure about the
+> description from the paper. One question I have:
+>
+> Does counter_validate() in the receive path update the bitmap from the
+> Type 4 counter (their_counter) before the received Type 4 packet was
+> authenticated?
 
-I am trying to understand a few details in WireGuard protocol, looking
-at the Linux kernel WireGuard implementation if I am unsure about the
-description from the paper. One question I have:
-
-Does counter_validate() in the receive path update the bitmap from the
-Type 4 counter (their_counter) before the received Type 4 packet was
-authenticated?
-
-Regards,
-
-Leon.
+No, it happens after authentication. Otherwise that'd be a real DoS vector.
