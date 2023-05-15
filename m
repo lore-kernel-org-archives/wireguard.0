@@ -4,63 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE5EFC77B7E
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  2 May 2023 09:06:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88AAAC77B75
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 15 May 2023 12:43:25 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3bc825c7;
-	Tue, 2 May 2023 09:03:43 +0000 (UTC)
-Received: from mail-il1-x131.google.com (mail-il1-x131.google.com
- [2607:f8b0:4864:20::131])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 01f0a80b
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 2 May 2023 09:03:42 +0000 (UTC)
-Received: by mail-il1-x131.google.com with SMTP id
- e9e14a558f8ab-32f4e0f42a7so53085ab.1
- for <wireguard@lists.zx2c4.com>; Tue, 02 May 2023 02:03:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20221208; t=1683018221; x=1685610221;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NKVfIlBvsYHMWDxi0uBcvmDgbiWUYMz6a+J28iJYmJA=;
- b=2ad2cOPQIGv+I5wDpt6S7LzAQBXSlVZJ+z6YhICzmFlUutg4zMkL7TI279sxH540G8
- H+P7CZUZpNY1va1AxKMtQw6bX607072FfV/9Tx0qXqIiZKWOvuYFAgV53OPKsvvNOjSw
- sjB4CPq+byYze/jaktc2S/yGEZprfGz0ENy9in4n5OXSwYe01FnroZwhSHXilCTjBBZT
- nnCyYjkvLmrJfvnxmxtlDZmJAvXWoxrwT5vzAoqf5b6Rc1DkLGFMeMrmeO1I8cl9xlyH
- +zahBxiZp7+eCu1P3hgE4IO2jKqatDPLmAIL1S05RXMfmQ23FFFC/0stZWr4f+gdGk0l
- EXAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20221208; t=1683018221; x=1685610221;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=NKVfIlBvsYHMWDxi0uBcvmDgbiWUYMz6a+J28iJYmJA=;
- b=Tt5FSYHD/wCE9cc5sZEl+bwcyTuJtenjm5Mmm9HcIVJt+nJ2jAgqUzi/0HCajJtEK5
- b380YyqXFulIk6NYk0PxI4t8g9SurGUxmfyVERPaCSwv8EGGxni5SL+VqKAut7y4J0Zt
- 6nZ1bo0GhPfhJWggXx7HWuRemJblm9CxQ62vAKtUlU1IAgqR50leaOssw7rYAk++fNyA
- bwZ8e8+OOqvKZOMzVYMg38CattUO3I3ZDrHCglmtQTTYFx6fTvZRvp09FOtAjoFbaIuR
- mxDZcUtmxge3Ksw6jvoiyST+sdo/P4hgaNnufQNgGxkCZxgUUhsv0k8v6tX3AuWXJa/F
- uONA==
-X-Gm-Message-State: AC+VfDystoPc8js7R576ICmigWAevEY7RwQAi4vKp4887hISAWAoDSJ5
- H8pQZaH+ZteZmwWiHs2WlmjlCehyCObQsC3WF6Uphw==
-X-Google-Smtp-Source: ACHHUZ747jLD/GDpZ0wLuJpv/ONcTgaCC5dR/I/K0IsHqe5jU64l+X+v7KsS7HlXQ828WToieUmI/aWMNaqocZ39qVc=
-X-Received: by 2002:a05:6e02:1e06:b0:32b:7232:dac6 with SMTP id
- g6-20020a056e021e0600b0032b7232dac6mr231658ila.18.1683018220705; Tue, 02 May
- 2023 02:03:40 -0700 (PDT)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b25286dd;
+	Mon, 15 May 2023 12:40:52 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6f53feaf
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 15 May 2023 12:40:51 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 3F96461336;
+ Mon, 15 May 2023 12:40:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47CA9C433EF;
+ Mon, 15 May 2023 12:40:48 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="j5f5COxX"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1684154444;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type;
+ bh=mNAb4Wekm0nmVgb6xJUdHBLap9TU/y7zwBEGDTdyy/g=;
+ b=j5f5COxX7IrgGWjpMPX+VK/sBoFV80MdI/UGnY80LaiYSrloemMsUUo/uvr8K2HB4zeBCf
+ sBImCBEcYpAgatug/NuSSDKvBy7L/aWWOtzNs4EZsbAv4ohv0clEtepm0x8tlRGFZwF4Wo
+ KnUhSAd1kdbkPlwk46LdxNkhd6jKDSI=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2edfe9f5
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Mon, 15 May 2023 12:40:43 +0000 (UTC)
+Date: Mon, 15 May 2023 14:40:41 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: wireguard@lists.zx2c4.com
+Subject: Direct APKs for WireGuard Android are now available
+Message-ID: <ZGIoSaDgYW91wCsv@zx2c4.com>
 MIME-Version: 1.0
-References: <0000000000002e8a7c05fa9e1a7a@google.com>
- <bdb29f17-dac3-20a3-c726-963259b95208@gmail.com>
-In-Reply-To: <bdb29f17-dac3-20a3-c726-963259b95208@gmail.com>
-From: Aleksandr Nogikh <nogikh@google.com>
-Date: Tue, 2 May 2023 11:03:29 +0200
-Message-ID: <CANp29Y6UGNweLS7kDx+nji9z2hUi8wXVfioKwpYftQmE4ueJZQ@mail.gmail.com>
-Subject: Re: [syzbot] Monthly wireguard report (Apr 2023)
-To: "J.F. Samuels - K2CIB" <radiowhiz@gmail.com>
-Cc: syzbot <syzbot+listded2f47f5f1d416c4059@syzkaller.appspotmail.com>, 
- Jason@zx2c4.com, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
- syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -75,82 +57,57 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello John,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Do you mean only these monthly reports or all messages from the mailing lis=
-ts?
+Hi folks,
 
-You received this specific email because you're subscribed to one of
-the following lists:
+By popular demand, on <https://www.wireguard.com/install/>, there's now 
+a (somewhat small) link in the Android section called "Download APK 
+File", for those who want to sideload the package or bundle it in an OS
+image or whatever else.
 
-linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
-wireguard@lists.zx2c4.com (the email was also sent to
-syzkaller-bugs@googlegroups.com, but you're not a member of it -- I've
-just checked).
+The recommended method of installation is still of course the Play
+Store, because its updater is known to work very well across devices.
+But now there's a decent alternative method.
 
-You could determine the exact one by looking at the "Mailing-list"
-header in the raw message.
+The new direct APK download and the Play Store are the *only* two
+supported installation sources. Alternative builds and alternative app
+stores aren't supported (unless they're shipping the direct APK file
+that the WireGuard project provides).
 
---
-Aleksandr
+You can verify those direct APK files using OpenBSD's signify(1):
 
-On Mon, May 1, 2023 at 5:56=E2=80=AFPM J.F. Samuels - K2CIB <radiowhiz@gmai=
-l.com> wrote:
->
-> I don't know how I subscribed to this - wish I knew enough to be of help!
->
-> Please unsubscribe me from all related lists.
->
-> Thanks,
->
-> John
->
->
->
-> On 5/1/2023 5:03 AM, syzbot wrote:
->
-> Hello wireguard maintainers/developers,
->
-> This is a 31-day syzbot report for the wireguard subsystem.
-> All related reports/information can be found at:
-> https://syzkaller.appspot.com/upstream/s/wireguard
->
-> During the period, 1 new issues were detected and 0 were fixed.
-> In total, 4 issues are still open and 13 have been fixed so far.
->
-> Some of the still happening issues:
->
-> Ref Crashes Repro Title
-> <1> 620     No    KCSAN: data-race in wg_packet_send_staged_packets / wg_=
-packet_send_staged_packets (3)
->                   https://syzkaller.appspot.com/bug?extid=3D6ba34f16b98fe=
-40daef1
-> <2> 440     No    KCSAN: data-race in wg_packet_decrypt_worker / wg_packe=
-t_rx_poll (2)
->                   https://syzkaller.appspot.com/bug?extid=3Dd1de830e4ecda=
-ac83d89
-> <3> 6       No    KASAN: slab-use-after-free Write in enqueue_timer
->                   https://syzkaller.appspot.com/bug?extid=3Dc2775460db0e1=
-c70018e
->
-> ---
-> This report is generated by a bot. It may contain errors.
-> See https://goo.gl/tpsmEJ for more information about syzbot.
-> syzbot engineers can be reached at syzkaller@googlegroups.com.
->
-> To disable reminders for individual bugs, reply with the following comman=
-d:
-> #syz set <Ref> no-reminders
->
-> To change bug's subsystems, reply with:
-> #syz set <Ref> subsystems: new-subsystem
->
-> You may send multiple commands in a single email message.
->
-> --
-> You received this message because you are subscribed to the Google Groups=
- "syzkaller-bugs" group.
-> To unsubscribe from this group and stop receiving emails from it, send an=
- email to syzkaller-bugs+unsubscribe@googlegroups.com.
-> To view this discussion on the web visit https://groups.google.com/d/msgi=
-d/syzkaller-bugs/bdb29f17-dac3-20a3-c726-963259b95208%40gmail.com.
+  $ cat wireguard-android-release.pub
+  untrusted comment: wireguard android release key public key
+  RWTAzwGRYr3EC9px0Ia3fbttz8WcVN6wrOwWp2delz4el6SI8XmkKSMp
+  $ curl -O https://download.wireguard.com/android-client/latest.sig
+  $ signify -V -p wireguard-android-release.pub -e -x latest.sig -m latest
+  Signature Verified
+  $ read _ file < <(sort -k2 -Vr latest)
+  $ curl -O https://download.wireguard.com/android-client/"$file"
+  $ sha256sum -c latest --ignore-missing
+  com.wireguard.android-1.0.20230512.apk: OK
+
+This is the same Ed25519-based signature mechanism that is used by the
+WireGuard Windows client. The private key lives in an HSM [1].
+
+Jason
+
+[1] https://marc.info/?l=openbsd-misc&m=155723329924761&w=2
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAmRiJ/QACgkQSfxwEqXe
+A669fg/9GnopO43uXGIB6T1IZbY1WkIDZt7pMdq52rypqMq9PwG4HK+kQbGJWJYC
+IBW9v3ae3uhVhX84Qnke7RJ3aYVMltfyp0BoTzsIsyk4v4U8KguGchdI5Mn59sj/
+2HSUVMQ9+5n7SCQqsJp9CW0GSBoME2AU1zzjEyzwr1SM7zq/5CCLEBvMsImhP0rw
+n1Vzb0o24CUNyiNbNy4op4eEAuLs8lpfj95qs0kpaLM2vH13LBeO0sKHdKUQe9dd
+iOJRXBrx8FAy/kwweycFww6KhGtO1fKzWwLyAwEhKvvcBC+kBhFfEU/mO6iIuao+
+YQ8VDw4uSaHrP3RFBFxVUlcMhI/ytShwnW2CIuKd1/tpCk9Pdq5tg+QQB5FqVv0A
+evAhjuI0ggzmsEpnh9ldYDWCDViKBz7TdBYgsQ+lW4lwQLNIAn3jzqHTSLNtJPY2
+Obw9E5PvZK/kw+cHbZJP4mRXpSl2sLL6HocDPUwRWNwEFAVawHlPNSkaNhiiWpmg
+HO0m7FMh7NP7R/IVA+7ULaUFL3X+R9d66znn2uoGwU783FQFlfKb4X5CCsP8h3+A
+YoJJ5v7328LHc6tajprvPSEH5Lt0ok+4cKxq/wAQb4AI2SUIFW77MRmM44q2TYrd
+mr0v2FmZxOlTdENn5lMyj2580k9E41zuH85/Pz0VxmgdbUuGqKM=
+=ACE8
+-----END PGP SIGNATURE-----
