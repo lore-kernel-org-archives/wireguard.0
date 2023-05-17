@@ -4,57 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63E80EB64DC
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Jun 2023 14:48:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35997EB64D7
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Jun 2023 14:48:38 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id adb0e30f;
-	Mon, 26 Jun 2023 14:43:15 +0000 (UTC)
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com
- [2a00:1450:4864:20::629])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0bca6d2e
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 418f1fe3;
+	Mon, 26 Jun 2023 14:43:16 +0000 (UTC)
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com
+ [2607:f8b0:4864:20::d36])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 755315dc
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 16 May 2023 13:07:03 +0000 (UTC)
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-965d2749e2eso2145505666b.1
- for <wireguard@lists.zx2c4.com>; Tue, 16 May 2023 06:07:03 -0700 (PDT)
+ Wed, 17 May 2023 23:13:25 +0000 (UTC)
+Received: by mail-io1-xd36.google.com with SMTP id
+ ca18e2360f4ac-76fe17da95fso33092139f.2
+ for <wireguard@lists.zx2c4.com>; Wed, 17 May 2023 16:13:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=googlemail.com; s=20221208; t=1684242423; x=1686834423;
- h=content-transfer-encoding:to:subject:message-id:date:from
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=aKWWZum/oG7GXYM66c79qPNCotQM6ALvce7AnXpbxOY=;
- b=J8gz/LajoJsZc0V+KzuIbVGhydfQCQPn+7AslhXlyuw8tsJIw/J8piCTAEfYxn7d1W
- 0z7nyVe3FaJ5e7EPWmiMHJS2eye7uc+t3ezixqbrrQURr/E7kVfIkLjwWnYRctnZBSpm
- 0DurKA0cd2OKYeLDrXGz6X9OkNaIchdEgUv7hgFaUgZEHCMzB7xrVR2MmYHh7nBfCHKt
- /t8ERnierf4sDhO1pMSARZMTw17DoLV6JIhQwIkiYxM8C/26ryOb86zkBkLrC1GYk2fe
- 3usL+ogn1VBlMA5kFWeSbzPrJ28efeGdJGqdxF46unzhnSpVgJxO3h8GxeH0fo7K3pxy
- VxPQ==
+ d=gmail.com; s=20221208; t=1684365203; x=1686957203;
+ h=content-transfer-encoding:subject:content-language:from:to
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zp7hI/a0wxrB6sgVQa04D8nK6P2oVwfSviKxbM22VU4=;
+ b=QNIuVHiuLr36+LFoZ6mYe4OTSkr36DLyAqZl0e1HTbMHELpDmCxvvbFGuN1+uad4GM
+ VTwPSEWyEs9sgipCC+bTq8xYRKeDjBp8nZ9V+/UyEUJFuxU258WU+4PRfhi1HjGLimKR
+ nM/f+XqC3der3HnUAzf9r7bOBU4cHflfJPnuvrXwbkYsXCzmNkrdw3TabTGIXJURLmSQ
+ nZh+h3aCdWJpwYDevpokI7KbWgBtLnRZ+NiRY+S4Kj3bSRTZIwoJzTJsirf4RLcDSpt/
+ rFgg+Ayr9BH8ayYDjxRDKT1bIMuAhipX+GxlCgEcHBYghK1xFmeHzGRq2vaC6Ze2ljF+
+ ZEtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20221208; t=1684242423; x=1686834423;
- h=content-transfer-encoding:to:subject:message-id:date:from
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=aKWWZum/oG7GXYM66c79qPNCotQM6ALvce7AnXpbxOY=;
- b=kM7756mK/xeE/g1iYRe2yAwBIStpaNkFlUzS6fdtM3cFdlZPaU2saXoUAnB2n5ALnH
- xD8poqXv+pfRBbHpTp5iuZrP5i1Bn6hpqd+bUUKdNc1QbWbRRLsX9+6LAKDypkI7MEXt
- p31j+tjScNZk78CVVF37S0FOAaIRddCKBqYv/H9Tgy0wIx57PyRIGdtOA2R8L9ymVe2a
- Hq8dqHcgVrXeBy3VezJdia5H/RtkHkFJ417z89qeACGLSvOZjSMeH//apNGfgV2MTP4v
- CVGR1uvpRIuzueySYeogli9fM1zOLelReRU98vKggEwlMKqJjng9QKq2kxtycYEGIyVJ
- 1/DQ==
-X-Gm-Message-State: AC+VfDzTxOxBHvlSuB3E8IUk5d8mkB1MNo5QFNiBYw8PhddU94sxevcg
- vvywkmsjihv/AhRWtFKfavRdOV51Q1te0QFduo1D3JtjMm0=
-X-Google-Smtp-Source: ACHHUZ55SBZ0YM71iLuAY7ierYER5O4zhExD73UBPG7pKjbOSnwhnV1nuiJURgZcR+bhS8mJqIbnMxs2bJQrk5oDnNs=
-X-Received: by 2002:a17:906:dac1:b0:961:8fcd:53cc with SMTP id
- xi1-20020a170906dac100b009618fcd53ccmr32902410ejb.42.1684242422735; Tue, 16
- May 2023 06:07:02 -0700 (PDT)
+ d=1e100.net; s=20221208; t=1684365203; x=1686957203;
+ h=content-transfer-encoding:subject:content-language:from:to
+ :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=zp7hI/a0wxrB6sgVQa04D8nK6P2oVwfSviKxbM22VU4=;
+ b=h77n1jAKc73oz8vjABa9xB6BZqWZ/aBNXBhplCIYfHxOCE9/X5lH4nxJCU0HcF67+r
+ 7dDFKrW6nBdbb7C4SCv5ZRQkBMSsjiENrlx55verHbrnkyjZnVltjvlZBFmBmZYJ0oxM
+ CVBia0ZFoNv+ayFL6CnImaOmlTw2+Clb93WeIAKUg/tnu8L/jh7oh6Fhn+JTrEbUmD08
+ 9+cpGHQWS1x4rGYEGwY0HKqlFaKAD/HlIrTIua7P3iagvLg4A5APF8vwcjT1rtVmLTjZ
+ mlBKIxz/fLSuL1/S+P6+oMc8k1ElIDCc3dO+9DTQih4snVWcXPFUC7Jdm/qM+P+6qHtB
+ HfTg==
+X-Gm-Message-State: AC+VfDxLcuAj7WIJaQwVqO3Az1a2kOhCfew2mxv5WU7GOZPoZsMLQMnb
+ uNIYqc6MvwYvOQcfA3JNfhbE/2NRYTU=
+X-Google-Smtp-Source: ACHHUZ6BLF3djwr+yILkMSuMtshU9TmJ6kZn0DPa7NCXO65P0nWgI2gnCcEKc826CYzpUwSdJSRzng==
+X-Received: by 2002:a5d:9e50:0:b0:76d:6398:e6f0 with SMTP id
+ i16-20020a5d9e50000000b0076d6398e6f0mr5743557ioi.12.1684365203530; 
+ Wed, 17 May 2023 16:13:23 -0700 (PDT)
+Received: from [10.12.114.193] ([172.58.83.91])
+ by smtp.gmail.com with ESMTPSA id
+ z26-20020a6be21a000000b0076fc5340aa3sm23244ioc.40.2023.05.17.16.13.22
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 17 May 2023 16:13:23 -0700 (PDT)
+Message-ID: <4fd6c9cb-c2cf-7a16-ee62-d958790652ea@gmail.com>
+Date: Wed, 17 May 2023 18:13:21 -0500
 MIME-Version: 1.0
-From: Anton <jnashicq@googlemail.com>
-Date: Tue, 16 May 2023 17:06:25 +0400
-Message-ID: <CAG_zMNLf17Pqzef2wpkp_SPqbi+9X6ipx0=p1mO93prDPBZkbQ@mail.gmail.com>
-Subject: Possible race condition in Wireguard-go
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
 To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+From: Harry G Coin <hgcoin@gmail.com>
+Content-Language: en-US
+Subject: ip netns del zaps wg link
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Mon, 26 Jun 2023 14:43:07 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -70,73 +80,20 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello all
+First, Hi and thanks for all the effort!
 
-I've found a possible race condition resulting in a panic in wireguard-go.
-It happens when a client session disconnects, not often - once in a
-few days with a few (5-10) sessions running.
-The app I'm working on is based on wireguard-go/tun/netstack/tun.go code.
+At least on Ubuntu latest LTS:  As advertised, if a wireguard link gets 
+created by systemd/networkd, then set into a different net namespace, 
+all works well.
 
-The problem reveals itself as a panic (see below).
-It happens when peer.RoutineSequentialReceiver() go-routine does a
-(*tun.Device).Write(), which calls gvisor (*Endpoint).InjectInbound(),
-but endpoint could have been made nil to this point of time, b/c
-tun.stack.RemoveNIC(1) called from tunDev.Close() assigns nil to
-endpoint.
+However, if that namespace is deleted, the link appears to be 'gone 
+forever'.  Other link types reappear in the primary namespace when the 
+namespace they are in gets deleted.   I'm not sure whether the link 
+retains its 'up' or 'down' state when the namespace it's in gets deleted 
+and reset to primary.  Not a big deal, doesn't happen often.
 
-A possible solution:
-https://github.com/mysteriumnetwork/wireguard-go/pull/6/files
-
-If I move
-> device.tun.device.Close()
-
-below the
-> device.RemoveAllPeers()
-
-thus making peer-related operations to finish before the
-device.tun.device.Close(), then crash doesn't happen.
-
-By now the code has been running for a week.
-I'll test it for another week or two.
+This is 100% repeatable.   Some other answer than 'inaccessible until 
+the next reboot' would be nice.
 
 
-Trace:
 
-> 2023-05-04T00:34:10.000 INF services\wireguard\service\service.go:162 > C=
-leaning up session 7f100e49-6517-4141-be66-1ac7c47ed5e8
-> DEBUG: (myst) 2023/05/04 00:34:10 Device closing
-> 2023-05-04T00:34:10.000 INF services\wireguard\service\stats_publisher.go=
-:65 > Stopped publishing statistics for session 7f100e49-6517-4141-be66-1ac=
-7c47ed5e8
-> DEBUG: (myst) 2023/05/04 00:34:10 peer(/Zbg=E2=80=A6wTzA) - Routine: sequ=
-ential receiver - stopped
-> panic: runtime error: invalid memory address or nil pointer dereference
-> [signal 0xc0000005 code=3D0x0 addr=3D0x20 pc=3D0x7ff62082c781]
-
-> goroutine 485845 [running]:
-> gvisor.dev/gvisor/pkg/tcpip/link/channel.(*Endpoint).InjectInbound(...)
->         C:/Users/user/go/pkg/mod/gvisor.dev/gvisor@v0.0.0-20221203005347-=
-703fd9b7fbc0/pkg/tcpip/link/channel/channel.go:194
-> github.com/mysteriumnetwork/node/services/wireguard/endpoint/netstack-pro=
-vider.(*netTun).Write(0xc002211600, {0xc0020348a0?, 0x1, 0xc0015ac810?}, 0x=
-10)
->         C:/Users/user/src/node/services/wireguard/endpoint/netstack-provi=
-der/netstack.go:164 +0x141
-> golang.zx2c4.com/wireguard/device.(*Peer).RoutineSequentialReceiver(0xc00=
-1229c00, 0x1)
->         C:/Users/user/go/pkg/mod/golang.zx2c4.com/wireguard@v0.0.0-202303=
-25221338-052af4a8072b/device/receive.go:513 +0x23a
-> created by golang.zx2c4.com/wireguard/device.(*Peer).Start
->         C:/Users/user/go/pkg/mod/golang.zx2c4.com/wireguard@v0.0.0-202303=
-25221338-052af4a8072b/device/peer.go:199 +0x2e5
-
-
-A link to related code:
-
-https://github.com/mysteriumnetwork/node/blob/5c109f64858da7c0c0add4e2dd7ce=
-9e4e46c99e1/services/wireguard/endpoint/netstack-provider/netstack.go#L164
-
-
---
-regards,
-  Anton
