@@ -4,62 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3394CC77B7F
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 18 May 2023 01:31:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9429C77B7F
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 18 May 2023 02:04:46 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a19dd14c;
-	Thu, 18 May 2023 01:22:54 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org
- [2604:1380:4641:c500::1])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 35bcf499
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 18 May 2023 01:22:53 +0000 (UTC)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 4359F64C28
- for <wireguard@lists.zx2c4.com>; Thu, 18 May 2023 01:22:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7455DC4339C
- for <wireguard@lists.zx2c4.com>; Thu, 18 May 2023 01:22:51 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="GLsCqjFj"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1684372969;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qOZXEweSAbSaLT/lMSUVVyFpux+M0zg06WVQ4J5+I5o=;
- b=GLsCqjFjfebrBNcZlzl1KsyUfQvv5BWoL8deq4injWI7XtxDW2eTbPGm+eV3F0nT1OLAXH
- HkdZZ9zas67b6wSK5iETeShuUbxCYpp39PgzqIlCqqqomiEjyM5kIogxSGIohjPj6YWtCK
- GmtQJ7cod8UbbrpFV7lnN5Vuq1o10h8=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a671e08b
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id db02f2bb;
+	Thu, 18 May 2023 02:04:44 +0000 (UTC)
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com
+ [2607:f8b0:4864:20::833])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 01208b0f
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 18 May 2023 01:22:47 +0000 (UTC)
-Received: by mail-vs1-f47.google.com with SMTP id
- ada2fe7eead31-4361113bdd1so436020137.0
- for <wireguard@lists.zx2c4.com>; Wed, 17 May 2023 18:22:47 -0700 (PDT)
-X-Gm-Message-State: AC+VfDxcH2qAKb+312eLveN3ehnHGPq4Mkxy/5/2kqj0DmBPRFq2DCk2
- gqH4oU8uht+s6yt3OY6PcEdO7l3szRPVS/5+j3M=
-X-Google-Smtp-Source: ACHHUZ7A8so3Diums9Uz5Nuy0V5+VMb7GtAH4KL+5vZPt/Z8fmPJu7qNNTeBSs5SxgysulktuDU+rUrZWEiXz894UJI=
-X-Received: by 2002:a67:de1a:0:b0:42c:77da:5d0a with SMTP id
- q26-20020a67de1a000000b0042c77da5d0amr15992398vsk.35.1684372967376; Wed, 17
- May 2023 18:22:47 -0700 (PDT)
-MIME-Version: 1.0
+ Thu, 18 May 2023 02:04:37 +0000 (UTC)
+Received: by mail-qt1-x833.google.com with SMTP id
+ d75a77b69052e-3f389c519e5so8438031cf.2
+ for <wireguard@lists.zx2c4.com>; Wed, 17 May 2023 19:04:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20221208; t=1684375476; x=1686967476;
+ h=content-transfer-encoding:mime-version:user-agent:message-id
+ :in-reply-to:date:references:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=o/EyLRisC92E+XONE+wKJLZmEA0d3vfIdje/fQBstKc=;
+ b=Lbnf+pgqzGL1GX3B0pI7lUa3IKEXe0WMRQyEe1G5v2Mg1lxcWfHyylFZArpL2yOHb+
+ hRRQ1GYhNytU0PTRL8E+m0GDb73kGKUxxSncA719Xyyr/JEX8jL97axaF49KZ1DEAmhn
+ 28MmSJ6ZYC73kYqTHOOHb3BFiwKkmVF2b1Yrx6Ght5ISd6BdI7xfot1YCpIwqo816ysX
+ qn9qkqiFoKNgXY5uhCoDH+uxD/rExyxKHm0pp6pOPebrufJqHn0m3opx0WGpzMa8cu34
+ v4KLcYkvsMxSwOlSxpjj3t6WNnE4ZiV87TvxGvLdSA7h5iDfQWwxWOefPwKQm662pkPT
+ qT1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20221208; t=1684375476; x=1686967476;
+ h=content-transfer-encoding:mime-version:user-agent:message-id
+ :in-reply-to:date:references:subject:cc:to:from:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=o/EyLRisC92E+XONE+wKJLZmEA0d3vfIdje/fQBstKc=;
+ b=k9TvleRzdEVgtukNTlVMcd3uPk6EjdPdquWPKJIUxtZ85Lw2xWarAWSLyGk3qOBykn
+ ZWiXEneqdGhkdEfBQd9RYD5fGaIzHIaES7hElI8JX/HEEJsziYaJnMUbStiR+XpoKei6
+ UHc6b63pWIkEiMwmkrG4uriIFupNlYxpS+8g9dWzSdd42cEkbGusHuGRzxZQIp+qy4UB
+ sE6/egk0Lw95cHyqAoEfdBr9nHNOSyDWf84sGHgaOYCVmSbg+1mt0ReIXnvUXiQkoq8m
+ sKz49XmV3bm73WNXMQR8rFEvd6rWY0hFLpcGt3jI/zfnkxAPdFnjssXF03A2QtNkCvvF
+ GgWA==
+X-Gm-Message-State: AC+VfDzKr207hIgLHtyHbbmI8SKdQ3T8NhPK/Poz977WXkX7ivb9mLhc
+ HG/RSfEHPLQpfq1H3er+xiRCyjl5LHybAw==
+X-Google-Smtp-Source: ACHHUZ6q7Wb2mzhsWUamzgfDjRTwk3jC46dKiXg7KbV5BCyxOcFS7pmIyCTPASASHRDR0wpTx13img==
+X-Received: by 2002:ac8:5c83:0:b0:3f4:f1f8:9383 with SMTP id
+ r3-20020ac85c83000000b003f4f1f89383mr3358183qta.52.1684375475807; 
+ Wed, 17 May 2023 19:04:35 -0700 (PDT)
+Received: from hurd (dsl-150-33.b2b2c.ca. [66.158.150.33])
+ by smtp.gmail.com with ESMTPSA id
+ n7-20020a05620a152700b0075784a8f13csm77516qkk.96.2023.05.17.19.04.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 17 May 2023 19:04:35 -0700 (PDT)
+From: Maxim Cournoyer <maxim.cournoyer@gmail.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: [bug] No keep-alives sent when private is set via PostUp
 References: <87fs7xtqrv.fsf@gmail.com>
  <CAHmME9rEKX_8s=WxoeBg5xf-5FLVxTm6q8Wo=-FrwRCuT7FX6Q@mail.gmail.com>
-In-Reply-To: <CAHmME9rEKX_8s=WxoeBg5xf-5FLVxTm6q8Wo=-FrwRCuT7FX6Q@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 18 May 2023 03:22:36 +0200
-X-Gmail-Original-Message-ID: <CAHmME9oh6toB+a=uWS8tYFiW6OyOJMYoSRoadwcxfpVrXfhAiw@mail.gmail.com>
-Message-ID: <CAHmME9oh6toB+a=uWS8tYFiW6OyOJMYoSRoadwcxfpVrXfhAiw@mail.gmail.com>
-Subject: Re: [bug] No keep-alives sent when private is set via PostUp
-To: Maxim Cournoyer <maxim.cournoyer@gmail.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+ <CAHmME9oh6toB+a=uWS8tYFiW6OyOJMYoSRoadwcxfpVrXfhAiw@mail.gmail.com>
+Date: Wed, 17 May 2023 22:04:34 -0400
+In-Reply-To: <CAHmME9oh6toB+a=uWS8tYFiW6OyOJMYoSRoadwcxfpVrXfhAiw@mail.gmail.com>
+ (Jason A. Donenfeld's message of "Thu, 18 May 2023 03:22:36 +0200")
+Message-ID: <87ttwamm31.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -75,14 +82,25 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Thu, May 18, 2023 at 3:17=E2=80=AFAM Jason A. Donenfeld <Jason@zx2c4.com=
-> wrote:
-> Until this patch hits stable kernels, you can probably work around
-> this by changing your PostUp into a PreUp. I adjusted the man page
-> here:
->
-> https://git.zx2c4.com/wireguard-tools/commit/?id=3D9d42bd1ab9d707f7a72162=
-d36c9b37cc9bdf480e
+Hi,
 
-Er, nevermind about this part. PreUp executes before the interface is added=
-.
+"Jason A. Donenfeld" <Jason@zx2c4.com> writes:
+
+> On Thu, May 18, 2023 at 3:17=E2=80=AFAM Jason A. Donenfeld <Jason@zx2c4.c=
+om> wrote:
+>> Until this patch hits stable kernels, you can probably work around
+>> this by changing your PostUp into a PreUp. I adjusted the man page
+>> here:
+>>
+>> https://git.zx2c4.com/wireguard-tools/commit/?id=3D9d42bd1ab9d707f7a7216=
+2d36c9b37cc9bdf480e
+>
+> Er, nevermind about this part. PreUp executes before the interface is add=
+ed.
+
+Does that mean that the example bit changed in the man page needs to be
+reverted?
+
+--=20
+Thanks,
+Maxim
