@@ -4,62 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D20A7C77B75
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 May 2023 20:20:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFDAFC77B7F
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 18 May 2023 01:18:03 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6bbf7fbe;
-	Wed, 17 May 2023 20:20:57 +0000 (UTC)
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com
- [2607:f8b0:4864:20::730])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ccd65dbe
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2454a1e0;
+	Thu, 18 May 2023 01:18:01 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org
+ [2604:1380:4641:c500::1])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 99773387
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 18 May 2023 01:17:59 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id E8BB064B76
+ for <wireguard@lists.zx2c4.com>; Thu, 18 May 2023 01:17:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BEF9C433D2
+ for <wireguard@lists.zx2c4.com>; Thu, 18 May 2023 01:17:56 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="FcEbJrV2"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1684372674;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Zj6csr/nKAXGH4MU6Px+ljsZJucQXTGvY2cgrXQHiCU=;
+ b=FcEbJrV2/RemsuFCgtGZI/hABDFKw131MjAPmbbxZDj0hWYE916JiV88ZardJzfHCuBIvY
+ 4U/recn1SwbRnQIhjl7AsvxSljz1+FNukiFE3Trg4Vr6r/ILRDLFbURap54e1KxJj6/7Mg
+ h2svfGS5n4WiavFj1hRTiTxCIL5tfI8=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id bba1e3d4
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 15 May 2023 18:04:39 +0000 (UTC)
-Received: by mail-qk1-x730.google.com with SMTP id
- af79cd13be357-757742c2e5fso851151085a.1
- for <wireguard@lists.zx2c4.com>; Mon, 15 May 2023 11:04:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20221208; t=1684173878; x=1686765878;
- h=mime-version:message-id:date:subject:to:from:from:to:cc:subject
- :date:message-id:reply-to;
- bh=UHeuGNv7zZWjAGdmRokJhSsAWEio6KEpGBfXOi+nMXU=;
- b=LpEKG+eE9CSr1LwcwDVEIQ9OFSqwRtNkG21uSpwrnvd9nejIw1sWOYg5cnceG0lX3h
- ZQhGP8ziLGo9d8neGMKKcYRt+zIfJ5GC8pEDS4xOt27xsHNUnGG9+De2ucDkRGTokzpG
- tLnGcxdJ1aigeG06Z1zkUJ+xm/ZaaJjf+Mew71gKT/inM0XxsjRWulHiT4hMQGv2IEhD
- x1le7vY8aNQcmpmrNBJ8SJuB66sssEQMu9G305c7Kj255ajDZkSyCIKWO+jkDOBd2pJ7
- 2zKM8hHcjh47AEcJwwv1mYwLP7KxmwkRfgphPWhKsBhaTY91rWsF1K3l+AnXiP9GCvLm
- raaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20221208; t=1684173878; x=1686765878;
- h=mime-version:message-id:date:subject:to:from:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=UHeuGNv7zZWjAGdmRokJhSsAWEio6KEpGBfXOi+nMXU=;
- b=aVwCU+iQ+G0hARHnsCi70iuy6QgsG0VcNqMhmE2vfs+7eXOlutXBraNndT1L275uZB
- nBqypI9uxw2elpTtP9DIXK1BW/DETwp904WB7eL7CREmNr+NHcv3CX43WkNOVDrP3uJ2
- ypKrw9pk0XPU738B56j0koew6Mz3yp/DaRwKJucMcdUQD3AJ5bznRRNEb4sLFMwe/qip
- Nnm9EOgJUAJLxQtg32ATUEMBxJLMYkzQkOOH/4S6U5Dguuy1PwB+XlprW+ihPHISoSoH
- MKnmjToN8oxF4wz2OW/3Y2y8uDhV6rnbInRn6Pi6Sz+jyDiasVoAwQgCp3+ZkF+QMqwi
- GRLQ==
-X-Gm-Message-State: AC+VfDyUMVJcwPQP2m+KGCSzPlD+W7c29dHwwXmongAY9tobEljw3ooB
- 6sCL2AnOt17ff8ucqjRyDGhj+FET9WA4amu8
-X-Google-Smtp-Source: ACHHUZ470aNQunwoqOmA1BGsYDVK6HPcjqfZU5qet1UEyPi9l3zlGDbcplmwYCNnuiYFreYCSPxmfQ==
-X-Received: by 2002:a05:6214:2a8e:b0:61b:9e0f:93c2 with SMTP id
- jr14-20020a0562142a8e00b0061b9e0f93c2mr47315809qvb.49.1684173878074; 
- Mon, 15 May 2023 11:04:38 -0700 (PDT)
-Received: from hurd (dsl-205-236-230-106.b2b2c.ca. [205.236.230.106])
- by smtp.gmail.com with ESMTPSA id
- v12-20020a0ce1cc000000b005dd8b934579sm5068325qvl.17.2023.05.15.11.04.37
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 May 2023 11:04:37 -0700 (PDT)
-From: Maxim Cournoyer <maxim.cournoyer@gmail.com>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: [bug] No keep-alives sent when private is set via PostUp
-Date: Mon, 15 May 2023 14:04:36 -0400
-Message-ID: <87fs7xtqrv.fsf@gmail.com>
+ Thu, 18 May 2023 01:17:54 +0000 (UTC)
+Received: by mail-ua1-f43.google.com with SMTP id
+ a1e0cc1a2514c-76d846a4b85so523188241.1
+ for <wireguard@lists.zx2c4.com>; Wed, 17 May 2023 18:17:54 -0700 (PDT)
+X-Gm-Message-State: AC+VfDwu3yRfDaqChuccrjwEX9oyfij2zwOKQNNyRhMWBrK7/dnfGIYS
+ eBo+7qwSIXyx2UA1eKJiDoMtZUCH4C2bLLOj1jI=
+X-Google-Smtp-Source: ACHHUZ4dtkuu4cUl27mKfgd+91ZN58o4G3HPLef7l16FyZIqWngjDW4WYnqea2PXp6G2o+i7s1fjH3Oh89bp0bqYeXM=
+X-Received: by 2002:a67:f5d2:0:b0:436:fc1:2a63 with SMTP id
+ t18-20020a67f5d2000000b004360fc12a63mr14551419vso.28.1684372673482; Wed, 17
+ May 2023 18:17:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Mailman-Approved-At: Wed, 17 May 2023 20:20:56 +0000
+References: <87fs7xtqrv.fsf@gmail.com>
+In-Reply-To: <87fs7xtqrv.fsf@gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 18 May 2023 03:17:42 +0200
+X-Gmail-Original-Message-ID: <CAHmME9rEKX_8s=WxoeBg5xf-5FLVxTm6q8Wo=-FrwRCuT7FX6Q@mail.gmail.com>
+Message-ID: <CAHmME9rEKX_8s=WxoeBg5xf-5FLVxTm6q8Wo=-FrwRCuT7FX6Q@mail.gmail.com>
+Subject: Re: [bug] No keep-alives sent when private is set via PostUp
+To: Maxim Cournoyer <maxim.cournoyer@gmail.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -74,48 +72,19 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
+Hi Maxim,
 
-I've encountered an edge case where no keep alives would be sent
-following recreating a connection with
+Thanks for the bug report! I think indeed you're right about this. Can
+you test if this commit fixes the issue for you?
 
---8<---------------cut here---------------start------------->8---
-wg-quick down my-config-file
-wg-quick up my-config-file
---8<---------------cut here---------------end--------------->8---
+https://git.zx2c4.com/wireguard-linux/commit/?id=3ac1bf099766f1e9735883d5127148054cd5b30a
 
-Where my-config-file contains something like:
+It at least satisfies the test case I added.
 
---8<---------------cut here---------------start------------->8---
-cat /gnu/store/zilv4f0jqa8nz8apqv8y3a6g0ifymxhc-wireguard-config/wg0.conf 
-[Interface]
-Address = 10.0.0.7/32
-Table = auto
+Until this patch hits stable kernels, you can probably work around
+this by changing your PostUp into a PreUp. I adjusted the man page
+here:
 
-PostUp = /gnu/store/4cnl0h79zc599xryr5jh66d7yq643zk4-wireguard-tools-1.0.20210914/bin/wg set %i private-key /etc/wireguard/private.key
+https://git.zx2c4.com/wireguard-tools/commit/?id=9d42bd1ab9d707f7a72162d36c9b37cc9bdf480e
 
-ListenPort = 51820
-
-[Peer] #apteryx
-PublicKey = JPWIbC9qMlnTkWfqGp0plOxWJ/ewOO/C9BuxIJles28=
-AllowedIPs = 10.0.1.1/32
-Endpoint = apteryx.duckdns.org:51820
-PersistentKeepalive = 25
---8<---------------cut here---------------end--------------->8---
-
-The following command on that machine:
---8<---------------cut here---------------start------------->8---
-tcpdump -n -i any port 51820
---8<---------------cut here---------------end--------------->8---
-
-wouldn't show any traffic.
-
-Discussing this on #wireguard (libera.chat IRC), the another| user
-thinks the problem could be triggered because of setting the private key
-in using a PostUp directive; more specifically it is believed the
-problem would happen when "no private key is defined when the interface
-comes up".
-
--- 
-Thanks,
-Maxim
+Jason
