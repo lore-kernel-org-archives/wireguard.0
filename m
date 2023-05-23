@@ -4,56 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1DFCC77B75
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 23 May 2023 16:24:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DFA2C77B75
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 23 May 2023 16:41:15 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c97e25ee;
-	Tue, 23 May 2023 16:14:32 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org
- [2604:1380:4641:c500::1])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 31f90911
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 298fb9bd;
+	Tue, 23 May 2023 16:41:13 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id aa7387b2
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 23 May 2023 16:14:26 +0000 (UTC)
+ Tue, 23 May 2023 16:41:11 +0000 (UTC)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 1532562747;
- Tue, 23 May 2023 16:14:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66727C433D2;
- Tue, 23 May 2023 16:14:23 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="ho9GhgHN"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1684858461;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=03lmNUAB17A9ca+oGO7O4py68GtfGLSGU69TNAskS4o=;
- b=ho9GhgHN5EnNp5DUHniUPEBPl6Kqd2MJACQhBAZKWYh9S9hKPioKW4g69yu94yVedbEl6C
- vj9ET3YZpLf3MWvN+6ydsNB2gLMmUqwQfG2FVNh69dlW3amnHINuZ4Sbd7N2d8T8LldRce
- y1D3SRzJrxN6QvVk+rSb93V1fl0+h/c=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f9d47816
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Tue, 23 May 2023 16:14:21 +0000 (UTC)
-Date: Tue, 23 May 2023 18:14:18 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: edumazet@google.com,
- syzbot <syzbot+c2775460db0e1c70018e@syzkaller.appspotmail.com>,
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 2E01960EC0;
+ Tue, 23 May 2023 16:41:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37BE6C433EF;
+ Tue, 23 May 2023 16:41:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1684860069;
+ bh=99tQwGA2fivyaV7yBZi/QCxkc1ZXrPn5AFuiF2mq8rg=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=WCr6pmi8qFTvA9PzUaQCujXU10uw4JCyzTKklseMJ6rM1cpkexU/37RFwEj3m8IO1
+ vuHCtztHI3Yyrhp/TPATmpzc+lPAYW0+RFFjKeJapxrje56uSOB6Mi4RPvHOz0rSxl
+ pGiLYHYyJ3UDYg6j6+ymGz3L177PLcUb/dcEP1FyBn9GNKG2qYC4Zf7Q0AYXbgXM6N
+ R1AQrN3mCqPQY5MV+4NVt+CCfHNKsocqU6nNJ+dmzcBRj8fQsjQayGKhVLnkS49LFi
+ XcADI5btRA3/gN3IuwOD4H8Yk+a+UG++lKvhr6kdyqsfzTltXkXEuet5M24U4LrpBi
+ pMpb+bp4AYxlQ==
+Date: Tue, 23 May 2023 09:41:08 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: Eric Dumazet <edumazet@google.com>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, syzbot
+ <syzbot+c2775460db0e1c70018e@syzkaller.appspotmail.com>,
  netdev@vger.kernel.org, syzkaller-bugs@googlegroups.com,
- davem@davemloft.net, linux-kernel@vger.kernel.org,
- pabeni@redhat.com, wireguard@lists.zx2c4.com, jann@thejh.net
+ davem@davemloft.net, linux-kernel@vger.kernel.org, pabeni@redhat.com,
+ wireguard@lists.zx2c4.com, jann@thejh.net
 Subject: Re: [syzbot] [wireguard?] KASAN: slab-use-after-free Write in
  enqueue_timer
-Message-ID: <ZGzmWtd7itw6oFsI@zx2c4.com>
+Message-ID: <20230523094108.0c624d47@kernel.org>
+In-Reply-To: <CANn89iLVSiO1o1C-P30_3i19Ci8W1jQk9mr-_OMsQ4tS8Nq2dg@mail.gmail.com>
 References: <000000000000c0b11d05fa917fe3@google.com>
  <ZGzfzEs-vJcZAySI@zx2c4.com> <20230523090512.19ca60b6@kernel.org>
+ <CANn89iLVSiO1o1C-P30_3i19Ci8W1jQk9mr-_OMsQ4tS8Nq2dg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230523090512.19ca60b6@kernel.org>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -68,39 +63,36 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Tue, May 23, 2023 at 09:05:12AM -0700, Jakub Kicinski wrote:
-> On Tue, 23 May 2023 17:46:20 +0200 Jason A. Donenfeld wrote:
-> > > Freed by task 41:
-> > >  __kmem_cache_free+0x264/0x3c0 mm/slub.c:3799
-> > >  device_release+0x95/0x1c0
-> > >  kobject_cleanup lib/kobject.c:683 [inline]
-> > >  kobject_release lib/kobject.c:714 [inline]
-> > >  kref_put include/linux/kref.h:65 [inline]
-> > >  kobject_put+0x228/0x470 lib/kobject.c:731
-> > >  netdev_run_todo+0xe5a/0xf50 net/core/dev.c:10400  
-> > 
-> > So that means the memory in question is actually the one that's
-> > allocated and freed by the networking stack. Specifically, dev.c:10626
-> > is allocating a struct net_device with a trailing struct wg_device (its
-> > priv_data). However, wg_device does not have any struct timer_lists in
-> > it, and I don't see how net_device's watchdog_timer would be related to
-> > the stacktrace which is clearly operating over a wg_peer timer.
-> > 
-> > So what on earth is going on here?
+On Tue, 23 May 2023 18:12:32 +0200 Eric Dumazet wrote:
+> > Your timer had the pleasure of getting queued _after_ a dead watchdog
+> > timer, no? IOW it tries to update the ->next pointer of a queued
+> > watchdog timer. We should probably do:
+> >
+> > diff --git a/net/core/dev.c b/net/core/dev.c
+> > index 374d38fb8b9d..f3ed20ebcf5a 100644
+> > --- a/net/core/dev.c
+> > +++ b/net/core/dev.c
+> > @@ -10389,6 +10389,8 @@ void netdev_run_todo(void)
+> >                 WARN_ON(rcu_access_pointer(dev->ip_ptr));
+> >                 WARN_ON(rcu_access_pointer(dev->ip6_ptr));
+> >
+> > +               WARN_ON(timer_shutdown_sync(&dev->watchdog_timer));
+> > +
+> >                 if (dev->priv_destructor)
+> >                         dev->priv_destructor(dev);
+> >                 if (dev->needs_free_netdev)
+> >
+> > to catch how that watchdog_timer is getting queued. Would that make
+> > sense, Eric?  
 > 
-> Your timer had the pleasure of getting queued _after_ a dead watchdog
-> timer, no? IOW it tries to update the ->next pointer of a queued
-> watchdog timer. 
+> Would this case be catched at the time the device is freed ?
+> 
+> (CONFIG_DEBUG_OBJECTS_FREE=y or something)
 
-Ahh, you're right! Specifically,
+It should, no idea why it isn't. Looking thru the code now I don't see
+any obvious gaps where timer object is on a list but not active :S
+There's no way to get a vmcore from syzbot, right? :)
 
-> hlist_add_head include/linux/list.h:945 [inline]
-> enqueue_timer+0xad/0x560 kernel/time/timer.c:605
-
-The write on line 945 refers to the side of the timer base, not the
-peer's timer_list being queued. So indeed, the wireguard netdev is still
-alive at this point, but it's being queued to a timer in a different
-netdev that's already been freed (whether watchdog or otherwise in some
-privdata). So, IOW, not a wireguard bug, right?
-
-Jason
+Also I thought the shutdown leads to a warning when someone tries to
+schedule the dead timer but in fact add_timer() just exits cleanly.
+So the shutdown won't help us find the culprit :(
