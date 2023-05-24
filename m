@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E1B1C7EE33
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 24 May 2023 15:33:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBF43C77B7A
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 24 May 2023 15:46:22 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e6015797;
-	Wed, 24 May 2023 15:33:47 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org
- [2604:1380:4641:c500::1])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 86418104
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7395f820;
+	Wed, 24 May 2023 15:39:40 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4e309c22
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 24 May 2023 15:33:45 +0000 (UTC)
+ Wed, 24 May 2023 15:39:39 +0000 (UTC)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id C174263385;
- Wed, 24 May 2023 15:33:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7922C4339C;
- Wed, 24 May 2023 15:33:42 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id B064663E6C;
+ Wed, 24 May 2023 15:39:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A60B2C433D2;
+ Wed, 24 May 2023 15:39:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1684942423;
- bh=88v5bOvUrHpnigzjD7xR3ehZTKQzCviyqHGY6Krfgxk=;
+ s=k20201202; t=1684942777;
+ bh=9Hl32z8O29zupLewPwrp8TBa3k0iI9CyhI88kKC9mx0=;
  h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=nZ0/YZCGN+y4Pnj8RFVrtv/aa7OoIMusnYX2i0bHSk0upcrNedee0iJe+T7ZA+UMc
- VKXxpJt/8x+rpyZqd4SdrXnxWeBIZfkNHcAbEZXHIh6zgOnAuAg4fdqMP5Oz1by3lp
- 8lHeciDHiVh1V6exuh2DDo/VWDhgqT7EjlVeXzNqsrDqbjah/6gOp1uX9QP5QJx4C5
- Mo6ZNRL5VvsS/BlsYqZJe8dhZYj2eOgU6xXy3SyhTQknJRBDJiV9l6xVyh53/77YpJ
- pU8u/t9DATb3dXTxPTT4TBvi4R8GdYgLb4Zmr/+13FLPWdLXALLpQXnCa4COmk39u/
- psDsfH8PfTAIw==
-Date: Wed, 24 May 2023 08:33:41 -0700
+ b=LeXRm7BtiZTlebT681eMU23sdH7H3sx167YpHnt5zUzTXsy44X1JAfbDnIrBJ03rn
+ 19Xpt0L3QVP5WH7cZyizBHJJIS/nDyh3pgzmRvR5iSIKpowHGWtlhTYYz6jWduPvsx
+ /kU8JlHTQXC5B/QbvoP6Dbw73YwFfbqMaUVmUmX8oem0zwojl2enIcZFazIW3vXYca
+ jgbWY4A0mTTsmC9CtMNsO2ctPty55mAQu6OLhG2RABV1LavDUqbFCXCZBzrnvKl53U
+ gtEgxaLeayUCj1TrpE8ckP9p8gmbT5XElDKW2lo/J8KhX4cmJDWMv+UGx92Lrisixv
+ 93vgt0zerCxmQ==
+Date: Wed, 24 May 2023 08:39:35 -0700
 From: Jakub Kicinski <kuba@kernel.org>
 To: Dmitry Vyukov <dvyukov@google.com>
 Cc: Eric Dumazet <edumazet@google.com>, "Jason A. Donenfeld"
@@ -43,8 +42,8 @@ Cc: Eric Dumazet <edumazet@google.com>, "Jason A. Donenfeld"
  wireguard@lists.zx2c4.com, jann@thejh.net
 Subject: Re: [syzbot] [wireguard?] KASAN: slab-use-after-free Write in
  enqueue_timer
-Message-ID: <20230524083341.0cd435f7@kernel.org>
-In-Reply-To: <CACT4Y+YcNt8rvJRK+XhCZa1Ocw9epHg1oSGc28mntjY3HWZp1g@mail.gmail.com>
+Message-ID: <20230524083935.7108f17f@kernel.org>
+In-Reply-To: <20230524083341.0cd435f7@kernel.org>
 References: <000000000000c0b11d05fa917fe3@google.com>
  <ZGzfzEs-vJcZAySI@zx2c4.com> <20230523090512.19ca60b6@kernel.org>
  <CANn89iLVSiO1o1C-P30_3i19Ci8W1jQk9mr-_OMsQ4tS8Nq2dg@mail.gmail.com>
@@ -54,6 +53,7 @@ References: <000000000000c0b11d05fa917fe3@google.com>
  <CANn89iLrP7-NbE1yU_okruVKqbuUc3gxPABq4-vQ4SKrUhEdtA@mail.gmail.com>
  <CANn89iKEjb-g1ed2M+VS5avSs=M0gNgH9QWXtOQRM_uDTMCwPw@mail.gmail.com>
  <CACT4Y+YcNt8rvJRK+XhCZa1Ocw9epHg1oSGc28mntjY3HWZp1g@mail.gmail.com>
+ <20230524083341.0cd435f7@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
@@ -71,12 +71,23 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, 24 May 2023 10:24:31 +0200 Dmitry Vyukov wrote:
-> FWIW There are more report examples on the dashboard.
-> There are some that don't mention wireguard nor usbnet, e.g.:
-> https://syzkaller.appspot.com/text?tag=CrashReport&x=17dd2446280000
-> So that's probably red herring. But they all seem to mention alloc_netdev_mqs.
+On Wed, 24 May 2023 08:33:41 -0700 Jakub Kicinski wrote:
+> On Wed, 24 May 2023 10:24:31 +0200 Dmitry Vyukov wrote:
+> > FWIW There are more report examples on the dashboard.
+> > There are some that don't mention wireguard nor usbnet, e.g.:
+> > https://syzkaller.appspot.com/text?tag=CrashReport&x=17dd2446280000
+> > So that's probably red herring. But they all seem to mention alloc_netdev_mqs.  
+> 
+> While we have you, let me ask about the possibility of having vmcore
+> access - I think it'd be very useful to solve this mystery. 
+> With a bit of luck the timer still has the function set.
 
-While we have you, let me ask about the possibility of having vmcore
-access - I think it'd be very useful to solve this mystery. 
-With a bit of luck the timer still has the function set.
+I take that back.
+
+Memory state around the buggy address:
+ ffff88801ecc1400: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff88801ecc1480: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+>ffff88801ecc1500: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb  
+                   ^
+ ffff88801ecc1580: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff88801ecc1600: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
