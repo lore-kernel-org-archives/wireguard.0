@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69417C7EE29
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  8 Jun 2023 11:45:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 946D3C7EE29
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  8 Jun 2023 12:11:04 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c67dd695;
-	Thu, 8 Jun 2023 11:45:33 +0000 (UTC)
-Received: from sonic310-57.consmr.mail.ir2.yahoo.com
- (sonic310-57.consmr.mail.ir2.yahoo.com [77.238.177.30])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5f3b01ce
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a460123f;
+	Thu, 8 Jun 2023 12:11:02 +0000 (UTC)
+Received: from sonic302-20.consmr.mail.ir2.yahoo.com
+ (sonic302-20.consmr.mail.ir2.yahoo.com [87.248.110.83])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 08585295
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 8 Jun 2023 11:45:30 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Thu, 8 Jun 2023 12:11:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.co.uk; s=s2048;
- t=1686224730; bh=IM3chJSV84cF0F6Nmi+YRm25zuQ/ZCGgacij/wrq/2A=;
+ t=1686226260; bh=xskhfeWWStxCLelWueTp+hI1ZQcnFqPFrjUUsuUJH6o=;
  h=Date:Subject:To:References:From:In-Reply-To:From:Subject:Reply-To;
- b=rdrp/qfOp67/581saMr0KwHlQOrmOhJlPkAHYvkyvDcDUJukUsDxhxBhHzUTtLR3w6blIn+x+jiE+of5MFRVO6dnqng2wfzrZlyrgnoJcfp3piDwAYb02pj0uf6vd4MWlAwGYnqbA240GpXeqXrx2ZjPuefU24phdgZJ7dOvKUONWmJFKj3UirtJlIDkTdAXlhn1yc2etkrPIiishlVUVBcemJEyMaCRDhzSjDP58lAtuQ9RXhElmPkNoED9BhuAKmHgWPIia87PEJlbwjr5Cs05gEYUdLY/oREoFja8ZJd46Gqu0l836XItrZTCgGmZuZ6hYRLCZdGoNZ6ax642EA==
+ b=QgNXEWGovRF4lLqmSHBMUw4YVlOjz46iNIa2r5Oyg1a4ApuCyWnm23uL3bBRcweMHD8M++AXQ9tQbdIuDN1MgEVTZ2HWZ4ce0svHzygHpHQGbqAZ0c33ZWvEmAfTR/Y2F/f8nw1nTe9KFUJzpyHIhvN4b7wEUoAC2xmdJs1N+tXqK5v5DZJo1rtpV3ujPPUiPOm98hs64UWDrsanIYoq4DJcbmDKOgile9WFJV8aJNkCD+J/e3ow8kT6yAXX3rLagp8Apr2ZTT50Luy7nBALNy/SLE7QY3RAe3W7cNY8yqWDGirFxiANiwEeNtehav1Ys7BF+foxyNFSHkgE++YYxw==
 X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1686224730; bh=jr5uEbS+CEmo/xLUP/qGB///nPOIXv8hQoL9JuogAsF=;
+ t=1686226260; bh=zfy4J1pl09LAwyqLJlRXGHcSuWOAI0nJ7hsO3LvRGn6=;
  h=X-Sonic-MF:Date:Subject:To:From:From:Subject;
- b=KJ7MTxADvUWzKXWEWWHOMIbtE4SntQE1kcINyH7wcqkngQFoKODL+DovDxhXoVxDYyIumoXHYGxk2O5WPfIcWPmRUT+W/LLAQoQiMb+eB2NwvYeRUIIdTpvSPocuqJXisM337Gli5wr+Q/bSLYEtHpgcESNjwrjAd8JyLau2oQcZu0t/69CsOazLt7uDKE3UKGENI0JF9QG7CTsJlGOkrmp0hAB2L3ERTEpMVMg+Qe5uylzc8bbN168g9gdTPwcwgE/ZBcsFoCo4t3xLwceQq5Q+Zj0/mD4zHecYlnSW8N41L97k+AU0qBXHVBAtr9egVOcEByTM6kCJRJj37KlGpA==
-X-YMail-OSG: VBhLucoVM1n2WQVp8qr6fZG5WYkVGbcaahwH_mjenlz9FIrzWUzglv6wSxKBgZx
- 3ppN3Abv9yD2wUUgF08QAfRNajoNKmks5As3L9j_dyARQPyuXnjUmR71Rr8opJICqEYY2Dq.8x.1
- Uakr4Y.jQHpXl5cDCOpU_GjR9DRz8fXJYGd4nT2yBhSktaD.s0ax7VrdAf1q5nxMU5FN91jTLloi
- 3xdievbLWXJLeJ3n.MP6eKRyx2CfLxivX9O9hL97qF3ZkXA87pyAFfXZY3Ae.xLr7ekWXCmY4Ped
- 0hYpYo12MqaexUyObPQaKwICLvqTR1EXecLNxl6YQbgp_B2MlBlz7.xvMm6CfnPDEn7vnH2reruQ
- tiZttNCkVnqFw8Ti0s1D949fDcvzqGsOudxbrBI7WU7U1R.9KtCYY_SKg8TB1FgBLyCaXrqyB3bR
- 6F3CSLNBeTbURiDCjB8f2bt.EKtkyY6MOSAN2UbVPsAxrRnR_qf.DYSTlkGu5GaPKcA17X7nekEo
- Z3wlaM2ZnsTr49uQLLP6BTCwnQ4VWj9LlnshfQo6LgYvTohP7mnpjKki4ONMIVb7xYEcAA.RuL7x
- 1GvNeBKFAeQDmwqa8_fSWDNY3uH3IANUshmJ6uob3NwmfP3s4qnr0x0Hputv6gUsAcX4yCbzQNdI
- aGDsnYds7V2t7M5VMXHVRS_eFjIT7MQ8EaoisDLaMPtb9qNLBAmtKf4erMe0mPYYMYVicV6c7ZMr
- DaLlcmhvB61Y.ecnyyl0cb0DLSGpyT6WEtoQKI4tSdRNOT7hc7qtr0wuL89eFUyW02KffodjOPSn
- dvfuJwLSx_rvYgLo5HdBLek.alF3aZ0ZAggtUTp8QI5045askTXNoc8GbMyqGu5_Z15Oc647LBjR
- RFmT5FgY9rO9pMA91PUqIllHN8bBZqHqbh7_P3aLkMsU79LmtkpjqSD_.BbSI9Eq3IWxsdpZWCkw
- QQNDnefc65JkGevOwrIl7nLFbM_v0bK35bOfpsYWyZ1yf6zMbqI045oFSCWB_vn1n22_CenjuXlQ
- 1CevDXjxmHw3t_vDHggLD_lziSQQq6TZIBVphaJC6tm3FMgV3nUXQIdH8nUq5UnhhE_3JrzPzxCG
- cfNZTW6nXYfVrs7X2XLnPB1XZ0jUuWpJ20ZoiO8EvZ.vo0D2ksVPxozTZZGoFMCTvOmf_s0TkFIc
- cn.vJ7IRvjFzfgC0Wtt2uTkSJ0UAMIlEztxc4JjPZ14JmAJ96m71sXgRADRxZ0wyHbvYq4nnljTm
- aH3cbMKSNx9.Vy.y5Edo0E6UuaNKbF7CCJRuaFFumuBvkUToAnDPn9SmDkNMbPoTIXlMK5sQVaCj
- bCghZ2Bp4gyddn5CxW9wQd4zMtGMXiKL4oDmVwYz2bP8DRBZtetgDJJeWEYB20Y.sz2NHXoYq2OF
- Hl.DgCxOnGBcIa3lZ24Siwwgdr0SFeWIGlftoAX.huSolk9wE4niQdtguiu3sF6NUXstzx09QJYy
- ijtLgRYAW0NPb14VsBN8NHJxyF9fVOfgsut9RM6ugGsvkzQV8A3eadM12M85ViUGqqvz7E65OFGN
- qC1Rr2UAJjlnNlRtcfDnPTlwGjiS8Ef8Dt2cFHoJWUQdyg6Rtr.WCptsSoS374MyGHK5uflVU9Sl
- DkJaPuy9HMVOmLC.vbbDHaINAXGXz_KJp_oerLsVuPRZXfgidV2kwuqHfe8hey_OhfXkjF8kQCa9
- xtjimZzVOK9eBGl4wqxpjdA364OeOg0E.MHdgCCKpub1QmC0EyPGKcxs7beIAjjHVycLywJLl8ug
- klqgzw5JYeO3ow8_DKxLC2YVg5YOJhYRqjCxtjM1UcHD2S3e4hHyp8OiUnhGu3Vwe13S8nxKZgXL
- YRT99SMjz8vpUgCBbRES_ZAC7l60AwxFGsL_ZhclgLF0ukS2.DqDxKkMDsU_s.yboeJExirTrkIp
- K1uvkvMlVhNgPa78NMijuyXvvr7Tvv4tLSXObEoofSey8yo8vLANA03JUabYA66l7ggSdMDzyxak
- .IQJ12rzyLgFS7gNzAnKH7PeuzrknGlBzam.WjTpaYyl7mTJe6nkud1vy6KfgHfx6xiBoHazKm8H
- Plj2V032RqEUaOiSDgZxYl4w4.8wiMHgut1CTd3fY2zIJlwndtVqS0Q9UdKOLL.3FXaj7pU7bWxW
- rddD4JRsFwTktat.0k5_y7c0xXqmSOMDvNa90I8WxkfVeTqykva7MnYGKb7Z24IdvrObOQs2B0as
- 1ymVF9vI5nyUF.0NyQM6L7dV43DRopqvIScmVqdu2KA2y2g.fzZnZ2gzMEKWB7zHTAzTR9zG5HDN
- RPynfJxs-
+ b=RnHXWvJ8Y7EOANjFbTYAKiLF3l3PWMsD6qKJTNG8i69Qd4Z2YEWG5ASZtOBfrPNt6vrgCGQU0i9PfiYd/sCD/eoxyd/YY9wKuMTULmnIi4VQF66UH5W2NHkRI7bMNy29dK5wYXyxKqfGKJlqWO2Eml5WNrNECXlh3e17zXEZfWITPFtt7t+i0cyMXbLc8t2l6dBHJC/qiUNx4SHxkk1joqOABX+x4kEDGbcsniwiH5QannM6GI59Nq51pkCuNyl9HO5b6vCls/3r0itXcUpn/XvJWsMmYep5d5yhII4NdACGTQuGofZ/sgEaGcS/neBZ54Aj6pTHR2/13rIWqv7+lQ==
+X-YMail-OSG: Npsk24wVM1lS8A2N8Rx271c19Wg5ZcPW1Iu9i693N3VJUNOdwixowJg.jeqjhl1
+ T6Oz579bKnWte44Xse.gHkzkd3stStQ4fNcF6164RIc9ktANmd5pDKwHRihBJUnp0QWrv4KxUCC5
+ KA4fHI8qdhXbw1BsTRn4MNEWqwVcX24VbtIex0Wy.JgajJH62aokxwqO1NtXSrLrvRrNE7NDpPYy
+ vxIHju2zDWqmQyS5NlXYjX4mXEE7HfTygungXwgRn1p1DNNhci1OmvXbtheWS2GGmSJhHtfNsJw2
+ urBoWExzXRCTbXX1NMNDNt5tYaHd6PAn0wQ3GDC0qWyqsB1.rXHS3X07t1g0iGp0fY3GbR2TKvh2
+ H1QgRCLyuSeh2kBrqrO94pLxnZU7zmclo9v7lZJnyypOFHo1xvrBbNtV2WXGJiS1g93T6CPTt_nx
+ vTMfhNUwzpE5ftK5dmPxm2O7vIhtqxNSkBjrr.T1VVUkD5nlk0n0pEIpi13VVUlA6YQbd6M7sXEX
+ j76YyWdpPrv.53a_dN0YVScGTRQ7KNnJQhfKRhxzqhk_7nD77adTdJh4FESZfTNhrgMYga7S5_At
+ LqvGlxPxaoC_wXmsr06VTKT_y1EjPwZlRy.28ltUYBIX5WYv_XW3KfOjTyESb8ZGvgNNdVmWfwFO
+ 0gPyNegJ4ysozz6qEJ69foy7SvxEvEYYCpINksbY6ghONoMiZqhcKHPPnzPxi8X0POfcl4JbJh2O
+ u138e_ig3ubFRsSJ7Kasum_Kms4SwDDMoHodPB.Jx8HiIyIr8gSpFxvCAMCKTYJuJRkYzg_sjOdf
+ rjTIAY7uPSWqvC0aAQiTdtGxIXzQcqJPfQt69X64EIOLrFR9Ct.d1KgTVqQNTX9_xoTFDP4gzsgt
+ M57G7TuiGkrGIyg0nmvjxlJ1AMPZjdrzdqP2ETp2AJYdpfvUMDWdyweHDfc7l92FhlYMGVSPd13F
+ mUGkymMzHMdUhsM68CpbXeRxUCRG0x6354hzlvrn4uw3g1hxTCMIsIqfbQYMKycf9FX03PF8OaiE
+ LXGTN1gJhVkTt.WLv43DlD3768Npabhi5WF5xQhkhUv7cNfABkan2Ebv17PxUgHf_N97GXtztwfC
+ GO7_S3WfZJ32FB.sO45vhNCqroi9qPWlxXUgqvrQayfCV.CZ7OOiR35O_xMteESflMzQek56H8Zh
+ .Ut39.cSn5G7MjcgR34NOfkdrYJ4JrWrzfwSkYFiC6U9cwgUo0s3UmddMkd5o6dyz4vENXRR4woe
+ 0CrkDuAkKuiSLZIBgEYDSdQUwApvFVcS_CXSNY9g8rQLMCPY9GAZXt0GJ_n4AHMPJbkkK9oDE1Ws
+ QtXgSArdum5BM3k44HwaOw7mxYyXabeU0WiiY9xoFBdgo02Tkb6UKX2HI.vpvcGVrokL0pfNPww2
+ JR6pw2F.jurKPOQ3OLcwN2Wopt6vg6wEh2OqrHglp6qFaAxnLazZ95Ah2Z.tPHH1r4ZIhoZVyBuq
+ 7FfT022Wu7T2dmZAvhgsRCt4g.7ZiJi1cKKzMdnZDMeR.cUHRdfZMLlcKdbqvgYKn9FTwhdzXPEB
+ WjSCmsJTwgSPjB9K3ED0g2n.GmM7HimNE8EAPs2RTWkGHKzdElrVZp19RqukP8pF2V7t8UUw.mx4
+ Gs4owibnjHlmv3gsNADyvsOy3BH.bXeSFIG5LHOlyfzEq6oo7ods3qx35OHiXTSXCdth8DnUJoQR
+ _VFAgoTjtUuoOjGyouxISPv8Z3a.zuBk53AYWhQjoRhkj3sYqCUe9f5Ae4AXVVeVLLG.dqfvM62H
+ g_MDDhXCfoRMl5_evtsuvEXVvlvyqAbWmTjg0GcnEtOJZ.kRYYRfolkrx6tW4aJ3RC2syJwaq6kW
+ YqjaK6CAQqr_epWeqMqz3XGDx0dOWCEjwuy4IFkmqJ980zLr3NDDOG6E.uigSvJipSblsvmGwVyW
+ MC3yNMBtoEw5rEJ5lC8xJQ20BYhIr_TJSCqrxre97U9bHTl8Ya.H4RypDi3kthZButgttZA1Uodb
+ DoolVm8jp7k4sH3AzZ8sFdB6W2b9ZFEUmtaLcxGWqst0KLLuxJq.T115tZdcRveGNp9f1.jNowy7
+ SntMHgAntEOj6._ThfS8k6ZKz7LdR4tCnX76kUSutorWsD_WdlLcO2tC16TZ980wgyxjawf0Yw1j
+ eRF3S04dba1xpOyrGZ8XoZJonqyrGD5vCb2mlqVO57UL_3kbHoTnwpmxy1.jEKp5S5ByOW7VjeMF
+ i7ezJFqAD7ZfZYOROqDFTHNGUKwn0pZtxAXFHjdeG2yFkBWuV1qADkTIPaJ0GP9ec7l4ddZ1__0L
+ j6o34Qao-
 X-Sonic-MF: <peljasz@yahoo.co.uk>
-X-Sonic-ID: 7f5c5452-34f4-402f-96e9-762c902ca529
+X-Sonic-ID: 02b6ed69-8a96-4fe3-b69a-e5cb92345b33
 Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic310.consmr.mail.ir2.yahoo.com with HTTP; Thu, 8 Jun 2023 11:45:30 +0000
-Received: by hermes--production-ir2-7867f454fc-tvpbc (Yahoo Inc. Hermes SMTP
- Server) with ESMTPA ID 050d899b5215d4e990b5442b8f694e8d; 
- Thu, 08 Jun 2023 11:45:28 +0000 (UTC)
-Message-ID: <8792819b-a595-7789-fc6f-3bce89d13d28@yahoo.co.uk>
-Date: Thu, 8 Jun 2023 13:45:27 +0200
+ sonic302.consmr.mail.ir2.yahoo.com with HTTP; Thu, 8 Jun 2023 12:11:00 +0000
+Received: by hermes--production-ir2-7867f454fc-z6m77 (Yahoo Inc. Hermes SMTP
+ Server) with ESMTPA ID fa6705cec2142187b21b7c0997816d80; 
+ Thu, 08 Jun 2023 12:10:57 +0000 (UTC)
+Message-ID: <bb78b2f2-0076-134c-6ab7-03ab282c39b3@yahoo.co.uk>
+Date: Thu, 8 Jun 2023 14:10:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.0
@@ -73,8 +73,10 @@ To: wireguard@lists.zx2c4.com
 References: <980aa33e-4bb4-e746-b45a-c0ab0ea7e371.ref@yahoo.co.uk>
  <980aa33e-4bb4-e746-b45a-c0ab0ea7e371@yahoo.co.uk>
  <20230608114742.63648767@parrot>
+ <8792819b-a595-7789-fc6f-3bce89d13d28@yahoo.co.uk>
+ <20230608140422.24071746@parrot>
 From: lejeczek <peljasz@yahoo.co.uk>
-In-Reply-To: <20230608114742.63648767@parrot>
+In-Reply-To: <20230608140422.24071746@parrot>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Mailer: WebService/1.1.21516
@@ -95,53 +97,69 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 
 
-On 08/06/2023 11:47, Marek Küthe wrote:
-> Hello,
->
-> I would be interested to know how you managed to post something on the
-> Mailling list? I have been trying to do this for several weeks, however
-> my messages do not arrive. Do you have a special trick?
->
-> I would appreciate an answer!
->
-> Greetings
-> Marek Küthe
->
-> On Thu, 8 Jun 2023 11:30:26 +0200
+On 08/06/2023 14:04, Marek Küthe wrote:
+> On Thu, 8 Jun 2023 13:45:27 +0200
 > lejeczek <peljasz@yahoo.co.uk> wrote:
 >
->> Hi guys.
->>
->> Purely accidentally I stumbled uppon:
->>
->> -> $ ping 10.1.101
->> PING 10.1.101 (10.1.0.101) 56(84) bytes of data.
->> 64 bytes from 10.1.0.101: icmp_seq=1 ttl=64 time=0.148 ms
->> 64 bytes from 10.1.0.101: icmp_seq=2 ttl=64 time=0.415 ms
->>
->> -> $ ip a ls dev wg0
->> 17: wg0: <POINTOPOINT,NOARP,UP,LOWER_UP> mtu 8920 qdisc
->> noqueue state UNKNOWN group default qlen 1000
->>       link/none
->>       inet 10.1.0.99/24 scope global wg0
->>          valid_lft forever preferred_lft forever
->> peer:
->> 14: wg0: <POINTOPOINT,NOARP,UP,LOWER_UP> mtu 8920 qdisc
->> noqueue state UNKNOWN group default qlen 1000
->>       link/none
->>       inet 10.1.0.100/24 scope global wg0
->>          valid_lft forever preferred_lft forever
->>
->> This a wg0's IP.
->> Someone could shed a bit more light on that - I'd imagine
->> many will appreciate, I will.
->> I'm thinking - is my ipcalcing messed up..
->> many thanks, L.
->>
+>> On 08/06/2023 11:47, Marek Küthe wrote:
+>>> Hello,
+>>>
+>>> I would be interested to know how you managed to post something on the
+>>> Mailling list? I have been trying to do this for several weeks, however
+>>> my messages do not arrive. Do you have a special trick?
+>>>
+>>> I would appreciate an answer!
+>>>
+>>> Greetings
+>>> Marek Küthe
+>>>
+>>> On Thu, 8 Jun 2023 11:30:26 +0200
+>>> lejeczek <peljasz@yahoo.co.uk> wrote:
+>>>   
+>>>> Hi guys.
+>>>>
+>>>> Purely accidentally I stumbled uppon:
+>>>>   
+>>>> -> $ ping 10.1.101
+>>>> PING 10.1.101 (10.1.0.101) 56(84) bytes of data.
+>>>> 64 bytes from 10.1.0.101: icmp_seq=1 ttl=64 time=0.148 ms
+>>>> 64 bytes from 10.1.0.101: icmp_seq=2 ttl=64 time=0.415 ms
+>>>>   
+>>>> -> $ ip a ls dev wg0
+>>>> 17: wg0: <POINTOPOINT,NOARP,UP,LOWER_UP> mtu 8920 qdisc
+>>>> noqueue state UNKNOWN group default qlen 1000
+>>>>        link/none
+>>>>        inet 10.1.0.99/24 scope global wg0
+>>>>           valid_lft forever preferred_lft forever
+>>>> peer:
+>>>> 14: wg0: <POINTOPOINT,NOARP,UP,LOWER_UP> mtu 8920 qdisc
+>>>> noqueue state UNKNOWN group default qlen 1000
+>>>>        link/none
+>>>>        inet 10.1.0.100/24 scope global wg0
+>>>>           valid_lft forever preferred_lft forever
+>>>>
+>>>> This a wg0's IP.
+>>>> Someone could shed a bit more light on that - I'd imagine
+>>>> many will appreciate, I will.
+>>>> I'm thinking - is my ipcalcing messed up..
+>>>> many thanks, L.
+>>>>   
+>>>   
+>> Apparently the list (maintainers?) practice old & healthy
+>> habit - which placing replies below/at bottom also is -  to
+>> accept only "text" format for a message. (I presume for new
+>> message/thread)
+>> Test that if you will. (Thunderbird works)
+>> regards, L.
+> Thanks, but I have a text-only mail client. So I don't think that's
+> the reason why my posts are still pending. All HTML emails I receive are
+> automatically converted for example.
 >
-Apparently the list (maintainers?) practice old & healthy 
-habit - which placing replies below/at bottom also is -  to 
-accept only "text" format for a message. (I presume for new 
-message/thread)
-Test that if you will. (Thunderbird works)
-regards, L.
+>
+Perhaps checking settings at - 
+https://lists.zx2c4.com/mailman/listinfo/wireguard - is also 
+worth checking.
+Nothing else comes to mind - I've just double-checked: if I 
+leave it to Thunderbird (default format is "automatic") then 
+a "failure notice" bounces back to me, whereas "text" 
+manually went in.
