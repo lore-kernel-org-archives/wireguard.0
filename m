@@ -4,68 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35997EB64D7
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Jun 2023 14:48:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BAE7EB64D7
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Jun 2023 14:56:37 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 418f1fe3;
-	Mon, 26 Jun 2023 14:43:16 +0000 (UTC)
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com
- [2607:f8b0:4864:20::d36])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 755315dc
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 814f0df2;
+	Mon, 26 Jun 2023 14:53:14 +0000 (UTC)
+Received: from len.romanrm.net (len.romanrm.net [91.121.86.59])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 177b6253
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 17 May 2023 23:13:25 +0000 (UTC)
-Received: by mail-io1-xd36.google.com with SMTP id
- ca18e2360f4ac-76fe17da95fso33092139f.2
- for <wireguard@lists.zx2c4.com>; Wed, 17 May 2023 16:13:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20221208; t=1684365203; x=1686957203;
- h=content-transfer-encoding:subject:content-language:from:to
- :user-agent:mime-version:date:message-id:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zp7hI/a0wxrB6sgVQa04D8nK6P2oVwfSviKxbM22VU4=;
- b=QNIuVHiuLr36+LFoZ6mYe4OTSkr36DLyAqZl0e1HTbMHELpDmCxvvbFGuN1+uad4GM
- VTwPSEWyEs9sgipCC+bTq8xYRKeDjBp8nZ9V+/UyEUJFuxU258WU+4PRfhi1HjGLimKR
- nM/f+XqC3der3HnUAzf9r7bOBU4cHflfJPnuvrXwbkYsXCzmNkrdw3TabTGIXJURLmSQ
- nZh+h3aCdWJpwYDevpokI7KbWgBtLnRZ+NiRY+S4Kj3bSRTZIwoJzTJsirf4RLcDSpt/
- rFgg+Ayr9BH8ayYDjxRDKT1bIMuAhipX+GxlCgEcHBYghK1xFmeHzGRq2vaC6Ze2ljF+
- ZEtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20221208; t=1684365203; x=1686957203;
- h=content-transfer-encoding:subject:content-language:from:to
- :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=zp7hI/a0wxrB6sgVQa04D8nK6P2oVwfSviKxbM22VU4=;
- b=h77n1jAKc73oz8vjABa9xB6BZqWZ/aBNXBhplCIYfHxOCE9/X5lH4nxJCU0HcF67+r
- 7dDFKrW6nBdbb7C4SCv5ZRQkBMSsjiENrlx55verHbrnkyjZnVltjvlZBFmBmZYJ0oxM
- CVBia0ZFoNv+ayFL6CnImaOmlTw2+Clb93WeIAKUg/tnu8L/jh7oh6Fhn+JTrEbUmD08
- 9+cpGHQWS1x4rGYEGwY0HKqlFaKAD/HlIrTIua7P3iagvLg4A5APF8vwcjT1rtVmLTjZ
- mlBKIxz/fLSuL1/S+P6+oMc8k1ElIDCc3dO+9DTQih4snVWcXPFUC7Jdm/qM+P+6qHtB
- HfTg==
-X-Gm-Message-State: AC+VfDxLcuAj7WIJaQwVqO3Az1a2kOhCfew2mxv5WU7GOZPoZsMLQMnb
- uNIYqc6MvwYvOQcfA3JNfhbE/2NRYTU=
-X-Google-Smtp-Source: ACHHUZ6BLF3djwr+yILkMSuMtshU9TmJ6kZn0DPa7NCXO65P0nWgI2gnCcEKc826CYzpUwSdJSRzng==
-X-Received: by 2002:a5d:9e50:0:b0:76d:6398:e6f0 with SMTP id
- i16-20020a5d9e50000000b0076d6398e6f0mr5743557ioi.12.1684365203530; 
- Wed, 17 May 2023 16:13:23 -0700 (PDT)
-Received: from [10.12.114.193] ([172.58.83.91])
- by smtp.gmail.com with ESMTPSA id
- z26-20020a6be21a000000b0076fc5340aa3sm23244ioc.40.2023.05.17.16.13.22
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 May 2023 16:13:23 -0700 (PDT)
-Message-ID: <4fd6c9cb-c2cf-7a16-ee62-d958790652ea@gmail.com>
-Date: Wed, 17 May 2023 18:13:21 -0500
+ Mon, 26 Jun 2023 14:53:12 +0000 (UTC)
+Received: from nvm (nvm.home.romanrm.net [IPv6:fd39::101])
+ by len.romanrm.net (Postfix) with SMTP id D5A444027B;
+ Mon, 26 Jun 2023 14:53:11 +0000 (UTC)
+Date: Mon, 26 Jun 2023 19:53:11 +0500
+From: Roman Mamedov <rm@romanrm.net>
+To: Rumen Telbizov <rumen.telbizov@menlosecurity.com>
+Cc: wireguard@lists.zx2c4.com
+Subject: Re: WireGuard IRQ distribution
+Message-ID: <20230626195311.03e86a19@nvm>
+In-Reply-To: <CA+FoirDk8ZC09YXC7T6ureaBWG6ZREpfE3cq5MoAkKf-rC=U1g@mail.gmail.com>
+References: <CA+FoirDk8ZC09YXC7T6ureaBWG6ZREpfE3cq5MoAkKf-rC=U1g@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-To: wireguard@lists.zx2c4.com
-From: Harry G Coin <hgcoin@gmail.com>
-Content-Language: en-US
-Subject: ip netns del zaps wg link
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Mailman-Approved-At: Mon, 26 Jun 2023 14:43:07 +0000
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -80,20 +42,58 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-First, Hi and thanks for all the effort!
+On Tue, 9 May 2023 15:17:00 -0700
+Rumen Telbizov <rumen.telbizov@menlosecurity.com> wrote:
 
-At least on Ubuntu latest LTS:  As advertised, if a wireguard link gets 
-created by systemd/networkd, then set into a different net namespace, 
-all works well.
+> Baseline iperf3 performance over plain VLAN:
+> * Stable 24Gbit/s and 2Mpps
+> 
+> bmon:
+>   Gb                      (RX Bits/second)
+> 24.54 .........|.||..|.||.||.||||||..||.||.......................
+> 20.45 .........|||||||||||||||||||||||||||||.....................
+> 16.36 ........||||||||||||||||||||||||||||||.....................
+> 12.27 ........||||||||||||||||||||||||||||||.....................
+> 8.18 ........|||||||||||||||||||||||||||||||.....................
+> 4.09 ::::::::|||||||||||||||||||||||||||||||:::::::::::::::::::::
+>      1   5   10   15   20   25   30   35   40   45   50   55   60
+>    M                     (RX Packets/second)
+> 2.03 .........|.||..|.||.||.||||||..||.||........................
+> 1.69 .........|||||||||||||||||||||||||||||......................
+> 1.35 ........||||||||||||||||||||||||||||||......................
+> 1.01 ........||||||||||||||||||||||||||||||......................
+> 0.68 ........|||||||||||||||||||||||||||||||.....................
+> 0.34 ::::::::|||||||||||||||||||||||||||||||:::::::::::::::::::::
+>      1   5   10   15   20   25   30   35   40   45   50   55   60
+> 
+> top:
+> %Cpu0  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+> %Cpu1  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+> %Cpu2  :  1.0 us,  1.0 sy,  0.0 ni, 98.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+> %Cpu3  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+> %Cpu4  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+> %Cpu5  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+> %Cpu6  :  1.0 us,  0.0 sy,  0.0 ni, 99.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+> %Cpu7  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+> %Cpu8  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+> %Cpu9  :  1.0 us,  1.0 sy,  0.0 ni, 98.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+> %Cpu10 :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+> %Cpu11 :  0.0 us,  0.9 sy,  0.0 ni, 16.8 id,  0.0 wa,  0.0 hi, 82.2 si,  0.0 st
+> %Cpu12 :  0.0 us, 32.3 sy,  0.0 ni, 65.6 id,  0.0 wa,  0.0 hi,  2.1 si,  0.0 st
+> %Cpu13 :  1.0 us, 36.3 sy,  0.0 ni, 59.8 id,  0.0 wa,  0.0 hi,  2.9 si,  0.0 st
+> %Cpu14 :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+> %Cpu15 :  0.0 us,  1.0 sy,  0.0 ni, 99.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+> 
+> The IRQs do pile up behind CPU 11 because iperf3 is single-threaded.
 
-However, if that namespace is deleted, the link appears to be 'gone 
-forever'.  Other link types reappear in the primary namespace when the 
-namespace they are in gets deleted.   I'm not sure whether the link 
-retains its 'up' or 'down' state when the namespace it's in gets deleted 
-and reset to primary.  Not a big deal, doesn't happen often.
+I'm not sure if they pile up because of that, or because of the same reason
+you point in WG's case, the 5-tuple being the same for the single TCP
+connection of iperf3.
 
-This is 100% repeatable.   Some other answer than 'inaccessible until 
-the next reboot' would be nice.
+Out of interest, maybe you could try iperf3's UDP mode, and apply the same
+port randomization trick as you used for WG, and see if it also makes it see
+the better IRQ distribution, and the speed drop?
 
-
-
+-- 
+With respect,
+Roman
