@@ -4,88 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6238EB64DA
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  3 Jul 2023 01:35:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4656EB64DA
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  8 Jul 2023 19:31:24 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dbd12429;
-	Mon, 3 Jul 2023 01:34:10 +0000 (UTC)
-Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com
- [2607:f8b0:4864:20::72f])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 970911ac
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 20264922;
+	Sat, 8 Jul 2023 19:31:22 +0000 (UTC)
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com
+ [2607:f8b0:4864:20::1029])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9c4fd272
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 3 Jul 2023 01:34:08 +0000 (UTC)
-Received: by mail-qk1-x72f.google.com with SMTP id
- af79cd13be357-765a5d31d0aso334658585a.2
- for <wireguard@lists.zx2c4.com>; Sun, 02 Jul 2023 18:34:08 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 27 Jun 2023 12:02:29 +0000 (UTC)
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-26314c2be8eso520349a91.1
+ for <wireguard@lists.zx2c4.com>; Tue, 27 Jun 2023 05:02:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20221208; t=1688348047; x=1690940047;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=j+DQp1aToFjJn6ibYm/4PN8jG7y+qtLc+dd9jn1u2OI=;
- b=E247jHIts6Coz6hmPu1O7nST/fEOvOmX8+WSIt8dvPOLEXWrHnbxR8/wZMD7eWOQfA
- VWuEOxQiDxZX2TGM1v1cJTzENETOZ1RTwXjXhPbfHKBlDZERMQ0MzLWQBG2sf45cWvf5
- TKh5cRMAl5Q29jZMz0JhPRozzhHoZodIsIBQ91yhE+QLdGmpjzDzt89AC7M/S72qzn2a
- AVlnBgqkZNvWnvJSs9VW+FNOJHBQusF4u/9r8z7R5++3JVQb0cb5EZNZXAolt3W62II7
- yhCabHg/iIHSZWmXZ+U6AnsKqOzUSbouWdcIm+VutWFROc2Cc1OuWBmxckNnX9zLZA1S
- rJGA==
+ d=gmail.com; s=20221208; t=1687867347; x=1690459347;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=ea49Ht+coMzb4H1KclTdiZtyqXj3uSCDOBKWk25uxy4=;
+ b=BC1d/dtlzYABRRE+ZU1ChmvzJ1Ouo2Qdg1VlUE5bEtKpLnLflupOWQ05RG5qVIV9VO
+ uCI0/WL3SXdMLBsP4rmB/lkv29yy8Pu6jgljk5Yn0SM0KUt2liev+mWXhXl6GDs18J7O
+ 9iXwv/Bya6wkJNNlamktGSSqwFYB/4mr0+FJk1Ji2o92k0U2dc0Kam+588l9GsY7VQGE
+ eeiyrexbb2CQzO5WVPj5xHqUYqgy/+yiwj9w1nQJF3lHj4764nMhQR+TeETfuzHKjaEw
+ RZs6OdE1lQYx1GkBjMhay7YQNOFV9c8VFujlcC/+UKvzHeoHCWtD9iv7obWdNydXQAqp
+ 0gzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20221208; t=1688348047; x=1690940047;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=j+DQp1aToFjJn6ibYm/4PN8jG7y+qtLc+dd9jn1u2OI=;
- b=jFyUxPFiqcHVtl+jfTBjMu9WJjXe3lYNHEm5vki5nSZ1tWGCrF5QZVLoFU2Q27MEbM
- QOfx/ZX4llRN6ZhskEMHISC868tU/K+VH1FRnY7+Iz/f/FZqNwB7aPYp0UNi9E1N8S3T
- KnoJwgVVSEGqyMo6y/gXulFXNogKQF0nmiDEUI7Nzr+HhBDYTDgojEQ9PI1ma4KPZnUs
- wOP1HVaJ/yeooFj3zPvl2JtxbGqWIcy5KrF+vNzkW6S6AqByWgmmRlFXTsRpnsA4SODP
- +n5wuq5fj3BGo9ciHVXQz2uXGwcuK4Slw5mdz8IcNQPpCQZeXrxjFyKp9ioHnbuRoPhQ
- A0iQ==
-X-Gm-Message-State: ABy/qLYNkJgggqA7w1cEhsSqcCrlv/2g0etWFEVi/E5TbHNb8p2Y5sPh
- uBCr2AWUF9u5e0VsFolDmT4=
-X-Google-Smtp-Source: APBJJlH92Kk5anUzz/btdHsFS1h2wIq4UMijxUHmrjYT7HeyyIRo0qQnTuby7k7tSS0XXQYnB3Oa/Q==
-X-Received: by 2002:a05:620a:2547:b0:763:9f31:1588 with SMTP id
- s7-20020a05620a254700b007639f311588mr10579466qko.70.1688348047293; 
- Sun, 02 Jul 2023 18:34:07 -0700 (PDT)
-Received: from debian.me ([103.131.18.64]) by smtp.gmail.com with ESMTPSA id
- c184-20020a621cc1000000b0066875f17266sm3492941pfc.135.2023.07.02.18.34.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 02 Jul 2023 18:34:06 -0700 (PDT)
-Received: by debian.me (Postfix, from userid 1000)
- id 73EA181BD580; Mon,  3 Jul 2023 08:34:02 +0700 (WIB)
-Date: Mon, 3 Jul 2023 08:34:01 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- Linux regressions mailing list <regressions@lists.linux.dev>
-Cc: Eric DeVolder <eric.devolder@oracle.com>,
- "Borislav Petkov (AMD)" <bp@alien8.de>, David R <david@unsolicited.net>,
- Boris Ostrovsky <boris.ovstrosky@oracle.com>,
- Miguel Luis <miguel.luis@oracle.com>,
- "Paul E. McKenney" <paulmck@kernel.org>,
- Joel Fernandes <joel@joelfernandes.org>, Boqun Feng <boqun.feng@gmail.com>,
- Jay Vosburgh <j.vosburgh@gmail.com>, Andy Gospodarek <andy@greyhouse.net>,
- "Rafael J. Wysocki" <rafael@kernel.org>,
- Len Brown <lenb@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
- Ingo Molnar <mingo@redhat.com>,
- Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
- "H. Peter Anvin" <hpa@zytor.com>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Linux RCU <rcu@vger.kernel.org>,
- Wireguard Mailing List <wireguard@lists.zx2c4.com>,
- Linux Networking <netdev@vger.kernel.org>,
- Linux ACPI <linux-acpi@vger.kernel.org>,
- Manuel 'satmd' Leiner <manuel.leiner@gmx.de>
-Subject: Re: Fwd: RCU stalls with wireguard over bonding over igb on Linux
- 6.3.0+
-Message-ID: <ZKIlibX5wCgWlonq@debian.me>
-References: <e5b76a4f-81ae-5b09-535f-114149be5069@gmail.com>
- <79196679-fb65-e5ad-e836-2c43447cfacd@gmail.com>
- <10f2a5ee-91e2-1241-9e3b-932c493e61b6@leemhuis.info>
- <CAHmME9onMWdJVUerf86V0kpmNKByt+VC=SUfys+GFryGq1ziHQ@mail.gmail.com>
+ d=1e100.net; s=20221208; t=1687867347; x=1690459347;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ea49Ht+coMzb4H1KclTdiZtyqXj3uSCDOBKWk25uxy4=;
+ b=CScVzfNYSVoPPxKe4KioqF4dDB087EH+vG21NO00k06Capvv7Juwymsm98icz5WLK2
+ og48pP8A8RimOC+L6GCoBEv61I7s4p0+UZlkJFEDJcley2y8wwN/0dm4Fj+KDZO6UVwv
+ SYRr3J8cZZRmWa9E2RGYHy+QoRRKa43OWuai2MrtYzKo0iYM0hO+ghDo7qM6sO9rL8D8
+ EZKDwWT28/8vZXogmfFLqs13sikfvzJCoPA3EJ8W7NB2nJdRoTsi0kYl/BNjHemGwFtK
+ f62e96L568XDWCsDCRYlgoK3zwMTjec/XC+gJMukHToH0yeRyIVoRfYunWVS7ei3IyRZ
+ +TtA==
+X-Gm-Message-State: AC+VfDxKa/5Gqct7V0ogD0AJ1h0yw5iebGKRg54yYBT0TsgW356Qm7Wi
+ 5MURF4G4AkQBjwvhMNtRP/BYHsk2D5+kq2InQFX32z//W1XbBA==
+X-Google-Smtp-Source: ACHHUZ4Sj7WGMAGSKIEY9l2WVOQURmbyfyuR+TJw6fNMxpwFVBHBo5Pufyw4NhLC/BB3ZKgiZrSK3O6TjgyufDhkc6Y=
+X-Received: by 2002:a17:90b:3b8c:b0:260:d77f:cc1f with SMTP id
+ pc12-20020a17090b3b8c00b00260d77fcc1fmr12958499pjb.42.1687867346785; Tue, 27
+ Jun 2023 05:02:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="iSZj5c+AXivxuOj4"
-Content-Disposition: inline
-In-Reply-To: <CAHmME9onMWdJVUerf86V0kpmNKByt+VC=SUfys+GFryGq1ziHQ@mail.gmail.com>
+From: Adrian Popa <adrian.popa.gh@gmail.com>
+Date: Tue, 27 Jun 2023 15:02:15 +0300
+Message-ID: <CAOKso16oBQ+kOS87pGOpAgBZDgQo1gohFMaiyL+AOG1bYY7szA@mail.gmail.com>
+Subject: Make error on extract-handshakes
+To: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
+X-Mailman-Approved-At: Sat, 08 Jul 2023 19:31:21 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -100,42 +68,42 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+Hello everyone!
+This is the 4th time I'm trying to post this to the list - the other
+messages got held up.
 
---iSZj5c+AXivxuOj4
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I'm trying to do packet capturing of wireguard traffic and have it
+decrypted by Wireshark (for educational purposes), so I'm trying to
+compile extract-handshakes with the following commands:
 
-On Sun, Jul 02, 2023 at 03:46:38PM +0200, Jason A. Donenfeld wrote:
-> I've got an overdue patch that I still need to submit to netdev, which
-> I suspect might actually fix this.
->=20
-> Can you let me know if
-> https://git.zx2c4.com/wireguard-linux/patch/?id=3D54d5e4329efe0d1dba8b4a5=
-8720d29493926bed0
-> solves the problem?
+$  git clone https://git.zx2c4.com/WireGuard
+$  cd WireGuard/contrib/examples/extract-handshakes
+$  make
+make -C /lib/modules/6.0.8-060008-generic/build
+M=/home/adrianp/temp/extract/WireGuard/contrib/examples/extract-handshakes
+offset-finder.o
+make[1]: Entering directory '/usr/src/linux-headers-6.0.8-060008-generic'
+warning: the compiler differs from the one used to build the kernel
+  The kernel was built by: x86_64-linux-gnu-gcc-12 (Ubuntu
+12.2.0-9ubuntu1) 12.2.0
+  You are using:           gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0
+make[3]: *** No rule to make target
+'/home/adrianp/temp/extract/WireGuard/contrib/examples/extract-handshakes/offset-finder.o'.
+Stop.
+make[2]: *** [scripts/Makefile.build:440: __build] Error 2
+make[1]: *** [Makefile:1858:
+/home/adrianp/temp/extract/WireGuard/contrib/examples/extract-handshakes]
+Error 2
+make[1]: Leaving directory '/usr/src/linux-headers-6.0.8-060008-generic'
+make: *** [Makefile:14: offset-finder.o] Error 2
 
-The reporter on Bugzilla [1] said it fixed the regression, so telling
-regzbot:
+Any ideas what I'm doing wrong? Is this the correct repository for
+extract-handshakes? Do I need other steps before make?
 
-#regzbot fix: 54d5e4329efe0d
+My build environment looks ok as far as I can tell:
+$  ls -l /lib/modules/6.0.8-060008-generic/build
+lrwxrwxrwx 1 root root 43 Nov 10  2022
+/lib/modules/6.0.8-060008-generic/build ->
+/usr/src/linux-headers-6.0.8-060008-generic
 
-Thanks.
-
-[1]: https://bugzilla.kernel.org/show_bug.cgi?id=3D217620#c6
-
---=20
-An old man doll... just what I always wanted! - Clara
-
---iSZj5c+AXivxuOj4
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZKIlfgAKCRD2uYlJVVFO
-o4VvAQC1HOL3pBDT4GLVcFv6vo9unyPwADyfbTt7FItp8GNDGwD/S1k8ndaOLk2I
-CQNHucPSMLNR09jmYdkOaFrGjSpluAQ=
-=tRvy
------END PGP SIGNATURE-----
-
---iSZj5c+AXivxuOj4--
+Thanks for your input!
