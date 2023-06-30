@@ -4,42 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1030EE49A6
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 19 Aug 2023 20:00:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C269BEE49A3
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 19 Aug 2023 20:28:34 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d5034a68;
-	Sat, 19 Aug 2023 20:00:21 +0000 (UTC)
-Received: from mail.0l.de (mail.0l.de [83.243.41.180])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 22cb89fc
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0f77948a;
+	Sat, 19 Aug 2023 20:14:12 +0000 (UTC)
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com
+ [2a00:1450:4864:20::32a])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id afb3c43f
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 19 Aug 2023 20:00:19 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon)
- with ESMTPA id EC649201DADE; Sat, 19 Aug 2023 22:00:17 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=steffenvogel.de;
- s=dkim; t=1692475218;
- h=from:subject:date:message-id:to:cc:mime-version:content-type:
- content-transfer-encoding:in-reply-to;
- bh=I1pgjO/YqdEkW1vZXGBuLPvdFgwgWIuquNQwFZn9hT4=;
- b=DgvdlbvY2jGpIasxC4JxoWQFJJ4luBjBFOBcgJdvXZYv0LNcovCj4xX7qlTfbiP/FxHH2h
- Xar50rS0/5XLYGb//b0T+Iu2E6FEOJvaM6zasHvwqSD4AWdkLJoIpY+wZkYBSL6YSHkLwF
- YsO3flUDKV3qeFTGBqFQxft4N0jdWNycjYjbVSLqzTg3s6Lqyqz4MWukuZz/V1qAm2/UAs
- IqFxPsAknc5SpFK99H3g4CXE8VKzTXIf/YUREDCGSDFRvpjB+NtD5y/bbYMD1Pw4uYwxo/
- ahmoa0eiqFftMbToTuBtUer9te1+IaOhaUONJUfk0vC0+oU7UN1r0yHYtuPTig==
-From: "Steffen Vogel" <post@steffenvogel.de>
-In-Reply-To: <20230819140218.5algu2nfmfostngh@House.clients.dxld.at>
-Content-Type: text/plain; charset="utf-8"
-Date: Sat, 19 Aug 2023 22:00:17 +0200
-Cc: wireguard@lists.zx2c4.com, bird-users@network.cz,
- babel-users@alioth-lists.debian.net
-To: =?utf-8?q?Daniel_Gr=C3=B6ber?= <dxld@darkboxed.org>
+ Fri, 30 Jun 2023 13:04:09 +0000 (UTC)
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-3fb4146e8deso22918135e9.0
+ for <wireguard@lists.zx2c4.com>; Fri, 30 Jun 2023 06:04:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=krose.org; s=google; t=1688130249; x=1690722249;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=0/7nNaL/P0R9e2nCJxMk8yYBb00MnGgU12TaDtIl+vI=;
+ b=nhNoqpi9ACeoCbg5vy0z3nv5OjCRslYcB4ywnxLzq5liuc4j1dXkQBwyCcn9m9amcU
+ Jtgw4qlKTRQKP6ANpOu1xqLzjDcfKvHt1l+nn4qGTwRXtDngNxLmztw7s/YTMl07+efO
+ QNlklNRFz38InmsnLxO9qIAjjsElRqS7K8rms=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20221208; t=1688130249; x=1690722249;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=0/7nNaL/P0R9e2nCJxMk8yYBb00MnGgU12TaDtIl+vI=;
+ b=fKplw9oQ/8swVj7Eu9tdiAYSZpNc46Qb2Xa/pZ2PoOyWSGyb07O/6GtDS5sl+H303y
+ XTh5oY2ykrCPHr6RC6L3SKO8Huxm4jgTYF693FCg5LaKScGFnTKYQ2BBnTVi7JOWiLBa
+ kv6U2G2tnlD1RCKSHbjkOUqg5o7/x8OuIAW0dxR7TN5tBIqvIcGH7nrrJb2vRcWY+/fw
+ IOfk1671kql/Y3WxVvvtpjnFN22iR6aHVHloh0sSdj9wCoJC8nNG9QlfyyultCgD+1lh
+ 8LFjVuKRznNbHoeUlywu7QmR6fDu9Yrw41G6FzIKkb5aHHLYJZilkvnRYABIEXnk8WHA
+ us0g==
+X-Gm-Message-State: AC+VfDzcFd3Hi45DNf5ouXXiHEfKuY6yt5oE/J1tbLa/Yq3ks2EOT8R/
+ RrvYFJFQcf9DASpW4YUEast6bYV7m7G0C4Hqq8furQEfEfYUOhp230c=
+X-Google-Smtp-Source: ACHHUZ4TexkValx3T3gz9xQOkfbDNlHpsgfrGtB85DOuQYNOZ+6W+czXnQZpGlIJXC0McLxUdaZdMxbtDqLh0BLYmYM=
+X-Received: by 2002:a1c:4b17:0:b0:3f9:255e:ee3b with SMTP id
+ y23-20020a1c4b17000000b003f9255eee3bmr2386766wma.30.1688130248507; Fri, 30
+ Jun 2023 06:04:08 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID: <4b-64e11f80-13-5e880900@8744214>
-Subject: =?utf-8?q?Re=3A?= [Babel-users] [RFC] Replace WireGuard AllowedIPs
- with IP route attribute
-User-Agent: SOGoMail 5.8.4
-Content-Transfer-Encoding: quoted-printable
-X-Last-TLS-Session-Version: None
+From: Kyle Rose <krose@krose.org>
+Date: Fri, 30 Jun 2023 09:03:56 -0400
+Message-ID: <CAJU8_nVZW5TiDrT-_bmn+DirbfCn4yuHtZi2xjJ+1ZRDi7ME1g@mail.gmail.com>
+Subject: Option to enable policy routing
+To: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
+X-Mailman-Approved-At: Sat, 19 Aug 2023 20:14:11 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -54,187 +65,83 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Daniel,
+I really like the straightforward configurability of Wireguard
+out-of-the-box. It was astonishingly easy to configure a mesh to
+replace my previous hub-and-spoke OpenVPN setup. Thank you for making
+this easy.
 
-Interesting ideas! I am wondering if this complexity is really necessar=
-y?
-How many routes do you have per peer? In my personal setup I have maxim=
-um of 1-100 routes per peer which I can handle with the current API qui=
-te comfortably.
+That said, I'd like the ability to use Linux's policy routing engine
+to allow for more complex packet flows across the VPN that are
+currently incompatible with Wireguard's internal packet handling. For
+example, let's say I have 4 nodes and want to be able to use each of
+the nodes as the default gateway for different types of flows.
+Modifying the sender side to respect a route's gateway is
+straightforward:
 
-My biggest concern about the introduction of a route attribute is that =
-this adds complexity for users.
-WireGuard's simplicity (and portability) have been important factors fo=
-r its success.
-
-A route attribute would introduce another source for the crypto-routing=
- peer selection process.
-What happens if the two mechanisms select different peers? Which one wo=
-uld have precedence?
-Similarly also for incoming packets. WireGuard's current principle is r=
-eally easy to understand. If the source address in in the peers Allowed=
-IP list, we will accept the packet. If not its discarded. This is a cen=
-tral part of WireGuard's crypto-key routing feature which would become =
-more complex.
-
-Also implementation wise I would have doubts: Should WireGuard itself p=
-erform route lookups to determine which packets will be accepted? Or do=
-es WireGuard needs to synchronize the kernel routing table with its int=
-ernal data structures itself?
-
-A second concern I have with the use of route attributes is limited por=
-tability. Not all platforms support them.
-How do we handle WireGuard userspace implementations?
-
-I've tackled this problem in a userspace daemon. The synchronisation of=
- a kernel routing table with a WireGuard AllowedIPs settings can be don=
-e by cunicu's route synchronization feature: https://cunicu.li/docs/fea=
-tures/rtsync
-
-The route synchronization feature keeps the kernel routing table in syn=
-c with WireGuard's AllowedIPs setting.
-This synchronization is bi-directional:
-
-- Networks which are found in a Peers AllowedIP list will be installed =
-as a kernel route
-- Kernel routes with the peers unique IP address as next-hop will be ad=
-ded to the Peers AllowedIPs list.
-
-This rather simple feature allows user to pair cunicu with a software r=
-outing daemon like Bird2 while using a single WireGuard interface with =
-multiple peer-to-peer links.
-
-I am assigning each WireGuard interface a link-local address which is d=
-erived from the peers public key.
-I am using the peers link-local address as the next-hop in my routing d=
-aemon to differentiate to which Peer the AllowedIP entry must be added.
-
-I am keeping track of the kernel's routing table and AllowedIPs by regu=
-larly polling the kernel.
-As the route synchronisation is just one of cunicu's features [1], I ha=
-ve a central "watcher" routine in cunicu which observes any modificatio=
-n the the WireGuard interfaces and dispatches events which the individu=
-al features then can hook into. These observations are not limited to t=
-he AllowedIPs but basically any state of the WireGuard interface. E.g. =
-last handshake time or per/peer traffic counters.
-
-In my setup a periodic synchronization worked fine. But I agree that it=
- would be nice if we could have a Netlink multicast group for subscribi=
-ng to changes like we also have for other parts of the Linux network st=
-ack like routing tables, or link states. This feature was already discu=
-ssed on the WireGuard mailing list [7]. But unfortunately the patch was=
- never accepted. Maybe we can revisit this patch?
-
-I would also be a big supported of extending the netlink API for suppor=
-ting incremental updates the AllowedIP lists. The netlink APIs are alre=
-ady different for each platform. So extending it for one platform would=
-n't hurt here.
-
-Unfortunately, I have far too many ideas for cunicu and limited time to=
- realize them all. So I've recently moved the whole cunicu project into=
- its own organization at GitHub/Codeberg [6] in attempt to find more co=
-ntributors.
-
-Best regards,
-Steffen (stv0g)
-
-[1] Others planned features are:
-- Endpoint discovery via ICE/STUN/TURN
-- Peer discovery
-- IP-autoconfiguration by deriving link-local addresses from peers publ=
-ic keys
-
-I have a lot more ideas here like integrating my
-- Go babel routing implementation [2]
-- or Rosenpass PQC key-exchange [3]
-- or performing proper path-MTU discovery using DPLPMTUD [4]
-- or using hardware tokens, TPMs, secure enclaves to rotate pre-shared =
-keys backed by a hardware source-of-trust [5]
-
-[2] https://github.com/cunicu/go-babel
-[3] https://github.com/cunicu/go-rosenpass
-[4] https://github.com/cunicu/go-pmtud
-[5] https://github.com/cunicu/go-skes
-[6] https://codeberg.org/cunicu
-[7] https://lists.zx2c4.com/pipermail/wireguard/2021-January/006318.htm=
-l
-
-On Saturday, August 19, 2023 16:02 CEST, Daniel Gr=C3=B6ber <dxld@darkb=
-oxed.org> wrote:
-
-> Hi wireguard, birds, and babelers,
->=20
-> tl;dr I want to add a new Linux route attribute (think "via $wgpeer")=
- to
-> supplement wireguard's internal AllowedIPs logic for both routing and
-> source address filtering.
->=20
-> I've been pondering how to better integrate wireguard into dynamic ro=
-uting
-> daemons, particularly BIRD and babeld. Essentially we want to be able=
- to
-> dynamically add/remove AllowedIPs depending on current reachability a=
-nd/or
-> link quality stats.
->=20
-> Looking at the wg netlink API I see two major efficiency/scalability
-> problems: 1) there is no way to be notified of changes in AllowedIPs =
-made
-> by other processes meaning we have to do periodic scans and 2) a peer=
-'s
-> AllowedIPs set can only be replaced wholesale, not modified
-> incrementally. This is problematic as "someone" might, in the worst c=
-ase,
-> want to install an entire internet routing table's worth of AllowedIP=
-s and
-> the set will likely change frequently. FYI: The IPv4 table has ~1M en=
-tries
-> at present, yikes.
->=20
-> Assuming external AllowedIPs changes are infrequent occationally dump=
-ing
-> them all to keep a consistent view of the state shouldn't be too much=
- of an
-> issue as long as the netlink interface is performant enoug, so I'm go=
-ing to
-> concentrate on the add/remove API for now.
->=20
-> Instead of doing the obvious thing and adding a more efficient increm=
-ental
-> AllowedIPs netlink interface I figure why not just add a route attrib=
-ute to
-> select a target wg peer on a device. That way we could not only save =
-memory
-> (no separate AllowedIPs trie) but also simplify routing daemon
-> implementation considerably.
->=20
-> This would mirror how on ethernet you can have `dev eth0 via $router=5F=
-ip`.
-> I'm still reviewing the net/ code to find the best way to do this, bu=
-t I'm
-> thinking either a new RTA=5FWGPEER, like: `default dev wg0 via-wgpeer
-> $peer=5Fpubkey` or perhaps re-using RTA=5FVIA and keying off a static=
-ally
-> configured AllowedIP addresses.
->=20
-> To start I'd make this an opt-in replacement for our usual AllowedIPs
-> logic, making sure to only activate it if any via* RTAs are active on=
- a
-> particular device, but if it proves to work well I don't see why we
-> couldn't adapt the netlink code to maintain AllowedIPs using this RTA=
- (but
-> invisible to userspace) to re-use the same code and get rid of allowe=
+--- a/drivers/net/wireguard/allowe
 dips.c
-> altogether. That's assuming this ends up being less code overall or p=
-erhaps
-> more performant.
->=20
-> Happy to hear your thoughts,
-> --Daniel
->=20
-> =5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=
-=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F
-> Babel-users mailing list
-> Babel-users@alioth-lists.debian.net
-> https://alioth-lists.debian.net/cgi-bin/mailman/listinfo/babel-users
++++ b/drivers/net/wireguard/allowe
+dips.c
+@@ -6,6 +6,8 @@
+ #include "allowedips.h"
+ #include "peer.h"
 
++#include <net/route.h>
++
+ enum { MAX_ALLOWEDIPS_BITS = 128 };
+
+ static struct kmem_cache *node_cache;
+@@ -356,10 +358,18 @@ int wg_allowedips_read_node(struct
+allowedips_node *node, u8 ip[16], u8 *cidr)
+ struct wg_peer *wg_allowedips_lookup_dst(struct allowedips *table,
+                                         struct sk_buff *skb)
+ {
+-       if (skb->protocol == htons(ETH_P_IP))
+-               return lookup(table->root4, 32, &ip_hdr(skb)->daddr);
+-       else if (skb->protocol == htons(ETH_P_IPV6))
+-               return lookup(table->root6, 128, &ipv6_hdr(skb)->daddr);
++       struct rtable *rt = skb_rtable(skb);
++       if (rt->rt_uses_gateway) {
++               if (rt->rt_gw_family == AF_INET)
++                       return lookup(table->root4, 32, &rt->rt_gw4);
++               else if (rt->rt_gw_family == AF_INET6)
++                       return lookup(table->root6, 128, &rt->rt_gw6);
++       } else {
++               if (skb->protocol == htons(ETH_P_IP))
++                       return lookup(table->root4, 32, &ip_hdr(skb)->daddr);
++               else if (skb->protocol == htons(ETH_P_IPV6))
++                       return lookup(table->root6, 128, &ipv6_hdr(skb)->daddr);
++       }
+        return NULL;
+ }
+
+The problem is that reply packets will be dropped via the source
+address check for all but the peer with the default route listed in
+AllowedIPs. The way the trie code works means a highly-invasive change
+would be needed to allow for multiple peers to be associated with a
+given prefix: I suspect any further complication (not to mention
+possible additional data structure bloat) is undesirable, and anyway I
+am looking to bypass most of the complexity created by Wireguard's
+parallel packet routing infrastructure and instead leverage the far
+more flexible Linux policy routing engine.
+
+At this point, what I'd like to do is be able to skip the source
+address check by configuration, instead relying on rp_filter and
+firewall rules to reject bogus or unwanted packets. With such a config
+knob, AllowedIPs would be used only for selecting the destination peer
+based on the packet daddr or the route's gateway. For a mesh like I
+described above, I would configure only a gateway IP for each peer in
+AllowedIPs and use the policy routing engine for all other packet
+routing behavior.
+
+I appreciate that Wireguard works the way it does most likely because
+routing is configured differently across the wide variety of devices
+it supports (and in some cases may be unavailable to users), so I
+don't think the AllowedIPs source address check should be removed by
+default; but it would be nice if I could turn it off and rely on other
+mechanisms in the kernel that would allow for more flexibility.
+
+Thoughts?
+
+Thanks,
+Kyle
