@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B06FEB64D9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2895AEB64DD
 	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  2 Jul 2023 13:50:00 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a86c724f;
-	Sun, 2 Jul 2023 13:47:02 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1fe30897
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 84cf5409;
+	Sun, 2 Jul 2023 13:47:12 +0000 (UTC)
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com
+ [2607:f8b0:4864:20::62b])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 29294677
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 2 Jul 2023 13:47:00 +0000 (UTC)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
- (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id B3A6360C24
- for <wireguard@lists.zx2c4.com>; Sun,  2 Jul 2023 13:46:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68DE8C433C9
- for <wireguard@lists.zx2c4.com>; Sun,  2 Jul 2023 13:46:58 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="Zk5MeBPw"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1688305613;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=DgyTZpYH4n9IkxjItDbDmUhF/fhQUb1wwAJFpzqh190=;
- b=Zk5MeBPwfSW2n6S0hurtfsv37B2KBfPoDKpwtPYaU4YjNrbK5UeNyWtPg3kZ9sEIzGgYmG
- eMZisM2BYTvZL15MxAQ08AXbrj/1WgSB83k0VM3+pD11YYEeiEDpHcVIq5sGjpA68cUOVr
- roKu6D7dy7GuGSzfcBs0KssjpjyC7eA=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ba0f1640
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 2 Jul 2023 13:46:52 +0000 (UTC)
-Received: by mail-vs1-f47.google.com with SMTP id
- ada2fe7eead31-4436dc265d6so1160365137.0
- for <wireguard@lists.zx2c4.com>; Sun, 02 Jul 2023 06:46:51 -0700 (PDT)
-X-Gm-Message-State: ABy/qLbnfVPxRp4ZbeuyNPfmXqt7+aGWU7sTpdcGh+5PCdaxIuv1rwfH
- cD+WEIh7alebGsbEStKpNBEyyJwakdW7t1soya0=
-X-Google-Smtp-Source: APBJJlGqQFeoUfE02AmvsH2pJ+qPAs8UdnGuzSAglr4yxRzNPQyJCtBP9XKz1B4Kp4ZazFDt6bCHMPcaSpg4TPOUzY0=
-X-Received: by 2002:a67:f94c:0:b0:443:7e49:c023 with SMTP id
- u12-20020a67f94c000000b004437e49c023mr3929865vsq.6.1688305609944; Sun, 02 Jul
- 2023 06:46:49 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Sun, 2 Jul 2023 03:32:09 +0000 (UTC)
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1b82bf265b2so14534895ad.0
+ for <wireguard@lists.zx2c4.com>; Sat, 01 Jul 2023 20:32:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20221208; t=1688268728; x=1690860728;
+ h=content-transfer-encoding:subject:from:cc:to:content-language
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZhN94lMUNnHFPAhVfo+rHKI0yY7VxURxglHWp96Srwg=;
+ b=H1lg1nuWSIDnWqY4UVAXcXDJAvhU1YHPpPrusiQohNNE5GvwsK4w5d69Q7qkFYlCoQ
+ 84Fxd+lbFB7/3yFhjBHEutcwet2ZEWFcyPyx9Aiuz2AvTnO0DuUHAzVoq6G1FspI2tte
+ n9rLvN+0COGioC0U1u981OUG9XFc6lhXnN8I/qBfkElWhYTtUu6u3S2CF4dAMVi4KAnv
+ LtzVHkclYvagZB1hY7ZPMEONvED3cxV5uNqWv41hLLykZAZsPnIFRZfMy+hSSgBmAHwi
+ gi3FnH1A2+JRvnqN3YD4PpzxbfUlw6fwQtvaX5GDyVPDSLN608urxpB41kGVdFjezpSy
+ yjZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20221208; t=1688268728; x=1690860728;
+ h=content-transfer-encoding:subject:from:cc:to:content-language
+ :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=ZhN94lMUNnHFPAhVfo+rHKI0yY7VxURxglHWp96Srwg=;
+ b=iKc0iNIib/INKd3Va8/uSdEHuu7mAWiGLLIAh0uGnBvIqakzYiX6czonlxSnJtiHn/
+ +Vd8Wcsvcxdim4hrqFUFYqmOt/rYXUeDSoQcIOlSVFhmbV9hKmlIUKmdt0iSpOghmhc0
+ 9KFcqNXGqNlLWcOjy0queZubsZPt6b+NIvMl7zMnNyVgk2UvTSw8tQySCD4OeorQ3fke
+ UVY6yR0wCWp7LORc2L6nmL7cFHnW77nf+9tKlHvIu2YlOaJXVT5al9OWmpd0/ymnQfar
+ YH4N4mG6rKpAdV6QwEHQ2/V7bZdT76u38TbCHJt2JwF5nYQS8VFY/n/tqzf/OKIxak7e
+ 8BHw==
+X-Gm-Message-State: ABy/qLbpHjGF7Y3tAMr4desb0gNbyy8BxZADIIitdGnIPr4fmjDBtKiZ
+ 3wUr2MVZLodNX2Y3lXKkPMQ=
+X-Google-Smtp-Source: APBJJlHZiamPWt4nUWriHFvnZ613G5ox0ZTDJ3hV30nK4Q6VIh6/Ew5xaB6xL5oCJQI9wAnlyBBErA==
+X-Received: by 2002:a17:903:244a:b0:1b7:cee1:60c4 with SMTP id
+ l10-20020a170903244a00b001b7cee160c4mr5800588pls.59.1688268727745; 
+ Sat, 01 Jul 2023 20:32:07 -0700 (PDT)
+Received: from [192.168.0.103] ([103.131.18.64])
+ by smtp.gmail.com with ESMTPSA id
+ w10-20020a1709029a8a00b001b567bb970esm12931622plp.84.2023.07.01.20.32.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 01 Jul 2023 20:32:07 -0700 (PDT)
+Message-ID: <e5b76a4f-81ae-5b09-535f-114149be5069@gmail.com>
+Date: Sun, 2 Jul 2023 10:31:56 +0700
 MIME-Version: 1.0
-References: <e5b76a4f-81ae-5b09-535f-114149be5069@gmail.com>
- <79196679-fb65-e5ad-e836-2c43447cfacd@gmail.com>
- <10f2a5ee-91e2-1241-9e3b-932c493e61b6@leemhuis.info>
-In-Reply-To: <10f2a5ee-91e2-1241-9e3b-932c493e61b6@leemhuis.info>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sun, 2 Jul 2023 15:46:38 +0200
-X-Gmail-Original-Message-ID: <CAHmME9onMWdJVUerf86V0kpmNKByt+VC=SUfys+GFryGq1ziHQ@mail.gmail.com>
-Message-ID: <CAHmME9onMWdJVUerf86V0kpmNKByt+VC=SUfys+GFryGq1ziHQ@mail.gmail.com>
-Subject: Re: Fwd: RCU stalls with wireguard over bonding over igb on Linux
- 6.3.0+
-To: Linux regressions mailing list <regressions@lists.linux.dev>
-Cc: Bagas Sanjaya <bagasdotme@gmail.com>,
- Eric DeVolder <eric.devolder@oracle.com>, 
- "Borislav Petkov (AMD)" <bp@alien8.de>, David R <david@unsolicited.net>, 
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Content-Language: en-US
+To: Eric DeVolder <eric.devolder@oracle.com>,
+ "Borislav Petkov (AMD)" <bp@alien8.de>, David R <david@unsolicited.net>,
  Boris Ostrovsky <boris.ovstrosky@oracle.com>,
- Miguel Luis <miguel.luis@oracle.com>, 
- "Paul E. McKenney" <paulmck@kernel.org>,
- Joel Fernandes <joel@joelfernandes.org>, 
- Boqun Feng <boqun.feng@gmail.com>, Jay Vosburgh <j.vosburgh@gmail.com>, 
- Andy Gospodarek <andy@greyhouse.net>, "Rafael J. Wysocki" <rafael@kernel.org>,
- Len Brown <lenb@kernel.org>, 
- Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>, 
- Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, 
- "H. Peter Anvin" <hpa@zytor.com>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, 
+ Miguel Luis <miguel.luis@oracle.com>, "Paul E. McKenney"
+ <paulmck@kernel.org>, Joel Fernandes <joel@joelfernandes.org>,
+ Boqun Feng <boqun.feng@gmail.com>, "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ Jay Vosburgh <j.vosburgh@gmail.com>, Andy Gospodarek <andy@greyhouse.net>,
+ "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown <lenb@kernel.org>,
+ Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>,
+ Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>,
+ x86@kernel.org, "H. Peter Anvin" <hpa@zytor.com>
+Cc: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Linux Regressions <regressions@lists.linux.dev>,
  Linux RCU <rcu@vger.kernel.org>,
- Wireguard Mailing List <wireguard@lists.zx2c4.com>, 
+ Wireguard Mailing List <wireguard@lists.zx2c4.com>,
  Linux Networking <netdev@vger.kernel.org>,
- Linux ACPI <linux-acpi@vger.kernel.org>, 
- "Manuel 'satmd' Leiner" <manuel.leiner@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+ Linux ACPI <linux-acpi@vger.kernel.org>
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+Subject: Fwd: RCU stalls with wireguard over bonding over igb on Linux 6.3.0+
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Mailman-Approved-At: Sun, 02 Jul 2023 13:47:11 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -91,11 +94,46 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-I've got an overdue patch that I still need to submit to netdev, which
-I suspect might actually fix this.
+Hi,
 
-Can you let me know if
-https://git.zx2c4.com/wireguard-linux/patch/?id=54d5e4329efe0d1dba8b4a58720d29493926bed0
-solves the problem?
+I notice a regression report on Bugzilla [1]. Quoting from it:
 
-Jason
+> I've spent the last week on debugging a problem with my attempt to upgrade my kernel from 6.2.8 to 6.3.8 (now also with 6.4.0 too).
+> 
+> The lenghty and detailed bug reports with all aspects of git bisect are at
+> https://bugs.gentoo.org/909066
+> 
+> A summary:
+> - if I do not configure wg0, the kernel does not hang
+> - if I use a kernel older than commit fed8d8773b8ea68ad99d9eee8c8343bef9da2c2c, it does not hang
+> 
+> The commit refers to code that seems unrelated to the problem for my naiive eye.
+> 
+> The hardware is a Dell PowerEdge R620 running Gentoo ~amd64.
+> 
+> I have so far excluded:
+> - dracut for generating the initramfs is the same version over all kernels
+> - linux-firmware has been the same
+> - CPU microcode has been the same
+> 
+> It's been a long time since I seriously involved with software development and I have been even less involved with kernel development.
+> 
+> Gentoo maintainers recommended me to open a bug with upstream, so here I am.
+> 
+> I currently have no idea how to make progress, but I'm willing to try things.
+
+See Bugzilla for the full thread.
+
+Anyway, I'm adding it to regzbot to make sure it doesn't fall through cracks
+unnoticed:
+
+#regzbot introduced: fed8d8773b8ea6 https://bugzilla.kernel.org/show_bug.cgi?id=217620
+#regzbot title: correcting acpi_is_processor_usable() check causes RCU stalls with wireguard over bonding+igb
+#regzbot link: https://bugs.gentoo.org/909066
+
+Thanks.
+
+[1]: https://bugzilla.kernel.org/show_bug.cgi?id=217620
+
+-- 
+An old man doll... just what I always wanted! - Clara
