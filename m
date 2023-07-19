@@ -4,66 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E911C001DC
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Jul 2023 17:58:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B00F2EB64DA
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Jul 2023 07:18:33 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d0aea572;
-	Tue, 18 Jul 2023 17:58:03 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 609aa9b8
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 272bd23a;
+	Wed, 19 Jul 2023 07:18:31 +0000 (UTC)
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com
+ [2a00:1450:4864:20::133])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7be04e3e
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 18 Jul 2023 17:58:02 +0000 (UTC)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
- (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 5F9346150B
- for <wireguard@lists.zx2c4.com>; Tue, 18 Jul 2023 17:58:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9200DC433CC
- for <wireguard@lists.zx2c4.com>; Tue, 18 Jul 2023 17:57:59 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="ex5UTj9w"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1689703076;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Z3DDMndpyGQ9Js5DGZvxnMtOBjS6KRA0SgH3Yn0/Ifk=;
- b=ex5UTj9wimDvzl6iBEvbtxWLBtLWz2cCL31LdbPMwtzbrm8Nj7oVrCWerFyS96RUUpBFvs
- NliCRmksdWtfl4tj7XnXOIEjRj0300HSSv3rEYvIdPBs5WvCC1M4evlgcDzwQeERm1EVdO
- ydVoP2y8Rc3KagLr6wpOTRjJh6p4Ov4=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 41015c98
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 18 Jul 2023 17:57:55 +0000 (UTC)
-Received: by mail-ed1-f54.google.com with SMTP id
- 4fb4d7f45d1cf-51e619bcbf9so8324022a12.3
- for <wireguard@lists.zx2c4.com>; Tue, 18 Jul 2023 10:57:55 -0700 (PDT)
-X-Gm-Message-State: ABy/qLZiQ5vknAW+LXtChE9woLvgHQRSKldQlZd+EgfDne4MMgYnzSSv
- ZbTavq9f0pW80/i5F1beltVQb+QVUXMZNV0jh34=
-X-Google-Smtp-Source: APBJJlEbE+jfEDYuzLdPmOtu5UXWbBGlbEEOaC0BX+lIg944+HdN56uIq7onSwd1wZz7Xep4OTrRvB60bolSKxN+89w=
-X-Received: by 2002:aa7:c704:0:b0:51e:e67:df4d with SMTP id
- i4-20020aa7c704000000b0051e0e67df4dmr326904edq.38.1689703072538; Tue, 18 Jul
- 2023 10:57:52 -0700 (PDT)
+ Wed, 19 Jul 2023 07:18:29 +0000 (UTC)
+Received: by mail-lf1-x133.google.com with SMTP id
+ 2adb3069b0e04-4f14865fcc0so6997e87.0
+ for <wireguard@lists.zx2c4.com>; Wed, 19 Jul 2023 00:18:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20221208; t=1689751108; x=1692343108;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pVX2sPDw+DWb/GS2tOcFuCZloAr9HeWMoOE7zgzcjAc=;
+ b=46aG0lZeboqdGiAS3eFFsz1BdFW5SyG3PcURkaVy++rO2QUmH/5GA7Ds3UCheEDPie
+ ta0nTEan440qy9SUXufv+C507Rv8Zy46oI7FMjICPvF3corilTesdXYmhGovu3mo5X0w
+ gAiXp7a5HZJR4Z3U0eNy6w5ATufEJgZdgXaTxk+U6Hi08trqMkoePhYmQxbP1RkQgzw9
+ t6KmjzTwVjUdZaIikUufDiQ4O2cd8R1eAL36Ck5N710TPh96eNsCZeYCuAyi2AVq6gjD
+ IK8/lhB1J117tQfoKq677dzObHwG7aYPdvuqPoB6xoBi3N15CLZbUear1wma6jLbCQ/u
+ JPew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20221208; t=1689751108; x=1692343108;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=pVX2sPDw+DWb/GS2tOcFuCZloAr9HeWMoOE7zgzcjAc=;
+ b=BvrWPXBq21eEAYim6c0B5ECj5Ha47yayoUhaIFcRZZYkkFTVRyZOQAl5HXSjFcdgDg
+ fGfXRLhlJtuT66pQFg8BeMJr5jwLQ2mYXxTC8Rjf/wsYi2eD/Dcj93STOODFmMYgWq8D
+ QqCnYrfP7v1q0qqKULaTHg4FAq9zHKzAS8cwldJp2xXn2bzkmcvH3pYJ6O2lZX/aFTzs
+ XoLbofsoGTfvs0Fpt086hcIWYx93DHoboGlocrg1Bxu1sCMrgoj/5NtuvZ8OTlzrfFSc
+ WHMspGtQYhUnQEeDJJDJwbIF2WFxe5KGD8EylnYyQ4B4E7YJ80AmFrLC2cHt/O3wQX1c
+ H1zw==
+X-Gm-Message-State: ABy/qLZsy4jIXJkop/+gqSLn0z9I7KzfL0wi8TT+QAr91BRUxZVOZT5s
+ DgqS4Kx22VN8U3WhegBc4TdsprPp7fXqiMgBw+3EhjrPZeAgrlhq/rk=
+X-Google-Smtp-Source: APBJJlHS5nTB31lrBs2t8tPY5lYDwtRsYt79WF3JVNrVSr1cjUl5chfsffOJ6UvHWTqxyKHiJyGrGgkuKbmpBZGZfOc=
+X-Received: by 2002:a19:5506:0:b0:4f7:5f7d:2f9b with SMTP id
+ n6-20020a195506000000b004f75f7d2f9bmr139829lfe.1.1689751107740; Wed, 19 Jul
+ 2023 00:18:27 -0700 (PDT)
 MIME-Version: 1.0
-References: <0000000000002bfa570600c477b3@google.com>
-In-Reply-To: <0000000000002bfa570600c477b3@google.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 18 Jul 2023 19:57:22 +0200
-X-Gmail-Original-Message-ID: <CAHmME9reBny-ufJp58uOg+KdMptircBRhLFd-N2KwxNUp6myTA@mail.gmail.com>
-Message-ID: <CAHmME9reBny-ufJp58uOg+KdMptircBRhLFd-N2KwxNUp6myTA@mail.gmail.com>
-Subject: Re: [syzbot] [wireguard?] [jfs?] KASAN: slab-use-after-free Read in
- wg_noise_keypair_get
-To: syzbot <syzbot+96eb4e0d727f0ae998a6@syzkaller.appspotmail.com>
-Cc: broonie@kernel.org, davem@davemloft.net, edumazet@google.com, 
- jfs-discussion@lists.sourceforge.net, kuba@kernel.org, 
- kuninori.morimoto.gx@renesas.com, linux-fsdevel@vger.kernel.org, 
- linux-kernel@vger.kernel.org, netdev@vger.kernel.org, pabeni@redhat.com, 
- povik+lin@cutebit.org, shaggy@kernel.org, syzkaller-bugs@googlegroups.com, 
- wireguard@lists.zx2c4.com
+References: <20230719091342.789107a9@parrot>
+In-Reply-To: <20230719091342.789107a9@parrot>
+From: Dmitry Vyukov <dvyukov@google.com>
+Date: Wed, 19 Jul 2023 09:18:14 +0200
+Message-ID: <CACT4Y+bsdEDukXi02RKWuEa-BYajP=4w5B-7KEUqf--HOVPVjg@mail.gmail.com>
+Subject: Fwd: WireGuard Mailling List
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: =?UTF-8?B?TWFyZWsgS8O8dGhl?= <m.k@mk16.de>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -78,10 +74,25 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Freed in:
+Hi,
 
- diUnmount+0xf3/0x100 fs/jfs/jfs_imap.c:195
- jfs_umount+0x186/0x3a0 fs/jfs/jfs_umount.c:63
- jfs_put_super+0x8a/0x190 fs/jfs/super.c:194
+I was asked to forward this to the list because the author has
+problems reaching it.
+It looks legit:
 
-So maybe not a wg issue?
+---------- Forwarded message ---------
+From: Marek K=C3=BCthe <m.k@mk16.de>
+
+Hello,
+
+the WireGuard logo is a Chinese dragon. Does he/she have a name? What
+could you call him/her? The background is that I want to make a mod for
+[UnCiv](https://github.com/yairm210/Unciv) and would like to incorporate
+there various motifs of computer life - among others, the dragon of
+WireGuard. Therefore he/she needs - at least for my purposes - a name.
+What would you call it?
+
+--
+Marek K=C3=BCthe
+m.k@mk16.de
+er/ihm he/him
