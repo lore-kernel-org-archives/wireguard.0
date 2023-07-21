@@ -4,53 +4,29 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEB8CC001E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Jul 2023 17:56:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB902EB64DA
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 21 Jul 2023 00:06:56 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2a484e8c;
-	Wed, 19 Jul 2023 17:52:44 +0000 (UTC)
-Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com
- [209.85.161.72])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 89aea9e3
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 53ce32c0;
+	Fri, 21 Jul 2023 00:06:55 +0000 (UTC)
+Received: from janet.servers.dxld.at (mail.servers.dxld.at [5.9.225.164])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8deaddd4
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 19 Jul 2023 17:52:37 +0000 (UTC)
-Received: by mail-oo1-f72.google.com with SMTP id
- 006d021491bc7-563668b61e5so10478483eaf.3
- for <wireguard@lists.zx2c4.com>; Wed, 19 Jul 2023 10:52:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20221208; t=1689789156; x=1692381156;
- h=to:from:subject:message-id:in-reply-to:date:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hiRiXJW3cvp7FSsZTUGSxXp2M76eBloK3LBfm2fpvAw=;
- b=caYCeyetU/DckqpQJcgC0OFSNi2l+fF+LqmkU0ZqKbi8aKVh01DAzeDbQtkvH9bYnN
- vU43k0rIsRyp/JhSyXLqwjiczJpNnvD97RYfJJL7G2JtUyvaybVE7mDx+1SrI3/08z2f
- 9zzff2WEiOo3ydPn+GMxpOnrvj9ZHok7spWqGVBS6r+yZn+3dMIgn3QubVuR6/KYX3ul
- VwdXtSzPFjmQSEqX4J5GrGgxWjgxij+ap8N85tz0T01uXCcGwUZjbJrUXg13ueT0asQP
- ILN3avcy13ukFaEo5EVQWNVpGSHxzMkHolC7x9kdyNbK3ySV/7+f5ziQwPwQeMQz809b
- Bjvw==
-X-Gm-Message-State: ABy/qLacMFnNAlEthUdzWJ0dtpCBcRI2A3FTXSKRK6ho1pQB+dLEY0/X
- i635gZ+bLDN+d2/85/y3XJIlAOBzV9JhY76xVv+7ZFwLvpA0
-X-Google-Smtp-Source: APBJJlG5ugVl7dPPwQXLSskdx//wo3Cxwyt6xyJHDlFhfMqOYOoEiwYraGQnxOCt15oVej8GHXbJ8Vy/Q7WgiHAYGdyqnMHSkz9m
+ Fri, 21 Jul 2023 00:06:54 +0000 (UTC)
+Received: janet.servers.dxld.at; Fri, 21 Jul 2023 02:06:53 +0200
+Date: Fri, 21 Jul 2023 02:06:43 +0200
+From: Daniel =?utf-8?Q?Gr=C3=B6ber?= <dxld@darkboxed.org>
+To: wireguard@lists.zx2c4.com
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ Baptiste Jonglez <baptiste@bitsofnetworks.org>,
+ Nico Schottelius <nico.schottelius@ungleich.ch>
+Subject: Wg source address is too sticky for multihomed systems aka multiple
+ endpoints redux
+Message-ID: <20230721000643.44y5pd7sfcjzhbjw@House.clients.dxld.at>
 MIME-Version: 1.0
-X-Received: by 2002:a05:6808:f0a:b0:3a3:644a:b55 with SMTP id
- m10-20020a0568080f0a00b003a3644a0b55mr30865038oiw.4.1689789156368; Wed, 19
- Jul 2023 10:52:36 -0700 (PDT)
-Date: Wed, 19 Jul 2023 10:52:36 -0700
-In-Reply-To: <30f03978-3035-a28e-c097-112036901bcb@nerdbynature.de>
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <00000000000069291b0600dab2d6@google.com>
-Subject: Re: [syzbot] [wireguard?] [jfs?] KASAN: slab-use-after-free Read in
- wg_noise_keypair_get
-From: syzbot <syzbot+96eb4e0d727f0ae998a6@syzkaller.appspotmail.com>
-To: broonie@kernel.org, dave.kleikamp@oracle.com, davem@davemloft.net, 
- edumazet@google.com, jason@zx2c4.com, jfs-discussion@lists.sourceforge.net, 
- kuba@kernel.org, kuninori.morimoto.gx@renesas.com, 
- linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org, 
- lists@nerdbynature.de, netdev@vger.kernel.org, pabeni@redhat.com, 
- povik@cutebit.org, syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -65,20 +41,98 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
+Hi wire-guard, :)
 
-syzbot has tested the proposed patch and the reproducer did not trigger any issue:
+tl;dr: I wan to implement mutliple peer endpoints to fix the only two
+problems haunting me with wireguard.
 
-Reported-and-tested-by: syzbot+96eb4e0d727f0ae998a6@syzkaller.appspotmail.com
+I have a multihomed router with two public IPv4 addresses plus default
+routes in a failover configuration. The setup includes the two default
+routes with different metrics and appropriate ip-rule(s) to make traffic
+with a preselected source address leave via the correct interface.
 
-Tested on:
+On top of this v4 underlay I run a number of wireguard interfaces providing
+IPv6 service for my network. Since one of the v4 uplinks is an LTE/5G
+router the main uplink is usually preferable and the (default) route
+metrics reflect this.
 
-commit:         6e2bda2c jfs: fix invalid free of JFS_IP(ipimap)->i_im..
-git tree:       https://github.com/kleikamp/linux-shaggy.git
-console output: https://syzkaller.appspot.com/x/log.txt?x=172aecaaa80000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=f631232ee56196bd
-dashboard link: https://syzkaller.appspot.com/bug?extid=96eb4e0d727f0ae998a6
-compiler:       Debian clang version 15.0.6, GNU ld (GNU Binutils for Debian) 2.40
+However I've observed wireguard continuing to send traffic via the larger
+metric default route after failover events even after the primary link and
+it's default route is back.
 
-Note: no patches were applied.
-Note: testing is done by a robot and is best-effort only.
+Source address issues on multihomed hosts have been discussed on the
+list multiple times before. See for example:
+- https://lists.zx2c4.com/pipermail/wireguard/2023-February/007948.html
+- https://lists.zx2c4.com/pipermail/wireguard/2021-October/007205.html
+- https://lists.zx2c4.com/pipermail/wireguard/2021-November/007309.html
+
+So I'm certainly not the only one experiencing issues like this.
+
+I set out on a quest to debug this. My first reading of the code indicated
+that perhaps the dst_cache is at fault but after adding some tracing code
+it became clear that our endpoint logic is simply broken for multihomed
+systems:
+
+The dst_cache gets properly invalidated whenever route switchover happens
+but when doing a new rt lookup we force the lookup to use the (known good)
+src address.
+
+This is deficient because if we run a full route lookup we might get a
+different source address (as is the case in my setup). I do think I
+understand why we do things like this: we know this source address is
+working and the new one could break connectivity. Fair enough.
+
+So here's a proposal: we introduce a second wg_peer endpoint address for
+use with handshakes. This way we can send a handshake using the new source
+address and only switch if it succeeds.
+
+I do expect this to be a fair bit of additional logic since we need to deal
+with timeouts, retrys and such. However I think this is a good opportunity
+to kill two birds with one stone. Hear me out.
+
+I have a second issue with wireguard that's been bugging me for ages:
+IPv4/6 non-dual-stack support _sucks_. The kernel only knows about one
+endpoint address ever so if a endpoint (DNS) host resolves to multiple
+addresses there's nothing userspace can easily do to make things work on
+IPv4-only *and* IPv6-only networks.
+
+This is kind of the same problem we're having with multihoming though: if
+only wireguard could keep track of multiple endpoints (think: dst+src
+address pairs).
+
+So my proposal is to just add support for multiple endpoints. There is only
+ever one endpoint involved in sending user data but we attempt handshakes
+over all endpoints. (Exact logic TBD)
+
+To fix the multihoming issue we then check if the socket.c:sendX rt lookup
+returns a different src address form what we're expecting. If not we clone
+the current (dst) endpoint with the new source address and kick off a
+handshake over it.
+
+Note "multiple endpoints" was suggested before in "[RFC] Handling multiple
+endpoints for a single peer" and I agree with most of the design spec
+presented in it:
+- https://lists.zx2c4.com/pipermail/wireguard/2017-January/000917.html
+
+I would perhaps not go as far as to introduce fancy RTT measurment. Me
+personally, I have a proper routing daemon (babeld) in userspace using an
+RTT metric for that. No need to do this in kernel.
+
+The ability to send "out-of-band" packets to a particular peer mentioned by
+Jason in the above mail would actually help routing daemons to cover the
+entire failover story as that's the only limitation currently: I need one
+wg tunnel per-peer to do routing but I digress.
+
+Let me know what y'all think, I'd like to start hacking/designing this
+ASAP. These things have been the only pain point in an otherwise stellar
+user experience with wireguard!
+
+Thanks,
+--Daniel
+
+PS: I have found one viable workaround for this source stickyness. `wg set
+$iface fwmar $mark` will reset all peer src addresses, but it doesn't stick
+at hight packet rates because (I think) the incoming packets immediately
+overwrite the src address in wg_packet_consume_data_done() via
+wg_socket_set_peer_endpoint(). So you have to do it a couple of times
+(perhaps in a tight loop) for it to un-stick the source address :)
