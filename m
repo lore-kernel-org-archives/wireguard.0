@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02EECEB64DD
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 21 Jul 2023 13:47:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45E42C001B0
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 23 Jul 2023 15:32:11 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6d47d5a9;
-	Fri, 21 Jul 2023 13:47:26 +0000 (UTC)
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com
- [2a00:1450:4864:20::22d])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 775896db
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 96b9de8c;
+	Sun, 23 Jul 2023 15:32:10 +0000 (UTC)
+Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com
+ [2607:f8b0:4864:20::1133])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a95ae016
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 21 Jul 2023 13:47:24 +0000 (UTC)
-Received: by mail-lj1-x22d.google.com with SMTP id
- 38308e7fff4ca-2b7441bfa9eso25315921fa.0
- for <wireguard@lists.zx2c4.com>; Fri, 21 Jul 2023 06:47:24 -0700 (PDT)
+ Sun, 23 Jul 2023 15:32:08 +0000 (UTC)
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-577412111f0so43438587b3.0
+ for <wireguard@lists.zx2c4.com>; Sun, 23 Jul 2023 08:32:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20221208; t=1689947244; x=1690552044;
+ d=gmail.com; s=20221208; t=1690126327; x=1690731127;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rJob3KAh3U6fuAyLfYE0XzFL7dZg1FsUf8WW64l/f30=;
- b=b/Y1Xz7N2bj7THm4kwHWZO0PV9h8UxYg4zhHy/lU6Q3QkCZS3SrTDfarBm6TytNK9u
- k5oG6OpUzjbnWcgKWHniUf+dOLFwS+otQ80zX3HPEe3aM6PFDXjFTg3738Azz0lWJYpE
- FFuvE8frrmjli1xHC/GLkNz3BacSjLojfBtCA/Lt052wLom7bznd4AdQzVWa+lIjpMSp
- Fer1Zq2FoTuu4l1XVkJG1J5F/cduWtfFmvLC2YvyyAQOMRJHm2yvjJxskmkbY/JgsYHI
- TGZ1k1/SQkZPyeHKfnHkIEFsHX8VJDIDnvPx9nmyGBEOlnakmjmq886T6gynYdL97WSY
- hyJg==
+ bh=uW1BxCwETSvIeh2Uh+uC4HrVTsZ8ekklY8cNS1nd7jc=;
+ b=UqmzQdTjDOTkVBO+7fxfqH4It4WEbwJ6kRVoNqpoIOnmfJ3D/MCLV5MUq0l478WFNl
+ wSbrB37pgF/hlpdSkA/DvAEX4WE0d+rPkySwJBGev7e9Hs9fI4mSHeednbuJCoD7vLwp
+ 8g9MhFRvXkmCgWX6P8dMATEAUOw7wC5NAiqWKxdnNK98TMGcQ0tp+OLEdOdwIifFwTpL
+ 0GvS14CQuyvWIjdtjOueJFqkkTnwIF/UA3YUuzxQZQHOYsrnpCJfX1RWAjdkbqO4jBPp
+ hvCns63h6G33/sGTbzA1AEG0E2jCJxIeY00y1ECsi4lA1xS0+5GYP7tPR5ZjKybumSag
+ RbjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20221208; t=1689947244; x=1690552044;
+ d=1e100.net; s=20221208; t=1690126327; x=1690731127;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rJob3KAh3U6fuAyLfYE0XzFL7dZg1FsUf8WW64l/f30=;
- b=PH7F4s6AR4wiMtf8NgbDLMsGOoeHeDKRcp7ZJdr6MFJxE4hxuyuoLPuLfyZHL02QKG
- qdFpSXR6GwMmhiwwLqv83IGzrlxfBgeuTs1/u8de9w/PhDJpP/Aps0mINorcEqCH9n4w
- DYTmPmckjI/Ws/dh0Ae5BU3J7qwaBeoI9SXk8bFDAhwp1jR666xAgnfG7VKuc8NwH2x7
- RuMQZ331SirvZtI8A6BUTfnDBhIwPL+Pb+TUhfbAAk5lDUjL44QpMKfnPHG/e95J8HNU
- p30EHJe/9HUm+fuC98+F58U654HqTYx8GsR/CpnX0BRCb2/3pmGgemZDcrS9riRDtBAi
- UWEw==
-X-Gm-Message-State: ABy/qLbmKvYmgEyJnkazU9M8Dvl5Q7dulZXz89yuGarUz/WfYOCvJwwC
- Jt1DLi2YWQXl7sUNUREyjqrPsBvaNrdjajYWDcIqw3PdAlk=
-X-Google-Smtp-Source: APBJJlFbB4ku4HK5pTy9V0cgR2IuxVVhbBXJgnl/ePjkkN2suzvxrlBMjPWtkiNpPTeMIg+egUeACLIqHM6+GN2AOio=
-X-Received: by 2002:a2e:9802:0:b0:2b6:f85a:20af with SMTP id
- a2-20020a2e9802000000b002b6f85a20afmr765816ljj.4.1689947243635; Fri, 21 Jul
- 2023 06:47:23 -0700 (PDT)
+ bh=uW1BxCwETSvIeh2Uh+uC4HrVTsZ8ekklY8cNS1nd7jc=;
+ b=ANuozMbeoc+NcGbDhiaIpDhSUWxDY2cAwXLlYJU6HLv4rjtUkkJfaAVbPfLzh5vkvR
+ 1EpReFd3fheUQEzR03SyCmJEuIsnlws6g0bPa0/nlduUs0BkJ+ZgrJfBwKSQnQj2wTLp
+ GS/pocTWo+wUsuu7vRlS3XPG4n7my5AHWPdqwK3BRblg6zT9DNVTzqWE3+RXh1OvKWXN
+ popDwsmcnJ46aYp3o4ZiJawjgTyLuDCiEARI07zgNO3ffVk8wNVoAs7dnwsacWThKM9n
+ mxTErHIJloGw0Ybp3wfzwzGg64GVuuyGVBnRS2rEsgTjOK4zuJXEDx31kllihiHhJoUq
+ q9rg==
+X-Gm-Message-State: ABy/qLaehjnzEL9RNONKgomBYL3JNIaLrY8y+cnsgzVynBuJtd7k6uTn
+ UvCxbY2RUMN4qMyg+aoVNtcNxbMCNpQfiiepubg=
+X-Google-Smtp-Source: APBJJlFN9wyICPDdHuJgeGxPbrReTA8ffZnnzLNNhHrRPi+XYBZy/P52RONEj4OoSSFB4NyBoNPEjDNMZQlCuQRoHlM=
+X-Received: by 2002:a81:5e0b:0:b0:573:a763:5876 with SMTP id
+ s11-20020a815e0b000000b00573a7635876mr6045293ywb.51.1690126327516; Sun, 23
+ Jul 2023 08:32:07 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230721000643.44y5pd7sfcjzhbjw@House.clients.dxld.at>
- <87351h4rp7.fsf@ungleich.ch>
-In-Reply-To: <87351h4rp7.fsf@ungleich.ch>
-From: John Lauro <johnalauro@gmail.com>
-Date: Fri, 21 Jul 2023 09:47:11 -0400
-Message-ID: <CADGd2Dpxst52_OxMJBO19Qn11hrgxsXVaNnryb9YryipLvX8Gg@mail.gmail.com>
-Subject: Re: Wg source address is too sticky for multihomed systems aka
- multiple endpoints redux
-To: Nico Schottelius <nico.schottelius@ungleich.ch>
-Cc: =?UTF-8?Q?Daniel_Gr=C3=B6ber?= <dxld@darkboxed.org>, 
- wireguard@lists.zx2c4.com, "Jason A. Donenfeld" <Jason@zx2c4.com>, 
- Baptiste Jonglez <baptiste@bitsofnetworks.org>
+References: <20230719091342.789107a9@parrot>
+ <CACT4Y+bsdEDukXi02RKWuEa-BYajP=4w5B-7KEUqf--HOVPVjg@mail.gmail.com>
+In-Reply-To: <CACT4Y+bsdEDukXi02RKWuEa-BYajP=4w5B-7KEUqf--HOVPVjg@mail.gmail.com>
+From: Wang Jian <larkwang@gmail.com>
+Date: Sun, 23 Jul 2023 23:31:56 +0800
+Message-ID: <CAF75rJA4ev7f9L4qm4LgKAe2xS5vyb7z=vrDq0RN_WXbOX_0kw@mail.gmail.com>
+Subject: Re: WireGuard Mailling List
+To: Dmitry Vyukov <dvyukov@google.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>, 
+ =?UTF-8?B?TWFyZWsgS8O8dGhl?= <m.k@mk16.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -77,61 +76,48 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-I have a lots of multihomed routers setup for vpn site to site and
-running bgp over the vpn mesh.
+Hi,
 
-First, make sure these are all 0 as are multihomed.
-cat $( find /proc/sys/net/ipv4 -name rp_filter )
+I don't know the origin of the Wireguard logo, but it seems to be a =E8=9B=
+=9F
+ (Jiao, pronounced j-ee-au), not a =E9=BE=99 (Long)
 
-The other thing I do is I run a different wireguard interface and peer
-on a different port and interface.
+The differences between Long (know as Chinese dragon) and Jiao is
+* Jiao has 2 small straight horns or no horn at all while Long has 2 bigger
+  and forky horns
+* Long has beard while Jiao has no beard
+* Jiao has snake like tail while Long has fish like tail (with round fin)
+* Long has 4 claws while Jiao has only 2 claws (foreclaws), but this featur=
+e
+  is usually misused.
 
-With bgp on top, one multihomed router to another multihomed router
-just ends up being multiple links it can route over and let linux/bgp
-decide which ones to use and automatically fail over if one path goes
-down.
+Generally, Jiao is upgraded/developed snake living in rivers; Long is
+upgraded/developed Jiao living in the sea, and Long can fly into the sky.
 
-That said, I don't have any NAT and both ends have fixed IPs, although
-they are multihomed.
+Of course you can call the logo  wireguard dragon as you wish.
 
-Can you create a separate wireguard interface for each physical
-interface (I suggest a different port too).  Separate wireguard
-interfaces should keep WG from having issues, and of course disabling
-rp_filter to keep linux from having issues.
-
-
-On Fri, Jul 21, 2023 at 4:05=E2=80=AFAM Nico Schottelius
-<nico.schottelius@ungleich.ch> wrote:
+Dmitry Vyukov <dvyukov@google.com> =E4=BA=8E2023=E5=B9=B47=E6=9C=8819=E6=97=
+=A5=E5=91=A8=E4=B8=89 15:22=E5=86=99=E9=81=93=EF=BC=9A
 >
+> Hi,
 >
-> Good morning,
+> I was asked to forward this to the list because the author has
+> problems reaching it.
+> It looks legit:
 >
-> Daniel Gr=C3=B6ber <dxld@darkboxed.org> writes:
-> > [...]
-> > I have a multihomed router [...]
+> ---------- Forwarded message ---------
+> From: Marek K=C3=BCthe <m.k@mk16.de>
 >
-> following up the thread from February, we migrated away from wireguard
-> to openvpn on systems that have are multi homed.
+> Hello,
 >
-> The main reason for that is the following type of connection to a high
-> probability fails to work:
->
-> 1) device -> [NAT/FIREWALL] -> multi homed server [IP A]
-> 2) multi homed server [IP B] -- blocked by firewall as it does not match
-> table entry
->
-> This always happens when the server has as an asymmetric route back to
-> the originating device, which really depends on the routing tables
-> or routing policy present on the multi homed server.
->
-> I'm a big fan of simplicity, but without an equivalent of openvpn's
-> "local" statement, wireguard is deemed to be unusable in many network
-> scenarios.
->
-> Best regards,
->
-> Nico
->
+> the WireGuard logo is a Chinese dragon. Does he/she have a name? What
+> could you call him/her? The background is that I want to make a mod for
+> [UnCiv](https://github.com/yairm210/Unciv) and would like to incorporate
+> there various motifs of computer life - among others, the dragon of
+> WireGuard. Therefore he/she needs - at least for my purposes - a name.
+> What would you call it?
 >
 > --
-> Sustainable and modern Infrastructures by ungleich.ch
+> Marek K=C3=BCthe
+> m.k@mk16.de
+> er/ihm he/him
