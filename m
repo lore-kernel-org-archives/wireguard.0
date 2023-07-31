@@ -4,34 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94121C001DE
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 23 Jul 2023 17:05:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFB39C001DE
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 31 Jul 2023 21:42:07 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6d7205f0;
-	Sun, 23 Jul 2023 17:05:13 +0000 (UTC)
-Received: from janet.servers.dxld.at (mail.servers.dxld.at [5.9.225.164])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2526cb9e
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2909c83f;
+	Mon, 31 Jul 2023 21:39:40 +0000 (UTC)
+Received: from tootai.net (mail1.tootai.net [2a01:4f8:a0:821b::58:14])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a52755d2
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 23 Jul 2023 17:05:11 +0000 (UTC)
-Received: janet.servers.dxld.at; Sun, 23 Jul 2023 19:05:09 +0200
-Date: Sun, 23 Jul 2023 19:05:04 +0200
-From: Daniel =?utf-8?Q?Gr=C3=B6ber?= <dxld@darkboxed.org>
-To: John Lauro <johnalauro@gmail.com>
-Cc: Nico Schottelius <nico.schottelius@ungleich.ch>,
- wireguard@lists.zx2c4.com, "Jason A. Donenfeld" <Jason@zx2c4.com>,
- Baptiste Jonglez <baptiste@bitsofnetworks.org>
-Subject: Re: Wg source address is too sticky for multihomed systems aka
- multiple endpoints redux
-Message-ID: <20230723170504.srjgry54xkyva4wf@House.clients.dxld.at>
-References: <20230721000643.44y5pd7sfcjzhbjw@House.clients.dxld.at>
- <87351h4rp7.fsf@ungleich.ch>
- <CADGd2Dpxst52_OxMJBO19Qn11hrgxsXVaNnryb9YryipLvX8Gg@mail.gmail.com>
+ Mon, 31 Jul 2023 21:39:37 +0000 (UTC)
+Received: from tootai.net (localhost [127.0.0.1])
+ by mail1.tootai.net (Postfix) with ESMTP id 671E86081887
+ for <wireguard@lists.zx2c4.com>; Mon, 31 Jul 2023 23:39:36 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=tootai.net; s=mail;
+ t=1690839576; bh=D+6bO2RXoGZWCCl/4hEkdRGsSYqKupAxl4D3p+GwRXY=;
+ h=Date:To:From:Subject:From;
+ b=ty7WfFNDbhZlHfpFMZ3of1u+XmzRHGHrcuftgNK+C4SmU9cbmNwZk/aheyEQ+HQJm
+ lG6x1PQRive0UIt1zWsTOU1l2ai+R7n3/8a8fgv/SkfR1vMKnmGthvnML+onlBiHxH
+ gy/eIhHSmW4J6+NJr7kbDk/wdx7nKLug7ajdJxrI=
+Received: from [IPV6:fd99:1234:beef:cafe::24] (unknown
+ [IPv6:fd99:1234:beef:cafe::24])
+ by mail1.tootai.net (Postfix) with ESMTPA id 243E36081883
+ for <wireguard@lists.zx2c4.com>; Mon, 31 Jul 2023 23:39:36 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=tootai.net; s=mail;
+ t=1690839576; bh=D+6bO2RXoGZWCCl/4hEkdRGsSYqKupAxl4D3p+GwRXY=;
+ h=Date:To:From:Subject:From;
+ b=ty7WfFNDbhZlHfpFMZ3of1u+XmzRHGHrcuftgNK+C4SmU9cbmNwZk/aheyEQ+HQJm
+ lG6x1PQRive0UIt1zWsTOU1l2ai+R7n3/8a8fgv/SkfR1vMKnmGthvnML+onlBiHxH
+ gy/eIhHSmW4J6+NJr7kbDk/wdx7nKLug7ajdJxrI=
+Message-ID: <e9ddd93a-4517-7411-a5d3-360fa8e1bde6@tootai.net>
+Date: Mon, 31 Jul 2023 23:39:35 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CADGd2Dpxst52_OxMJBO19Qn11hrgxsXVaNnryb9YryipLvX8Gg@mail.gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.1
+Content-Language: fr-FR
+To: wireguard <wireguard@lists.zx2c4.com>
+From: Daniel <tech@tootai.net>
+Subject: Endpoint failover ip
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: ClamAV using ClamSMTP
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -46,70 +59,16 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi John,
+Hello,
 
-On Fri, Jul 21, 2023 at 09:47:11AM -0400, John Lauro wrote:
-> I have a lots of multihomed routers setup for vpn site to site and
-> running bgp over the vpn mesh.
-> 
-> First, make sure these are all 0 as are multihomed.
-> cat $( find /proc/sys/net/ipv4 -name rp_filter )
+I create a hostname with few IPs v4 & v6 for my wireguard server. I 
+faced today a problem that after a failure with the ip a customer wg was 
+registered, it continue to try to register with this ip insteed to 
+fallback to another one.
 
-My routers are behind consumer ISPs so I never get packets which would fail
-RPF and I have RPF upstream of me either way, so this doesn't make a
-difference in my case. Like I said I have ip-rules (PBR) to direct traffic
-to the correct interface based on source address to appease upstream's RPF.
+Is there a way to avoid this problem and to get failover working 
+properly with wireguard ?
 
-> The other thing I do is I run a different wireguard interface and peer
-> on a different port and interface.
-
-Same, in order to run a routing daemon on top of wg you pretty much have to
-do that currently as only one peer may have AllowedIPs=::/0 but the routing
-daemons dont (yet, I'm working on this for babel) know how to update
-AllowedIPs.
-
-> With bgp on top, one multihomed router to another multihomed router
-> just ends up being multiple links it can route over and let linux/bgp
-> decide which ones to use and automatically fail over if one path goes
-> down.
-> 
-> That said, I don't have any NAT and both ends have fixed IPs, although
-> they are multihomed.
-
-I'm pretty sure you're not seeing the problem I describe here because your
-paths are going to be pretty equivalent, but in my case one is DOCSIS3 and
-one is LTE/5G (depends on weather) which is much worse in terms of
-bandwidth and latency/jitter consistency. So I can actually see the
-difference in applications (video buffering etc) which is what had me start
-debugging in the first place :)
-
-> Can you create a separate wireguard interface for each physical
-> interface (I suggest a different port too).  Separate wireguard
-> interfaces should keep WG from having issues, and of course disabling
-> rp_filter to keep linux from having issues.
-
-Hmm, that might just work since my routing daemon does RTT based routing
-and the mobile connection is going to be much worse there. I already have
-to deploy two tunnel because of the mentioned v4/v6 dualstack issue so I'm
-not really keen to multiply that number _again_. Besides my `set fwmark`
-workaround does actually legitimately work but it's ugly as hell :)
-
-> On Fri, Jul 21, 2023 at 4:05 AM Nico Schottelius
-
-/me realizes you were replying to Nico *blush*. See this is why you don't
-top-post. Learn some netiquette people :-)
-
-I've actually taken my followup discussion with Nico off-list because I
-think it might be a more involved debug session on what's going on in his
-setup, which is going to distract from my proposal. I'll send any
-conclusions we come to back to the list though.
-
-FYI: I do have a patch to add the necessary debugging code and logs to show
-the concrete issue here, I just didn't want to cause information overload
-in the initial mail. Just let me know and I'll send those along if there's
-any doubt about whether what I describe is the actual issue I'm having. I'm
-pretty convinced but the first rule of the internet it that the problem is
-always the X-Y problem~.
-
-Thanks,
---Daniel
+Thanks for any hint
+-- 
+Daniel
