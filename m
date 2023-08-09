@@ -4,48 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B0E9EB64DD
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  3 Aug 2023 12:42:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3036FC001E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  9 Aug 2023 18:29:34 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eacee4e6;
-	Thu, 3 Aug 2023 12:42:05 +0000 (UTC)
-Received: from mail-ot1-f77.google.com (mail-ot1-f77.google.com
- [209.85.210.77])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 31c6e09c
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 240ab34d;
+	Wed, 9 Aug 2023 18:27:06 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org
+ [2604:1380:4641:c500::1])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1c647551
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 3 Aug 2023 12:42:03 +0000 (UTC)
-Received: by mail-ot1-f77.google.com with SMTP id
- 46e09a7af769-6bb31d627ebso1512817a34.2
- for <wireguard@lists.zx2c4.com>; Thu, 03 Aug 2023 05:42:03 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20221208; t=1691066522; x=1691671322;
- h=to:from:subject:message-id:date:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QS/jf/60yteZJ4KS6ZjrdJhYl3jCQuMPys0NiOhJrhY=;
- b=bSJzT+yYZ8FsbzoyT4KF9pzkvWVbRaz8AuRhpNYl0LjOImH9ErM5eZa+uopt4VIlXA
- y3csTjal43EnZju1VP2HjWUrn1UB2CzuAzIYy/S5lCh0habn/24Ysz15/k4IKA8kIUw0
- gu5qStuxVVcua95fa6Yigm5il3meROGbbdeeFyhEKcxe3f12QPRcS4AeqCNJLtbbDQIj
- LTeIjNkfjahA/UhYjXTzl+8hVycY9MobTDIDMCJyDBGA6ldB6e82HNLWs71M1+NlNosr
- Z9DqE2laHS4dHeVgQszwivryK4izR843MOVqXyycJDNzRT452U7ooPuYPBR69LIYinjX
- 6TYQ==
-X-Gm-Message-State: ABy/qLa1+x9hTi9xN5FXDgYU3U1Lsa1m78gydQFaE8UpVo21pv/7Xw6N
- 5OdzK1KA1XhBAIOK3SVhJWKCkpZjKr84LMMpRluu3GQzJk+w
-X-Google-Smtp-Source: APBJJlENO0gmwwV/xjXG9L0hUNI4Nqx2bZZgKXtPLaN9g0bZrxgPVdPJqzdkkI55GpfUxvyNlxZ/eZAQ3E0uJDawHHOphpogDL4E
+ for <wireguard@lists.zx2c4.com>; Wed, 9 Aug 2023 18:27:00 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 566576440B;
+ Wed,  9 Aug 2023 18:26:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96947C433CB;
+ Wed,  9 Aug 2023 18:26:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1691605617;
+ bh=u7lyAnuoCBK4HeX3OmFYKSkMTwgWVxImpISU79sgDi0=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=hiYUtcYHAi752w+xaly3rBSj6Ok2YO6hGXOHkyowsQS6j/4sG4FB8PHHgkQAorITA
+ s9X5gx/eHqQujzFKZa5r0eE1TXci4kQ2Nkt7rn0r1bJyJWTZW1drW08PPsGSyJgSOK
+ YSEThvqZOf0TEU7cTx4MjBykx+8712T/UuKeTwTJFmtmifaETBPxHt2c/yx8iAYmJU
+ /Wi8rX4QqBcEk4PgMrmxnTkJa7DwefA8dONYeTK+K+sHTEt3foUBrIKyJee6TAXAd/
+ RUGxcvkq9w13rAfHRpfaFimB9xB7X7H+ZuU+dav/GFf1Iyv9mGGus80OJuqdKEKWFR
+ yqr0rlwaEafsQ==
+From: Jakub Kicinski <kuba@kernel.org>
+To: davem@davemloft.net
+Cc: netdev@vger.kernel.org, edumazet@google.com, pabeni@redhat.com,
+ jiri@resnulli.us, johannes@sipsolutions.net,
+ Jakub Kicinski <kuba@kernel.org>, Jason@zx2c4.com, alex.aring@gmail.com,
+ stefan@datenfreihafen.org, miquel.raynal@bootlin.com,
+ krzysztof.kozlowski@linaro.org, jmaloy@redhat.com, ying.xue@windriver.com,
+ floridsleeves@gmail.com, leon@kernel.org, jacob.e.keller@intel.com,
+ wireguard@lists.zx2c4.com, linux-wpan@vger.kernel.org,
+ tipc-discussion@lists.sourceforge.net
+Subject: [PATCH net-next 05/10] genetlink: use attrs from struct genl_info
+Date: Wed,  9 Aug 2023 11:26:43 -0700
+Message-ID: <20230809182648.1816537-6-kuba@kernel.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20230809182648.1816537-1-kuba@kernel.org>
+References: <20230809182648.1816537-1-kuba@kernel.org>
 MIME-Version: 1.0
-X-Received: by 2002:a05:6870:768e:b0:1bb:51ab:a7c5 with SMTP id
- dx14-20020a056870768e00b001bb51aba7c5mr19524053oab.9.1691066521933; Thu, 03
- Aug 2023 05:42:01 -0700 (PDT)
-Date: Thu, 03 Aug 2023 05:42:01 -0700
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <00000000000054df9f0602041ba8@google.com>
-Subject: [syzbot] [wireguard?] KASAN: null-ptr-deref Write in
- wg_packet_send_staged_packets
-From: syzbot <syzbot+1ef6522091226898343f@syzkaller.appspotmail.com>
-To: Jason@zx2c4.com, davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
- linux-kernel@vger.kernel.org, netdev@vger.kernel.org, pabeni@redhat.com, 
- syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -60,138 +64,270 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
+Since dumps carry struct genl_info now, use the attrs pointer
+use the attr pointer from genl_info and remove the one in
+struct genl_dumpit_info.
 
-syzbot found the following issue on:
-
-HEAD commit:    d7b3af5a77e8 Add linux-next specific files for 20230728
-git tree:       linux-next
-console output: https://syzkaller.appspot.com/x/log.txt?x=10774fa1a80000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=62dd327c382e3fe
-dashboard link: https://syzkaller.appspot.com/bug?extid=1ef6522091226898343f
-compiler:       gcc (Debian 12.2.0-14) 12.2.0, GNU ld (GNU Binutils for Debian) 2.40
-
-Unfortunately, I don't have any reproducer for this issue yet.
-
-Downloadable assets:
-disk image: https://storage.googleapis.com/syzbot-assets/5efa5e68267f/disk-d7b3af5a.raw.xz
-vmlinux: https://storage.googleapis.com/syzbot-assets/b1f5d3e10263/vmlinux-d7b3af5a.xz
-kernel image: https://storage.googleapis.com/syzbot-assets/57cab469d186/bzImage-d7b3af5a.xz
-
-IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+1ef6522091226898343f@syzkaller.appspotmail.com
-
-==================================================================
-BUG: KASAN: null-ptr-deref in instrument_atomic_read_write include/linux/instrumented.h:96 [inline]
-BUG: KASAN: null-ptr-deref in atomic_fetch_add_relaxed include/linux/atomic/atomic-instrumented.h:252 [inline]
-BUG: KASAN: null-ptr-deref in __refcount_add include/linux/refcount.h:193 [inline]
-BUG: KASAN: null-ptr-deref in __refcount_inc include/linux/refcount.h:250 [inline]
-BUG: KASAN: null-ptr-deref in refcount_inc include/linux/refcount.h:267 [inline]
-BUG: KASAN: null-ptr-deref in kref_get include/linux/kref.h:45 [inline]
-BUG: KASAN: null-ptr-deref in wg_peer_get drivers/net/wireguard/peer.h:76 [inline]
-BUG: KASAN: null-ptr-deref in wg_packet_send_staged_packets+0xd10/0x1860 drivers/net/wireguard/send.c:385
-Write of size 4 at addr 0000000000000710 by task syz-executor.2/22201
-
-CPU: 1 PID: 22201 Comm: syz-executor.2 Not tainted 6.5.0-rc3-next-20230728-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/12/2023
-Call Trace:
- <IRQ>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0xd9/0x1b0 lib/dump_stack.c:106
- kasan_report+0xda/0x110 mm/kasan/report.c:588
- check_region_inline mm/kasan/generic.c:181 [inline]
- kasan_check_range+0xef/0x190 mm/kasan/generic.c:187
- instrument_atomic_read_write include/linux/instrumented.h:96 [inline]
- atomic_fetch_add_relaxed include/linux/atomic/atomic-instrumented.h:252 [inline]
- __refcount_add include/linux/refcount.h:193 [inline]
- __refcount_inc include/linux/refcount.h:250 [inline]
- refcount_inc include/linux/refcount.h:267 [inline]
- kref_get include/linux/kref.h:45 [inline]
- wg_peer_get drivers/net/wireguard/peer.h:76 [inline]
- wg_packet_send_staged_packets+0xd10/0x1860 drivers/net/wireguard/send.c:385
- wg_packet_send_keepalive+0x48/0x300 drivers/net/wireguard/send.c:239
- wg_expired_send_persistent_keepalive+0x5e/0x70 drivers/net/wireguard/timers.c:141
- call_timer_fn+0x1a0/0x580 kernel/time/timer.c:1700
- expire_timers kernel/time/timer.c:1751 [inline]
- __run_timers+0x764/0xb10 kernel/time/timer.c:2022
- run_timer_softirq+0x58/0xd0 kernel/time/timer.c:2035
- __do_softirq+0x218/0x965 kernel/softirq.c:553
- invoke_softirq kernel/softirq.c:427 [inline]
- __irq_exit_rcu kernel/softirq.c:632 [inline]
- irq_exit_rcu+0xb7/0x120 kernel/softirq.c:644
- sysvec_apic_timer_interrupt+0x93/0xc0 arch/x86/kernel/apic/apic.c:1109
- </IRQ>
- <TASK>
- asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:645
-RIP: 0010:write_comp_data+0x3c/0x90 kernel/kcov.c:236
-Code: 01 00 00 49 89 f8 65 48 8b 14 25 40 ba 03 00 a9 00 01 ff 00 74 0e 85 f6 74 59 8b 82 04 16 00 00 85 c0 74 4f 8b 82 e0 15 00 00 <83> f8 03 75 44 48 8b 82 e8 15 00 00 8b 92 e4 15 00 00 48 8b 38 48
-RSP: 0018:ffffc900038bfa80 EFLAGS: 00000246
-RAX: 0000000000000000 RBX: 1ffff92000717f51 RCX: ffffffff882281ad
-RDX: ffff888020b1bb80 RSI: 0000000000000000 RDI: 0000000000000005
-RBP: 0000000000000000 R08: 0000000000000005 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000000 R12: ffffc900038bfdb0
-R13: ffffc900038bfbb0 R14: ffffc900038bfb90 R15: ffffc900038bfaa8
- copy_msghdr_from_user+0xcd/0x160 net/socket.c:2430
- recvmsg_copy_msghdr net/socket.c:2681 [inline]
- ___sys_recvmsg+0xdc/0x1a0 net/socket.c:2753
- do_recvmmsg+0x2af/0x740 net/socket.c:2851
- __sys_recvmmsg net/socket.c:2930 [inline]
- __do_sys_recvmmsg net/socket.c:2953 [inline]
- __se_sys_recvmmsg net/socket.c:2946 [inline]
- __x64_sys_recvmmsg+0x235/0x290 net/socket.c:2946
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7fcbf367cb29
-Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 e1 20 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007fcbf43d00c8 EFLAGS: 00000246 ORIG_RAX: 000000000000012b
-RAX: ffffffffffffffda RBX: 00007fcbf379c050 RCX: 00007fcbf367cb29
-RDX: 0000000000010106 RSI: 00000000200000c0 RDI: 0000000000000003
-RBP: 00007fcbf36c847a R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000002 R11: 0000000000000246 R12: 0000000000000000
-R13: 000000000000000b R14: 00007fcbf379c050 R15: 00007ffdfffbc408
- </TASK>
-==================================================================
-----------------
-Code disassembly (best guess):
-   0:	01 00                	add    %eax,(%rax)
-   2:	00 49 89             	add    %cl,-0x77(%rcx)
-   5:	f8                   	clc
-   6:	65 48 8b 14 25 40 ba 	mov    %gs:0x3ba40,%rdx
-   d:	03 00
-   f:	a9 00 01 ff 00       	test   $0xff0100,%eax
-  14:	74 0e                	je     0x24
-  16:	85 f6                	test   %esi,%esi
-  18:	74 59                	je     0x73
-  1a:	8b 82 04 16 00 00    	mov    0x1604(%rdx),%eax
-  20:	85 c0                	test   %eax,%eax
-  22:	74 4f                	je     0x73
-  24:	8b 82 e0 15 00 00    	mov    0x15e0(%rdx),%eax
-* 2a:	83 f8 03             	cmp    $0x3,%eax <-- trapping instruction
-  2d:	75 44                	jne    0x73
-  2f:	48 8b 82 e8 15 00 00 	mov    0x15e8(%rdx),%rax
-  36:	8b 92 e4 15 00 00    	mov    0x15e4(%rdx),%edx
-  3c:	48 8b 38             	mov    (%rax),%rdi
-  3f:	48                   	rex.W
-
-
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 ---
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
+CC: Jason@zx2c4.com
+CC: jiri@resnulli.us
+CC: alex.aring@gmail.com
+CC: stefan@datenfreihafen.org
+CC: miquel.raynal@bootlin.com
+CC: krzysztof.kozlowski@linaro.org
+CC: jmaloy@redhat.com
+CC: ying.xue@windriver.com
+CC: floridsleeves@gmail.com
+CC: leon@kernel.org
+CC: jacob.e.keller@intel.com
+CC: wireguard@lists.zx2c4.com
+CC: linux-wpan@vger.kernel.org
+CC: tipc-discussion@lists.sourceforge.net
+---
+ drivers/net/wireguard/netlink.c | 2 +-
+ include/net/genetlink.h         | 1 -
+ net/devlink/health.c            | 2 +-
+ net/devlink/leftover.c          | 6 +++---
+ net/ethtool/netlink.c           | 3 ++-
+ net/ethtool/tunnels.c           | 2 +-
+ net/ieee802154/nl802154.c       | 4 ++--
+ net/netlink/genetlink.c         | 7 +++----
+ net/nfc/netlink.c               | 4 ++--
+ net/tipc/netlink_compat.c       | 2 +-
+ net/tipc/node.c                 | 4 ++--
+ net/tipc/socket.c               | 2 +-
+ net/tipc/udp_media.c            | 2 +-
+ 13 files changed, 20 insertions(+), 21 deletions(-)
 
-syzbot will keep track of this issue. See:
-https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
+diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlink.c
+index 6d1bd9f52d02..dc09b75a3248 100644
+--- a/drivers/net/wireguard/netlink.c
++++ b/drivers/net/wireguard/netlink.c
+@@ -200,7 +200,7 @@ static int wg_get_device_start(struct netlink_callback *cb)
+ {
+ 	struct wg_device *wg;
+ 
+-	wg = lookup_interface(genl_dumpit_info(cb)->attrs, cb->skb);
++	wg = lookup_interface(genl_info_dump(cb)->attrs, cb->skb);
+ 	if (IS_ERR(wg))
+ 		return PTR_ERR(wg);
+ 	DUMP_CTX(cb)->wg = wg;
+diff --git a/include/net/genetlink.h b/include/net/genetlink.h
+index 86c8eaaa3a43..a8a15b9c22c8 100644
+--- a/include/net/genetlink.h
++++ b/include/net/genetlink.h
+@@ -255,7 +255,6 @@ struct genl_split_ops {
+ struct genl_dumpit_info {
+ 	const struct genl_family *family;
+ 	struct genl_split_ops op;
+-	struct nlattr **attrs;
+ 	struct genl_info info;
+ };
+ 
+diff --git a/net/devlink/health.c b/net/devlink/health.c
+index 194340a8bb86..b8b3c09eea9e 100644
+--- a/net/devlink/health.c
++++ b/net/devlink/health.c
+@@ -1250,7 +1250,7 @@ devlink_health_reporter_get_from_cb(struct netlink_callback *cb)
+ {
+ 	const struct genl_dumpit_info *info = genl_dumpit_info(cb);
+ 	struct devlink_health_reporter *reporter;
+-	struct nlattr **attrs = info->attrs;
++	struct nlattr **attrs = info->info.attrs;
+ 	struct devlink *devlink;
+ 
+ 	devlink = devlink_get_from_attrs_lock(sock_net(cb->skb->sk), attrs);
+diff --git a/net/devlink/leftover.c b/net/devlink/leftover.c
+index 3bf42f5335ed..98ee57a490e9 100644
+--- a/net/devlink/leftover.c
++++ b/net/devlink/leftover.c
+@@ -5172,7 +5172,7 @@ static int devlink_nl_cmd_region_read_dumpit(struct sk_buff *skb,
+ 	struct devlink_nl_dump_state *state = devlink_dump_state(cb);
+ 	struct nlattr *chunks_attr, *region_attr, *snapshot_attr;
+ 	u64 ret_offset, start_offset, end_offset = U64_MAX;
+-	struct nlattr **attrs = info->attrs;
++	struct nlattr **attrs = info->info.attrs;
+ 	struct devlink_port *port = NULL;
+ 	devlink_chunk_fill_t *region_cb;
+ 	struct devlink_region *region;
+@@ -5195,8 +5195,8 @@ static int devlink_nl_cmd_region_read_dumpit(struct sk_buff *skb,
+ 		goto out_unlock;
+ 	}
+ 
+-	if (info->attrs[DEVLINK_ATTR_PORT_INDEX]) {
+-		index = nla_get_u32(info->attrs[DEVLINK_ATTR_PORT_INDEX]);
++	if (attrs[DEVLINK_ATTR_PORT_INDEX]) {
++		index = nla_get_u32(attrs[DEVLINK_ATTR_PORT_INDEX]);
+ 
+ 		port = devlink_port_get_by_index(devlink, index);
+ 		if (!port) {
+diff --git a/net/ethtool/netlink.c b/net/ethtool/netlink.c
+index ae344f1b0bbd..9fc7c41f4786 100644
+--- a/net/ethtool/netlink.c
++++ b/net/ethtool/netlink.c
+@@ -538,7 +538,8 @@ static int ethnl_default_start(struct netlink_callback *cb)
+ 		goto free_req_info;
+ 	}
+ 
+-	ret = ethnl_default_parse(req_info, info->attrs, sock_net(cb->skb->sk),
++	ret = ethnl_default_parse(req_info, info->info.attrs,
++				  sock_net(cb->skb->sk),
+ 				  ops, cb->extack, false);
+ 	if (req_info->dev) {
+ 		/* We ignore device specification in dump requests but as the
+diff --git a/net/ethtool/tunnels.c b/net/ethtool/tunnels.c
+index 05f752557b5e..b4ce47dd2aa6 100644
+--- a/net/ethtool/tunnels.c
++++ b/net/ethtool/tunnels.c
+@@ -219,7 +219,7 @@ int ethnl_tunnel_info_start(struct netlink_callback *cb)
+ {
+ 	const struct genl_dumpit_info *info = genl_dumpit_info(cb);
+ 	struct ethnl_tunnel_info_dump_ctx *ctx = (void *)cb->ctx;
+-	struct nlattr **tb = info->attrs;
++	struct nlattr **tb = info->info.attrs;
+ 	int ret;
+ 
+ 	BUILD_BUG_ON(sizeof(*ctx) > sizeof(cb->ctx));
+diff --git a/net/ieee802154/nl802154.c b/net/ieee802154/nl802154.c
+index d610c1886160..1a265a421308 100644
+--- a/net/ieee802154/nl802154.c
++++ b/net/ieee802154/nl802154.c
+@@ -262,7 +262,7 @@ nl802154_prepare_wpan_dev_dump(struct sk_buff *skb,
+ 
+ 	if (!cb->args[0]) {
+ 		*wpan_dev = __cfg802154_wpan_dev_from_attrs(sock_net(skb->sk),
+-							    info->attrs);
++							    info->info.attrs);
+ 		if (IS_ERR(*wpan_dev)) {
+ 			err = PTR_ERR(*wpan_dev);
+ 			goto out_unlock;
+@@ -570,7 +570,7 @@ static int nl802154_dump_wpan_phy_parse(struct sk_buff *skb,
+ 					struct nl802154_dump_wpan_phy_state *state)
+ {
+ 	const struct genl_dumpit_info *info = genl_dumpit_info(cb);
+-	struct nlattr **tb = info->attrs;
++	struct nlattr **tb = info->info.attrs;
+ 
+ 	if (tb[NL802154_ATTR_WPAN_PHY])
+ 		state->filter_wpan_phy = nla_get_u32(tb[NL802154_ATTR_WPAN_PHY]);
+diff --git a/net/netlink/genetlink.c b/net/netlink/genetlink.c
+index 82ad26970b9b..d47879d5a74c 100644
+--- a/net/netlink/genetlink.c
++++ b/net/netlink/genetlink.c
+@@ -846,7 +846,6 @@ static int genl_start(struct netlink_callback *cb)
+ 	}
+ 	info->family = ctx->family;
+ 	info->op = *ops;
+-	info->attrs = attrs;
+ 	info->info.snd_seq	= cb->nlh->nlmsg_seq;
+ 	info->info.snd_portid	= NETLINK_CB(cb->skb).portid;
+ 	info->info.nlhdr	= cb->nlh;
+@@ -864,7 +863,7 @@ static int genl_start(struct netlink_callback *cb)
+ 	}
+ 
+ 	if (rc) {
+-		genl_family_rcv_msg_attrs_free(info->attrs);
++		genl_family_rcv_msg_attrs_free(info->info.attrs);
+ 		genl_dumpit_info_free(info);
+ 		cb->data = NULL;
+ 	}
+@@ -898,7 +897,7 @@ static int genl_done(struct netlink_callback *cb)
+ 		rc = ops->done(cb);
+ 		genl_op_unlock(info->family);
+ 	}
+-	genl_family_rcv_msg_attrs_free(info->attrs);
++	genl_family_rcv_msg_attrs_free(info->info.attrs);
+ 	genl_dumpit_info_free(info);
+ 	return rc;
+ }
+@@ -1387,7 +1386,7 @@ static int ctrl_dumppolicy_start(struct netlink_callback *cb)
+ {
+ 	const struct genl_dumpit_info *info = genl_dumpit_info(cb);
+ 	struct ctrl_dump_policy_ctx *ctx = (void *)cb->ctx;
+-	struct nlattr **tb = info->attrs;
++	struct nlattr **tb = info->info.attrs;
+ 	const struct genl_family *rt;
+ 	struct genl_op_iter i;
+ 	int err;
+diff --git a/net/nfc/netlink.c b/net/nfc/netlink.c
+index e9ac6a6f934e..aa1dbf654c3e 100644
+--- a/net/nfc/netlink.c
++++ b/net/nfc/netlink.c
+@@ -110,10 +110,10 @@ static struct nfc_dev *__get_device_from_cb(struct netlink_callback *cb)
+ 	struct nfc_dev *dev;
+ 	u32 idx;
+ 
+-	if (!info->attrs[NFC_ATTR_DEVICE_INDEX])
++	if (!info->info.attrs[NFC_ATTR_DEVICE_INDEX])
+ 		return ERR_PTR(-EINVAL);
+ 
+-	idx = nla_get_u32(info->attrs[NFC_ATTR_DEVICE_INDEX]);
++	idx = nla_get_u32(info->info.attrs[NFC_ATTR_DEVICE_INDEX]);
+ 
+ 	dev = nfc_get_device(idx);
+ 	if (!dev)
+diff --git a/net/tipc/netlink_compat.c b/net/tipc/netlink_compat.c
+index 299cd6754f14..5bc076f2fa74 100644
+--- a/net/tipc/netlink_compat.c
++++ b/net/tipc/netlink_compat.c
+@@ -208,7 +208,7 @@ static int __tipc_nl_compat_dumpit(struct tipc_nl_compat_cmd_dump *cmd,
+ 		goto err_out;
+ 	}
+ 
+-	info.attrs = attrbuf;
++	info.info.attrs = attrbuf;
+ 
+ 	if (nlmsg_len(cb.nlh) > 0) {
+ 		err = nlmsg_parse_deprecated(cb.nlh, GENL_HDRLEN, attrbuf,
+diff --git a/net/tipc/node.c b/net/tipc/node.c
+index a9c5b6594889..3105abe97bb9 100644
+--- a/net/tipc/node.c
++++ b/net/tipc/node.c
+@@ -2662,7 +2662,7 @@ static int __tipc_nl_add_node_links(struct net *net, struct tipc_nl_msg *msg,
+ int tipc_nl_node_dump_link(struct sk_buff *skb, struct netlink_callback *cb)
+ {
+ 	struct net *net = sock_net(skb->sk);
+-	struct nlattr **attrs = genl_dumpit_info(cb)->attrs;
++	struct nlattr **attrs = genl_dumpit_info(cb)->info.attrs;
+ 	struct nlattr *link[TIPC_NLA_LINK_MAX + 1];
+ 	struct tipc_net *tn = net_generic(net, tipc_net_id);
+ 	struct tipc_node *node;
+@@ -2870,7 +2870,7 @@ int tipc_nl_node_dump_monitor_peer(struct sk_buff *skb,
+ 	int err;
+ 
+ 	if (!prev_node) {
+-		struct nlattr **attrs = genl_dumpit_info(cb)->attrs;
++		struct nlattr **attrs = genl_dumpit_info(cb)->info.attrs;
+ 		struct nlattr *mon[TIPC_NLA_MON_MAX + 1];
+ 
+ 		if (!attrs[TIPC_NLA_MON])
+diff --git a/net/tipc/socket.c b/net/tipc/socket.c
+index ef8e5139a873..bb1118d02f95 100644
+--- a/net/tipc/socket.c
++++ b/net/tipc/socket.c
+@@ -3791,7 +3791,7 @@ int tipc_nl_publ_dump(struct sk_buff *skb, struct netlink_callback *cb)
+ 	struct tipc_sock *tsk;
+ 
+ 	if (!tsk_portid) {
+-		struct nlattr **attrs = genl_dumpit_info(cb)->attrs;
++		struct nlattr **attrs = genl_dumpit_info(cb)->info.attrs;
+ 		struct nlattr *sock[TIPC_NLA_SOCK_MAX + 1];
+ 
+ 		if (!attrs[TIPC_NLA_SOCK])
+diff --git a/net/tipc/udp_media.c b/net/tipc/udp_media.c
+index 926232557e77..f892b0903dba 100644
+--- a/net/tipc/udp_media.c
++++ b/net/tipc/udp_media.c
+@@ -465,7 +465,7 @@ int tipc_udp_nl_dump_remoteip(struct sk_buff *skb, struct netlink_callback *cb)
+ 	int i;
+ 
+ 	if (!bid && !skip_cnt) {
+-		struct nlattr **attrs = genl_dumpit_info(cb)->attrs;
++		struct nlattr **attrs = genl_dumpit_info(cb)->info.attrs;
+ 		struct net *net = sock_net(skb->sk);
+ 		struct nlattr *battrs[TIPC_NLA_BEARER_MAX + 1];
+ 		char *bname;
+-- 
+2.41.0
 
-If the bug is already fixed, let syzbot know by replying with:
-#syz fix: exact-commit-title
-
-If you want to change bug's subsystems, reply with:
-#syz set subsystems: new-subsystem
-(See the list of subsystem names on the web dashboard)
-
-If the bug is a duplicate of another bug, reply with:
-#syz dup: exact-subject-of-another-report
-
-If you want to undo deduplication, reply with:
-#syz undup
