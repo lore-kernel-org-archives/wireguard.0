@@ -4,50 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11FB5C001B0
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  9 Aug 2023 21:18:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7B2FC001DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 10 Aug 2023 03:51:44 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0b114ef1;
-	Wed, 9 Aug 2023 21:18:17 +0000 (UTC)
-Received: from sipsolutions.net (s3.sipsolutions.net [2a01:4f8:242:246e::2])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id df345732
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 02204f96;
+	Thu, 10 Aug 2023 03:51:42 +0000 (UTC)
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com
+ [2607:f8b0:4864:20::42d])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 451d9a93
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 9 Aug 2023 21:05:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=sipsolutions.net; s=mail; h=MIME-Version:Content-Transfer-Encoding:
- Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
- :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
- Resent-Cc:Resent-Message-ID; bh=DxxrfxJdW+x6vHwwv13H/HcSziuw1ToHD20ksvqM8rE=; 
- t=1691615111; x=1692824711; b=XFzJ434gUl6zBCvg7HFUduqwJk83/Hpvz7FIQs7hR/vmUGk
- K0YgaSr1AGD0SernuIqtPST/OUqzoMkJ8imwJVnEdRppgrK5jMb1FrVzdk9vAWJ8O3H9OK476PI49
- GpW+TRFUVLMxlA7gZX9p3geavwDs42tA1S12ndVB3H0wjGQOYnl16WvBHdIxGxame3FtrsbcPfGkx
- 8JyLt77puxSG+MYsMWtIMDX8vRPYhWR67huld81bVroH8r9ic+B62e7Zh0F7lbUf9mq438AW85A41
- HPIZch8Sv/603jBKuskLPo5HuIcgeiE9JcBILnXTIIJuA2ejxPYDVvuwD3CTqNZA==;
-Received: by sipsolutions.net with esmtpsa
- (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
- (Exim 4.96) (envelope-from <johannes@sipsolutions.net>)
- id 1qTqMM-00F8EE-2i; Wed, 09 Aug 2023 23:04:51 +0200
-Message-ID: <4e0b764736eafde134e52e7609c6ad351a5282ad.camel@sipsolutions.net>
-Subject: Re: [PATCH net-next 05/10] genetlink: use attrs from struct genl_info
-From: Johannes Berg <johannes@sipsolutions.net>
-To: Jakub Kicinski <kuba@kernel.org>, davem@davemloft.net
-Cc: netdev@vger.kernel.org, edumazet@google.com, pabeni@redhat.com, 
- jiri@resnulli.us, Jason@zx2c4.com, alex.aring@gmail.com,
- stefan@datenfreihafen.org,  miquel.raynal@bootlin.com,
- krzysztof.kozlowski@linaro.org, jmaloy@redhat.com,  ying.xue@windriver.com,
- floridsleeves@gmail.com, leon@kernel.org,  jacob.e.keller@intel.com,
- wireguard@lists.zx2c4.com, linux-wpan@vger.kernel.org, 
- tipc-discussion@lists.sourceforge.net
-Date: Wed, 09 Aug 2023 23:04:47 +0200
-In-Reply-To: <20230809182648.1816537-6-kuba@kernel.org>
-References: <20230809182648.1816537-1-kuba@kernel.org>
- <20230809182648.1816537-6-kuba@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.48.4 (3.48.4-1.fc38) 
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 10 Aug 2023 03:51:40 +0000 (UTC)
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-686efa1804eso343685b3a.3
+ for <wireguard@lists.zx2c4.com>; Wed, 09 Aug 2023 20:51:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20221208; t=1691639499; x=1692244299;
+ h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Bs6Ef6YrdVWVUnL/f6Y1+3WIGcGsCnnft8o7I+1bo8I=;
+ b=Pv/3GwyC4R2yug9R8mfhJ7ss5g1pCGESy0co4/XV4Tbu6ZAOm0gNa/C+RjtzH6Cdqs
+ NIrTqLkzUEMxOOJ84gKgQIKSzjmE9h151L9xhqUe2ohF7bVD4K2Tm5KZti5MdBeiAXKY
+ wtjEfd4IZHdDsEMY8nMBImgJ1weUe9ltyLBpZ6YYt6GO7AsYabwMYjsybAQ+g6i+Xd80
+ gSrsKbWatSNRw0XM5oe/17MCdQFEagTo/1zXJaNmF/IEIXpfDNIoxlgxDrnlEucY0wdI
+ honuL9/vAGBO0BtbSHYjVpC6+0V5sAAe/j4MDYOYNgBAb23SHGU3hhgYQGdGDxmtWpC+
+ Kd2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20221208; t=1691639499; x=1692244299;
+ h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Bs6Ef6YrdVWVUnL/f6Y1+3WIGcGsCnnft8o7I+1bo8I=;
+ b=IxzDBs5DHZ4FyP4zN+HaedhU0gRgHTAEPyo0asuxs0UaE44gBBJXNJXvHj4Ri7FZC6
+ SOibraTflh4ln4bb547/+eQ5aH/Hr/xi824uJZNI4C/3gHd8GEBNR0I1EzzAY6dOvc+m
+ hk0CfGITnpt4fUKvwhqDRqLx0EBGf1/o+Y4KGpQw9/8lRRTS8Wn4beW+SrkWQ9PeHNgI
+ mW2SQgfhdlnBdVtPrBXZ/JXEI1drcEIJfrAd6g3ozxFQ6xwHF960aTbfAX8W6FeGf8KS
+ J80FWG4b+dJJk+n/FO9m3mBY3mHfi2gkHkx/hStzCdGVEItKNZr7faLNSGLIXcl2OJV2
+ yigw==
+X-Gm-Message-State: AOJu0Yw7rKTjohdfa8NjIUspyCxIALapxCVBTkiX27k+5EranHUlhDnS
+ 9moBDD9PnQc6rJuekth+e7HPB0Irb9oWVmVD
+X-Google-Smtp-Source: AGHT+IG3L8WieweZZ1bML8G2/5QHI7N1LZEy5QozfZwV9D4x8gUxhvrvoMrQYcv1wBgzRpCDfDWkLg==
+X-Received: by 2002:a05:6a21:9993:b0:138:3302:1471 with SMTP id
+ ve19-20020a056a21999300b0013833021471mr1526105pzb.6.1691639499013; 
+ Wed, 09 Aug 2023 20:51:39 -0700 (PDT)
+Received: from Laptop-X1 ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ k4-20020a170902ba8400b001bb4f9d86ebsm381216pls.23.2023.08.09.20.51.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 09 Aug 2023 20:51:38 -0700 (PDT)
+Date: Thu, 10 Aug 2023 11:51:35 +0800
+From: Hangbin Liu <liuhangbin@gmail.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: wireguard@lists.zx2c4.com
+Subject: What's the wireguard-tools
+Message-ID: <ZNRex9yqvEekpU/h@Laptop-X1>
 MIME-Version: 1.0
-X-malware-bazaar: not-scanned
-X-Mailman-Approved-At: Wed, 09 Aug 2023 21:18:16 +0000
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -62,14 +73,17 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, 2023-08-09 at 11:26 -0700, Jakub Kicinski wrote:
-> Since dumps carry struct genl_info now, use the attrs pointer
-> use the attr pointer from genl_info and remove the one in
-> struct genl_dumpit_info.
+Hi Jason,
 
-Some parts of that commit message got duplicated.
+I'm maintaining the RHEL wireguard-tools rpm. Recently, There is a request to
+convert the license tag in the spec file to SPDX format[1]. The current License
+tag in wireguard-tools spec file is GPLv2, which is the same with the COPYING
+in upstream. But when I searched the src files, I found there are kinds of
+license identifier. e.g. GPL-2.0, LGPL-2.1+, MIT, GPL-2.0 OR MIT, etc.
 
-Otherwise looks fine,
-Reviewed-by: Johannes Berg <johannes@sipsolutions.net>
+Do you know which one I should use at the end? Should we unify the src files?
 
-johannes
+[1] https://fedoraproject.org/wiki/Changes/SPDX_Licenses_Phase_1
+
+Thanks
+Hangbin
