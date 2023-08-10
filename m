@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE4A2EE4993
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 23 Aug 2023 16:07:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9214EEE49A3
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 23 Aug 2023 16:07:15 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c2f824be;
-	Wed, 23 Aug 2023 16:07:09 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 05b384b6;
+	Wed, 23 Aug 2023 16:07:14 +0000 (UTC)
 Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com
  [2a00:1450:4864:20::332])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f7dddd85
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 170b7a8e
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 24 Jul 2023 05:29:33 +0000 (UTC)
+ Thu, 10 Aug 2023 14:50:32 +0000 (UTC)
 Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-3fbc54cab6fso28871765e9.0
- for <wireguard@lists.zx2c4.com>; Sun, 23 Jul 2023 22:29:33 -0700 (PDT)
+ 5b1f17b1804b1-3fe45481edfso9686025e9.1
+ for <wireguard@lists.zx2c4.com>; Thu, 10 Aug 2023 07:50:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20221208; t=1690176572; x=1690781372;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:to:references
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=gmail.com; s=20221208; t=1691679032; x=1692283832;
+ h=content-transfer-encoding:in-reply-to:autocrypt:to:content-language
+ :references:subject:from:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
  bh=nb2n0uv595eFjLrEgpvsrMrshNYI9uMInfb2ta5izuM=;
- b=SrPzXEu7MvZ506WfK/lcPTdv9DtW7njetfW6NRUFbZ3WaQ0SIaYX0kCTjNF3CVQCO/
- HYinltnt0+HVCh3DMTNLNRHipBq4Io12Bllktdq3HQqpylYyPOcKe+HSfoyYvCSoH7cx
- TYF6vAF+lS7HqtW4Y1Fq01uve6DZyTc0PBwBp2RzmPrrQbZLIR98ODoGEFYikxK/cKUu
- +kEdAbQDyIf1Gl5QdMDrPJ1WesGD2+ZPx6sPbysGGXaXkomr3wT6lOcB+p4iTsPmyNxQ
- WaMEZqdpkUFn+TVPyJXaMP6NaRm5aBiCoJVcPQmiPN6pn13a0aHoHtsEqwnsR5pQNty5
- t7Nw==
+ b=Hrxhg8MkKaRh9ic1Tqtvf98KQ4pwuU9EXocqQbWd32vVs5yToh922gRjmOkcz+gn7K
+ 1YPgFlmbhd4+ZO9THVwNWBuzIuNdIVqHBV9MMqTbkW/LS6CAFR/gJwDt58G2Fr16M0LB
+ F1O/ZhPyjsICTR0xpYqZdMfP6+9PRotQ7mIpBHOPBWXJ6daygUbtanSTpB4rCWJuhODu
+ urhqp1/C2lNlFpLVNFgv75/8p+Zz1PtSNehc82wgcxQK4C2NQfhu/Q5C6eLp/2ZiHq6j
+ DeHOAkvm+qokIDLNh4GSuyOVMZP/8vWH+RQf69zkpMyH/ZtKydfzCnL9cVtf7DyaZmKY
+ a5Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20221208; t=1690176572; x=1690781372;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:to:references
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20221208; t=1691679032; x=1692283832;
+ h=content-transfer-encoding:in-reply-to:autocrypt:to:content-language
+ :references:subject:from:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
  bh=nb2n0uv595eFjLrEgpvsrMrshNYI9uMInfb2ta5izuM=;
- b=MX474bYFSXdaGM6h1rSPYU1zCh4FlELj8i6otmLIRDu1yAW+Ek0xkkjiaRHP4Q58dX
- t2tkhtvCQli3zBcx77VQz2jUNJrjaCYOvmmMmlR9ajgbg/KjPdDfSAgxXMqWMu/1oxpj
- 3HhsnCr+XTJqcKxt7hwO2N4+xBFURYe2sHlXMjMq6HWF4GIvSpgYXZxfb0jiXyvdCtuJ
- XJM31AspQQjVnoDl+t/KiE69UhJtMAyMM95vD+77H+WjEAJ3BBrgrwOIT615HqXximwq
- oy6GfTmS6qSUjyvgViSwBT4K03Nd5nTCtg1K5ru2zR3wS/ltmMPjUZnL7wJ/QNSPbpnL
- XgFQ==
-X-Gm-Message-State: ABy/qLZBPVlG2VQbtJxoh2E/dp7jxkzJgKuwMNpPzP6ZAg/G2ZxsyF+Z
- KRmj6gWnijZuDERMJo2EvHajjTobL88=
-X-Google-Smtp-Source: APBJJlGYzKaSo+RJ6lLSl6cRZ3KFw4lI1C2ynjxTm4fMmAVIe9IxkMf3nfYYpv29qeJb6dALz63z1A==
-X-Received: by 2002:a05:600c:257:b0:3fa:984d:7e9f with SMTP id
- 23-20020a05600c025700b003fa984d7e9fmr5048440wmj.6.1690176572299; 
- Sun, 23 Jul 2023 22:29:32 -0700 (PDT)
-Received: from [192.168.178.23] (dynamic-adsl-94-34-96-117.clienti.tiscali.it.
- [94.34.96.117]) by smtp.gmail.com with ESMTPSA id
- h18-20020a5d5492000000b003142e438e8csm11576823wrv.26.2023.07.23.22.29.31
+ b=bYVx5ob7GorKpdsUTTOL+2153bXVIdwR14Uza9K3rVZhQnmxczMoil2emQTpSBr4CM
+ sNsKrgqV2dEF6IGAFV9tATXYa0D6WRBJgPVbtpS/Nv6dD/jHoCvseZemsFb07GefM8pb
+ 5S+QEdqHyZfC0P88S2NW2fnc8XiRzQb+cKnwTddFC2pfQvkAu2tdWgFJizUzGDmZv2gH
+ RJBATNdlxCWcfXtAtBN2L2cKHtI5PqiRe8H4Ys7PfJ7SKe48M3z7itRU8m90P4B8ymrC
+ vRUdmKtMukRwxHNq1gg/amxImp3i0VQIsKOeNjVfN9BXcAJRdOldC2bsqn2uGbxoSVY4
+ Iuqg==
+X-Gm-Message-State: AOJu0Yxj18R8hA6JvGDcYJQ6y07rW/+upUNZMzXKKAhkxAZ+1uDBqCD2
+ YmGwohleZF8t8TC3oj38UiSgqPL44SI=
+X-Google-Smtp-Source: AGHT+IFkPq2HRtbYQWf4aFpaoikoIN/xmnlik0o7uVUC0jh67Or6nR+qiV/jmX/oEReVstwj6fJqdQ==
+X-Received: by 2002:adf:db42:0:b0:314:ca7:f30b with SMTP id
+ f2-20020adfdb42000000b003140ca7f30bmr2159197wrj.54.1691679031884; 
+ Thu, 10 Aug 2023 07:50:31 -0700 (PDT)
+Received: from [192.168.178.23] (94-33-27-97.static.clienti.tiscali.it.
+ [94.33.27.97]) by smtp.gmail.com with ESMTPSA id
+ n11-20020a5d6b8b000000b0031417b0d338sm2384751wrx.87.2023.08.10.07.50.31
  for <wireguard@lists.zx2c4.com>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 23 Jul 2023 22:29:31 -0700 (PDT)
-Message-ID: <7cde2e10-b27d-0502-1b97-bacdbd9dd4a4@gmail.com>
-Date: Mon, 24 Jul 2023 07:29:31 +0200
+ Thu, 10 Aug 2023 07:50:31 -0700 (PDT)
+Message-ID: <83adf492-e8b7-40e2-95c8-76a72cff69d4@gmail.com>
+Date: Thu, 10 Aug 2023 16:50:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: wg-quick down not reverting DNS parameters on MacOS
-Content-Language: en-US
-References: <7522f2c6-5782-25f5-6f25-75d05d50b868@gmail.com>
-To: wireguard@lists.zx2c4.com
 From: Matteo Franzil <matteofranzil@gmail.com>
+Subject: wg-quick down not reverting DNS parameters on MacOS
+References: <7cde2e10-b27d-0502-1b97-bacdbd9dd4a4@gmail.com>
+Content-Language: en-US
+To: wireguard@lists.zx2c4.com
 Autocrypt: addr=matteofranzil@gmail.com; keydata=
  xjMEY8EjPRYJKwYBBAHaRw8BAQdAhzoO6y/vPyGYJPS0NxQCNULJz0okRfqlQMlwHTc49HbN
  KE1hdHRlbyBGcmFuemlsIDxtYXR0ZW9mcmFuemlsQGdtYWlsLmNvbT7CmQQTFgoAQRYhBAOT
@@ -73,8 +73,7 @@ Autocrypt: addr=matteofranzil@gmail.com; keydata=
  jrIGsd9oot3F++7X6lOGBQJjwSM9AhsMBQkDwmcAAAoJEN3F++7X6lOGyAoBAPbsUUokpTdP
  x3WyIwxLK5yxc2eRMZuVOaUBoWR+/IfYAP4596bjzGp0vW7XjQA6gzI4cgwhK3yjgsQrfYib
  BP7CCQ==
-In-Reply-To: <7522f2c6-5782-25f5-6f25-75d05d50b868@gmail.com>
-X-Forwarded-Message-Id: <7522f2c6-5782-25f5-6f25-75d05d50b868@gmail.com>
+In-Reply-To: <7cde2e10-b27d-0502-1b97-bacdbd9dd4a4@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Mailman-Approved-At: Wed, 23 Aug 2023 16:07:07 +0000
