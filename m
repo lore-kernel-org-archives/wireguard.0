@@ -4,101 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56248C04A6A
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Aug 2023 13:12:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B223C27C53
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Aug 2023 22:19:09 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b71329cf;
-	Wed, 16 Aug 2023 13:12:25 +0000 (UTC)
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
- [64.147.123.21])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d8946849
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cee21824;
+	Wed, 16 Aug 2023 22:19:07 +0000 (UTC)
+Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net
+ [217.70.183.199])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 966fb045
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 Aug 2023 13:12:22 +0000 (UTC)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
- by mailout.west.internal (Postfix) with ESMTP id 1C83A3200941;
- Wed, 16 Aug 2023 09:12:15 -0400 (EDT)
-Received: from imap51 ([10.202.2.101])
- by compute6.internal (MEProxy); Wed, 16 Aug 2023 09:12:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
- :cc:content-type:content-type:date:date:from:from:in-reply-to
- :in-reply-to:message-id:mime-version:references:reply-to:sender
- :subject:subject:to:to; s=fm3; t=1692191534; x=1692277934; bh=ZR
- T106v0hiqgMDmrCmS6eySFqP6+naQFmpKPfl1LC4A=; b=vnOGsLEBWf6iRqdcGe
- aKN5BWG0fJGAVU6JVIXw2r5trEbi4U8HGAkyD0+6xPYUebCuLdj/BgvHcLXQ3VWz
- DM86GEBHF5q/32OBTSQ1jAmNdTLIKRxKeTpDjT17bQgiqwms96qRRheqtFVNxibZ
- hwb68kNFhtdjc0mMi067Ltuik7Sz8Ub0DzdHrBDczZvPLkmNw72p43WeSwcA6Uhd
- jlAAKWZ6Al07ksUMdho4dSrDxHjxQNY7apoz3xCtR88uxRhkG9xkFDGscnnRTo5l
- WiGl5SfVo9TNOcr+c7G2H0chHBT3ePUGo7ZEdPXRmkEqRq9XFAWEkvI8BxCAowqC
- qylw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:sender:subject
- :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm1; t=1692191534; x=1692277934; bh=ZRT106v0hiqgM
- DmrCmS6eySFqP6+naQFmpKPfl1LC4A=; b=J253saPLCyaYpeIDlShp7YvjJgenV
- Ht1wUlTeHrAp+sMBGixfNZyUOs+v29RrlwC/Ff32lR6rR8Ptf/e2eCzpS7zg4WOK
- JYImEvkjD5EcWi13FT1qPlKSW+lxLDrtzkAe+SPR9zQ5OXHVI5o5ZavoAdaJjrvF
- mYs/WGtCNnfkuosVJ63bXDJlTIEuUUTya6gHAHWER0NlUHQA4H1Y/6SUWW5k7VGX
- CgelTXP6IMV844RF/eUDrOP+e8y9sL3KhWck/HUsbwg8VPAFec37UpcjQLZf4mWh
- uldSfe9YCl3AXDW8zsfBvdpTuUvrJa25ROBLezhFUT/OIhB48LEBQcZnA==
-X-ME-Sender: <xms:K8vcZHO8GGtKsWaqQcWz1qpw7lABKKHBkhe_YqZz2EzFfnfT05ISiA>
- <xme:K8vcZB-r0Y6dBNf9v4cUL_7yF6uQAKk9sv7-_V3dOoxP_cvdsp3JLUt2S3lonyhXT
- Ls1v4Sr_SabhXlhEhc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedruddtledgieduucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehr
- nhguuceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrth
- htvghrnhepffehueegteeihfegtefhjefgtdeugfegjeelheejueethfefgeeghfektdek
- teffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprg
- hrnhgusegrrhhnuggsrdguvg
-X-ME-Proxy: <xmx:K8vcZGQO-MgdXr5jJldoDAQTHH6Ovgm0uSHlTvzKqKADkMryTvW66g>
- <xmx:K8vcZLtkn6_JnzcwFpD1vZfMnl9JtfeWnWAVnzNARqjEiksaIcRtOg>
- <xmx:K8vcZPepBT5Oy2rf3fQLmMFTs8XTCaO1eXozKuHr43Q9B1oPLmqWGA>
- <xmx:LsvcZBc7lnjA2S24fyGf-1Kbi-eqlGDcVFzJeOS9w2dwF53-Geo3HA>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id C1305B60089; Wed, 16 Aug 2023 09:12:11 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-624-g7714e4406d-fm-20230801.001-g7714e440
-Mime-Version: 1.0
-Message-Id: <0681968f-743d-4b55-bb1e-dbd665ea8783@app.fastmail.com>
-In-Reply-To: <20230816055010.31534-1-rdunlap@infradead.org>
-References: <20230816055010.31534-1-rdunlap@infradead.org>
-Date: Wed, 16 Aug 2023 15:11:35 +0200
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Randy Dunlap" <rdunlap@infradead.org>, linux-kernel@vger.kernel.org
-Cc: "Russell King" <linux@armlinux.org.uk>,
- linux-arm-kernel@lists.infradead.org,
- "Jason A . Donenfeld" <Jason@zx2c4.com>, wireguard@lists.zx2c4.com,
- Linux-Arch <linux-arch@vger.kernel.org>,
- linux-snps-arc@lists.infradead.org, "Vineet Gupta" <vgupta@kernel.org>,
- "Brian Cain" <bcain@quicinc.com>, linux-hexagon@vger.kernel.org,
- "Greg Ungerer" <gerg@linux-m68k.org>,
- "Geert Uytterhoeven" <geert@linux-m68k.org>,
- linux-m68k@lists.linux-m68k.org, "Michal Simek" <monstr@monstr.eu>,
- "Thomas Bogendoerfer" <tsbogend@alpha.franken.de>,
- "Dinh Nguyen" <dinguyen@kernel.org>, "Jonas Bonn" <jonas@southpole.se>,
- "Stefan Kristiansson" <stefan.kristiansson@saunalahti.fi>,
- "Stafford Horne" <shorne@gmail.com>,
- "linux-openrisc@vger.kernel.org" <linux-openrisc@vger.kernel.org>,
- linux-mips@vger.kernel.org, "Michael Ellerman" <mpe@ellerman.id.au>,
- "Nicholas Piggin" <npiggin@gmail.com>,
- "Christophe Leroy" <christophe.leroy@csgroup.eu>,
- linuxppc-dev@lists.ozlabs.org, linux-riscv@lists.infradead.org,
- "Paul Walmsley" <paul.walmsley@sifive.com>,
- "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert Ou" <aou@eecs.berkeley.edu>,
- "Yoshinori Sato" <ysato@users.sourceforge.jp>,
- "Rich Felker" <dalias@libc.org>,
- "John Paul Adrian Glaubitz" <glaubitz@physik.fu-berlin.de>,
- linux-sh@vger.kernel.org, "Max Filippov" <jcmvbkbc@gmail.com>,
- "Josh Triplett" <josh@joshtriplett.org>,
- "Masahiro Yamada" <masahiroy@kernel.org>, linux-kbuild@vger.kernel.org,
- "Andrew Morton" <akpm@linux-foundation.org>
-Subject: Re: [PATCH] treewide: drop CONFIG_EMBEDDED
-Content-Type: text/plain
+ Thu, 10 Aug 2023 06:17:51 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id B87F5FF806;
+ Thu, 10 Aug 2023 06:17:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+ t=1691648271;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tCIldS7LgLkPH6J7rOrlaq8d6ZCqBahmrHWXhqMCqrQ=;
+ b=Jo6v7fsauFxEg0pgDs7l0RyOUOqAr1TIKTgcHJZmAD8dsHY0cAKbYXbcXKj5t/V+1feTy1
+ ZHeivWFlH8RBiM/9sCPF+vzuQBeIBuL40kfYZdiHUuVAS98ocnGZzFY+7vPD/huMvuql6U
+ A3iXMVmAB6X7Phi7XdbhXwH4SqdMCttpIDAqxHzYUFzNeW6dW/NsWSLiiw+BH9qlQQHwAe
+ 8mnrvYJYkyn3ZPvBW6YLfMpRLtfPLyxy98cMQRZSXt5R7XsUiOoixoP7P0xFLWp2jWNgRA
+ 3Jtko+zPAP4vjS4Cttq4iBDB1Ai1NmGjdMNd6ynYX0/U1EdvDtcV9YOWzs9LNg==
+Date: Thu, 10 Aug 2023 08:17:43 +0200
+From: Miquel Raynal <miquel.raynal@bootlin.com>
+To: Jakub Kicinski <kuba@kernel.org>
+Cc: davem@davemloft.net, netdev@vger.kernel.org, edumazet@google.com,
+ pabeni@redhat.com, jiri@resnulli.us, johannes@sipsolutions.net,
+ Jason@zx2c4.com, alex.aring@gmail.com, stefan@datenfreihafen.org,
+ krzysztof.kozlowski@linaro.org, jmaloy@redhat.com, ying.xue@windriver.com,
+ floridsleeves@gmail.com, leon@kernel.org, jacob.e.keller@intel.com,
+ wireguard@lists.zx2c4.com, linux-wpan@vger.kernel.org,
+ tipc-discussion@lists.sourceforge.net
+Subject: Re: [PATCH net-next 05/10] genetlink: use attrs from struct genl_info
+Message-ID: <20230810081743.567abd78@xps-13>
+In-Reply-To: <20230809182648.1816537-6-kuba@kernel.org>
+References: <20230809182648.1816537-1-kuba@kernel.org>
+ <20230809182648.1816537-6-kuba@kernel.org>
+Organization: Bootlin
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-GND-Sasl: miquel.raynal@bootlin.com
+X-Mailman-Approved-At: Wed, 16 Aug 2023 22:19:06 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -113,14 +65,24 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, Aug 16, 2023, at 07:50, Randy Dunlap wrote:
-> There is only one Kconfig user of CONFIG_EMBEDDED and it can be
-> switched to EXPERT or "if !ARCH_MULTIPLATFORM" (suggested by Arnd).
->
-> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-> Cc: Russell King <linux@armlinux.org.uk>
-> Cc: linux-arm-kernel@lists.infradead.org
-> Cc: Arnd Bergmann <arnd@arndb.de>
-> Cc: Jason A. Donenfeld <Jason@zx2c4.com>
+Hi Jakub,
 
-Acked-by: Arnd Bergmann <arnd@arndb.de>
+kuba@kernel.org wrote on Wed,  9 Aug 2023 11:26:43 -0700:
+
+> Since dumps carry struct genl_info now, use the attrs pointer
+> use the attr pointer from genl_info and remove the one in
+
+"use the attr pointer" is present twice
+
+> struct genl_dumpit_info.
+>=20
+> Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+
+>  net/ieee802154/nl802154.c       | 4 ++--
+
+Otherwise for wpan:
+
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+
+Thanks,
+Miqu=C3=A8l
