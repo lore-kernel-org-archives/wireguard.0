@@ -4,78 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9214EEE49A3
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 23 Aug 2023 16:07:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E90AEE49A0
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 23 Aug 2023 16:07:17 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 05b384b6;
-	Wed, 23 Aug 2023 16:07:14 +0000 (UTC)
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com
- [2a00:1450:4864:20::332])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 170b7a8e
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4ea41955;
+	Wed, 23 Aug 2023 16:07:16 +0000 (UTC)
+Received: from relay.yourmailgateway.de (relay.yourmailgateway.de
+ [185.244.194.184])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id dd7ee820
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 10 Aug 2023 14:50:32 +0000 (UTC)
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-3fe45481edfso9686025e9.1
- for <wireguard@lists.zx2c4.com>; Thu, 10 Aug 2023 07:50:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20221208; t=1691679032; x=1692283832;
- h=content-transfer-encoding:in-reply-to:autocrypt:to:content-language
- :references:subject:from:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=nb2n0uv595eFjLrEgpvsrMrshNYI9uMInfb2ta5izuM=;
- b=Hrxhg8MkKaRh9ic1Tqtvf98KQ4pwuU9EXocqQbWd32vVs5yToh922gRjmOkcz+gn7K
- 1YPgFlmbhd4+ZO9THVwNWBuzIuNdIVqHBV9MMqTbkW/LS6CAFR/gJwDt58G2Fr16M0LB
- F1O/ZhPyjsICTR0xpYqZdMfP6+9PRotQ7mIpBHOPBWXJ6daygUbtanSTpB4rCWJuhODu
- urhqp1/C2lNlFpLVNFgv75/8p+Zz1PtSNehc82wgcxQK4C2NQfhu/Q5C6eLp/2ZiHq6j
- DeHOAkvm+qokIDLNh4GSuyOVMZP/8vWH+RQf69zkpMyH/ZtKydfzCnL9cVtf7DyaZmKY
- a5Xg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20221208; t=1691679032; x=1692283832;
- h=content-transfer-encoding:in-reply-to:autocrypt:to:content-language
- :references:subject:from:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nb2n0uv595eFjLrEgpvsrMrshNYI9uMInfb2ta5izuM=;
- b=bYVx5ob7GorKpdsUTTOL+2153bXVIdwR14Uza9K3rVZhQnmxczMoil2emQTpSBr4CM
- sNsKrgqV2dEF6IGAFV9tATXYa0D6WRBJgPVbtpS/Nv6dD/jHoCvseZemsFb07GefM8pb
- 5S+QEdqHyZfC0P88S2NW2fnc8XiRzQb+cKnwTddFC2pfQvkAu2tdWgFJizUzGDmZv2gH
- RJBATNdlxCWcfXtAtBN2L2cKHtI5PqiRe8H4Ys7PfJ7SKe48M3z7itRU8m90P4B8ymrC
- vRUdmKtMukRwxHNq1gg/amxImp3i0VQIsKOeNjVfN9BXcAJRdOldC2bsqn2uGbxoSVY4
- Iuqg==
-X-Gm-Message-State: AOJu0Yxj18R8hA6JvGDcYJQ6y07rW/+upUNZMzXKKAhkxAZ+1uDBqCD2
- YmGwohleZF8t8TC3oj38UiSgqPL44SI=
-X-Google-Smtp-Source: AGHT+IFkPq2HRtbYQWf4aFpaoikoIN/xmnlik0o7uVUC0jh67Or6nR+qiV/jmX/oEReVstwj6fJqdQ==
-X-Received: by 2002:adf:db42:0:b0:314:ca7:f30b with SMTP id
- f2-20020adfdb42000000b003140ca7f30bmr2159197wrj.54.1691679031884; 
- Thu, 10 Aug 2023 07:50:31 -0700 (PDT)
-Received: from [192.168.178.23] (94-33-27-97.static.clienti.tiscali.it.
- [94.33.27.97]) by smtp.gmail.com with ESMTPSA id
- n11-20020a5d6b8b000000b0031417b0d338sm2384751wrx.87.2023.08.10.07.50.31
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 10 Aug 2023 07:50:31 -0700 (PDT)
-Message-ID: <83adf492-e8b7-40e2-95c8-76a72cff69d4@gmail.com>
-Date: Thu, 10 Aug 2023 16:50:30 +0200
+ Fri, 11 Aug 2023 11:37:12 +0000 (UTC)
+Received: from relay01-mors.netcup.net (localhost [127.0.0.1])
+ by relay01-mors.netcup.net (Postfix) with ESMTPS id 4RMhbW5v5Dz8x1B
+ for <wireguard@lists.zx2c4.com>; Fri, 11 Aug 2023 13:37:11 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rtlblus.de; s=key2;
+ t=1691753831; bh=ekz6hRCnM5cSdSI3TvwDqSprcWfPTA45qhSZBy+pcIA=;
+ h=Date:From:To:Subject:From;
+ b=lqmir6yyweBKX0fXX02p8NIqgoZPZ1JDVJicoqB276PuI3x3tzJv5BgagVjLR1XNY
+ w4ZtQ0aPxwJKGbDVSBlvDkG0roMhE03opduce32rMJx6ELJEDfkusiJZpnF6Cp+BE6
+ pzmdn9vLJXKPigqESR8yWxQ+NlTqjj2E7smWsgo1DcVHiMyZc5Rr3fkMIi5Ct969y3
+ tTummwc5YOM+xsn/mq2CX+WaVrRt31hU/NMoady0W0yDR4MTTowbQ7CdVamEmw6lS0
+ U7c/EEyguVaU53ic4ihdmmsClFMKOomzek44LHjEqAvJ/AtK/TU0fd9lxGUrSO2tmV
+ ElaagZnChjUdw==
+Received: from policy02-mors.netcup.net (unknown [46.38.225.35])
+ by relay01-mors.netcup.net (Postfix) with ESMTPS id 4RMhbW5CBSz7vLh
+ for <wireguard@lists.zx2c4.com>; Fri, 11 Aug 2023 13:37:11 +0200 (CEST)
+Received: from mx2f44.netcup.net (unknown [10.243.12.53])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ by policy02-mors.netcup.net (Postfix) with ESMTPS id 4RMhbW3dzLz8sZR
+ for <wireguard@lists.zx2c4.com>; Fri, 11 Aug 2023 13:37:11 +0200 (CEST)
+Received: from webmail01.netcup.net (unknown [46.38.249.153])
+ by mx2f44.netcup.net (Postfix) with ESMTPA id CE40324067
+ for <wireguard@lists.zx2c4.com>; Fri, 11 Aug 2023 13:37:06 +0200 (CEST)
+Authentication-Results: mx2f44;
+ spf=pass (sender IP is 46.38.249.153) smtp.mailfrom=wireguard@rtlblus.de
+ smtp.helo=webmail01.netcup.net
+Received-SPF: pass (mx2f44: connection is authenticated)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Matteo Franzil <matteofranzil@gmail.com>
-Subject: wg-quick down not reverting DNS parameters on MacOS
-References: <7cde2e10-b27d-0502-1b97-bacdbd9dd4a4@gmail.com>
-Content-Language: en-US
+Date: Fri, 11 Aug 2023 13:37:06 +0200
+From: wireguard@rtlblus.de
 To: wireguard@lists.zx2c4.com
-Autocrypt: addr=matteofranzil@gmail.com; keydata=
- xjMEY8EjPRYJKwYBBAHaRw8BAQdAhzoO6y/vPyGYJPS0NxQCNULJz0okRfqlQMlwHTc49HbN
- KE1hdHRlbyBGcmFuemlsIDxtYXR0ZW9mcmFuemlsQGdtYWlsLmNvbT7CmQQTFgoAQRYhBAOT
- QK13jrIGsd9oot3F++7X6lOGBQJjwSM9AhsDBQkDwmcABQsJCAcCAiICBhUKCQgLAgQWAgMB
- Ah4HAheAAAoJEN3F++7X6lOGvZsA/1KsW3IWN22bXh2QJeeZKi4SnzSqRzkPzroCGvEu9szO
- AP9qzJeGAfdyWZNwE9UGQIt8HbCgqkVxkK0jFseE+ONlCs44BGPBIz0SCisGAQQBl1UBBQEB
- B0CmkNrtiqdN2xYTHoYD68ulpwcl05oR3a0nDtsV2pGwKAMBCAfCfgQYFgoAJhYhBAOTQK13
- jrIGsd9oot3F++7X6lOGBQJjwSM9AhsMBQkDwmcAAAoJEN3F++7X6lOGyAoBAPbsUUokpTdP
- x3WyIwxLK5yxc2eRMZuVOaUBoWR+/IfYAP4596bjzGp0vW7XjQA6gzI4cgwhK3yjgsQrfYib
- BP7CCQ==
-In-Reply-To: <7cde2e10-b27d-0502-1b97-bacdbd9dd4a4@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Subject: Is there a simplified Android User Interfaces on FireTV ?
+User-Agent: Roundcube Webmail/1.4.13
+Message-ID: <88b63760dfb5fce218eb696d7048663a@rtlblus.de>
+X-Sender: wireguard@rtlblus.de
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+X-PPP-Message-ID: <169175382711.11786.11477652511197564544@mx2f44.netcup.net>
+X-Rspamd-Queue-Id: CE40324067
+X-Rspamd-Server: rspamd-worker-8404
+X-NC-CID: gI9SePMjFmfJh3U+PnKaP0P9ZELunEBel1o8Wlu6iGrMcLIN
 X-Mailman-Approved-At: Wed, 23 Aug 2023 16:07:07 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -91,40 +73,51 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi!
+Hi,
+I'm not quite sure if this is a real bug, but I only get to a simplified 
+GUI on the FireTV instead of the one I'm usually used to from Andoird. 
+Only when I reinstall the apk and open it right after, I get the usual 
+GUI with settings options.
 
-I extensively searched for any discussion on this bug (or at least, I 
-hope so), which has been bugging me for a while.
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│                     ┌────────────────────────────────────────┐         
+               │
+│                     │        WireGuard                       │         
+               │
+│                     │     FAST, MODERN, SECURE VPN TUNNEL    │         
+               │
+│                     └────────────────────────────────────────┘         
+               │
+│  ┌──────────────────────┐                                              
+               │
+│  │  NAME                │                                              
+               │
+│  │  x MB/ y MB          │                                              
+               │
+│  │                      │                                              
+               │
+│  └──────────────────────┘                                              
+               │
+│                                                                        
+               │
+│                                                                        
+               │
+│                                                                        
+               │
+│                                                                        
+               │
+│                                                                        
+               │
+│  ┌───────┐                                                             
+      ┌──────┐ │
+│  │ Trash │                                                             
+      │  +   │ │
+│  └───────┘                                                             
+      └──────┘ │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+https://ibb.co/fn17PwD
 
-I am a Wireguard user on macOS Ventura (version 13.4.1 (c)), and 
-installed wireguard via the wireguard-tools (version 1.0.20210914) and 
-wireguard-go (0.0.20230223) commands on brew.
+but i want/need the "normal" GUI (https://ibb.co/qW0BG7B) with the Split 
+Option for specific apps (https://ibb.co/chCb7sY)
 
-Assume I have set my DNS servers either via GUI or via DHCP (doesn't 
-matter how), and I use wg-quick to connect to a wg conf file (also 
-irrelevant what is the target server).
-
-The moment I:
-- use wg-quick to bring up the VPN,
-- put my Mac to sleep,
-- reopen the lid,
-- use wg-quick to stop the VPN,
-
-then DNS servers are not updated back to the original value, and instead 
-stick to what the previous VPN configuration had commanded.
-
-The workaround is just to verify what DNS servers are set with scutil 
---dns and cat /etc/resolv.conf, but editing them is a pain. I often work 
-with an open VPN and closing the lid without remembering to turn it of 
-is common.
-
-Let me know if I also need to provide further details.
-
-See also this GitHub issue, which was posted on an unrelated repository 
-but perfectly matches what I have just said:
-
-https://github.com/StreisandEffect/streisand/issues/1334
-
-
-Matteo
-
+Thanks in advance
