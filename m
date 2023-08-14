@@ -4,52 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C269BEE49A3
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 19 Aug 2023 20:28:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B44DEE49AA
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 19 Aug 2023 20:28:35 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0f77948a;
-	Sat, 19 Aug 2023 20:14:12 +0000 (UTC)
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com
- [2a00:1450:4864:20::32a])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id afb3c43f
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7281d0f2;
+	Sat, 19 Aug 2023 20:14:16 +0000 (UTC)
+Received: from w4.tutanota.de (w4.tutanota.de [81.3.6.165])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4a54158e
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 30 Jun 2023 13:04:09 +0000 (UTC)
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-3fb4146e8deso22918135e9.0
- for <wireguard@lists.zx2c4.com>; Fri, 30 Jun 2023 06:04:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=krose.org; s=google; t=1688130249; x=1690722249;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=0/7nNaL/P0R9e2nCJxMk8yYBb00MnGgU12TaDtIl+vI=;
- b=nhNoqpi9ACeoCbg5vy0z3nv5OjCRslYcB4ywnxLzq5liuc4j1dXkQBwyCcn9m9amcU
- Jtgw4qlKTRQKP6ANpOu1xqLzjDcfKvHt1l+nn4qGTwRXtDngNxLmztw7s/YTMl07+efO
- QNlklNRFz38InmsnLxO9qIAjjsElRqS7K8rms=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20221208; t=1688130249; x=1690722249;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=0/7nNaL/P0R9e2nCJxMk8yYBb00MnGgU12TaDtIl+vI=;
- b=fKplw9oQ/8swVj7Eu9tdiAYSZpNc46Qb2Xa/pZ2PoOyWSGyb07O/6GtDS5sl+H303y
- XTh5oY2ykrCPHr6RC6L3SKO8Huxm4jgTYF693FCg5LaKScGFnTKYQ2BBnTVi7JOWiLBa
- kv6U2G2tnlD1RCKSHbjkOUqg5o7/x8OuIAW0dxR7TN5tBIqvIcGH7nrrJb2vRcWY+/fw
- IOfk1671kql/Y3WxVvvtpjnFN22iR6aHVHloh0sSdj9wCoJC8nNG9QlfyyultCgD+1lh
- 8LFjVuKRznNbHoeUlywu7QmR6fDu9Yrw41G6FzIKkb5aHHLYJZilkvnRYABIEXnk8WHA
- us0g==
-X-Gm-Message-State: AC+VfDzcFd3Hi45DNf5ouXXiHEfKuY6yt5oE/J1tbLa/Yq3ks2EOT8R/
- RrvYFJFQcf9DASpW4YUEast6bYV7m7G0C4Hqq8furQEfEfYUOhp230c=
-X-Google-Smtp-Source: ACHHUZ4TexkValx3T3gz9xQOkfbDNlHpsgfrGtB85DOuQYNOZ+6W+czXnQZpGlIJXC0McLxUdaZdMxbtDqLh0BLYmYM=
-X-Received: by 2002:a1c:4b17:0:b0:3f9:255e:ee3b with SMTP id
- y23-20020a1c4b17000000b003f9255eee3bmr2386766wma.30.1688130248507; Fri, 30
- Jun 2023 06:04:08 -0700 (PDT)
+ Mon, 14 Aug 2023 16:27:38 +0000 (UTC)
+Received: from tutadb.w10.tutanota.de (unknown [192.168.1.10])
+ by w4.tutanota.de (Postfix) with ESMTP id 02A15106030B
+ for <wireguard@lists.zx2c4.com>; Mon, 14 Aug 2023 16:27:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1692030457; 
+ s=s1; d=diyaa.ca;
+ h=From:From:To:To:Subject:Subject:Content-Description:Content-ID:Content-Type:Content-Type:Content-Transfer-Encoding:Content-Transfer-Encoding:Cc:Date:Date:In-Reply-To:MIME-Version:MIME-Version:Message-ID:Message-ID:Reply-To:References:Sender;
+ bh=cgsrJTi+YOhiGFBA2CKe5lax0I8WbUOka8k0Jc1mkEA=;
+ b=Dy9bgWOmuOLqaePWOlLU8V/gHOU0JZMSs52TEgynTA0bgMTXZfyzBWVMmy2rJHVf
+ QlMuMcP0g9dLGryFeytTCMts1iqitlYpTS30jP4MetQVVcNlz6wN3CNEFQbLEVR7PFx
+ 4PRIz5jDAxMzfBFzy47+QKZIRmOI3tC1ctAxufJA7XaCsiyMbzeihA0I2T6G6jmEpJV
+ 7p88XgTfX/G6tf1z9t1fFe3Fi31CWN4RsTnjD6vc19Go3KKX8+8Cj2jypI9tajuSXIz
+ Yhn8I43C2gHySOiPhCGjXenmbKxp5Km4P7BZ5W07ScNoDeECuji/yFwA9ZVk3oCbIFm
+ Ab/7o/aATw==
+Date: Mon, 14 Aug 2023 18:27:37 +0200 (CEST)
+From: Diyaa Alkanakre <diyaa@diyaa.ca>
+To: Wireguard <wireguard@lists.zx2c4.com>
+Message-ID: <NborxNu--3-9@diyaa.ca>
+Subject: Wireguard Dynamic ARP entries
 MIME-Version: 1.0
-From: Kyle Rose <krose@krose.org>
-Date: Fri, 30 Jun 2023 09:03:56 -0400
-Message-ID: <CAJU8_nVZW5TiDrT-_bmn+DirbfCn4yuHtZi2xjJ+1ZRDi7ME1g@mail.gmail.com>
-Subject: Option to enable policy routing
-To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Mailman-Approved-At: Sat, 19 Aug 2023 20:14:11 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -65,83 +50,12 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-I really like the straightforward configurability of Wireguard
-out-of-the-box. It was astonishingly easy to configure a mesh to
-replace my previous hub-and-spoke OpenVPN setup. Thank you for making
-this easy.
+Hello everyone,
 
-That said, I'd like the ability to use Linux's policy routing engine
-to allow for more complex packet flows across the VPN that are
-currently incompatible with Wireguard's internal packet handling. For
-example, let's say I have 4 nodes and want to be able to use each of
-the nodes as the default gateway for different types of flows.
-Modifying the sender side to respect a route's gateway is
-straightforward:
+I am seeing lots of ARP dynamic entries on Windows when typing "arp -a" on the command line on windows. I am wondering if that is a normal behavior? when I set a wireguard peer with a default route "0.0.0.0/0, ::/0" I end up spending about 2 minutes to get to the bottom of the CLI when I type "arp -a".
 
---- a/drivers/net/wireguard/allowe
-dips.c
-+++ b/drivers/net/wireguard/allowe
-dips.c
-@@ -6,6 +6,8 @@
- #include "allowedips.h"
- #include "peer.h"
+I am just wondering if that is a normal behavior? why is this happening??
 
-+#include <net/route.h>
-+
- enum { MAX_ALLOWEDIPS_BITS = 128 };
+Thank you in advance,
 
- static struct kmem_cache *node_cache;
-@@ -356,10 +358,18 @@ int wg_allowedips_read_node(struct
-allowedips_node *node, u8 ip[16], u8 *cidr)
- struct wg_peer *wg_allowedips_lookup_dst(struct allowedips *table,
-                                         struct sk_buff *skb)
- {
--       if (skb->protocol == htons(ETH_P_IP))
--               return lookup(table->root4, 32, &ip_hdr(skb)->daddr);
--       else if (skb->protocol == htons(ETH_P_IPV6))
--               return lookup(table->root6, 128, &ipv6_hdr(skb)->daddr);
-+       struct rtable *rt = skb_rtable(skb);
-+       if (rt->rt_uses_gateway) {
-+               if (rt->rt_gw_family == AF_INET)
-+                       return lookup(table->root4, 32, &rt->rt_gw4);
-+               else if (rt->rt_gw_family == AF_INET6)
-+                       return lookup(table->root6, 128, &rt->rt_gw6);
-+       } else {
-+               if (skb->protocol == htons(ETH_P_IP))
-+                       return lookup(table->root4, 32, &ip_hdr(skb)->daddr);
-+               else if (skb->protocol == htons(ETH_P_IPV6))
-+                       return lookup(table->root6, 128, &ipv6_hdr(skb)->daddr);
-+       }
-        return NULL;
- }
-
-The problem is that reply packets will be dropped via the source
-address check for all but the peer with the default route listed in
-AllowedIPs. The way the trie code works means a highly-invasive change
-would be needed to allow for multiple peers to be associated with a
-given prefix: I suspect any further complication (not to mention
-possible additional data structure bloat) is undesirable, and anyway I
-am looking to bypass most of the complexity created by Wireguard's
-parallel packet routing infrastructure and instead leverage the far
-more flexible Linux policy routing engine.
-
-At this point, what I'd like to do is be able to skip the source
-address check by configuration, instead relying on rp_filter and
-firewall rules to reject bogus or unwanted packets. With such a config
-knob, AllowedIPs would be used only for selecting the destination peer
-based on the packet daddr or the route's gateway. For a mesh like I
-described above, I would configure only a gateway IP for each peer in
-AllowedIPs and use the policy routing engine for all other packet
-routing behavior.
-
-I appreciate that Wireguard works the way it does most likely because
-routing is configured differently across the wide variety of devices
-it supports (and in some cases may be unavailable to users), so I
-don't think the AllowedIPs source address check should be removed by
-default; but it would be nice if I could turn it off and rely on other
-mechanisms in the kernel that would allow for more flexibility.
-
-Thoughts?
-
-Thanks,
-Kyle
+Diyaa
