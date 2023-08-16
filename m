@@ -4,31 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD2CDC27C6D
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Aug 2023 22:31:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AACB6C27C53
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Aug 2023 23:01:24 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4128ea87;
-	Wed, 16 Aug 2023 22:29:05 +0000 (UTC)
-Received: from len.romanrm.net (len.romanrm.net [91.121.86.59])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 510e2069
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 484cd100;
+	Wed, 16 Aug 2023 23:01:22 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c69d8ee4
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 Aug 2023 22:29:03 +0000 (UTC)
-Received: from nvm (nvm2.home.romanrm.net [IPv6:fd39::4a:3cff:fe57:d6b5])
- by len.romanrm.net (Postfix) with SMTP id 9EEDD4010B;
- Wed, 16 Aug 2023 22:29:02 +0000 (UTC)
-Date: Thu, 17 Aug 2023 03:29:02 +0500
-From: Roman Mamedov <rm@romanrm.net>
-To: Henrik Hautakoski <henrik@eossweden.org>
-Cc: wireguard@lists.zx2c4.com
-Subject: Re: [PATCH] wg-quick: linux: add restart command.
-Message-ID: <20230817032902.0d2f7a29@nvm>
-In-Reply-To: <20230816050653.28972-1-henrik@eossweden.org>
-References: <20230816050653.28972-1-henrik@eossweden.org>
-X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+ Wed, 16 Aug 2023 23:01:20 +0000 (UTC)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id BC2F5658C2
+ for <wireguard@lists.zx2c4.com>; Wed, 16 Aug 2023 23:01:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADC6AC433C9
+ for <wireguard@lists.zx2c4.com>; Wed, 16 Aug 2023 23:01:17 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="jXokpT8H"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1692226871;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=fJ+exFyMwxf+Sp/aWFmN/k274aR2STKWbu8odcAPWm8=;
+ b=jXokpT8HHm9bHv6hIJ3T3CMHWSwvmBYeqbPj7fjD4Ezxvigmdm/fXPxtKXDXtXiveMyEy2
+ K2zo2MO6Jx19/zc76sU6x7FN12g49ex3CRn9eKlZgLZMkYTlRh8PLwi9EYMp443CajZ7FT
+ H+k/S7W81nftL8bDVz+/B0+KLWJPGLw=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 1e5d3511
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 16 Aug 2023 23:01:10 +0000 (UTC)
+Received: by mail-vs1-f42.google.com with SMTP id
+ ada2fe7eead31-447823dd96fso2104625137.1
+ for <wireguard@lists.zx2c4.com>; Wed, 16 Aug 2023 16:01:10 -0700 (PDT)
+X-Gm-Message-State: AOJu0YxuZQiXonni4G8CZ5gBp/G36j8pKZMR8jYM5aJ2Qdu+u7Kz2iFT
+ GhZecBBrEQF/ye5Bdl4KNvpn8oJ/phq1ahy2m1w=
+X-Google-Smtp-Source: AGHT+IFdKTop/dTzxxplY5bDLsdLZZ0m1tGPXQJd6rkmBy2Wm4exC645Mb9rMUW6TK7Pnh6+pZhH7oflLvX5KYDSdqc=
+X-Received: by 2002:a67:e211:0:b0:443:c87f:ebb1 with SMTP id
+ g17-20020a67e211000000b00443c87febb1mr2517297vsa.29.1692226866965; Wed, 16
+ Aug 2023 16:01:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+References: <20230816055010.31534-1-rdunlap@infradead.org>
+In-Reply-To: <20230816055010.31534-1-rdunlap@infradead.org>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 17 Aug 2023 00:58:18 +0200
+X-Gmail-Original-Message-ID: <CAHmME9pxC_e6Ftj1MJ4H2skhhKfNubd=7OwcH9xepCxjkDxpkg@mail.gmail.com>
+Message-ID: <CAHmME9pxC_e6Ftj1MJ4H2skhhKfNubd=7OwcH9xepCxjkDxpkg@mail.gmail.com>
+Subject: Re: [PATCH] treewide: drop CONFIG_EMBEDDED
+To: Randy Dunlap <rdunlap@infradead.org>
+Cc: linux-kernel@vger.kernel.org, Russell King <linux@armlinux.org.uk>, 
+ linux-arm-kernel@lists.infradead.org, Arnd Bergmann <arnd@arndb.de>, 
+ wireguard@lists.zx2c4.com, linux-arch@vger.kernel.org, 
+ linux-snps-arc@lists.infradead.org, Vineet Gupta <vgupta@kernel.org>, 
+ Brian Cain <bcain@quicinc.com>, linux-hexagon@vger.kernel.org, 
+ Greg Ungerer <gerg@linux-m68k.org>, Geert Uytterhoeven <geert@linux-m68k.org>, 
+ linux-m68k@lists.linux-m68k.org, Michal Simek <monstr@monstr.eu>, 
+ Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+ Dinh Nguyen <dinguyen@kernel.org>, Jonas Bonn <jonas@southpole.se>, 
+ Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>,
+ Stafford Horne <shorne@gmail.com>, 
+ linux-openrisc@vger.kernel.org, linux-mips@vger.kernel.org, 
+ Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>, 
+ Christophe Leroy <christophe.leroy@csgroup.eu>, linuxppc-dev@lists.ozlabs.org, 
+ linux-riscv@lists.infradead.org, Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Yoshinori Sato <ysato@users.sourceforge.jp>, Rich Felker <dalias@libc.org>, 
+ John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+ linux-sh@vger.kernel.org, 
+ Max Filippov <jcmvbkbc@gmail.com>, Josh Triplett <josh@joshtriplett.org>, 
+ Masahiro Yamada <masahiroy@kernel.org>, linux-kbuild@vger.kernel.org, 
+ Andrew Morton <akpm@linux-foundation.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -43,42 +95,63 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, 16 Aug 2023 07:06:53 +0200
-Henrik Hautakoski <henrik@eossweden.org> wrote:
-
-> Add a simple "restart" command that just do cmd_down followed by an cmd_up. Saves abit of typing :)
-> 
-> Signed-off-by: Henrik Hautakoski <henrik@eossweden.org>
+On Wed, Aug 16, 2023 at 7:50=E2=80=AFAM Randy Dunlap <rdunlap@infradead.org=
+> wrote:
+>
+> There is only one Kconfig user of CONFIG_EMBEDDED and it can be
+> switched to EXPERT or "if !ARCH_MULTIPLATFORM" (suggested by Arnd).
+>
+> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+> Cc: Russell King <linux@armlinux.org.uk>
+> Cc: linux-arm-kernel@lists.infradead.org
+> Cc: Arnd Bergmann <arnd@arndb.de>
+> Cc: Jason A. Donenfeld <Jason@zx2c4.com>
+> Cc: wireguard@lists.zx2c4.com
+> Cc: linux-arch@vger.kernel.org
+> Cc: linux-snps-arc@lists.infradead.org
+> Cc: Vineet Gupta <vgupta@kernel.org>
+> Cc: Brian Cain <bcain@quicinc.com>
+> Cc: linux-hexagon@vger.kernel.org
+> Cc: Greg Ungerer <gerg@linux-m68k.org>
+> Cc: Geert Uytterhoeven <geert@linux-m68k.org>
+> Cc: linux-m68k@lists.linux-m68k.org
+> Cc: Michal Simek <monstr@monstr.eu>
+> Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+> Cc: Dinh Nguyen <dinguyen@kernel.org>
+> Cc: Jonas Bonn <jonas@southpole.se>
+> Cc: Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>
+> Cc: Stafford Horne <shorne@gmail.com>
+> Cc: linux-openrisc@vger.kernel.org
+> Cc: linux-mips@vger.kernel.org
+> Cc: Michael Ellerman <mpe@ellerman.id.au>
+> Cc: Nicholas Piggin <npiggin@gmail.com>
+> Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+> Cc: linuxppc-dev@lists.ozlabs.org
+> Cc: linux-riscv@lists.infradead.org
+> Cc: Paul Walmsley <paul.walmsley@sifive.com>
+> Cc: Palmer Dabbelt <palmer@dabbelt.com>
+> Cc: Albert Ou <aou@eecs.berkeley.edu>
+> Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
+> Cc: Rich Felker <dalias@libc.org>
+> Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+> Cc: linux-sh@vger.kernel.org
+> Cc: Max Filippov <jcmvbkbc@gmail.com>
+> Cc: Josh Triplett <josh@joshtriplett.org>
+> Cc: Masahiro Yamada <masahiroy@kernel.org>
+> Cc: linux-kbuild@vger.kernel.org
+> Cc: Andrew Morton <akpm@linux-foundation.org>
 > ---
->  src/wg-quick/linux.bash | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
-> 
-> diff --git a/src/wg-quick/linux.bash b/src/wg-quick/linux.bash
-> index 69e5bef..cc9f288 100755
-> --- a/src/wg-quick/linux.bash
-> +++ b/src/wg-quick/linux.bash
-> @@ -298,7 +298,7 @@ execute_hooks() {
->  
->  cmd_usage() {
->  	cat >&2 <<-_EOF
-> -	Usage: $PROGRAM [ up | down | save | strip ] [ CONFIG_FILE | INTERFACE ]
-> +	Usage: $PROGRAM [ up | down | restart | save | strip ] [ CONFIG_FILE | INTERFACE ]
->  
->  	  CONFIG_FILE is a configuration file, whose filename is the interface name
->  	  followed by \`.conf'. Otherwise, INTERFACE is an interface name, with
-> @@ -373,6 +373,11 @@ elif [[ $# -eq 2 && $1 == down ]]; then
->  	auto_su
->  	parse_options "$2"
->  	cmd_down
-> +elif [[ $# -eq 2 && $1 == restart ]]; then
-> +	auto_su
-> +	parse_options "$2"
-> +	cmd_down
-> +    cmd_up
+> diff -- a/tools/testing/selftests/wireguard/qemu/kernel.config b/tools/te=
+sting/selftests/wireguard/qemu/kernel.config
+> --- a/tools/testing/selftests/wireguard/qemu/kernel.config
+> +++ b/tools/testing/selftests/wireguard/qemu/kernel.config
+> @@ -41,7 +41,6 @@ CONFIG_KALLSYMS=3Dy
+>  CONFIG_BUG=3Dy
+>  CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE=3Dy
+>  CONFIG_JUMP_LABEL=3Dy
+> -CONFIG_EMBEDDED=3Dn
+>  CONFIG_BASE_FULL=3Dy
+>  CONFIG_FUTEX=3Dy
+>  CONFIG_SHMEM=3Dy
 
-cmd_down and the lines prior use a TAB to indent, but cmd_up uses 4 spaces
-instead.
-
--- 
-With respect,
-Roman
+Acked-by: Jason A. Donenfeld <Jason@zx2c4.com>
