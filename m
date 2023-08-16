@@ -4,63 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24C60EE49AD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C1B2EE49A8
 	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 19 Aug 2023 20:28:36 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 64adc2eb;
-	Sat, 19 Aug 2023 20:14:19 +0000 (UTC)
-Received: from gandalf.ozlabs.org (mail.ozlabs.org [2404:9400:2221:ea00::3])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6aa2f39c
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4a2cdc07;
+	Sat, 19 Aug 2023 20:14:18 +0000 (UTC)
+Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com
+ [2607:f8b0:4864:20::f30])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id fe6d1c87
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 17 Aug 2023 04:38:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ellerman.id.au;
- s=201909; t=1692247099;
- bh=TTioG2ECpny8c1gUsV9lSzzBSbOyxoHgJmKmcWGJJb4=;
- h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
- b=XBb7K0DGSY/aWma20FuWJJsaYj/I7WnxTgc1QHrKacwxzHabn8IDVtxnh+u1kir6R
- 0/dCSv6v4j6K+H0n0qfcFvbzDwuMx48my6HmK54JUowGxZTDeBv/LzC/fGdkjM0jbL
- uhrythOSDp6fSsw5OTIIfIEFFsUSHSrvxpvNZyVXzcV91YnrQwqGxwE4iXdMVpv7PD
- KJDmjPNi29obujTq193LiorByY4yu6Webks9bDdTMqdbgikcZ6YUA9A+9yqAiDvppy
- K31/Jqh8vTUknZvmhTxSZipw5CVFpctxK0wQ1Ogxo+krqzabVOtQDHKwv50O+7cmGR
- NxwruEUcx/hdw==
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4RRC1B2MJWz4wZn;
- Thu, 17 Aug 2023 14:38:06 +1000 (AEST)
-From: Michael Ellerman <mpe@ellerman.id.au>
-To: Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org
-Cc: Randy Dunlap <rdunlap@infradead.org>, Russell King
- <linux@armlinux.org.uk>, linux-arm-kernel@lists.infradead.org, Arnd
- Bergmann <arnd@arndb.de>, "Jason A . Donenfeld" <Jason@zx2c4.com>,
- wireguard@lists.zx2c4.com, linux-arch@vger.kernel.org,
- linux-snps-arc@lists.infradead.org, Vineet Gupta <vgupta@kernel.org>,
- Brian Cain <bcain@quicinc.com>, linux-hexagon@vger.kernel.org, Greg
- Ungerer <gerg@linux-m68k.org>, Geert Uytterhoeven <geert@linux-m68k.org>,
- linux-m68k@lists.linux-m68k.org, Michal Simek <monstr@monstr.eu>, Thomas
- Bogendoerfer <tsbogend@alpha.franken.de>, Dinh Nguyen
- <dinguyen@kernel.org>, Jonas Bonn <jonas@southpole.se>, Stefan
- Kristiansson <stefan.kristiansson@saunalahti.fi>, Stafford Horne
- <shorne@gmail.com>, linux-openrisc@vger.kernel.org,
- linux-mips@vger.kernel.org, Nicholas Piggin <npiggin@gmail.com>,
- Christophe Leroy <christophe.leroy@csgroup.eu>,
- linuxppc-dev@lists.ozlabs.org, linux-riscv@lists.infradead.org, Paul
- Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Albert Ou <aou@eecs.berkeley.edu>, Yoshinori Sato
- <ysato@users.sourceforge.jp>, Rich Felker <dalias@libc.org>, John Paul
- Adrian Glaubitz <glaubitz@physik.fu-berlin.de>, linux-sh@vger.kernel.org,
- Max Filippov <jcmvbkbc@gmail.com>, Josh Triplett <josh@joshtriplett.org>,
- Masahiro Yamada <masahiroy@kernel.org>, linux-kbuild@vger.kernel.org,
- Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH] treewide: drop CONFIG_EMBEDDED
-In-Reply-To: <20230816055010.31534-1-rdunlap@infradead.org>
-References: <20230816055010.31534-1-rdunlap@infradead.org>
-Date: Thu, 17 Aug 2023 14:38:05 +1000
-Message-ID: <875y5e707m.fsf@mail.lhotse>
+ Wed, 16 Aug 2023 22:45:15 +0000 (UTC)
+Received: by mail-qv1-xf30.google.com with SMTP id
+ 6a1803df08f44-6471744acb6so20716826d6.1
+ for <wireguard@lists.zx2c4.com>; Wed, 16 Aug 2023 15:45:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20221208; t=1692225914; x=1692830714;
+ h=content-transfer-encoding:subject:from:reply-to:cc:to
+ :content-language:user-agent:mime-version:date:message-id:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=MGoBkEwlCnbJad+CecbjRY+VjiJK8E7bojDgpjg7FvU=;
+ b=J+2GZw9sDgAuPCvyYPqSvvzp1lVg6wE6qeMOlcYMGPuThPNLCGYiiW2dwFVq91l/vl
+ NT/yeq5xZ4Ufc7IZxR6ugOwOZQfg5nMbUshmMxhNTewriji8eUuaNn0c360FPsW5tkH4
+ 6cS/vKC7K0l0lZLKGVqDi2VTUmRXgo+WSJJ9fOFjLJU7uhgHYQzddKm06zxNwf3BXFjN
+ SCDUE56G1UeYAPYGs2dGSOsKeDDFiUZRdgQwqGIeL2NpPJhlcnrVVGytRXUYD0OF20a4
+ 87SE8XWZHMx/EGlk2yISP6pygxQx+aQ11VINZVZvJIAIyOIfvz+sxSaS9uqbom35csu9
+ 8sYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20221208; t=1692225914; x=1692830714;
+ h=content-transfer-encoding:subject:from:reply-to:cc:to
+ :content-language:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=MGoBkEwlCnbJad+CecbjRY+VjiJK8E7bojDgpjg7FvU=;
+ b=FWg+6ehS0tXCzKwaitFxKSOucnWh9Qa/jbTuYCrLfTbGlXrrNgBZL89JDwjIYJHIIV
+ hKpWTd6lhvCKvoCehc7hwoAcAidmcN5TkjBcYF9KaFAdALGQbUMnH3eePV4O7ih7n1kj
+ C4MB3zyxK9SQWFNh2neIPkmuXcFaA+IP2I5kqWvTE0IoEshGItoo9u75kb9BB1kUq/GY
+ kJVq80al00gK89JQgOeatADfONDMBuIRm/guJC9psWS8tPPI0rVyOpgm5WNwcsqpjMjS
+ JLran29d2Tmujo2INIj9dHI/gdTiO1EbaDvciMge708A/vchBST+cLlpU3orr75WuaWV
+ CrvQ==
+X-Gm-Message-State: AOJu0YzqGnGYVSlzvdRfaefUQkXbJ4vEKNewpg3myKPXFGFyS+oo0VOz
+ 6qWGbI1SKUI7ewaid+eCln/td1oKJNtG3A==
+X-Google-Smtp-Source: AGHT+IFsHNXunRgp3X8hlKrWnp7WXFK/+sVXWgsvRCLnJDzFjNXPGtXcdWLNPeHWJ41d2OTBT7Z5iQ==
+X-Received: by 2002:a0c:e4c7:0:b0:649:980c:4ee1 with SMTP id
+ g7-20020a0ce4c7000000b00649980c4ee1mr1626603qvm.5.1692225914347; 
+ Wed, 16 Aug 2023 15:45:14 -0700 (PDT)
+Received: from ?IPV6:2600:4040:57a3:100:5b2e:7da0:3ac1:56bd?
+ ([2600:4040:57a3:100:5b2e:7da0:3ac1:56bd])
+ by smtp.gmail.com with ESMTPSA id
+ w13-20020a0ce10d000000b00645cbb3b6bbsm3864703qvk.115.2023.08.16.15.45.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 16 Aug 2023 15:45:13 -0700 (PDT)
+Message-ID: <38e1a01b-1e8b-7c66-bafc-fc5861f08da9@gmail.com>
+Date: Wed, 16 Aug 2023 18:45:12 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Content-Language: en-US
+To: Randy Dunlap <rdunlap@infradead.org>
+Cc: linux-kernel@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
+ linux-arm-kernel@lists.infradead.org, Arnd Bergmann <arnd@arndb.de>,
+ "Jason A . Donenfeld" <Jason@zx2c4.com>, wireguard@lists.zx2c4.com,
+ linux-arch@vger.kernel.org, linux-snps-arc@lists.infradead.org,
+ Vineet Gupta <vgupta@kernel.org>, Brian Cain <bcain@quicinc.com>,
+ linux-hexagon@vger.kernel.org, Greg Ungerer <gerg@linux-m68k.org>,
+ linux-m68k@lists.linux-m68k.org, Michal Simek <monstr@monstr.eu>,
+ Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+ Dinh Nguyen <dinguyen@kernel.org>, Jonas Bonn <jonas@southpole.se>,
+ Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>,
+ Stafford Horne <shorne@gmail.com>, linux-openrisc@vger.kernel.org,
+ linux-mips@vger.kernel.org, Michael Ellerman <mpe@ellerman.id.au>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Christophe Leroy <christophe.leroy@csgroup.eu>,
+ linuxppc-dev@lists.ozlabs.org, linux-riscv@lists.infradead.org,
+ Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>, Rich Felker <dalias@libc.org>,
+ John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+ linux-sh@vger.kernel.org, Max Filippov <jcmvbkbc@gmail.com>,
+ Josh Triplett <josh@joshtriplett.org>, Masahiro Yamada
+ <masahiroy@kernel.org>, linux-kbuild@vger.kernel.org,
+ Andrew Morton <akpm@linux-foundation.org>
+From: Jesse Taube <mr.bossman075@gmail.com>
+Subject: Re: [PATCH] treewide: drop CONFIG_EMBEDDED
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Mailman-Approved-At: Sat, 19 Aug 2023 20:14:11 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -73,39 +100,29 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
+Reply-To: 20230816055010.31534-1-rdunlap@infradead.org
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Randy Dunlap <rdunlap@infradead.org> writes:
-> There is only one Kconfig user of CONFIG_EMBEDDED and it can be
-> switched to EXPERT or "if !ARCH_MULTIPLATFORM" (suggested by Arnd).
->
-> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-...
->  arch/powerpc/configs/40x/klondike_defconfig          |    2 +-
->  arch/powerpc/configs/44x/fsp2_defconfig              |    2 +-
->  arch/powerpc/configs/52xx/tqm5200_defconfig          |    2 +-
->  arch/powerpc/configs/mgcoge_defconfig                |    2 +-
->  arch/powerpc/configs/microwatt_defconfig             |    2 +-
->  arch/powerpc/configs/ps3_defconfig                   |    2 +-
-  
-Acked-by: Michael Ellerman <mpe@ellerman.id.au> (powerpc)
+Hi, Randy
 
-...
+ > diff -- a/init/Kconfig b/init/Kconfig
+ > --- a/init/Kconfig
+ > +++ b/init/Kconfig
+ > @@ -1790,14 +1790,6 @@ config DEBUG_RSEQ
+ >
+ >  	  If unsure, say N.
+ >
+ > -config EMBEDDED
+ > -	bool "Embedded system"
+ > -	select EXPERT
+ > -	help
+ > -	  This option should be enabled if compiling the kernel for
+ > -	  an embedded system so certain expert options are available
+ > -	  for configuration.
 
-> diff -- a/init/Kconfig b/init/Kconfig
-> --- a/init/Kconfig
-> +++ b/init/Kconfig
-> @@ -1790,14 +1790,6 @@ config DEBUG_RSEQ
->  
->  	  If unsure, say N.
->  
-> -config EMBEDDED
-> -	bool "Embedded system"
-> -	select EXPERT
+Wouldn't removing this break many out of tree configs?
+Should there be a warning here to update change it instead of removal?
 
-This is a crucial detail that could be mentioned in the change log. ie.
-that all defconfigs that currently have EMBEDDED=y are currently
-selecting EXPERT already.
-
-cheers
+Thanks,
+Jesse Taube
