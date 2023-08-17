@@ -4,60 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E90AEE49A0
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 23 Aug 2023 16:07:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40A36EE4993
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 23 Aug 2023 16:19:58 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4ea41955;
-	Wed, 23 Aug 2023 16:07:16 +0000 (UTC)
-Received: from relay.yourmailgateway.de (relay.yourmailgateway.de
- [185.244.194.184])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id dd7ee820
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0eca4422;
+	Wed, 23 Aug 2023 16:07:17 +0000 (UTC)
+Received: from mail-200166.simplelogin.co (mail-200166.simplelogin.co
+ [176.119.200.166])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 428d7590
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 11 Aug 2023 11:37:12 +0000 (UTC)
-Received: from relay01-mors.netcup.net (localhost [127.0.0.1])
- by relay01-mors.netcup.net (Postfix) with ESMTPS id 4RMhbW5v5Dz8x1B
- for <wireguard@lists.zx2c4.com>; Fri, 11 Aug 2023 13:37:11 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rtlblus.de; s=key2;
- t=1691753831; bh=ekz6hRCnM5cSdSI3TvwDqSprcWfPTA45qhSZBy+pcIA=;
- h=Date:From:To:Subject:From;
- b=lqmir6yyweBKX0fXX02p8NIqgoZPZ1JDVJicoqB276PuI3x3tzJv5BgagVjLR1XNY
- w4ZtQ0aPxwJKGbDVSBlvDkG0roMhE03opduce32rMJx6ELJEDfkusiJZpnF6Cp+BE6
- pzmdn9vLJXKPigqESR8yWxQ+NlTqjj2E7smWsgo1DcVHiMyZc5Rr3fkMIi5Ct969y3
- tTummwc5YOM+xsn/mq2CX+WaVrRt31hU/NMoady0W0yDR4MTTowbQ7CdVamEmw6lS0
- U7c/EEyguVaU53ic4ihdmmsClFMKOomzek44LHjEqAvJ/AtK/TU0fd9lxGUrSO2tmV
- ElaagZnChjUdw==
-Received: from policy02-mors.netcup.net (unknown [46.38.225.35])
- by relay01-mors.netcup.net (Postfix) with ESMTPS id 4RMhbW5CBSz7vLh
- for <wireguard@lists.zx2c4.com>; Fri, 11 Aug 2023 13:37:11 +0200 (CEST)
-Received: from mx2f44.netcup.net (unknown [10.243.12.53])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by policy02-mors.netcup.net (Postfix) with ESMTPS id 4RMhbW3dzLz8sZR
- for <wireguard@lists.zx2c4.com>; Fri, 11 Aug 2023 13:37:11 +0200 (CEST)
-Received: from webmail01.netcup.net (unknown [46.38.249.153])
- by mx2f44.netcup.net (Postfix) with ESMTPA id CE40324067
- for <wireguard@lists.zx2c4.com>; Fri, 11 Aug 2023 13:37:06 +0200 (CEST)
-Authentication-Results: mx2f44;
- spf=pass (sender IP is 46.38.249.153) smtp.mailfrom=wireguard@rtlblus.de
- smtp.helo=webmail01.netcup.net
-Received-SPF: pass (mx2f44: connection is authenticated)
+ Thu, 17 Aug 2023 20:15:13 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; d=simplelogin.co; s=arc-20230626; t=1692303313;
+ cv=none;
+ b=0rS2CERjL+wM09WY/+fbv7se7i16DkshhJXVgF5V/CKUE9FXhzWYxZa8oV+9HkJTg1wYUxF+6m6Uya7zbywZeGnhZfCu8yZyRmwRZenR1LzKEhM6p4xOaJE/ClN7HnAnURPwaMgxnx4hptHG6fYFaAKm+okHK3/OtSNdBH9GsI73t4OuMG8jbDY45tdhctCTVCkKFfGtegmHWXbJjA9Vx0sTzZldlObUV40wzbb1Dw+7TGnmsgTdq2GrJxnjdRasamR72aPBJx/3QP2lQTntTaXA6H3BmX0XgJY1z/yycGZl3ASsy8N8GZtKqjYQGFErfgGSi8kIx8/SUiobuOXEJQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; d=simplelogin.co; s=arc-20230626;
+ t=1692303313; c=relaxed/simple;
+ bh=ZmrjpcF94IqYv5MJfqd3+Q2lVNCsOsSHL5J9w64Y0N4=;
+ h=DKIM-Signature:Date:Subject:MIME-Version:Content-Type:
+ Content-Transfer-Encoding:From:To:Message-ID:X-SimpleLogin-Type:
+ X-SimpleLogin-EmailLog-ID:X-SimpleLogin-Want-Signing;
+ b=3L3tyX2CtJm73nWSWYghOk/qA6Ueu8ys1uLUJnnvvBqlASyOxUd+2yYvrsqH3VkL2vZrtlZ9TjfEjlGGmYRVrWr16KZJUavjarjF3h2UE5SYzCAPQcfMnKiAUvvmDnGAOkCpQqex6llccgrAuwkm9Y3qgWxbnjcc11FNa9dafbM0pd2suQkocb+cVYBlcT8vXToml6B8JwsLW8ZiLkMoRItnifCw2mKECUkdMhxnJoglvFSEKii/xXDBzrt1X4Xs8US06B23ZayTv7XsWdC76ST7mLavOY9vTAaqeu47qeBctBbH0Ru21/IJa+A4YvUJv2/QM7XPnRki/2kW3/RwBA==
+ARC-Authentication-Results: i=1; mail.protonmail.ch
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=simplelogin.com;
+ s=dkim; t=1692303312;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ZmrjpcF94IqYv5MJfqd3+Q2lVNCsOsSHL5J9w64Y0N4=;
+ b=f93P2FpkjLSCaiDIZsNu93poWccel9xYU63vytgqNBnxgeZFJ51siSXOsFDPLAjFpcWUZ7
+ dyivCkWq1LIHD8FFIAdB9NVxUROlniaFdArLjR8zH7Y0Q+9gUwlf+jRKdmmagQAKdR9iOP
+ 1BFFALIe1xmoP1YvTeu+PluWybd0+wY=
+Date: Thu, 17 Aug 2023 20:14:52 +0000
+Subject: Re: [WireGuard] Header / MTU sizes for Wireguard
 MIME-Version: 1.0
-Date: Fri, 11 Aug 2023 13:37:06 +0200
-From: wireguard@rtlblus.de
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: blurt_overkill882@simplelogin.com
 To: wireguard@lists.zx2c4.com
-Subject: Is there a simplified Android User Interfaces on FireTV ?
-User-Agent: Roundcube Webmail/1.4.13
-Message-ID: <88b63760dfb5fce218eb696d7048663a@rtlblus.de>
-X-Sender: wireguard@rtlblus.de
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-X-PPP-Message-ID: <169175382711.11786.11477652511197564544@mx2f44.netcup.net>
-X-Rspamd-Queue-Id: CE40324067
-X-Rspamd-Server: rspamd-worker-8404
-X-NC-CID: gI9SePMjFmfJh3U+PnKaP0P9ZELunEBel1o8Wlu6iGrMcLIN
+Message-ID: <169230331253.7.2936868369217934671.167170975@simplelogin.com>
+X-SimpleLogin-Type: Reply
+X-SimpleLogin-EmailLog-ID: 167170975
+X-SimpleLogin-Want-Signing: yes
 X-Mailman-Approved-At: Wed, 23 Aug 2023 16:07:07 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -73,51 +61,15 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
-I'm not quite sure if this is a real bug, but I only get to a simplified 
-GUI on the FireTV instead of the one I'm usually used to from Andoird. 
-Only when I reinstall the apk and open it right after, I get the usual 
-GUI with settings options.
+Hello, I hope this is the right place.
 
-┌──────────────────────────────────────────────────────────────────────────────────────┐
-│                     ┌────────────────────────────────────────┐         
-               │
-│                     │        WireGuard                       │         
-               │
-│                     │     FAST, MODERN, SECURE VPN TUNNEL    │         
-               │
-│                     └────────────────────────────────────────┘         
-               │
-│  ┌──────────────────────┐                                              
-               │
-│  │  NAME                │                                              
-               │
-│  │  x MB/ y MB          │                                              
-               │
-│  │                      │                                              
-               │
-│  └──────────────────────┘                                              
-               │
-│                                                                        
-               │
-│                                                                        
-               │
-│                                                                        
-               │
-│                                                                        
-               │
-│                                                                        
-               │
-│  ┌───────┐                                                             
-      ┌──────┐ │
-│  │ Trash │                                                             
-      │  +   │ │
-│  └───────┘                                                             
-      └──────┘ │
-└──────────────────────────────────────────────────────────────────────────────────────┘
-https://ibb.co/fn17PwD
+I see here[1] that if you're using IPv4 exclusively, you can get away with =
+an MTU of 1440. If my client only has IPv4 internet, however the server iss=
+ues an IPv6 address for use by the client, can the client still use 1440 wi=
+thout fragmentation, or must the client use 1420, because even though their=
+ connection is IPv4, they are issued an IPv6 address within the tunnel?
 
-but i want/need the "normal" GUI (https://ibb.co/qW0BG7B) with the Split 
-Option for specific apps (https://ibb.co/chCb7sY)
+[1] https://lists.zx2c4.com/pipermail/wireguard/2017-December/002201.html
 
-Thanks in advance
+Thanks in advance!
+
