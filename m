@@ -4,46 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D969BC2FC0F
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 17 Aug 2023 01:52:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A91CEC2FC04
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 17 Aug 2023 03:17:55 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e40f23e3;
-	Thu, 17 Aug 2023 01:52:15 +0000 (UTC)
-Received: from smtp.outgoing.loopia.se (smtp.outgoing.loopia.se [93.188.3.37])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 256467f7
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b0043249;
+	Thu, 17 Aug 2023 03:15:38 +0000 (UTC)
+Received: from casper.infradead.org (casper.infradead.org
+ [2001:8b0:10b:1236::1])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 81e1d76d
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 17 Aug 2023 01:52:14 +0000 (UTC)
-Received: from s807.loopia.se (localhost [127.0.0.1])
- by s807.loopia.se (Postfix) with ESMTP id 847682F9E48C
- for <wireguard@lists.zx2c4.com>; Thu, 17 Aug 2023 03:52:13 +0200 (CEST)
-Received: from s981.loopia.se (unknown [172.22.191.6])
- by s807.loopia.se (Postfix) with ESMTP id 757E52E27542;
- Thu, 17 Aug 2023 03:52:13 +0200 (CEST)
-Received: from s472.loopia.se (unknown [172.22.191.6])
- by s981.loopia.se (Postfix) with ESMTP id 73D6D22B16B3;
- Thu, 17 Aug 2023 03:52:13 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at amavis.loopia.se
-Received: from s981.loopia.se ([172.22.191.5])
- by s472.loopia.se (s472.loopia.se [172.22.190.12]) (amavisd-new, port 10024)
- with LMTP id CBlns7DAcCSd; Thu, 17 Aug 2023 03:52:12 +0200 (CEST)
-X-Loopia-Auth: user
-X-Loopia-User: henrik@eossweden.org
-X-Loopia-Originating-IP: 188.150.193.72
-Received: from electra.sargeras.net (c188-150-193-72.bredband.tele2.se
- [188.150.193.72]) (Authenticated sender: henrik@eossweden.org)
- by s981.loopia.se (Postfix) with ESMTPSA id F335E22B1689;
- Thu, 17 Aug 2023 03:52:11 +0200 (CEST)
-From: Henrik Hautakoski <henrik@eossweden.org>
-To: wireguard@lists.zx2c4.com
-Cc: rm@romanrm.net
-Subject: [PATCH v1] wg-quick: linux: add restart command.
-Date: Thu, 17 Aug 2023 03:52:11 +0200
-Message-ID: <20230817015211.82114-1-henrik@eossweden.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230817032902.0d2f7a29@nvm>
-References: <20230817032902.0d2f7a29@nvm>
+ Thu, 17 Aug 2023 03:15:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=casper.20170209; h=Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+ :Reply-To:Content-ID:Content-Description;
+ bh=P/kFyzCr/eSDaJkbY0OlCILEe1j9xWTLXn/yJLAYIu4=; b=A9+ZOyBLxgvkefgcCG3G+GbFOc
+ t3Q4LPTtkkpyh0LBpbAFdc+3lhG3pcvB3Tuy2cTe9/M//iW+Sx1QS7+tpwHS9HCucIDpD/RDGCGIr
+ FphyIapebkE7eEjeEnFtOi+9dwumQAvsQRYGjE0GEiZ5WBo53AxtXkFjlluHJQQSFYe1ZQ0mwCfpK
+ 6X/okD9sKE4Z8iWegd56l1SCJXl6wUSJ5Uk04klLzVcTy3SNTh8mgr2aL00kPfkoj1Td2N2/Azxck
+ 21ORjXTS2+GmCUfbeyQtLCC4mizooGziW6L1eBdD4Ta+hfKURTJGkPtTMCT5Ht16ny8Gi1C8JbRXm
+ mdreectQ==;
+Received: from [2601:1c2:980:9ec0::1a0b]
+ by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+ id 1qWTTi-000tOI-Mm; Thu, 17 Aug 2023 03:15:18 +0000
+Message-ID: <86e329b1-c8d7-47bf-8be8-3326daf74eb5@infradead.org>
+Date: Wed, 16 Aug 2023 20:15:09 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH] treewide: drop CONFIG_EMBEDDED
+To: 20230816055010.31534-1-rdunlap@infradead.org
+Cc: linux-kernel@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
+ linux-arm-kernel@lists.infradead.org, Arnd Bergmann <arnd@arndb.de>,
+ "Jason A . Donenfeld" <Jason@zx2c4.com>, wireguard@lists.zx2c4.com,
+ linux-arch@vger.kernel.org, linux-snps-arc@lists.infradead.org,
+ Vineet Gupta <vgupta@kernel.org>, Brian Cain <bcain@quicinc.com>,
+ linux-hexagon@vger.kernel.org, Greg Ungerer <gerg@linux-m68k.org>,
+ linux-m68k@lists.linux-m68k.org, Michal Simek <monstr@monstr.eu>,
+ Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+ Dinh Nguyen <dinguyen@kernel.org>, Jonas Bonn <jonas@southpole.se>,
+ Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>,
+ Stafford Horne <shorne@gmail.com>, linux-openrisc@vger.kernel.org,
+ linux-mips@vger.kernel.org, Michael Ellerman <mpe@ellerman.id.au>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Christophe Leroy <christophe.leroy@csgroup.eu>,
+ linuxppc-dev@lists.ozlabs.org, linux-riscv@lists.infradead.org,
+ Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>, Rich Felker <dalias@libc.org>,
+ John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+ linux-sh@vger.kernel.org, Max Filippov <jcmvbkbc@gmail.com>,
+ Josh Triplett <josh@joshtriplett.org>, Masahiro Yamada
+ <masahiroy@kernel.org>, linux-kbuild@vger.kernel.org,
+ Andrew Morton <akpm@linux-foundation.org>
+References: <38e1a01b-1e8b-7c66-bafc-fc5861f08da9@gmail.com>
+Content-Language: en-US
+From: Randy Dunlap <rdunlap@infradead.org>
+In-Reply-To: <38e1a01b-1e8b-7c66-bafc-fc5861f08da9@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -59,37 +78,53 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+Hi Jesse,
+
+On 8/16/23 15:45, Jesse Taube wrote:
+> Hi, Randy
+> 
+>> diff -- a/init/Kconfig b/init/Kconfig
+>> --- a/init/Kconfig
+>> +++ b/init/Kconfig
+>> @@ -1790,14 +1790,6 @@ config DEBUG_RSEQ
+>>
+>>        If unsure, say N.
+>>
+>> -config EMBEDDED
+>> -    bool "Embedded system"
+>> -    select EXPERT
+>> -    help
+>> -      This option should be enabled if compiling the kernel for
+>> -      an embedded system so certain expert options are available
+>> -      for configuration.
+> 
+> Wouldn't removing this break many out of tree configs?
+
+I'm not familiar with out-of-tree configs.
+Do you have some examples of some that use CONFIG_EMBEDDED?
+(not distros)
+
+> Should there be a warning here to update change it instead of removal?
+
+kconfig doesn't have a warning mechanism AFAIK.
+Do you have an idea of how this would work?
+
+We could make a smaller change to init/Kconfig, like so:
+
+ config EMBEDDED
+-	bool "Embedded system"
++	bool "Embedded system (DEPRECATED)"
+ 	select EXPERT
+ 	help
+-	  This option should be enabled if compiling the kernel for
+-	  an embedded system so certain expert options are available
+-	  for configuration.
++	  This option is being removed after Linux 6.6.
++	  Use EXPERT instead of EMBEDDED.
+
+but there is no way to produce a warning message. I.e., even with this
+change, the message will probably be overlooked.
+
 ---
-v1: indent fix.
-
- src/wg-quick/linux.bash | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
-
-diff --git a/src/wg-quick/linux.bash b/src/wg-quick/linux.bash
-index 69e5bef..4300268 100755
---- a/src/wg-quick/linux.bash
-+++ b/src/wg-quick/linux.bash
-@@ -298,7 +298,7 @@ execute_hooks() {
- 
- cmd_usage() {
- 	cat >&2 <<-_EOF
--	Usage: $PROGRAM [ up | down | save | strip ] [ CONFIG_FILE | INTERFACE ]
-+	Usage: $PROGRAM [ up | down | restart | save | strip ] [ CONFIG_FILE | INTERFACE ]
- 
- 	  CONFIG_FILE is a configuration file, whose filename is the interface name
- 	  followed by \`.conf'. Otherwise, INTERFACE is an interface name, with
-@@ -373,6 +373,11 @@ elif [[ $# -eq 2 && $1 == down ]]; then
- 	auto_su
- 	parse_options "$2"
- 	cmd_down
-+elif [[ $# -eq 2 && $1 == restart ]]; then
-+	auto_su
-+	parse_options "$2"
-+	cmd_down
-+	cmd_up
- elif [[ $# -eq 2 && $1 == save ]]; then
- 	auto_su
- 	parse_options "$2"
--- 
-2.41.0
+~Randy
 
