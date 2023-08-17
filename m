@@ -4,66 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A91CEC2FC04
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 17 Aug 2023 03:17:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAF03EB64DD
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 17 Aug 2023 09:15:12 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b0043249;
-	Thu, 17 Aug 2023 03:15:38 +0000 (UTC)
-Received: from casper.infradead.org (casper.infradead.org
- [2001:8b0:10b:1236::1])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 81e1d76d
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5a7c6e1f;
+	Thu, 17 Aug 2023 09:15:10 +0000 (UTC)
+Received: from mail-pg1-f207.google.com (mail-pg1-f207.google.com
+ [209.85.215.207])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id cdf3b018
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 17 Aug 2023 03:15:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
- :Reply-To:Content-ID:Content-Description;
- bh=P/kFyzCr/eSDaJkbY0OlCILEe1j9xWTLXn/yJLAYIu4=; b=A9+ZOyBLxgvkefgcCG3G+GbFOc
- t3Q4LPTtkkpyh0LBpbAFdc+3lhG3pcvB3Tuy2cTe9/M//iW+Sx1QS7+tpwHS9HCucIDpD/RDGCGIr
- FphyIapebkE7eEjeEnFtOi+9dwumQAvsQRYGjE0GEiZ5WBo53AxtXkFjlluHJQQSFYe1ZQ0mwCfpK
- 6X/okD9sKE4Z8iWegd56l1SCJXl6wUSJ5Uk04klLzVcTy3SNTh8mgr2aL00kPfkoj1Td2N2/Azxck
- 21ORjXTS2+GmCUfbeyQtLCC4mizooGziW6L1eBdD4Ta+hfKURTJGkPtTMCT5Ht16ny8Gi1C8JbRXm
- mdreectQ==;
-Received: from [2601:1c2:980:9ec0::1a0b]
- by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
- id 1qWTTi-000tOI-Mm; Thu, 17 Aug 2023 03:15:18 +0000
-Message-ID: <86e329b1-c8d7-47bf-8be8-3326daf74eb5@infradead.org>
-Date: Wed, 16 Aug 2023 20:15:09 -0700
+ Thu, 17 Aug 2023 09:15:08 +0000 (UTC)
+Received: by mail-pg1-f207.google.com with SMTP id
+ 41be03b00d2f7-564656d952aso8229118a12.3
+ for <wireguard@lists.zx2c4.com>; Thu, 17 Aug 2023 02:15:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20221208; t=1692263707; x=1692868507;
+ h=to:from:subject:message-id:date:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=hJTqPyt33YHCdZmnyY+B0zFc5RAHxXXxfwM+1DfiJ8I=;
+ b=kfYtt/Bq11WLfBG+a/jf60nw9Z4fwouthTerFCKQriSqQ/5HIiMdZMA0oue2vTFFHe
+ xyuFQ5vfTNVVhzr2nqwnjm+nHsPIU14DdL4PQj/OzJ3AdF+bnV5w/yHHsRviJYDpBjR6
+ gjLjlpK5tfv6htYGoa7DyIfvnQJ0LkLLkKbxsKBC88sr9LSTnsJwCBqNzT4Vl8WKuaeT
+ J80wbVLgssT5x4N3o8vOQtKX+29wA4vPdtTmjp/O0QpJ/RExNAvQY8DXrc6MCgyHtILP
+ Dko6ndV3pMkX0vKBj+pJ4a+zlJvrY/WGFTbmbUBUMQg/iuHVEYFiSEaDa7GFeWd7wPvp
+ 6UPQ==
+X-Gm-Message-State: AOJu0Yyb2n4t4R6l13vtAiYxtNdu63A0SHBhGZGnIBnNBecoaXOXKXUm
+ r2XhbHQ6dTY0s6qXdUXgX9MZKu862oeDiF21COnuvtATX2mb
+X-Google-Smtp-Source: AGHT+IG5SfPB6AqV0l0rIQDdt/eZEnUvKDtlCt/SixOdnbEiXNIVo5KHqkUwwKsWppFfJjuOvEfYGvOICNfMXCelQCiE5xt//1Hf
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH] treewide: drop CONFIG_EMBEDDED
-To: 20230816055010.31534-1-rdunlap@infradead.org
-Cc: linux-kernel@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
- linux-arm-kernel@lists.infradead.org, Arnd Bergmann <arnd@arndb.de>,
- "Jason A . Donenfeld" <Jason@zx2c4.com>, wireguard@lists.zx2c4.com,
- linux-arch@vger.kernel.org, linux-snps-arc@lists.infradead.org,
- Vineet Gupta <vgupta@kernel.org>, Brian Cain <bcain@quicinc.com>,
- linux-hexagon@vger.kernel.org, Greg Ungerer <gerg@linux-m68k.org>,
- linux-m68k@lists.linux-m68k.org, Michal Simek <monstr@monstr.eu>,
- Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
- Dinh Nguyen <dinguyen@kernel.org>, Jonas Bonn <jonas@southpole.se>,
- Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>,
- Stafford Horne <shorne@gmail.com>, linux-openrisc@vger.kernel.org,
- linux-mips@vger.kernel.org, Michael Ellerman <mpe@ellerman.id.au>,
- Nicholas Piggin <npiggin@gmail.com>,
- Christophe Leroy <christophe.leroy@csgroup.eu>,
- linuxppc-dev@lists.ozlabs.org, linux-riscv@lists.infradead.org,
- Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Yoshinori Sato <ysato@users.sourceforge.jp>, Rich Felker <dalias@libc.org>,
- John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
- linux-sh@vger.kernel.org, Max Filippov <jcmvbkbc@gmail.com>,
- Josh Triplett <josh@joshtriplett.org>, Masahiro Yamada
- <masahiroy@kernel.org>, linux-kbuild@vger.kernel.org,
- Andrew Morton <akpm@linux-foundation.org>
-References: <38e1a01b-1e8b-7c66-bafc-fc5861f08da9@gmail.com>
-Content-Language: en-US
-From: Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <38e1a01b-1e8b-7c66-bafc-fc5861f08da9@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-Received: by 2002:a63:3307:0:b0:565:f8d4:bb4f with SMTP id
+ z7-20020a633307000000b00565f8d4bb4fmr827736pgz.11.1692263707169; Thu, 17 Aug
+ 2023 02:15:07 -0700 (PDT)
+Date: Thu, 17 Aug 2023 02:15:07 -0700
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <00000000000021dc2806031ad901@google.com>
+Subject: [syzbot] [wireguard?] INFO: rcu detected stall in
+ wg_ratelimiter_gc_entries (2)
+From: syzbot <syzbot+c1cc0083f159b67cb192@syzkaller.appspotmail.com>
+To: Jason@zx2c4.com, davem@davemloft.net, edumazet@google.com, jiri@nvidia.com,
+ kuba@kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
+ pabeni@redhat.com, syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -78,53 +61,122 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Jesse,
+Hello,
 
-On 8/16/23 15:45, Jesse Taube wrote:
-> Hi, Randy
-> 
->> diff -- a/init/Kconfig b/init/Kconfig
->> --- a/init/Kconfig
->> +++ b/init/Kconfig
->> @@ -1790,14 +1790,6 @@ config DEBUG_RSEQ
->>
->>        If unsure, say N.
->>
->> -config EMBEDDED
->> -    bool "Embedded system"
->> -    select EXPERT
->> -    help
->> -      This option should be enabled if compiling the kernel for
->> -      an embedded system so certain expert options are available
->> -      for configuration.
-> 
-> Wouldn't removing this break many out of tree configs?
+syzbot found the following issue on:
 
-I'm not familiar with out-of-tree configs.
-Do you have some examples of some that use CONFIG_EMBEDDED?
-(not distros)
+HEAD commit:    ace0ab3a4b54 Revert "vlan: Fix VLAN 0 memory leak"
+git tree:       net
+console output: https://syzkaller.appspot.com/x/log.txt?x=16153769a80000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=3e670757e16affb
+dashboard link: https://syzkaller.appspot.com/bug?extid=c1cc0083f159b67cb192
+compiler:       gcc (Debian 12.2.0-14) 12.2.0, GNU ld (GNU Binutils for Debian) 2.40
+syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=1227599ba80000
+C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=17414927a80000
 
-> Should there be a warning here to update change it instead of removal?
+Downloadable assets:
+disk image: https://storage.googleapis.com/syzbot-assets/e03bf2f0ff9c/disk-ace0ab3a.raw.xz
+vmlinux: https://storage.googleapis.com/syzbot-assets/ad6e79c01723/vmlinux-ace0ab3a.xz
+kernel image: https://storage.googleapis.com/syzbot-assets/617319e5afb7/bzImage-ace0ab3a.xz
 
-kconfig doesn't have a warning mechanism AFAIK.
-Do you have an idea of how this would work?
+The issue was bisected to:
 
-We could make a smaller change to init/Kconfig, like so:
+commit c2368b19807affd7621f7c4638cd2e17fec13021
+Author: Jiri Pirko <jiri@nvidia.com>
+Date:   Fri Jul 29 07:10:35 2022 +0000
 
- config EMBEDDED
--	bool "Embedded system"
-+	bool "Embedded system (DEPRECATED)"
- 	select EXPERT
- 	help
--	  This option should be enabled if compiling the kernel for
--	  an embedded system so certain expert options are available
--	  for configuration.
-+	  This option is being removed after Linux 6.6.
-+	  Use EXPERT instead of EMBEDDED.
+    net: devlink: introduce "unregistering" mark and use it during devlinks iteration
 
-but there is no way to produce a warning message. I.e., even with this
-change, the message will probably be overlooked.
+bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=17901617a80000
+final oops:     https://syzkaller.appspot.com/x/report.txt?x=14501617a80000
+console output: https://syzkaller.appspot.com/x/log.txt?x=10501617a80000
+
+IMPORTANT: if you fix the issue, please add the following tag to the commit:
+Reported-by: syzbot+c1cc0083f159b67cb192@syzkaller.appspotmail.com
+Fixes: c2368b19807a ("net: devlink: introduce "unregistering" mark and use it during devlinks iteration")
+
+rcu: INFO: rcu_preempt self-detected stall on CPU
+rcu: 	1-....: (10499 ticks this GP) idle=2d5c/1/0x4000000000000000 softirq=8994/8995 fqs=4737
+rcu: 	         hardirqs   softirqs   csw/system
+rcu: 	 number:        0          0            0
+rcu: 	cputime:    32198      20291           25   ==> 52490(ms)
+rcu: 	(t=10500 jiffies g=7889 q=546 ncpus=2)
+CPU: 1 PID: 5075 Comm: kworker/1:6 Not tainted 6.5.0-rc5-syzkaller-00194-gace0ab3a4b54 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
+Workqueue: events_power_efficient wg_ratelimiter_gc_entries
+RIP: 0010:taprio_next_tc_txq net/sched/sch_taprio.c:771 [inline]
+RIP: 0010:taprio_dequeue_tc_priority+0x2fb/0x4b0 net/sched/sch_taprio.c:801
+Code: 01 00 00 48 be 00 00 00 00 00 fc ff df 48 8b 4c 24 28 48 89 c8 48 c1 e8 03 0f b6 14 30 48 89 c8 83 e0 07 83 c0 01 38 d0 7c 08 <84> d2 0f 85 da 00 00 00 48 8b 04 24 45 0f b7 75 fe 0f b6 00 38 44
+RSP: 0000:ffffc900001e0d60 EFLAGS: 00000202
+RAX: 0000000000000007 RBX: ffff88806f6f6394 RCX: ffff88807b860b5e
+RDX: 0000000000000000 RSI: dffffc0000000000 RDI: dffffc0000000000
+RBP: 000000000000000b R08: 0000000000000005 R09: 0000000000000000
+R10: 0000000000000000 R11: 000000000000004e R12: 0000000000000008
+R13: ffff88807b860b60 R14: 0000000000000000 R15: 0000000000000001
+FS:  0000000000000000(0000) GS:ffff8880b9900000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f5ace99f5c0 CR3: 000000006f75b000 CR4: 00000000003506e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <IRQ>
+ taprio_dequeue+0x12e/0x5f0 net/sched/sch_taprio.c:868
+ dequeue_skb net/sched/sch_generic.c:292 [inline]
+ qdisc_restart net/sched/sch_generic.c:397 [inline]
+ __qdisc_run+0x1c4/0x19d0 net/sched/sch_generic.c:415
+ qdisc_run include/net/pkt_sched.h:125 [inline]
+ qdisc_run include/net/pkt_sched.h:122 [inline]
+ net_tx_action+0x71e/0xc80 net/core/dev.c:5049
+ __do_softirq+0x218/0x965 kernel/softirq.c:553
+ invoke_softirq kernel/softirq.c:427 [inline]
+ __irq_exit_rcu kernel/softirq.c:632 [inline]
+ irq_exit_rcu+0xb7/0x120 kernel/softirq.c:644
+ sysvec_apic_timer_interrupt+0x93/0xc0 arch/x86/kernel/apic/apic.c:1109
+ </IRQ>
+ <TASK>
+ asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:645
+RIP: 0010:lock_acquire+0x1ef/0x510 kernel/locking/lockdep.c:5729
+Code: c1 05 d5 6e 9b 7e 83 f8 01 0f 85 b0 02 00 00 9c 58 f6 c4 02 0f 85 9b 02 00 00 48 85 ed 74 01 fb 48 b8 00 00 00 00 00 fc ff df <48> 01 c3 48 c7 03 00 00 00 00 48 c7 43 08 00 00 00 00 48 8b 84 24
+RSP: 0000:ffffc90003e1fb98 EFLAGS: 00000206
+RAX: dffffc0000000000 RBX: 1ffff920007c3f75 RCX: 0000000000000001
+RDX: 1ffff11003f03c80 RSI: ffffffff8a6c83a0 RDI: ffffffff8ac811a0
+RBP: 0000000000000200 R08: 0000000000000000 R09: fffffbfff2309dea
+R10: ffffffff9184ef57 R11: 0000000000000000 R12: 0000000000000001
+R13: 0000000000000000 R14: ffffffff8d89afb8 R15: 0000000000000000
+ __raw_spin_lock include/linux/spinlock_api_smp.h:133 [inline]
+ _raw_spin_lock+0x2e/0x40 kernel/locking/spinlock.c:154
+ spin_lock include/linux/spinlock.h:351 [inline]
+ wg_ratelimiter_gc_entries+0xc6/0x520 drivers/net/wireguard/ratelimiter.c:63
+ process_one_work+0xaa2/0x16f0 kernel/workqueue.c:2600
+ worker_thread+0x687/0x1110 kernel/workqueue.c:2751
+ kthread+0x33a/0x430 kernel/kthread.c:389
+ ret_from_fork+0x2c/0x70 arch/x86/kernel/process.c:145
+ ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
+ </TASK>
+
 
 ---
-~Randy
+This report is generated by a bot. It may contain errors.
+See https://goo.gl/tpsmEJ for more information about syzbot.
+syzbot engineers can be reached at syzkaller@googlegroups.com.
 
+syzbot will keep track of this issue. See:
+https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
+For information about bisection process see: https://goo.gl/tpsmEJ#bisection
+
+If the bug is already fixed, let syzbot know by replying with:
+#syz fix: exact-commit-title
+
+If you want syzbot to run the reproducer, reply with:
+#syz test: git://repo/address.git branch-or-commit-hash
+If you attach or paste a git patch, syzbot will apply it before testing.
+
+If you want to overwrite bug's subsystems, reply with:
+#syz set subsystems: new-subsystem
+(See the list of subsystem names on the web dashboard)
+
+If the bug is a duplicate of another bug, reply with:
+#syz dup: exact-subject-of-another-report
+
+If you want to undo deduplication, reply with:
+#syz undup
