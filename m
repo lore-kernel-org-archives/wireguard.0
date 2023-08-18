@@ -4,27 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5ADEC001DE
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 18 Aug 2023 11:50:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5A6BEE49A0
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 18 Aug 2023 23:44:51 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8fdda864;
-	Fri, 18 Aug 2023 11:50:08 +0000 (UTC)
-Received: from janet.servers.dxld.at (mail.servers.dxld.at [5.9.225.164])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id aab2de01
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8545d593;
+	Fri, 18 Aug 2023 23:44:49 +0000 (UTC)
+Received: from bombadil.infradead.org (bombadil.infradead.org
+ [2607:7c80:54:3::133])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7c123d89
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 18 Aug 2023 11:50:06 +0000 (UTC)
-Received: janet.servers.dxld.at; Fri, 18 Aug 2023 13:50:06 +0200
-From: =?UTF-8?q?Daniel=20Gr=C3=B6ber?= <dxld@darkboxed.org>
-To: wireguard@lists.zx2c4.com
-Cc: "Jason A . Donenfeld" <Jason@zx2c4.com>,
- =?UTF-8?q?Daniel=20Gr=C3=B6ber?= <dxld@darkboxed.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH v2 RESEND] wg: Allow config to read secret keys from file
-Date: Fri, 18 Aug 2023 13:49:57 +0200
-Message-Id: <20230818114957.982705-1-dxld@darkboxed.org>
-X-Mailer: git-send-email 2.39.2
+ Fri, 18 Aug 2023 23:44:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+ Content-Type:In-Reply-To:References:Cc:To:From:Subject:MIME-Version:Date:
+ Message-ID:Sender:Reply-To:Content-ID:Content-Description;
+ bh=xTd+xM15uwaYqGAW/S8CZDkcwvuJ3aJIIjx1MPGNF/Y=; b=pZH/ksRwnPq3maIwYAlJC3Rrrr
+ 9sXlHg5rZOuCTKksS/zIoMTj4CYgiei2BSHr/Fmq4d5o6u6K44iFq95QRQnAeXh21SPlKB1dSqI9S
+ Cfts7MiOtQtejm51Kqr727hN42qMODja2NIagNNWPITLUN3zgCX6JPHkj/KLLfXzJl6lnRj2IQpX0
+ rdlY37izaBlOJXXS/VdrrvoBUDNRoF1KuxWjFO1MPDhsEqGcrcCV503FRIC+zvjs3tCc/aw4OtNDw
+ 1CgyBaH6pumLMmkbfGn+hR53qU8NQHPiWTB5c7oduD3LBzu4IRjjLr3T37jzgVW5PH9+G1oKRWkqj
+ I69daqCw==;
+Received: from [2601:1c2:980:9ec0::2764]
+ by bombadil.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
+ id 1qX98o-00ABNX-07; Fri, 18 Aug 2023 23:44:30 +0000
+Message-ID: <78a802c5-3f0d-e199-d974-e586c00180eb@infradead.org>
+Date: Fri, 18 Aug 2023 16:44:26 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.14.0
+Subject: Re: [PATCH] treewide: drop CONFIG_EMBEDDED
+Content-Language: en-US
+From: Randy Dunlap <rdunlap@infradead.org>
+To: Jesse Taube <mr.bossman075@gmail.com>
+Cc: linux-kernel@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
+ linux-arm-kernel@lists.infradead.org, Arnd Bergmann <arnd@arndb.de>,
+ "Jason A . Donenfeld" <Jason@zx2c4.com>, wireguard@lists.zx2c4.com,
+ linux-arch@vger.kernel.org, linux-snps-arc@lists.infradead.org,
+ Vineet Gupta <vgupta@kernel.org>, Brian Cain <bcain@quicinc.com>,
+ linux-hexagon@vger.kernel.org, Greg Ungerer <gerg@linux-m68k.org>,
+ linux-m68k@lists.linux-m68k.org, Michal Simek <monstr@monstr.eu>,
+ Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+ Dinh Nguyen <dinguyen@kernel.org>, Jonas Bonn <jonas@southpole.se>,
+ Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>,
+ Stafford Horne <shorne@gmail.com>, linux-openrisc@vger.kernel.org,
+ linux-mips@vger.kernel.org, Michael Ellerman <mpe@ellerman.id.au>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Christophe Leroy <christophe.leroy@csgroup.eu>,
+ linuxppc-dev@lists.ozlabs.org, linux-riscv@lists.infradead.org,
+ Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>, Rich Felker <dalias@libc.org>,
+ John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+ linux-sh@vger.kernel.org, Max Filippov <jcmvbkbc@gmail.com>,
+ Josh Triplett <josh@joshtriplett.org>, Masahiro Yamada
+ <masahiroy@kernel.org>, linux-kbuild@vger.kernel.org,
+ Andrew Morton <akpm@linux-foundation.org>
+References: <38e1a01b-1e8b-7c66-bafc-fc5861f08da9@gmail.com>
+ <86e329b1-c8d7-47bf-8be8-3326daf74eb5@infradead.org>
+In-Reply-To: <86e329b1-c8d7-47bf-8be8-3326daf74eb5@infradead.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -41,77 +79,65 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This adds two new config keys PrivateKeyFile= and PresharedKeyFile= that
-simply hook up the existing code for the `wg set ... private-key /file`
-codepath.
+Hi Jesse,
 
-By using the new options wireguard configs can become a lot easier to
-manage and deploy as we don't have to treat them as secrets anymore. This
-way they can, for example, be tracked in public git repos while the secret
-keys can be provisioned using an out of band system or with a manual
-one-time step instead.
+I replied to your comment a few days ago, but for some reason
+your email to me contains:
+Reply-To: 20230816055010.31534-1-rdunlap@infradead.org
+so it wasn't sent directly to you.
 
-Before this patch we were using an ugly hack: it's possible to simply omit
-PrivateKey= and set it using `PostUp = wg set %i private-key /some/file`.
-However this breaks when we try to use setconf or synconf as they
-will (rightly) unset the private key when it's missing in the underlying
-config file breaking connectivity.
+My former reply is below.
 
-Reviewed-By: Michael Tokarev <mjt@tls.msk.ru>
-Signed-off-by: Daniel Gröber <dxld@darkboxed.org>
----
- src/config.c | 8 ++++++++
- src/man/wg.8 | 4 ++++
- 2 files changed, 12 insertions(+)
+On 8/16/23 20:15, Randy Dunlap wrote:
+> Hi Jesse,
+> 
+> On 8/16/23 15:45, Jesse Taube wrote:
+>> Hi, Randy
+>>
+>>> diff -- a/init/Kconfig b/init/Kconfig
+>>> --- a/init/Kconfig
+>>> +++ b/init/Kconfig
+>>> @@ -1790,14 +1790,6 @@ config DEBUG_RSEQ
+>>>
+>>>         If unsure, say N.
+>>>
+>>> -config EMBEDDED
+>>> -    bool "Embedded system"
+>>> -    select EXPERT
+>>> -    help
+>>> -      This option should be enabled if compiling the kernel for
+>>> -      an embedded system so certain expert options are available
+>>> -      for configuration.
+>>
+>> Wouldn't removing this break many out of tree configs?
+> 
+> I'm not familiar with out-of-tree configs.
+> Do you have some examples of some that use CONFIG_EMBEDDED?
+> (not distros)
+> 
+>> Should there be a warning here to update change it instead of removal?
+> 
+> kconfig doesn't have a warning mechanism AFAIK.
+> Do you have an idea of how this would work?
+> 
+> We could make a smaller change to init/Kconfig, like so:
+> 
+>  config EMBEDDED
+> -	bool "Embedded system"
+> +	bool "Embedded system (DEPRECATED)"
+>  	select EXPERT
+>  	help
+> -	  This option should be enabled if compiling the kernel for
+> -	  an embedded system so certain expert options are available
+> -	  for configuration.
+> +	  This option is being removed after Linux 6.6.
+> +	  Use EXPERT instead of EMBEDDED.
+> 
+> but there is no way to produce a warning message. I.e., even with this
+> change, the message will probably be overlooked.
+> 
+> ---
+> ~Randy
 
-diff --git a/src/config.c b/src/config.c
-index 81ccb47..1e924c7 100644
---- a/src/config.c
-+++ b/src/config.c
-@@ -450,6 +450,10 @@ static bool process_line(struct config_ctx *ctx, const char *line)
- 			ret = parse_key(ctx->device->private_key, value);
- 			if (ret)
- 				ctx->device->flags |= WGDEVICE_HAS_PRIVATE_KEY;
-+		} else if (key_match("PrivateKeyFile")) {
-+			ret = parse_keyfile(ctx->device->private_key, value);
-+			if (ret)
-+				ctx->device->flags |= WGDEVICE_HAS_PRIVATE_KEY;
- 		} else
- 			goto error;
- 	} else if (ctx->is_peer_section) {
-@@ -467,6 +471,10 @@ static bool process_line(struct config_ctx *ctx, const char *line)
- 			ret = parse_key(ctx->last_peer->preshared_key, value);
- 			if (ret)
- 				ctx->last_peer->flags |= WGPEER_HAS_PRESHARED_KEY;
-+		} else if (key_match("PresharedKeyFile")) {
-+			ret = parse_keyfile(ctx->last_peer->preshared_key, value);
-+			if (ret)
-+				ctx->last_peer->flags |= WGPEER_HAS_PRESHARED_KEY;
- 		} else
- 			goto error;
- 	} else
-diff --git a/src/man/wg.8 b/src/man/wg.8
-index 7984539..a5d8bcf 100644
---- a/src/man/wg.8
-+++ b/src/man/wg.8
-@@ -134,6 +134,8 @@ The \fIInterface\fP section may contain the following fields:
- .IP \(bu
- PrivateKey \(em a base64 private key generated by \fIwg genkey\fP. Required.
- .IP \(bu
-+PrivateKeyFile \(em path to a file containing a base64 private key. May be used instead of \fIPrivateKey\fP. Optional.
-+.IP \(bu
- ListenPort \(em a 16-bit port for listening. Optional; if not specified, chosen
- randomly.
- .IP \(bu
-@@ -151,6 +153,8 @@ and may be omitted. This option adds an additional layer of symmetric-key
- cryptography to be mixed into the already existing public-key cryptography,
- for post-quantum resistance.
- .IP \(bu
-+PresharedKeyFile \(em path to a file containing a base64 preshared key. May be used instead of \fIPresharedKey\fP. Optional.
-+.IP \(bu
- AllowedIPs \(em a comma-separated list of IP (v4 or v6) addresses with
- CIDR masks from which incoming traffic for this peer is allowed and to
- which outgoing traffic for this peer is directed. The catch-all
 -- 
-2.39.2
-
+~Randy
