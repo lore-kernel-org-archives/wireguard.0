@@ -4,41 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC51BEE49AF
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 19 Aug 2023 20:28:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83B88EE49AD
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 19 Aug 2023 20:28:40 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7595aaab;
-	Sat, 19 Aug 2023 20:14:23 +0000 (UTC)
-Received: from mail.wayoftao.net (wayoftao.net [80.209.237.75])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 454792cd
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 773a9519;
+	Sat, 19 Aug 2023 20:14:24 +0000 (UTC)
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com
+ [2a00:1450:4864:20::533])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 23132c23
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 19 Aug 2023 15:08:32 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon)
- with ESMTPSA id E986F101106
- for <wireguard@lists.zx2c4.com>; Sat, 19 Aug 2023 15:08:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wayoftao.net;
- s=dkim; t=1692457712;
- h=from:subject:date:message-id:to:mime-version:content-type:
- content-language; bh=AodlXyyqEMP2WOu1reZEAcj2w3xk2hycH2GRqB9aKOg=;
- b=CA0YNzFle2vaHNpKfMeqKWqBs+nSPXF5c67WKZij3s+wphkV0CkpPMlQI4Uo75gkL9uXGU
- jNF1NMH9T0/hm/ZCE4R6pMUPTVWW2hXiM2T+aD4iYWbD5k0rsydJ3ClktrtL+Xx4Gdmuz8
- ogVKjZnApinQAlerVelUdXhF5M1EnyTlZDRFf/5M8b3iX03JW0FW3gS0MFXPFFnA4gD55G
- wXcu2zawmmir3zrhmx820SH915DO5phd6xJ9ALzbBzXgewXUtiyM2r3h2w3NOt9o8s7gP/
- u2bK95rpZsuj+5gLbJg9daRc2LYk2MG8DFc1+Cxn9aw68qMb7X42lwM922Kwkw==
-Message-ID: <ae27527e-c1f3-2b28-4c2d-b1c0698ed395@wayoftao.net>
-Date: Sat, 19 Aug 2023 17:08:27 +0200
+ Sat, 19 Aug 2023 20:06:09 +0000 (UTC)
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-52889bc61b6so2606293a12.0
+ for <wireguard@lists.zx2c4.com>; Sat, 19 Aug 2023 13:06:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=krose.org; s=google; t=1692475568; x=1693080368;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pBqxtTZFcF2+u+z3+vXMkFR/hscinsTNek8/4Z/c7Hk=;
+ b=ozLq/B4Z+DRHLp4NNDVydjulQjGcKx9+nbWmC4dQTaaZUr4TP4ayH4ij2pfPnA6JwA
+ cgUsrt7YX1/LPAxvltyxRMiq0fXqTYd/7sXemEcQewNg1WHz0xrmk+f+uPUa20OGqR04
+ aUCR/qcoizkNSoE5QxR33mNOg0YfibnqX4Yy8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20221208; t=1692475568; x=1693080368;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=pBqxtTZFcF2+u+z3+vXMkFR/hscinsTNek8/4Z/c7Hk=;
+ b=N4NR6NEILi7fEk7DGhrqQ/Xn9Y1siLV3eqt6nongSP8158QpICNjE4Rr64MtmdVPVV
+ DVqQYNKCX2GiYriCXGQQk4OzLgcSudruqJ0/OEVOb7aj2wWe8jLILJPAJpK+dGb7/k1l
+ O4TNobF6hp5DIcrjU1pC8yCBjUDJDKjy6NpjjqreaoZlJTvhWV1TKjeMLOEFHy6imzHE
+ I0V3O8Q2cO9QF44YKuYEExGBwDrAt5R2bZQxc/lkgemwB3sinoV/6Z9ksSLlPYYBkdKd
+ rKni7bJuPvKuLk6d0Yw+JVsV174dPSfHfBKnRxGR9Tnl12W0gv1Bgpcaa6se9oHanmCf
+ bEMg==
+X-Gm-Message-State: AOJu0YxW/p2yf0avjFSgm+IYHWM28UEA/vTYDIaFrBdURsp8mCLinJJx
+ H+A1oaQHohdi9bNOWvk8EEb+cKy6r4+WMoNIJynK5g==
+X-Google-Smtp-Source: AGHT+IHDaDzNz84MlDg7tk71l8nIAb8Fwq+6S4gp+BG/81KaBWioAieOr8aidr6A1j2+hG24vDvMw4lE6Zgo/Tn6lo8=
+X-Received: by 2002:aa7:d6c4:0:b0:522:3849:48d8 with SMTP id
+ x4-20020aa7d6c4000000b00522384948d8mr1784809edr.9.1692475568483; Sat, 19 Aug
+ 2023 13:06:08 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-To: wireguard@lists.zx2c4.com
-Content-Language: en-US
-From: Kim Nilsson <kim@wayoftao.net>
-Subject: allowed-ips: separation of concerns, routing and firewalling
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------0yQIIyObyhYHHC9F0k0Acynn"
-X-Last-TLS-Session-Version: TLSv1.3
+References: <20230819140218.5algu2nfmfostngh@House.clients.dxld.at>
+In-Reply-To: <20230819140218.5algu2nfmfostngh@House.clients.dxld.at>
+From: Kyle Rose <krose@krose.org>
+Date: Sat, 19 Aug 2023 16:05:57 -0400
+Message-ID: <CAJU8_nXtXcxL2XezZxvigXeGVnvtWrs2BaF2kpbe-DM4aARuBA@mail.gmail.com>
+Subject: Re: [RFC] Replace WireGuard AllowedIPs with IP route attribute
+To: =?UTF-8?Q?Daniel_Gr=C3=B6ber?= <dxld@darkboxed.org>
+Cc: wireguard@lists.zx2c4.com, bird-users@network.cz, 
+ babel-users@alioth-lists.debian.net
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Mailman-Approved-At: Sat, 19 Aug 2023 20:14:11 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -54,178 +72,159 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------0yQIIyObyhYHHC9F0k0Acynn
-Content-Type: multipart/mixed; boundary="------------C4xUhAwEcxrsDmP8RmNVxLVc";
- protected-headers="v1"
-From: Kim Nilsson <kim@wayoftao.net>
-To: wireguard@lists.zx2c4.com
-Message-ID: <ae27527e-c1f3-2b28-4c2d-b1c0698ed395@wayoftao.net>
-Subject: allowed-ips: separation of concerns, routing and firewalling
+Daniel,
 
---------------C4xUhAwEcxrsDmP8RmNVxLVc
-Content-Type: multipart/mixed; boundary="------------EyBQK7vQCWT0MqHAnMrtvpXR"
+I attempted several times to send the following message to the mailing
+list nearly two months ago, but they all landed in moderation for some
+reason and were silently dropped after a few days. You are not the
+only one who wants this functionality for mesh VPNs. I note the email
+you subsequently replied to (by Bernd) also didn't show up on the
+list, suggesting I am not the only one whose messages are being
+inexplicably jailed.
 
---------------EyBQK7vQCWT0MqHAnMrtvpXR
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Kyle
 
-SGVsbG8gd2lyZWd1YXJkIHByb2plY3QsDQoNCg0KSSBhbSBjdXJyZW50bHkgd29ya2luZyBv
-biBzZXZlcmFsIHByb2plY3RzIHRoYXQgbWFrZSB1c2Ugb2Ygd2lyZWd1YXJkIGFzIA0KcGFy
-dCBvZiBhIGxhcmdlciBuZXR3b3JraW5nIHNjaGVtZS4gU2luY2UgdGhlcmUgYXJlIG1hbnkg
-ZGV0YWlscyBhYm91dCANCnR1bm5lbGluZywgbmV0d29yayByb3V0aW5nLCBhbmQgZmlyZXdh
-bGxpbmcgdGhhdCBhcmUgY29uc2lkZXJlZCANCm11c3Qta25vdyBmb3IgbWFueSBvZiBteSBj
-b3dvcmtlcnMgSSByZWNlbnRseSBoYWQgdG8gbWFrZSBhIHByZXNlbnRhdGlvbiANCm9uIGhv
-dyBwYWNrZXRzIG1vdmUgdGhyb3VnaCB0aGUgbmV0d29yayBzdGFjayBhbmQsIGZvciBleGFt
-cGxlLCBob3cgdGhleSANCmVuZCB1cCBvbiB0aGUgcmVjZWl2aW5nIGVuZCBvZiBhIHdpcmVn
-dWFyZCB0dW5uZWwuIER1cmluZyB0aGUgDQpwcmVzZW50YXRpb24gYSBxdWVzdGlvbiBhcm9z
-ZSBvbiB3aGF0IGhhcHBlbnMgd2hlbiBhbiBJUCBwYWNrZXQgaXMgDQpyb3V0ZWQgdGhyb3Vn
-aCBhIGdhdGV3YXkgYW5kIHdoYXQgd2lyZWd1YXJkIGRvZXMuDQoNCg0KV2hlbiBhbiBJUCBw
-YWNrZXQgaXMgdG8gYmUgc2VudCBvdmVyIGUuZy4gZXRoZXJuZXQsIHRoZSBsaW5rIGxheWVy
-IA0KZGVzdGluYXRpb24gYWRkcmVzcyBpcyB1c3VhbGx5IGRpc2NvdmVyZWQgdXNpbmcgQVJQ
-LiBJbiB0aGUgY2FzZSBvZiANCndpcmVndWFyZCwgYSBsb29rdXAgaXMgcGVyZm9ybWVkIGlu
-dG8gYSB0YWJsZSB3aGljaCBtYXBzIHRoZSBlbnRyaWVzIG9mIA0KYWxsb3dlZC1pcHMgdG8g
-dGhlaXIgY29ycmVzcG9uZGluZyB3aXJlZ3VhcmQgcGVlci4gVGhpcyBiZWhhdmlvciBpcyAN
-CnJlbGF0aXZlbHkgc3RyYWlnaHRmb3J3YXJkIGFuZCBkb2VzIHdoYXQgb25lIHdvdWxkIGV4
-cGVjdCBmcm9tIGEgbGluayBsYXllci4NCg0KDQpIb3dldmVyLCB3aGVuIGFuIElQIHBhY2tl
-dCBpcyB0byBiZSByb3V0ZWQgdGhyb3VnaCBhIGdhdGV3YXkgdGhlIA0KaW50ZXJhY3Rpb24g
-d2l0aCBsaW5rIGxheWVyIHByb2Nlc3NlcyBzdWNoIEFSUCBpcyB1c3VhbGx5IHBlcmZvcm1l
-ZCANCnVzaW5nIHRoZSBnYXRld2F5IGFkZHJlc3MgYXMgb3Bwb3NlZCB0byB0aGUgYWN0dWFs
-IGRlc3RpbmF0aW9uIGFkZHJlc3MgDQpvZiB0aGUgcGFja2V0IChpbiBMaW51eCB0aGlzIGlz
-IGF0dGFjaGVkIHRvIGEgZ2l2ZW4gc2tiIGFzIGRzdCBpbmZvKS4gDQogRnJvbSB3aGF0IEkg
-dW5kZXJzdGFuZCwgd2lyZWd1YXJkIGNvbXBsZXRlbHkgaWdub3JlcyB0aGUgcHJlc2VuY2Ug
-b2YgDQpzdWNoIHJvdXRpbmcgaW5mb3JtYXRpb24gYW5kIGluc3RlYWQgcmVxdWlyZXMgdGhl
-IHVzZXIgdG8gbWFudWFsbHkgDQpwb3B1bGF0ZSBhIHBhcnRpY3VsYXIgcGVlciB3aXRoIGFs
-bCBwb3NzaWJsZSBkZXN0aW5hdGlvbiBhZGRyZXNzZXMuIEluIA0KZWZmZWN0LCB0aGUgY29u
-Y2VybiBvZiBwYWNrZXQgcm91dGluZyBpcyBwbGFjZWQgaW5zaWRlIHRoZSB3aXJlZ3VhcmQg
-DQppbXBsZW1lbnRhdGlvbiBpbnN0ZWFkIG9mIGJlaW5nIGxlZnQgdG8gdGhlIHJvdXRpbmcg
-c3Vic3lzdGVtLg0KDQoNCkFzIGZvciBwb3NzaWJsZSBtb3RpdmF0aW9ucyBmb3IgdGhpcyBk
-ZXNpZ24gY2hvaWNlLCBJIGNhbiB0aGluayBvZiANCnNlY3VyaXR5IGFzIG9uZSB0aGF0IGNv
-dWxkIGJlIGNvbnNpZGVyZWQgbW90aXZhdGluZyBlbm91Z2ggLSBBIHBhY2tldCANCmNhbm5v
-dCB0cmF2ZWwgdG8gYSB3aXJlZ3VhcmQgcGVlciB1bmxlc3MgaXRzIGRlc3RpbmF0aW9uIGFk
-ZHJlc3MgaXMgaW4gDQp0aGUgc2V0IG9mIGFsbG93ZWQtaXBzLiBMb29raW5nIGF0IHRoZSBp
-bXBsZW1lbnRhdGlvbiBpdCBpcyBhbHNvIGV2aWRlbnQgDQp0aGF0IHdpcmVndWFyZCBhbHNv
-IHdpbGwgbm90IHJlY2VpdmUgcGFja2V0cyB3aXRoIHNvdXJjZSBhZGRyZXNzZXMgbm90IA0K
-cHJlc2VudCBpbiBhbGxvd2VkLWlwcyAoYW5kIGNvbXBsYWluIHRoYXQgdGhlcmUgaXMgYSAi
-ZGlzaG9uZXN0IHBlZXIiKS4NCg0KSG93ZXZlciwgaXMgdGhpcyBub3QgYWxzbyBhIGNhc2Ug
-b2YgdGhlIGNvbmNlcm5zIG9mIGFub3RoZXIgc3Vic3lzdGVtIA0Kdml6LiB0aGUgZmlyZXdh
-bGwgYmVpbmcgcGxhY2VkIGluc2lkZSB0aGUgd2lyZWd1YXJkIGltcGxlbWVudGF0aW9uPyBB
-cyANCml0IHN0YW5kcywgd2hhdCBpcyB0cmFkaXRpb25hbGx5IGNvbnNpZGVyZWQgcm91dGlu
-ZyBhbmQgZmlyZXdhbGwgDQppbmZvcm1hdGlvbiBoYXMgdG8gYmUgc2hhcmVkIHdpdGggd2ly
-ZWd1YXJkIGluIG9yZGVyIHRvIG1haW50YWluIGEgDQp3b3JraW5nIHR1bm5lbC4NCg0KDQpX
-b3VsZCBpdCBub3QgYmUgbW9yZSByZWFzb25hYmxlIGlmIHdpcmVndWFyZCBhY3RlZCBhcyBh
-IGNvbW1vbiBsaW5rIA0KbGF5ZXIgYW5kIHJlc3BlY3RlZCB0aGUgYm91bmRhcmllcyBvZiBp
-bnRlcm5ldCBsYXllciByb3V0aW5nIGFuZCANCmZpcmV3YWxsaW5nPyBUbyB0aGlzIGVmZmVj
-dCBJIGhhdmUgY3JlYXRlZCBhbmQgdGVzdGVkIGEgc21hbGwgcGF0Y2ggDQp3aGljaCBkb2Vz
-IHR3byB0aGluZ3MsIG5hbWVseTsNCg0KMS4gQ2hlY2tzIGZvciB0aGUgcHJlc2VuY2Ugb2Yg
-cm91dGluZyBpbmZvcm1hdGlvbiBvbiBvdXRnb2luZyBwYXlsb2FkcyANCmFuZCwgaWYgcHJl
-c2VudCwgdXNlcyB0aGUgc3BlY2lmaWVkIGdhdGV3YXkgYWRkcmVzcyBhcyBpbnB1dCB0byB0
-aGUgcGVlciANCmxvb2t1cC4NCg0KMi4gUmVtb3ZlcyB0aGUgcmVzdHJpY3Rpb24gdy5yLnQu
-IHRoZSBzb3VyY2UgYWRkcmVzcyBvZiBpbmNvbWluZyBwYXlsb2Fkcy4NCg0KDQpJJ20gc3Vy
-ZSBpdCBpcyBub3QgcG9zc2libGUgYXQgdGhpcyBzdGFnZSB0byBqdXN0IGZ1bmRhbWVudGFs
-bHkgYWx0ZXIgDQp0aGUgc2VtYW50aWNzIG9mIGFsbG93ZWQtaXBzLCBidXQsIGlmIHlvdSBh
-Z3JlZSB3aXRoIG15IG9ic2VydmF0aW9ucywgDQpwZXJoYXBzIHRoZSBwYXRjaCBjYW4gc2Vy
-dmUgYXMgdGhlIGZvdW5kYXRpb24gb2Ygc29tZXRoaW5nIG5ldyB3aGljaCBjYW4gDQpiZWdp
-biB0byBkZXByZWNhdGVlIGFsbG93ZWQtaXBzIGFzIHdlIGtub3cgaXQgdG9kYXk/DQoNCg0K
-UmVnYXJkcywNCg0KS2ltIE5pbHNzb24NCg0KDQpQLlMuDQoNCkFwb2xvZ2llcyBpZiB0aGlz
-IGhhcyBhbHJlYWR5IGJlZW4gZGlzY3Vzc2VkIGJlZm9yZS4NCg0KDQo=
---------------EyBQK7vQCWT0MqHAnMrtvpXR
-Content-Type: text/x-patch; charset=UTF-8; name="wireguard_routing.patch"
-Content-Disposition: attachment; filename="wireguard_routing.patch"
-Content-Transfer-Encoding: base64
+=3D=3D=3D=3D
+I really like the straightforward configurability of Wireguard
+out-of-the-box. It was astonishingly easy to configure a mesh to
+replace my previous hub-and-spoke OpenVPN setup. Thank you for making
+this easy.
 
-SW5kZXg6IGxpbnV4L2RyaXZlcnMvbmV0L3dpcmVndWFyZC9hbGxvd2VkaXBzLmMKPT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PQotLS0gbGludXgub3JpZy9kcml2ZXJzL25ldC93aXJlZ3VhcmQvYWxsb3dlZGlw
-cy5jCisrKyBsaW51eC9kcml2ZXJzL25ldC93aXJlZ3VhcmQvYWxsb3dlZGlwcy5jCkBAIC01
-LDYgKzUsOCBAQAogCiAjaW5jbHVkZSAiYWxsb3dlZGlwcy5oIgogI2luY2x1ZGUgInBlZXIu
-aCIKKyNpbmNsdWRlICJuZXQvZHN0LmgiCisjaW5jbHVkZSAibmV0L3JvdXRlLmgiCiAKIGVu
-dW0geyBNQVhfQUxMT1dFRElQU19ERVBUSCA9IDEyOSB9OwogCkBAIC0zNTYsNiArMzU4LDE1
-IEBAIGludCB3Z19hbGxvd2VkaXBzX3JlYWRfbm9kZShzdHJ1Y3QgYWxsb3cKIHN0cnVjdCB3
-Z19wZWVyICp3Z19hbGxvd2VkaXBzX2xvb2t1cF9kc3Qoc3RydWN0IGFsbG93ZWRpcHMgKnRh
-YmxlLAogCQkJCQkgc3RydWN0IHNrX2J1ZmYgKnNrYikKIHsKKwljb25zdCBzdHJ1Y3QgZHN0
-X2VudHJ5ICpkc3QgPSBza2JfZHN0KHNrYik7CisJaWYgKGRzdCkgeworCQljb25zdCBzdHJ1
-Y3QgcnRhYmxlICpydCA9IGNvbnRhaW5lcl9vZihkc3QsIHN0cnVjdCBydGFibGUsIGRzdCk7
-CisJCWlmIChydC0+cnRfZ3dfZmFtaWx5ID09IEFGX0lORVQpCisJCQlyZXR1cm4gbG9va3Vw
-KHRhYmxlLT5yb290NCwgMzIsICZydC0+cnRfZ3c0KTsKKwkJZWxzZSBpZiAocnQtPnJ0X2d3
-X2ZhbWlseSA9PSBBRl9JTkVUNikKKwkJCXJldHVybiBsb29rdXAodGFibGUtPnJvb3Q2LCAx
-MjgsICZydC0+cnRfZ3c2KTsKKwl9CisKIAlpZiAoc2tiLT5wcm90b2NvbCA9PSBodG9ucyhF
-VEhfUF9JUCkpCiAJCXJldHVybiBsb29rdXAodGFibGUtPnJvb3Q0LCAzMiwgJmlwX2hkcihz
-a2IpLT5kYWRkcik7CiAJZWxzZSBpZiAoc2tiLT5wcm90b2NvbCA9PSBodG9ucyhFVEhfUF9J
-UFY2KSkKQEAgLTM2MywxNyArMzc0LDYgQEAgc3RydWN0IHdnX3BlZXIgKndnX2FsbG93ZWRp
-cHNfbG9va3VwX2RzdAogCXJldHVybiBOVUxMOwogfQogCi0vKiBSZXR1cm5zIGEgc3Ryb25n
-IHJlZmVyZW5jZSB0byBhIHBlZXIgKi8KLXN0cnVjdCB3Z19wZWVyICp3Z19hbGxvd2VkaXBz
-X2xvb2t1cF9zcmMoc3RydWN0IGFsbG93ZWRpcHMgKnRhYmxlLAotCQkJCQkgc3RydWN0IHNr
-X2J1ZmYgKnNrYikKLXsKLQlpZiAoc2tiLT5wcm90b2NvbCA9PSBodG9ucyhFVEhfUF9JUCkp
-Ci0JCXJldHVybiBsb29rdXAodGFibGUtPnJvb3Q0LCAzMiwgJmlwX2hkcihza2IpLT5zYWRk
-cik7Ci0JZWxzZSBpZiAoc2tiLT5wcm90b2NvbCA9PSBodG9ucyhFVEhfUF9JUFY2KSkKLQkJ
-cmV0dXJuIGxvb2t1cCh0YWJsZS0+cm9vdDYsIDEyOCwgJmlwdjZfaGRyKHNrYiktPnNhZGRy
-KTsKLQlyZXR1cm4gTlVMTDsKLX0KLQogaW50IF9faW5pdCB3Z19hbGxvd2VkaXBzX3NsYWJf
-aW5pdCh2b2lkKQogewogCW5vZGVfY2FjaGUgPSBLTUVNX0NBQ0hFKGFsbG93ZWRpcHNfbm9k
-ZSwgMCk7CkluZGV4OiBsaW51eC9kcml2ZXJzL25ldC93aXJlZ3VhcmQvcmVjZWl2ZS5jCj09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT0KLS0tIGxpbnV4Lm9yaWcvZHJpdmVycy9uZXQvd2lyZWd1YXJkL3JlY2Vp
-dmUuYworKysgbGludXgvZHJpdmVycy9uZXQvd2lyZWd1YXJkL3JlY2VpdmUuYwpAQCAtMzM4
-LDcgKzMzOCw2IEBAIHN0YXRpYyB2b2lkIHdnX3BhY2tldF9jb25zdW1lX2RhdGFfZG9uZSgK
-IHsKIAlzdHJ1Y3QgbmV0X2RldmljZSAqZGV2ID0gcGVlci0+ZGV2aWNlLT5kZXY7CiAJdW5z
-aWduZWQgaW50IGxlbiwgbGVuX2JlZm9yZV90cmltOwotCXN0cnVjdCB3Z19wZWVyICpyb3V0
-ZWRfcGVlcjsKIAogCXdnX3NvY2tldF9zZXRfcGVlcl9lbmRwb2ludChwZWVyLCBlbmRwb2lu
-dCk7CiAKQEAgLTQwMSwyNCArNDAwLDEwIEBAIHN0YXRpYyB2b2lkIHdnX3BhY2tldF9jb25z
-dW1lX2RhdGFfZG9uZSgKIAlpZiAodW5saWtlbHkocHNrYl90cmltKHNrYiwgbGVuKSkpCiAJ
-CWdvdG8gcGFja2V0X3Byb2Nlc3NlZDsKIAotCXJvdXRlZF9wZWVyID0gd2dfYWxsb3dlZGlw
-c19sb29rdXBfc3JjKCZwZWVyLT5kZXZpY2UtPnBlZXJfYWxsb3dlZGlwcywKLQkJCQkJICAg
-ICAgIHNrYik7Ci0Jd2dfcGVlcl9wdXQocm91dGVkX3BlZXIpOyAvKiBXZSBkb24ndCBuZWVk
-IHRoZSBleHRyYSByZWZlcmVuY2UuICovCi0KLQlpZiAodW5saWtlbHkocm91dGVkX3BlZXIg
-IT0gcGVlcikpCi0JCWdvdG8gZGlzaG9uZXN0X3BhY2tldF9wZWVyOwotCiAJbmFwaV9ncm9f
-cmVjZWl2ZSgmcGVlci0+bmFwaSwgc2tiKTsKIAl1cGRhdGVfcnhfc3RhdHMocGVlciwgbWVz
-c2FnZV9kYXRhX2xlbihsZW5fYmVmb3JlX3RyaW0pKTsKIAlyZXR1cm47CiAKLWRpc2hvbmVz
-dF9wYWNrZXRfcGVlcjoKLQluZXRfZGJnX3NrYl9yYXRlbGltaXRlZCgiJXM6IFBhY2tldCBo
-YXMgdW5hbGxvd2VkIHNyYyBJUCAoJXBJU2MpIGZyb20gcGVlciAlbGx1ICglcElTcGZzYylc
-biIsCi0JCQkJZGV2LT5uYW1lLCBza2IsIHBlZXItPmludGVybmFsX2lkLAotCQkJCSZwZWVy
-LT5lbmRwb2ludC5hZGRyKTsKLQkrK2Rldi0+c3RhdHMucnhfZXJyb3JzOwotCSsrZGV2LT5z
-dGF0cy5yeF9mcmFtZV9lcnJvcnM7Ci0JZ290byBwYWNrZXRfcHJvY2Vzc2VkOwogZGlzaG9u
-ZXN0X3BhY2tldF90eXBlOgogCW5ldF9kYmdfcmF0ZWxpbWl0ZWQoIiVzOiBQYWNrZXQgaXMg
-bmVpdGhlciBpcHY0IG5vciBpcHY2IGZyb20gcGVlciAlbGx1ICglcElTcGZzYylcbiIsCiAJ
-CQkgICAgZGV2LT5uYW1lLCBwZWVyLT5pbnRlcm5hbF9pZCwgJnBlZXItPmVuZHBvaW50LmFk
-ZHIpOwpJbmRleDogbGludXgvZHJpdmVycy9uZXQvd2lyZWd1YXJkL2FsbG93ZWRpcHMuaAo9
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09Ci0tLSBsaW51eC5vcmlnL2RyaXZlcnMvbmV0L3dpcmVndWFyZC9hbGxv
-d2VkaXBzLmgKKysrIGxpbnV4L2RyaXZlcnMvbmV0L3dpcmVndWFyZC9hbGxvd2VkaXBzLmgK
-QEAgLTQzLDExICs0Myw5IEBAIHZvaWQgd2dfYWxsb3dlZGlwc19yZW1vdmVfYnlfcGVlcihz
-dHJ1Y3QKIC8qIFRoZSBpcCBpbnB1dCBwb2ludGVyIHNob3VsZCBiZSBfX2FsaWduZWQoX19h
-bGlnbm9mKHU2NCkpKSAqLwogaW50IHdnX2FsbG93ZWRpcHNfcmVhZF9ub2RlKHN0cnVjdCBh
-bGxvd2VkaXBzX25vZGUgKm5vZGUsIHU4IGlwWzE2XSwgdTggKmNpZHIpOwogCi0vKiBUaGVz
-ZSByZXR1cm4gYSBzdHJvbmcgcmVmZXJlbmNlIHRvIGEgcGVlcjogKi8KKy8qIFJldHVybnMg
-YSBzdHJvbmcgcmVmZXJlbmNlIHRvIGEgcGVlcjogKi8KIHN0cnVjdCB3Z19wZWVyICp3Z19h
-bGxvd2VkaXBzX2xvb2t1cF9kc3Qoc3RydWN0IGFsbG93ZWRpcHMgKnRhYmxlLAogCQkJCQkg
-c3RydWN0IHNrX2J1ZmYgKnNrYik7Ci1zdHJ1Y3Qgd2dfcGVlciAqd2dfYWxsb3dlZGlwc19s
-b29rdXBfc3JjKHN0cnVjdCBhbGxvd2VkaXBzICp0YWJsZSwKLQkJCQkJIHN0cnVjdCBza19i
-dWZmICpza2IpOwogCiAjaWZkZWYgREVCVUcKIGJvb2wgd2dfYWxsb3dlZGlwc19zZWxmdGVz
-dCh2b2lkKTsK
+That said, I'd like the ability to use Linux's policy routing engine
+to allow for more complex packet flows across the VPN that are
+currently incompatible with Wireguard's internal packet handling. For
+example, let's say I have 4 nodes and want to be able to use each of
+the nodes as the default gateway for different types of flows.
+Modifying the sender side to respect a route's gateway is
+straightforward:
 
---------------EyBQK7vQCWT0MqHAnMrtvpXR--
+--- a/drivers/net/wireguard/allowe
+dips.c
++++ b/drivers/net/wireguard/allowe
+dips.c
+@@ -6,6 +6,8 @@
+ #include "allowedips.h"
+ #include "peer.h"
 
---------------C4xUhAwEcxrsDmP8RmNVxLVc--
++#include <net/route.h>
++
+ enum { MAX_ALLOWEDIPS_BITS =3D 128 };
 
---------------0yQIIyObyhYHHC9F0k0Acynn
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
+ static struct kmem_cache *node_cache;
+@@ -356,10 +358,18 @@ int wg_allowedips_read_node(struct
+allowedips_node *node, u8 ip[16], u8 *cidr)
+ struct wg_peer *wg_allowedips_lookup_dst(stru
+ct allowedips *table,
+                                         struct sk_buff *skb)
+ {
+-       if (skb->protocol =3D=3D htons(ETH_P_IP))
+-               return lookup(table->root4, 32, &ip_hdr(skb)->daddr);
+-       else if (skb->protocol =3D=3D htons(ETH_P_IPV6))
+-               return lookup(table->root6, 128, &ipv6_hdr(skb)->daddr);
++       struct rtable *rt =3D skb_rtable(skb);
++       if (rt->rt_uses_gateway) {
++               if (rt->rt_gw_family =3D=3D AF_INET)
++                       return lookup(table->root4, 32, &rt->rt_gw4);
++               else if (rt->rt_gw_family =3D=3D AF_INET6)
++                       return lookup(table->root6, 128, &rt->rt_gw6);
++       } else {
++               if (skb->protocol =3D=3D htons(ETH_P_IP))
++                       return lookup(table->root4, 32, &ip_hdr(skb)->daddr=
+);
++               else if (skb->protocol =3D=3D htons(ETH_P_IPV6))
++                       return lookup(table->root6, 128, &ipv6_hdr(skb)->da=
+ddr);
++       }
+        return NULL;
+ }
 
------BEGIN PGP SIGNATURE-----
+The problem is that reply packets will be dropped via the source
+address check for all but the peer with the default route listed in
+AllowedIPs. The way the trie code works means a highly-invasive change
+would be needed to allow for multiple peers to be associated with a
+given prefix: I suspect any further complication (not to mention
+possible additional data structure bloat) is undesirable, and anyway I
+am looking to bypass most of the complexity created by Wireguard's
+parallel packet routing infrastructure and instead leverage the far
+more flexible Linux policy routing engine.
 
-wsF5BAABCAAjFiEEVGq84EJQRtWonhiWfwaiOxiOwqIFAmTg2usFAwAAAAAACgkQfwaiOxiOwqJK
-fQ//fYO8FXaPHRKX3gjoMwrlrzH/eXUZSIKcz6hK7GejzAMWGdwBbg/Qg2TYuKL18rHfGazwd4/R
-uw2Tz1PsT3rqnzoMcWxDae3vBE/PICkqzoAkOaWviquj3N3OLc9HFNr0CmdieZe0lnM284cu0dD8
-bjVzJFlAfcTOz+6GkgPpawtnBHkU8ORpuOWCCO7B98cKX54FO6F6DbjraZWlPIkWfzN9E6hNFuwu
-14bkrRw9HHkNgOAICasHA31t4rTtXhnYjQnUylHVVl873KfZs7L2huIclE/vTq5ldv2Gj1tA98EA
-PzJH2OoHNCCN/VqWcYU7mEEmAIvt50mOdUjIb80mF3PPMCOMyjY8GKddWYrB1rEe801onlm+8Dij
-kHJLmf/BKgq/3dw5Dt+wTCoNm6MmkoWSVwl3bEuq26ko0j6rD0aqfgQ/jp7OP2OR2y818gkibRY6
-izDh7k1KzY3UaZx03TgGaD45fVTDHC/4b0bhZoN+ZavSypHEB2CA5XgZhGjc+T2RTjVHk2vdppbL
-1pKQtcLh7icMhiWjCczbHDYAC7fmbvRUcqdamQFVPt3PYbsojOd44kNV1e93HQaf0FQ4iLZN1i/L
-TN+u/Ra9UcERSo1opbW/9UGKfKXjPqVPKwqjMALgZzzUagewC+sOmxnuk1ZH0o9ycXJLngJ3MvYx
-LVI=
-=Jp7b
------END PGP SIGNATURE-----
+At this point, what I'd like to do is be able to skip the source
+address check by configuration, instead relying on rp_filter and
+firewall rules to reject bogus or unwanted packets. With such a config
+knob, AllowedIPs would be used only for selecting the destination peer
+based on the packet daddr or the route's gateway. For a mesh like I
+described above, I would configure only a gateway IP for each peer in
+AllowedIPs and use the policy routing engine for all other packet
+routing behavior.
 
---------------0yQIIyObyhYHHC9F0k0Acynn--
+I appreciate that Wireguard works the way it does most likely because
+routing is configured differently across the wide variety of devices
+it supports (and in some cases may be unavailable to users), so I
+don't think the AllowedIPs source address check should be removed by
+default; but it would be nice if I could turn it off and rely on other
+mechanisms in the kernel that would allow for more flexibility.
+
+
+On Sat, Aug 19, 2023 at 10:05=E2=80=AFAM Daniel Gr=C3=B6ber <dxld@darkboxed=
+.org> wrote:
+>
+> Hi wireguard, birds, and babelers,
+>
+> tl;dr I want to add a new Linux route attribute (think "via $wgpeer") to
+> supplement wireguard's internal AllowedIPs logic for both routing and
+> source address filtering.
+>
+> I've been pondering how to better integrate wireguard into dynamic routin=
+g
+> daemons, particularly BIRD and babeld. Essentially we want to be able to
+> dynamically add/remove AllowedIPs depending on current reachability and/o=
+r
+> link quality stats.
+>
+> Looking at the wg netlink API I see two major efficiency/scalability
+> problems: 1) there is no way to be notified of changes in AllowedIPs made
+> by other processes meaning we have to do periodic scans and 2) a peer's
+> AllowedIPs set can only be replaced wholesale, not modified
+> incrementally. This is problematic as "someone" might, in the worst case,
+> want to install an entire internet routing table's worth of AllowedIPs an=
+d
+> the set will likely change frequently. FYI: The IPv4 table has ~1M entrie=
+s
+> at present, yikes.
+>
+> Assuming external AllowedIPs changes are infrequent occationally dumping
+> them all to keep a consistent view of the state shouldn't be too much of =
+an
+> issue as long as the netlink interface is performant enoug, so I'm going =
+to
+> concentrate on the add/remove API for now.
+>
+> Instead of doing the obvious thing and adding a more efficient incrementa=
+l
+> AllowedIPs netlink interface I figure why not just add a route attribute =
+to
+> select a target wg peer on a device. That way we could not only save memo=
+ry
+> (no separate AllowedIPs trie) but also simplify routing daemon
+> implementation considerably.
+>
+> This would mirror how on ethernet you can have `dev eth0 via $router_ip`.
+> I'm still reviewing the net/ code to find the best way to do this, but I'=
+m
+> thinking either a new RTA_WGPEER, like: `default dev wg0 via-wgpeer
+> $peer_pubkey` or perhaps re-using RTA_VIA and keying off a statically
+> configured AllowedIP addresses.
+>
+> To start I'd make this an opt-in replacement for our usual AllowedIPs
+> logic, making sure to only activate it if any via* RTAs are active on a
+> particular device, but if it proves to work well I don't see why we
+> couldn't adapt the netlink code to maintain AllowedIPs using this RTA (bu=
+t
+> invisible to userspace) to re-use the same code and get rid of allowedips=
+.c
+> altogether. That's assuming this ends up being less code overall or perha=
+ps
+> more performant.
+>
+> Happy to hear your thoughts,
+> --Daniel
