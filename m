@@ -4,67 +4,29 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5A6BEE49A0
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 18 Aug 2023 23:44:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87014EE4981
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 19 Aug 2023 07:22:52 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8545d593;
-	Fri, 18 Aug 2023 23:44:49 +0000 (UTC)
-Received: from bombadil.infradead.org (bombadil.infradead.org
- [2607:7c80:54:3::133])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7c123d89
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 451a2a24;
+	Sat, 19 Aug 2023 07:22:50 +0000 (UTC)
+Received: from janet.servers.dxld.at (mail.servers.dxld.at [5.9.225.164])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 844daeb4
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 18 Aug 2023 23:44:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
- Content-Type:In-Reply-To:References:Cc:To:From:Subject:MIME-Version:Date:
- Message-ID:Sender:Reply-To:Content-ID:Content-Description;
- bh=xTd+xM15uwaYqGAW/S8CZDkcwvuJ3aJIIjx1MPGNF/Y=; b=pZH/ksRwnPq3maIwYAlJC3Rrrr
- 9sXlHg5rZOuCTKksS/zIoMTj4CYgiei2BSHr/Fmq4d5o6u6K44iFq95QRQnAeXh21SPlKB1dSqI9S
- Cfts7MiOtQtejm51Kqr727hN42qMODja2NIagNNWPITLUN3zgCX6JPHkj/KLLfXzJl6lnRj2IQpX0
- rdlY37izaBlOJXXS/VdrrvoBUDNRoF1KuxWjFO1MPDhsEqGcrcCV503FRIC+zvjs3tCc/aw4OtNDw
- 1CgyBaH6pumLMmkbfGn+hR53qU8NQHPiWTB5c7oduD3LBzu4IRjjLr3T37jzgVW5PH9+G1oKRWkqj
- I69daqCw==;
-Received: from [2601:1c2:980:9ec0::2764]
- by bombadil.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
- id 1qX98o-00ABNX-07; Fri, 18 Aug 2023 23:44:30 +0000
-Message-ID: <78a802c5-3f0d-e199-d974-e586c00180eb@infradead.org>
-Date: Fri, 18 Aug 2023 16:44:26 -0700
+ Sat, 19 Aug 2023 07:22:48 +0000 (UTC)
+Received: janet.servers.dxld.at; Sat, 19 Aug 2023 09:22:48 +0200
+Date: Sat, 19 Aug 2023 09:22:45 +0200
+From: Daniel =?utf-8?Q?Gr=C3=B6ber?= <dxld@darkboxed.org>
+To: Nathaniel Filardo <nwfilardo@gmail.com>
+Cc: wireguard@lists.zx2c4.com
+Subject: Re: IPv6-only flag set on v6 sockets prevents the use of v4-mapped
+ addresses
+Message-ID: <20230819072245.bj7giu7lk4zqib2h@House.clients.dxld.at>
+References: <CAKsvP2ZcqUvFD5g6vMxZrv7Z5+YAmoGBAh7zf8iZPPRE6LNEDg@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH] treewide: drop CONFIG_EMBEDDED
-Content-Language: en-US
-From: Randy Dunlap <rdunlap@infradead.org>
-To: Jesse Taube <mr.bossman075@gmail.com>
-Cc: linux-kernel@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
- linux-arm-kernel@lists.infradead.org, Arnd Bergmann <arnd@arndb.de>,
- "Jason A . Donenfeld" <Jason@zx2c4.com>, wireguard@lists.zx2c4.com,
- linux-arch@vger.kernel.org, linux-snps-arc@lists.infradead.org,
- Vineet Gupta <vgupta@kernel.org>, Brian Cain <bcain@quicinc.com>,
- linux-hexagon@vger.kernel.org, Greg Ungerer <gerg@linux-m68k.org>,
- linux-m68k@lists.linux-m68k.org, Michal Simek <monstr@monstr.eu>,
- Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
- Dinh Nguyen <dinguyen@kernel.org>, Jonas Bonn <jonas@southpole.se>,
- Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>,
- Stafford Horne <shorne@gmail.com>, linux-openrisc@vger.kernel.org,
- linux-mips@vger.kernel.org, Michael Ellerman <mpe@ellerman.id.au>,
- Nicholas Piggin <npiggin@gmail.com>,
- Christophe Leroy <christophe.leroy@csgroup.eu>,
- linuxppc-dev@lists.ozlabs.org, linux-riscv@lists.infradead.org,
- Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Yoshinori Sato <ysato@users.sourceforge.jp>, Rich Felker <dalias@libc.org>,
- John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
- linux-sh@vger.kernel.org, Max Filippov <jcmvbkbc@gmail.com>,
- Josh Triplett <josh@joshtriplett.org>, Masahiro Yamada
- <masahiroy@kernel.org>, linux-kbuild@vger.kernel.org,
- Andrew Morton <akpm@linux-foundation.org>
-References: <38e1a01b-1e8b-7c66-bafc-fc5861f08da9@gmail.com>
- <86e329b1-c8d7-47bf-8be8-3326daf74eb5@infradead.org>
-In-Reply-To: <86e329b1-c8d7-47bf-8be8-3326daf74eb5@infradead.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAKsvP2ZcqUvFD5g6vMxZrv7Z5+YAmoGBAh7zf8iZPPRE6LNEDg@mail.gmail.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -79,65 +41,25 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Jesse,
+Hi Nathaniel,
 
-I replied to your comment a few days ago, but for some reason
-your email to me contains:
-Reply-To: 20230816055010.31534-1-rdunlap@infradead.org
-so it wasn't sent directly to you.
+On Mon, May 22, 2023 at 07:48:04AM +0100, Nathaniel Filardo wrote:
+> This means that v4-mapped v6 addresses (::ffff:a.b.c.d) can be
+> registered as peer endpoints, but the kernel very silently won't try
+> to reach out.  Is that deliberate for some reason that eludes me?  If
+> it is, could the userspace tooling be educated about v4-mapped
+> addresses and translate them accordingly before handing them up to the
+> kernel; if it isn't, could we drop the v6-only flag on the kernel
+> socket?
 
-My former reply is below.
+Since I recently sent some patches touching the socket binding code I'm
+worndering what the exact use case is here? DNS will never return these
+addressess, I've only ever seen them used (internally to programs) when the
+kernel returns them in non-v6only sockets. Is there some other context
+these get returned in I'm missing?
 
-On 8/16/23 20:15, Randy Dunlap wrote:
-> Hi Jesse,
-> 
-> On 8/16/23 15:45, Jesse Taube wrote:
->> Hi, Randy
->>
->>> diff -- a/init/Kconfig b/init/Kconfig
->>> --- a/init/Kconfig
->>> +++ b/init/Kconfig
->>> @@ -1790,14 +1790,6 @@ config DEBUG_RSEQ
->>>
->>>         If unsure, say N.
->>>
->>> -config EMBEDDED
->>> -    bool "Embedded system"
->>> -    select EXPERT
->>> -    help
->>> -      This option should be enabled if compiling the kernel for
->>> -      an embedded system so certain expert options are available
->>> -      for configuration.
->>
->> Wouldn't removing this break many out of tree configs?
-> 
-> I'm not familiar with out-of-tree configs.
-> Do you have some examples of some that use CONFIG_EMBEDDED?
-> (not distros)
-> 
->> Should there be a warning here to update change it instead of removal?
-> 
-> kconfig doesn't have a warning mechanism AFAIK.
-> Do you have an idea of how this would work?
-> 
-> We could make a smaller change to init/Kconfig, like so:
-> 
->  config EMBEDDED
-> -	bool "Embedded system"
-> +	bool "Embedded system (DEPRECATED)"
->  	select EXPERT
->  	help
-> -	  This option should be enabled if compiling the kernel for
-> -	  an embedded system so certain expert options are available
-> -	  for configuration.
-> +	  This option is being removed after Linux 6.6.
-> +	  Use EXPERT instead of EMBEDDED.
-> 
-> but there is no way to produce a warning message. I.e., even with this
-> change, the message will probably be overlooked.
-> 
-> ---
-> ~Randy
+I considered dropping the v6only flag for the new bind-to-address code path
+I introduced but couldn't convince myself that there really is a good
+reason to deviate from established wg behaviour here.
 
--- 
-~Randy
+--Daniel
