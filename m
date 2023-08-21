@@ -4,54 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44D95EE4996
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 21 Aug 2023 19:45:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C978EE49A6
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 21 Aug 2023 20:43:53 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d92cadc5;
-	Mon, 21 Aug 2023 19:42:47 +0000 (UTC)
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com
- [2607:f8b0:4864:20::1031])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6b3242b1
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c59f0259;
+	Mon, 21 Aug 2023 20:40:54 +0000 (UTC)
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3ac91685
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 21 Aug 2023 19:42:45 +0000 (UTC)
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-26f3975ddd4so1258716a91.1
- for <wireguard@lists.zx2c4.com>; Mon, 21 Aug 2023 12:42:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sidebranch-com.20221208.gappssmtp.com; s=20221208; t=1692646963; x=1693251763;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=NQifJQzeScTn3Dtk1KqbyV/TDfM6r0pxndHCKsh+Udk=;
- b=uZA5hPJUitXsosfXUPSMtoKYlc+cg5qFxCFVbE0eApDGg9K9Qll5y83feT/8fy6Nhs
- jPrBrVmZUxNOgwlGIrpw6yU8+sL4xMiP8vnqHFINhtPZllyaYfbKQMZZgSKsILT1lDLm
- dcGO1hcjsqCDwPawbOdhTYR9hZRCHO2x/koJ6QZn27oNMMqhBSxreDNM7yXcljEOCK6v
- FzKd6lzQVgAKYyWgVfMwDkqdXbh8ZksPy/G1VJCWzWEGzPgyV77GoGU5gZLzqKehe0PL
- CijvCJp9hZZArZgA98O67IzpUseC35FyjfvIGVjS0yRM0ckuYDk7zsgqz+Qlg0RwDoUz
- ddGA==
+ Mon, 21 Aug 2023 20:40:53 +0000 (UTC)
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-1bef53ee9a8so42051605ad.0
+ for <wireguard@lists.zx2c4.com>; Mon, 21 Aug 2023 13:40:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20221208; t=1692646963; x=1693251763;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ d=1e100.net; s=20221208; t=1692650452; x=1693255252;
+ h=to:from:subject:message-id:date:mime-version:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=NQifJQzeScTn3Dtk1KqbyV/TDfM6r0pxndHCKsh+Udk=;
- b=K4KNA2tIvP+mgga8OXQGDhAP7IZggCNGrKfHzsC9G1RRIZWd0+2WCaajKfCx1jRdM3
- gHiPJHDTMgGq9rvblPSHbviJCBL835h2UFAmgDsxE2eG1WN+BBlDoMV6hDUrpV2qIV2s
- 0ouFrF8RLjVrR2lhj26mBuC7tYIVkWzyG9FFwB7ndMDENrnKZ5kklnENBQ7pft3SroCi
- ExQNbBCx4yxXtGl6ACGMCIfxpsjcOYXGqksX4tX6An5B+b7p4DxOkg4jdebQVRsfDlyt
- /G8HL2+8VBaYSjla4uzaYc/70gPYsFmJCAYiuXrir3M1BDo0zm+wbXW8bk4/sRnhiX6Y
- FSkg==
-X-Gm-Message-State: AOJu0Yz0/5Aryg/BPFfc5eOEqPB0rDbyp5OVrtwralMKhBcDRgKtVKli
- J0PqIPT6f/YDSifEQecPyg2ZcgrRBJYRTYy5yzj3Sndt1gRhJ5e1l0Y=
-X-Google-Smtp-Source: AGHT+IGVINzJOsdQHuGX6+QUP++naXJ2TPcfMToTOBenEMqegMlan0ciUamkFR3LhK8JF2UzHlh/14Jv38bh+bJVJGA=
-X-Received: by 2002:a17:90a:eb09:b0:262:f06d:c0fc with SMTP id
- j9-20020a17090aeb0900b00262f06dc0fcmr6736951pjz.7.1692646962987; Mon, 21 Aug
- 2023 12:42:42 -0700 (PDT)
+ bh=/T2AYPyC3yfWbi3PEYaCinp56m3vESMG0m502j5yMho=;
+ b=etZsKECxICf+LbNDhfK4zUMNb7P4f2OlG33nEsIhpSVUgvuAZYG+ZQFegEOQZQZDmp
+ 3K+VA7xz4c8hYnYZubDypj8Bi9XJS94F2HK87qH8spfOGdFwLgcT4eCkkwl7Kyuvu5CK
+ Mzm4sSCcDUnCZWRQRDUyPaQX7brt84ayaia7/LfPS8whAt/+3FqrYtcFXXqOs4PvWHk5
+ sGNGXMnEgkNLJh++lmp2zP6Q/kRumgvPtC6+g8x+6dCL0r62F1SrvVSDCfE+3QX/oW0K
+ DhguG4phP4+qvBm9KQ7ZHVYq+uVGIfSnSSqO67bTI7GncR1MyYNW77a+CbEQnVouYR91
+ rW5w==
+X-Gm-Message-State: AOJu0YwOXk9VbNL6mm4JQCqyHi7Gyn8nYf3EvDMQ7UvGeG+h8j1TkIMe
+ wwTt/lkbuBLj6pd9rjoTGTglLi2DRLW0RC0MPB0838mZhT9o
+X-Google-Smtp-Source: AGHT+IEn4C5Vlf4RAcUhGmKEP1v3/zFcihV101yhFdEzDdyCM7Sqwf89T9PX8fk9hOPa7BylFUjis/o3CvUzQaEw5b2t/R+QjVuR
 MIME-Version: 1.0
-From: Leon Woestenberg <leon@sidebranch.com>
-Date: Mon, 21 Aug 2023 21:42:31 +0200
-Message-ID: <CAMjhiJg+5=BHtqem+_Bjy5Dq=6u5Fhr630ZAUstKS40eu1oKxg@mail.gmail.com>
-Subject: WireGuard FPGA RTL open-source implementation
-To: wireguard@lists.zx2c4.com
+X-Received: by 2002:a17:902:ce8e:b0:1b8:95fc:d0f with SMTP id
+ f14-20020a170902ce8e00b001b895fc0d0fmr3724050plg.7.1692650451820; Mon, 21 Aug
+ 2023 13:40:51 -0700 (PDT)
+Date: Mon, 21 Aug 2023 13:40:51 -0700
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <000000000000e8eb14060374e429@google.com>
+Subject: [syzbot] Monthly wireguard report (Aug 2023)
+From: syzbot <syzbot+listd934ed408c9f32a4a743@syzkaller.appspotmail.com>
+To: Jason@zx2c4.com, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
+ syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -67,44 +59,34 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello all,
+Hello wireguard maintainers/developers,
 
-Our FPGA (RTL)  implementation of WireGuard* is now released as open
-source, here:
+This is a 31-day syzbot report for the wireguard subsystem.
+All related reports/information can be found at:
+https://syzkaller.appspot.com/upstream/s/wireguard
 
-https://github.com/brightai-nl/BlackwireOverview
+During the period, 2 new issues were detected and 0 were fixed.
+In total, 6 issues are still open and 14 have been fixed so far.
 
-The implementation reaches 100 Gbit/s on AMD (formerly Xilinx) Alveo
-U50 per direction and is currently limited to 1K sessions.
+Some of the still happening issues:
 
-This is a true *inline* accelerator where one end of the FPGA
-(Ethernet) is encrypted and the other is plaintext (Ethernet or PCIe
-depending on FPGA board). The full protocol is implemented on the
-FPGA. The data path with symmetric crypto is implemented in RTL (using
-SpinalHDL).
+Ref Crashes Repro Title
+<1> 763     No    KCSAN: data-race in wg_packet_send_staged_packets / wg_packet_send_staged_packets (3)
+                  https://syzkaller.appspot.com/bug?extid=6ba34f16b98fe40daef1
+<2> 511     No    KCSAN: data-race in wg_packet_decrypt_worker / wg_packet_rx_poll (2)
+                  https://syzkaller.appspot.com/bug?extid=d1de830e4ecdaac83d89
+<3> 3       Yes   INFO: rcu detected stall in wg_ratelimiter_gc_entries (2)
+                  https://syzkaller.appspot.com/bug?extid=c1cc0083f159b67cb192
 
-The session management is currently mostly implemented in software on
-a RISC-V SoC, but we already had the x25519 crypto accelerated, as
-well as some handshake primitives, and are moving this more and more
-into RTL.
+---
+This report is generated by a bot. It may contain errors.
+See https://goo.gl/tpsmEJ for more information about syzbot.
+syzbot engineers can be reached at syzkaller@googlegroups.com.
 
-*It is not finished, but we think we started with all the hard parts
-(i.e. non-trivial ports) and have 25% left to do before we can call
-this WireGuard.
+To disable reminders for individual bugs, reply with the following command:
+#syz set <Ref> no-reminders
 
-Our current release is targeted at developers, not end-users. We
-decided not to release any integration code yet, as we cannot support
-an in-rush of "issues" where people cannot get this to run on their
-favorite FPGA board. We hope the project gets some sponsorship from
-FPGA (board) vendors to support their platforms.
+To change bug's subsystems, reply with:
+#syz set <Ref> subsystems: new-subsystem
 
-I would like to thank contributors to SpinalHDL and Corundum,
-especially Charles Papon and Alex Forencich as they have been our
-(indirect) main contributors of the project by providing an excellent
-FPGA HDL/RTL development language resp. an excellent Ethernet/PCIe
-FPGA NIC, as a starting point for our development.
-
-Regards,
-
-Leon Woestenberg
-leon@sidebranch.com
+You may send multiple commands in a single email message.
