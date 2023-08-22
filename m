@@ -4,46 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C978EE49A6
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 21 Aug 2023 20:43:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9881EEE49A5
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 22 Aug 2023 20:39:40 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c59f0259;
-	Mon, 21 Aug 2023 20:40:54 +0000 (UTC)
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3ac91685
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 51401e0f;
+	Tue, 22 Aug 2023 20:39:38 +0000 (UTC)
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com
+ [2a00:1450:4864:20::236])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 64928a04
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 21 Aug 2023 20:40:53 +0000 (UTC)
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-1bef53ee9a8so42051605ad.0
- for <wireguard@lists.zx2c4.com>; Mon, 21 Aug 2023 13:40:53 -0700 (PDT)
+ Tue, 22 Aug 2023 20:39:36 +0000 (UTC)
+Received: by mail-lj1-x236.google.com with SMTP id
+ 38308e7fff4ca-2b962c226ceso76884151fa.3
+ for <wireguard@lists.zx2c4.com>; Tue, 22 Aug 2023 13:39:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20221208; t=1692736775; x=1693341575;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=4h8P0LUOqLBgi0S8c4NN0qaEyXk9NKVhNWbXoi9VnJY=;
+ b=oGzBpZBf08wHnKoi9ZVLulsoh8rbbsRFT+xzHaJj57tFH/cYA9lmydgTlzD0C4yYi5
+ sJpURWv8LA1xNEtD3Kg0QFXPgV1ZkXLjuqjz9y2ndj1pChM0s3M01Q/35+1UIHnWoe+N
+ mlDK3Stz6qQS6uSBBs1GH524V+jZ4JDxdvAblHwJoqfKHnzevK0nfEw+PNg368XnuU8K
+ v0Vr5ZbeQqjmWRX/b0mzVOO7Bwk4Q+DrRUX7XGGTyhXTieM9qGtqZDwSWn7GvmgNLuNp
+ rufB9cL9UKxcjQ8/SIo7kjCWtceiryCvpBflYkaEgLwJiRbb+lWjloTgK18owow9iXN2
+ MnaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20221208; t=1692650452; x=1693255252;
- h=to:from:subject:message-id:date:mime-version:x-gm-message-state
+ d=1e100.net; s=20221208; t=1692736776; x=1693341576;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=/T2AYPyC3yfWbi3PEYaCinp56m3vESMG0m502j5yMho=;
- b=etZsKECxICf+LbNDhfK4zUMNb7P4f2OlG33nEsIhpSVUgvuAZYG+ZQFegEOQZQZDmp
- 3K+VA7xz4c8hYnYZubDypj8Bi9XJS94F2HK87qH8spfOGdFwLgcT4eCkkwl7Kyuvu5CK
- Mzm4sSCcDUnCZWRQRDUyPaQX7brt84ayaia7/LfPS8whAt/+3FqrYtcFXXqOs4PvWHk5
- sGNGXMnEgkNLJh++lmp2zP6Q/kRumgvPtC6+g8x+6dCL0r62F1SrvVSDCfE+3QX/oW0K
- DhguG4phP4+qvBm9KQ7ZHVYq+uVGIfSnSSqO67bTI7GncR1MyYNW77a+CbEQnVouYR91
- rW5w==
-X-Gm-Message-State: AOJu0YwOXk9VbNL6mm4JQCqyHi7Gyn8nYf3EvDMQ7UvGeG+h8j1TkIMe
- wwTt/lkbuBLj6pd9rjoTGTglLi2DRLW0RC0MPB0838mZhT9o
-X-Google-Smtp-Source: AGHT+IEn4C5Vlf4RAcUhGmKEP1v3/zFcihV101yhFdEzDdyCM7Sqwf89T9PX8fk9hOPa7BylFUjis/o3CvUzQaEw5b2t/R+QjVuR
+ bh=4h8P0LUOqLBgi0S8c4NN0qaEyXk9NKVhNWbXoi9VnJY=;
+ b=c/IZQywLAvngx47qQKKLzWliP4jbVWZQZPBbfUn22s5wQnNMc1tK0z2hXpL7vwm5G/
+ QdbqNguA6cjnSwlV6oGqisnFRa00Rs4pJSdCFCsSpJz+5n/Q+pCgqp7ICv8bSUydGwyU
+ AfK2x2gFq8ULOBl/IZ2pl/lrOdtkhZA+EXUafkuveVPA4cEdYNEZpz3KOTg6K3FY+82O
+ MYcmU3CYBqbIwTV6IASbO5RFtlTSwCTmEZaxLuUwX+2deB23uQ3EINHxFa6bMBKIwy7a
+ i0m0LGH0RSYQCe8dxZ+8bhxnMpYGfxfVPAK2sV5wlPL7niv55tb32D2SBqWCNNoQuXW2
+ mRNQ==
+X-Gm-Message-State: AOJu0YxTHBS6acdtqWPrdh7zXRDmM7X2GDqupTlC/U3NUmA180ki+o3W
+ 8zJcs0rsGZ4rEUZAP/OxbxOputN0AVFR3Y2oIgI8ov7L03YPNA==
+X-Google-Smtp-Source: AGHT+IG/C6Czs7nq/kllK7fPdGy5Mn3n0YyWL0VmcSUWJUWQYc6UvYcsX65+HOCdP915aid6sGe2twfiOxwmAutwxzc=
+X-Received: by 2002:a2e:9c51:0:b0:2bc:d8cb:59fe with SMTP id
+ t17-20020a2e9c51000000b002bcd8cb59femr635827ljj.8.1692736774697; Tue, 22 Aug
+ 2023 13:39:34 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 2002:a17:902:ce8e:b0:1b8:95fc:d0f with SMTP id
- f14-20020a170902ce8e00b001b895fc0d0fmr3724050plg.7.1692650451820; Mon, 21 Aug
- 2023 13:40:51 -0700 (PDT)
-Date: Mon, 21 Aug 2023 13:40:51 -0700
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <000000000000e8eb14060374e429@google.com>
-Subject: [syzbot] Monthly wireguard report (Aug 2023)
-From: syzbot <syzbot+listd934ed408c9f32a4a743@syzkaller.appspotmail.com>
-To: Jason@zx2c4.com, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
- syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
+From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
+Date: Tue, 22 Aug 2023 17:39:23 -0300
+Message-ID: <CAJq09z6Dz3idziDgB-3-VOVa=YEWk6ZOrLOwLTBctRb5VkLMLA@mail.gmail.com>
+Subject: IPv6 and PPPoE with MSSFIX
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -59,34 +67,29 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello wireguard maintainers/developers,
+Hello,
 
-This is a 31-day syzbot report for the wireguard subsystem.
-All related reports/information can be found at:
-https://syzkaller.appspot.com/upstream/s/wireguard
+We noticed an issue with clients that use PPPoE and connect to WG
+using IPv6. Both sides start to fragment the encrypted packet leading
+to a severe degradation in performance. We reduced the wireguard MTU
+from the default 1420 to 1400 and the issue was solved. However, I
+wonder if it could be fixed with MSSFIX (in my case, nftables
+equivalent).
 
-During the period, 2 new issues were detected and 0 were fixed.
-In total, 6 issues are still open and 14 have been fixed so far.
+The server does know that the remote address has a smaller MTU as it
+fragments the packet accordingly when any VPN peer sends some traffic.
+The traffic inside the VPN does adjust the TCP MSS to fit into vpn
+interface MTU (1420 by default, now 1400).
 
-Some of the still happening issues:
+I could dynamically add firewall rules to clamp MSS per authorized_ips
+but, theoretically, the kernel has all the info to do that
+automatically. I wonder if MSSFIX could detect the best MTU for a
+specific address through the wireguard. It should consider the
+peer-to-peer PMTU, the IP protocol wireguard is using and the normal
+wireguard headers.
 
-Ref Crashes Repro Title
-<1> 763     No    KCSAN: data-race in wg_packet_send_staged_packets / wg_packet_send_staged_packets (3)
-                  https://syzkaller.appspot.com/bug?extid=6ba34f16b98fe40daef1
-<2> 511     No    KCSAN: data-race in wg_packet_decrypt_worker / wg_packet_rx_poll (2)
-                  https://syzkaller.appspot.com/bug?extid=d1de830e4ecdaac83d89
-<3> 3       Yes   INFO: rcu detected stall in wg_ratelimiter_gc_entries (2)
-                  https://syzkaller.appspot.com/bug?extid=c1cc0083f159b67cb192
+Regards,
 
 ---
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
-
-To disable reminders for individual bugs, reply with the following command:
-#syz set <Ref> no-reminders
-
-To change bug's subsystems, reply with:
-#syz set <Ref> subsystems: new-subsystem
-
-You may send multiple commands in a single email message.
+     Luiz Angelo Daros de Luca
+            luizluca@gmail.com
