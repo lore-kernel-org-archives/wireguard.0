@@ -4,38 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25235EE49A3
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 23 Aug 2023 16:19:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D891EE49A0
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 23 Aug 2023 16:19:59 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 08965a2a;
-	Wed, 23 Aug 2023 16:07:18 +0000 (UTC)
-Received: from iedub0.y7.hu (iedub0.y7.hu [2a05:d018:563:7900::25])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 07bf2afb
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 76baf149;
+	Wed, 23 Aug 2023 16:07:20 +0000 (UTC)
+Received: from mail-oo1-xc43.google.com (mail-oo1-xc43.google.com
+ [2607:f8b0:4864:20::c43])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 51086be9
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 20 Aug 2023 06:57:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=y7.local;
- s=may2017; h=Content-Type:MIME-Version:Subject:Message-ID:Date:To:From:
- List-Unsubscribe; bh=mCPzq0K+xM2hoDN57yT7NYR8K1MSrA5RFKfGwM8pQdQ=; b=dG+ZBkmX
- 213BjaMHqetr8bIfWM7yjAmsAaoY1pSf9JHrFZTbRwRzcfSmnnNuf6N3h+Xn2k4zJ2k/2ULrMWwgd
- oscuOfqtMCqT6WehNsG2o/yLNyfyFpSwS6YTrtOTfW16/PaUNhC+S5H7+29DI4f2ub4m6ov28dxLn
- jgAjDbeMXSyCVx9Qm+m08+JW79dQyH4PL0jC7E+gv9K0Ri+1m5KsZafIn0aRhCaaIytdj/2rTLrYv
- J5R0Rzv4riZaexRxWMudTuDi2AADryNwxSnO6DHAqqqqXEToRxbtaI7a61WejAfvQ63Jxy7W2O2kJ
- rsyQOzrowfdbCFDG4dLewACZ3Q==;
-Received: from [::ffff:158.255.211.76] (port=55340 helo=[44.128.141.22])
- by mta01.defra0.y7.local with esmtpa (Exim 4.96)
- (envelope-from <e@y7.local>) id 1qXcNT-00G35d-0T;
- Sun, 20 Aug 2023 06:57:35 +0000
-From: Endre Szabo <e@y7.local>
-To: <wireguard@lists.zx2c4.com>
-Date: Sun, 20 Aug 2023 08:57:32 +0200
-Message-ID: <18a11bc0f60.28a6.38ae7defbc00cf30cde15e5f7bfb2d02@y7.local>
-In-Reply-To: <NborxNu--3-9@diyaa.ca>
-References: <NborxNu--3-9@diyaa.ca>
-Subject: Re: Wireguard Dynamic ARP entries
+ Tue, 22 Aug 2023 17:26:49 +0000 (UTC)
+Received: by mail-oo1-xc43.google.com with SMTP id
+ 006d021491bc7-570f6c17c55so535022eaf.2
+ for <wireguard@lists.zx2c4.com>; Tue, 22 Aug 2023 10:26:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20221208; t=1692725207; x=1693330007;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=Azhla3fUQ6wegUjaqIDqRQ0WEsUSd9m69dDH0cGluG0=;
+ b=RbaK9vKvIVBkvvEWyV1lCdFciDbJdGJkDO0xHCUQ4ciI103lAKjyO4wY6FVoMe8yIm
+ 2t1QSkSU0YD6yo5xtU/dj40MsemQkvgYx8teiF1d6PDuBZjXjwV0tGMhVInTeP2bUrNV
+ bmH3qa5j6Xr6SmhbkDMQT8mUQ2Jc/C5WkaySxA7eQTEoBXD2KUqM+yv5uggp8t3bOaHf
+ Ep/SZKJFJbb0Cr4YYRHRqHS+AvTbZRDfWIqds5azZZyg4Zp+4Tt9d+FcTsTwe+SRtNtX
+ VpDYxaL1b/wV5jcP0gQpQHwTa6k3nod5lBjBrqdxjp9vYEMlDjEMe+oB6CoUk1KqJCFw
+ KG/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20221208; t=1692725207; x=1693330007;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Azhla3fUQ6wegUjaqIDqRQ0WEsUSd9m69dDH0cGluG0=;
+ b=Pl4OjhkE4wyqggCO6GPSJrH3Xu0mWDh9G/zgGWigvZDxaxUag0Z1G37kaWrXBKNvhJ
+ M19DSsdHHYkDedvBdxu18uvfBTAb+m5B5hBLo3cnDOka9vXZtuS5pAWX15EDswwexv2g
+ ErYtDYOGTtOM60vCncq6FAprO1Uk0NCLmwG1lMOZ1l4GoOIG5+ENgT4acARLk1NGnHjl
+ 4uqNvqVUNeS2nBiPIQIzANaxXRj7HlFsRqqnsKEONkgjYcBUkUOmmpDt/rIIduDdrNVb
+ ClO6OBx5M+rTj+zFuhPSDoyJv4B+CxUXNAGQr+dheM6/kUJnTkYjJ74Gb8g2xJfw57mo
+ ukJw==
+X-Gm-Message-State: AOJu0YwkLNzJOE855wCHuTqcnbZT9cyMF/0qBiM/Kv7pqeINdlj0EXp6
+ 9v0a8xWqeftIqnaP4MiaQfLjifOY280UV2PGulJpZq3cUZzj6Q==
+X-Google-Smtp-Source: AGHT+IGUkjS9zBkq9XL23hZd5K8sSAx1Mdiar9+W0+Snm02lE67iw40QGeHjhzMWEBD1CrC2cfLqKQfhiXspWrhG+ec=
+X-Received: by 2002:a4a:dfb8:0:b0:566:fd3b:4329 with SMTP id
+ k24-20020a4adfb8000000b00566fd3b4329mr8817568ook.7.1692725207511; Tue, 22 Aug
+ 2023 10:26:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+From: Kat Liny <billowtongroup@gmail.com>
+Date: Wed, 23 Aug 2023 00:26:31 +0700
+Message-ID: <CAMFOZ_+iR0J5q5RUKvZ8Gtk3Q3bVcAs=GpB9YWxjCUTs5cN4oQ@mail.gmail.com>
+Subject: Disconnection Bug on Win 11 with Intel adapter
+To: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
 X-Mailman-Approved-At: Wed, 23 Aug 2023 16:07:07 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -51,25 +68,44 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-I guess it is a normal thing on windows as Cisco VPN Client works the same way.
+There appears to be a bug that causes the network adapter "Intel(R)
+Wi-Fi 6E AX211 160MHz" on Windows 11 (with all current updates) to
+disconnect and re-connect to the WiFi network a few times AFTER
+disconnecting a WireGuard client profile. If the WireGuardTunnel
+service can be either set to automatic startup or be started later
+after Windows loads.  The WireGuard connection will remain stable and
+connected until the WireGuardTunnel service is stopped, that is when
+the connection issues begin, the Internet will be lost for about 20
+seconds each time, sometimes more, then reconnects (and usually last
+5-15 minutes while the adapter disconnects and reconnects to the
+normal network). The issue could be lasting longer than that, I did
+not have the patience after each test with reboot.
 
---
-Endre
+Have tried:
+-Disabling windows firewall and windows defender
+-Disable/enable the Intel network adapter quickly after disabling the
+WireGuard tunnel service.
+-Changing many of the adapter settings.
 
-On August 19, 2023 22:31:33 Diyaa Alkanakre <diyaa@diyaa.ca> wrote:
+After each test, I rebooted.
 
-> Hello everyone,
->
-> I am seeing lots of ARP dynamic entries on Windows when typing "arp -a" on 
-> the command line on windows. I am wondering if that is a normal behavior? 
-> when I set a wireguard peer with a default route "0.0.0.0/0, ::/0" I end up 
-> spending about 2 minutes to get to the bottom of the CLI when I type "arp -a".
->
-> I am just wondering if that is a normal behavior? why is this happening??
->
-> Thank you in advance,
->
-> Diyaa
+It seems only a reboot solves the issue, and the intermittent
+disconnection issue will start again after connecting/disconnecting
+the WireGuard profile.
 
+If the WireGuardTunnel service is kept to Disabled status and I never
+try to connect to a WireGuard client config during the test, then the
+disconnection issue does not happen.
 
+In the Event Viewer logs, it shows this a few times, only during the
+issue which seems related:
+-----
+The description for Event ID 7021 from source Netwtw12 cannot be
+found. Either the component that raises this event is not installed on
+your local computer or the installation is corrupted. You can install
+or repair the component on the local computer.
+----
 
+Tested using the WireGuard installer wireguard-amd64-0.5.3.msi. There
+are no other security/networking products on the machine that could be
+conflicting.
