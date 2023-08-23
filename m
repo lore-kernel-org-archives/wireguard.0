@@ -4,60 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF82EC27C40
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 23 Aug 2023 19:55:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EAE0C3DA66
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 23 Aug 2023 23:31:47 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f555e9ea;
-	Wed, 23 Aug 2023 19:55:37 +0000 (UTC)
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com
- [2a00:1450:4864:20::236])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f5ae9332
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a4eb30ef;
+	Wed, 23 Aug 2023 23:31:45 +0000 (UTC)
+Received: from exchange.fintech.ru (exchange.fintech.ru [195.54.195.159])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ba6f5c4b
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 23 Aug 2023 19:55:35 +0000 (UTC)
-Received: by mail-lj1-x236.google.com with SMTP id
- 38308e7fff4ca-2b9c907bc68so99901321fa.2
- for <wireguard@lists.zx2c4.com>; Wed, 23 Aug 2023 12:55:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20221208; t=1692820535; x=1693425335;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Z/tSPnYBNFfk81u75//nhed3zQ+8AYuB6m/Afwv+azU=;
- b=CXtq4jJ9wT1qChNaSu/hqyTXK5J3npNtwzk7Do6zadAeyCM3G15KMESbAu6MwL0OTj
- RM4K1hpeRheqkoU+zTcFEHYGh+yH86Pvk4dIw0dYimMUGy+vVOM/EE+BwsPEYB2DUcMF
- se95AxdOofYMZa9P18sFg6wcI+rcpqMOSRJKQbmTTpmJh6Ogv7hmcsFXrqi+C1vNhjEF
- LwyLO2t2racl8fpR4+cXx6reofgMUbAjFgUU45qNOhQoLZzWgwINjpwGgfW6WgwMXMUm
- bAg60VpvReBJS/MrK/JenXoybBj+1a0PVNsjYBCFwLSvEAZPpmXGAl2DdW6bPOFP3LSY
- XUIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20221208; t=1692820535; x=1693425335;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Z/tSPnYBNFfk81u75//nhed3zQ+8AYuB6m/Afwv+azU=;
- b=IMLHYAu0gm3AK3EUUbJjhzBwdovzDL9pmmxygq+KjU2kvAvC0Y8b+Oez3HB5QzTILt
- ILhLDj8O4pmR2t0ZnLaTCyLIr9I2VXk34LFRWIvlxQSoO3zkvhdtCa7e2Cp63Csi7Viv
- GIr222jdC33wZ7lXHrxLZ/P23ibIMZ8KZbFvAOknRmJfXpaxI5LAUVjOHs1KKJyIOlu8
- zEBeBRC+qIqUW8BxWB20c9249xmYaWnWPTY4iZiwc3Sx3HHVo8Kfmh07sduXmVBvzVqK
- cIPm1y1Sc2pricJibC0c6oLfD4j2wmzUZojfkaZ0YT3p4weyi5bnjVR/WfSe2MD+4xwG
- sCWQ==
-X-Gm-Message-State: AOJu0YxZUIkxN7GF3SHStSphYt+alNz4/wKTqie6WSjdNX2yxDi2DzLE
- 8gKuo020caxNZO83UCVDUCqZvIekVb/TZ9Qqr5poNWu6bXk=
-X-Google-Smtp-Source: AGHT+IHBbd24ZeNHrBnYKg8GXeuDLi3hmTC0Cm9T7N1JTr8Oh7USKZQb8Kt2iAzGNzWJodF79GCrjPQQn8QA8gQjQAc=
-X-Received: by 2002:a2e:9f4d:0:b0:2b9:7513:3596 with SMTP id
- v13-20020a2e9f4d000000b002b975133596mr10171672ljk.5.1692820534744; Wed, 23
- Aug 2023 12:55:34 -0700 (PDT)
+ Wed, 23 Aug 2023 17:39:00 +0000 (UTC)
+Received: from Ex16-01.fintech.ru (10.0.10.18) by exchange.fintech.ru
+ (195.54.195.159) with Microsoft SMTP Server (TLS) id 14.3.498.0; Wed, 23 Aug
+ 2023 20:38:53 +0300
+Received: from localhost (10.0.253.138) by Ex16-01.fintech.ru (10.0.10.18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2242.4; Wed, 23 Aug
+ 2023 20:38:52 +0300
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, "David S. Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>
+CC: Nikita Zhandarovich <n.zhandarovich@fintech.ru>, Jakub Kicinski
+ <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ <wireguard@lists.zx2c4.com>, <netdev@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, syzbot <syzkaller@googlegroups.com>,
+ <lvc-project@linuxtesting.org>,
+ <syzbot+d1de830e4ecdaac83d89@syzkaller.appspotmail.com>
+Subject: [PATCH net] wireguard: receive: fix data-race around
+ receiving_counter.counter
+Date: Wed, 23 Aug 2023 10:38:39 -0700
+Message-ID: <20230823173839.43938-1-n.zhandarovich@fintech.ru>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <CAJq09z6Dz3idziDgB-3-VOVa=YEWk6ZOrLOwLTBctRb5VkLMLA@mail.gmail.com>
- <20230823170740.ie5ro6eswgus3x2l@House.clients.dxld.at>
-In-Reply-To: <20230823170740.ie5ro6eswgus3x2l@House.clients.dxld.at>
-From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Date: Wed, 23 Aug 2023 16:55:23 -0300
-Message-ID: <CAJq09z5QPLF-WyQiWwCZymvLhG31jp5eNctze_mYmKixtn6nNg@mail.gmail.com>
-Subject: Re: IPv6 and PPPoE with MSSFIX
-To: =?UTF-8?Q?Daniel_Gr=C3=B6ber?= <dxld@darkboxed.org>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.0.253.138]
+X-ClientProxiedBy: Ex16-02.fintech.ru (10.0.10.19) To Ex16-01.fintech.ru
+ (10.0.10.18)
+X-Mailman-Approved-At: Wed, 23 Aug 2023 23:31:43 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -72,68 +56,41 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-> > I could dynamically add firewall rules to clamp MSS per authorized_ips
-> > but, theoretically, the kernel has all the info to do that
-> > automatically. I wonder if MSSFIX could detect the best MTU for a
-> > specific address through the wireguard. It should consider the
-> > peer-to-peer PMTU, the IP protocol wireguard is using and the normal
-> > wireguard headers.
->
-> Interesting idea Luiz, so if I understand correctly you have a wg device
-> with multiple peers where only some of them need the reduced MTU and you'd
-> like to use the maximum possible MTU for all peers.
->
-> As things are this won't "just work" with MSSFIX because the wg device
-> won't generate ICMP packet-too-big errors for packets sent to it for
-> encapsulation regardless of the underlying PMTU, rather the wg device will
-> always fragment when the resulting encapsulated packet doesn't fit as
-> you've observed.
->
-> AFAIK MSSFIX will only look at the actual outgoing route MTU and calculate
-> the MSS from that. Since wg never causes (dynamic) PMTU entries to be
-> created that won't work.
->
-> However we can also just create "static" PMTU entries. As we've seen above
-> linux uses the "mtu" route attribute to determine the actual PMTU behind a
-> route, as opposed to the netdev MTU, which you should think of as the upper
-> limit of what a link can support.
->
-> So you can try adding a route specific for the peer that's behind PPPoE
-> with the reduced PMTU. Assuming 2001:db8:1432::/64 is this peer's
-> AllowedIPs:
->
->     $ ip route add 2001:db8:1432::/64 dev wg0 mtu 1432 proto static
->
-> You should be able to add this in PostUp in your wg.conf. The "proto
-> static" is optional, I just like to use that to mark administratively
-> created routes.
->
-> You're still going to want to set the peer's wg device MTU to 1432 or you
-> can create "mtu" routes in a similar fashion there. Up to you.
->
-> Also note MSSFIX or the nft equivalent mouthful `tcp flags syn tcp option
-> maxseg size set rt mtu` is really only appropriate for IPv4 traffic since
-> IPv4-PMTU is broken by too many networks. However over in always-sunny IPv6
-> land PMTU does work and should be preferred to mangling TCP headers. The
-> static PTMU route we created should cause the kernel to start sending the
-> appropriate ICMPv6 packet-too-big errors when it's configured for IPv6
-> forwarding.
->
-> You can test the PTB behaviour with `ping 2001:db8:1432::1 -s3000 -M do`.
-> The -s3000 sends large packets, careful with the size that's the ICMP
-> _payload size_ so it's not equivalent to MTU, and `-M do` disables local
-> fragmentation so you can see when PMTU is doing it's job. You'll get
-> something like "ping: local error: message too long, mtu: XXXX" showing the
-> PMTU value if ICMP-PTB error generation is working along the path.
+Syzkaller with KCSAN identified a data-race issue when accessing
+keypair->receiving_counter.counter.
 
-I didn't think about adding the MTU directly to the route table. Now
-it is more interesting. Wireguard adds a route to each allowed ips. If
-we detect a pmtu change pmtu for a target, we could adjust those
-routes to avoid fragmentation. I just don't know if we would break the
-connection if we modify MTU up or down during a transfer. I believe
-increasing it won't matter for existing connections as MSS is already
-negotiated and bringing it down will just fragment the traffic.
-Anyway, I believe it is better to fragment the plain packet than the
-encrypted one. And for new TCP connections, the firewall can clamp TCP
-MSS to the optimal value, even considering if it is using IPv4 or
-IPv6.
+This patch uses READ_ONCE() and WRITE_ONCE() annotations to fix the
+problem.
+
+Fixes: a9e90d9931f3 ("wireguard: noise: separate receive counter from send counter")
+Reported-by: syzbot+d1de830e4ecdaac83d89@syzkaller.appspotmail.com
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+---
+ drivers/net/wireguard/receive.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/net/wireguard/receive.c b/drivers/net/wireguard/receive.c
+index 0b3f0c843550..b5232ffa8bc7 100644
+--- a/drivers/net/wireguard/receive.c
++++ b/drivers/net/wireguard/receive.c
+@@ -251,7 +251,7 @@ static bool decrypt_packet(struct sk_buff *skb, struct noise_keypair *keypair)
+ 
+ 	if (unlikely(!READ_ONCE(keypair->receiving.is_valid) ||
+ 		  wg_birthdate_has_expired(keypair->receiving.birthdate, REJECT_AFTER_TIME) ||
+-		  keypair->receiving_counter.counter >= REJECT_AFTER_MESSAGES)) {
++		  READ_ONCE(keypair->receiving_counter.counter) >= REJECT_AFTER_MESSAGES)) {
+ 		WRITE_ONCE(keypair->receiving.is_valid, false);
+ 		return false;
+ 	}
+@@ -318,7 +318,7 @@ static bool counter_validate(struct noise_replay_counter *counter, u64 their_cou
+ 		for (i = 1; i <= top; ++i)
+ 			counter->backtrack[(i + index_current) &
+ 				((COUNTER_BITS_TOTAL / BITS_PER_LONG) - 1)] = 0;
+-		counter->counter = their_counter;
++		WRITE_ONCE(counter->counter, their_counter);
+ 	}
+ 
+ 	index &= (COUNTER_BITS_TOTAL / BITS_PER_LONG) - 1;
+-- 
+2.25.1
+
