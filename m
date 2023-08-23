@@ -4,55 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58AA7C3DA6E
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 Dec 2023 05:25:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4390FC46CD2
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 Dec 2023 05:25:51 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8f2dffca;
-	Wed, 20 Dec 2023 04:58:57 +0000 (UTC)
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com
- [2a00:1450:4864:20::22c])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d205a1b0
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e01f5453;
+	Wed, 20 Dec 2023 04:58:58 +0000 (UTC)
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com
+ [2607:f8b0:4864:20::102a])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id cbf9cc76
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 13 Aug 2023 13:36:30 +0000 (UTC)
-Received: by mail-lj1-x22c.google.com with SMTP id
- 38308e7fff4ca-2b9db1de50cso51788131fa.3
- for <wireguard@lists.zx2c4.com>; Sun, 13 Aug 2023 06:36:30 -0700 (PDT)
+ Wed, 23 Aug 2023 23:58:05 +0000 (UTC)
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-26d1e5f2c35so4247941a91.2
+ for <wireguard@lists.zx2c4.com>; Wed, 23 Aug 2023 16:58:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20221208; t=1691933790; x=1692538590;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=e0Watq003ZAUpSjGoyMhVN5xyMBX7jwndthGeVSFbSw=;
- b=pCt2qhHUZvZ9FDmi0hdc6/urX5oV0rkWDbRSbm2UTNSl7dBSN5fSLN1LpYDjRReB74
- X+Q27IVH4/4I/nMROLDYz3tMOdz1L6gZvnv4ho/JaRxza+PaOMOFbIH149aBXq+NhJ0x
- swWUtzR/eqvmWg9CPeNN+EfR6e6U1Hyo5+Xi60QKENP4TI7rGr3cXyJzAlyakdKHCPsk
- CXD91WcHL9v0gqPYdu1qr3PMV1oPoZsG6L1CgSQ6KqP6mFSyKSIDQYskXCv6FAzjWHrJ
- MlBN5ai4n2lpy3ZaDcX3sUH3w6ETlmCsOPiixtQZxE8iT7o0pv0nt7nAIbcl2lp6WzxN
- IVBA==
+ d=gmail.com; s=20221208; t=1692835083; x=1693439883;
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=wrwz8f0lL47SToE2ljw86gMnYN+pUzKJ9YnPs959xdc=;
+ b=jdDf+Edm7MuAxcjcwsJGYckZ4RWGN/BL9dwOEt5ly3UVHmL+OoPlp6hYlWN1EfaM03
+ unVOMYrCELut+JmuufMNb/9TLgQS3jMf5csWkxOjpaFllsIUrv4DeFZkxW0dpDLWgitW
+ 7Y+VoR74+Hue2TWixFkrl7wnltalQ3f8pDVw4icm7NctW5nKZzEZVMZp6tk3ZaCuGq94
+ H+qu5CDmT3Tfcl+4v5b2bmBDZeSdw2qpbeXCU7HK+EPtfUZL6KnDa6R+Sf8KcBXqKmRC
+ Da5Y0vzUBsSbvN9EEfXKnxc0w/4mfN8lvd8C4mgVWnzbRDyJ0yi9mFliBAG66tLGNv6r
+ 1vsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20221208; t=1691933790; x=1692538590;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=e0Watq003ZAUpSjGoyMhVN5xyMBX7jwndthGeVSFbSw=;
- b=l6gcOEO+8Yeg9Wmc5LHVJUNh5+2QA2fWgfmfuf4R47uZWmhFlJcmsgKw7zmoJwT1sv
- 9K+Xz3yY1OyXwbZWvJIUE8hxxNnlzANJU7vKeFscbSwxDIsw6bK2pZVFAwdjU8di0wn9
- nfFXbF9cMyM2o49euy/dwiGxk+sR2PlaVCPCbMIRen0JTliXw2X5gE4JdbxY0eCBfEAg
- fo9Wq0fZgasXyHpho2FsSJ+FA5agcqm8MdlMMxzM8CdGGHnSNOwIyGcfwNCJwuuRooYP
- UatPrNTBEX1Slvjsil+EtGKPzHuez5yRChwqx0AybwN7iaZ2ipN5vkkrGcBpHBKEUnn5
- 2vDA==
-X-Gm-Message-State: AOJu0YyHUsI+xTx4VCx+Epj9NozZR6utNkyZ0WK9iLs48TCmOPOu3w2H
- y1VZ+/2l62mWeQ1VFjmtPPDG+Z8IJ9B/14zTxQo2gcKS5yrDBw==
-X-Google-Smtp-Source: AGHT+IHMTyqctiOqXjpnyxQ8ldduzuHNAFqL78/wH93M9BW8WRTD7W+CxXrY/1uYTvWDu9fVTXq0JRXvLVgaOj/XfP4=
-X-Received: by 2002:a2e:9f14:0:b0:2ba:38c4:1621 with SMTP id
- u20-20020a2e9f14000000b002ba38c41621mr5215225ljk.9.1691933789644; Sun, 13 Aug
- 2023 06:36:29 -0700 (PDT)
+ d=1e100.net; s=20221208; t=1692835083; x=1693439883;
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wrwz8f0lL47SToE2ljw86gMnYN+pUzKJ9YnPs959xdc=;
+ b=MGevpGVvIliCod0TKDcImb91uY8IBAw2+vWEGs91ao1bKL2Vo0M6gCK9XatkPXhLh0
+ QEHKLUkKVnEcGH70Wsi3Sg36xajWLWoZKGB9PTZRD8Bju0SuP2H+TWTYfGwnQPXj7q8T
+ Z6ZxePQp0GLYXpEP0b/42fePy79ziVDWhIdBpXDQFjbad1+NPnmR8feLkQqpKNSBH9TC
+ /s72oVxZJ9GNHytflTOSxnyQv9P0OQ0/sVCnWXxIE8ZLEvfeH+uk7RJiWjH6JDfJiqmG
+ xtOdzDzGlSAYgcb+ZnakG7Ss7g3MZV/rNe+WSNVw69xwhzxrxEp7gPBXoZmP6G5+8bB4
+ 6zpw==
+X-Gm-Message-State: AOJu0Yy+FOa5Krr4ont6ajUWCUlb95fXqh8MKyCbHuI55kxfKITRmjul
+ D4+E+p1SrndBwZGPtlxyjNYtn2RbHAsnPc3Yr4z61WHPiTs=
+X-Google-Smtp-Source: AGHT+IFdAsBhTn3qXDz3CdSTEz3fGCPtdj7/WbWn9wPYxC870fA30SgohBK3TIAlEkYQ+tyXk84jW28sgnvKtC/0JT0=
+X-Received: by 2002:a17:90a:ee87:b0:268:4485:c868 with SMTP id
+ i7-20020a17090aee8700b002684485c868mr11353141pjz.49.1692835082919; Wed, 23
+ Aug 2023 16:58:02 -0700 (PDT)
 MIME-Version: 1.0
-From: Chengbo Zhao <cbzhao.cn@gmail.com>
-Date: Sun, 13 Aug 2023 21:36:18 +0800
-Message-ID: <CAMFsdgwjDzvLtJS5R_t1CMeP2zQkmMMRUCHtXro-vwJxDF_O_Q@mail.gmail.com>
-Subject: Upload speed slow in Windows through ipv6
+From: Mighty Guava <mightyguava@gmail.com>
+Date: Wed, 23 Aug 2023 19:57:51 -0400
+Message-ID: <CAL9uZM8JHTrse+T8GE9k3sNVdKCh3MPQaU_nW28dOpOqAJn+ow@mail.gmail.com>
+Subject: Issues starting Wireguard connection on Mac and iOS
 To: wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Mailman-Approved-At: Wed, 20 Dec 2023 04:58:44 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -68,32 +70,65 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello:
+Hi all,
 
-I just changed my way back home from OpenVPN to WireGuard. Nice work,
-faster and easier to configure!
+I=E2=80=99ve been having issues with the iOS (iPhone 12) and Mac (MacBook M=
+1)
+clients for Wireguard when starting a connection. It usually takes
+several attempts to start a connection. Specifically, one of the
+following things occur when activating Wireguard:
 
-But when I tried to connect through ipv6, I had some troubles: the
-download speed seems normal, but upload speed (Both to LAN and WAN)
-was limited to ~10Mbps (about 10~20% of full speed).
+* It shows =E2=80=9CData sent: 148b=E2=80=9D, incrementing a small amount e=
+very 5
+seconds-ish with nothing showing for Data Received.
+* It shows =E2=80=9CData received: 96b=E2=80=9D incrementing a small amount=
+ every 5
+seconds, while =E2=80=9CData sent=E2=80=9D is going up by about 20MB/s ever=
+y second,
+effectively saturating my uplink. Statistics on my router does show
+the data actually going somewhere. Wireguard logs on the peer it=E2=80=99s
+connecting to though do not show anything unusual.
 
-I thought it was a network issue at first, so I used a process of
-elimination to find out what went wrong. On the mobile phone, using
-the same configuration, both upload and download can reach the upload
-rate of my broadband ~60Mbps. This indicates that the computer may not
-be working properly. So, I went on to test on my laptop and found that
-when using ipv4 for connection, the upload and download can also run
-at full speed. I guess that there may be a performance problem with
-the forwarding of ipv6 packets in WireGuard NT. By the way, I just
-configure ipv4 for all clients in WireGuard's internal network.
+In both cases, the connection isn=E2=80=99t actually successful, and I am
+unable to access vpn network. The connection is successful for me
+about 1 out of 5 times, though it=E2=80=99s not deterministic.
 
-  Test Device     ipv4-download   ipv4-upload   ipv6-download   ipv6-upload
- --------------- --------------- ------------- --------------- -------------
-  PC-Win11        ~60Mbps         ~60Mbps       ~60Mbps         ~10Mbps
-  Phone-Android   ~60Mbps         ~60Mbps       ~60Mbps         ~60Mbps
+I=E2=80=99ve had no issues connecting from an Android client. It succeeds
+every time. When my Mac or iOS clients succeed in making a connection,
+I also see no problems.
 
-Can you guys do further tests to resolve this issue?
+The same issue occurs when connecting to 3 completely different peers
+from the Mac/iOS device: 1 running Raspberry Pi OS (Debian based), 1
+running weejewel/wg-easy Docker container, 1 running on an Asus
+RT-AX86U Router using their software. All wireguard packages up to
+date.
 
----
+I=E2=80=99ve tried upping MTU to 1500 and shortening keep alive but neither=
+ successful.
+
+There=E2=80=99s a serverfault topic for this issue as well (not created by =
+me)
+with several people reporting similar experiences.
+https://serverfault.com/questions/1129770/wireguard-clients-need-to-make-ma=
+ny-attempts-to-connect-before-receiving-data
+
+Client config below:
+
+[Interface]
+PrivateKey =3D <pub key>
+Address =3D 10.6.0.3/32
+
+[Peer]
+PublicKey =3D <pub key>
+AllowedIPs =3D 0.0.0.0/0
+Endpoint =3D <server address>
+PersistentKeepalive =3D 25
+
+DNS is pointed to an internal DNS server on my intranet. I've tried
+removing it to not override DNS, but it does not seem to have an
+impact.
+
+Hoping someone on this list has leads on how I might be able to fix this.
+
 Thanks,
-Chengbo Zhao
+Yunchi
