@@ -4,56 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4390FC46CD2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25445C46CD3
 	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 Dec 2023 05:25:51 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e01f5453;
-	Wed, 20 Dec 2023 04:58:58 +0000 (UTC)
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com
- [2607:f8b0:4864:20::102a])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id cbf9cc76
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a51d1221;
+	Wed, 20 Dec 2023 04:58:59 +0000 (UTC)
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
+ [66.111.4.27])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2ce4d9d8
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 23 Aug 2023 23:58:05 +0000 (UTC)
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-26d1e5f2c35so4247941a91.2
- for <wireguard@lists.zx2c4.com>; Wed, 23 Aug 2023 16:58:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20221208; t=1692835083; x=1693439883;
- h=content-transfer-encoding:to:subject:message-id:date:from
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=wrwz8f0lL47SToE2ljw86gMnYN+pUzKJ9YnPs959xdc=;
- b=jdDf+Edm7MuAxcjcwsJGYckZ4RWGN/BL9dwOEt5ly3UVHmL+OoPlp6hYlWN1EfaM03
- unVOMYrCELut+JmuufMNb/9TLgQS3jMf5csWkxOjpaFllsIUrv4DeFZkxW0dpDLWgitW
- 7Y+VoR74+Hue2TWixFkrl7wnltalQ3f8pDVw4icm7NctW5nKZzEZVMZp6tk3ZaCuGq94
- H+qu5CDmT3Tfcl+4v5b2bmBDZeSdw2qpbeXCU7HK+EPtfUZL6KnDa6R+Sf8KcBXqKmRC
- Da5Y0vzUBsSbvN9EEfXKnxc0w/4mfN8lvd8C4mgVWnzbRDyJ0yi9mFliBAG66tLGNv6r
- 1vsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20221208; t=1692835083; x=1693439883;
- h=content-transfer-encoding:to:subject:message-id:date:from
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wrwz8f0lL47SToE2ljw86gMnYN+pUzKJ9YnPs959xdc=;
- b=MGevpGVvIliCod0TKDcImb91uY8IBAw2+vWEGs91ao1bKL2Vo0M6gCK9XatkPXhLh0
- QEHKLUkKVnEcGH70Wsi3Sg36xajWLWoZKGB9PTZRD8Bju0SuP2H+TWTYfGwnQPXj7q8T
- Z6ZxePQp0GLYXpEP0b/42fePy79ziVDWhIdBpXDQFjbad1+NPnmR8feLkQqpKNSBH9TC
- /s72oVxZJ9GNHytflTOSxnyQv9P0OQ0/sVCnWXxIE8ZLEvfeH+uk7RJiWjH6JDfJiqmG
- xtOdzDzGlSAYgcb+ZnakG7Ss7g3MZV/rNe+WSNVw69xwhzxrxEp7gPBXoZmP6G5+8bB4
- 6zpw==
-X-Gm-Message-State: AOJu0Yy+FOa5Krr4ont6ajUWCUlb95fXqh8MKyCbHuI55kxfKITRmjul
- D4+E+p1SrndBwZGPtlxyjNYtn2RbHAsnPc3Yr4z61WHPiTs=
-X-Google-Smtp-Source: AGHT+IFdAsBhTn3qXDz3CdSTEz3fGCPtdj7/WbWn9wPYxC870fA30SgohBK3TIAlEkYQ+tyXk84jW28sgnvKtC/0JT0=
-X-Received: by 2002:a17:90a:ee87:b0:268:4485:c868 with SMTP id
- i7-20020a17090aee8700b002684485c868mr11353141pjz.49.1692835082919; Wed, 23
- Aug 2023 16:58:02 -0700 (PDT)
-MIME-Version: 1.0
-From: Mighty Guava <mightyguava@gmail.com>
-Date: Wed, 23 Aug 2023 19:57:51 -0400
-Message-ID: <CAL9uZM8JHTrse+T8GE9k3sNVdKCh3MPQaU_nW28dOpOqAJn+ow@mail.gmail.com>
-Subject: Issues starting Wireguard connection on Mac and iOS
+ Thu, 24 Aug 2023 12:41:30 +0000 (UTC)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+ by mailout.nyi.internal (Postfix) with ESMTP id DAFC25C00B9
+ for <wireguard@lists.zx2c4.com>; Thu, 24 Aug 2023 08:41:25 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute6.internal (MEProxy); Thu, 24 Aug 2023 08:41:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=furrypaws.ca; h=
+ cc:content-transfer-encoding:content-type:content-type:date:date
+ :from:from:in-reply-to:message-id:mime-version:reply-to:sender
+ :subject:subject:to:to; s=fm3; t=1692880885; x=1692967285; bh=oK
+ gfhls3vd+1X5g0XaYblB+eT3EMAFN/i1lUhd7RPSE=; b=Xra4o9F15nFO89C41U
+ 9XOBAJHAux8+44Bh0srBSwdTDGQMhKHWsQl6V0SnR3SYAUgPAa/+ylSs08V9grST
+ UaRd+DarRfvXYAtu3Zq8NF08wFi2m6Yrd8Jwi6yTguXy2vhCJrxIfIZQx8JS4wUw
+ EiWtpPPt/eBidK3H5jqyBc0llqiV+fTxTWsroiCPNLo0YmD1hhJOC5W9IwSZyeiv
+ 2XJMIgXbx6gIdC9yo4PDBbLqixZHX33lPteXmtuxtUUDfT4vkt1BYn4mSaq2gbTO
+ u04GQHYvaDHTd4maCu0cbWf2LLAZQyZ3Q1qu9Wtmy/9os494uChXut+lLidxX202
+ BB0g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-transfer-encoding:content-type
+ :content-type:date:date:feedback-id:feedback-id:from:from
+ :in-reply-to:message-id:mime-version:reply-to:sender:subject
+ :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm1; t=1692880885; x=1692967285; bh=oKgfhls3vd+1X
+ 5g0XaYblB+eT3EMAFN/i1lUhd7RPSE=; b=ghAcM4f4z4mIc4GQOuDlgLbnMGATk
+ ORLdJdm4yQjASWnwGIdpC0Sl1GhPw3+NrhCClG4ggyR3XDDEX/GNd0dwA082W/Er
+ Bf1v3F7gY8/Vr/ISxv6YvdTk2t4Pw14BKgxQNHSi8VQWiRMtTzv3KBUgkg5rZwEu
+ aU3pr1iAFyWOkS5+XL3P9PTi9tZ3KZ8EMJsZrlFAwvcjNaa0LpQ26fVJkvAGSNr0
+ uCfbeU2ZEQ5ae7rbG0p+Ua6XdpZGRousDqvcYHfbgA2JB7QhLkBXGRTjz84AurQC
+ vUocFKUBeqXrQ5llZNaC5PmvA7spTb0WHvIkAxBK8OgnQZqtdYvde2wIQ==
+X-ME-Sender: <xms:9U_nZMd0aryKi-XNRUgJgoUMT_5JOHHwdRWu62V2AjJX8pIhHQMppg>
+ <xme:9U_nZOOeqF_1akmq-ZlQ5ji-bTsMX24ZBlALIdtyKPgyDKczf_AtqKxVQq3cx9DFe
+ ROeDRRPA5G5m41WCQ>
+X-ME-Received: <xmr:9U_nZNjwL4SpgdyuKWWMUQtSlBimrYOfxIZ6lxEqErGpZ1bL2tw260bphdRGv9oGULTaItAgv22yqns3omIgq3x66RsWlBcRSrLkPpU0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedruddviedgheefucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffokfggtgfgsehtqhhmtd
+ ertddtnecuhfhrohhmpeetnhgurhgvficuuegvrhhrhicuoegrnhgurhgvfiesfhhurhhr
+ hihprgifshdrtggrqeenucggtffrrghtthgvrhhnpeetheejfedvtedtleehvefhudehfe
+ eihffgtdeuhfevgefhuedvieefueehueeikeenucffohhmrghinhepohhpnhhsvghnshgv
+ rdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+ eprghnughrvgifsehfuhhrrhihphgrfihsrdgtrg
+X-ME-Proxy: <xmx:9U_nZB8Iz_br9QlgmncOzYeaGHS6LBVh5u8PFWnVV-uwwxF2vAdawQ>
+ <xmx:9U_nZIsTSrKybPddAPEiZ4PqWRfOR1EmiEFr_2EVK76qB6yh1d7_kQ>
+ <xmx:9U_nZIHQI4Z7tBKIsFj-A_8IA5yBUWqUgkYT6_Z_zZYn2IIlHCoUPg>
+ <xmx:9U_nZEJla7CDfPvOcqbG8NESRew2ks0VG0_ENVkD3jEMIdCoDuVf8A>
+Feedback-ID: i7da94273:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <wireguard@lists.zx2c4.com>; Thu, 24 Aug 2023 08:41:24 -0400 (EDT)
+From: Andrew Berry <andrew@furrypaws.ca>
 To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Subject: Bug connecting in iOS / macOS client when using the WG UI to connect
+Date: Thu, 24 Aug 2023 08:41:24 -0400
+X-Mailer: MailMate (1.14r5937)
+Message-ID: <2E8408F8-888B-4A21-B035-C0A2257E2491@furrypaws.ca>
+MIME-Version: 1.0
+Content-Type: text/plain
 Content-Transfer-Encoding: quoted-printable
 X-Mailman-Approved-At: Wed, 20 Dec 2023 04:58:44 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -70,65 +86,32 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi all,
+Are there any known issues using the toggle in the Wireguard app to conne=
+ct, versus the toggle in the Settings app?
 
-I=E2=80=99ve been having issues with the iOS (iPhone 12) and Mac (MacBook M=
-1)
-clients for Wireguard when starting a connection. It usually takes
-several attempts to start a connection. Specifically, one of the
-following things occur when activating Wireguard:
+I've been having trouble connecting to an OPNSesnse-hosted Wireguard VPN.=
+ Symptoms are:
 
-* It shows =E2=80=9CData sent: 148b=E2=80=9D, incrementing a small amount e=
-very 5
-seconds-ish with nothing showing for Data Received.
-* It shows =E2=80=9CData received: 96b=E2=80=9D incrementing a small amount=
- every 5
-seconds, while =E2=80=9CData sent=E2=80=9D is going up by about 20MB/s ever=
-y second,
-effectively saturating my uplink. Statistics on my router does show
-the data actually going somewhere. Wireguard logs on the peer it=E2=80=99s
-connecting to though do not show anything unusual.
+  - No handshakes
+  - No data going across the tunnel
+  - Except sometimes, there are handshakes, but there is a huge amount of=
+ data shown in the counters way beyond what is possible, and no actual tr=
+affic works
 
-In both cases, the connection isn=E2=80=99t actually successful, and I am
-unable to access vpn network. The connection is successful for me
-about 1 out of 5 times, though it=E2=80=99s not deterministic.
+If I reconnect enough times, eventually it works fine.
 
-I=E2=80=99ve had no issues connecting from an Android client. It succeeds
-every time. When my Mac or iOS clients succeed in making a connection,
-I also see no problems.
+I posted about this on the OPNSense forums, and another user mentioned se=
+eing this and that starting the VPN via Settings always worked. The same =
+workaround seems to fix it for me too:
 
-The same issue occurs when connecting to 3 completely different peers
-from the Mac/iOS device: 1 running Raspberry Pi OS (Debian based), 1
-running weejewel/wg-easy Docker container, 1 running on an Asus
-RT-AX86U Router using their software. All wireguard packages up to
-date.
+https://forum.opnsense.org/index.php?topic=3D35555
 
-I=E2=80=99ve tried upping MTU to 1500 and shortening keep alive but neither=
- successful.
+While at first I thought this was an issue with the FreeBSD port of Wireg=
+uard, now I wonder if this is just an Apple client issue or an issue betw=
+een the Apple client and the FreeBSD port.
 
-There=E2=80=99s a serverfault topic for this issue as well (not created by =
-me)
-with several people reporting similar experiences.
-https://serverfault.com/questions/1129770/wireguard-clients-need-to-make-ma=
-ny-attempts-to-connect-before-receiving-data
-
-Client config below:
-
-[Interface]
-PrivateKey =3D <pub key>
-Address =3D 10.6.0.3/32
-
-[Peer]
-PublicKey =3D <pub key>
-AllowedIPs =3D 0.0.0.0/0
-Endpoint =3D <server address>
-PersistentKeepalive =3D 25
-
-DNS is pointed to an internal DNS server on my intranet. I've tried
-removing it to not override DNS, but it does not seem to have an
-impact.
-
-Hoping someone on this list has leads on how I might be able to fix this.
+Has anyone else seen the same behaviour? Any suggestions on ways to get u=
+seful information for debugging?
 
 Thanks,
-Yunchi
+--Andrew
