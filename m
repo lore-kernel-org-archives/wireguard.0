@@ -4,54 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01D2CCDB474
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 23 Oct 2023 14:04:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDDD6C001E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 23 Oct 2023 14:24:06 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cf6d16b9;
-	Mon, 23 Oct 2023 14:04:26 +0000 (UTC)
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6c7b1bd0
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7cf9f1ee;
+	Mon, 23 Oct 2023 14:07:29 +0000 (UTC)
+Received: from smtp.zlima12.com (<unknown> [47.87.186.165])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 80ab7ee3
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 23 Oct 2023 14:04:24 +0000 (UTC)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 136B6CE24DE;
- Mon, 23 Oct 2023 14:04:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74247C433C8;
- Mon, 23 Oct 2023 14:04:19 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="NZR/yraA"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1698069857;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=a50K0V9T1FPsR2jaKp1w4O6pzSmklgTtl4SI1anzDNw=;
- b=NZR/yraAyQD6UFh5OFNCQwAN8jFa0XXnp5//mlWQvFo7VrBJlkIs/Los7YsKijowzzCMrN
- TjYIzwVoyCzNEgSl5csIDcuJLWw/FG+CmawZlQmsVSJGvE76RPTAq7dWigIPcH4jJ5RWCA
- zg4lZUDB48ZR/K6VLkx/SQTQHYqRKiQ=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c64f3372
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Mon, 23 Oct 2023 14:04:16 +0000 (UTC)
-Date: Mon, 23 Oct 2023 16:04:13 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Daniel =?utf-8?Q?Gr=C3=B6ber?= <dxld@darkboxed.org>
-Cc: "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] wireguard: Fix leaking sockets in wg_socket_init error
- paths
-Message-ID: <ZTZ9XfPOXD4JXdjk@zx2c4.com>
-References: <20231023130609.595122-1-dxld@darkboxed.org>
+ Mon, 28 Aug 2023 02:54:56 +0000 (UTC)
+Date: Sun, 27 Aug 2023 22:54:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=zlima12.com; s=dkim;
+ t=1693191294; bh=vdmO6Z60ykXGdx2St9wAHRw1SMv3VG5vbA958csN6eg=;
+ h=Date:From:To:Subject;
+ b=Bd+4nCV2msDw6Sj611QucWokI/m2ZPdKtYBUrvSiaMvWpoO7aljU/ORSkiJf33CV5
+ Dj5ccJf17aw+t26c6tQ2kvK/HaLi7ozQC5zCBF7uxHtNQzTiF2rah/Jhq6S8HwZcYw
+ NYy9e58EAraiacQc44EZ3XHORfeLysE9MMHyknUvR9TemoZ6DC5xg3rOYQLxkple4O
+ hsG/LNPR/6y6zNRGrahQ0JphhscNy3coImUmX9C3MIQY3a8w1yBJK97xBKyR0ij5m5
+ BmTXdRZcTADDom3uebRqVIlW6xmDHH9teVJiWvhB9pCeuc/F8TqQFOYq3UeeMWsh9V
+ 0OwmI2fek/hUg==
+From: "John A. Leuenhagen" <john+wireguard@zlima12.com>
+To: wireguard@lists.zx2c4.com
+Subject: wireguard-android: Multiple Tunnel Support with Userspace Backend
+Message-ID: <krf5hsjmtqbq2qsb2rivsmlhidpq22w4foks42fyuu2e4uo6hx@32wygy6wjv2r>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20231023130609.595122-1-dxld@darkboxed.org>
+X-Mailman-Approved-At: Mon, 23 Oct 2023 14:07:27 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -66,70 +46,17 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+Hi all,
 
-The signed-off-by is missing and the subject does not match the format
-of any other wireguard commits.
+I've just noticed that since switching to the Android userspace backend,
+I am unable to activate multiple tunnels at the same time. From what I
+was able to find with a quick search, it seems that unlike the kernel
+module backend, the Go backend does indeed have this limitation. Can
+anyone confirm that this is the case?
 
-On Mon, Oct 23, 2023 at 03:06:09PM +0200, Daniel Gröber wrote:
-> This doesn't seem to be reachable normally, but while working on a patch
+If so, is there some limitation or other issue that is preventing the
+functionality from being implemented? Or is it simply a matter of the
+code not being written yet? Would patches be welcomed in this case?
 
-"Normally" as in what? At all? Or?
-
-> for the address binding code I ended up triggering this leak and had to
-> reboot to get rid of the leaking wg sockets.
-
-This commit message doesn't describe any rationale for this patch. Can
-you describe the bug?
-
-> ---
->  drivers/net/wireguard/socket.c | 9 +++++++--
->  1 file changed, 7 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/net/wireguard/socket.c b/drivers/net/wireguard/socket.c
-> index 0414d7a6ce74..c35163f503e7 100644
-> --- a/drivers/net/wireguard/socket.c
-> +++ b/drivers/net/wireguard/socket.c
-> @@ -387,7 +387,7 @@ int wg_socket_init(struct wg_device *wg, u16 port)
->  	ret = udp_sock_create(net, &port4, &new4);
->  	if (ret < 0) {
->  		pr_err("%s: Could not create IPv4 socket\n", wg->dev->name);
-> -		goto out;
-> +		goto err;
-
-`new4` is either NULL or has already been freed here in the `goto retry`
-case. `new6` is NULL here.
-
->  	}
->  	set_sock_opts(new4);
->  	setup_udp_tunnel_sock(net, new4, &cfg);
-> @@ -402,7 +402,7 @@ int wg_socket_init(struct wg_device *wg, u16 port)
->  				goto retry;
->  			pr_err("%s: Could not create IPv6 socket\n",
->  			       wg->dev->name);
-> -			goto out;
-> +			goto err;
-
-`new4` has just been freed by `udp_tunnel_sock_release` just above the
-context. `new6` is NULL.
-
->  		}
->  		set_sock_opts(new6);
->  		setup_udp_tunnel_sock(net, new6, &cfg);
-> @@ -414,6 +414,11 @@ int wg_socket_init(struct wg_device *wg, u16 port)
->  out:
->  	put_net(net);
->  	return ret;
-> +
-> +err:
-> +	sock_free(new4 ? new4->sk : NULL);
-> +	sock_free(new6 ? new6->sk : NULL);
-> +	goto out;
->  }
->  
->  void wg_socket_reinit(struct wg_device *wg, struct sock *new4,
-
-I don't see the bug. If there is one, maybe try again with a real patch
-that describes it better. If there isn't one, what is the point?
-
-Jason
+Best,
+John
