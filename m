@@ -4,49 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67557C83F18
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 28 Aug 2023 14:47:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB55FC83F12
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 28 Aug 2023 15:44:31 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 975dcf39;
-	Mon, 28 Aug 2023 14:40:06 +0000 (UTC)
-Received: from mail-pf1-f207.google.com (mail-pf1-f207.google.com
- [209.85.210.207])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8967cb08
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ba445d02;
+	Mon, 28 Aug 2023 15:41:03 +0000 (UTC)
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com
+ [2a00:1450:4864:20::52c])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f9099f15
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 28 Aug 2023 14:40:04 +0000 (UTC)
-Received: by mail-pf1-f207.google.com with SMTP id
- d2e1a72fcca58-68a6cd7c6eeso3127119b3a.3
- for <wireguard@lists.zx2c4.com>; Mon, 28 Aug 2023 07:40:04 -0700 (PDT)
+ Mon, 28 Aug 2023 15:41:00 +0000 (UTC)
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-52a3ec08d93so4448907a12.2
+ for <wireguard@lists.zx2c4.com>; Mon, 28 Aug 2023 08:41:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=krose.org; s=google; t=1693237259; x=1693842059;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zARob631HDu4vo9he63BDoIZlN3GRJv3Tzyt1ZZONg8=;
+ b=UC0MudefTilk1Q4R3UHc3P5O91ry8kq+IMtwrS1IPShiOaF0hdTa8ePU5AvQ2YH/QF
+ /s/WE3KRuCbtQIE/2rcybuUBokQR8AdwaN9g7FzOyfqJyJwZrJg32xfyDWXbSZF2oTeW
+ EGgfa8XDN4xE8K6r8yJAiI7UThSoyx7ATDzYQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20221208; t=1693233603; x=1693838403;
- h=to:from:subject:message-id:date:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=hXm95atR3/kTaW7ZQT6rFBULl00iH/6dVcnDXDrfk9A=;
- b=VCrEBXNQ+xuDnbG3UJXJ2TiBwLd/+xK4nmEkmdSW7OuSPPT4mgL/CpuNgMLNEyDZ5I
- jQ5N1CrEi+4jtumU5HNGg52jvyUWOrYGelXHVGu1SAXRVYGSc5c4ea3YBlARnXUFfAfK
- QQO+Q6NeypVLIdRTcx0vKI1ym+dyyHw8sqwUfZV1/UeYsnFzQQTAZlB1453w4Nz/MT9o
- ZHoPpxcwah8rQTsTE4tzJzKfgmsIJ/hkCSDz/ctH1270rZ5+3v1XGqknmWdxCnbObpMv
- tXrbA8YYP0DDVGLRB+TS+lXS22xEThfqCNoBVRghYAZMh8A5aKKzMZ6B7OslguYAHidV
- 1C/A==
-X-Gm-Message-State: AOJu0YwkHDsAHfVcYb3gMCmchHe+OXadT5zNUzuKVLNVXhUbWCcV3b49
- 4SfBo52Fw9jcl4wChYFUo9spH8h0v6xR0YmlmJPw1kI8m2dK
-X-Google-Smtp-Source: AGHT+IHk5716Ca10XTl59GGFCRhNTZ++7d+1/qS6le4ntpw38yoiawKpbVdirHbxDUVwiYODTWuEPcXT99H90Y2zkTjpezKUVune
+ d=1e100.net; s=20221208; t=1693237259; x=1693842059;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=zARob631HDu4vo9he63BDoIZlN3GRJv3Tzyt1ZZONg8=;
+ b=EUyVn7sUDaM+gySTV6DfXoTqST1JZ0WbIWBnsyIQgvdyD3ltDYx8RQqOCbnalek1rd
+ kPn6whnnLjVZ28PfQZ5Kwpme1VeIiuJK/MFLQXnnGblzteIOHo70pfJX7WLMMDFHZdGl
+ tUWz9hClR5BjU1WJQVoZhwBEfE2if/8yT/7ooQ2oMi53kF/MFRQoliXLvTgc/t/0cn01
+ eUaMytIavEAfXmSld0OaSuf5l96CChrvM2N2j4MPdxkIEpOE+YHoqcKDm01ztD9LRaGK
+ aBa9YRGOUmu1hvf/przsGOnodXuxXkOpzrZLZPP08yVKbQO4aVmjC3D+fRFcmzpWqDSU
+ Vlag==
+X-Gm-Message-State: AOJu0Ywf+3txMKIuVrkyko8LJR8uroQWwj6iQYhxZVr6aP6XS8hcEEC+
+ NQLu8EoSplfFZUYo/OTofQ7qW7O8aFBgOgo5/IJJxD0Xexb0LR0c
+X-Google-Smtp-Source: AGHT+IEgC9ZhzfaXVNRbNDAvR+7KXDs4YmDZ/ixPQ2GjWwIxo+IG7AekYmves8mqffYG+MiBortGr4stgsdGZ/Qomf8=
+X-Received: by 2002:aa7:c30d:0:b0:522:3a37:a463 with SMTP id
+ l13-20020aa7c30d000000b005223a37a463mr19378745edq.20.1693237259594; Mon, 28
+ Aug 2023 08:40:59 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 2002:a05:6a00:2d27:b0:68a:4d66:cb4 with SMTP id
- fa39-20020a056a002d2700b0068a4d660cb4mr8029052pfb.4.1693233602960; Mon, 28
- Aug 2023 07:40:02 -0700 (PDT)
-Date: Mon, 28 Aug 2023 07:40:02 -0700
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <0000000000006d22850603fcabc3@google.com>
-Subject: [syzbot] [wireguard?] KCSAN: data-race in wg_socket_send_skb_to_peer
- / wg_socket_send_skb_to_peer
-From: syzbot <syzbot+b1c5c1efac7273c587fe@syzkaller.appspotmail.com>
-To: Jason@zx2c4.com, davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
- linux-kernel@vger.kernel.org, netdev@vger.kernel.org, pabeni@redhat.com, 
- syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
+References: <20230819140218.5algu2nfmfostngh@House.clients.dxld.at>
+ <4b-64e11f80-13-5e880900@8744214>
+ <20230819212357.lkshcpslkgbeaq4e@House.clients.dxld.at>
+In-Reply-To: <20230819212357.lkshcpslkgbeaq4e@House.clients.dxld.at>
+From: Kyle Rose <krose@krose.org>
+Date: Mon, 28 Aug 2023 11:40:48 -0400
+Message-ID: <CAJU8_nVR_ohTetKzHoxFH=dYccQg9HdniqV+JKk4LoJGorx0ZA@mail.gmail.com>
+Subject: Re: [Babel-users] [RFC] Replace WireGuard AllowedIPs with IP route
+ attribute
+To: =?UTF-8?Q?Daniel_Gr=C3=B6ber?= <dxld@darkboxed.org>
+Cc: Steffen Vogel <post@steffenvogel.de>, wireguard@lists.zx2c4.com,
+ bird-users@network.cz, babel-users@alioth-lists.debian.net
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -61,77 +74,20 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
+On Sat, Aug 19, 2023 at 5:25=E2=80=AFPM Daniel Gr=C3=B6ber <dxld@darkboxed.=
+org> wrote:
+> Having read Kyle's use-case I'm thinking my original plan to extend the w=
+g
+> internal source-address filtering to use a rt lookup with our new attribu=
+te
+> would not be maximally useful so now my thinking is we should just have a
+> boolean toggle to disable it explicitly per device.
 
-syzbot found the following issue on:
+If there is interest among the maintainers in eventually merging a
+change with a per-interface knob to turn off the source IP check, I
+will go through the trouble of putting together an initial pass at
+this. I don't want to spend the time if there is firm opposition to
+the idea.
 
-HEAD commit:    4f9e7fabf864 Merge tag 'trace-v6.5-rc6' of git://git.kerne..
-git tree:       upstream
-console output: https://syzkaller.appspot.com/x/log.txt?x=13f1991fa80000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=f12c32a009b80107
-dashboard link: https://syzkaller.appspot.com/bug?extid=b1c5c1efac7273c587fe
-compiler:       Debian clang version 15.0.6, GNU ld (GNU Binutils for Debian) 2.40
-
-Unfortunately, I don't have any reproducer for this issue yet.
-
-Downloadable assets:
-disk image: https://storage.googleapis.com/syzbot-assets/586c18cf5685/disk-4f9e7fab.raw.xz
-vmlinux: https://storage.googleapis.com/syzbot-assets/26437f4b2bc8/vmlinux-4f9e7fab.xz
-kernel image: https://storage.googleapis.com/syzbot-assets/6be368a4b854/bzImage-4f9e7fab.xz
-
-IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+b1c5c1efac7273c587fe@syzkaller.appspotmail.com
-
-==================================================================
-BUG: KCSAN: data-race in wg_socket_send_skb_to_peer / wg_socket_send_skb_to_peer
-
-read-write to 0xffff88813587e3d8 of 8 bytes by task 31333 on cpu 1:
- wg_socket_send_skb_to_peer+0xe4/0x130 drivers/net/wireguard/socket.c:183
- wg_packet_create_data_done drivers/net/wireguard/send.c:251 [inline]
- wg_packet_tx_worker+0x128/0x320 drivers/net/wireguard/send.c:276
- process_one_work+0x434/0x860 kernel/workqueue.c:2600
- worker_thread+0x5f2/0xa10 kernel/workqueue.c:2751
- kthread+0x1d7/0x210 kernel/kthread.c:389
- ret_from_fork+0x2e/0x40 arch/x86/kernel/process.c:145
- ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
-
-read-write to 0xffff88813587e3d8 of 8 bytes by task 8119 on cpu 0:
- wg_socket_send_skb_to_peer+0xe4/0x130 drivers/net/wireguard/socket.c:183
- wg_socket_send_buffer_to_peer+0xd6/0x100 drivers/net/wireguard/socket.c:200
- wg_packet_send_handshake_initiation drivers/net/wireguard/send.c:40 [inline]
- wg_packet_handshake_send_worker+0x10c/0x150 drivers/net/wireguard/send.c:51
- process_one_work+0x434/0x860 kernel/workqueue.c:2600
- worker_thread+0x5f2/0xa10 kernel/workqueue.c:2751
- kthread+0x1d7/0x210 kernel/kthread.c:389
- ret_from_fork+0x2e/0x40 arch/x86/kernel/process.c:145
- ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
-
-value changed: 0x000000000000b4fc -> 0x000000000000b51c
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 0 PID: 8119 Comm: kworker/u4:63 Not tainted 6.5.0-rc7-syzkaller-00104-g4f9e7fabf864 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/26/2023
-Workqueue: wg-kex-wg0 wg_packet_handshake_send_worker
-==================================================================
-
-
----
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
-
-syzbot will keep track of this issue. See:
-https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
-
-If the bug is already fixed, let syzbot know by replying with:
-#syz fix: exact-commit-title
-
-If you want to overwrite bug's subsystems, reply with:
-#syz set subsystems: new-subsystem
-(See the list of subsystem names on the web dashboard)
-
-If the bug is a duplicate of another bug, reply with:
-#syz dup: exact-subject-of-another-report
-
-If you want to undo deduplication, reply with:
-#syz undup
+Thanks,
+Kyle
