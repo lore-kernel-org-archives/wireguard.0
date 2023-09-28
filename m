@@ -4,38 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D792AC83F2C
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  3 Sep 2023 03:22:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAD9CCE7B10
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 28 Sep 2023 09:56:35 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9959cd0e;
-	Sun, 3 Sep 2023 03:22:48 +0000 (UTC)
-Received: from mail1.matrix-dream.net (<unknown> [2a0a:51c0::71])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f25f449d
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8473e6b5;
+	Thu, 28 Sep 2023 09:56:33 +0000 (UTC)
+Received: from tom.rz.uni-passau.de (tom.rz.uni-passau.de [132.231.51.4])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 314edd08
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 3 Sep 2023 03:22:46 +0000 (UTC)
-Received: from ivan by mail1.matrix-dream.net with local (Exim 4.93.0.4)
- (envelope-from <labawi-wg@matrix-dream.net>)
- id 1qcdfx-0007YJ-DI; Sun, 03 Sep 2023 03:21:25 +0000
-Date: Sun, 3 Sep 2023 03:21:25 +0000
-From: Ivan =?iso-8859-1?Q?Lab=E1th?= <labawi-wg@matrix-dream.net>
-To: Daniel =?iso-8859-1?Q?Gr=F6ber?= <dxld@darkboxed.org>
-Cc: Juliusz Chroboczek <jch@irif.fr>, Kyle Rose <krose@krose.org>,
- bird-users@network.cz, babel-users@alioth-lists.debian.net,
- wireguard@lists.zx2c4.com
-Subject: Re: [RFC] Replace WireGuard AllowedIPs with IP route attribute
-Message-ID: <ZPP7tab5OqR39RcY@matrix-dream.net>
-References: <20230819140218.5algu2nfmfostngh@House.clients.dxld.at>
- <4b-64e11f80-13-5e880900@8744214>
- <20230819212357.lkshcpslkgbeaq4e@House.clients.dxld.at>
- <CAJU8_nVR_ohTetKzHoxFH=dYccQg9HdniqV+JKk4LoJGorx0ZA@mail.gmail.com>
- <20230828160705.a5uxv5l2zknna7yj@House.clients.dxld.at>
- <87v8czqd3w.wl-jch@irif.fr>
- <20230828221312.fw5pvnt4x7p2c52k@House.clients.dxld.at>
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 28 Sep 2023 09:56:31 +0000 (UTC)
+Received: from [132.231.11.13] (helo=smith.sec.uni-passau.de)
+ by mail.uni-passau.de with ESMTPS (eXpurgate 4.47.0)
+ (envelope-from <jp@sec.uni-passau.de>)
+ id 65154dce-0713-84e733040019-84e70b0dc5cb-3
+ for <wireguard@lists.zx2c4.com>; Thu, 28 Sep 2023 11:56:30 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uni-passau.de;
+ s=up-2020-11-19; t=1695894990;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=LeOwNrI+YcIToX5KRkqueG0ZDpaf5oW/VBN4oTqkqqk=;
+ b=ECtKHeeDtBlbIqMdeWakGX7JVFGQfAhzSM0OYth3t0sC4bzjSe4cn4c16WTPLOJG+Jeg1z
+ Rt2VFNvt6t6CRR9+Okd2SulLHYayBi32cb19CIgvCH6LCl097x7lLtDRPnOg+FJYCG/6Rk
+ GPHLaDzVR80O50CxX1aa7tnQ772svBE=
+Received: from smith.sec.uni-passau.de (2002:84e7:b0d::84e7:b0d) by
+ smith.sec.uni-passau.de (2002:84e7:b0d::84e7:b0d) with Microsoft SMTP Server
+ (TLS) id 15.0.1497.48; Thu, 28 Sep 2023 11:56:18 +0200
+Received: from smith.sec.uni-passau.de ([fe80::55d2:6c14:41:dff9]) by
+ smith.sec.uni-passau.de ([fe80::55d2:6c14:41:dff9%12]) with mapi id
+ 15.00.1497.048; Thu, 28 Sep 2023 11:56:18 +0200
+From: "Posegga, Joachim" <jp@sec.uni-passau.de>
+To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Subject: MAC OS 14 / Sonoma
+Thread-Topic: MAC OS 14 / Sonoma
+Thread-Index: AQHZ8fIGUEeCe72kQkOnvYu07JttfA==
+Date: Thu, 28 Sep 2023 09:56:17 +0000
+Message-ID: <BD851A2D-7FFC-4E84-801D-863F53198E8C@sec.uni-passau.de>
+Accept-Language: de-DE, en-US
+Content-Language: en-GB
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Microsoft-MacOutlook/16.77.23091703
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [185.43.213.157]
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <D8CFCC221C52974DA13ED1940D7A1408@sec.uni-passau.de>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230828221312.fw5pvnt4x7p2c52k@House.clients.dxld.at>
+X-purgate-ID: 151291::1695894990-735229DF-8AA88B31/0/0
+X-purgate-type: clean
+X-purgate-size: 214
+X-purgate-Ad: Categorized by eleven eXpurgate (R) http://www.eleven.de
+X-Rspamd-Server: tom
+X-Spamd-Result: default: False [1.10 / 15.00]; MIME_BASE64_TEXT_BOGUS(1.00)[];
+ MIME_BASE64_TEXT(0.10)[];
+ DKIM_SIGNED(0.00)[uni-passau.de:s=up-2020-11-19];
+ RCPT_COUNT_ONE(0.00)[1]; FROM_EQ_ENVFROM(0.00)[];
+ PREVIOUSLY_DELIVERED(0.00)[wireguard@lists.zx2c4.com];
+ RCVD_NO_TLS_LAST(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_EQ_ADDR_ALL(0.00)[]; RCVD_COUNT_THREE(0.00)[3]
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: D0B141B759A50
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -50,60 +82,6 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
-
-IMO, a good tunnel solution may be if what is now called AllowedIPs,
-were functionally split into:
- - AcceptIPS (to be different from AllowedIPs)
- - RouteIPs
-Perhaps with a default shorthand of, say, IPs, setting both, as
-AllowedIPs historically caused confusion wrt. it's meaning.
-
-Wireguard API is a bit clunky, but I think one could dynamically manage
-routes in reasonably efficient ways without extra interfaces and layers.
-
-Not sure if it would fullfill all reasonably achievable goals.
-
-Don't really have the time to implement anything, and I'm sure it would
-not be easy, so just a possible tip to consider.
-
-Regards,
-Ivan Labáth
-
-On Tue, Aug 29, 2023 at 12:13:12AM +0200, Daniel Gröber wrote:
-> Hi Juliusz,
-> 
-> On Mon, Aug 28, 2023 at 07:40:51PM +0200, Juliusz Chroboczek wrote:
-> > I've read the whole discussion, and I'm still not clear what advantages
-> > the proposed route attribute has over having one interface per peer.  Is
-> > it because interfaces are expensive in the Linux kernel?  Or is there some
-> > other reason why it is better to run all WG tunnels over a single interface?
-> 
-> Off the top of my head UDP port exhaustion is a scalability concern here,
-> just as an example, not that I'd actually ever need that many peers in my
-> network :)
-> 
-> One wg-device per-peer means we need one UDP port per-peer and since
-> currently binding to a specific IP is also not supported by wg (I have a
-> patch pending for this though) there's no good way to work around this.
-> 
-> Frankly having tons of interfaces is just an operational PITA in all sorts
-> of ways. Apart from the port exhaustion having more than one wg device also
-> means I have to _allocate_ a new port for each node in my managment system
-> somehow instead of just using a static port for the entire network. This
-> gets dicy fast as I want to move in the direction of dynamic peering as in
-> tinc.
-> 
-> Other than that my `ip -br a` output is getting unmanagably long and having
-> more than one device means I have to keep ACL lists in sync all over the
-> system. This is a problem for daemons that don't support automatic reload
-> (babeld for example :P). I also have to sync the set of interface to
-> nftables which is easy to get wrong as it's still manual in my setup.
-> 
-> All of that could be solved, but I would also like to get my wg+babel VPN
-> setup deployed more widely at some point and all that friction isn't going
-> to help with that so I'd rather have this supported properly.
-> 
-> --Daniel
-
-
+SGksDQoNCkkgY2Fubm90IHJvdXRlIHRyYWZmaWMgdGhyb3VnaCBlc3RhYmxpc2hlZCBXRyB0dW5u
+ZWxzIGFmdGVyIHVwZ3JhZGluZyB0byBtYWNPUyAxNC4wIFNvbm9tYSAoMjNBMzQ0KS4gQW55b25l
+IGhhdmluZyBzaW1pbGFyIGlzc3Vlcz8NCg0KICBKb2FjaGltLg0KDQo=
