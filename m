@@ -4,52 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB70EE728DE
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Sep 2023 19:45:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69176E728E1
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 30 Sep 2023 19:09:50 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a110fe49;
-	Fri, 29 Sep 2023 19:45:22 +0000 (UTC)
-Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com
- [209.85.160.70])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ef65ee0b
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9074c54a;
+	Sat, 30 Sep 2023 19:09:48 +0000 (UTC)
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com
+ [2a00:1450:4864:20::536])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9714697d
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 29 Sep 2023 19:45:21 +0000 (UTC)
-Received: by mail-oa1-f70.google.com with SMTP id
- 586e51a60fabf-1d66b019a27so30652946fac.0
- for <wireguard@lists.zx2c4.com>; Fri, 29 Sep 2023 12:45:20 -0700 (PDT)
+ Sat, 30 Sep 2023 19:09:46 +0000 (UTC)
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-533c5d10dc7so16626398a12.3
+ for <wireguard@lists.zx2c4.com>; Sat, 30 Sep 2023 12:09:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1696100986; x=1696705786; darn=lists.zx2c4.com;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=aiG+rR+R6t56lqWfRqLp7eEyf7rlNWDwPW+R1Jte8F8=;
+ b=YICQdTx40EsOE6L+FSXC0aefn2Fy36k9FbUoF3whzr0+QzEg3GhY5/tvSgEUg9oAxN
+ z+YGEj1aVuVEtiX201JA89U7y8H9pptk7toKXA0KBP8JFBX0WXzajsecXF7Ne61soB3U
+ Jq45eBt+rlRfq71JQTBcIwKPOblt4/iy+ASFPRXlEsVKqzyh2bFUEnqOGfJ3pmnD3zCV
+ J5MOeiqJ3dR5Zsum1jqMaLgu9oRts79pfJv5svR17OmoP17Z4stEaLJQ9sBLKEsSemtt
+ YSB85rpEUa12R6fRKFFw4px0dQOztf5m+c0c3t+3Nsc4vXLeqx65bY7U8sP8o7vwhUyX
+ EbBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1696016719; x=1696621519;
- h=to:from:subject:message-id:in-reply-to:date:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uOUbdmuYhfXA8PXd4YARC5tF6kjo7P/y7HVDRuq7ymQ=;
- b=hV1AcxSTMUoUY7uyhswSYA3HZJzThOsdrib3akjwXA9uUxfTt7PtRGXqypHrMzgltY
- 7ubfbA6KIpqL4YEYpHAnNOTu4lwv2s/I3jfyzQ+R4e0/oWhfwGdTYjXIn9MmT9YxGlAT
- m2VASNhenWLxE5BniHsC3rkOk6/vG24fi8zQGIzH51jNOo/E+d1SllKnfHx3iZqwVMIZ
- env13nwKqvvh58UxQCbhIgPnmDhFdq9nCrOEZH+AUblZbUHSwlIY0ILIQtmw9zrcUJaB
- 5L6VpaGdcTTtxarW6gGrSbcY/4uqCPp5ToIdnQi7Xw7agJelwzB4rHSMOhR9nkMI365q
- mXCg==
-X-Gm-Message-State: AOJu0YzjY95/Kt1nK+GIPQNcr1kNsbrs6wMkexgkR19T/eCz0rOJWc8C
- sLqvAGx66b+jX9mXdMTl7EJtqEtbSvHN5yvw8c++EcGF3Pzq
-X-Google-Smtp-Source: AGHT+IFYMqItjJEVGHOIHmUPeuMNaMxy8KqwKD+rwjOwwTOlXsRSXiwCv6oua1+5pQPktR4BQVSd+yRH6/cIOImXUzqYibBfr/5x
+ d=1e100.net; s=20230601; t=1696100986; x=1696705786;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=aiG+rR+R6t56lqWfRqLp7eEyf7rlNWDwPW+R1Jte8F8=;
+ b=Cb/1M7Y4lmyA3dqvxmymIykY/GN+F5884W9YSkHV7mjRcuypcFsH6bDnKGFc30lqRE
+ Hx6gUq8tSO4v9P8zNuGZKxAAL0QpUxhF+xwC3SNbcGICgBzmmTmGy+omVq/E1V1dw3Ms
+ Gjg1td629DwdfqogVKPjWQUGK4/3MJwlgRMKHKXeAKJh+Zqg7JslrBBJi/cXOLY0c0tA
+ jJ27kDoUS1Wg8JzmOI0MCi1av+5Dttfvn1k5Y8zCD9+R0ryfVEtxtYdmKsljADmbtGFo
+ Vt/ss7PK4tBVf7Qztj+a/poApl6lp69U1cNtRQggJd6quvpLUiOVo5D30IuQnmDE6IQz
+ +F4w==
+X-Gm-Message-State: AOJu0Yy/MqWMj6Ht4yyTcqOenx9i/E26DDY9wvaXYbBX5x9GvfK5t5xQ
+ 6HsKt7gbT4xKFnB7Ho4buwewKnUr50iAZWYgoDsnySqC/1EBHg==
+X-Google-Smtp-Source: AGHT+IEFYIqlsSIH2oBNp7sWYVqDynNsTzYA6egfNUX/XSMGQAzbus7SnohCR4bopck2tE4Af+SqZs1rqkX5RE5QuJ4=
+X-Received: by 2002:aa7:d5cc:0:b0:530:9fbc:8df6 with SMTP id
+ d12-20020aa7d5cc000000b005309fbc8df6mr6458145eds.2.1696100985787; Sat, 30 Sep
+ 2023 12:09:45 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 2002:a05:6870:98ae:b0:1b0:9643:6f69 with SMTP id
- eg46-20020a05687098ae00b001b096436f69mr1969651oab.4.1696016719665; Fri, 29
- Sep 2023 12:45:19 -0700 (PDT)
-Date: Fri, 29 Sep 2023 12:45:19 -0700
-In-Reply-To: <00000000000021dc2806031ad901@google.com>
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <0000000000001be691060684aa2c@google.com>
-Subject: Re: [syzbot] [wireguard?] INFO: rcu detected stall in
- wg_ratelimiter_gc_entries (2)
-From: syzbot <syzbot+c1cc0083f159b67cb192@syzkaller.appspotmail.com>
-To: Jason@zx2c4.com, daniel.wippermann@resol.de, davem@davemloft.net, 
- edumazet@google.com, hdanton@sina.com, jason@zx2c4.com, jhs@mojatatu.com, 
- jiri@nvidia.com, kuba@kernel.org, linux-kernel@vger.kernel.org, 
- netdev@vger.kernel.org, pabeni@redhat.com, pctammela@mojatatu.com, 
- syzkaller-bugs@googlegroups.com, victor@mojatatu.com, vladimir.oltean@nxp.com, 
- wireguard@lists.zx2c4.com
+From: Houman <houmie@gmail.com>
+Date: Sat, 30 Sep 2023 20:09:06 +0100
+Message-ID: <CABBZOskMb-6Lc9rAyuqQvYbs3HX-yGXoQHJHcrZzJrbRfsq1wg@mail.gmail.com>
+Subject: =?UTF-8?Q?Wireguard=2Dapple_1=2E0=2E16=2D27_can=E2=80=99t_be_added_via_SPM?=
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -65,24 +67,12 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-syzbot suspects this issue was fixed by commit:
+Hello Jason, Andrej
 
-commit da71714e359b64bd7aab3bd56ec53f307f058133
-Author: Jamal Hadi Salim <jhs@mojatatu.com>
-Date:   Tue Aug 22 10:12:31 2023 +0000
+Please try to add the latest Wireguard-Apple 1.0.16-27 via Swift
+Package Manager and you will see that fails. The issue could be
+related to swift-tools-version.
 
-    net/sched: fix a qdisc modification with ambiguous command request
-
-bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=129c464e680000
-start commit:   8a519a572598 net: veth: Page pool creation error handling ..
-git tree:       net
-kernel config:  https://syzkaller.appspot.com/x/.config?x=3e670757e16affb
-dashboard link: https://syzkaller.appspot.com/bug?extid=c1cc0083f159b67cb192
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=129f8553a80000
-C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=1205baada80000
-
-If the result looks correct, please mark the issue as fixed by replying with:
-
-#syz fix: net/sched: fix a qdisc modification with ambiguous command request
-
-For information about bisection process see: https://goo.gl/tpsmEJ#bisection
+Please advise what to do?
+Thank you.
+Houman
