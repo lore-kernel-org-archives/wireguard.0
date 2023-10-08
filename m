@@ -4,72 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED7AAE93701
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  5 Oct 2023 10:41:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63409E95A82
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Oct 2023 15:29:42 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8b7e7b54;
-	Thu, 5 Oct 2023 10:36:14 +0000 (UTC)
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com
- [2a00:1450:4864:20::631])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 93227704
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 594ba387;
+	Sun, 8 Oct 2023 15:27:49 +0000 (UTC)
+Received: from mail-oa1-f79.google.com (mail-oa1-f79.google.com
+ [209.85.160.79])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 80873193
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 5 Oct 2023 10:36:11 +0000 (UTC)
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-9b9a494cc59so144658566b.3
- for <wireguard@lists.zx2c4.com>; Thu, 05 Oct 2023 03:36:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mullvad.net; s=july2021; t=1696502171; x=1697106971; darn=lists.zx2c4.com;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=u4QMk02cLz/bZ7X3NZrlOKH7nlarTKp4sKPFJyNsmWQ=;
- b=Y86HFySPnwJDCp7BOpW8Yri620R6bG5Z2+t2Watqiyyr5S3EKC6aUY6xEPCf0UEbcI
- nALJWEgKiP+20ucGE5vFrD45SiAIJPbYUmN7Fwkk3cCaQw2KFV+D2R5txhVGHPXBPaX6
- HzyxldU6TNjHaT2goJ1wrLxKvcBvgn/VRhlj1uficZ8JdhxZvup9a3iHUtr7zuRm4KlW
- 7bWhzFHpAiF+MvQ9iDTxJUK+Bxm+N7bAKnlinmakiFm5crtOpCJdzf6TpfbRBOealeQj
- Z9RimefgzcySWiqtyWnItuzG1rJVvgB6bDHUI/tNGtmyNujHZI/KJanBuBVf+7HyIjc8
- xu5w==
+ for <wireguard@lists.zx2c4.com>; Sun, 8 Oct 2023 15:27:47 +0000 (UTC)
+Received: by mail-oa1-f79.google.com with SMTP id
+ 586e51a60fabf-1dd886536f2so5904041fac.3
+ for <wireguard@lists.zx2c4.com>; Sun, 08 Oct 2023 08:27:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1696502171; x=1697106971;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=u4QMk02cLz/bZ7X3NZrlOKH7nlarTKp4sKPFJyNsmWQ=;
- b=qi9usWhfP6RsYPnsAD1FDs0IceLCWNGgBdbeJNoK1aPl0dmiRWaD8Oe5BTLpOHeGhH
- PwbdeJTLt35+tGzL90xRr+udyTypnr543FZYmbdthmqjyDeFbsWsl3ynrDPfu2ntbAmc
- d/cSNO0FH6qGYVkUBCTRpHvYldPzHWOACnSDL3Ye8xilo4OZPblDZtwTajfgTOVN1VvU
- d55891ZAXA2ZjJyUSGtfVSy6PLE5o9fKpMAtaiemPf5OOr6nWKyRN7bQV5fNAc675VQ8
- qObZVUhS1maeiPyiyfTvAy4dkw1oDhK2dtO1Qmg7lU7KsD4tXrG1I4R6kzAcA2REBfYH
- 1FYw==
-X-Gm-Message-State: AOJu0YyQCkFBFnf7XoKTVIcCz88qmGcXiIvIIEpyuVinNmwHK0u0AMdO
- r/FaLXGZhmIQsRwrrU0DY/n/rf8vJk6yNU6ZA20QWg==
-X-Google-Smtp-Source: AGHT+IG8AU2mRf6x67mDmHjaHD0tYytA/gSpesvcPmu9UPj+8HlBCskTDVodJ/e9+c9G+TTJpxb6kQ==
-X-Received: by 2002:a17:906:196:b0:9ae:72b8:4a84 with SMTP id
- 22-20020a170906019600b009ae72b84a84mr4155000ejb.41.1696502171529; 
- Thu, 05 Oct 2023 03:36:11 -0700 (PDT)
-Received: from smtpclient.apple (84-52-158-57.dynamic.telemach.net.
- [84.52.158.57]) by smtp.gmail.com with ESMTPSA id
- c17-20020adfe751000000b00327de0173f6sm1469641wrn.115.2023.10.05.03.36.10
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 05 Oct 2023 03:36:11 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.700.6\))
-Subject: =?utf-8?Q?Re=3A_Wireguard-apple_1=2E0=2E16-27_can=E2=80=99t_be_ad?=
- =?utf-8?Q?ded_via_SPM?=
-From: Andrej Mihajlov <and@mullvad.net>
-In-Reply-To: <CABBZOsnduGWGQFEPP=p4iPcLOzemXW2rzO5dc0NziNHZA11ZOA@mail.gmail.com>
-Date: Thu, 5 Oct 2023 12:35:59 +0200
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <6B97F367-1E1C-4F13-AC03-3611511899EA@mullvad.net>
-References: <CABBZOskMb-6Lc9rAyuqQvYbs3HX-yGXoQHJHcrZzJrbRfsq1wg@mail.gmail.com>
- <DDB7ACE8-3757-43C1-B0B6-0FB9C53079E8@mullvad.net>
- <CABBZOs=zEFGfLERL=JC1KtbZTka+1EitTHH9ZEdwkU95BYEHyA@mail.gmail.com>
- <C5E4F9F5-D489-4250-890A-3DE50ED09BE8@mullvad.net>
- <CABBZOsnduGWGQFEPP=p4iPcLOzemXW2rzO5dc0NziNHZA11ZOA@mail.gmail.com>
-To: Houman <houmie@gmail.com>
-X-Mailer: Apple Mail (2.3731.700.6)
+ d=1e100.net; s=20230601; t=1696778866; x=1697383666;
+ h=to:from:subject:message-id:date:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=3qHI8coAGIlxFEFe37OEjc5tftTQMBWp+MUuffsbsvw=;
+ b=OiVb7Eyh/QkWN5caCPlOEtCFBraE7qgELIQG1DxsCxz5IczZ/AIVQhNSs1YjJwWFKD
+ LphyImBtxWQ4Cp9GpxFfRC3pPxsTeqieEhwUrTdYF6ghO63SB4U1VrdbIG0ZhU5x8Z+i
+ 1pl1QBHxPAQHffaXmn48Y/AARpOJv6Z3kaUH3GjuuEw9h8y3NfgCJdxBuzDQKubOqk1c
+ wBPLlakI2v+uwpuBBEcdSslYSwvJGHM9LOmtmBdOS2Zc8tgumauPUNAAaHOfOHRXA5qT
+ IYcETUPYub6e00k2nmZyFSMUD656/McCe8KZxPHK/z7Pog09n3xiL/rPU+H3gyHf8EvK
+ GfyA==
+X-Gm-Message-State: AOJu0YxsWRJjt6WT84F5/E8cFPO3rNLTuKD/mQgItIoGKcUlxvQKM/DS
+ rUeEbpBnhirB98VnidTVPRiLa/fEGZJl5mCLHruQ6+kg58W0
+X-Google-Smtp-Source: AGHT+IGTZmXhzwZBTw28xm0AwF8vsR0+nxTuVLX4In7tdP1G9Hbb0l+bpBjcsX6lZ20I9pqBf+p96rf61T2L5ar7Y2gVWcn5NG/6
+MIME-Version: 1.0
+X-Received: by 2002:a05:6870:b7b1:b0:1d1:40c5:a531 with SMTP id
+ ed49-20020a056870b7b100b001d140c5a531mr5258426oab.3.1696778865815; Sun, 08
+ Oct 2023 08:27:45 -0700 (PDT)
+Date: Sun, 08 Oct 2023 08:27:45 -0700
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <0000000000008f393c0607361dd5@google.com>
+Subject: [syzbot] [wireguard?] WARNING in kthread_unpark
+From: syzbot <syzbot+66ff56c4661498a22ae8@syzkaller.appspotmail.com>
+To: Jason@zx2c4.com, davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+ linux-kernel@vger.kernel.org, netdev@vger.kernel.org, pabeni@redhat.com, 
+ syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -84,142 +59,95 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Houman,
+Hello,
 
-Great!=20
+syzbot found the following issue on:
 
-I have added WireguardKitType as a dynamic library which contains all of =
-the Swift data types used by WireGuardKit, such as: PrivateKey, =
-PublicKey, IPAddressRange, etc.
+HEAD commit:    2e530aeb342b Merge branch 'for-next/core', remote-tracking..
+git tree:       git://git.kernel.org/pub/scm/linux/kernel/git/arm64/linux.git for-kernelci
+console output: https://syzkaller.appspot.com/x/log.txt?x=13ef2062680000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=5cc95add722fb0c1
+dashboard link: https://syzkaller.appspot.com/bug?extid=66ff56c4661498a22ae8
+compiler:       Debian clang version 15.0.6, GNU ld (GNU Binutils for Debian) 2.40
+userspace arch: arm64
 
-It does not depend on WireGuardGoBridge, which proved to be problematic =
-to include in unit tests (if I recall that right). Apart from that I =
-noticed that go runtime spawns some worker threads when binary is linked =
-against wg-go, so we didn=E2=80=99t want that in our main bundle or app =
-extensions.
+Unfortunately, I don't have any reproducer for this issue yet.
 
-So in short, when using any of data types provided by WireGuardKit:
+Downloadable assets:
+disk image: https://storage.googleapis.com/syzbot-assets/2468ab4c933e/disk-2e530aeb.raw.xz
+vmlinux: https://storage.googleapis.com/syzbot-assets/bd3708bf8a20/vmlinux-2e530aeb.xz
+kernel image: https://storage.googleapis.com/syzbot-assets/86bc7d3468f9/Image-2e530aeb.gz.xz
 
-- Import WireGuardKitTypes in main bundle or app extensions.
-- Import WireGuardKit in network extension. Internally WireGuardKit =
-re-exports all types from WireGuardKitTypes.
+IMPORTANT: if you fix the issue, please add the following tag to the commit:
+Reported-by: syzbot+66ff56c4661498a22ae8@syzkaller.appspotmail.com
 
-There is a handful of other improvements besides that and I hope that =
-all of them will be upstreamed over time.
+------------[ cut here ]------------
+WARNING: CPU: 1 PID: 11 at kernel/kthread.c:524 __kthread_bind kernel/kthread.c:537 [inline]
+WARNING: CPU: 1 PID: 11 at kernel/kthread.c:524 kthread_unpark+0x148/0x204 kernel/kthread.c:630
+Modules linked in:
+CPU: 1 PID: 11 Comm: kworker/u4:0 Not tainted 6.6.0-rc3-syzkaller-g2e530aeb342b #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/04/2023
+Workqueue: netns cleanup_net
+pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : __kthread_bind kernel/kthread.c:537 [inline]
+pc : kthread_unpark+0x148/0x204 kernel/kthread.c:630
+lr : __kthread_bind kernel/kthread.c:537 [inline]
+lr : kthread_unpark+0x148/0x204 kernel/kthread.c:630
+sp : ffff800092b376d0
+x29: ffff800092b376d0 x28: ffff0000c63f0000 x27: dfff800000000000
+x26: 1fffe00019602005 x25: dfff800000000000 x24: 1fffe00018c7e29c
+x23: 0000000000000000 x22: 0000000000000000 x21: ffff0000cd704400
+x20: ffff0000cb01002c x19: ffff0000cb010000 x18: ffff800092b371c0
+x17: ffff80008e19d000 x16: ffff8000802771bc x15: 0000000000000001
+x14: 1fffe00019602130 x13: 0000000000000000 x12: 0000000000000003
+x11: 0000000000000000 x10: 0000000000000000 x9 : 0000000000000000
+x8 : ffff0000c199b780 x7 : 0000000000000000 x6 : 0000000000000000
+x5 : 0000000000000020 x4 : 0000000000000000 x3 : 0000000000000000
+x2 : 0000000000000006 x1 : 0000000000000000 x0 : 0000000000000000
+Call trace:
+ __kthread_bind kernel/kthread.c:537 [inline]
+ kthread_unpark+0x148/0x204 kernel/kthread.c:630
+ kthread_stop+0x188/0x704 kernel/kthread.c:706
+ destroy_workqueue+0x124/0xdc4 kernel/workqueue.c:4805
+ wg_destruct+0x1c8/0x2dc drivers/net/wireguard/device.c:258
+ netdev_run_todo+0xc34/0xe08 net/core/dev.c:10445
+ rtnl_unlock+0x14/0x20 net/core/rtnetlink.c:151
+ default_device_exit_batch+0x6cc/0x744 net/core/dev.c:11454
+ ops_exit_list net/core/net_namespace.c:175 [inline]
+ cleanup_net+0x5dc/0x8d0 net/core/net_namespace.c:614
+ process_one_work+0x694/0x1204 kernel/workqueue.c:2630
+ process_scheduled_works kernel/workqueue.c:2703 [inline]
+ worker_thread+0x938/0xef4 kernel/workqueue.c:2784
+ kthread+0x288/0x310 kernel/kthread.c:388
+ ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:857
+irq event stamp: 8730562
+hardirqs last  enabled at (8730561): [<ffff80008a7140e8>] __raw_spin_unlock_irqrestore include/linux/spinlock_api_smp.h:151 [inline]
+hardirqs last  enabled at (8730561): [<ffff80008a7140e8>] _raw_spin_unlock_irqrestore+0x38/0x98 kernel/locking/spinlock.c:194
+hardirqs last disabled at (8730562): [<ffff80008a625394>] el1_dbg+0x24/0x80 arch/arm64/kernel/entry-common.c:436
+softirqs last  enabled at (8730490): [<ffff800084cff268>] spin_unlock_bh include/linux/spinlock.h:396 [inline]
+softirqs last  enabled at (8730490): [<ffff800084cff268>] wg_packet_purge_staged_packets+0x1b8/0x1f4 drivers/net/wireguard/send.c:338
+softirqs last disabled at (8730488): [<ffff800084cff0ec>] spin_lock_bh include/linux/spinlock.h:356 [inline]
+softirqs last disabled at (8730488): [<ffff800084cff0ec>] wg_packet_purge_staged_packets+0x3c/0x1f4 drivers/net/wireguard/send.c:335
+---[ end trace 0000000000000000 ]---
 
-Best,
-Andrej
 
-> On 5 Oct 2023, at 12:08, Houman <houmie@gmail.com> wrote:
->=20
-> Hi Andrej,
->=20
-> That's absolutely brilliant. Thank you for showing love to this
-> project. I have pointed my SPM to your repo and it worked right away.
-> What is the WireguardKitType?  That wasn't there before, but It seems
-> to be working even without adding that to my project.
->=20
-> I've starred your project too. Well done.
->=20
-> Best,
-> Houman
->=20
->=20
->=20
->=20
->=20
-> On Thu, 5 Oct 2023 at 10:28, Andrej Mihajlov <and@mullvad.net> wrote:
->>=20
->> Hi Houman,
->>=20
->> I maintain a fork of wireguard-apple for the past couple of years and =
-it works with Xcode 15 and Swift 5.9:
->> github.com/mullvad/wireguard-apple (branch: mullvad-master)
->>=20
->> In the app I maintain, WireGuardGoBridge target is built using bash =
-script for flexibility, instead of bash sorcery so you might want this =
-too:
->> github.com/mullvad/mullvadvpn-app/blob/main/ios/build-wireguard-go.sh =
-<http://github.com/mullvad/mullvadvpn-app/blob/main/ios/build-wireguard-go=
-.sh>
->>=20
->> Hope any of this helps.
->>=20
->> Best,
->> Andrej
->>=20
->>> On 4 Oct 2023, at 18:04, Houman <houmie@gmail.com> wrote:
->>>=20
->>> Hello Andrej,
->>>=20
->>> Thank you for your reply.  I have already forked the branch and set
->>> Package.swift to swift-tools-version:5.5. But I still get the same
->>> error as before.
->>>=20
->>> Swift-tools-version:5.5 only worked with the previous version
->>> 1.0.15-26 that was released on 23rd Sep 2021.
->>> The 1.0.16-27 that was tagged on 15th Feb 2023 is completely broken
->>> and doesn't work with SPM.  I have tried swift-tools-versions 5.6,
->>> 5.7, 5.8 and 5.9.  I strongly believe that this commit from Jason
->>> ccc7472fd7d1c7c19584e6a30c45a56b8ba57790 on 14th Feb 2023 has broken
->>> it.  I don't think he tested it afterwards with SPM.
->>>=20
->>> This (outdated) PR proves that more people are having problems with
->>> installing the latest version since the February release:
->>> https://github.com/WireGuard/wireguard-apple/pull/24
->>>=20
->>> Error Message:
->>> Invalid manifest (compiled with: "/Applications/Xcode
->>> =
-app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/us/bin/swift",
->>> "visoverlay", =
-"/ar/folders/9m/lwx244892997kpg7vb5vssh0000gn/T/TemporaryDirectory.
->>> BBHXP8/vfs.yaml*, "-", "/Applicationscode.
->>> =
-app/Contents/SharedFrameworks/SwiftM.framework/SharedSupport/ManifestA*,
->>> "PackageDescription, "-Xlinker", "-rath", "-Xlinker", "/Applicatio..
->>>=20
->>> Xcode version: Version 15.0 (15A240d)
->>> Mac version: 14.0 (23A344)
->>>=20
->>> Your help is much appreciated,
->>> Thanks,
->>> Houman
->>>=20
->>>=20
->>> On Wed, 4 Oct 2023 at 12:46, Andrej Mihajlov <and@mullvad.net> =
-wrote:
->>>>=20
->>>> Hi,
->>>>=20
->>>> Right. I think that preamble in Package.swift should be changed =
-from:
->>>>=20
->>>>> // swift-tools-version:5.3
->>>>=20
->>>> to at least:
->>>>=20
->>>>> // swift-tools-version:5.5
->>>>=20
->>>> Which works with Xcode 15 based on my experience.
->>>>=20
->>>> Jason could you please bump it?
->>>>=20
->>>> Best,
->>>>=20
->>>> Andrej
->>>>=20
->>>>> On 30 Sep 2023, at 21:09, Houman <houmie@gmail.com> wrote:
->>>>>=20
->>>>> Hello Jason, Andrej
->>>>>=20
->>>>> Please try to add the latest Wireguard-Apple 1.0.16-27 via Swift
->>>>> Package Manager and you will see that fails. The issue could be
->>>>> related to swift-tools-version.
->>>>>=20
->>>>> Please advise what to do?
->>>>> Thank you.
->>>>> Houman
->>>>=20
->>=20
+---
+This report is generated by a bot. It may contain errors.
+See https://goo.gl/tpsmEJ for more information about syzbot.
+syzbot engineers can be reached at syzkaller@googlegroups.com.
 
+syzbot will keep track of this issue. See:
+https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
+
+If the bug is already fixed, let syzbot know by replying with:
+#syz fix: exact-commit-title
+
+If you want to overwrite bug's subsystems, reply with:
+#syz set subsystems: new-subsystem
+(See the list of subsystem names on the web dashboard)
+
+If the bug is a duplicate of another bug, reply with:
+#syz dup: exact-subject-of-another-report
+
+If you want to undo deduplication, reply with:
+#syz undup
