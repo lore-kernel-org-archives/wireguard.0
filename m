@@ -4,44 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93897C072A2
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Nov 2023 13:34:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1D2CC54FB9
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Nov 2023 13:34:42 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1d136779;
-	Sun, 19 Nov 2023 13:34:39 +0000 (UTC)
-Received: from mariecurie.slightlybroken.com (mariecurie.slightlybroken.com
- [116.203.185.229])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d5e71ac1
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 475a0c4e;
+	Sun, 19 Nov 2023 13:34:41 +0000 (UTC)
+Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com
+ [2607:f8b0:4864:20::f2c])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6493c2b4
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 29 Sep 2023 16:19:16 +0000 (UTC)
-Received: from slightlybroken.com (46-127-146-24.dynamic.hispeed.ch
- [46.127.146.24])
- by mariecurie.slightlybroken.com (Postfix) with ESMTPSA id 8E5DE50EAE7F
- for <wireguard@lists.zx2c4.com>; Fri, 29 Sep 2023 18:19:16 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=slightlybroken.com;
- s=20220918; t=1696004356;
- bh=+iUN+9q2aU01uOTMwvgVv1V5kyUZneZi/kTJNobVG+c=;
- h=Date:From:To:Subject:Message-ID:References:MIME-Version:
- Content-Type:Content-Disposition:In-Reply-To:From:To:CC:Date:
- Subject:Content-Type:Content-Disposition:Reply-To:In-Reply-To:
- MIME-Version:Message-ID:References;
- b=BOyG59vtVuj60wWVrqBZNQo59TZSNcYQSa6BuoOb3xxS6yftMe5hugGKEJuCKH0PI
- ++94+f9x4t5ZCe/sOSn0qrSh+SAB+esXcS7XPI8jFJKVMKSCb9EvLmxost/iI9cvoz
- /lhdHIYEt7RdL/gSQDSih9tILXCxfPs1ibM8prWw=
-Date: Fri, 29 Sep 2023 18:19:15 +0200
-From: Reto <reto@slightlybroken.com>
-To: wireguard@lists.zx2c4.com
-Subject: Re: [RFC] Replace WireGuard AllowedIPs with IP route attribute
-Message-ID: <fbajo774tkhkkbzo66nkvfrr2el2yowtr5uffdgyduaty735i2@m2cjrphubr52>
-Mail-Followup-To: wireguard@lists.zx2c4.com
-References: <ZPP7tab5OqR39RcY@matrix-dream.net>
- <20230929131257.4uyp3fkxkxt7qg3f@darkboxed.org>
+ Thu, 19 Oct 2023 06:20:08 +0000 (UTC)
+Received: by mail-qv1-xf2c.google.com with SMTP id
+ 6a1803df08f44-65b162328edso45056306d6.2
+ for <wireguard@lists.zx2c4.com>; Wed, 18 Oct 2023 23:20:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1697696407; x=1698301207; darn=lists.zx2c4.com;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=T5SEKdWFf1S1UCsC3S6FwamG1eM4FGOEEjITcEYizb4=;
+ b=JcZ8lEuBGtJ3AwLbZy6/GFNavoEa3AJ4p2pmt1zNuYehav1+qQ9vpKWLIALTcJJf53
+ 6y61O6GIlM1jn/K3yCstIruSrLXeq/xPGc7B+I3qEw5kSrEUYnuLRtsPLYTFud/DBQby
+ df4YBX+MN59PlEKeds76Jf1qsctT5pH13AxRt8DiSf5ySrb/MGmhyDwlc+GDdRdg5h2r
+ wvtQ7lkOuGPx5qREYEc9xcHmrL4dHbraI9OcG1hzpBtaEWPTa1NQ0g385SXM2QqVeR8W
+ f7MIrStH+Pvjv1rjQ3W6SPKEJz8VcYKU4FqdU5PgZxZf+x3Zjbi/ACDGf+fiAJfI7x3a
+ RwFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1697696407; x=1698301207;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=T5SEKdWFf1S1UCsC3S6FwamG1eM4FGOEEjITcEYizb4=;
+ b=UQn36e/IjUi93Y0TxQw/AAosHBO4Apo+8ThkT8+wbSLFrMb6kaSE7yTmwJRhVxNG5g
+ 2cOq7w6/p4C8a2etshbc4n3hZpMJtEIrhapJH0xQmGMqn4toqdfcxX3mBN7Lu8ZPmNE0
+ bhCmAcZaKRzRdEqXFcj8u8/giDZDfCW2RBPhTExmI/GGDSvq68ljZiJb2kKtgjVoxJPq
+ JVD1NaXdPBCC5dLfGjHsIrUKxc3Uu1jm4Vf/KIfjiCTzFDPDvIc56TrYJGnriX3liomk
+ ojy5Z3wsSmsCwJjbAIZIJNlsjMx1qzYLETO/qxjHrlwDQXohOqWqnkYjhBxWxatx9CNe
+ KUbA==
+X-Gm-Message-State: AOJu0YygsqzGkZyVXXMKWMFhp161eBUzqrw2S2VWzx8iOdvAbwDiD3EL
+ pLHFrEQlOUrXBOPbhyyll/zqcW1HUdq/fUQvY/SpYD7dWCstfw==
+X-Google-Smtp-Source: AGHT+IHWAgnfU+R0PK5GaEeMHYRR2J9VZSBS30uRtnCkW1uFp55a8nMgpIS70xsHgQ/0W+y+scOJ87Ek6f4gbQbniVI=
+X-Received: by 2002:a05:6214:20aa:b0:658:2bec:eae2 with SMTP id
+ 10-20020a05621420aa00b006582beceae2mr1376407qvd.10.1697696406961; Wed, 18 Oct
+ 2023 23:20:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230929131257.4uyp3fkxkxt7qg3f@darkboxed.org>
+From: Tristan Camilleri <tristancamilleri2@gmail.com>
+Date: Thu, 19 Oct 2023 08:19:56 +0200
+Message-ID: <CADS3Xjem1HEvpYGaM9WF_MUZAXtvaAjsovMEgjqGPo81426e_w@mail.gmail.com>
+Subject: Wireguard and Windows metrics priority
+To: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
 X-Mailman-Approved-At: Sun, 19 Nov 2023 13:34:33 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -57,23 +68,33 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Fri, Sep 29, 2023 at 03:12:57PM +0200, Daniel Gröber wrote:
-> PS: Your mail didn't reach my inbox for some reason, I randomly found it
-> while looking at the wg list archives. Consider configuring your mail
-> client to To/CC people you're replying to in order to better handle flaky
-> list servers.
+Dear all,
 
-Well...
+I hope that you are all well. We have a wireguard service running for
+the VPN solution, and currently we are testing a scenario with the
+Windows metrics. We are allocating the network adapter metrics as
+follows:
 
-Date: Sun, 3 Sep 2023 03:21:25 +0000
-From: Ivan Labáth <labawi-wg@matrix-dream.net>
-To: Daniel Gröber <dxld@darkboxed.org>
-Cc: Juliusz Chroboczek <jch@irif.fr>, Kyle Rose <krose@krose.org>,
-        bird-users@network.cz, babel-users@alioth-lists.debian.net, wireguard@lists.zx2c4.com
-Subject: Re: [RFC] Replace WireGuard AllowedIPs with IP route attribute
-Message-ID: <ZPP7tab5OqR39RcY@matrix-dream.net>
+VPN (Wireguard): 10
 
-They did.
+Ethernet adapters: 20
 
-Cheers,
-Reto
+Wifi Adapters: 100
+
+Bluetooth: 150
+
+While configuring this, we were testing if this really works to prefer
+wired over wifi or not. While having the wireguard service running and
+connected to a wifi connection. We connected a LAN cable to the
+device, but the device's connection traffic did not switch from WiFi
+to wired. We tested this with the service of wireguard down, and it
+switched automatically.
+
+We wish that it would work when connected to wifi; it switches to
+wired when the wireguard service is running.
+
+Do you have any suggestions for this? Maybe you have encountered this.
+
+Thanks and regards,
+
+Tristan
