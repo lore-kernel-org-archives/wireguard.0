@@ -4,53 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1D2CC54FB9
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Nov 2023 13:34:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B21ECC072A2
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Nov 2023 13:45:21 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 475a0c4e;
-	Sun, 19 Nov 2023 13:34:41 +0000 (UTC)
-Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com
- [2607:f8b0:4864:20::f2c])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6493c2b4
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7f9cd77c;
+	Sun, 19 Nov 2023 13:34:42 +0000 (UTC)
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com
+ [2a00:1450:4864:20::229])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d28a9db0
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 19 Oct 2023 06:20:08 +0000 (UTC)
-Received: by mail-qv1-xf2c.google.com with SMTP id
- 6a1803df08f44-65b162328edso45056306d6.2
- for <wireguard@lists.zx2c4.com>; Wed, 18 Oct 2023 23:20:08 -0700 (PDT)
+ Thu, 19 Oct 2023 07:44:14 +0000 (UTC)
+Received: by mail-lj1-x229.google.com with SMTP id
+ 38308e7fff4ca-2b95d5ee18dso110990391fa.1
+ for <wireguard@lists.zx2c4.com>; Thu, 19 Oct 2023 00:44:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1697696407; x=1698301207; darn=lists.zx2c4.com;
+ d=um-edu-mt.20230601.gappssmtp.com; s=20230601; t=1697701453; x=1698306253;
+ darn=lists.zx2c4.com; 
  h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
  :date:message-id:reply-to;
- bh=T5SEKdWFf1S1UCsC3S6FwamG1eM4FGOEEjITcEYizb4=;
- b=JcZ8lEuBGtJ3AwLbZy6/GFNavoEa3AJ4p2pmt1zNuYehav1+qQ9vpKWLIALTcJJf53
- 6y61O6GIlM1jn/K3yCstIruSrLXeq/xPGc7B+I3qEw5kSrEUYnuLRtsPLYTFud/DBQby
- df4YBX+MN59PlEKeds76Jf1qsctT5pH13AxRt8DiSf5ySrb/MGmhyDwlc+GDdRdg5h2r
- wvtQ7lkOuGPx5qREYEc9xcHmrL4dHbraI9OcG1hzpBtaEWPTa1NQ0g385SXM2QqVeR8W
- f7MIrStH+Pvjv1rjQ3W6SPKEJz8VcYKU4FqdU5PgZxZf+x3Zjbi/ACDGf+fiAJfI7x3a
- RwFQ==
+ bh=o6mOy2qDglDLe36TMMUyyCe1fTzaPE9BF+4sXxflUuw=;
+ b=OoC8Z5ZIHTXwPqZZTRzMnmzknda35MUTzg1wkDu6P9/bBclRQra7ndGWZKgZuAgZNI
+ fLVEL2+2Qvij+hK0WkVUbpvvT1ScTlIYo4rWycLRM+g2HX9zhk/s6bP3b2PZgbm+AWHF
+ v6n/9B3Fg1OVCnNFDFYiEoiVMzdlaQ4cxn0W8+Hgjl2sO0oqKRAqhOC+/7vbins1D5OW
+ 0XS+oA5PlBMeuG6DLetWgYZNf99MbgQ7L17zo1fCrW4aVWFrGDff+0R7FxkhX+YIXBOh
+ vveHcefCVfARoiJrD6oU35GlZoelJ9Yk2YAYt/NG1X6ex6/tlgRKE8UT6nLKN7GKZMPu
+ gzqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1697696407; x=1698301207;
+ d=1e100.net; s=20230601; t=1697701453; x=1698306253;
  h=to:subject:message-id:date:from:mime-version:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=T5SEKdWFf1S1UCsC3S6FwamG1eM4FGOEEjITcEYizb4=;
- b=UQn36e/IjUi93Y0TxQw/AAosHBO4Apo+8ThkT8+wbSLFrMb6kaSE7yTmwJRhVxNG5g
- 2cOq7w6/p4C8a2etshbc4n3hZpMJtEIrhapJH0xQmGMqn4toqdfcxX3mBN7Lu8ZPmNE0
- bhCmAcZaKRzRdEqXFcj8u8/giDZDfCW2RBPhTExmI/GGDSvq68ljZiJb2kKtgjVoxJPq
- JVD1NaXdPBCC5dLfGjHsIrUKxc3Uu1jm4Vf/KIfjiCTzFDPDvIc56TrYJGnriX3liomk
- ojy5Z3wsSmsCwJjbAIZIJNlsjMx1qzYLETO/qxjHrlwDQXohOqWqnkYjhBxWxatx9CNe
- KUbA==
-X-Gm-Message-State: AOJu0YygsqzGkZyVXXMKWMFhp161eBUzqrw2S2VWzx8iOdvAbwDiD3EL
- pLHFrEQlOUrXBOPbhyyll/zqcW1HUdq/fUQvY/SpYD7dWCstfw==
-X-Google-Smtp-Source: AGHT+IHWAgnfU+R0PK5GaEeMHYRR2J9VZSBS30uRtnCkW1uFp55a8nMgpIS70xsHgQ/0W+y+scOJ87Ek6f4gbQbniVI=
-X-Received: by 2002:a05:6214:20aa:b0:658:2bec:eae2 with SMTP id
- 10-20020a05621420aa00b006582beceae2mr1376407qvd.10.1697696406961; Wed, 18 Oct
- 2023 23:20:06 -0700 (PDT)
+ bh=o6mOy2qDglDLe36TMMUyyCe1fTzaPE9BF+4sXxflUuw=;
+ b=JK6WkpHieFa3Nux67UPgVykLFWRCIgsofMkoIJLv/4T16Mc9TmSQVgK0jDdb8j/s2Z
+ eB5D7Cw4ppx5TNrOr1Qr9IrIC2uFDlIdf1/4v/MZx3Xu5gukoXLS9XjWcRmfp23CJAAj
+ fJ5O7j7ME97QCR7IhCIH6Uz0dBjJcU3ogbf9woglw5wHJMG7vFRPWAuDRuqswXNJSVQU
+ w/2OI64lM3uPQBa1tzfhG6e0iH+S8TOMvikpEZwpS2sY+xnmoEuaAXgHaTAO8sFzCm17
+ GSsSpXezluEhVMjeYnbs27CZjJZZEz00IkJptJgw9j2f8jcBBZ47+L62q9063wunlCoU
+ qA2g==
+X-Gm-Message-State: AOJu0YxBBKiV/ax8Yy8JwWSM+a5EO6g7F61GCgOkflYnSc8wN2SJ9fp+
+ Hmh49TQmtM+Or5eK3VNOyvAr/KGLDO7JVyXmNim0UN74ebxB6xoD3xCnbg==
+X-Google-Smtp-Source: AGHT+IFI3GdwfRUHDI/ExIwhqtYIw0lbwXz8nRop46owAnE/iANJ27v8yQmD7WLkFjWMwbQfgMLijqfxt3F5DtZvZ4Q=
+X-Received: by 2002:a2e:a781:0:b0:2c5:239f:1866 with SMTP id
+ c1-20020a2ea781000000b002c5239f1866mr980695ljf.29.1697701452532; Thu, 19 Oct
+ 2023 00:44:12 -0700 (PDT)
 MIME-Version: 1.0
-From: Tristan Camilleri <tristancamilleri2@gmail.com>
-Date: Thu, 19 Oct 2023 08:19:56 +0200
-Message-ID: <CADS3Xjem1HEvpYGaM9WF_MUZAXtvaAjsovMEgjqGPo81426e_w@mail.gmail.com>
-Subject: Wireguard and Windows metrics priority
+From: Dave Mifsud <dave.mifsud@um.edu.mt>
+Date: Thu, 19 Oct 2023 09:43:46 +0200
+Message-ID: <CALv0RtmmZyMUGeBjuU+hvDven23Ad6XYWqfL--h+m-sHt-+ZPg@mail.gmail.com>
+Subject: Wireguard Windows keeps using lower priority interface (wifi) when a
+ higher priority interface (wired) becomes available
 To: wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
 X-Mailman-Approved-At: Sun, 19 Nov 2023 13:34:33 +0000
@@ -68,33 +70,21 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Dear all,
+We are implementing Wireguard as a VPN solution for our network on
+Windows 10/11 clients. One issue we have encountered is that Wireguard
+VPN traffic keeps transiting the wifi interface, even when wired
+becomes available.
 
-I hope that you are all well. We have a wireguard service running for
-the VPN solution, and currently we are testing a scenario with the
-Windows metrics. We are allocating the network adapter metrics as
-follows:
+We have tested the same Windows device without Wireguard, and when the
+wired connection becomes available, traffic switches to the wired
+connection.
 
-VPN (Wireguard): 10
+Unfortunately users do not realise this, and at times are located in
+an area where wifi connectivity is not optimal.
 
-Ethernet adapters: 20
+Has anyone come across this issue? Can anything be done, apart from
+creating a trigger in windows such that whenever a wired connection
+becomes available Wireguard is restarted? We would like to avoid this,
+as the solution seems too drastic.
 
-Wifi Adapters: 100
-
-Bluetooth: 150
-
-While configuring this, we were testing if this really works to prefer
-wired over wifi or not. While having the wireguard service running and
-connected to a wifi connection. We connected a LAN cable to the
-device, but the device's connection traffic did not switch from WiFi
-to wired. We tested this with the service of wireguard down, and it
-switched automatically.
-
-We wish that it would work when connected to wifi; it switches to
-wired when the wireguard service is running.
-
-Do you have any suggestions for this? Maybe you have encountered this.
-
-Thanks and regards,
-
-Tristan
+Dave
