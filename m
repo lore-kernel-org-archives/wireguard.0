@@ -4,25 +4,25 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A53A2C25B47
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 23 Oct 2023 17:28:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C20E7C25B4B
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 23 Oct 2023 17:28:33 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 23f8909c;
-	Mon, 23 Oct 2023 17:09:56 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 85623f16;
+	Mon, 23 Oct 2023 17:09:55 +0000 (UTC)
 Received: from janet.servers.dxld.at (mail.servers.dxld.at
  [2001:678:4d8:200::1a57])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c14c3f46
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 00ea9d0b
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
  Mon, 23 Oct 2023 17:09:44 +0000 (UTC)
-Received: janet.servers.dxld.at; Mon, 23 Oct 2023 19:09:44 +0200
+Received: janet.servers.dxld.at; Mon, 23 Oct 2023 19:09:43 +0200
 From: =?UTF-8?q?Daniel=20Gr=C3=B6ber?= <dxld@darkboxed.org>
 To: wireguard@lists.zx2c4.com
 Cc: "Jason A . Donenfeld" <Jason@zx2c4.com>,
  =?UTF-8?q?Daniel=20Gr=C3=B6ber?= <dxld@darkboxed.org>
-Subject: [PATCH v2 6/6] wg: Simplify showconf_main by using print_sockaddr_inet
-Date: Mon, 23 Oct 2023 19:09:00 +0200
-Message-Id: <20231023170900.131473-6-dxld@darkboxed.org>
+Subject: [PATCH v2 5/6] wg: Replace print_endpoint with print_sockaddr_inet
+Date: Mon, 23 Oct 2023 19:08:59 +0200
+Message-Id: <20231023170900.131473-5-dxld@darkboxed.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20231023170900.131473-1-dxld@darkboxed.org>
 References: <20231023170900.131473-1-dxld@darkboxed.org>
@@ -43,46 +43,99 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+Note this changes the commandline behaviour slightly. Previously we would
+output the gai_strerror message instead of the address when getnameinfo
+fails.
+
+I don't think this behaviour is very useful for scripts as it's hard to
+match for since we're missing, say, an "error: " prefix. Instead print the
+error to stderr and just don't print anything on stdout in this case. Empty
+string is easier to detect than an arbitrary set of (possibly localised!)
+error messages.
+
 Signed-off-by: Daniel Gröber <dxld@darkboxed.org>
 ---
- src/showconf.c | 17 ++---------------
- 1 file changed, 2 insertions(+), 15 deletions(-)
 
-diff --git a/src/showconf.c b/src/showconf.c
-index c99a6a0..f2c6a68 100644
---- a/src/showconf.c
-+++ b/src/showconf.c
-@@ -23,8 +23,6 @@ int showconf_main(int argc, const char *argv[])
- {
- 	char base64[WG_KEY_LEN_BASE64];
- 	char ip[INET6_ADDRSTRLEN];
--	char host[4096 + 1], service[512 + 1];
+Changes in v2:
+  - Remove now redundant print_endpoint prototype
+
+ src/show.c | 29 +++--------------------------
+ src/show.h |  1 -
+ 2 files changed, 3 insertions(+), 27 deletions(-)
+
+diff --git a/src/show.c b/src/show.c
+index 3048183..ec830d1 100644
+--- a/src/show.c
++++ b/src/show.c
+@@ -104,29 +104,6 @@ static char *ip(const struct wgallowedip *ip)
+ 	return buf;
+ }
+ 
+-char *print_endpoint(const struct sockaddr *addr)
+-{
+-	char host[4096 + 1];
+-	char service[512 + 1];
+-	static char buf[sizeof(host) + sizeof(service) + 4];
+-	int ret;
 -	socklen_t addr_len = 0;
- 	struct wgdevice *device = NULL;
- 	struct wgpeer *peer;
- 	struct wgallowedip *allowedip;
-@@ -77,19 +75,8 @@ int showconf_main(int argc, const char *argv[])
- 		if (peer->first_allowedip)
- 			printf("\n");
+-
+-	memset(buf, 0, sizeof(buf));
+-	if (addr->sa_family == AF_INET)
+-		addr_len = sizeof(struct sockaddr_in);
+-	else if (addr->sa_family == AF_INET6)
+-		addr_len = sizeof(struct sockaddr_in6);
+-
+-	ret = getnameinfo(addr, addr_len, host, sizeof(host), service, sizeof(service), NI_DGRAM | NI_NUMERICSERV | NI_NUMERICHOST);
+-	if (ret) {
+-		strncpy(buf, gai_strerror(ret), sizeof(buf) - 1);
+-		buf[sizeof(buf) - 1] = '\0';
+-	} else
+-		snprintf(buf, sizeof(buf), (addr->sa_family == AF_INET6 && strchr(host, ':')) ? "[%s]:%s" : "%s:%s", host, service);
+-	return buf;
+-}
+-
+ char *print_sockaddr_inet(const struct sockaddr_inet *sa)
+ {
+ 	char host[4096 + 1], service[512 + 1], ifname_buf[IF_NAMESIZE+10] = "%";
+@@ -271,7 +248,7 @@ static void pretty_print(struct wgdevice *device)
+ 		if (peer->flags & WGPEER_HAS_PRESHARED_KEY)
+ 			terminal_printf("  " TERMINAL_BOLD "preshared key" TERMINAL_RESET ": %s\n", masked_key(peer->preshared_key));
+ 		if (peer->endpoint.addr.sa_family == AF_INET || peer->endpoint.addr.sa_family == AF_INET6)
+-			terminal_printf("  " TERMINAL_BOLD "endpoint" TERMINAL_RESET ": %s\n", print_endpoint(&peer->endpoint.addr));
++			terminal_printf("  " TERMINAL_BOLD "endpoint" TERMINAL_RESET ": %s\n", print_sockaddr_inet(&peer->endpoint.addr_inet));
+ 		terminal_printf("  " TERMINAL_BOLD "allowed ips" TERMINAL_RESET ": ");
+ 		if (peer->first_allowedip) {
+ 			for_each_wgallowedip(peer, allowedip)
+@@ -315,7 +292,7 @@ static void dump_print(struct wgdevice *device, bool with_interface)
+ 		printf("%s\t", key(peer->public_key));
+ 		printf("%s\t", maybe_key(peer->preshared_key, peer->flags & WGPEER_HAS_PRESHARED_KEY));
+ 		if (peer->endpoint.addr.sa_family == AF_INET || peer->endpoint.addr.sa_family == AF_INET6)
+-			printf("%s\t", print_endpoint(&peer->endpoint.addr));
++			printf("%s\t", print_sockaddr_inet(&peer->endpoint.addr_inet));
+ 		else
+ 			printf("(none)\t");
+ 		if (peer->first_allowedip) {
+@@ -366,7 +343,7 @@ static bool ugly_print(struct wgdevice *device, const char *param, bool with_int
+ 				printf("%s\t", device->name);
+ 			printf("%s\t", key(peer->public_key));
+ 			if (peer->endpoint.addr.sa_family == AF_INET || peer->endpoint.addr.sa_family == AF_INET6)
+-				printf("%s\n", print_endpoint(&peer->endpoint.addr));
++				printf("%s\n", print_sockaddr_inet(&peer->endpoint.addr_inet));
+ 			else
+ 				printf("(none)\n");
+ 		}
+diff --git a/src/show.h b/src/show.h
+index 3673b65..2490301 100644
+--- a/src/show.h
++++ b/src/show.h
+@@ -7,7 +7,6 @@
+ #define SHOW_H
+ struct sockaddr_inet;
  
--		// TODO: use print_endpoint
--		if (peer->endpoint.addr.sa_family == AF_INET || peer->endpoint.addr.sa_family == AF_INET6) {
--			if (peer->endpoint.addr.sa_family == AF_INET)
--				addr_len = sizeof(struct sockaddr_in);
--			else if (peer->endpoint.addr.sa_family == AF_INET6)
--				addr_len = sizeof(struct sockaddr_in6);
--			if (!getnameinfo(&peer->endpoint.addr, addr_len, host, sizeof(host), service, sizeof(service), NI_DGRAM | NI_NUMERICSERV | NI_NUMERICHOST)) {
--				if (peer->endpoint.addr.sa_family == AF_INET6 && strchr(host, ':'))
--					printf("Endpoint = [%s]:%s\n", host, service);
--				else
--					printf("Endpoint = %s:%s\n", host, service);
--			}
--		}
-+		if (peer->endpoint.addr.sa_family == AF_INET || peer->endpoint.addr.sa_family == AF_INET6)
-+			printf("Endpoint = %s\n", print_sockaddr_inet(&peer->endpoint.addr_inet));
+-char *print_endpoint(const struct sockaddr *addr);
+ char *print_sockaddr_inet(const struct sockaddr_inet *addr);
  
- 		if (peer->persistent_keepalive_interval)
- 			printf("PersistentKeepalive = %u\n", peer->persistent_keepalive_interval);
+ #endif
 -- 
 2.39.2
 
