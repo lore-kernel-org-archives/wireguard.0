@@ -4,57 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B21ECC072A2
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Nov 2023 13:45:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95D64C54E76
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Nov 2023 13:45:22 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7f9cd77c;
-	Sun, 19 Nov 2023 13:34:42 +0000 (UTC)
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com
- [2a00:1450:4864:20::229])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d28a9db0
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ac0aa0e8;
+	Sun, 19 Nov 2023 13:34:44 +0000 (UTC)
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com
+ [2a00:1450:4864:20::536])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c2221eaf
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 19 Oct 2023 07:44:14 +0000 (UTC)
-Received: by mail-lj1-x229.google.com with SMTP id
- 38308e7fff4ca-2b95d5ee18dso110990391fa.1
- for <wireguard@lists.zx2c4.com>; Thu, 19 Oct 2023 00:44:14 -0700 (PDT)
+ Sun, 29 Oct 2023 19:23:00 +0000 (UTC)
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-53df747cfe5so6325980a12.2
+ for <wireguard@lists.zx2c4.com>; Sun, 29 Oct 2023 12:23:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=um-edu-mt.20230601.gappssmtp.com; s=20230601; t=1697701453; x=1698306253;
- darn=lists.zx2c4.com; 
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=o6mOy2qDglDLe36TMMUyyCe1fTzaPE9BF+4sXxflUuw=;
- b=OoC8Z5ZIHTXwPqZZTRzMnmzknda35MUTzg1wkDu6P9/bBclRQra7ndGWZKgZuAgZNI
- fLVEL2+2Qvij+hK0WkVUbpvvT1ScTlIYo4rWycLRM+g2HX9zhk/s6bP3b2PZgbm+AWHF
- v6n/9B3Fg1OVCnNFDFYiEoiVMzdlaQ4cxn0W8+Hgjl2sO0oqKRAqhOC+/7vbins1D5OW
- 0XS+oA5PlBMeuG6DLetWgYZNf99MbgQ7L17zo1fCrW4aVWFrGDff+0R7FxkhX+YIXBOh
- vveHcefCVfARoiJrD6oU35GlZoelJ9Yk2YAYt/NG1X6ex6/tlgRKE8UT6nLKN7GKZMPu
- gzqw==
+ d=gmail.com; s=20230601; t=1698607380; x=1699212180; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=lNLFWGQcY8gYIVtMiFHRcEBxCrJLado4A3Ox6EBfYkM=;
+ b=T9CG8MbuCaWIFBJ/51VqlygpO0xScgHdBdWdGODjxO93iceOQ8QJ32ETq7wi4NR+86
+ Ug/MtMSXnQDIKZHwjZBoTUs/qZzcvGho3cEtjenLOw2c2J/GzV/1j9cwViB8cCm9+dTd
+ LeH3aK3DuZUHEYYOS5xb7Io+Eo2/x+GQHwxaOeOcH6QFYh8nyi2Q3Om4zREExSRW+EeF
+ I5bNaIorHpIScaP6XvAi50uGq8P8A48ZbymrNjsj7wzfV0JYvH66ZL9KljiQe2W2UB17
+ swP+vBeUu+JaZyeerjhQrhkc4Y+EidnVl5oFnYCbDiA6Qq8WrHrChI83TqUKP+F7glda
+ KOiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1697701453; x=1698306253;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=o6mOy2qDglDLe36TMMUyyCe1fTzaPE9BF+4sXxflUuw=;
- b=JK6WkpHieFa3Nux67UPgVykLFWRCIgsofMkoIJLv/4T16Mc9TmSQVgK0jDdb8j/s2Z
- eB5D7Cw4ppx5TNrOr1Qr9IrIC2uFDlIdf1/4v/MZx3Xu5gukoXLS9XjWcRmfp23CJAAj
- fJ5O7j7ME97QCR7IhCIH6Uz0dBjJcU3ogbf9woglw5wHJMG7vFRPWAuDRuqswXNJSVQU
- w/2OI64lM3uPQBa1tzfhG6e0iH+S8TOMvikpEZwpS2sY+xnmoEuaAXgHaTAO8sFzCm17
- GSsSpXezluEhVMjeYnbs27CZjJZZEz00IkJptJgw9j2f8jcBBZ47+L62q9063wunlCoU
- qA2g==
-X-Gm-Message-State: AOJu0YxBBKiV/ax8Yy8JwWSM+a5EO6g7F61GCgOkflYnSc8wN2SJ9fp+
- Hmh49TQmtM+Or5eK3VNOyvAr/KGLDO7JVyXmNim0UN74ebxB6xoD3xCnbg==
-X-Google-Smtp-Source: AGHT+IFI3GdwfRUHDI/ExIwhqtYIw0lbwXz8nRop46owAnE/iANJ27v8yQmD7WLkFjWMwbQfgMLijqfxt3F5DtZvZ4Q=
-X-Received: by 2002:a2e:a781:0:b0:2c5:239f:1866 with SMTP id
- c1-20020a2ea781000000b002c5239f1866mr980695ljf.29.1697701452532; Thu, 19 Oct
- 2023 00:44:12 -0700 (PDT)
-MIME-Version: 1.0
-From: Dave Mifsud <dave.mifsud@um.edu.mt>
-Date: Thu, 19 Oct 2023 09:43:46 +0200
-Message-ID: <CALv0RtmmZyMUGeBjuU+hvDven23Ad6XYWqfL--h+m-sHt-+ZPg@mail.gmail.com>
-Subject: Wireguard Windows keeps using lower priority interface (wifi) when a
- higher priority interface (wired) becomes available
+ d=1e100.net; s=20230601; t=1698607380; x=1699212180;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=lNLFWGQcY8gYIVtMiFHRcEBxCrJLado4A3Ox6EBfYkM=;
+ b=UmiqkVAclG7bCI5bfYqFRwzR5g1iHx2iqTcaCo4LLwqiBjOAmMKPdwGwXIgArlBowJ
+ H6uYauljWL/3cHAwAmYv6NZHAOzgM4go7aJcnVADQJZMQfsvDTtox4G1mQc101ZszLEA
+ 1VIgQgNQTAWntsCdjQGenQirOk47lEFmmj7pYC0TXMM/wJ49TfOupTGKByKPomL7E/Ox
+ iLu3wiY+dS1MSdcuilUfHFLWpIbWUS1idMOVB9beLhhX5Qg+jAKqbQmYwCOCPQ+VRRAc
+ esmt/VpxPIllQxlrULeJ5jaYTjcNCxElBbKxnsikqDmdThDEyUvKdH135gURX9imSAqr
+ yMJQ==
+X-Gm-Message-State: AOJu0YzE6WMn9iHNoxUOp+ERZT4ZSI/M/eAgCldCAJuLJGa2Mv9E5ti3
+ kSouSDlN022Blzy4A3HNeXgpFxYEceg=
+X-Google-Smtp-Source: AGHT+IEVBMwRhshvCoAWm0XiSHU+Joud+ak0i7m9h9qs4Sy4d/hlU1ESCVQVRPtT5jdqZ4gxNdA2Hw==
+X-Received: by 2002:a17:906:fe46:b0:9c3:b3cb:29b2 with SMTP id
+ wz6-20020a170906fe4600b009c3b3cb29b2mr6948978ejb.42.1698607379373; 
+ Sun, 29 Oct 2023 12:22:59 -0700 (PDT)
+Received: from tom.local ([185.195.232.175]) by smtp.gmail.com with ESMTPSA id
+ gq4-20020a170906e24400b0099bd0b5a2bcsm4788242ejb.101.2023.10.29.12.22.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 29 Oct 2023 12:22:58 -0700 (PDT)
+From: Thomas Brierley <tomxor@gmail.com>
 To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Cc: Thomas Brierley <tomxor@gmail.com>
+Subject: [PATCH] wg-quick: linux: fix MTU calculation (use PMTUD)
+Date: Sun, 29 Oct 2023 19:22:10 +0000
+Message-Id: <20231029192210.120316-1-tomxor@gmail.com>
+X-Mailer: git-send-email 2.30.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Sun, 19 Nov 2023 13:34:33 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -70,21 +75,95 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-We are implementing Wireguard as a VPN solution for our network on
-Windows 10/11 clients. One issue we have encountered is that Wireguard
-VPN traffic keeps transiting the wifi interface, even when wired
-becomes available.
+Currently MTU calculation fails to successfully utilise the kernel's
+built-in path MTU discovery mechanism (PMTUD). Fixing this required a
+re-write of the set_mtu_up() function, which also addresses two related
+MTU issues as a side effect...
 
-We have tested the same Windows device without Wireguard, and when the
-wired connection becomes available, traffic switches to the wired
-connection.
+1. Trigger PMTUD Before Query
 
-Unfortunately users do not realise this, and at times are located in
-an area where wifi connectivity is not optimal.
+Currently the endpoint path MTU acquired from `ip route get` will almost
+definitely be empty, because this only queries the routing cache.  To
+trigger PMTUD on the endpoint and fill this cache, it is necessary to
+send an ICMP with the DF bit set.
 
-Has anyone come across this issue? Can anything be done, apart from
-creating a trigger in windows such that whenever a wired connection
-becomes available Wireguard is restarted? We would like to avoid this,
-as the solution seems too drastic.
+We now perform a ping beforehand with a total packet size equal to the
+interface MTU, larger will not trigger PMTUD, and smaller can miss a
+bottleneck. To calculate the ping payload, the device MTU and IP header
+size must be determined first.
 
-Dave
+2. Consider IPv6/4 Header Size
+
+Currently an 80 byte header size is assumed i.e. IPv6=40 + WireGuard=40.
+However this is not optimal in the case of IPv4. Since determining the
+IP header size is required for PMTUD anyway, this is now optimised as a
+side effect of endpoint MTU calculation.
+
+3. Use Smallest Endpoint MTU
+
+Currently in the case of multiple endpoints the largest endpoint path
+MTU is used. However WireGuard will dynamically switch between endpoints
+when e.g. one fails, so the smallest MTU is now used to ensure all
+endpoints will function correctly.
+
+Signed-off-by: Thomas Brierley <tomxor@gmail.com>
+---
+ src/wg-quick/linux.bash | 41 ++++++++++++++++++++++++++---------------
+ 1 file changed, 26 insertions(+), 15 deletions(-)
+
+diff --git a/src/wg-quick/linux.bash b/src/wg-quick/linux.bash
+index 4193ce5..5aba2cb 100755
+--- a/src/wg-quick/linux.bash
++++ b/src/wg-quick/linux.bash
+@@ -123,22 +123,33 @@ add_addr() {
+ }
+ 
+ set_mtu_up() {
+-	local mtu=0 endpoint output
+-	if [[ -n $MTU ]]; then
+-		cmd ip link set mtu "$MTU" up dev "$INTERFACE"
+-		return
+-	fi
+-	while read -r _ endpoint; do
+-		[[ $endpoint =~ ^\[?([a-z0-9:.]+)\]?:[0-9]+$ ]] || continue
+-		output="$(ip route get "${BASH_REMATCH[1]}" || true)"
+-		[[ ( $output =~ mtu\ ([0-9]+) || ( $output =~ dev\ ([^ ]+) && $(ip link show dev "${BASH_REMATCH[1]}") =~ mtu\ ([0-9]+) ) ) && ${BASH_REMATCH[1]} -gt $mtu ]] && mtu="${BASH_REMATCH[1]}"
+-	done < <(wg show "$INTERFACE" endpoints)
+-	if [[ $mtu -eq 0 ]]; then
+-		read -r output < <(ip route show default || true) || true
+-		[[ ( $output =~ mtu\ ([0-9]+) || ( $output =~ dev\ ([^ ]+) && $(ip link show dev "${BASH_REMATCH[1]}") =~ mtu\ ([0-9]+) ) ) && ${BASH_REMATCH[1]} -gt $mtu ]] && mtu="${BASH_REMATCH[1]}"
++	local dev devmtu end endmtu iph=40 wgh=40 mtu
++	# Device MTU
++	if [[ -n $(ip route show default) ]]; then
++		[[ $(ip route show default) =~ dev\ ([^ ]+) ]]
++		dev=${BASH_REMATCH[1]}
++		[[ $(ip addr show $dev scope global) =~ inet6 ]] &&
++			iph=40 || iph=20
++		if [[ $(ip link show dev $dev) =~ mtu\ ([0-9]+) ]]; then
++			devmtu=${BASH_REMATCH[1]}
++			[[ $(( devmtu - iph - wgh )) -gt $mtu ]] &&
++				mtu=$(( devmtu - iph - wgh ))
++		fi
++		# Endpoint MTU
++		while read -r _ end; do
++			[[ $end =~ ^\[?([a-f0-9:.]+)\]?:[0-9]+$ ]]
++			end=${BASH_REMATCH[1]}
++			[[ $end =~ [:] ]] &&
++				iph=40 || iph=20
++			ping -w 1 -M do -s $(( devmtu - iph - 8 )) $end &> /dev/null || true
++			if [[ $(ip route get $end) =~ mtu\ ([0-9]+) ]]; then
++				endmtu=${BASH_REMATCH[1]}
++				[[ $(( endmtu - iph - wgh )) -lt $mtu ]] &&
++					mtu=$(( endmtu - iph - wgh ))
++			fi
++		done < <(wg show "$INTERFACE" endpoints)
+ 	fi
+-	[[ $mtu -gt 0 ]] || mtu=1500
+-	cmd ip link set mtu $(( mtu - 80 )) up dev "$INTERFACE"
++	cmd ip link set mtu ${MTU:-${mtu:-1420}} up dev "$INTERFACE"
+ }
+ 
+ resolvconf_iface_prefix() {
+-- 
+2.30.2
+
