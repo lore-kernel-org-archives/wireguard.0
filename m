@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 476DCC072A2
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Nov 2023 13:57:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39929C54FB9
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Nov 2023 13:57:50 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 36bfea5e;
-	Sun, 19 Nov 2023 13:34:54 +0000 (UTC)
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com
- [2a00:1450:4864:20::52f])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 824e0419
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 58ebfab1;
+	Sun, 19 Nov 2023 13:35:10 +0000 (UTC)
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com
+ [2607:f8b0:4864:20::1029])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 280fbf0c
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sat, 7 Oct 2023 22:47:20 +0000 (UTC)
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-538575a38ffso5485782a12.1
- for <wireguard@lists.zx2c4.com>; Sat, 07 Oct 2023 15:47:20 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Mon, 6 Nov 2023 18:43:18 +0000 (UTC)
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-2802c41b716so3951438a91.1
+ for <wireguard@lists.zx2c4.com>; Mon, 06 Nov 2023 10:43:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1696718839; x=1697323639; darn=lists.zx2c4.com;
+ d=gmail.com; s=20230601; t=1699296197; x=1699900997; darn=lists.zx2c4.com;
  h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
  :date:message-id:reply-to;
- bh=ff2iXSB8IrTT7T3lWCDZ4qSdrWPr4XM+ss5qEJFHMGM=;
- b=jgNmxXJ+iUpjbf2AMwxbTSc155ycndum/zfzhuXmko9lMywp9uUgSEuuoGgpabb40V
- 0vWztZ0fSRerOgZFC3/5DOFOAfxHRQ5h9xz5E71GEzeLNQ8McGp1r4CwfC1W1TQr9V0K
- XGetnUVekSkBaz7LEOn/sHoMFbYw275LauHUGPzrKoGlpitw/NkhYO667xy0T9p10DEo
- Y/zvYsiA246haL+oA7gF0rm1BD25fziGbNM4YpuoG1YsrwKzS138cYzzYtGYB1T1MGhQ
- oTmUhoTDpwPe4HFrBbNy+hy9j80CAW2wCBB9/IRFcawdDEG8lzm0l49O/V2VvCW1Elv1
- eQzw==
+ bh=QSUFzUI7rnY0qi+/de7BpD0utAMBbHZ2rfhoqzmagvE=;
+ b=TcaZTi3OrTqHwTte1P7Y9gQF2C3lbfrNOMGLDqKXrJLwfXktMl7KOEVh8b90qJtqs3
+ DfdAc4DXSsHpGkYCkB5Qp2iHCXR8Rtrbt6/La8Q6Gdehcit8edHnDaR3ckXqd1gQP5I/
+ ssIt2u2b75Z6lbl4Cjiv9Vj9DtycX4LeIxysOl9CTZs7tJvXA9T/FASNc2nUGX210iUe
+ VKPTAcGo5/KHN5bWZZ7FT1RJqDgxDcyypqIMHkSwlgag92zefZbnDOQ70qBf7gPPKDlF
+ U79c0T+Uc4IQBsnQzVWvPJv4xwQhnVkxVEuG3XsVqrr/iFJvBz7QB8w2n7MvXGgrLxQn
+ A+sQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1696718839; x=1697323639;
+ d=1e100.net; s=20230601; t=1699296197; x=1699900997;
  h=to:subject:message-id:date:from:mime-version:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ff2iXSB8IrTT7T3lWCDZ4qSdrWPr4XM+ss5qEJFHMGM=;
- b=Z5Fv7hZizHBkgUe5DBnClrTmYe7h6wFWfTSfu9oYYhfc5QSWomOp3dwAuCJcdtEnhV
- QwtJxtD4mzkeyuUrglh688O0cSw6UgTWJA35105TTuWljOZvW5F6b6wN2cqvxGoU5M7W
- VwIw0zFfkyuvdHlhcXUfKZe/dLa3xFFZMGOqW0xVilyNsnzC6VJostzmRq/6cJySxiBD
- 0efRGX72wrfsmnHjdg/6of9bFHxw3foC9UTD2rbAj2U4eX6rCU5aQCBpj9oUemeBAJ0y
- lCOrz+8MLUjQXI7xvMaiOWUE91zvpyFtyHsXiBPe5+WRtww/FQLf4uqaZNVOxYOCTL0Q
- Z4IQ==
-X-Gm-Message-State: AOJu0YzbLaA4YjJSZBSdfvcnk6dFujeSQr2x/JBDcBcWFN/8fs/eY6zv
- ur3ZZ1vswlDrGkLElghHHKZcJ3CNfNkVdAJ+HMX0QAyhoXY=
-X-Google-Smtp-Source: AGHT+IG4O3D1V9Y4+B1S6lmppoXkLZ3HTSxAE5IZIWUAEsYaKu0RkLdPF5hvKsogTyEbWihw/x/AHMNWFlLDPjaHBf4=
-X-Received: by 2002:a05:6402:31e5:b0:538:8949:9dff with SMTP id
- dy5-20020a05640231e500b0053889499dffmr9918181edb.27.1696718839415; Sat, 07
- Oct 2023 15:47:19 -0700 (PDT)
+ bh=QSUFzUI7rnY0qi+/de7BpD0utAMBbHZ2rfhoqzmagvE=;
+ b=QQ2B44k02sG4O4veObtm5Bt3+OriAMvN04K43GMzf9DkzLZskAD46u554y2HVwW/ra
+ Ll+nap71FGw2BaZ5YXn7qXlhT7vYtWqixMFlZbTIf1gbyoK3S2V043GxI6JaSD4cb6aj
+ IDhmc27IukkPv5xTDqp0FMkuYN9nQYUKUdH/dEnOQBSQZ/pwsMiTcx2b25L9Mfda0yw5
+ d7JKzhmzbz41N0AE1DWOImStu9tb/OBOLKP8SH0xUZu0DHaeWlVjwN/np0HCh9ZErdy9
+ eB6UjrmKqMXBM56KHw5S54ao26R71IcVQDFIa3F1uBYeKozyZds7Po1NaLG+k/eQH7hT
+ jbPQ==
+X-Gm-Message-State: AOJu0YxSfE/5ucXpHPqXaa6xHWJZ9B4WuZl3XiqbaNToyhJwhG39xQbr
+ RbUsHIMRRqjI+IxjSQ8AzBR1T0Q0dt36kBwmvH+fNlQXJtY=
+X-Google-Smtp-Source: AGHT+IHYTg4c0sMhjeLLD5SPD0ge7ojAIGEt1CYtzQCb/GpqEEp0tFdB2L95rOgYgfOwGTCxwSXXFP6aKKCxvN4Up4A=
+X-Received: by 2002:a17:90a:1a:b0:280:1d7f:440f with SMTP id
+ 26-20020a17090a001a00b002801d7f440fmr21085903pja.26.1699296196929; Mon, 06
+ Nov 2023 10:43:16 -0800 (PST)
 MIME-Version: 1.0
-From: Jan Noha <nohajc@gmail.com>
-Date: Sun, 8 Oct 2023 00:46:43 +0200
-Message-ID: <CAEqCujJ7bck6w0UiKdwXFfH6R+RWgALZg5JUxEuQupUgPRHQPg@mail.gmail.com>
-Subject: UAPI socket for the macOS sandboxed Wireguard app
+From: Erik Schulz <erikschulz184@gmail.com>
+Date: Mon, 6 Nov 2023 19:43:06 +0100
+Message-ID: <CAE5KivgR-GA0GXpF3smL=XybcCKz4UvOsfRsm6ZSKtTUcsPc8w@mail.gmail.com>
+Subject: Bugs in MacOS client: Infinite reconnect when using on-demand and
+ switching user; missing reconnect feature
 To: wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
-X-Mailman-Approved-At: Sun, 19 Nov 2023 13:34:52 +0000
+X-Mailman-Approved-At: Sun, 19 Nov 2023 13:35:10 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -67,44 +68,34 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
+I'm using the MacOS App Store client,
+App version: 1.0.16 (27)
+Go backend version: 1e2c3e5a
 
-I want to submit a series of patches concerning Wireguard on macOS.
+I use multiple users and switch between them.
 
-If it's ok, I will just link to a github PR which links to three other
-PRs (in wireguard-apple, wireguard-go and wireguard-tools).
+a)
+When logged in as user A, which has the tunnel set up, and Wireguard running,
+when switching to user B, Wireguard disconnects the tunnel.
+As user B, trying to switch on the tunnel in Settings > VPN, fails.
+I'm guessing this is unavoidable, and a security feature of the OS,
+but if not, it would be nice to have a configuration option to allow
+the tunnel to continue to operate.
 
-https://github.com/WireGuard/wgctrl-go/pull/143
+b)
+when having "On-Demand" enabled for ethernet and wifi,
+When switching to user B, the Settings > VPN seems to be in an
+infinite loop, switching on/off. I'm guessing that Wireguard (running
+in user A) is trying to establish the tunnel, but failing. I'm
+guessing that there is a bug in the retry/wait logic for On-Demand.
+This causes high cpu load.
+This means that I'm unable to use "On-Demand".
 
-Let me explain what this is about. I've been trying to automate
-Wireguard tunnel configuration for some P2P use cases and I wanted to
-use wgctrl-go library for the task.
+c)
+Instead of On-Demand, it would be nice to automatically reconnect when
+switching back to user A.
+Currently I have to enable it manually each time I switch to user A.
+Could the app remember that the connection was active before user
+switch, and when switching back, automatically reconnect?
 
-This already works fine on Linux and Windows. On macOS, it's a bit
-more complicated. If you only use CLI for creating tun interfaces
-(using wireguard from homebrew for example), it also works.
-Specifically, wgctrl-go communicates with the wireguard user-space
-daemon via a unix domain socket located in /var/run/wireguard/ (this
-is referred to as UAPI in the code).
-
-However, if you want to use Wireguard from the App Store - which has
-some other advantages besides the UI (such as on-demand VPN and
-generally nice OS integration) - it comes as a sandboxed Network
-Extension. Currently, it does not expose any UAPI socket, so wgctrl-go
-cannot be used to configure it.
-
-The socket can be opened except it has to be inside the sandbox home
-directory. There is no problem connecting to it from "outside" using
-cli tools which are not sandboxed themselves.
-
-That's basically what I did here. Changes were needed in
-wireguard-apple and wireguard-go to open the socket in a
-macOS-specific location, then I updated wgctrl-go and wireguard-tools
-(so that wg commands work too) to look for UAPI sockets in both the
-sandbox location and the default one.
-
-If you're interested in discussing this topic further, I'll look
-forward to any feedback.
-
-Thank you,
-Jan Noha
+Thanks!
