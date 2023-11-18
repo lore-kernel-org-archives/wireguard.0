@@ -4,65 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 253C1C5AE5B
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Nov 2023 13:45:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B218C072A2
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Nov 2023 13:45:25 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 85276655;
-	Sun, 19 Nov 2023 13:34:47 +0000 (UTC)
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com
- [2a00:1450:4864:20::131])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 169140d3
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 38e78a34;
+	Sun, 19 Nov 2023 13:34:49 +0000 (UTC)
+Received: from korolev.univ-paris7.fr (korolev.univ-paris7.fr
+ [2001:660:3301:8000::1:2])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 25f6ec89
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 11 Nov 2023 11:03:56 +0000 (UTC)
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-50970c2115eso3853567e87.1
- for <wireguard@lists.zx2c4.com>; Sat, 11 Nov 2023 03:03:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1699700635; x=1700305435; darn=lists.zx2c4.com;
- h=to:date:message-id:subject:mime-version:content-transfer-encoding
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=PfbRirZh7sz0ZjjlYqSB2GodiSK3hGl0+j4vvlG1nzQ=;
- b=CFIoAkjN+57uL3vfMjhZ98/ZPCSsxbygfoD/O66TBkA5Qt31V2/zsy7Jv5k/d1Q+th
- Z4RZYddcXz1sQNxBXsUasu7c8PgHN/vZHO1jjjbEp4E036xbhGDrWQ/kjTq1zm3xSpRT
- wZUO88XM0xoaMb/3tEqlMqkCZGMO3DWlq0b2lqS+PnBfy9vgxycTro/OEYvkKIEF/csq
- c2dsilfDR+rl8do7GwVW/F93ek7M2Tht48VL3UQWsZU8ji5lT3x4wCGHicRq1dhWkD70
- 8egqoUa7vQ3LzauwVQk5hORcnl4rl0xMMh1apkn2MqKsa9s6khD2pdSSN7P6mL/F8F99
- qTdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1699700635; x=1700305435;
- h=to:date:message-id:subject:mime-version:content-transfer-encoding
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PfbRirZh7sz0ZjjlYqSB2GodiSK3hGl0+j4vvlG1nzQ=;
- b=iQgW+coGKjaHJTXp9FVRV+2funnOmRPJ1oUYjGyIR86f3i9Y31OoUK7iccJGfPV/GD
- Lf1KygfNwS/ondmIylHQXxImAG6lmD5S5cdmYs1r9mjmArejz1A3lHkUmNb7fVcqwWCC
- ifhx9LcSboALNTjyWkdHH0QhiuaZjPFbhjNCRPn8wBSq4nwWC78bwEV4WwQXaW9Q7oeK
- D2BxnTjn3BdclBIwRgBwx4eL+VewCCvi/tG9sqtYyCvdIWV4Oht2nwVRHU2BjT2R8gEA
- +EyX+kPDiMJt4PPfHnGb82FfGk5rV2iu50B5FOIgr3yHZ2DT9DqW8JO+Nw+qFZisLt2Y
- Q0Gg==
-X-Gm-Message-State: AOJu0YzdO89u1Tqukrn1F8pkqRXEHsd9kwnLAY+PmPvhO008mTnNvjMa
- goerbmGi6QkqJZgxeUVgKGpZuHNFvHBegg==
-X-Google-Smtp-Source: AGHT+IGFtDuwxyvKfjnRuRzc1yyuhf7RFqIwC3wZ/DA4/pDU8NbABmNPHe4/RnGl6BCTT+fGYCCWrg==
-X-Received: by 2002:a05:6512:3190:b0:507:9f51:acee with SMTP id
- i16-20020a056512319000b005079f51aceemr1341681lfe.22.1699700635062; 
- Sat, 11 Nov 2023 03:03:55 -0800 (PST)
-Received: from smtpclient.apple ([188.227.48.129])
- by smtp.gmail.com with ESMTPSA id
- er19-20020a05651248d300b00507a387c4c4sm238056lfb.229.2023.11.11.03.03.54
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Sat, 11 Nov 2023 03:03:54 -0800 (PST)
-From: Gregory Klyushnikov <grishka93@gmail.com>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.700.6\))
-Subject: Wireguard Android app sometimes shows its UI instead of just toggling
- the VPN
-Message-Id: <2E6A421F-50FF-44BA-B0A6-FA1F2F421ABB@gmail.com>
-Date: Sat, 11 Nov 2023 14:03:54 +0300
-To: wireguard@lists.zx2c4.com
-X-Mailer: Apple Mail (2.3731.700.6)
+ Sat, 18 Nov 2023 12:22:21 +0000 (UTC)
+Received: from potemkin.univ-paris7.fr (potemkin.univ-paris7.fr
+ [IPv6:2001:660:3301:8000::1:1])
+ by korolev.univ-paris7.fr (8.14.4/8.14.4/relay1/82085) with ESMTP id
+ 3AICM9Br003886
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Sat, 18 Nov 2023 13:22:11 +0100
+Received: from mailhub.math.univ-paris-diderot.fr
+ (mailhub.math.univ-paris-diderot.fr [81.194.30.253])
+ by potemkin.univ-paris7.fr (8.14.4/8.14.4/relay2/82085) with ESMTP id
+ 3AICM9KV005678; Sat, 18 Nov 2023 13:22:09 +0100
+Received: from mailhub.math.univ-paris-diderot.fr (localhost [127.0.0.1])
+ by mailhub.math.univ-paris-diderot.fr (Postfix) with ESMTP id A36CB4449A;
+ Sat, 18 Nov 2023 13:22:07 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=irif.fr; h=
+ content-type:content-type:mime-version:user-agent:references
+ :in-reply-to:subject:subject:from:from:message-id:date:date
+ :received:received; s=dkim-irif; t=1700310126; x=1701174127; bh=
+ nYcVXKVlv1ETZgy7miHoyMFRG25VY0yG0blwZ8Ol3IU=; b=Uvc/O79JqT/8n/aL
+ HuTLwjQqf9POidqiOvU7YUW1AkzmyzchM4k84N+wxWkN9f/cQ0HX/5KLAB44Esn9
+ fxb/QGXdNvCnWkgi1o5zB5vZ1JJ+TXiNSqXgUfxH65An4LtPQv84BkEJjGWaDICo
+ Zjzi4x1MwEvqt3DonTbmieao+JpVchfz8KSNlHG1ogHMtDgLSKRERZ/vGrOHqhBO
+ 7cvJ1AIwAWQU5JyX9Lr7nmfJaP5d6u06QIiW+gk6mzytgeiRe9EFBd3d39LYvH2u
+ FPjuk5t6+x/blMCDzTwmBD8MZxGz/RVdoMALtt9jqouWntbCBbsO3KmKGaw80ClD
+ bKUxLw==
+X-Virus-Scanned: amavisd-new at math.univ-paris-diderot.fr
+Received: from mailhub.math.univ-paris-diderot.fr ([127.0.0.1])
+ by mailhub.math.univ-paris-diderot.fr (mailhub.math.univ-paris-diderot.fr
+ [127.0.0.1]) (amavisd-new, port 10023)
+ with ESMTP id wcIyYWvOr0to; Sat, 18 Nov 2023 13:22:06 +0100 (CET)
+Received: from pirx.irif.fr (unknown [78.194.40.74])
+ (Authenticated sender: jch)
+ by mailhub.math.univ-paris-diderot.fr (Postfix) with ESMTPSA id 0B12E44499;
+ Sat, 18 Nov 2023 13:22:03 +0100 (CET)
+Date: Sat, 18 Nov 2023 13:22:03 +0100
+Message-ID: <871qcn8d5g.wl-jch@irif.fr>
+From: Juliusz Chroboczek <jch@irif.fr>
+To: "Erin Shepherd" <bird-users@erinshepherd.net>
+Cc: Daniel =?ISO-8859-1?Q?Gr=F6ber?= <dxld@darkboxed.org>,
+ "Alexander Zubkov" <green@qrator.net>,
+ babel-users@alioth-lists.debian.net, "Kyle Rose" <krose@krose.org>,
+ bird-users@network.cz, wireguard@lists.zx2c4.com
+Subject: Re: [Babel-users] [RFC] Replace WireGuard AllowedIPs with IP route
+ attribute
+In-Reply-To: <918e1d5b-9f11-4f9c-bf9a-94cb0d41ce2b@app.fastmail.com>
+References: <20230819140218.5algu2nfmfostngh@House.clients.dxld.at>
+ <4b-64e11f80-13-5e880900@8744214>
+ <20230819212357.lkshcpslkgbeaq4e@House.clients.dxld.at>
+ <CAJU8_nVR_ohTetKzHoxFH=dYccQg9HdniqV+JKk4LoJGorx0ZA@mail.gmail.com>
+ <20230828160705.a5uxv5l2zknna7yj@House.clients.dxld.at>
+ <87v8czqd3w.wl-jch@irif.fr>
+ <20230828221312.fw5pvnt4x7p2c52k@House.clients.dxld.at>
+ <804a0c0a-78df-7f4c-1d0d-213e8bdb4120@nic.cz>
+ <CABr+u0YVm+rCDybpaJQdXW4GuRbOnRgELG33pWPAgOSrwc-YbA@mail.gmail.com>
+ <20231118021901.47kzvwn4pup4vkmg@House.clients.dxld.at>
+ <918e1d5b-9f11-4f9c-bf9a-94cb0d41ce2b@app.fastmail.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/29.1 Mule/6.0
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.7
+ (korolev.univ-paris7.fr [IPv6:2001:660:3301:8000::1:2]);
+ Sat, 18 Nov 2023 13:22:11 +0100 (CET)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.7
+ (potemkin.univ-paris7.fr [194.254.61.141]);
+ Sat, 18 Nov 2023 13:22:09 +0100 (CET)
+X-Miltered: at korolev with ID 6558AC71.000 by Joe's j-chkmail (http : //
+ j-chkmail dot ensmp dot fr)!
+X-Miltered: at potemkin with ID 6558AC71.000 by Joe's j-chkmail (http : //
+ j-chkmail dot ensmp dot fr)!
+X-j-chkmail-Enveloppe: 6558AC71.000 from
+ potemkin.univ-paris7.fr/potemkin.univ-paris7.fr/null/potemkin.univ-paris7.fr/<jch@irif.fr>
+X-j-chkmail-Enveloppe: 6558AC71.000 from
+ mailhub.math.univ-paris-diderot.fr/mailhub.math.univ-paris-diderot.fr/null/mailhub.math.univ-paris-diderot.fr/<jch@irif.fr>
+X-j-chkmail-Score: MSGID : 6558AC71.000 on korolev.univ-paris7.fr : j-chkmail
+ score : . : R=. U=. O=. B=0.000 -> S=0.000
+X-j-chkmail-Score: MSGID : 6558AC71.000 on potemkin.univ-paris7.fr : j-chkmail
+ score : . : R=. U=. O=. B=0.000 -> S=0.000
+X-j-chkmail-Status: Ham
+X-j-chkmail-Status: Ham
 X-Mailman-Approved-At: Sun, 19 Nov 2023 13:34:33 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -78,17 +108,28 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+> Is tying source address filtering to the routing table the right thing to do
+> here? It seems to me that it would cause issues similar to those we see more
+> generally with Unicast Reverse Path Filtering
 
-I haven't found a proper bug tracker to report this in =
-(wireguard-android github repo has issues off) so... I have a Wireguard =
-tile in my quick settings. Sometimes, when I tap it, instead of toggling =
-the VPN, the app's activity starts and the VPN state remains unchanged. =
-My device is a Pixel 4a running Android 13, the app version is =
-1.0.20231018, installed from Google Play. I'm not able to reproduce this =
-on purpose but it's always annoying when it happens. If logcat logs =
-would be helpful, I'll try to get some next time I run into this issue.
+Issues are caused by the kernel performing filtering that the routing
+protocol is not aware of: it causes the routing daemon's routing table to
+no longer match the effective forwarding table (the kernel's routing
+table).  That's the reason why uRPF breaks most routing protocols, that's
+the reason why we have trouble making Wireguard work with Babel, and also
+the reason behind https://github.com/jech/babeld/issues/111.
 
-Regards,
-Gregory
+Contrariwise, we can teach Babel to explicitly take into account the
+kernel features that we're interested in using.  Thus, Babel could be
+aware of the restrictions placed on a wireguard interface, and collaborate
+with Wireguard so that the routing table and the forwarding table remain
+congruent.  I haven't looked at the issue in detail, but I believe that
+would be an interesting (short-term) research project, one that I would be
+glad to collaborate with (but not necessarily lead, at least not right now).
 
+For the specific case of source address filtering, Babel already has an
+(implemented) extension to deal with source addresses, and I encourage you
+to consider whether it can be used to deal with the issue at hand.  Please
+see https://arxiv.org/pdf/1403.0445.pdf and RFC 9079.
+
+-- Juliusz
