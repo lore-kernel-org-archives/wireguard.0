@@ -4,29 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 574F4C072A2
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 20 Nov 2023 01:17:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DF72C072A2
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 20 Nov 2023 02:05:16 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e2c4e5e3;
-	Mon, 20 Nov 2023 01:17:09 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 78f689f1;
+	Mon, 20 Nov 2023 02:05:14 +0000 (UTC)
 Received: from janet.servers.dxld.at (mail.servers.dxld.at
  [2001:678:4d8:200::1a57])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3159dbc1
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ebbd5a90
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 20 Nov 2023 01:17:06 +0000 (UTC)
-Received: janet.servers.dxld.at; Mon, 20 Nov 2023 02:17:06 +0100
-Date: Mon, 20 Nov 2023 02:17:01 +0100
+ Mon, 20 Nov 2023 02:05:12 +0000 (UTC)
+Received: janet.servers.dxld.at; Mon, 20 Nov 2023 03:05:06 +0100
+Date: Mon, 20 Nov 2023 03:05:01 +0100
 From: Daniel =?utf-8?Q?Gr=C3=B6ber?= <dxld@darkboxed.org>
-To: Thomas Brierley <tomxor@gmail.com>
-Cc: wireguard@lists.zx2c4.com
-Subject: Re: [PATCH] wg-quick: linux: fix MTU calculation (use PMTUD)
-Message-ID: <20231120011701.asllvpzuffih34wz@House.clients.dxld.at>
-References: <20231029192210.120316-1-tomxor@gmail.com>
+To: Erin Shepherd <bird-users@erinshepherd.net>,
+ Juliusz Chroboczek <jch@irif.fr>
+Cc: Alexander Zubkov <green@qrator.net>,
+ babel-users@alioth-lists.debian.net, Kyle Rose <krose@krose.org>,
+ bird-users@network.cz, wireguard@lists.zx2c4.com
+Subject: Re: [Babel-users] [RFC] Replace WireGuard AllowedIPs with IP route
+ attribute
+Message-ID: <20231120020501.t6jw2k2u42y2ntqt@House.clients.dxld.at>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20231029192210.120316-1-tomxor@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <918e1d5b-9f11-4f9c-bf9a-94cb0d41ce2b@app.fastmail.com>
+ <871qcn8d5g.wl-jch@irif.fr>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -41,134 +46,76 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Thomas,
+Hi Erin, Juliusz,
 
-On Sun, Oct 29, 2023 at 07:22:10PM +0000, Thomas Brierley wrote:
-> Currently MTU calculation fails to successfully utilise the kernel's
-> built-in path MTU discovery mechanism (PMTUD). Fixing this required a
-> re-write of the set_mtu_up() function, which also addresses two related
-> MTU issues as a side effect...
-> 
-> 1. Trigger PMTUD Before Query
-> 
-> Currently the endpoint path MTU acquired from `ip route get` will almost
-> definitely be empty,
+On Sat, Nov 18, 2023 at 11:21:57AM +0100, Erin Shepherd wrote:
+> On Sat, 18 Nov 2023, at 03:19, Daniel Gr=C3=B6ber wrote:
+> > That would be a problem as I specifically want to tie the source address
+> > filtering to this too. I'll have a look at the internals (if and) when I
+> > get around to starting work on this.
+>=20
+> Is tying source address filtering to the routing table the right thing to
+> do here? It seems to me that it would cause issues similar to those we
+> see more generally with Unicast Reverse Path Filtering
 
-This is not entirely true, routes can specify the `mtu` route attribute
-explicitly and this will show up here. Something like:
+IMO not providing a way to do source address filtering at the routing level
+was the original sin :)
 
-    $ ip route add 2001:db8::1 dev eth0 via fe80::1 mtu 9000
-    $ ip route get 2001:db8::1                                          ~ 
-    2001:db8::1 from :: via fe80::1 dev eth0 src 2001:db8:2 metric 1 mtu 9000 pref medium
+There is certianly the multihoming challange to be overcome as traditional
+BCP38 style filtering doesn't cut it in the general case. I have some ideas
+on how to deal with this.
 
-So this is useful even when not taking PMTU into account. The only
-concerning problem I see here is that in the case where ip-route-get
-returns a cached PMTU so the MTU selection isn't fully deterministic.
+I've done some experiments and found that in Linux multi-nexthop routes
+actually match reverse path lookups (using nftables "rt") for _any_ of the
+source interfaces involved. I think this can be used to build RFC 3704
+style Feasible Path Reverse Path Forwarding when the routing daemon
+involved supports ECMP.
 
-> because this only queries the routing cache.  To
-> trigger PMTUD on the endpoint and fill this cache, it is necessary to
-> send an ICMP with the DF bit set.
+This experiment is what got me interested in having via-wgpeer in the
+routing table in the first place, once we have that we can apply the above
+idea not just at the interface level but at the wg peer level. Neat.
 
-I don't think this is useful. Path MTU may change, doing this only once
-when the interface comes up just makes wg-quick less predictable IMO.
+Can you think of a use-case where fpRPF isn't enough?
 
-> We now perform a ping beforehand with a total packet size equal to the
-> interface MTU, larger will not trigger PMTUD, and smaller can miss a
-> bottleneck. To calculate the ping payload, the device MTU and IP header
-> size must be determined first.
-> 
-> 2. Consider IPv6/4 Header Size
-> 
-> Currently an 80 byte header size is assumed i.e. IPv6=40 + WireGuard=40.
-> However this is not optimal in the case of IPv4. Since determining the
-> IP header size is required for PMTUD anyway, this is now optimised as a
-> side effect of endpoint MTU calculation.
+It's also noteworthy that once we have this support for via-wgpeer it'd be
+possible to apply ip-rule policy to the filtering decision. Perhaps that
+gives some additional power for more fun use-cases :)
 
-This is not a good idea. Consider what happens when a peer roams from an
-IPv4 to a IPv6 endpoint address. It's better to be conservative and assume
-IPv6 sized overhead, besides IPv4 is legacy anyway ;)
+On Sat, Nov 18, 2023 at 01:22:03PM +0100, Juliusz Chroboczek wrote:
+> Issues are caused by the kernel performing filtering that the routing
+> protocol is not aware of: it causes the routing daemon's routing table to
+> no longer match the effective forwarding table (the kernel's routing
+> table).  That's the reason why uRPF breaks most routing protocols, that's
+> the reason why we have trouble making Wireguard work with Babel, and also
+> the reason behind https://github.com/jech/babeld/issues/111.
 
-> 3. Use Smallest Endpoint MTU
-> 
-> Currently in the case of multiple endpoints the largest endpoint path
-> MTU is used. However WireGuard will dynamically switch between endpoints
-> when e.g. one fails, so the smallest MTU is now used to ensure all
-> endpoints will function correctly.
+Right on the money as always. This idea has been on my mind too.
 
-"function correctly". Do note that wireguard lets it's UDP packets be
-fragmented. So connectivty will still work even when the wg device MTU
-doesn't match the (current) PMTU. The only downsides to this mismatch being
-performance:
+> Contrariwise, we can teach Babel to explicitly take into account the
+> kernel features that we're interested in using.  Thus, Babel could be
+> aware of the restrictions placed on a wireguard interface, and collaborate
+> with Wireguard so that the routing table and the forwarding table remain
+> congruent.  I haven't looked at the issue in detail, but I believe that
+> would be an interesting (short-term) research project, one that I would be
+> glad to collaborate with (but not necessarily lead, at least not right no=
+w).
 
- - additional header overhead for fragments,
- - less than half max packets-per-second performance and
- - additional lateny for tunnel packets hit by IPv6 PMTU discovery
+Sounds interesting do you have a funding source in mind?
 
-   I was surprised to learn that this would happen periodically, every time
-   the PMTU cache expires. Seems inherent in the IPv6 design as there's no
-   way (AFAICT) for the kernel to validate the PMTU before the cache
-   expires (like is done for NDP for example).
+> For the specific case of source address filtering, Babel already has an
+> (implemented) extension to deal with source addresses, and I encourage you
+> to consider whether it can be used to deal with the issue at hand.  Please
+> see https://arxiv.org/pdf/1403.0445.pdf and RFC 9079.
 
-> Signed-off-by: Thomas Brierley <tomxor@gmail.com>
-> ---
->  src/wg-quick/linux.bash | 41 ++++++++++++++++++++++++++---------------
->  1 file changed, 26 insertions(+), 15 deletions(-)
-> 
-> diff --git a/src/wg-quick/linux.bash b/src/wg-quick/linux.bash
-> index 4193ce5..5aba2cb 100755
-> --- a/src/wg-quick/linux.bash
-> +++ b/src/wg-quick/linux.bash
-> @@ -123,22 +123,33 @@ add_addr() {
->  }
->  
->  set_mtu_up() {
-> -	local mtu=0 endpoint output
-> -	if [[ -n $MTU ]]; then
-> -		cmd ip link set mtu "$MTU" up dev "$INTERFACE"
-> -		return
-> -	fi
-> -	while read -r _ endpoint; do
-> -		[[ $endpoint =~ ^\[?([a-z0-9:.]+)\]?:[0-9]+$ ]] || continue
-> -		output="$(ip route get "${BASH_REMATCH[1]}" || true)"
-> -		[[ ( $output =~ mtu\ ([0-9]+) || ( $output =~ dev\ ([^ ]+) && $(ip link show dev "${BASH_REMATCH[1]}") =~ mtu\ ([0-9]+) ) ) && ${BASH_REMATCH[1]} -gt $mtu ]] && mtu="${BASH_REMATCH[1]}"
-> -	done < <(wg show "$INTERFACE" endpoints)
-> -	if [[ $mtu -eq 0 ]]; then
-> -		read -r output < <(ip route show default || true) || true
-> -		[[ ( $output =~ mtu\ ([0-9]+) || ( $output =~ dev\ ([^ ]+) && $(ip link show dev "${BASH_REMATCH[1]}") =~ mtu\ ([0-9]+) ) ) && ${BASH_REMATCH[1]} -gt $mtu ]] && mtu="${BASH_REMATCH[1]}"
-> +	local dev devmtu end endmtu iph=40 wgh=40 mtu
-> +	# Device MTU
-> +	if [[ -n $(ip route show default) ]]; then
-> +		[[ $(ip route show default) =~ dev\ ([^ ]+) ]]
-> +		dev=${BASH_REMATCH[1]}
-> +		[[ $(ip addr show $dev scope global) =~ inet6 ]] &&
-> +			iph=40 || iph=20
-> +		if [[ $(ip link show dev $dev) =~ mtu\ ([0-9]+) ]]; then
-> +			devmtu=${BASH_REMATCH[1]}
-> +			[[ $(( devmtu - iph - wgh )) -gt $mtu ]] &&
-> +				mtu=$(( devmtu - iph - wgh ))
-> +		fi
-> +		# Endpoint MTU
-> +		while read -r _ end; do
-> +			[[ $end =~ ^\[?([a-f0-9:.]+)\]?:[0-9]+$ ]]
-> +			end=${BASH_REMATCH[1]}
-> +			[[ $end =~ [:] ]] &&
-> +				iph=40 || iph=20
-> +			ping -w 1 -M do -s $(( devmtu - iph - 8 )) $end &> /dev/null || true
-> +			if [[ $(ip route get $end) =~ mtu\ ([0-9]+) ]]; then
-> +				endmtu=${BASH_REMATCH[1]}
-> +				[[ $(( endmtu - iph - wgh )) -lt $mtu ]] &&
-> +					mtu=$(( endmtu - iph - wgh ))
-> +			fi
-> +		done < <(wg show "$INTERFACE" endpoints)
->  	fi
-> -	[[ $mtu -gt 0 ]] || mtu=1500
-> -	cmd ip link set mtu $(( mtu - 80 )) up dev "$INTERFACE"
-> +	cmd ip link set mtu ${MTU:-${mtu:-1420}} up dev "$INTERFACE"
->  }
->  
->  resolvconf_iface_prefix() {
-> -- 
-> 2.30.2
-> 
+I don't think I mentioned this to you yet, but I have another one of my
+crazy ideas of doing something vaguely similar to BGP flowspec with
+babel. Restricted to IP source/destination address, so no L4 stuff. I just
+want to represent firewall policy using ipv6 subtrees and distribute it in
+realtime using babel :)
+
+Unfortunately this is currently stalled due to an apparent nft rt match
+kernel bug preventing me from representing multiple possible outcomes since
+I want to support dropping, accepting but also stateful firewalling of
+matching flows.
 
 --Daniel
