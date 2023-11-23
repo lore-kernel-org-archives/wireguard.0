@@ -4,37 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94673C61D92
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Nov 2023 07:42:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E154C61D85
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 23 Nov 2023 03:33:55 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2ce9278b;
-	Wed, 22 Nov 2023 07:39:49 +0000 (UTC)
-Received: from janet.servers.dxld.at (mail.servers.dxld.at
- [2001:678:4d8:200::1a57])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9750dcca
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7627f34c;
+	Thu, 23 Nov 2023 03:33:54 +0000 (UTC)
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com
+ [2a00:1450:4864:20::22e])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2a8e6420
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 22 Nov 2023 07:39:47 +0000 (UTC)
-Received: janet.servers.dxld.at; Wed, 22 Nov 2023 08:39:40 +0100
-Date: Wed, 22 Nov 2023 08:39:35 +0100
-From: Daniel =?utf-8?Q?Gr=C3=B6ber?= <dxld@darkboxed.org>
-To: Alexander Zubkov <green@qrator.net>
-Cc: Erin Shepherd <bird-users@erinshepherd.net>,
- Juliusz Chroboczek <jch@irif.fr>,
- babel-users@alioth-lists.debian.net, Kyle Rose <krose@krose.org>,
- BIRD Users <bird-users@network.cz>, wireguard@lists.zx2c4.com
-Subject: Re: [Babel-users] [RFC] Replace WireGuard AllowedIPs with IP route
- attribute
-Message-ID: <20231122073935.7bkugxmv4wknsqfb@House.clients.dxld.at>
-References: <918e1d5b-9f11-4f9c-bf9a-94cb0d41ce2b@app.fastmail.com>
- <871qcn8d5g.wl-jch@irif.fr>
- <20231120020501.t6jw2k2u42y2ntqt@House.clients.dxld.at>
- <CABr+u0b6vrZoYzQcMiCXX7W0XsQRNMzQfZnT5cK1MQoZ4NoqkA@mail.gmail.com>
+ Thu, 23 Nov 2023 03:33:51 +0000 (UTC)
+Received: by mail-lj1-x22e.google.com with SMTP id
+ 38308e7fff4ca-2c887d1fb8fso5788981fa.0
+ for <wireguard@lists.zx2c4.com>; Wed, 22 Nov 2023 19:33:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1700710431; x=1701315231; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=n2FqSJVvoMNsla7RHHhw4t0Q60HssDGH4yvmGUBFNb8=;
+ b=JmaZDQz8axNeD+gJoFHuhMdsyo0EB0V8VoYQWTiuoQqu9ZOvWEJyfK+wTYiiQkJTcP
+ twt1W6ZvDFPTUaVKKInHgR+KMxXStPKpc1kjodpsFGTo+XyaF9K4nOsj5vWKdmFqwrfU
+ Pr66oLddC9ZxLQRDTed9/ALz20c6zY70sOX7/0Jts5TFdvF7pJZz0d4TrGftgZEj2kLT
+ ++UonSBAMtCwOmvLrsOjQFhJOsArdTctJmFECXxBPlycFYr2fWKUhuRhEGieJ8ZnVpXm
+ QZb5qA7lwlv8QMfQV4mMxv3jzzerwvtwsuZGTbiFa8FlVJEzloAwoxwc/I920RnqmVXr
+ BvjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1700710431; x=1701315231;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=n2FqSJVvoMNsla7RHHhw4t0Q60HssDGH4yvmGUBFNb8=;
+ b=es2Sgd0FoqRWkgufugz9WWyWQR5WI/OGHhDh3NTSrQWXWHoN8Do+SMgIUzFwbu7RNw
+ zLmf73CwQPSX9lRfbANuSKKs+wvZVmw2fSwghazaL0hEhqlVbsVB6DMS0k7geltzq6Sq
+ BAoFNfzkggwnPJc6tRnNKmk4MChYzx2hiky9/RonqOr+9w7B/oAc2/FwkHDw1oJtSdC4
+ H6tug3kPbqjlROrcr6KhxaTBeQAgdoMl1Mr2gcMgdBKP6D7OvE1F9L1C70lJnn5Se18p
+ dH93+ZQtbLAG0A0uoFP7++I/N/UKl6FmmKzGKLHGWiUjojxYNHH+oqamc2JMCT1hQu6K
+ rM0Q==
+X-Gm-Message-State: AOJu0Yy66D5eXGGyYCGA2s/sVNmJw5gGMouBXVpDmOX95zMKcegYWd5M
+ 2RIfoOmPrrf5xnqebnYo7KIup50fdv0JP6arOTwBFF6lup0=
+X-Google-Smtp-Source: AGHT+IH9E4O3GqKCjZiCVso3T8M/TX5x6THHNzwDhbWZJWrlDAhBJwX8QM0H8F/huud0+XISYVwjaMqls+uVKR35fy8=
+X-Received: by 2002:a2e:b990:0:b0:2c7:fa5:6db9 with SMTP id
+ p16-20020a2eb990000000b002c70fa56db9mr2722284ljp.48.1700710430874; Wed, 22
+ Nov 2023 19:33:50 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="cnob7nwxinq5tsx3"
-Content-Disposition: inline
-In-Reply-To: <CABr+u0b6vrZoYzQcMiCXX7W0XsQRNMzQfZnT5cK1MQoZ4NoqkA@mail.gmail.com>
+References: <20231029192210.120316-1-tomxor@gmail.com>
+ <20231120011701.asllvpzuffih34wz@House.clients.dxld.at>
+In-Reply-To: <20231120011701.asllvpzuffih34wz@House.clients.dxld.at>
+From: Thomas Brierley <tomxor@gmail.com>
+Date: Thu, 23 Nov 2023 03:33:39 +0000
+Message-ID: <CAHTdPdd0o-w27DuaRk9C4chP=nCNEE=J3oJDUaB0+zsv91yGNQ@mail.gmail.com>
+Subject: Re: [PATCH] wg-quick: linux: fix MTU calculation (use PMTUD)
+To: =?UTF-8?Q?Daniel_Gr=C3=B6ber?= <dxld@darkboxed.org>
+Cc: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -49,107 +74,131 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+Hi Daniel
 
---cnob7nwxinq5tsx3
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks for having a look at this.
 
-Hi Alexander,
+On Mon, 20 Nov 2023 at 01:17, Daniel Gr=C3=B6ber <dxld@darkboxed.org> wrote=
+:
 
-On Wed, Nov 22, 2023 at 12:17:49AM +0100, Alexander Zubkov wrote:
-> > Can you think of a use-case where fpRPF isn't enough?
->=20
-> Yes. IMHO, the problem with RPF is that routing table doesn't reflect the
-> network topology, but only a subset of it.
+> > because this only queries the routing cache.  To
+> > trigger PMTUD on the endpoint and fill this cache, it is necessary to
+> > send an ICMP with the DF bit set.
+>
+> I don't think this is useful. Path MTU may change, doing this only once
+> when the interface comes up just makes wg-quick less predictable IMO.
 
-Right that is the fundamental problem, so my solution to that is: routing
-should "just represent the full network topology" :)  As the routing
-protocol sees it anyway, since the whole point of RFP is to only allow
-paths that the routing system chooses.
+Yes, I understand PMTU may change, usually when changing internet
+connection. There is also the issue of bringing up an interface without
+a connection, such as when using the wg-quick startup service.
+Accommodating dynamic PMTU is probably out of scope of the wg-quick
+script, but is something I would like to look into separately.
 
-Do note that while I implement the topology information using ECMP routes
-there's no reason you actually have to use ECMP. You could still have
-regular routes in your (main) routing table and use a separate table with
-ECMP routes for RPF and this is very much something I want us to support.
+I still think it would be beneficial to set the MTU optimally if only
+upon bringing an interface up, because PMTU is usually stable for a
+particular gateway and having this built in makes it far easier for
+users to automatically obtain the appropriate MTU. I think it also more
+accurately reflects the man page which suggests automatic discovery.
 
-> I mean in topologies where multiple pathes are possible, you can choose
-> to use or even learn only a subset of those pathes.
+> > 2. Consider IPv6/4 Header Size
+> >
+> > Currently an 80 byte header size is assumed i.e. IPv6=3D40 + WireGuard=
+=3D40.
+> > However this is not optimal in the case of IPv4. Since determining the
+> > IP header size is required for PMTUD anyway, this is now optimised as a
+> > side effect of endpoint MTU calculation.
+>
+> This is not a good idea. Consider what happens when a peer roams from an
+> IPv4 to a IPv6 endpoint address. It's better to be conservative and assum=
+e
+> IPv6 sized overhead, besides IPv4 is legacy anyway ;)
 
-If I undestand correctly you're talking about (local) routing daemon policy
-here. Yes this is something you can do and my current approach of (abusing)
-ECMP only works when your routing policy satisfies some symmetry criteria.
+MTU calculation is performed independently for each endpoint, with
+separate header size calculation accommodating both IPv4 and IPv6
+addresses along side each other. The smallest MTU of all endpoints is
+used, so switching from an IPv4 to an IPv6 endpoint should not result in
+an MTU which is too large due to IP header size differences.
 
-However as Juliusz pointed out integrating this idea into the routing
-protocol proper could allow using arbitrary policy without ever breaking
-RPF, but figuring out the details is (exciting) future work.
+In my case the current behaviour is not conservative enough, but due to
+absence of PMTUD rather than assumed IP header sizes.
 
-> In that sense might be yes, the original sin is that the routing table
-> doesn't reflect all the topology, not only the pathes we choose for egres=
-s.
-> Not sure though if it is a sin, in that case routing table would be too
-> overcomplicated.
+> > 3. Use Smallest Endpoint MTU
+> >
+> > Currently in the case of multiple endpoints the largest endpoint path
+> > MTU is used. However WireGuard will dynamically switch between endpoint=
+s
+> > when e.g. one fails, so the smallest MTU is now used to ensure all
+> > endpoints will function correctly.
+>
+> "function correctly". Do note that WireGuard lets it's UDP packets be
+> fragmented. So connectivity will still work even when the wg device MTU
+> doesn't match the (current) PMTU. The only downsides to this mismatch bei=
+ng
+> performance:
+>
+>  - additional header overhead for fragments,
+>  - less than half max packets-per-second performance and
+>  - additional lateny for tunnel packets hit by IPv6 PMTU discovery
+>
+>    I was surprised to learn that this would happen periodically, every ti=
+me
+>    the PMTU cache expires. Seems inherent in the IPv6 design as there's n=
+o
+>    way (AFAICT) for the kernel to validate the PMTU before the cache
+>    expires (like is done for NDP for example).
 
-Right routing table (modification) performance and clutter is certainly a
-reason to forgoe this approach but I find that for the kind of (small)
-networks I want to run and that many people might run using wireguard this
-is perfectly fine.
+So, the reason I ended up tinkering with WireGuard MTU is due to real
+world reliability issues. Although the risk in setting it optimally
+based on PMTU remains unclear to me, marginal performance gains are not
+what brought me here. Networking is not my area of expertise, so the
+best I can do is lay out my experience and see if you think it adds any
+weight in favour of this change in behaviour, because I haven't done a
+full root cause analysis:
 
-> If I understand correctly, such fpRPF approach works only if you both lea=
-rn
-> all possible pathes and use all of them in a multi-nexthop route. But for
-> example in the Internet with its advanced BGP announcement policies it is
-> not true at all.
+I found that browsing the web over WireGuard with an MTU set larger than
+the PMTU resulted in randomly stalled HTTP requests. This is noticeable
+even with a single stalled HTTP request due to the HTTP 1.1 head of line
+blocking issue. I tested this manually with individual HTTP requests
+with a large enough payload, verifying that it only occurs over
+WireGuard connections.
 
-Right to deply fpRPF on a large scale you really need some kind of support
-=66rom the routing protocol. AFAIK there's nothing like that for BGP yet?
+With naked HTTP/TCP the network seems happy, I assume it is fragmenting
+packets; but over WireGuard, somehow, some packets just seem to get
+dropped. Maybe UDP is getting treated differently, or maybe what's
+actually happening is the network is blackholing in both cases but PMTUD
+is figuring this out in the case of TCP (RFC 2923), and maybe that stops
+working when encapsulated in UDP?...  But this is pure speculation, I'm
+out of my depth here, and haven't dug any deeper.
 
-I don't think it's completely inapplicable either though, might still work
-for iBGP with appropriately designed routing policy. My interest lies
-mostly with doing this using babel though.
+This behaviour is probably network operator dependent, or specific to
+LTE networks, which I use for permanent internet access, and which
+commonly use a lower than average MTU. For example my current ISP uses
+1380, and the current wg-quick behaviour is to set the MTU to the
+default route interface MTU less 80 bytes (1420 for regular interfaces),
+which results in the above behaviour.
 
-> So from my point of view it is good to split the topology definition
-> (ingress decapsulation) and the chosen pathes (egress routing). Because it
-> is related, but still different processes. So the system can be more
-> flexible. Although we need to repeat common things and keep ingress and
-> egress consistent/synced.
+I've used all four of the major mobile network operators in my country
+and experienced this on two of them (separate physical networks, not
+virtual operators). The other two used an MTU of 1500 anyway.
 
-To me flexibility is only desirable insofar as it doesn't conflict with
-system security. Source address authenticity is an important property I
-wouldn't want to give up here. If it's easier to ignore source address
-filtering than it is to implement it nobody is going to do it (cf. the
-internet) and I think that's the crux of the problem with "encap".
+Just to prove I'm not entirely on my own, this issue also appears to be
+known to WireGuard VPN providers, .e.g from Mullvad's FAQ:
 
-Wireguard gifted us this amazing state of source filtering being the easy
-default and I want to keep it that way.
+> The default MTU (maximum transmission unit) for WireGuard in the Mullvad
+> app is 1380. You can set it to 1280 if the WireGuard connection stops
+> working. This may be necessary in some mobile networks.
 
-> my point is that RPF (with its variations too) has its bounds and cannot
-> be a universal solution, there is no silver bullet here.
+I suppose it could be argued this is not a WireGuard concern, mobile
+networks are behaving weirdly. Also IME it's not entirely unreliable
+above the optimal MTU, it's just *less* reliable.
 
-No, ofc. nothing we do can possibly "fix everything for everyone" but
-that's no reason not to try a new approach for a particular problem in a
-particular use-case :)
+I had not anticipated such a patch would have any down sides, I saw this
+as a general deficiency - Although I appreciate, as you pointed out, it
+is not a 100% complete solution.
 
---Daniel
+I'm interested more in what your concerns are and what you think of the
+above, but will move along if you still think it's not suitable.
 
---cnob7nwxinq5tsx3
-Content-Type: application/pgp-signature; name="signature.asc"
+Cheers
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEV6G/FbT2+ZuJ7bKf05SBrh55rPcFAmVdsDQACgkQ05SBrh55
-rPcrghAAigwl3TC7Ob/LxV9p9a/nLcZilRhEwyQVugak7nksUHU9RMIC2ddMfagm
-2te1fm05ZwvxNc+XXpeNTte5gq03fkRQKq8Lkv9UNGoXq/AB7YgUB8Gr5wFjZZYZ
-BWtd4hLi7+aQpQcSofbrw96VylG9rhJf8Da5x//3WgCtwOpXw+T+T760yAko0HiN
-XVUy5CL7ccVOteMY5OfrCwgQ/HVajMhEWnc6th93+w71ikMpnIzarB68U6YTeqaR
-Dnrtfr94eMPdn3CRgttwS96G6igkeavo0MDivg0K8Iz8Hp4Dxo1v2VE+59vA6oQn
-N+oiwujROwVzZ+yOfSfXmC5YqkEFF+nr1607ajtbRZD1m/ZCqO+fjK0vv58JAhq5
-nNBzBeCDG8aF9H36brrv3/522FcKZs9rLVKVpOOAqGoVf+nTLFFog/45YZgb6F4h
-HAQfkMPkSQ6NFj7/F++sg+2jcZQRob37jKnV8d5aSFseyOZUdPLcG7NqGDbyVD7q
-4K85yyNNbw2M4aVgWRUgWVDhcheYKetIb9GYJjIHJG0JiDztmRL0MNYzODbBE+68
-h8vJ7KQUcInRWvr6dfAAivtTsedd9NBQ93lkRdwrPG1VFEaLTkUSvwmtugen8Md5
-J3oVbCKH7SGdZr68Tz8d27uCSxRZjnQuG2fSDhWg5bDlOPSw7kA=
-=95wQ
------END PGP SIGNATURE-----
-
---cnob7nwxinq5tsx3--
+Tom
