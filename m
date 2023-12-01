@@ -4,74 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE21EC46CD8
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 Dec 2023 05:25:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C00FBC4706C
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 Dec 2023 05:25:54 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0b8b5526;
-	Wed, 20 Dec 2023 04:59:02 +0000 (UTC)
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
- [66.111.4.28])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 45b4893e
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d027881f;
+	Wed, 20 Dec 2023 04:59:03 +0000 (UTC)
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com
+ [2607:f8b0:4864:20::b2e])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 70cf34d9
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 23 Nov 2023 14:32:16 +0000 (UTC)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
- by mailout.nyi.internal (Postfix) with ESMTP id 3A1135C00C4
- for <wireguard@lists.zx2c4.com>; Thu, 23 Nov 2023 09:32:15 -0500 (EST)
-Received: from imap42 ([10.202.2.92])
- by compute2.internal (MEProxy); Thu, 23 Nov 2023 09:32:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unexpl0.red; h=
- cc:content-type:content-type:date:date:from:from:in-reply-to
- :in-reply-to:message-id:mime-version:references:reply-to:sender
- :subject:subject:to:to; s=fm1; t=1700749935; x=1700836335; bh=SA
- ik552WB0e9mVo86fen3jXNVqao1YdeH6OqGlN8lRk=; b=QWfxctTh5GfOQKVWhg
- nK7S0jGwKEesGeBq39c7wA4BoVbyxU1v/iAYFNl7MCcVi5ZoUZq7fX12QrrS5SdB
- Fl1G4p1xJWGE2bt3n0q/h2UcbOoC1mmyplUr6QN84uv6U1IAXW+uv3n11KDgKYy3
- ILHbuoTSh69mDVyk7tqM7tQUkOHbN9xFxtzhDHR0qZtv64xGdb1uFUGbcaHuqtfw
- DieqwrPW+6C8MxN6tcidCptyoL9LKpl9BaBdIHF1VYQxYtVOPKIuzSRwHSE1sGIG
- dCua3LXJGFBwsLvIkWBhTMzI0V2R0V4ITFObwNH6Nn2ZOUNL+u2zhju/QStdOczJ
- 6Mrg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:sender:subject
- :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm1; t=1700749935; x=1700836335; bh=SAik552WB0e9m
- Vo86fen3jXNVqao1YdeH6OqGlN8lRk=; b=mMVtPEZzRQDno/7sGJ0+x5WwVv1mI
- mfcDDFjSjxafLb4wVCvqoUwAlg48LYvVsyFrH+qi631NxdgeEem1s173kZLjO+ot
- ZRAVO/QCyAEs210Zj7lCrBjn8fW90Zf35zPDNxq8Q7b+SwB11lL8+zRQfqM3aGtD
- nxeTt/iDDJajQc0fs9DQrgfV4k91pnLugr290/JDrjoE2vESQjjoSoCAU+qFEiH+
- KzLKCWbL1kRyQ2mGxst0rfCsTTFv8ZpSx7XGVXCwErhqhNcwoEySpOxF5pl2oh7X
- RHgH+kbiLu+Wp3O7hhRPO/BNAkwRSKhdp4A1RM8SExYJ27YYO1/uqtokw==
-X-ME-Sender: <xms:bmJfZZRWwuXGh1WB3vjiNh_04zpu1F56PTiyUL2GnPPWqIeM5LJKag>
- <xme:bmJfZSzx7d3uBZp7hU78kWCg7eICyn_5HkMt-p-1AJHw8RUbddmzbSDBHKLwsr2Ar
- Rozh2_NM5_9xZ3ACpM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudehfedgieegucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucgoufhushhpvggtthffohhmrghinhculdegledmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepiicuoegu
- iihmsehunhgvgihplhdtrdhrvgguqeenucggtffrrghtthgvrhhnpeekheefkedvudfgle
- eiffetvdduteffkeekueegkedvgeejjeeuffdugedttddtgeenucffohhmrghinhepghho
- ohhglhgvrdgtohhmpdhgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtne
- curfgrrhgrmhepmhgrihhlfhhrohhmpeguiihmsehunhgvgihplhdtrdhrvggu
-X-ME-Proxy: <xmx:b2JfZe2P7biq278k1aNXsMVukHoAL13wmWOPOZjHjdLXMh8INq76Iw>
- <xmx:b2JfZRCi1KVGF0MlTVpAUeyP8T0D0DB2a8ztvABopP7giWoNNtresw>
- <xmx:b2JfZSglJyiVDFMnZV6lRkOQQaJhLUkkqeqP7kUSoWf5m4DiXLPhYA>
- <xmx:b2JfZdt_h005skSCfZhbq4VANw5dbp7uTlwAYY2cWHKFoRF5dTok_w>
-Feedback-ID: i0fcc46dd:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id D93F6BC007C; Thu, 23 Nov 2023 09:32:14 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-1234-gac66594aae-fm-20231122.001-gac66594a
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2023 20:39:16 +0000 (UTC)
+Received: by mail-yb1-xb2e.google.com with SMTP id
+ 3f1490d57ef6-db5e5647c24so739711276.1
+ for <wireguard@lists.zx2c4.com>; Fri, 01 Dec 2023 12:39:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1701463155; x=1702067955; darn=lists.zx2c4.com;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=CO2vFDqc5YvSB7HGz083DWkF4hiCN0xbxd5JpiBhNJk=;
+ b=BJAdbKYHA44/EbJs7cxBm3WokIIa2iv/glGy9ovelKhfA0WXIPaT67OsBJ04QxvZCQ
+ 3JQ/CvL0uO5FrYF3XwXh/pCGf60p7rx3lFmy/qTgIrXGQh+ZksNBp+nDPOP1cthlxqNH
+ FhoS4+b0htKUYpXEgfopRRuuh3iJ3gXf1GgS2WaWE6MxCnbuEynq/K7kEy0yV/WDVtCk
+ mVL59ZRutBtJDxmuQ7XWzA8Kw85g3YqTcOoDE++Zl6+dw/0hE16m5Qep6J3yMbBWOxcf
+ OWBLCdctUBiefVaf7ggbxAsia6u84IEfm1mN2cnylpSFP/lhBmpXp1PfHl+AyyUw0SXv
+ bHcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1701463155; x=1702067955;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=CO2vFDqc5YvSB7HGz083DWkF4hiCN0xbxd5JpiBhNJk=;
+ b=RkYAyt9Ve4HgG1outk3XlcmPjk6UeTxxsSYSAGqOSQ7dRedn08Ckx88ARaU0OSNhnz
+ iV6zifjr/6NO0a1JuxOHTnGqfbUuBc6ogYn68Tpa/SHDjSR5sH+fe769REsJxNC/BdxV
+ quoiA6sdhDPIURoSMc/kUXkpVf96E10cAx14DT3G/6PeKv8OPieGQ+r57vOAY7+++UnK
+ ygKrLGHSrnONF0GGKTZV+QDKSDxDdQ1+mlJ1lo29aqbzWvBo8dcj4noVsbHvFterG6H/
+ NvDuz1csOeLwB2Gi8aHdJjAsqJst8EXMGBFSnRK1Cx9dXAL0mTzUqww6H6t3hCAcjwwb
+ JDoQ==
+X-Gm-Message-State: AOJu0YzpBH4H08zEc2uvzlrxFwi9//iMflvt6ZnIxIwc8RQl+ee4c8i6
+ DWmwEhCmJkaksGQsmNU7hnBTj7lNsTqK/70thL9AnAE3eLLPBJ8X
+X-Google-Smtp-Source: AGHT+IEbsuuna5oIcIMm5iaaqaOp+3US91AHIOFcWksNShHcSbXMR/8n1uOQEQjKVRmenpcqZ7B2jLbAU7WtqgO5B7U=
+X-Received: by 2002:a25:bd8f:0:b0:db7:daec:ec65 with SMTP id
+ f15-20020a25bd8f000000b00db7daecec65mr86587ybh.44.1701463154813; Fri, 01 Dec
+ 2023 12:39:14 -0800 (PST)
 MIME-Version: 1.0
-Message-Id: <44acf7f1-3a68-4e82-bb2e-0f296490b7ce@app.fastmail.com>
-In-Reply-To: <CAEqCujJ7bck6w0UiKdwXFfH6R+RWgALZg5JUxEuQupUgPRHQPg@mail.gmail.com>
-References: <CAEqCujJ7bck6w0UiKdwXFfH6R+RWgALZg5JUxEuQupUgPRHQPg@mail.gmail.com>
-Date: Thu, 23 Nov 2023 14:31:53 +0000
-From: z <dzm@unexpl0.red>
+From: Colin Williams <colin.williams.orcas@gmail.com>
+Date: Fri, 1 Dec 2023 12:39:04 -0800
+Message-ID: <CAN8Z3GvdnCEzdMZ6W-jN0XLypGPJYNa+H0qRjXNk3AK-yuxMVw@mail.gmail.com>
+Subject: No mention of ip tables to setup VPN
 To: wireguard@lists.zx2c4.com
-Subject: Re: UAPI socket for the macOS sandboxed Wireguard app
-Content-Type: text/plain
+Content-Type: text/plain; charset="UTF-8"
 X-Mailman-Approved-At: Wed, 20 Dec 2023 04:58:44 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -87,53 +67,159 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Would like to see this reviewed, as it appears to accomplish #4 on the MacOS TODO list[0].
+I setup wireguard following the site. I did not create configuration
+files. I just followed the example on
+https://www.wireguard.com/quickstart/
 
-I know Jason hasn't gotten a chance to review yet, as he says in the wgctrl-go PR.  If we need extra review bandwidth, I can do some testing if desired.
+I can ping between the hosts through wg via their interface IPs
+10.0.0.1 / 10.0.0.2
 
--dzm
+One host I wish to use it as a VPN. Call it Host A
 
-[0]: https://docs.google.com/document/d/1BnzImOF8CkungFnuRlWhnEpY2OmEHSckat62aZ6LYGY/edit
+I set `net.ipv4.ip_forward = 1 on host A and checked it was set properly.
 
-On Sat, Oct 7, 2023, at 10:46 PM, Jan Noha wrote:
-> Hello,
->
-> I want to submit a series of patches concerning Wireguard on macOS.
->
-> If it's ok, I will just link to a github PR which links to three other
-> PRs (in wireguard-apple, wireguard-go and wireguard-tools).
->
-> https://github.com/WireGuard/wgctrl-go/pull/143
->
-> Let me explain what this is about. I've been trying to automate
-> Wireguard tunnel configuration for some P2P use cases and I wanted to
-> use wgctrl-go library for the task.
->
-> This already works fine on Linux and Windows. On macOS, it's a bit
-> more complicated. If you only use CLI for creating tun interfaces
-> (using wireguard from homebrew for example), it also works.
-> Specifically, wgctrl-go communicates with the wireguard user-space
-> daemon via a unix domain socket located in /var/run/wireguard/ (this
-> is referred to as UAPI in the code).
->
-> However, if you want to use Wireguard from the App Store - which has
-> some other advantages besides the UI (such as on-demand VPN and
-> generally nice OS integration) - it comes as a sandboxed Network
-> Extension. Currently, it does not expose any UAPI socket, so wgctrl-go
-> cannot be used to configure it.
->
-> The socket can be opened except it has to be inside the sandbox home
-> directory. There is no problem connecting to it from "outside" using
-> cli tools which are not sandboxed themselves.
->
-> That's basically what I did here. Changes were needed in
-> wireguard-apple and wireguard-go to open the socket in a
-> macOS-specific location, then I updated wgctrl-go and wireguard-tools
-> (so that wg commands work too) to look for UAPI sockets in both the
-> sandbox location and the default one.
->
-> If you're interested in discussing this topic further, I'll look
-> forward to any feedback.
->
-> Thank you,
-> Jan Noha
+
+Then to setup the routing I follow the section `````Overriding The
+Default Route```` in https://www.wireguard.com/netns/ on Host B
+
+
+After adding routes by above, I can still ping each host via their ip
+and am still connected to the other host via SSH . But I lose my
+internet connection on Host B otherwise. I copied my wg command
+outputs and config details below.
+
+Does anyone know what I'm doing wrong?
+
+
+In some examples I see folks using iptables like:
+
+
+setting `iptables -t nat -A POSTROUTING -j MASQUERADE` on Host A .
+
+
+If it's likely necessary, why don't I see a mention of this on the
+documentation on wireguard.com ?
+
+
+
+
+Some errors I see:
+
+PING google.com (142.250.69.206) 56(84) bytes of data.
+
+From XXX (10.0.0.2) icmp_seq=1 Destination Host Unreachable
+
+ping: sendmsg: Required key not available
+
+From XXX (10.0.0.2) icmp_seq=2 Destination Host Unreachable
+
+ping: sendmsg: Required key not available
+
+From XXX (10.0.0.2) icmp_seq=3 Destination Host Unreachable
+
+ping: sendmsg: Required key not available
+
+../../../lib/isc/netmgr/uverr2result.c:98:isc___nm_uverr2result():
+unable to convert libuv error code in udp_send_cb
+(../../../lib/isc/netmgr/udp.c:802) to isc_result: -126: Unknown
+system error -126
+
+;; communications error to 1.1.1.1#53: timed out
+
+../../../lib/isc/netmgr/uverr2result.c:98:isc___nm_uverr2result():
+unable to convert libuv error code in udp_send_cb
+(../../../lib/isc/netmgr/udp.c:802) to isc_result: -126: Unknown
+system error -126
+
+^C[colin_williams@JT9M367J07 wg]$ ping 10.0.0.1
+
+PING 10.0.0.1 (10.0.0.1) 56(84) bytes of data.
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Host A wg command output
+
+interface: wg0
+
+public key: 5ZXlotq43t3g3qz97ZkXeSu75+E6UchzO5hj4=
+
+private key: (hidden)
+
+listening port: XXXXX
+
+
+peer: 5mjkoeRw2e0IbPa2rontt5AvO8oJgCVBlJgqVil+1T4=
+
+endpoint: 203.45.131.16:33333
+
+allowed ips: 10.0.0.2/32
+
+latest handshake: 8 minutes, 4 seconds ago
+
+transfer: 27.48 KiB received, 33.24 KiB sent
+
+Host B wg command output
+
+interface: wg0
+
+public key: 5mjko3qg3g3qg35AvO8oJgCVBlJgqVil+1T4=
+
+private key: (hidden)
+
+listening port: 35052
+
+
+peer: 5ZXlosrq6L+ZT+O5Bg1mz97ZkXeSu75+E6UchzO5hj4=
+
+endpoint: 203.4.11.174:38101
+
+allowed ips: 10.0.0.1/32
+
+latest handshake: 9 minutes, 9 seconds ago
+
+transfer: 26.73 KiB received, 30.51 KiB sent
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+Routing table Host B before additions. Everything works from Host A &&
+B at this point
+
+default via 192.168.10.1 dev wlp1s0f0 proto dhcp src 192.168.10.177 metric 600
+
+10.0.0.0/24 dev wg0 proto kernel scope link src 10.0.0.2
+
+192.168.10.0/24 dev wlp1s0f0 proto kernel scope link src
+192.168.10.177 metric 600
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Adding `````Overriding The Default Route```` from doc in
+https://www.wireguard.com/netns/ on Host B
+
+route.
+
+After adding the route to HostB, I can no longer access most internet
+resources from HostB. However, host B can still ping Host A and vice
+versa via IP address.
+
+The errors shown above for Host B are after I set the routing table.
+Please excuse if the route table looks funny. I think I am having
+trouble pasting from my laptop.
+
+
+Kernel IP routing table
+
+Destination Gateway Genmask Flags Metric Ref Use Iface
+
+0.0.0.00.0.0.0128.0.0.0U 0 0 0 wg0
+
+default _gateway 0.0.0.0UG 600 0 0 wlp1
+
+10.0.0.00.0.0.0255.255.255.0 U 0 0 0 wg0
+
+128.0.0.00.0.0.0128.0.0.0U 0 0 0 wg0
+
+192.168.10.00.0.0.0255.255.255.0 U 600 0 0 wlp1
+
+203.45.131.16:33333 _gateway 255.255.255.255 UGH 0 0 0 wlp1
