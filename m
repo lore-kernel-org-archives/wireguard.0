@@ -4,46 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F2BFC4167B
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  2 Dec 2023 14:45:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF434C4167B
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 Dec 2023 18:11:00 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d4f13fd2;
-	Sat, 2 Dec 2023 14:45:26 +0000 (UTC)
-Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com
- [209.85.160.70])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6fec2ffb
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8df89acf;
+	Mon, 4 Dec 2023 18:07:13 +0000 (UTC)
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com
+ [2607:f8b0:4864:20::430])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 068a753c
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sat, 2 Dec 2023 14:45:24 +0000 (UTC)
-Received: by mail-oa1-f70.google.com with SMTP id
- 586e51a60fabf-1fb2132b0edso142181fac.2
- for <wireguard@lists.zx2c4.com>; Sat, 02 Dec 2023 06:45:23 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Mon, 4 Dec 2023 18:07:11 +0000 (UTC)
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-6ce416a74d5so907361b3a.2
+ for <wireguard@lists.zx2c4.com>; Mon, 04 Dec 2023 10:07:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1701713230; x=1702318030; darn=lists.zx2c4.com;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+ :reply-to; bh=vnKGL9rVmaXJ0k7UQTGGb8qgGBw3yaFYXulmlj0ClVk=;
+ b=bCixj4xeznuIN0t+tS1vfQFivkZpc+X1W09ZpQpqdUby7UqUF+ECEpsIZ9tZ5+1RTD
+ OKFvw8DPoyJjLYHJuvpA3d2hvaP//NFS9TgT7UkSGWCAX+Y1g8I7hLFj/37f+7AC+f90
+ UJjdSLbS7Wk8zo8QjqoqB37jhLBXeSNQxS//8Ih53Zzj3pB5Yv6QIP0cOiys2S256qKT
+ 5mf44Ho5/u5/xFzaSTg5+mIEZQeTGwZYGny07JTnY/gRgRzPNrsp4iJeDUT5PXSDC6+6
+ CO7kBJMZ0AfA6KUkD9LzhWLovXMS8Ur5tyOKtcj22sUWWihaPuabSBSOQIAPxMrpq+OS
+ rqAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1701528322; x=1702133122;
- h=to:from:subject:message-id:date:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=uXji0FayEZ6ZtxjggJXewCoQp56yCFYLUG6+WjvjOH0=;
- b=RLmBWE4P8bt/3fFvtacDmOk079UuCTcHyc/59/1FVCFUWKFVwwMEoAaQ0Nvc+7cVFd
- j5TtJtF+icViBiYIpmc4jWjOOHYuxJCED7pshmRn2dSb2FJpErGX+TLq3FXqHtMkZxeV
- ztZ9IbBA5xXdsV5yWAw7yxX3OlOBCyRbUPRV3rixSvXjAbO4iESuklGy55J/Q48G2Hof
- w+QAkh59tGp0nJoBfb7jAT9lTAjWfD5gEuz4RIDYu3bX7B0eaYdK/vaQo5MoZOcohn1U
- KErVwnczsB9UHqjDI+ASqlZUeqY6wRyonTcK5THMwDHFfcefviNW03HVtXlQr+oljdfs
- pbkg==
-X-Gm-Message-State: AOJu0Yy5VVn7u4baNr22SyqT3AitmLiq5DJTdsRAVn+HA4EepoFrWKN5
- ejub4IO9HtFvgcAXF/JRaXbt1GhPLZrZX2TTdwwq9fU8TPXO
-X-Google-Smtp-Source: AGHT+IG9uEwV+geit3YX8pywaHxADr5o9qfC/4ittVHFsfKR4mufuPIca7zzAfGnfqGuSmhQx2FkG6zobjB/PRwPmOOEE29VI//U
+ d=1e100.net; s=20230601; t=1701713230; x=1702318030;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vnKGL9rVmaXJ0k7UQTGGb8qgGBw3yaFYXulmlj0ClVk=;
+ b=SHf3oaqB8wga/OHiPOYSCus8Y73akzFfiVASa70YH/uIXe3nPLMk44T0HWi0FLbowi
+ SbZIqeASSldHDgjxPNpSiY5ByR2oeuL9RnE0ZAT+1w2p0jWu7B9IkVhsX6jCeiPe0A7c
+ MNiadIbBvdWjCMkH1/7wobXgCyFsLtjeerHWg3X4LYKlxwh0zGHPuskxRkFFRJf/YvZq
+ lc/mGL4OL3dSwE6sifUfKtPoecbIeTkCJmjix5N4JRGcM1oLn97r3K7eTWoGOs7lDfCv
+ 7f2EGSJe0CvsUpfrXcTP9JdVWUKitut62j4oDmxNlP2OQ85zZ8QJ0lA00y3pFiI96APQ
+ 9etg==
+X-Gm-Message-State: AOJu0YyZvC6VnDeIOC+7sVR+L//pvwVzXURmKEtKljbBWW4tFxLWsf6u
+ JN2VGHOF2sFvjKqEmCGjhg4=
+X-Google-Smtp-Source: AGHT+IGDIGeeBa7UWPj4E4w2SIGHBjZgGz8oxGqwAWzNb+KD7mpnEvIno4bt3NIHORxil3wMtNwC4w==
+X-Received: by 2002:a05:6a20:1448:b0:18c:374c:6e64 with SMTP id
+ a8-20020a056a20144800b0018c374c6e64mr27716780pzi.36.1701713229690; 
+ Mon, 04 Dec 2023 10:07:09 -0800 (PST)
+Received: from localhost ([2620:10d:c090:400::4:27ef])
+ by smtp.gmail.com with ESMTPSA id
+ u2-20020a056a00158200b006cdd507ca2esm7943470pfk.167.2023.12.04.10.07.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 04 Dec 2023 10:07:09 -0800 (PST)
+Date: Mon, 4 Dec 2023 08:07:07 -1000
+From: Tejun Heo <tj@kernel.org>
+To: Naohiro Aota <Naohiro.Aota@wdc.com>
+Cc: Lai Jiangshan <jiangshanlai@gmail.com>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "linux-btrfs@vger.kernel.org" <linux-btrfs@vger.kernel.org>,
+ "ceph-devel@vger.kernel.org" <ceph-devel@vger.kernel.org>,
+ "cgroups@vger.kernel.org" <cgroups@vger.kernel.org>,
+ "coreteam@netfilter.org" <coreteam@netfilter.org>,
+ "dm-devel@lists.linux.dev" <dm-devel@lists.linux.dev>,
+ "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+ "gfs2@lists.linux.dev" <gfs2@lists.linux.dev>,
+ "intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>,
+ "iommu@lists.linux.dev" <iommu@lists.linux.dev>,
+ "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, 
+ "linux-bcachefs@vger.kernel.org" <linux-bcachefs@vger.kernel.org>,
+ "linux-block@vger.kernel.org" <linux-block@vger.kernel.org>,
+ "linux-cachefs@redhat.com" <linux-cachefs@redhat.com>,
+ "linux-cifs@vger.kernel.org" <linux-cifs@vger.kernel.org>,
+ "linux-crypto@vger.kernel.org" <linux-crypto@vger.kernel.org>,
+ "linux-erofs@lists.ozlabs.org" <linux-erofs@lists.ozlabs.org>,
+ "linux-f2fs-devel@lists.sourceforge.net"
+ <linux-f2fs-devel@lists.sourceforge.net>, 
+ "linux-fscrypt@vger.kernel.org" <linux-fscrypt@vger.kernel.org>,
+ "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
+ "linux-mediatek@lists.infradead.org" <linux-mediatek@lists.infradead.org>,
+ "linux-mm@kvack.org" <linux-mm@kvack.org>,
+ "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+ "linux-nfs@vger.kernel.org" <linux-nfs@vger.kernel.org>,
+ "linux-nvme@lists.infradead.org" <linux-nvme@lists.infradead.org>,
+ "linux-raid@vger.kernel.org" <linux-raid@vger.kernel.org>,
+ "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>,
+ "linux-remoteproc@vger.kernel.org" <linux-remoteproc@vger.kernel.org>,
+ "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
+ "linux-trace-kernel@vger.kernel.org" <linux-trace-kernel@vger.kernel.org>,
+ "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
+ "linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>,
+ "linux-xfs@vger.kernel.org" <linux-xfs@vger.kernel.org>,
+ "nbd@other.debian.org" <nbd@other.debian.org>,
+ "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+ "ntb@lists.linux.dev" <ntb@lists.linux.dev>,
+ "open-iscsi@googlegroups.com" <open-iscsi@googlegroups.com>,
+ "oss-drivers@corigine.com" <oss-drivers@corigine.com>,
+ "platform-driver-x86@vger.kernel.org" <platform-driver-x86@vger.kernel.org>,
+ "samba-technical@lists.samba.org" <samba-technical@lists.samba.org>,
+ "target-devel@vger.kernel.org" <target-devel@vger.kernel.org>,
+ "virtualization@lists.linux.dev" <virtualization@lists.linux.dev>,
+ "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Subject: Re: Performance drop due to alloc_workqueue() misuse and recent change
+Message-ID: <ZW4VS3Z0auYCjg-W@slm.duckdns.org>
+References: <dbu6wiwu3sdhmhikb2w6lns7b27gbobfavhjj57kwi2quafgwl@htjcc5oikcr3>
 MIME-Version: 1.0
-X-Received: by 2002:a05:6870:3312:b0:1fa:de51:f90b with SMTP id
- x18-20020a056870331200b001fade51f90bmr789107oae.11.1701528322667; Sat, 02 Dec
- 2023 06:45:22 -0800 (PST)
-Date: Sat, 02 Dec 2023 06:45:22 -0800
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <0000000000003f7eb8060b87efb6@google.com>
-Subject: [syzbot] Monthly wireguard report (Dec 2023)
-From: syzbot <syzbot+liste63a02b3d759fb087a11@syzkaller.appspotmail.com>
-To: Jason@zx2c4.com, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
- syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <dbu6wiwu3sdhmhikb2w6lns7b27gbobfavhjj57kwi2quafgwl@htjcc5oikcr3>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -58,34 +120,129 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello wireguard maintainers/developers,
+Hello,
 
-This is a 31-day syzbot report for the wireguard subsystem.
-All related reports/information can be found at:
-https://syzkaller.appspot.com/upstream/s/wireguard
+On Mon, Dec 04, 2023 at 04:03:47PM +0000, Naohiro Aota wrote:
+> Recently, commit 636b927eba5b ("workqueue: Make unbound workqueues to use
+> per-cpu pool_workqueues") changed WQ_UNBOUND workqueue's behavior. It
+> changed the meaning of alloc_workqueue()'s max_active from an upper limit
+> imposed per NUMA node to a limit per CPU. As a result, massive number of
+> workers can be running at the same time, especially if the workqueue user
+> thinks the max_active is a global limit.
+> 
+> Actually, it is already written it is per-CPU limit in the documentation
+> before the commit. However, several callers seem to misuse max_active,
+> maybe thinking it is a global limit. It is an unexpected behavior change
+> for them.
 
-During the period, 1 new issues were detected and 1 were fixed.
-In total, 4 issues are still open and 15 have been fixed so far.
+Right, and the behavior has been like that for a very long time and there
+was no other way to achieve reasonable level of concurrency, so the current
+situation is expected.
 
-Some of the still happening issues:
+> For example, these callers set max_active = num_online_cpus(), which is a
+> suspicious limit applying to per-CPU. This config means we can have nr_cpu
+> * nr_cpu active tasks working at the same time.
 
-Ref Crashes Repro Title
-<1> 818     No    KCSAN: data-race in wg_packet_send_staged_packets / wg_packet_send_staged_packets (3)
-                  https://syzkaller.appspot.com/bug?extid=6ba34f16b98fe40daef1
-<2> 594     No    KCSAN: data-race in wg_packet_decrypt_worker / wg_packet_rx_poll (2)
-                  https://syzkaller.appspot.com/bug?extid=d1de830e4ecdaac83d89
-<3> 3       No    KCSAN: data-race in wg_packet_handshake_receive_worker / wg_packet_rx_poll (6)
-                  https://syzkaller.appspot.com/bug?extid=57cb9d16a1b17521eb76
+Yeah, that sounds like a good indicator.
 
----
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
+> fs/f2fs/data.c: sbi->post_read_wq = alloc_workqueue("f2fs_post_read_wq",
+> fs/f2fs/data.c-                                          WQ_UNBOUND | WQ_HIGHPRI,
+> fs/f2fs/data.c-                                          num_online_cpus());
+> 
+> fs/crypto/crypto.c:     fscrypt_read_workqueue = alloc_workqueue("fscrypt_read_queue",
+> fs/crypto/crypto.c-                                              WQ_UNBOUND | WQ_HIGHPRI,
+> fs/crypto/crypto.c-                                              num_online_cpus());
+> 
+> fs/verity/verify.c:     fsverity_read_workqueue = alloc_workqueue("fsverity_read_queue",
+> fs/verity/verify.c-                                               WQ_HIGHPRI,
+> fs/verity/verify.c-                                               num_online_cpus());
+> 
+> drivers/crypto/hisilicon/qm.c:  qm->wq = alloc_workqueue("%s", WQ_HIGHPRI | WQ_MEM_RECLAIM |
+> drivers/crypto/hisilicon/qm.c-                           WQ_UNBOUND, num_online_cpus(),
+> drivers/crypto/hisilicon/qm.c-                           pci_name(qm->pdev));
+> 
+> block/blk-crypto-fallback.c:    blk_crypto_wq = alloc_workqueue("blk_crypto_wq",
+> block/blk-crypto-fallback.c-                                    WQ_UNBOUND | WQ_HIGHPRI |
+> block/blk-crypto-fallback.c-                                    WQ_MEM_RECLAIM, num_online_cpus());
+> 
+> drivers/md/dm-crypt.c:          cc->crypt_queue = alloc_workqueue("kcryptd/%s",
+> drivers/md/dm-crypt.c-                                            WQ_CPU_INTENSIVE | WQ_MEM_RECLAIM | WQ_UNBOUND,
+> drivers/md/dm-crypt.c-                                            num_online_cpus(), devname);
 
-To disable reminders for individual bugs, reply with the following command:
-#syz set <Ref> no-reminders
+Most of these work items are CPU bound but not completley so. e.g.
+kcrypt_crypt_write_continue() does wait_for_completion(), so setting
+max_active to 1 likely isn't what they want either. They mostly want some
+reasonable system-wide concurrency limit w.r.t. the CPU count while keeping
+some level of flexibility in terms of task placement.
 
-To change bug's subsystems, reply with:
-#syz set <Ref> subsystems: new-subsystem
+The previous max_active wasn't great for this because its meaning changed
+depending on the number of nodes. Now, the meaning doesn't change but it's
+not really useful for the above purpose. It's only useful for avoiding
+melting the system completely.
 
-You may send multiple commands in a single email message.
+One way to go about it is to declare that concurrency level management for
+unbound workqueue is on users but that seems not ideal given many use cases
+would want it anyway.
+
+Let me think it over but I think the right way to go about it is going the
+other direction - ie. making max_active apply to the whole system regardless
+of the number of nodes / ccx's / whatever.
+
+> Furthermore, the change affects performance in a certain case.
+> 
+> Btrfs creates several WQ_UNBOUND workqueues with a default max_active =
+> min(NRCPUS + 2, 8). As my machine has 96 CPUs with NUMA disabled, this
+> max_active config allows running over 700 active works. Before the commit,
+> it is limited to 8 if NUMA is disabled or limited to 16 if NUMA nodes is 2.
+> 
+> I reverted the workqueue code back to before the commit, and I ran the
+> following fio command on RAID0 btrfs on 6 SSDs.
+> 
+> fio --group_reporting --eta=always --eta-interval=30s --eta-newline=30s \
+>     --rw=write --fallocate=none \
+>     --direct=1 --ioengine=libaio --iodepth=32 \
+>     --filesize=100G \
+>     --blocksize=64k \
+>     --time_based --runtime=300s \
+>     --end_fsync=1 \
+>     --directory=${MNT} \
+>     --name=writer --numjobs=32
+> 
+> By changing workqueue's max_active, the result varies.
+> 
+> - wq max_active=8   (intended limit by btrfs?)
+>   WRITE: bw=2495MiB/s (2616MB/s), 2495MiB/s-2495MiB/s (2616MB/s-2616MB/s), io=753GiB (808GB), run=308953-308953msec
+> - wq max_active=16  (actual limit on 2 NUMA nodes setup)
+>   WRITE: bw=1736MiB/s (1820MB/s), 1736MiB/s-1736MiB/s (1820MB/s-1820MB/s), io=670GiB (720GB), run=395532-395532msec
+> - wq max_active=768 (simulating current limit)
+>   WRITE: bw=1276MiB/s (1338MB/s), 1276MiB/s-1276MiB/s (1338MB/s-1338MB/s), io=375GiB (403GB), run=300984-300984msec
+> 
+> The current performance is slower than the previous limit (max_active=16)
+> by 27%, or it is 50% slower than the intended limit.  The performance drop
+> might be due to contention of the btrfs-endio-write works. There are over
+> 700 kworker instances were created and 100 works are on the 'D' state
+> competing for a lock.
+> 
+> More specifically, I tested the same workload on the commit.
+> 
+> - At commit 636b927eba5b ("workqueue: Make unbound workqueues to use per-cpu pool_workqueues")
+>   WRITE: bw=1191MiB/s (1249MB/s), 1191MiB/s-1191MiB/s (1249MB/s-1249MB/s), io=350GiB (376GB), run=300714-300714msec
+> - At the previous commit = 4cbfd3de73 ("workqueue: Call wq_update_unbound_numa() on all CPUs in NUMA node on CPU hotplug")
+>   WRITE: bw=1747MiB/s (1832MB/s), 1747MiB/s-1747MiB/s (1832MB/s-1832MB/s), io=748GiB (803GB), run=438134-438134msec
+> 
+> So, it is -31.8% performance down with the commit.
+> 
+> In summary, we misuse max_active, considering it is a global limit. And,
+> the recent commit introduced a huge performance drop in some cases.  We
+> need to review alloc_workqueue() usage to check if its max_active setting
+> is proper or not.
+
+Thanks a lot for the report. I think it's a lot more reasonable to assume
+that max_active is global for unbound workqueues. The current workqueue
+behavior is not very intuitive or useful. I'll try to find something more
+reasonable. Thanks for the report and analysis. Much appreciated.
+
+Thanks.
+
+-- 
+tejun
