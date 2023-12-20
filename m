@@ -4,58 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EACBC3DA6E
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 Dec 2023 07:59:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 061CBC3DA6E
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 Dec 2023 12:24:27 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c1841209;
-	Wed, 20 Dec 2023 07:59:42 +0000 (UTC)
-Received: from isrv.corpit.ru (isrv.corpit.ru [86.62.121.231])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 85c34179
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 36dd7779;
+	Wed, 20 Dec 2023 12:19:40 +0000 (UTC)
+Received: from shin.romanrm.net (shin.romanrm.net [2a11:27c0:1f5::2a])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4b889f4a
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 20 Dec 2023 07:59:41 +0000 (UTC)
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2A0543D446;
- Wed, 20 Dec 2023 10:59:54 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3777D4ECA1;
- Wed, 20 Dec 2023 10:59:40 +0300 (MSK)
-Message-ID: <70a5f5c7-2846-4f96-a567-e2a7d7a65c49@tls.msk.ru>
-Date: Wed, 20 Dec 2023 10:59:40 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+ Wed, 20 Dec 2023 12:19:37 +0000 (UTC)
+Received: from nvm (nvm2.home.romanrm.net [IPv6:fd39::4a:3cff:fe57:d6b5])
+ by shin.romanrm.net (Postfix) with SMTP id E7AE13F725;
+ Wed, 20 Dec 2023 12:19:32 +0000 (UTC)
+Date: Wed, 20 Dec 2023 17:19:24 +0500
+From: Roman Mamedov <rm@romanrm.net>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: Roman Lesechko <polo-ru@yandex.ru>, wireguard@lists.zx2c4.com
 Subject: Re: [PATCH] Edited RU translation to avoid misunderstanding
-Content-Language: en-US
-To: Roman Lesechko <polo-ru@yandex.ru>, wireguard@lists.zx2c4.com
+Message-ID: <20231220171924.7f72351e@nvm>
+In-Reply-To: <70a5f5c7-2846-4f96-a567-e2a7d7a65c49@tls.msk.ru>
 References: <20231219155923.1892-1-polo-ru@yandex.ru>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20231219155923.1892-1-polo-ru@yandex.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+ <70a5f5c7-2846-4f96-a567-e2a7d7a65c49@tls.msk.ru>
+X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -70,16 +44,37 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-19.12.2023 18:59, Roman Lesechko :
-> I have edited RU translations of "macToggleStatusButton" on the main screen. In english button's caption is imperative: Activate/Deactivate. Current russian translation is wrong in terms of tenses. For example, Wireguard is deactivated, but the button's caption says it is already active.
-> 
-> Signed-off-by: Roman Lesechko <polo-ru@yandex.ru>
+On Wed, 20 Dec 2023 10:59:40 +0300
+Michael Tokarev <mjt@tls.msk.ru> wrote:
 
-> -"tunnelPeerPersistentKeepaliveValue (%@)" = "каждые %@ - интервал в секундах";
-> +"tunnelPeerPersistentKeepaliveValue (%@)" = "каждые %@ секунд";
+> 19.12.2023 18:59, Roman Lesechko :
+> > I have edited RU translations of "macToggleStatusButton" on the main sc=
+reen. In english button's caption is imperative: Activate/Deactivate. Curre=
+nt russian translation is wrong in terms of tenses. For example, Wireguard =
+is deactivated, but the button's caption says it is already active.
+> >=20
+> > Signed-off-by: Roman Lesechko <polo-ru@yandex.ru>
+>=20
+> > -"tunnelPeerPersistentKeepaliveValue (%@)" =3D "=D0=BA=D0=B0=D0=B6=D0=
+=B4=D1=8B=D0=B5 %@ - =D0=B8=D0=BD=D1=82=D0=B5=D1=80=D0=B2=D0=B0=D0=BB =D0=
+=B2 =D1=81=D0=B5=D0=BA=D1=83=D0=BD=D0=B4=D0=B0=D1=85";
+> > +"tunnelPeerPersistentKeepaliveValue (%@)" =3D "=D0=BA=D0=B0=D0=B6=D0=
+=B4=D1=8B=D0=B5 %@ =D1=81=D0=B5=D0=BA=D1=83=D0=BD=D0=B4";
+>=20
+> Personally I would keep this one as it was.  Yes it is a bit ugly but it =
+is better
+> for, say, 2 or 3 seconds.
 
-Personally I would keep this one as it was.  Yes it is a bit ugly but it is better
-for, say, 2 or 3 seconds.
+The old one is way too awkward and still wrong for when it's 1.
 
-/mjt
+To handle the case of 2 or 3 it can be "=D0=BA=D0=B0=D0=B6=D0=B4=D1=8B=D0=
+=B5 %@ =D1=81=D0=B5=D0=BA."
 
+In this format it's impossible to reach perfection (as in Russian the words
+before and after the number also need to change inflection depending on the
+actual value). But even as proposed in the patch, I'd say it is better than
+before.
+
+--=20
+With respect,
+Roman
