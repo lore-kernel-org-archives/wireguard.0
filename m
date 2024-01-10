@@ -4,66 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53222D49227
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 13:47:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26CD3D49223
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 13:49:34 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7e1e1b8b;
-	Mon, 18 Nov 2024 12:39:31 +0000 (UTC)
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com
- [209.85.208.49])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d455e761
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e395a8f2;
+	Mon, 18 Nov 2024 12:44:58 +0000 (UTC)
+Received: from mail.sandstorm.de (mail.sandstorm.de [178.63.128.130])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4c78a9e8
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 14 Mar 2024 09:25:01 +0000 (UTC)
-Received: by mail-ed1-f49.google.com with SMTP id
- 4fb4d7f45d1cf-563cb3ba9daso784094a12.3
- for <wireguard@lists.zx2c4.com>; Thu, 14 Mar 2024 02:25:01 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710408301; x=1711013101;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=R2AMCKa8xjuFJ/+y6Cct9NYQEH6LHnnZ4GOl/QZE6sI=;
- b=W5s+vmPgyIz71y9d6GsRbv72QKfOnPK+IWSRNXwf3uE63w3Ao0Sl7RiDKzKfQ5rruG
- KBUNczameTwulJHw8OxVqZx5h8d60Zt+qweqZ3lZzQ3KNxV6iY//Ej9y5CQo+j3lcc59
- fHpmPzBNrtp5nt2q8Kr7EPU6iN7NmX3WcH1GgrdlPAqw9OeMzfdZjCfhWdJ80YAF5GpG
- Y7a8jlbUqo+lyjDQYV5pPPk+dOkS0gGF8KXUinBwe0Mcw7w7m2xjNqHo14RhkDQGwr6a
- rvd6PYPl2tcyrpiLXV1TYP2qxDwtgJ1tXCYgaPjUqX4x3K/g9x4xoLzZoR6Obza746Oj
- GP4g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXs4Lo9ZRnXIPL21JuwKAf0+8QdJpEHjNqjbh2B95n+QQQ1TafmqqI1l5Bpa4KaFP5+YiBurvpVHKHBp//4cvKAz26xosF3/hgb
-X-Gm-Message-State: AOJu0YxGEwR50hVM0AuqnrX/pGrLIa5GQ61JUPbmcT4dgd1gGpQibBCF
- 6dwlWlvwG+GbfyBpjaFE3z3gA2sOxCygelkPmoO2jod9DZj/d/tW
-X-Google-Smtp-Source: AGHT+IEV2+DZzFGZ2aBVjsYtF46Z5Pf8Bzv2uM+4A3+8sU8bu/aI8ncLBomTP3kDjPXWSerq/6lTaQ==
-X-Received: by 2002:a05:6402:4494:b0:568:3362:cccf with SMTP id
- er20-20020a056402449400b005683362cccfmr808747edb.7.1710408300966; 
- Thu, 14 Mar 2024 02:25:00 -0700 (PDT)
-Received: from gmail.com (fwdproxy-lla-008.fbsv.net.
- [2a03:2880:30ff:8::face:b00c]) by smtp.gmail.com with ESMTPSA id
- m24-20020aa7d358000000b0056729e902f7sm521951edr.56.2024.03.14.02.25.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Mar 2024 02:25:00 -0700 (PDT)
-Date: Thu, 14 Mar 2024 02:24:58 -0700
-From: Breno Leitao <leitao@debian.org>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
- horms@kernel.org, dsahern@kernel.org,
- "open list:WIREGUARD SECURE NETWORK TUNNEL" <wireguard@lists.zx2c4.com>
-Subject: Re: [PATCH net-next v2 1/2] wireguard: Leverage core stats allocator
-Message-ID: <ZfLCakKfDmC/JNPV@gmail.com>
-References: <20240308112746.2290505-1-leitao@debian.org>
- <ZfJtzhKJV4yo3LRF@zx2c4.com>
- <CAHmME9prrtWu8jkj20WKvTZV6mjQE2Vt_mFWGOuy9St1FOrEOg@mail.gmail.com>
- <CAHmME9oPPtJXd8DsA+xXvbdN7T0PbAM5kYpQj32KZXv9bKP1ng@mail.gmail.com>
+ Wed, 10 Jan 2024 09:01:32 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon)
+ with ESMTPSA id 8B060480C59
+ for <wireguard@lists.zx2c4.com>; Wed, 10 Jan 2024 10:01:31 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sandstorm.de;
+ s=dkim; t=1704877291;
+ h=from:subject:date:message-id:to:mime-version:content-type:
+ content-transfer-encoding; bh=+mFosxKcrUUUgiFPDbUy31qP2/s3ZQDOePj95PEw6/A=;
+ b=fVvaaJdheUFeZcSPLzSyhR23Ayg/J8LKdMrTsy/jg80mt+ViXlu8h2RkNj+rPyggy6xxnX
+ jWCQ9L7GF46sKOJQAVrr78R9ys9ywlK8G8oe+4Gccugm1o+6RJCy4lOx1weIkGU2nXeLnu
+ 5c9xF/5u+L6KFJdNnOZE6Q4bGlIQ3Xjjyarn5D81NkmOssxLv/MKw2+6gwBRbdJ3uJvTba
+ x9Qw08j75s3sozO5GJ9ZnM8Ur8GGZqH8r0foV/5Vp0I1Phd/k3fomgJndefmvaXxtD5R6N
+ Lj1aWv2K2HNLKQtP2S+lBiSrldHylYOuhcaU6WsUGKWhRN2lJUR9zC/r6Z3l6A==
+Message-ID: <70581f4d-66ee-4164-830f-df751ed039f9@sandstorm.de>
+Date: Wed, 10 Jan 2024 10:01:31 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAHmME9oPPtJXd8DsA+xXvbdN7T0PbAM5kYpQj32KZXv9bKP1ng@mail.gmail.com>
-X-Mailman-Approved-At: Mon, 18 Nov 2024 12:39:22 +0000
+User-Agent: Mozilla Thunderbird
+To: wireguard@lists.zx2c4.com
+From: =?UTF-8?Q?Sebastian_Kurf=C3=BCrst?= <sebastian.kurfuerst@sandstorm.de>
+Subject: Mac OS: Can WireGuardKit expose UAPI Control Socket? (with code)
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Last-TLS-Session-Version: TLSv1.3
+X-Mailman-Approved-At: Mon, 18 Nov 2024 12:44:56 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -78,22 +51,27 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, Mar 13, 2024 at 09:35:43PM -0600, Jason A. Donenfeld wrote:
-> On Wed, Mar 13, 2024 at 9:27 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> >
-> > On Wed, Mar 13, 2024 at 9:24 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> > >
-> > > I applied this series to the wireguard tree. Thanks for the patches.
-> >
-> > Actually, sorry, nevermind. 1/2 is fine, but 2/2 results in `ip -stats
-> > link ...` returning all zeros.
-> 
-> Ahh, okay, required some more commits from 6.8. Okay, seems to be
-> working. I'll let this cook a bit and then push it up in a while.
+Hey everybody,
 
-Right, it requires the following commit, which is already in net-next
-and 6.9 by now.
 
-3e2f544dd8a33b2f6 ("net: get stats64 if device if driver is configured")
+first off, thanks for your awesome work with Wireguard. It's an 
+invaluable tool and I am really glad to use it.
 
-Thanks Jason!
+
+I've tried to control the Mac OS Wireguard Client via the `wg` CLI - and 
+then quickly found 
+https://github.com/WireGuard/wgctrl-go/issues/96#issuecomment-1712514157 
+where somebody implemented exposing this control socket for Mac OS.
+
+
+Now, my question is - what is the process of getting such a contribution 
+reviewed / merged / upstream? Apologies if I am using the wrong channel 
+here.
+
+
+All the best,
+Sebastian
+
+PS: I am not the original creator of the code; I simply stumbled upon it 
+and thought it would be a valuable addition to the ecosystem :)
+
