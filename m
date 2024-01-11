@@ -4,61 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5978C3DA6E
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 Dec 2023 17:59:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D49B7C47077
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 11 Jan 2024 15:41:48 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a4e7ca18;
-	Wed, 20 Dec 2023 17:56:15 +0000 (UTC)
-Received: from isrv.corpit.ru (isrv.corpit.ru [86.62.121.231])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0cd085f8
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 12fda47e;
+	Thu, 11 Jan 2024 15:41:46 +0000 (UTC)
+Received: from exchange.fintech.ru (exchange.fintech.ru [195.54.195.159])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6dc31836
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 20 Dec 2023 17:56:13 +0000 (UTC)
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 56DCE3D782;
- Wed, 20 Dec 2023 20:56:27 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7C4044FC1E;
- Wed, 20 Dec 2023 20:56:12 +0300 (MSK)
-Message-ID: <9d732954-b7a7-48ca-b307-168f1054f286@tls.msk.ru>
-Date: Wed, 20 Dec 2023 20:56:12 +0300
+ Thu, 11 Jan 2024 15:41:45 +0000 (UTC)
+Received: from Ex16-01.fintech.ru (10.0.10.18) by exchange.fintech.ru
+ (195.54.195.159) with Microsoft SMTP Server (TLS) id 14.3.498.0; Thu, 11 Jan
+ 2024 18:41:44 +0300
+Received: from localhost (10.0.253.138) by Ex16-01.fintech.ru (10.0.10.18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2242.4; Thu, 11 Jan
+ 2024 18:41:43 +0300
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, "David S. Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>
+CC: Nikita Zhandarovich <n.zhandarovich@fintech.ru>, Jakub Kicinski
+ <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ <wireguard@lists.zx2c4.com>, <netdev@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, syzbot <syzkaller@googlegroups.com>,
+ <syzbot+d1de830e4ecdaac83d89@syzkaller.appspotmail.com>
+Subject: [PATCH net] wireguard: receive: annotate data-race around
+ receiving_counter.counter
+Date: Thu, 11 Jan 2024 07:41:38 -0800
+Message-ID: <20240111154138.7605-1-n.zhandarovich@fintech.ru>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Edited RU translation to avoid misunderstanding
-Content-Language: en-US
-To: Roman Lesechko <polo-ru@yandex.ru>, Roman Mamedov <rm@romanrm.net>
-Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-References: <20231219155923.1892-1-polo-ru@yandex.ru>
- <70a5f5c7-2846-4f96-a567-e2a7d7a65c49@tls.msk.ru>
- <20231220171924.7f72351e@nvm> <802041703091998@mail.yandex.ru>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <802041703091998@mail.yandex.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.0.253.138]
+X-ClientProxiedBy: Ex16-02.fintech.ru (10.0.10.19) To Ex16-01.fintech.ru
+ (10.0.10.18)
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -73,18 +54,66 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-20.12.2023 20:20, Roman Lesechko пишет:
-> With "секунд" I just tried to comply with english source. This option will be OK for the most numbers of seconds out of 60. If it's OK to use short 
-> form I agree that "сек." is much better and won't cause any problems with understanding.
-> My concern and main reason for patch is the part with status updates.
-> -"macToggleStatusButtonActivate" = "Подключен";
-> +"macToggleStatusButtonActivate" = "Подключить";
-> -"macToggleStatusButtonDeactivate" = "Отключен";
-> +"macToggleStatusButtonDeactivate" = "Отключить";
-> -"tunnelOnDemandOptionOff" = "Выключить";
-> +"tunnelOnDemandOptionOff" = "Отключено";
+Syzkaller with KCSAN identified a data-race issue [1] when accessing
+keypair->receiving_counter.counter.
 
-Yes, these definitely needs to go in, as currently
-the meaning is just the opposite of reality.
+This patch uses READ_ONCE() and WRITE_ONCE() annotations to fix the
+problem.
 
-/mjt
+[1]
+BUG: KCSAN: data-race in wg_packet_decrypt_worker / wg_packet_rx_poll
+
+write to 0xffff888107765888 of 8 bytes by interrupt on cpu 0:
+ counter_validate drivers/net/wireguard/receive.c:321 [inline]
+ wg_packet_rx_poll+0x3ac/0xf00 drivers/net/wireguard/receive.c:461
+ __napi_poll+0x60/0x3b0 net/core/dev.c:6536
+ napi_poll net/core/dev.c:6605 [inline]
+ net_rx_action+0x32b/0x750 net/core/dev.c:6738
+ __do_softirq+0xc4/0x279 kernel/softirq.c:553
+ do_softirq+0x5e/0x90 kernel/softirq.c:454
+ __local_bh_enable_ip+0x64/0x70 kernel/softirq.c:381
+ __raw_spin_unlock_bh include/linux/spinlock_api_smp.h:167 [inline]
+ _raw_spin_unlock_bh+0x36/0x40 kernel/locking/spinlock.c:210
+ spin_unlock_bh include/linux/spinlock.h:396 [inline]
+ ptr_ring_consume_bh include/linux/ptr_ring.h:367 [inline]
+ wg_packet_decrypt_worker+0x6c5/0x700 drivers/net/wireguard/receive.c:499
+ process_one_work kernel/workqueue.c:2633 [inline]
+ ...
+
+read to 0xffff888107765888 of 8 bytes by task 3196 on cpu 1:
+ decrypt_packet drivers/net/wireguard/receive.c:252 [inline]
+ wg_packet_decrypt_worker+0x220/0x700 drivers/net/wireguard/receive.c:501
+ process_one_work kernel/workqueue.c:2633 [inline]
+ process_scheduled_works+0x5b8/0xa30 kernel/workqueue.c:2706
+ worker_thread+0x525/0x730 kernel/workqueue.c:2787
+ ...
+
+Fixes: a9e90d9931f3 ("wireguard: noise: separate receive counter from send counter")
+Reported-by: syzbot+d1de830e4ecdaac83d89@syzkaller.appspotmail.com
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+---
+ drivers/net/wireguard/receive.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/net/wireguard/receive.c b/drivers/net/wireguard/receive.c
+index a176653c8861..d91383afb6e2 100644
+--- a/drivers/net/wireguard/receive.c
++++ b/drivers/net/wireguard/receive.c
+@@ -251,7 +251,7 @@ static bool decrypt_packet(struct sk_buff *skb, struct noise_keypair *keypair)
+ 
+ 	if (unlikely(!READ_ONCE(keypair->receiving.is_valid) ||
+ 		  wg_birthdate_has_expired(keypair->receiving.birthdate, REJECT_AFTER_TIME) ||
+-		  keypair->receiving_counter.counter >= REJECT_AFTER_MESSAGES)) {
++		  READ_ONCE(keypair->receiving_counter.counter) >= REJECT_AFTER_MESSAGES)) {
+ 		WRITE_ONCE(keypair->receiving.is_valid, false);
+ 		return false;
+ 	}
+@@ -318,7 +318,7 @@ static bool counter_validate(struct noise_replay_counter *counter, u64 their_cou
+ 		for (i = 1; i <= top; ++i)
+ 			counter->backtrack[(i + index_current) &
+ 				((COUNTER_BITS_TOTAL / BITS_PER_LONG) - 1)] = 0;
+-		counter->counter = their_counter;
++		WRITE_ONCE(counter->counter, their_counter);
+ 	}
+ 
+ 	index &= (COUNTER_BITS_TOTAL / BITS_PER_LONG) - 1;
