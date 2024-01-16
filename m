@@ -4,49 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B279EC4706C
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 12 Jan 2024 10:13:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED430C47077
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 16 Jan 2024 13:02:37 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e53f10e6;
-	Fri, 12 Jan 2024 10:11:29 +0000 (UTC)
-Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
- [209.85.166.71])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7f121efb
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0d2e0899;
+	Tue, 16 Jan 2024 12:59:25 +0000 (UTC)
+Received: from exchange.fintech.ru (exchange.fintech.ru [195.54.195.159])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2fbc41b9
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 12 Jan 2024 10:11:27 +0000 (UTC)
-Received: by mail-io1-f71.google.com with SMTP id
- ca18e2360f4ac-7bbb3de4dcbso857404239f.1
- for <wireguard@lists.zx2c4.com>; Fri, 12 Jan 2024 02:11:27 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1705054286; x=1705659086;
- h=to:from:subject:message-id:date:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=dgGYhOChlMIrhGxl8DNFGpHAHl0ZZQh2kQ8m5tGIY28=;
- b=CNkgqGE/RpmJg0r0cPtGqUeaVJQzJhSgwyiHBi92VPDXw/Fy+EMZ08ne+D91tdaypb
- WW2jhbwSxe4oTXV3cldEk2OfFB0E959H1Y0n/r9+ZSd5GRi9ysuchVbUSF9w1Ccvm7pp
- tC7IlAsA9o3BWpegcA3eba6/NYkcSpeV7dcwnKZWC70b7zoj1b31X5WhaSvIPx/nS7sS
- 26Xf3QSDFayjmMc0Mx/wOmryIkX3YiXkcVjwBaeWiUkzbsBF7X2/nyj3Lq4uSTNK0gPH
- oMxUJjMYPSwnvTHXaGtLfPJ6VGJHKqFAdN7wpfzBcwhDOWWVTpgZTihbgJQhVB1zKll5
- dmEw==
-X-Gm-Message-State: AOJu0Yzce2wFNZCiPJL76LzVXOe0BmvvouUAAWhWU5UwdPlvfLi/E7LP
- NHjZrBF/EemKAOy9Kkj8WkKOQCUCazCeCf/fzoGctedEZkQ4
-X-Google-Smtp-Source: AGHT+IFyxUt57Zi5R0ygl3UdwU6il4gc+6aHiFDOPeKehuUQWByq4QRWcy9U2zhAzeT0vJbW0/aBGSfO7x5NQl9otdQ0gydb9eQ5
+ Tue, 16 Jan 2024 12:59:22 +0000 (UTC)
+Received: from Ex16-01.fintech.ru (10.0.10.18) by exchange.fintech.ru
+ (195.54.195.169) with Microsoft SMTP Server (TLS) id 14.3.498.0; Tue, 16 Jan
+ 2024 15:59:21 +0300
+Received: from localhost (10.0.253.138) by Ex16-01.fintech.ru (10.0.10.18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2242.4; Tue, 16 Jan
+ 2024 15:59:19 +0300
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, "David S. Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>
+CC: Nikita Zhandarovich <n.zhandarovich@fintech.ru>, Jakub Kicinski
+ <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ <wireguard@lists.zx2c4.com>, <netdev@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, syzbot <syzkaller@googlegroups.com>,
+ <syzbot+d1de830e4ecdaac83d89@syzkaller.appspotmail.com>
+Subject: [PATCH net v2] wireguard: receive: annotate data-race around
+ receiving_counter.counter
+Date: Tue, 16 Jan 2024 04:59:11 -0800
+Message-ID: <20240116125911.6176-1-n.zhandarovich@fintech.ru>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-X-Received: by 2002:a05:6e02:20cb:b0:35f:a338:44ae with SMTP id
- 11-20020a056e0220cb00b0035fa33844aemr86964ilq.3.1705054286306; Fri, 12 Jan
- 2024 02:11:26 -0800 (PST)
-Date: Fri, 12 Jan 2024 02:11:26 -0800
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <0000000000000ee656060ebce37a@google.com>
-Subject: [syzbot] [wireguard?] KCSAN: data-race in wg_packet_send_keepalive /
- wg_packet_send_staged_packets (6)
-From: syzbot <syzbot+6d5c91ea71454cf3e972@syzkaller.appspotmail.com>
-To: Jason@zx2c4.com, davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
- linux-kernel@vger.kernel.org, netdev@vger.kernel.org, pabeni@redhat.com, 
- syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.0.253.138]
+X-ClientProxiedBy: Ex16-02.fintech.ru (10.0.10.19) To Ex16-01.fintech.ru
+ (10.0.10.18)
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -61,98 +54,78 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
+Syzkaller with KCSAN identified a data-race issue [1] when accessing
+keypair->receiving_counter.counter.
 
-syzbot found the following issue on:
+This patch uses READ_ONCE() and WRITE_ONCE() annotations to fix the
+problem.
 
-HEAD commit:    ab27740f7665 Merge tag 'linux_kselftest-next-6.8-rc1' of g..
-git tree:       upstream
-console output: https://syzkaller.appspot.com/x/log.txt?x=1526c96de80000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=6d534f78e1db6532
-dashboard link: https://syzkaller.appspot.com/bug?extid=6d5c91ea71454cf3e972
-compiler:       Debian clang version 15.0.6, GNU ld (GNU Binutils for Debian) 2.40
+[1]
+BUG: KCSAN: data-race in wg_packet_decrypt_worker / wg_packet_rx_poll
 
-Unfortunately, I don't have any reproducer for this issue yet.
+write to 0xffff888107765888 of 8 bytes by interrupt on cpu 0:
+ counter_validate drivers/net/wireguard/receive.c:321 [inline]
+ wg_packet_rx_poll+0x3ac/0xf00 drivers/net/wireguard/receive.c:461
+ __napi_poll+0x60/0x3b0 net/core/dev.c:6536
+ napi_poll net/core/dev.c:6605 [inline]
+ net_rx_action+0x32b/0x750 net/core/dev.c:6738
+ __do_softirq+0xc4/0x279 kernel/softirq.c:553
+ do_softirq+0x5e/0x90 kernel/softirq.c:454
+ __local_bh_enable_ip+0x64/0x70 kernel/softirq.c:381
+ __raw_spin_unlock_bh include/linux/spinlock_api_smp.h:167 [inline]
+ _raw_spin_unlock_bh+0x36/0x40 kernel/locking/spinlock.c:210
+ spin_unlock_bh include/linux/spinlock.h:396 [inline]
+ ptr_ring_consume_bh include/linux/ptr_ring.h:367 [inline]
+ wg_packet_decrypt_worker+0x6c5/0x700 drivers/net/wireguard/receive.c:499
+ process_one_work kernel/workqueue.c:2633 [inline]
+ ...
 
-Downloadable assets:
-disk image: https://storage.googleapis.com/syzbot-assets/a20a48bc4578/disk-ab27740f.raw.xz
-vmlinux: https://storage.googleapis.com/syzbot-assets/118b632bca22/vmlinux-ab27740f.xz
-kernel image: https://storage.googleapis.com/syzbot-assets/b053e27eb223/bzImage-ab27740f.xz
-
-IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+6d5c91ea71454cf3e972@syzkaller.appspotmail.com
-
-==================================================================
-BUG: KCSAN: data-race in wg_packet_send_keepalive / wg_packet_send_staged_packets
-
-write to 0xffff88814cd91280 of 8 bytes by task 3194 on cpu 0:
- __skb_queue_head_init include/linux/skbuff.h:2162 [inline]
- skb_queue_splice_init include/linux/skbuff.h:2248 [inline]
- wg_packet_send_staged_packets+0xe5/0xad0 drivers/net/wireguard/send.c:351
- wg_xmit+0x5b8/0x660 drivers/net/wireguard/device.c:218
- __netdev_start_xmit include/linux/netdevice.h:4940 [inline]
- netdev_start_xmit include/linux/netdevice.h:4954 [inline]
- xmit_one net/core/dev.c:3548 [inline]
- dev_hard_start_xmit+0x11b/0x3f0 net/core/dev.c:3564
- __dev_queue_xmit+0xeff/0x1d80 net/core/dev.c:4349
- dev_queue_xmit include/linux/netdevice.h:3134 [inline]
- neigh_connected_output+0x231/0x2a0 net/core/neighbour.c:1592
- neigh_output include/net/neighbour.h:542 [inline]
- ip6_finish_output2+0xa66/0xce0 net/ipv6/ip6_output.c:137
- ip6_finish_output+0x1a5/0x490 net/ipv6/ip6_output.c:222
- NF_HOOK_COND include/linux/netfilter.h:303 [inline]
- ip6_output+0xeb/0x220 net/ipv6/ip6_output.c:243
- dst_output include/net/dst.h:451 [inline]
- NF_HOOK include/linux/netfilter.h:314 [inline]
- ndisc_send_skb+0x4a2/0x670 net/ipv6/ndisc.c:509
- ndisc_send_rs+0x3ab/0x3e0 net/ipv6/ndisc.c:719
- addrconf_dad_completed+0x640/0x8e0 net/ipv6/addrconf.c:4295
- addrconf_dad_work+0x891/0xbc0
+read to 0xffff888107765888 of 8 bytes by task 3196 on cpu 1:
+ decrypt_packet drivers/net/wireguard/receive.c:252 [inline]
+ wg_packet_decrypt_worker+0x220/0x700 drivers/net/wireguard/receive.c:501
  process_one_work kernel/workqueue.c:2633 [inline]
  process_scheduled_works+0x5b8/0xa30 kernel/workqueue.c:2706
  worker_thread+0x525/0x730 kernel/workqueue.c:2787
- kthread+0x1d7/0x210 kernel/kthread.c:388
- ret_from_fork+0x48/0x60 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:242
+ ...
 
-read to 0xffff88814cd91280 of 8 bytes by task 3202 on cpu 1:
- skb_queue_empty include/linux/skbuff.h:1798 [inline]
- wg_packet_send_keepalive+0x20/0x100 drivers/net/wireguard/send.c:225
- wg_receive_handshake_packet drivers/net/wireguard/receive.c:186 [inline]
- wg_packet_handshake_receive_worker+0x445/0x5e0 drivers/net/wireguard/receive.c:213
- process_one_work kernel/workqueue.c:2633 [inline]
- process_scheduled_works+0x5b8/0xa30 kernel/workqueue.c:2706
- worker_thread+0x525/0x730 kernel/workqueue.c:2787
- kthread+0x1d7/0x210 kernel/kthread.c:388
- ret_from_fork+0x48/0x60 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:242
-
-value changed: 0xffff888148fef200 -> 0xffff88814cd91280
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 1 PID: 3202 Comm: kworker/1:8 Not tainted 6.7.0-syzkaller-01727-gab27740f7665 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 11/17/2023
-Workqueue: wg-kex-wg2 wg_packet_handshake_receive_worker
-==================================================================
-
-
+Fixes: a9e90d9931f3 ("wireguard: noise: separate receive counter from send counter")
+Reported-by: syzbot+d1de830e4ecdaac83d89@syzkaller.appspotmail.com
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 ---
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
+v2: add missing annotation in wg_packet_rx_poll() per Eric Duzamet's
+<edumazet@google.com> helpful suggestion.
 
-syzbot will keep track of this issue. See:
-https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
+ drivers/net/wireguard/receive.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-If the report is already addressed, let syzbot know by replying with:
-#syz fix: exact-commit-title
-
-If you want to overwrite report's subsystems, reply with:
-#syz set subsystems: new-subsystem
-(See the list of subsystem names on the web dashboard)
-
-If the report is a duplicate of another one, reply with:
-#syz dup: exact-subject-of-another-report
-
-If you want to undo deduplication, reply with:
-#syz undup
+diff --git a/drivers/net/wireguard/receive.c b/drivers/net/wireguard/receive.c
+index a176653c8861..db01ec03bda0 100644
+--- a/drivers/net/wireguard/receive.c
++++ b/drivers/net/wireguard/receive.c
+@@ -251,7 +251,7 @@ static bool decrypt_packet(struct sk_buff *skb, struct noise_keypair *keypair)
+ 
+ 	if (unlikely(!READ_ONCE(keypair->receiving.is_valid) ||
+ 		  wg_birthdate_has_expired(keypair->receiving.birthdate, REJECT_AFTER_TIME) ||
+-		  keypair->receiving_counter.counter >= REJECT_AFTER_MESSAGES)) {
++		  READ_ONCE(keypair->receiving_counter.counter) >= REJECT_AFTER_MESSAGES)) {
+ 		WRITE_ONCE(keypair->receiving.is_valid, false);
+ 		return false;
+ 	}
+@@ -318,7 +318,7 @@ static bool counter_validate(struct noise_replay_counter *counter, u64 their_cou
+ 		for (i = 1; i <= top; ++i)
+ 			counter->backtrack[(i + index_current) &
+ 				((COUNTER_BITS_TOTAL / BITS_PER_LONG) - 1)] = 0;
+-		counter->counter = their_counter;
++		WRITE_ONCE(counter->counter, their_counter);
+ 	}
+ 
+ 	index &= (COUNTER_BITS_TOTAL / BITS_PER_LONG) - 1;
+@@ -463,7 +463,7 @@ int wg_packet_rx_poll(struct napi_struct *napi, int budget)
+ 			net_dbg_ratelimited("%s: Packet has invalid nonce %llu (max %llu)\n",
+ 					    peer->device->dev->name,
+ 					    PACKET_CB(skb)->nonce,
+-					    keypair->receiving_counter.counter);
++					    READ_ONCE(keypair->receiving_counter.counter));
+ 			goto next;
+ 		}
+ 
