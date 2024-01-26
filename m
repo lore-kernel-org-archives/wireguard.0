@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F826D49223
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 13:53:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16651D49221
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 14:13:35 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 520207db;
-	Mon, 18 Nov 2024 12:45:00 +0000 (UTC)
-Received: from smtp04-ext3.udag.de (smtp04-ext3.udag.de [62.146.106.41])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8292f96e
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ae006597;
+	Mon, 18 Nov 2024 12:45:03 +0000 (UTC)
+Received: from smtp02-ext3.udag.de (smtp02-ext3.udag.de [62.146.106.33])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id cce25a61
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 17 Jan 2024 21:03:05 +0000 (UTC)
-Received: from Til-Desktop.lan (p54aa3bb3.dip0.t-ipconnect.de [84.170.59.179])
- by smtp04-ext3.udag.de (Postfix) with ESMTPA id 8737EE0165;
- Wed, 17 Jan 2024 22:03:04 +0100 (CET)
+ Fri, 26 Jan 2024 18:38:39 +0000 (UTC)
+Received: from Til-Desktop.lan (pd9570506.dip0.t-ipconnect.de [217.87.5.6])
+ by smtp02-ext3.udag.de (Postfix) with ESMTPA id B6571E0109;
+ Fri, 26 Jan 2024 19:38:38 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tk154.de;
- s=uddkim-202310; t=1705525384;
+ s=uddkim-202310; t=1706294318;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding;
  bh=LXNxy0v+VDNL40Q2zD5zdLJG1F2xd0WrvT1EdcLjIZg=;
- b=JEFx+FUWm0JHj+T7Xx4T3HkaD9zajBrdUvmM8JUZP7BHqDqPUUn0VBiJ+de9NSo89AWqQI
- 3L6sxAS7EWxr1GAj1ziFU9vpAxKAHLY+ZsJMD0AzfeOBQSqqIcLKZ5helh7ZjqXxzDr1ky
- a5eYaNgERUrj7/wPeSH+d2XP7p+ZVvkFJ+im6W5mDQIt3Oz4ytkGnbe5k8xg8cOl/9f1Nc
- m0qrTPDflg9k74cej1AKp0BHGfAdlux5wJjcgwfCh5SCDfNdTIIC3z4wg+tHKonTImQF5N
- hfBrzPSBh2ztZjxyivp9g0nXK3RHudwFYPKCXlDA3EMngOwx3XRoJnI8cpHu8A==
+ b=TKB4HD4LhifCEWLRSGTgLvGT+I3BaGmuPZHf9Q2JwDBomDe9UQoyT+sS/TsaO0p9VTSbAB
+ oMP1avb1tNYMXZlfADjFQDPOSqYXmyGPMHsg0rwNYb1T3egDqPpU9Woe1Ont8Ht5Lf+lt2
+ gao2zatZ4MD54M/kOMT552bnRssZdRxAbXiRc2F+3Uv7NcMfSDI+ubdYbUxFaNJunytFve
+ xaCvt8abOsWgV5NIqWVRAqJvrIBC8s9M8itHFVYJliWAij9V9FWbx4cNIFa3DFQsZeiMve
+ tzZGRlNPzGrqk0UyHGQdkpgAt9PatEet2/tulKVK9IgOYYNX8Uk4Tuwo40rmmQ==
 From: Til Kaiser <mail@tk154.de>
 To: wireguard@lists.zx2c4.com
 Cc: Til Kaiser <mail@tk154.de>
 Subject: [PATCH] wg-quick: replace ip route add with ip route append
-Date: Wed, 17 Jan 2024 22:01:51 +0100
-Message-Id: <20240117210151.315819-1-mail@tk154.de>
+Date: Fri, 26 Jan 2024 19:37:42 +0100
+Message-Id: <20240126183742.1172754-1-mail@tk154.de>
 X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Authentication-Results: smtp04-ext3.udag.de;
+Authentication-Results: smtp02-ext3.udag.de;
  auth=pass smtp.auth=mail@tk154.de smtp.mailfrom=mail@tk154.de
 X-Mailman-Approved-At: Mon, 18 Nov 2024 12:44:56 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
