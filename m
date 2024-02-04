@@ -4,71 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3EA0D4920F
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 11:23:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54AFFD49212
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 12:35:44 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7a872ce7;
-	Mon, 18 Nov 2024 11:23:06 +0000 (UTC)
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com
- [2607:f8b0:4864:20::532])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f6f4501f
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ad683930;
+	Mon, 18 Nov 2024 12:35:42 +0000 (UTC)
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com
+ [2a00:1450:4864:20::32d])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 15f8840a
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 18 Nov 2024 10:09:04 +0000 (UTC)
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-7f8095a200eso2751309a12.1
- for <wireguard@lists.zx2c4.com>; Mon, 18 Nov 2024 02:09:04 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Sun, 4 Feb 2024 10:10:42 +0000 (UTC)
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-40fd26d4f92so7060255e9.0
+ for <wireguard@lists.zx2c4.com>; Sun, 04 Feb 2024 02:10:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731924543; x=1732529343; darn=lists.zx2c4.com;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=4Goi/04yT5xIN7OeRKBKYdqRHma0hsyOKgiMd+irV+s=;
- b=a5NXSskEjBRjIu2g0WvOY2nWR1t0dRxVaIkhfMMRjNZ1iznuzRlw0Pqb8YHobB0fpr
- ocgmGKgp7488b7cvglpng9BfUV+xAFQ8SUQ8ZJiW2rvTYJShjVq0WqjwodKZtL/zRZ1w
- SdLME26ffVCVF2bcLzcXM1uugdd7DVyfv1eCbDGGfgMdjgB4Acm53hFXoFqDZw1ktbd4
- iPVnvJ8OeTuzRMMcogBLLBJzaJn+AhpHxBWNMyuaeSpIGB+ONHHPJjHlcxLbElIMmI+1
- yuTe5vrbivPS4ea0eQ3IDRDt55vXMyAiTOvMCXSo1iWlmDzWOr28Mcvp1d1Gf8jRLG0A
- +cDg==
+ d=gmail.com; s=20230601; t=1707041441; x=1707646241; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=YnK5Oa8kb7CgSyAbum4t1svCfP6IMFnHlJOgLAgYyLY=;
+ b=WRSJGcS0CKdrmbx3BSMThfHo9CfTDcUurlv2bYfNFn1yP5kgBfY665ZbqHDqIafqV9
+ 5p5Icj9nSpoJrlfGHjcymmZGPV3XKLGRaPedgXJPDEvmLTkVBM005N7uhv0zJTU9HmwM
+ IzEHlRRn+Hzl+4YOLHpqyfT5oHbgvuZcidi1ZFLmNzyRiUObyMu1h3hijw0posr3X1xI
+ Vqh58CqTpwV5j0GfpZVLU6RbbAfAQM++SlN5DZj17ZbmUytcAKvyMryi4JRCIV7O1UFh
+ q9W+0K3WHSx9Xl4VeVkoD/j1rooIdxyIAd7AHAKDGkPP8yfFVP5dDjXq0DC1BucLLHnR
+ QLbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731924543; x=1732529343;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4Goi/04yT5xIN7OeRKBKYdqRHma0hsyOKgiMd+irV+s=;
- b=GtK4KOcE34pKxGWSbNL8vTu/rs1Mro13MDwIQ/HSPHhxQqEtT/T6aO+7f/uxYHOLSx
- Ps/E8WQ+gas9rf79te4EYDOPYKTFx5FSPS5T2nozaKoWNW22NsBxuwo137YJQClOK80C
- v8gMWeDxR8dvfgspubwdJqeI7FzOaXVLmVXgiKWuXEq16LQhja1gTN7GcO66j+A7SLmO
- SNmqWhbxoq3TOIsiNDZoD02yTuwmqaPGw6K7GeRRlE2xx5DG+cXROl0LK6d5M3z4JsXC
- NyCbW+sZ5xRQiWyujABQmy6DGy4zbEAdu35zEHK/rXV8RDaDkd6Ezg8gPxqhgtkY0uj4
- 4HEA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXkliSq1u5zFzm47HNx5yZTjGwT/csFb3TMGsGCAwOYn1HpHxJTlhA1bDClz0abvMIyR54yFaFpi4U=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YzuahxEjOm5ce7pIJMpJ/IR39emRUQb+GdNNIewaaCSXU67j0c6
- +jmEUMd798AEfB9U7ffpyAkVWv5XNFftIapdF5Glp0UpLHeQ6b5l
-X-Google-Smtp-Source: AGHT+IGUsm9S0hEZ6xp7ESqNA2ThEEcxKekQUPQciNMBgUVwcC33mAfegzLfpusuFWYQvVKGptTr9A==
-X-Received: by 2002:a05:6a21:3282:b0:1d4:f7e9:172a with SMTP id
- adf61e73a8af0-1dc8069161bmr27734319637.23.1731924542658; 
- Mon, 18 Nov 2024 02:09:02 -0800 (PST)
-Received: from fedora ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7f8c1dc658csm5605511a12.69.2024.11.18.02.08.58
+ d=1e100.net; s=20230601; t=1707041441; x=1707646241;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=YnK5Oa8kb7CgSyAbum4t1svCfP6IMFnHlJOgLAgYyLY=;
+ b=N+QRsxQHmwPFaDbwyaoFXs/6zUy5JtixIfFi8Em2aqcOYM/iq/COqnOrO38EqhHnCx
+ vgmAwhESDna7ZF7DaDYykE2Yuz6rvjMFsxrHSsl2PMi1Q5gf2yiF/QUOBffU3yhVmogu
+ Fg7CQl8c/4fzhvB2I9nsoRFzLA2P8gF5hZbPF/EwDOtA+KrYaTtf8xrlxrx1QU2vFxzI
+ N+d5xwURvZmf7WJsP/zTfASswosTdsVPexcGL1ZPSVRhhg/+JegmaHgE3fgWQl5SeN7g
+ +WMk2JMT1eqcYVojy9w7TYTdlIETjEvGHBoqVFvHzdOMF60wvOmHf9/VwIY8KATS/NOp
+ xfiQ==
+X-Gm-Message-State: AOJu0YwDYs2D1V1c1qgNDIzTFUW2vAlcECJ8Oww1wklaPF5Bi8cST8ES
+ nNt9pY9odh3JbbqNWd1YSGlFdncU4MNJ5S03rzHm6l6EvCNL8TJtplueeZqG8KPv
+X-Google-Smtp-Source: AGHT+IFSDRe6kZPlmKmYsPmFAHCkBvdLCsE6XC8/O4Jdk79v2pW9/vLRcUAfHECCQW1QJ3r/BEk56A==
+X-Received: by 2002:adf:e7cc:0:b0:33b:287d:412c with SMTP id
+ e12-20020adfe7cc000000b0033b287d412cmr3173744wrn.43.1707041441090; 
+ Sun, 04 Feb 2024 02:10:41 -0800 (PST)
+Received: from images.net ([2001:41d0:2:c72a::])
+ by smtp.gmail.com with ESMTPSA id
+ n12-20020a5d400c000000b0033b3c2e73e2sm231660wrp.113.2024.02.04.02.10.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 Nov 2024 02:09:01 -0800 (PST)
-Date: Mon, 18 Nov 2024 10:08:55 +0000
-From: Hangbin Liu <liuhangbin@gmail.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: netdev@vger.kernel.org, Shuah Khan <shuah@kernel.org>,
- "David S. Miller" <davem@davemloft.net>,
- Florian Westphal <fw@strlen.de>, Phil Sutter <phil@nwl.cc>,
- wireguard@lists.zx2c4.com, linux-kselftest@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCHv2 net-next] selftests: wireguards: use nft by default
-Message-ID: <ZzsSN49rftIlBhtf@fedora>
-References: <20241111041902.25814-1-liuhangbin@gmail.com>
- <ZzpNXM17NX3nVzMl@zx2c4.com>
+ Sun, 04 Feb 2024 02:10:40 -0800 (PST)
+From: Athanasios Oikonomou <athoik@gmail.com>
+To: wireguard@lists.zx2c4.com
+Cc: Athanasios Oikonomou <athoik@gmail.com>
+Subject: [PATCH] wg-quick: linux: check iptables existance prior trying restore
+Date: Sun,  4 Feb 2024 12:10:29 +0200
+Message-Id: <20240204101029.1805-1-athoik@gmail.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZzpNXM17NX3nVzMl@zx2c4.com>
+Content-Transfer-Encoding: 8bit
+X-Mailman-Approved-At: Mon, 18 Nov 2024 12:35:39 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -83,17 +75,66 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Sun, Nov 17, 2024 at 09:09:00PM +0100, Jason A. Donenfeld wrote:
-> On Mon, Nov 11, 2024 at 04:19:02AM +0000, Hangbin Liu wrote:
-> > Use nft by default if it's supported, as nft is the replacement for iptables,
-> > which is used by default in some releases. Additionally, iptables is dropped
-> > in some releases.
->  
-> Rather than having this optionality, I'd rather just do everything in
-> one way or the other. So if you're adamant that we need to use nft, just
-> convert the whole thing. And then subsequently, make sure that the qemu
-> test harness supports it. That should probably be a series.
+This commit is adding a check for iptables existance prior restoring iptables rules.
+Testing the existable of iptables already applied in remove_firewall.
+https://git.zx2c4.com/wireguard-tools/tree/src/wg-quick/linux.bash?id=13f4ac4cb74b5a833fa7f825ba785b1e5774e84f#n197
 
-Thanks, I will do an update for the qemu test.
+Without fix applied wg-quick fails.
 
-Hangbin
+$ wg-quick up wg0
+[#] ip link add wg0 type wireguard
+[#] wg setconf wg0 /dev/fd/63
+[#] ip -4 address add 10.100.0.2/32 dev wg0
+[#] ip -6 address add fd08:4711::2/128 dev wg0
+[#] ip link set mtu 1420 up dev wg0
+[#] resolvconf -a wg0 -m 0 -x
+[#] wg set wg0 fwmark 51820
+[#] ip -6 route add ::/0 dev wg0 table 51820
+[#] ip -6 rule add not fwmark 51820 table 51820
+[#] ip -6 rule add table main suppress_prefixlength 0
+[#] ip6tables-restore -n
+/usr/bin/wg-quick: line 32: ip6tables-restore: command not found
+[#] resolvconf -d wg0 -f
+[#] ip -6 rule delete table 51820
+[#] ip -6 rule delete table main suppress_prefixlength 0
+[#] ip link delete dev wg0
+
+With fix applied wg-quick works.
+
+wg-quick up wg0
+[#] ip link add wg0 type wireguard
+[#] wg setconf wg0 /dev/fd/63
+[#] ip -4 address add 10.100.0.2/32 dev wg0
+[#] ip -6 address add fd08:4711::2/128 dev wg0
+[#] ip link set mtu 1420 up dev wg0
+[#] resolvconf -a wg0 -m 0 -x
+[#] wg set wg0 fwmark 51820
+[#] ip -6 route add ::/0 dev wg0 table 51820
+[#] ip -6 rule add not fwmark 51820 table 51820
+[#] ip -6 rule add table main suppress_prefixlength 0
+[#] ip -4 route add 0.0.0.0/0 dev wg0 table 51820
+[#] ip -4 rule add not fwmark 51820 table 51820
+[#] ip -4 rule add table main suppress_prefixlength 0
+[#] sysctl -q net.ipv4.conf.all.src_valid_mark=1
+
+Signed-off-by: Athanasios Oikonomou <athoik@gmail.com>
+---
+ src/wg-quick/linux.bash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/wg-quick/linux.bash b/src/wg-quick/linux.bash
+index 4193ce5..0d85840 100755
+--- a/src/wg-quick/linux.bash
++++ b/src/wg-quick/linux.bash
+@@ -240,7 +240,7 @@ add_default() {
+ 	[[ $proto == -4 ]] && cmd sysctl -q net.ipv4.conf.all.src_valid_mark=1
+ 	if type -p nft >/dev/null; then
+ 		cmd nft -f <(echo -n "$nftcmd")
+-	else
++	elif type -p iptables >/dev/null; then
+ 		echo -n "$restore" | cmd $iptables-restore -n
+ 	fi
+ 	HAVE_SET_FIREWALL=1
+-- 
+2.20.1
+
