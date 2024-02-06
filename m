@@ -4,41 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47D74C4828D
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Feb 2024 18:11:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1CBEC48297
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  6 Feb 2024 19:08:22 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 24f34059;
-	Mon, 5 Feb 2024 18:11:37 +0000 (UTC)
-Received: from exchange.fintech.ru (exchange.fintech.ru [195.54.195.159])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4a1a6307
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 5 Feb 2024 18:11:36 +0000 (UTC)
-Received: from Ex16-01.fintech.ru (10.0.10.18) by exchange.fintech.ru
- (195.54.195.159) with Microsoft SMTP Server (TLS) id 14.3.498.0; Mon, 5 Feb
- 2024 21:11:36 +0300
-Received: from localhost (10.0.253.138) by Ex16-01.fintech.ru (10.0.10.18)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2242.4; Mon, 5 Feb 2024
- 21:11:35 +0300
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, "David S. Miller"
- <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>
-CC: Nikita Zhandarovich <n.zhandarovich@fintech.ru>, Jakub Kicinski
- <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- <wireguard@lists.zx2c4.com>, <netdev@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, syzbot <syzkaller@googlegroups.com>,
- <syzbot+d1de830e4ecdaac83d89@syzkaller.appspotmail.com>
-Subject: [PATCH RESEND net v2] wireguard: receive: annotate data-race around
- receiving_counter.counter
-Date: Mon, 5 Feb 2024 10:11:11 -0800
-Message-ID: <20240205181111.43414-1-n.zhandarovich@fintech.ru>
-X-Mailer: git-send-email 2.25.1
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0dc6b561;
+	Tue, 6 Feb 2024 19:08:20 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4c6960ed
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Tue, 6 Feb 2024 19:08:18 +0000 (UTC)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 44BC7616B6
+ for <wireguard@lists.zx2c4.com>; Tue,  6 Feb 2024 19:08:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2954C43399
+ for <wireguard@lists.zx2c4.com>; Tue,  6 Feb 2024 19:08:15 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="LVYTNWwY"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1707246492;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=5Z2BovTB2FP3edEraPK/nJ0WYXm/OBj4X4o2+dRHDHE=;
+ b=LVYTNWwYm9Wnifm+IPQytFsIAWPe8JRZPoAImZ+xzPkRASSk8ARmb0BFkv1v7b3KZjEBEd
+ p/QCXwDCviVUlOQQfN09tIpxSlcGQbxkxlcWz6KmGWBlb4FZw0M8l7ZdpkgmvgnrIPbLlt
+ Scnb/Mp3SgEFPF0wRmM213GES4sPrmI=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id cf3db93e
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Tue, 6 Feb 2024 19:08:12 +0000 (UTC)
+Received: by mail-yw1-f181.google.com with SMTP id
+ 00721157ae682-6040d33380cso61647407b3.1
+ for <wireguard@lists.zx2c4.com>; Tue, 06 Feb 2024 11:08:12 -0800 (PST)
+X-Gm-Message-State: AOJu0YwQzMhBDoU4tlDYCF4DMV/ZdSafw+TOfGcRePBJIY2cm8+DXTF5
+ QIsgOomKvAoG/1OwuUsceGt0qS4abmlztuJuPLQRbzNs7lcttYLlRTHnAko1aBYDPFN2c53dlPx
+ fgmX/5+EHemfmkTLrL8AxcIALiZU=
+X-Google-Smtp-Source: AGHT+IFOV3Wdo2fUCv+WtJ2o5y/XqcPp1tWUbVJd5wtVPEHmafutx5P5ZJmnK/9+OaT6VsaQgi9vpUwdxEhxJFQC1YU=
+X-Received: by 2002:a81:99ca:0:b0:5ff:85f4:27ee with SMTP id
+ q193-20020a8199ca000000b005ff85f427eemr2455343ywg.10.1707246491366; Tue, 06
+ Feb 2024 11:08:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.0.253.138]
-X-ClientProxiedBy: Ex16-02.fintech.ru (10.0.10.19) To Ex16-01.fintech.ru
- (10.0.10.18)
+References: <20240205181111.43414-1-n.zhandarovich@fintech.ru>
+In-Reply-To: <20240205181111.43414-1-n.zhandarovich@fintech.ru>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 6 Feb 2024 20:08:00 +0100
+X-Gmail-Original-Message-ID: <CAHmME9qkOEzzUJmJroZp3X2j=2Q6tE+EMYCr0bW3vYyK=M5FuQ@mail.gmail.com>
+Message-ID: <CAHmME9qkOEzzUJmJroZp3X2j=2Q6tE+EMYCr0bW3vYyK=M5FuQ@mail.gmail.com>
+Subject: Re: [PATCH RESEND net v2] wireguard: receive: annotate data-race
+ around receiving_counter.counter
+To: n.zhandarovich@fintech.ru
+Cc: "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ wireguard@lists.zx2c4.com, 
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ syzbot <syzkaller@googlegroups.com>, 
+ syzbot+d1de830e4ecdaac83d89@syzkaller.appspotmail.com
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -53,78 +74,4 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Syzkaller with KCSAN identified a data-race issue [1] when accessing
-keypair->receiving_counter.counter.
-
-This patch uses READ_ONCE() and WRITE_ONCE() annotations to fix the
-problem.
-
-[1]
-BUG: KCSAN: data-race in wg_packet_decrypt_worker / wg_packet_rx_poll
-
-write to 0xffff888107765888 of 8 bytes by interrupt on cpu 0:
- counter_validate drivers/net/wireguard/receive.c:321 [inline]
- wg_packet_rx_poll+0x3ac/0xf00 drivers/net/wireguard/receive.c:461
- __napi_poll+0x60/0x3b0 net/core/dev.c:6536
- napi_poll net/core/dev.c:6605 [inline]
- net_rx_action+0x32b/0x750 net/core/dev.c:6738
- __do_softirq+0xc4/0x279 kernel/softirq.c:553
- do_softirq+0x5e/0x90 kernel/softirq.c:454
- __local_bh_enable_ip+0x64/0x70 kernel/softirq.c:381
- __raw_spin_unlock_bh include/linux/spinlock_api_smp.h:167 [inline]
- _raw_spin_unlock_bh+0x36/0x40 kernel/locking/spinlock.c:210
- spin_unlock_bh include/linux/spinlock.h:396 [inline]
- ptr_ring_consume_bh include/linux/ptr_ring.h:367 [inline]
- wg_packet_decrypt_worker+0x6c5/0x700 drivers/net/wireguard/receive.c:499
- process_one_work kernel/workqueue.c:2633 [inline]
- ...
-
-read to 0xffff888107765888 of 8 bytes by task 3196 on cpu 1:
- decrypt_packet drivers/net/wireguard/receive.c:252 [inline]
- wg_packet_decrypt_worker+0x220/0x700 drivers/net/wireguard/receive.c:501
- process_one_work kernel/workqueue.c:2633 [inline]
- process_scheduled_works+0x5b8/0xa30 kernel/workqueue.c:2706
- worker_thread+0x525/0x730 kernel/workqueue.c:2787
- ...
-
-Fixes: a9e90d9931f3 ("wireguard: noise: separate receive counter from send counter")
-Reported-by: syzbot+d1de830e4ecdaac83d89@syzkaller.appspotmail.com
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
----
-v2: add missing annotation in wg_packet_rx_poll() per Eric Duzamet's
-<edumazet@google.com> helpful suggestion.
-
- drivers/net/wireguard/receive.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/net/wireguard/receive.c b/drivers/net/wireguard/receive.c
-index a176653c8861..db01ec03bda0 100644
---- a/drivers/net/wireguard/receive.c
-+++ b/drivers/net/wireguard/receive.c
-@@ -251,7 +251,7 @@ static bool decrypt_packet(struct sk_buff *skb, struct noise_keypair *keypair)
- 
- 	if (unlikely(!READ_ONCE(keypair->receiving.is_valid) ||
- 		  wg_birthdate_has_expired(keypair->receiving.birthdate, REJECT_AFTER_TIME) ||
--		  keypair->receiving_counter.counter >= REJECT_AFTER_MESSAGES)) {
-+		  READ_ONCE(keypair->receiving_counter.counter) >= REJECT_AFTER_MESSAGES)) {
- 		WRITE_ONCE(keypair->receiving.is_valid, false);
- 		return false;
- 	}
-@@ -318,7 +318,7 @@ static bool counter_validate(struct noise_replay_counter *counter, u64 their_cou
- 		for (i = 1; i <= top; ++i)
- 			counter->backtrack[(i + index_current) &
- 				((COUNTER_BITS_TOTAL / BITS_PER_LONG) - 1)] = 0;
--		counter->counter = their_counter;
-+		WRITE_ONCE(counter->counter, their_counter);
- 	}
- 
- 	index &= (COUNTER_BITS_TOTAL / BITS_PER_LONG) - 1;
-@@ -463,7 +463,7 @@ int wg_packet_rx_poll(struct napi_struct *napi, int budget)
- 			net_dbg_ratelimited("%s: Packet has invalid nonce %llu (max %llu)\n",
- 					    peer->device->dev->name,
- 					    PACKET_CB(skb)->nonce,
--					    keypair->receiving_counter.counter);
-+					    READ_ONCE(keypair->receiving_counter.counter));
- 			goto next;
- 		}
- 
+Queued up, thanks.
