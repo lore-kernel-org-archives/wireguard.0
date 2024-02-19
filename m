@@ -4,52 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 902C8C4829D
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 12 Feb 2024 21:26:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C62ADC48BF8
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Feb 2024 11:44:12 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a50eba50;
-	Mon, 12 Feb 2024 21:26:19 +0000 (UTC)
-Received: from mail-il1-f198.google.com (mail-il1-f198.google.com
- [209.85.166.198])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1105c03d
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 75a84d07;
+	Mon, 19 Feb 2024 11:44:10 +0000 (UTC)
+Received: from mail.servers.dxld.at (janet.hall.dxld.at
+ [2001:678:4d8:200::1000])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 56149a74
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 12 Feb 2024 21:26:17 +0000 (UTC)
-Received: by mail-il1-f198.google.com with SMTP id
- e9e14a558f8ab-363be7d5b20so37349735ab.3
- for <wireguard@lists.zx2c4.com>; Mon, 12 Feb 2024 13:26:17 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707773176; x=1708377976;
- h=to:from:subject:message-id:date:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Wagcq9COHb24z/xuskXRn8d6kbGmFHER+wSRaPPVz+w=;
- b=bYufNG38VUwTpAH3dFkzzmHxllJQ0Jug9SgbmoomSI4H0qAKs6B4FHWvJOZ9o/JxAG
- LpYCtTWym3A4Ei25e7EfGn5GjcdRqhsud/akbjUbp1iVVoTLr+DUKsrXBZnw4uIOIiTf
- Ow2JDqbrkWyaYN6Q0vmCvq2svotDw+VffLANPFA8FItebU/64SxwLpQM/TmIH+ctr1Vj
- 9d77oUXgVRWSOG650SouflOlFlU/QkUOn7ymfcv8ZD71JTjQekFdDjaW3mYe9l2C5eMN
- pRoTNkGLvTzskDJb2P1kBSRNJyA4Yrwkt0noxA+/+7Ct1ACJl6EOnaoCXNnr2xw3Fxwl
- /Mow==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUjSF2UrB0DUqzg2TzPSA2Hd/QioRSChvn3L3i97WOlt5kj58Z8a6Hv+Mo7sSREJ4BxCSChuA+KdOvgrc1cfki6uR9ZZBj/evp/
-X-Gm-Message-State: AOJu0YxxjJifpxpYohiuAYaiNTGNw0TLJTp65XAeV81aJzaPwl8lRguA
- J6lFMAQHki18FJdorp6HQiRWnaAbluQCsZQXWrEJybsUs6oYYobQR/VNTQOlNXnI82RdACBIlsl
- SjeyKnPmsKTwW8QPq6jG80oSt5WVs462mcaNdeApVOeRMtC5X6HVr+/I=
-X-Google-Smtp-Source: AGHT+IEQ6Yr7NUwr1aO5sIMrfITNumwjXzV8MO5Y/AwbsS6q1SAgcgqkhs5f5Cb/5wsoXRVEZPgBYlQuasVbw4LiOOqFFgIk1CeV
+ Mon, 19 Feb 2024 11:44:07 +0000 (UTC)
+Received: from dxld by mail.servers.dxld.at with local (Exim 4.96)
+ (envelope-from <dxld@darkboxed.org>) id 1rc23t-00CpJs-17;
+ Mon, 19 Feb 2024 12:43:53 +0100
+From: =?UTF-8?q?Daniel=20Gr=C3=B6ber?= <dxld@darkboxed.org>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>, wireguard@lists.zx2c4.com,
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: =?UTF-8?q?Daniel=20Gr=C3=B6ber?= <dxld@darkboxed.org>
+Subject: [PATCH net-next v3] wireguard: Add netlink attrs for binding to
+ address and netdev
+Date: Mon, 19 Feb 2024 12:43:34 +0100
+Message-Id: <20240219114334.3057169-1-dxld@darkboxed.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-X-Received: by 2002:a05:6638:4904:b0:471:fe5:c48b with SMTP id
- cx4-20020a056638490400b004710fe5c48bmr88097jab.3.1707773176154; Mon, 12 Feb
- 2024 13:26:16 -0800 (PST)
-Date: Mon, 12 Feb 2024 13:26:16 -0800
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <00000000000085930e061135ed45@google.com>
-Subject: [syzbot] [wireguard?] KCSAN: data-race in wg_packet_receive /
- wg_packet_receive (7)
-From: syzbot <syzbot+fd07f3da9110f5f18b4f@syzkaller.appspotmail.com>
-To: Jason@zx2c4.com, davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
- linux-kernel@vger.kernel.org, netdev@vger.kernel.org, pabeni@redhat.com, 
- syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -64,136 +47,346 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
+Currently wg sockets are always bound to the wildcard address, this has two
+major downsides we care about:
 
-syzbot found the following issue on:
+1) It prevents re-using listen one port numbers on different ifaces/IPs.
 
-HEAD commit:    a5b6244cf87c Merge tag 'block-6.8-2024-02-10' of git://git..
-git tree:       upstream
-console output: https://syzkaller.appspot.com/x/log.txt?x=126f51e0180000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=3cd0dc1b46a5bc5c
-dashboard link: https://syzkaller.appspot.com/bug?extid=fd07f3da9110f5f18b4f
-compiler:       Debian clang version 15.0.6, GNU ld (GNU Binutils for Debian) 2.40
+ Our use case lies in dynamically routed wg mesh networks. Here running one
+ wg tunnel with AllowedIPs=::/0[1] per node *pair* is not unusual, but
+ needing unique ports across the whole network actually represents a
+ tangible scalability concern because as few as n=363 nodes will cause port
+ exhaustion since n*(n-1)/2 > 2^16-1.
 
-Unfortunately, I don't have any reproducer for this issue yet.
+ [1]: The need to do that comes from the lack of routing daemon support for
+   dynamically managing AllowedIPs which in turn is due to poor scalability
+   of the current netlink interface.
 
-Downloadable assets:
-disk image: https://storage.googleapis.com/syzbot-assets/c1a21353ecf6/disk-a5b6244c.raw.xz
-vmlinux: https://storage.googleapis.com/syzbot-assets/675fe8a43c32/vmlinux-a5b6244c.xz
-kernel image: https://storage.googleapis.com/syzbot-assets/1848dc711f3f/bzImage-a5b6244c.xz
+2) It has been demonstrated that having tunnel underlay and overlay routes
+ mixed into one routing table is fraught with peril[2] so it is desirable
+ to allow wireguard sockets to bind to a VRF l3mdev to separate the
+ two.
 
-IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+fd07f3da9110f5f18b4f@syzkaller.appspotmail.com
+ Technically ip-rules hacks could be applied to make this happen but since
+ routing table separation is a serious security concern we should make
+ doing it right easy.
 
-==================================================================
-BUG: KCSAN: data-race in wg_packet_receive / wg_packet_receive
+ [2]: Xue et. al. Bypassing Tunnels: Leaking VPN Client Traffic by Abusing
+   Routing Tables.
+   https://www.usenix.org/conference/usenixsecurity23/presentation/xue
 
-read to 0xffff88812bad5c08 of 4 bytes by interrupt on cpu 0:
- wg_cpumask_next_online drivers/net/wireguard/queueing.h:127 [inline]
- wg_queue_enqueue_per_device_and_peer drivers/net/wireguard/queueing.h:173 [inline]
- wg_packet_consume_data drivers/net/wireguard/receive.c:526 [inline]
- wg_packet_receive+0xc51/0x12c0 drivers/net/wireguard/receive.c:576
- wg_receive+0x4e/0x70 drivers/net/wireguard/socket.c:326
- udp_queue_rcv_one_skb+0xad0/0xb60 net/ipv4/udp.c:2113
- udp_queue_rcv_skb+0x20a/0x220 net/ipv4/udp.c:2191
- udp_unicast_rcv_skb+0x1c2/0x1f0 net/ipv4/udp.c:2351
- __udp4_lib_rcv+0xb93/0x1110 net/ipv4/udp.c:2427
- udp_rcv+0x4f/0x60 net/ipv4/udp.c:2609
- ip_protocol_deliver_rcu+0x356/0x6d0 net/ipv4/ip_input.c:205
- ip_local_deliver_finish+0x13c/0x1b0 net/ipv4/ip_input.c:233
- NF_HOOK include/linux/netfilter.h:314 [inline]
- ip_local_deliver+0xec/0x1c0 net/ipv4/ip_input.c:254
- dst_input include/net/dst.h:461 [inline]
- ip_rcv_finish net/ipv4/ip_input.c:449 [inline]
- NF_HOOK include/linux/netfilter.h:314 [inline]
- ip_rcv+0x18a/0x260 net/ipv4/ip_input.c:569
- __netif_receive_skb_one_core net/core/dev.c:5534 [inline]
- __netif_receive_skb+0x90/0x1b0 net/core/dev.c:5648
- process_backlog+0x21f/0x380 net/core/dev.c:5976
- __napi_poll+0x60/0x3c0 net/core/dev.c:6576
- napi_poll net/core/dev.c:6645 [inline]
- net_rx_action+0x32b/0x750 net/core/dev.c:6778
- __do_softirq+0xc4/0x27b kernel/softirq.c:553
- do_softirq+0x5e/0x90 kernel/softirq.c:454
- __local_bh_enable_ip+0x66/0x70 kernel/softirq.c:381
- __raw_read_unlock_bh include/linux/rwlock_api_smp.h:257 [inline]
- _raw_read_unlock_bh+0x1b/0x20 kernel/locking/spinlock.c:284
- wg_socket_send_skb_to_peer+0x109/0x130 drivers/net/wireguard/socket.c:184
- wg_packet_create_data_done drivers/net/wireguard/send.c:251 [inline]
- wg_packet_tx_worker+0x127/0x360 drivers/net/wireguard/send.c:276
- process_one_work kernel/workqueue.c:2633 [inline]
- process_scheduled_works+0x5b8/0xa40 kernel/workqueue.c:2706
- worker_thread+0x525/0x730 kernel/workqueue.c:2787
- kthread+0x1d7/0x210 kernel/kthread.c:388
- ret_from_fork+0x48/0x60 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:242
+The implementation is intentionally backwards compatible. Older
+wireguard-tools userspace will only show WGDEVICE_A_LISTEN_PORT even when
+we're listening on an IP or netdev and omitting the new listen attrs during
+set results in a wildcard bound socket as ever.
 
-write to 0xffff88812bad5c08 of 4 bytes by interrupt on cpu 1:
- wg_cpumask_next_online drivers/net/wireguard/queueing.h:130 [inline]
- wg_queue_enqueue_per_device_and_peer drivers/net/wireguard/queueing.h:173 [inline]
- wg_packet_consume_data drivers/net/wireguard/receive.c:526 [inline]
- wg_packet_receive+0xd3a/0x12c0 drivers/net/wireguard/receive.c:576
- wg_receive+0x4e/0x70 drivers/net/wireguard/socket.c:326
- udpv6_queue_rcv_one_skb+0xb37/0xbc0 net/ipv6/udp.c:716
- udpv6_queue_rcv_skb+0x20f/0x230 net/ipv6/udp.c:778
- udp6_unicast_rcv_skb+0x195/0x1b0 net/ipv6/udp.c:921
- __udp6_lib_rcv+0xa24/0xc80 net/ipv6/udp.c:1010
- udpv6_rcv+0x4f/0x60 net/ipv6/udp.c:1124
- ip6_protocol_deliver_rcu+0x92f/0xf30 net/ipv6/ip6_input.c:438
- ip6_input_finish net/ipv6/ip6_input.c:483 [inline]
- NF_HOOK include/linux/netfilter.h:314 [inline]
- ip6_input+0xbd/0x1b0 net/ipv6/ip6_input.c:492
- dst_input include/net/dst.h:461 [inline]
- ip6_rcv_finish+0x1d9/0x2d0 net/ipv6/ip6_input.c:79
- NF_HOOK include/linux/netfilter.h:314 [inline]
- ipv6_rcv+0x74/0x150 net/ipv6/ip6_input.c:310
- __netif_receive_skb_one_core net/core/dev.c:5534 [inline]
- __netif_receive_skb+0x90/0x1b0 net/core/dev.c:5648
- process_backlog+0x21f/0x380 net/core/dev.c:5976
- __napi_poll+0x60/0x3c0 net/core/dev.c:6576
- napi_poll net/core/dev.c:6645 [inline]
- net_rx_action+0x32b/0x750 net/core/dev.c:6778
- __do_softirq+0xc4/0x27b kernel/softirq.c:553
- do_softirq+0x5e/0x90 kernel/softirq.c:454
- __local_bh_enable_ip+0x66/0x70 kernel/softirq.c:381
- __raw_read_unlock_bh include/linux/rwlock_api_smp.h:257 [inline]
- _raw_read_unlock_bh+0x1b/0x20 kernel/locking/spinlock.c:284
- wg_socket_send_skb_to_peer+0x109/0x130 drivers/net/wireguard/socket.c:184
- wg_packet_create_data_done drivers/net/wireguard/send.c:251 [inline]
- wg_packet_tx_worker+0x127/0x360 drivers/net/wireguard/send.c:276
- process_one_work kernel/workqueue.c:2633 [inline]
- process_scheduled_works+0x5b8/0xa40 kernel/workqueue.c:2706
- worker_thread+0x525/0x730 kernel/workqueue.c:2787
- kthread+0x1d7/0x210 kernel/kthread.c:388
- ret_from_fork+0x48/0x60 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:242
-
-value changed: 0x00000000 -> 0x00000001
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 1 PID: 5475 Comm: kworker/1:6 Not tainted 6.8.0-rc3-syzkaller-00293-ga5b6244cf87c #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/25/2024
-Workqueue: wg-crypt-wg0 wg_packet_tx_worker
-==================================================================
-
-
+Signed-off-by: Daniel Gröber <dxld@darkboxed.org>
 ---
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
+Changes in v3:
+ - Rewrite commit message
 
-syzbot will keep track of this issue. See:
-https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
+Userspace wireguard-tools patches are here:
+  https://lists.zx2c4.com/pipermail/wireguard/2023-October/thread.html#8222
+  wg: Support binding to specific addr and iface for multihomed hosts
 
-If the report is already addressed, let syzbot know by replying with:
-#syz fix: exact-commit-title
+ drivers/net/wireguard/device.c  |  4 +--
+ drivers/net/wireguard/device.h  |  3 +-
+ drivers/net/wireguard/netlink.c | 56 ++++++++++++++++++++++++++++-----
+ drivers/net/wireguard/socket.c  | 41 +++++++++++++++---------
+ drivers/net/wireguard/socket.h  |  3 +-
+ include/uapi/linux/wireguard.h  |  6 ++++
+ 6 files changed, 88 insertions(+), 25 deletions(-)
 
-If you want to overwrite report's subsystems, reply with:
-#syz set subsystems: new-subsystem
-(See the list of subsystem names on the web dashboard)
+diff --git a/drivers/net/wireguard/device.c b/drivers/net/wireguard/device.c
+index deb9636b0ecf..ec28f5021791 100644
+--- a/drivers/net/wireguard/device.c
++++ b/drivers/net/wireguard/device.c
+@@ -48,7 +48,7 @@ static int wg_open(struct net_device *dev)
+ 		dev_v6->cnf.addr_gen_mode = IN6_ADDR_GEN_MODE_NONE;
+ 
+ 	mutex_lock(&wg->device_update_lock);
+-	ret = wg_socket_init(wg, wg->incoming_port);
++	ret = wg_socket_init(wg, wg->port_cfg);
+ 	if (ret < 0)
+ 		goto out;
+ 	list_for_each_entry(peer, &wg->peer_list, peer_list) {
+@@ -249,7 +249,7 @@ static void wg_destruct(struct net_device *dev)
+ 	rtnl_unlock();
+ 	mutex_lock(&wg->device_update_lock);
+ 	rcu_assign_pointer(wg->creating_net, NULL);
+-	wg->incoming_port = 0;
++	memzero_explicit(&wg->port_cfg, sizeof(wg->port_cfg));
+ 	wg_socket_reinit(wg, NULL, NULL);
+ 	/* The final references are cleared in the below calls to destroy_workqueue. */
+ 	wg_peer_remove_all(wg);
+diff --git a/drivers/net/wireguard/device.h b/drivers/net/wireguard/device.h
+index 43c7cebbf50b..ac4092d8c9d0 100644
+--- a/drivers/net/wireguard/device.h
++++ b/drivers/net/wireguard/device.h
+@@ -17,6 +17,7 @@
+ #include <linux/mutex.h>
+ #include <linux/net.h>
+ #include <linux/ptr_ring.h>
++#include <net/udp_tunnel.h>
+ 
+ struct wg_device;
+ 
+@@ -53,7 +54,7 @@ struct wg_device {
+ 	atomic_t handshake_queue_len;
+ 	unsigned int num_peers, device_update_gen;
+ 	u32 fwmark;
+-	u16 incoming_port;
++	struct udp_port_cfg port_cfg;
+ };
+ 
+ int wg_device_init(void);
+diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlink.c
+index e220d761b1f2..b0a4bf78982e 100644
+--- a/drivers/net/wireguard/netlink.c
++++ b/drivers/net/wireguard/netlink.c
+@@ -26,6 +26,8 @@ static const struct nla_policy device_policy[WGDEVICE_A_MAX + 1] = {
+ 	[WGDEVICE_A_PUBLIC_KEY]		= NLA_POLICY_EXACT_LEN(NOISE_PUBLIC_KEY_LEN),
+ 	[WGDEVICE_A_FLAGS]		= { .type = NLA_U32 },
+ 	[WGDEVICE_A_LISTEN_PORT]	= { .type = NLA_U16 },
++	[WGDEVICE_A_LISTEN_ADDR]	= NLA_POLICY_MIN_LEN(sizeof(struct in_addr)),
++	[WGDEVICE_A_LISTEN_IFINDEX]	= { .type = NLA_U32 },
+ 	[WGDEVICE_A_FWMARK]		= { .type = NLA_U32 },
+ 	[WGDEVICE_A_PEERS]		= { .type = NLA_NESTED }
+ };
+@@ -230,11 +232,22 @@ static int wg_get_device_dump(struct sk_buff *skb, struct netlink_callback *cb)
+ 
+ 	if (!ctx->next_peer) {
+ 		if (nla_put_u16(skb, WGDEVICE_A_LISTEN_PORT,
+-				wg->incoming_port) ||
++				ntohs(wg->port_cfg.local_udp_port)) ||
++		    nla_put_u32(skb, WGDEVICE_A_LISTEN_IFINDEX, wg->port_cfg.bind_ifindex) ||
+ 		    nla_put_u32(skb, WGDEVICE_A_FWMARK, wg->fwmark) ||
+ 		    nla_put_u32(skb, WGDEVICE_A_IFINDEX, wg->dev->ifindex) ||
+ 		    nla_put_string(skb, WGDEVICE_A_IFNAME, wg->dev->name))
+ 			goto out;
++		if (wg->port_cfg.family == AF_INET &&
++		    nla_put_in_addr(skb, WGDEVICE_A_LISTEN_ADDR,
++				    wg->port_cfg.local_ip.s_addr))
++				goto out;
++#if IS_ENABLED(CONFIG_IPV6)
++		if (wg->port_cfg.family == AF_INET6 &&
++		    nla_put_in6_addr(skb, WGDEVICE_A_LISTEN_ADDR,
++				     &wg->port_cfg.local_ip6))
++				goto out;
++#endif
+ 
+ 		down_read(&wg->static_identity.lock);
+ 		if (wg->static_identity.has_identity) {
+@@ -311,19 +324,49 @@ static int wg_get_device_done(struct netlink_callback *cb)
+ 	return 0;
+ }
+ 
+-static int set_port(struct wg_device *wg, u16 port)
++static int set_port_cfg(struct wg_device *wg, struct nlattr **attrs)
+ {
+ 	struct wg_peer *peer;
++	struct udp_port_cfg port_cfg = {
++		.family = AF_UNSPEC,
++	};
++
++	if (attrs[WGDEVICE_A_LISTEN_PORT])
++		port_cfg.local_udp_port =
++			htons(nla_get_u16(attrs[WGDEVICE_A_LISTEN_PORT]));
++	if (attrs[WGDEVICE_A_LISTEN_ADDR]) {
++		union {
++			struct in_addr addr4;
++			struct in6_addr addr6;
++		} *u_addr = nla_data(attrs[WGDEVICE_A_LISTEN_ADDR]);
++		size_t len = nla_len(attrs[WGDEVICE_A_LISTEN_ADDR]);
++
++		if (len == sizeof(struct in_addr)) {
++			port_cfg.family = AF_INET;
++			port_cfg.local_ip = u_addr->addr4;
++		} else if (len == sizeof(struct in6_addr)) {
++#if IS_ENABLED(CONFIG_IPV6)
++			port_cfg.family = AF_INET6;
++			port_cfg.local_ip6 = u_addr->addr6;
++#else
++			return -EAFNOSUPPORT;
++#endif
++		}
++	}
++	if (attrs[WGDEVICE_A_LISTEN_IFINDEX]) {
++		port_cfg.bind_ifindex =
++			nla_get_u32(attrs[WGDEVICE_A_LISTEN_IFINDEX]);
++	}
+ 
+-	if (wg->incoming_port == port)
++	if (memcmp(&port_cfg, &wg->port_cfg, sizeof(port_cfg)) == 0)
+ 		return 0;
+ 	list_for_each_entry(peer, &wg->peer_list, peer_list)
+ 		wg_socket_clear_peer_endpoint_src(peer);
+ 	if (!netif_running(wg->dev)) {
+-		wg->incoming_port = port;
++		wg->port_cfg = port_cfg;
+ 		return 0;
+ 	}
+-	return wg_socket_init(wg, port);
++	return wg_socket_init(wg, port_cfg);
+ }
+ 
+ static int set_allowedip(struct wg_peer *peer, struct nlattr **attrs)
+@@ -531,8 +574,7 @@ static int wg_set_device(struct sk_buff *skb, struct genl_info *info)
+ 	}
+ 
+ 	if (info->attrs[WGDEVICE_A_LISTEN_PORT]) {
+-		ret = set_port(wg,
+-			nla_get_u16(info->attrs[WGDEVICE_A_LISTEN_PORT]));
++		ret = set_port_cfg(wg, info->attrs);
+ 		if (ret)
+ 			goto out;
+ 	}
+diff --git a/drivers/net/wireguard/socket.c b/drivers/net/wireguard/socket.c
+index 0414d7a6ce74..47bb46e0cdd9 100644
+--- a/drivers/net/wireguard/socket.c
++++ b/drivers/net/wireguard/socket.c
+@@ -346,7 +346,7 @@ static void set_sock_opts(struct socket *sock)
+ 	sk_set_memalloc(sock->sk);
+ }
+ 
+-int wg_socket_init(struct wg_device *wg, u16 port)
++int wg_socket_init(struct wg_device *wg, struct udp_port_cfg port_cfg)
+ {
+ 	struct net *net;
+ 	int ret;
+@@ -356,12 +356,7 @@ int wg_socket_init(struct wg_device *wg, u16 port)
+ 		.encap_rcv = wg_receive
+ 	};
+ 	struct socket *new4 = NULL, *new6 = NULL;
+-	struct udp_port_cfg port4 = {
+-		.family = AF_INET,
+-		.local_ip.s_addr = htonl(INADDR_ANY),
+-		.local_udp_port = htons(port),
+-		.use_udp_checksums = true
+-	};
++	struct udp_port_cfg port4;
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	int retries = 0;
+ 	struct udp_port_cfg port6 = {
+@@ -373,6 +368,23 @@ int wg_socket_init(struct wg_device *wg, u16 port)
+ 	};
+ #endif
+ 
++	if (port_cfg.family == AF_UNSPEC) {
++		port4 = (struct udp_port_cfg) {
++			.family = AF_INET,
++			.local_ip.s_addr = htonl(INADDR_ANY),
++			.local_udp_port = port_cfg.local_udp_port,
++			.use_udp_checksums = true
++		};
++	} else {
++		port4 = port_cfg;
++		port4.use_udp_checksums = true;
++		if (IS_ENABLED(CONFIG_IPV6) && port_cfg.family == AF_INET6) {
++			port4.use_udp6_tx_checksums = true;
++			port4.use_udp6_rx_checksums = true;
++			port4.ipv6_v6only = true;
++		}
++	}
++
+ 	rcu_read_lock();
+ 	net = rcu_dereference(wg->creating_net);
+ 	net = net ? maybe_get_net(net) : NULL;
+@@ -380,10 +392,6 @@ int wg_socket_init(struct wg_device *wg, u16 port)
+ 	if (unlikely(!net))
+ 		return -ENONET;
+ 
+-#if IS_ENABLED(CONFIG_IPV6)
+-retry:
+-#endif
+-
+ 	ret = udp_sock_create(net, &port4, &new4);
+ 	if (ret < 0) {
+ 		pr_err("%s: Could not create IPv4 socket\n", wg->dev->name);
+@@ -392,13 +400,18 @@ int wg_socket_init(struct wg_device *wg, u16 port)
+ 	set_sock_opts(new4);
+ 	setup_udp_tunnel_sock(net, new4, &cfg);
+ 
++	if (port_cfg.family != AF_UNSPEC)
++		goto reinit;
++
+ #if IS_ENABLED(CONFIG_IPV6)
++retry:
+ 	if (ipv6_mod_enabled()) {
+ 		port6.local_udp_port = inet_sk(new4->sk)->inet_sport;
+ 		ret = udp_sock_create(net, &port6, &new6);
+ 		if (ret < 0) {
+ 			udp_tunnel_sock_release(new4);
+-			if (ret == -EADDRINUSE && !port && retries++ < 100)
++			if (ret == -EADDRINUSE && !port_cfg.local_udp_port &&
++			    retries++ < 100)
+ 				goto retry;
+ 			pr_err("%s: Could not create IPv6 socket\n",
+ 			       wg->dev->name);
+@@ -409,6 +422,8 @@ int wg_socket_init(struct wg_device *wg, u16 port)
+ 	}
+ #endif
+ 
++reinit:
++	wg->port_cfg = port_cfg;
+ 	wg_socket_reinit(wg, new4->sk, new6 ? new6->sk : NULL);
+ 	ret = 0;
+ out:
+@@ -428,8 +443,6 @@ void wg_socket_reinit(struct wg_device *wg, struct sock *new4,
+ 				lockdep_is_held(&wg->socket_update_lock));
+ 	rcu_assign_pointer(wg->sock4, new4);
+ 	rcu_assign_pointer(wg->sock6, new6);
+-	if (new4)
+-		wg->incoming_port = ntohs(inet_sk(new4)->inet_sport);
+ 	mutex_unlock(&wg->socket_update_lock);
+ 	synchronize_net();
+ 	sock_free(old4);
+diff --git a/drivers/net/wireguard/socket.h b/drivers/net/wireguard/socket.h
+index bab5848efbcd..1532a263c518 100644
+--- a/drivers/net/wireguard/socket.h
++++ b/drivers/net/wireguard/socket.h
+@@ -10,8 +10,9 @@
+ #include <linux/udp.h>
+ #include <linux/if_vlan.h>
+ #include <linux/if_ether.h>
++#include <net/udp_tunnel.h>
+ 
+-int wg_socket_init(struct wg_device *wg, u16 port);
++int wg_socket_init(struct wg_device *wg, struct udp_port_cfg port);
+ void wg_socket_reinit(struct wg_device *wg, struct sock *new4,
+ 		      struct sock *new6);
+ int wg_socket_send_buffer_to_peer(struct wg_peer *peer, void *data,
+diff --git a/include/uapi/linux/wireguard.h b/include/uapi/linux/wireguard.h
+index ae88be14c947..240d1c850dfd 100644
+--- a/include/uapi/linux/wireguard.h
++++ b/include/uapi/linux/wireguard.h
+@@ -28,6 +28,8 @@
+  *    WGDEVICE_A_PRIVATE_KEY: NLA_EXACT_LEN, len WG_KEY_LEN
+  *    WGDEVICE_A_PUBLIC_KEY: NLA_EXACT_LEN, len WG_KEY_LEN
+  *    WGDEVICE_A_LISTEN_PORT: NLA_U16
++ *    WGDEVICE_A_LISTEN_ADDR : NLA_MIN_LEN(struct sockaddr), struct sockaddr_in or struct sockaddr_in6
++ *    WGDEVICE_A_LISTEN_IFINDEX : NLA_U32
+  *    WGDEVICE_A_FWMARK: NLA_U32
+  *    WGDEVICE_A_PEERS: NLA_NESTED
+  *        0: NLA_NESTED
+@@ -82,6 +84,8 @@
+  *                      peers should be removed prior to adding the list below.
+  *    WGDEVICE_A_PRIVATE_KEY: len WG_KEY_LEN, all zeros to remove
+  *    WGDEVICE_A_LISTEN_PORT: NLA_U16, 0 to choose randomly
++ *    WGDEVICE_A_LISTEN_ADDR : struct sockaddr_in or struct sockaddr_in6.
++ *    WGDEVICE_A_LISTEN_IFINDEX : NLA_U32
+  *    WGDEVICE_A_FWMARK: NLA_U32, 0 to disable
+  *    WGDEVICE_A_PEERS: NLA_NESTED
+  *        0: NLA_NESTED
+@@ -157,6 +161,8 @@ enum wgdevice_attribute {
+ 	WGDEVICE_A_LISTEN_PORT,
+ 	WGDEVICE_A_FWMARK,
+ 	WGDEVICE_A_PEERS,
++	WGDEVICE_A_LISTEN_ADDR,
++	WGDEVICE_A_LISTEN_IFINDEX,
+ 	__WGDEVICE_A_LAST
+ };
+ #define WGDEVICE_A_MAX (__WGDEVICE_A_LAST - 1)
+-- 
+2.39.2
 
-If the report is a duplicate of another one, reply with:
-#syz dup: exact-subject-of-another-report
-
-If you want to undo deduplication, reply with:
-#syz undup
