@@ -4,50 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5554AC48BF6
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 Feb 2024 10:58:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E751C5478C
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 27 Feb 2024 12:52:42 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3607627c;
-	Wed, 21 Feb 2024 10:58:27 +0000 (UTC)
-Received: from mail-io1-f72.google.com (mail-io1-f72.google.com
- [209.85.166.72])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9e5a4f9f
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a38e69d8;
+	Tue, 27 Feb 2024 12:52:40 +0000 (UTC)
+Received: from klaus.reldeif.de (<unknown>
+ [2a03:4000:21:a0d:a84b:bbff:fea3:805c])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5e0109ec
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 21 Feb 2024 10:58:25 +0000 (UTC)
-Received: by mail-io1-f72.google.com with SMTP id
- ca18e2360f4ac-7c751a35e4dso52142139f.2
- for <wireguard@lists.zx2c4.com>; Wed, 21 Feb 2024 02:58:25 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708513104; x=1709117904;
- h=to:from:subject:message-id:date:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=5jm6Ei9nJOAtDNiwBs++J+e2bUk4eeHrUjSMfCNj5Lc=;
- b=vmFm8Q/1Q3OZKyT36TkkEe3nIXlG+BPYFHz0wtCSB8m8OIM8RqJAYEJDmNsJE1ubRZ
- Qq3e7zGvBs7wSHN9E2f88En06D2ed+6VcsVXtf9svzNf8K1kYDzeomGQ+B5R72TBCAaN
- QCzGGJ8vwXZky7tBzjFoDdzu0KBYz3RK8TTC2Sdy13kYQ8RrMNnAgH0WA78Kt+GstnDU
- koqOK6q2aI3WUXwXifsU0wndxF4zWr4BxE5Bm2zkZba2ofxc5wKWqzxNpFynj6D1D/CR
- yMdgyX89WBnBltwIn9FtQeCEbJjWf6oGEC+ALeGEK6dXODZfUspdCig1ko8HK01iNg6S
- CvyA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUiW/WzOSfJXSgVS1Nbys7D2lBNSV8voOqyTBBa6ksFrr2MlD00WKHTXIFnYoSkyT66FG5MGPDy1x24RcwkXG+4C2llsF1FPwkY
-X-Gm-Message-State: AOJu0YxTK7IUoRT/a1z2O17hXFGr+Kfeqzo0+BzbTPAsdlI1SZpNryIE
- qduymcdYSBl6lr9zN/P15WpOK38XWaDolq/MrOAKGHpIQDiUbGhAnGFthr/GliUhuwsPyQDYNym
- 8tbVLo748Qcfwa/6SgQ8yj6GpzcmmOpiBOISr2q7weBtqPD929ONET/w=
-X-Google-Smtp-Source: AGHT+IF/JWOtF3bGcvLFPn3GepiEaaD446INF6uZGhTQ4fNNmNDEu93tyDBDGuF0MTsp3ToTDrXiTZpCQ4CRsnblj+TOTDzWYQpL
+ Tue, 27 Feb 2024 12:52:38 +0000 (UTC)
+Received: from [130.75.33.138] (idefix-hs.sra.uni-hannover.de [130.75.33.138])
+ by klaus.reldeif.de (Postfix) with ESMTPSA id 438C8872CB
+ for <wireguard@lists.zx2c4.com>; Tue, 27 Feb 2024 13:52:38 +0100 (CET)
+Message-ID: <a34c95ff-c053-49fd-8ffc-d9cca49c11b2@reldeif.de>
+Date: Tue, 27 Feb 2024 13:52:37 +0100
 MIME-Version: 1.0
-X-Received: by 2002:a92:ca4d:0:b0:365:21f4:7008 with SMTP id
- q13-20020a92ca4d000000b0036521f47008mr979051ilo.4.1708513104412; Wed, 21 Feb
- 2024 02:58:24 -0800 (PST)
-Date: Wed, 21 Feb 2024 02:58:24 -0800
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <000000000000aec9480611e23402@google.com>
-Subject: [syzbot] Monthly wireguard report (Feb 2024)
-From: syzbot <syzbot+listb237e3b69c5568cf7073@syzkaller.appspotmail.com>
-To: Jason@zx2c4.com, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
- syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+To: wireguard@lists.zx2c4.com
+Content-Language: de-DE
+From: =?UTF-8?Q?Bj=C3=B6rn_Fiedler?= <bjoern@reldeif.de>
+Subject: [PATCH] wg-quick: linux: introduce BirthNamespace parameter
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -62,34 +42,70 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello wireguard maintainers/developers,
+This allows the interface to be created in another network namespace
+and be moved into the current one afterwards. As the interface
+remembers it's birth namespace, encrypted packets are sent and
+received using the birth namespace. Use case is to route all the
+traffic via the "New Namespace Solution" as described on
+https://www.wireguard.com/netns/
 
-This is a 31-day syzbot report for the wireguard subsystem.
-All related reports/information can be found at:
-https://syzkaller.appspot.com/upstream/s/wireguard
-
-During the period, 1 new issues were detected and 0 were fixed.
-In total, 3 issues are still open and 15 have been fixed so far.
-
-Some of the still happening issues:
-
-Ref Crashes Repro Title
-<1> 868     No    KCSAN: data-race in wg_packet_send_staged_packets / wg_packet_send_staged_packets (3)
-                  https://syzkaller.appspot.com/bug?extid=6ba34f16b98fe40daef1
-<2> 683     No    KCSAN: data-race in wg_packet_decrypt_worker / wg_packet_rx_poll (2)
-                  https://syzkaller.appspot.com/bug?extid=d1de830e4ecdaac83d89
-<3> 1       No    KCSAN: data-race in wg_packet_receive / wg_packet_receive (7)
-                  https://syzkaller.appspot.com/bug?extid=fd07f3da9110f5f18b4f
-
+Signed-off-by Björn Fiedler <bjoern@reldeif.de>
 ---
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
+  src/man/wg-quick.8      | 3 +++
+  src/wg-quick/linux.bash | 7 ++++++-
+  2 files changed, 9 insertions(+), 1 deletion(-)
 
-To disable reminders for individual bugs, reply with the following command:
-#syz set <Ref> no-reminders
+diff --git a/src/man/wg-quick.8 b/src/man/wg-quick.8
+index bc9e145..b141041 100644
+--- a/src/man/wg-quick.8
++++ b/src/man/wg-quick.8
+@@ -92,6 +92,9 @@ special values: `off' disables the creation of routes altogether, and `auto'
+  (the default) adds routes to the default table and enables special handling of
+  default routes.
+  .IP \(bu
++BirthNamespace \(em on Linux, if specified, the interface is created inside that namespace and
++afterwards moved into the current network namespace.
++.IP \(bu
+  PreUp, PostUp, PreDown, PostDown \(em script snippets which will be executed by
+  .BR bash (1)
+  before/after setting up/tearing down the interface, most commonly used
+diff --git a/src/wg-quick/linux.bash b/src/wg-quick/linux.bash
+index 4193ce5..b0d1b70 100755
+--- a/src/wg-quick/linux.bash
++++ b/src/wg-quick/linux.bash
+@@ -18,6 +18,7 @@ MTU=""
+  DNS=( )
+  DNS_SEARCH=( )
+  TABLE=""
++BIRTH_NAMESPACE=""
+  PRE_UP=( )
+  POST_UP=( )
+  PRE_DOWN=( )
+@@ -61,6 +62,7 @@ parse_options() {
+                                 [[ $v =~ (^[0-9.]+$)|(^.*:.*$) ]] && DNS+=( $v ) || DNS_SEARCH+=( $v )
+                         done; continue ;;
+                         Table) TABLE="$value"; continue ;;
++                       BirthNamespace) BIRTH_NAMESPACE="$value"; continue ;;
+                         PreUp) PRE_UP+=( "$value" ); continue ;;
+                         PreDown) PRE_DOWN+=( "$value" ); continue ;;
+                         PostUp) POST_UP+=( "$value" ); continue ;;
+@@ -87,12 +89,15 @@ auto_su() {
 
-To change bug's subsystems, reply with:
-#syz set <Ref> subsystems: new-subsystem
+  add_if() {
+         local ret
+-       if ! cmd ip link add "$INTERFACE" type wireguard; then
++       local namespace_arg=""
++       [[ -z $BIRTH_NAMESPACE ]] || namespace_arg="-n ${BIRTH_NAMESPACE}"
++       if ! cmd ip $namespace_arg link add "$INTERFACE" type wireguard; then
+                 ret=$?
+                 [[ -e /sys/module/wireguard ]] || ! command -v "${WG_QUICK_USERSPACE_IMPLEMENTATION:-wireguard-go}" >/dev/null && exit $ret
+                 echo "[!] Missing WireGuard kernel module. Falling back to slow userspace implementation." >&2
+                 cmd "${WG_QUICK_USERSPACE_IMPLEMENTATION:-wireguard-go}" "$INTERFACE"
+         fi
++    [[ -z $BIRTH_NAMESPACE ]] || cmd ip $namespace_arg link set "$INTERFACE" netns $BASHPID
+  }
 
-You may send multiple commands in a single email message.
+  del_if() {
+-- 
+2.43.0
+
