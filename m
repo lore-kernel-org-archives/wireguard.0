@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10FC3D49226
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 13:47:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D5E9D49223
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 13:47:39 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 76661bb7;
-	Mon, 18 Nov 2024 12:39:25 +0000 (UTC)
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com
- [209.85.218.50])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6261afaa
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 86948b46;
+	Mon, 18 Nov 2024 12:39:23 +0000 (UTC)
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com
+ [209.85.208.46])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7c82d179
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 8 Mar 2024 10:34:33 +0000 (UTC)
-Received: by mail-ej1-f50.google.com with SMTP id
- a640c23a62f3a-a3f893ad5f4so87550966b.2
- for <wireguard@lists.zx2c4.com>; Fri, 08 Mar 2024 02:34:33 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Mar 2024 10:34:31 +0000 (UTC)
+Received: by mail-ed1-f46.google.com with SMTP id
+ 4fb4d7f45d1cf-563c403719cso2405628a12.2
+ for <wireguard@lists.zx2c4.com>; Fri, 08 Mar 2024 02:34:31 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709894072; x=1710498872;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=XagB2LkBSV5q8D6u6Fwx7UufMS0bw8vTRFIb2KLQwug=;
- b=ZysvVmorGLY7x88LFaQWLR0HyijlY2Up3GfuzbQyd187gUJ9GqUpi8xoZKgbTI48u9
- N3Q0Qsyb2s7G+RouWfDNW0Z8w0BhkxZFhklGkww1o4oeW0rbEj6ogI1E4lYn5/1TfeJm
- Ls6FK0a4aDMy1vxOv4220SH/eBmfeIObDTeyNYQA05qy/VZycgQ7QxLkcl2vYavDDrQc
- 5BIw6Y2FcraZlrMjvDIIjh9BM/dEQGK7InbnBaHJBnIg0XrvYCPvhQfDDY+blXxRuIgB
- GQWzxV1APnKfmWV9EQxP3S8tpWzdQr/YiumSpRZ25GlOqXXnIp1oeZkk5+/Jx3bVbuqV
- tiLw==
+ d=1e100.net; s=20230601; t=1709894071; x=1710498871;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=NDoFAf/EWOLeF9600iXmBhzVjPZO0aaKJXl+GmInLQk=;
+ b=OVhCx7/k6SttQ9OX71fVqg1VfzqDdriZICuYw+SfaE77sJ+eOtwYYlvpdRLK/sBiaZ
+ KKDzVSdzbN6IshdlQyC/KaiE4YWBRFWSh6F8Ly0/27B9OFVqT8OzDcgK8pfahKdiBF1K
+ IX6IiLOBocsnHfuSdeBqQi5+RYFH0Bx672AsN4X5Yaj9KHqqOsF1AMmd+CuA8qNi3ZP6
+ 54UmrAS6Z/7PG4dpLAKXfjIckNgeZF9FjEJtxRl94jptV050fLMp3rQayuJ3Kmioxy3x
+ ig579uOycSpbJa/QiF/yBS59XaEezCyT1myd6BMYHh4bzI5U7wEnbGha+Ej5KsQpj4U5
+ 1hAQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXeOnuRyT60/KlVnVUdJRXFHQXOwuVtv+uGaFi3vcoJbGjxZes+kYs2VKqNbCI7kz1/Ox6sa8OVwSFxOpFuN/uXG9qkI7NJG6Fu
-X-Gm-Message-State: AOJu0YxXZJ/RCxdSBH0llPiB+8isuZQkxoy6Ykfl6o7qE85UCFFxq2NA
- 2ffduo9lsy3V+vEDrg/wg6ZnD+vgEqS2GAE2Y1aEgM76hIqRHLe7
-X-Google-Smtp-Source: AGHT+IGyNSLodNc0h4ktHrVIEYbbfZTb0oilAJIHPaJ7ue0mB7a++vK8N5tq65PuSeYnwlaBf4byHQ==
-X-Received: by 2002:a17:906:c7c3:b0:a3e:34e8:626f with SMTP id
- dc3-20020a170906c7c300b00a3e34e8626fmr14919878ejb.66.1709894072325; 
- Fri, 08 Mar 2024 02:34:32 -0800 (PST)
-Received: from localhost (fwdproxy-lla-120.fbsv.net.
- [2a03:2880:30ff:78::face:b00c]) by smtp.gmail.com with ESMTPSA id
- p16-20020a170906229000b00a442979e5e5sm9133311eja.220.2024.03.08.02.34.31
+ AJvYcCUEu6jgBHNGK3KghiOa1swYsiYp8z01cixnwH/pbZj+msO//8qhfVqmnIRsKGblP/b3aNV7ps9i+s8cfyB47RHNsb675IhAH8Ww
+X-Gm-Message-State: AOJu0Yw5kqF5Of22LZgpUS45YtwEcabo7qVEWRrS5Gjn4QYWS1PVzfbH
+ Jaf79m9w3YTOOu8WIY+ats1cCVepE+eajhfWk/pFE+F2MBkYQ2Z2
+X-Google-Smtp-Source: AGHT+IEJMBNjE1KzZZWYOZbl0RRbmyKgc2oj55yl0Ule29SisD4BdzhDEO1dS4GvHWr++b4B33BelQ==
+X-Received: by 2002:a05:6402:5c4:b0:566:b2e1:58f with SMTP id
+ n4-20020a05640205c400b00566b2e1058fmr1513116edx.41.1709894070654; 
+ Fri, 08 Mar 2024 02:34:30 -0800 (PST)
+Received: from localhost (fwdproxy-lla-001.fbsv.net.
+ [2a03:2880:30ff:1::face:b00c]) by smtp.gmail.com with ESMTPSA id
+ o14-20020aa7c7ce000000b0056742460f68sm5716057eds.66.2024.03.08.02.34.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Mar 2024 02:34:32 -0800 (PST)
+ Fri, 08 Mar 2024 02:34:30 -0800 (PST)
 From: Breno Leitao <leitao@debian.org>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  "David S. Miller" <davem@davemloft.net>,
@@ -50,12 +50,10 @@ To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
 Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org, horms@kernel.org,
  dsahern@kernel.org,
  wireguard@lists.zx2c4.com (open list:WIREGUARD SECURE NETWORK TUNNEL)
-Subject: [PATCH net-next 2/2] wireguard: Remove generic .ndo_get_stats64
-Date: Fri,  8 Mar 2024 02:34:18 -0800
-Message-ID: <20240308103419.1771177-2-leitao@debian.org>
+Subject: [PATCH net-next 1/2] wireguard: Leverage core stats allocator
+Date: Fri,  8 Mar 2024 02:34:17 -0800
+Message-ID: <20240308103419.1771177-1-leitao@debian.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240308103419.1771177-1-leitao@debian.org>
-References: <20240308103419.1771177-1-leitao@debian.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Mon, 18 Nov 2024 12:39:22 +0000
@@ -73,32 +71,59 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Commit 3e2f544dd8a33 ("net: get stats64 if device if driver is
-configured") moved the callback to dev_get_tstats64() to net core, so,
-unless the driver is doing some custom stats collection, it does not
-need to set .ndo_get_stats64.
+With commit 34d21de99cea9 ("net: Move {l,t,d}stats allocation to core and
+convert veth & vrf"), stats allocation could be done on net core
+instead of in this driver.
 
-Since this driver is now relying in NETDEV_PCPU_STAT_TSTATS, then, it
-doesn't need to set the dev_get_tstats64() generic .ndo_get_stats64
-function pointer.
+With this new approach, the driver doesn't have to bother with error
+handling (allocation failure checking, making sure free happens in the
+right spot, etc). This is core responsibility now.
+
+Remove the allocation in the wireguard driver and leverage the network
+core allocation instead.
 
 Signed-off-by: Breno Leitao <leitao@debian.org>
 ---
- drivers/net/wireguard/device.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/wireguard/device.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
 diff --git a/drivers/net/wireguard/device.c b/drivers/net/wireguard/device.c
-index cb025ba8f60d..0f7ed274fdf7 100644
+index deb9636b0ecf..cb025ba8f60d 100644
 --- a/drivers/net/wireguard/device.c
 +++ b/drivers/net/wireguard/device.c
-@@ -237,7 +237,6 @@ static const struct net_device_ops netdev_ops = {
- 	.ndo_open		= wg_open,
- 	.ndo_stop		= wg_stop,
- 	.ndo_start_xmit		= wg_xmit,
--	.ndo_get_stats64	= dev_get_tstats64
- };
+@@ -262,7 +262,6 @@ static void wg_destruct(struct net_device *dev)
+ 	rcu_barrier(); /* Wait for all the peers to be actually freed. */
+ 	wg_ratelimiter_uninit();
+ 	memzero_explicit(&wg->static_identity, sizeof(wg->static_identity));
+-	free_percpu(dev->tstats);
+ 	kvfree(wg->index_hashtable);
+ 	kvfree(wg->peer_hashtable);
+ 	mutex_unlock(&wg->device_update_lock);
+@@ -331,14 +330,10 @@ static int wg_newlink(struct net *src_net, struct net_device *dev,
+ 	if (!wg->index_hashtable)
+ 		goto err_free_peer_hashtable;
  
- static void wg_destruct(struct net_device *dev)
+-	dev->tstats = netdev_alloc_pcpu_stats(struct pcpu_sw_netstats);
+-	if (!dev->tstats)
+-		goto err_free_index_hashtable;
+-
+ 	wg->handshake_receive_wq = alloc_workqueue("wg-kex-%s",
+ 			WQ_CPU_INTENSIVE | WQ_FREEZABLE, 0, dev->name);
+ 	if (!wg->handshake_receive_wq)
+-		goto err_free_tstats;
++		goto err_free_index_hashtable;
+ 
+ 	wg->handshake_send_wq = alloc_workqueue("wg-kex-%s",
+ 			WQ_UNBOUND | WQ_FREEZABLE, 0, dev->name);
+@@ -397,8 +392,6 @@ static int wg_newlink(struct net *src_net, struct net_device *dev,
+ 	destroy_workqueue(wg->handshake_send_wq);
+ err_destroy_handshake_receive:
+ 	destroy_workqueue(wg->handshake_receive_wq);
+-err_free_tstats:
+-	free_percpu(dev->tstats);
+ err_free_index_hashtable:
+ 	kvfree(wg->index_hashtable);
+ err_free_peer_hashtable:
 -- 
 2.43.0
 
