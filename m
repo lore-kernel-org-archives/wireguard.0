@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D5E9D49223
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 13:47:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1D57D49224
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 13:47:41 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 86948b46;
-	Mon, 18 Nov 2024 12:39:23 +0000 (UTC)
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com
- [209.85.208.46])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7c82d179
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ea650f56;
+	Mon, 18 Nov 2024 12:39:27 +0000 (UTC)
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com
+ [209.85.208.51])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a863d86c
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 8 Mar 2024 10:34:31 +0000 (UTC)
-Received: by mail-ed1-f46.google.com with SMTP id
- 4fb4d7f45d1cf-563c403719cso2405628a12.2
- for <wireguard@lists.zx2c4.com>; Fri, 08 Mar 2024 02:34:31 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Mar 2024 11:27:55 +0000 (UTC)
+Received: by mail-ed1-f51.google.com with SMTP id
+ 4fb4d7f45d1cf-56647babfe6so1030855a12.3
+ for <wireguard@lists.zx2c4.com>; Fri, 08 Mar 2024 03:27:55 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709894071; x=1710498871;
+ d=1e100.net; s=20230601; t=1709897275; x=1710502075;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=NDoFAf/EWOLeF9600iXmBhzVjPZO0aaKJXl+GmInLQk=;
- b=OVhCx7/k6SttQ9OX71fVqg1VfzqDdriZICuYw+SfaE77sJ+eOtwYYlvpdRLK/sBiaZ
- KKDzVSdzbN6IshdlQyC/KaiE4YWBRFWSh6F8Ly0/27B9OFVqT8OzDcgK8pfahKdiBF1K
- IX6IiLOBocsnHfuSdeBqQi5+RYFH0Bx672AsN4X5Yaj9KHqqOsF1AMmd+CuA8qNi3ZP6
- 54UmrAS6Z/7PG4dpLAKXfjIckNgeZF9FjEJtxRl94jptV050fLMp3rQayuJ3Kmioxy3x
- ig579uOycSpbJa/QiF/yBS59XaEezCyT1myd6BMYHh4bzI5U7wEnbGha+Ej5KsQpj4U5
- 1hAQ==
+ bh=qI+9EY7tzIYxs5Vpyz3cprJUSGJAHgHmPUUQiiDZ9PQ=;
+ b=JRCZIp/Y+hTY7C3BJzvviLbsRG1QL/wGoNHuvJic/WOhNn3HhD2YXO1vCiXX0/brrC
+ UOA38jK/FOzR4qU2ODmkAdURCP1hH9Z+ClePGl+OoW5XHADDPjHqBY4Oe15qVv6PBBFh
+ obTu3SDDcsUktRsUiQVd0i/GxHLa8z39AZRZ2HVHJiZivJsC8IW/Ylezd4Y5wWe1VM3E
+ P591sorfzuQuGY3GDd8KxDgPBzWulQh+imIPoB6YvnQ5PgSxbnkxh7Yg3AFjz7IsDDRR
+ 8PZnCYFeiNz6QMNFGw5ZdMBT1odHWv24x++4yECpwOEi0d5xxbJZVdFqN/CkMrd8LVTL
+ +Hsg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUEu6jgBHNGK3KghiOa1swYsiYp8z01cixnwH/pbZj+msO//8qhfVqmnIRsKGblP/b3aNV7ps9i+s8cfyB47RHNsb675IhAH8Ww
-X-Gm-Message-State: AOJu0Yw5kqF5Of22LZgpUS45YtwEcabo7qVEWRrS5Gjn4QYWS1PVzfbH
- Jaf79m9w3YTOOu8WIY+ats1cCVepE+eajhfWk/pFE+F2MBkYQ2Z2
-X-Google-Smtp-Source: AGHT+IEJMBNjE1KzZZWYOZbl0RRbmyKgc2oj55yl0Ule29SisD4BdzhDEO1dS4GvHWr++b4B33BelQ==
-X-Received: by 2002:a05:6402:5c4:b0:566:b2e1:58f with SMTP id
- n4-20020a05640205c400b00566b2e1058fmr1513116edx.41.1709894070654; 
- Fri, 08 Mar 2024 02:34:30 -0800 (PST)
-Received: from localhost (fwdproxy-lla-001.fbsv.net.
- [2a03:2880:30ff:1::face:b00c]) by smtp.gmail.com with ESMTPSA id
- o14-20020aa7c7ce000000b0056742460f68sm5716057eds.66.2024.03.08.02.34.30
+ AJvYcCVJTq5BGaPy3fQmviZbdwLDZo74XmptKnKmhP0qYIqR+Rv2V7frTNsYidkeXmO/yS06ksEa7cUSd7tGJXKG5O47ZsFzeGSCclZA
+X-Gm-Message-State: AOJu0YxaTgdeD1ia8SWiMtD8sVabYKJfh6o0Rbe8kxEm+z2LGVRp1NTX
+ +3dyV5sjWI2QLs+D/ic544G4LBYr3FlHSNBHEFJJpenbcv0F4b7s
+X-Google-Smtp-Source: AGHT+IGdfwim53dOX/d0wdKqBpr8eVBgLopTYvjp5ZHw8PeZ2UdHS3kSBFamwUgpLKpuECK067aZsQ==
+X-Received: by 2002:a17:907:11c1:b0:a44:1b9e:b977 with SMTP id
+ va1-20020a17090711c100b00a441b9eb977mr14202779ejb.19.1709897274658; 
+ Fri, 08 Mar 2024 03:27:54 -0800 (PST)
+Received: from localhost (fwdproxy-lla-002.fbsv.net.
+ [2a03:2880:30ff:2::face:b00c]) by smtp.gmail.com with ESMTPSA id
+ gb42-20020a170907962a00b00a441a7a75b5sm9146201ejc.209.2024.03.08.03.27.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Mar 2024 02:34:30 -0800 (PST)
+ Fri, 08 Mar 2024 03:27:54 -0800 (PST)
 From: Breno Leitao <leitao@debian.org>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  "David S. Miller" <davem@davemloft.net>,
@@ -50,9 +50,9 @@ To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
 Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org, horms@kernel.org,
  dsahern@kernel.org,
  wireguard@lists.zx2c4.com (open list:WIREGUARD SECURE NETWORK TUNNEL)
-Subject: [PATCH net-next 1/2] wireguard: Leverage core stats allocator
-Date: Fri,  8 Mar 2024 02:34:17 -0800
-Message-ID: <20240308103419.1771177-1-leitao@debian.org>
+Subject: [PATCH net-next v2 1/2] wireguard: Leverage core stats allocator
+Date: Fri,  8 Mar 2024 03:27:44 -0800
+Message-ID: <20240308112746.2290505-1-leitao@debian.org>
 X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -83,12 +83,17 @@ Remove the allocation in the wireguard driver and leverage the network
 core allocation instead.
 
 Signed-off-by: Breno Leitao <leitao@debian.org>
+--
+Changelog:
+
+v2:
+	* Setting dev->pcpu_stat_type was missing in v1 patch.
 ---
- drivers/net/wireguard/device.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ drivers/net/wireguard/device.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/net/wireguard/device.c b/drivers/net/wireguard/device.c
-index deb9636b0ecf..cb025ba8f60d 100644
+index deb9636b0ecf..6aa071469e1c 100644
 --- a/drivers/net/wireguard/device.c
 +++ b/drivers/net/wireguard/device.c
 @@ -262,7 +262,6 @@ static void wg_destruct(struct net_device *dev)
@@ -99,7 +104,15 @@ index deb9636b0ecf..cb025ba8f60d 100644
  	kvfree(wg->index_hashtable);
  	kvfree(wg->peer_hashtable);
  	mutex_unlock(&wg->device_update_lock);
-@@ -331,14 +330,10 @@ static int wg_newlink(struct net *src_net, struct net_device *dev,
+@@ -297,6 +296,7 @@ static void wg_setup(struct net_device *dev)
+ 	dev->hw_enc_features |= WG_NETDEV_FEATURES;
+ 	dev->mtu = ETH_DATA_LEN - overhead;
+ 	dev->max_mtu = round_down(INT_MAX, MESSAGE_PADDING_MULTIPLE) - overhead;
++	dev->pcpu_stat_type = NETDEV_PCPU_STAT_TSTATS;
+ 
+ 	SET_NETDEV_DEVTYPE(dev, &device_type);
+ 
+@@ -331,14 +331,10 @@ static int wg_newlink(struct net *src_net, struct net_device *dev,
  	if (!wg->index_hashtable)
  		goto err_free_peer_hashtable;
  
@@ -115,7 +128,7 @@ index deb9636b0ecf..cb025ba8f60d 100644
  
  	wg->handshake_send_wq = alloc_workqueue("wg-kex-%s",
  			WQ_UNBOUND | WQ_FREEZABLE, 0, dev->name);
-@@ -397,8 +392,6 @@ static int wg_newlink(struct net *src_net, struct net_device *dev,
+@@ -397,8 +393,6 @@ static int wg_newlink(struct net *src_net, struct net_device *dev,
  	destroy_workqueue(wg->handshake_send_wq);
  err_destroy_handshake_receive:
  	destroy_workqueue(wg->handshake_receive_wq);
