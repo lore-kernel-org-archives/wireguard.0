@@ -4,56 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33EB4C54798
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  5 Mar 2024 18:38:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDD49C54791
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  9 Mar 2024 18:35:58 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a75ef9e0;
-	Tue, 5 Mar 2024 18:38:21 +0000 (UTC)
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 70d5544e
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 83c0612e;
+	Sat, 9 Mar 2024 18:35:11 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id cbdba81c
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 5 Mar 2024 18:38:18 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Sat, 9 Mar 2024 18:35:08 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 98D48CE1E00;
- Tue,  5 Mar 2024 18:38:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F1AAC433C7;
- Tue,  5 Mar 2024 18:38:12 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id A365E60ACE;
+ Sat,  9 Mar 2024 18:35:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D85EDC433F1;
+ Sat,  9 Mar 2024 18:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1709663895;
- bh=jpAm1zYYQsLEehQYoa1ojXYdsiZS6ytxodAFhX2P7Vg=;
+ s=k20201202; t=1710009306;
+ bh=CaI6XbzfSVP/ZZNSkSOFjhFSN4voXtlNtdxFfrr0ITo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=O5IaiDThotBkXPvaVZJNGJwNzbX4phN9vU+0m3EZVajRn5ZUSBJrvWPFFQTjUm5Ke
- 566mBpxxMHEREV4gBHQm4f6Wqnpi8Onb5tzB2+pUYAUCIMnkxm0WJSk79Oa71u1OzK
- Rx6jfA1DOOKgzAoLC5sPUcNhTkrlnY8r3GWQQ96xUtWCV+qFr2lTN1jCLOcPEu0y/a
- YCO7MydRi18XWiaURiAXeHuLhu2d7FizVE30i5SkIfgkuPkNHk3sm2N1QUXFSQ2jFQ
- nChN/bzWLxp0zRjIqkJ/56PorfYXne8N49eCoieqsfG3PNR4qxkh12VmaXJGV8m6ED
- lgxxTUfYaI3NA==
-From: Conor Dooley <conor@kernel.org>
-To: linux-riscv@lists.infradead.org
-Cc: conor@kernel.org, Conor Dooley <conor.dooley@microchip.com>,
- Paul Walmsley <paul.walmsley@sifive.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- linux-kernel@vger.kernel.org, Brendan Higgins <brendan.higgins@linux.dev>,
- David Gow <davidgow@google.com>, Rae Moar <rmoar@google.com>,
- "Jason A. Donenfeld" <Jason@zx2c4.com>, Shuah Khan <shuah@kernel.org>,
- linux-kselftest@vger.kernel.org, kunit-dev@googlegroups.com,
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org
-Subject: [PATCH v1 2/2] RISC-V: drop SOC_VIRT for ARCH_VIRT
-Date: Tue,  5 Mar 2024 18:37:06 +0000
-Message-ID: <20240305-stress-earflap-d7ddb8655a4d@spud>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240305-praying-clad-c4fbcaa7ed0a@spud>
-References: <20240305-praying-clad-c4fbcaa7ed0a@spud>
+ b=Ub98/+79m+EDIF2EZVpFotXwqppx3/lmkCZNEnriQzRLs7jTC51D1ofRQB+czM+fA
+ mDdztIG70eS4k584BKdqnLEAB9eI+5HNDuT0w7fQ2Ts8jn5+ntdSCa3oUFZBwmgEcL
+ kPEAIe5p1T/9evZxHt7OMscT6x217A9VVPg9aLObmv6sHzEf7tSzEb4fikM6NtE6Vn
+ gMF1ZFm2h9Tj2aKthTVZ+bKv3UKqa7D7egT0cHi58S8RWW0OtQ9v2im+W3m0G5PRHo
+ HzoEqwQG65YGUq4WSsasZyMBHwQLYscl5tuZeD+0ebGVz76k46TsVHce3r0mokgjC2
+ JXKamOS+Ar/CQ==
+From: Jakub Kicinski <kuba@kernel.org>
+To: davem@davemloft.net
+Cc: netdev@vger.kernel.org, edumazet@google.com, pabeni@redhat.com,
+ jiri@resnulli.us, Jakub Kicinski <kuba@kernel.org>, Jason@zx2c4.com,
+ mareklindner@neomailbox.ch, sw@simonwunderlich.de, a@unstable.cc,
+ sven@narfation.org, pshelar@ovn.org, andriy.shevchenko@linux.intel.com,
+ wireguard@lists.zx2c4.com, dev@openvswitch.org
+Subject: [PATCH net-next 3/3] genetlink: remove linux/genetlink.h
+Date: Sat,  9 Mar 2024 10:34:58 -0800
+Message-ID: <20240309183458.3014713-4-kuba@kernel.org>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240309183458.3014713-1-kuba@kernel.org>
+References: <20240309183458.3014713-1-kuba@kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4198;
- i=conor.dooley@microchip.com; h=from:subject:message-id;
- bh=SLlSaZ+G4FwHZPlvuZ1ianZDFUhekawPuNsTN8M0NIc=;
- b=owGbwMvMwCFWscWwfUFT0iXG02pJDKnP04KKXSUf5cTo/6v+/e+ixs77UTo717P2my9J05y0o
- ff93ktJHaUsDGIcDLJiiiyJt/tapNb/cdnh3PMWZg4rE8gQBi5OAZhIdjQjw17OXRd2OTK6nl2i
- oPE4fl7zvb07y+3+Mkq3Jb6SbTqiPYfhv/fam6sPncvMsT5fPeny3KrCV9/+2Z4S2aem9zfoFdd
- xMX4A
-X-Developer-Key: i=conor.dooley@microchip.com; a=openpgp;
- fpr=F9ECA03CF54F12CD01F1655722E2C55B37CF380C
 Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -69,120 +57,151 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-From: Conor Dooley <conor.dooley@microchip.com>
+genetlink.h is a shell of what used to be a combined uAPI
+and kernel header over a decade ago. It has fewer than
+10 lines of code. Merge it into net/genetlink.h.
+In some ways it'd be better to keep the combined header
+under linux/ but it would make looking through git history
+harder.
 
-The ARCH_ and SOC_ versions of this symbol have persisted for quite a
-while now in parallel. Generated .config files from previous LTS kernels
-should have both. Finally remove SOC_VIRT and update all config files
-using it.
-
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 ---
-I had a 1.5 year old ack from Jason that I dropped due to the passage of
-time.
-
-CC: Paul Walmsley <paul.walmsley@sifive.com>
-CC: Palmer Dabbelt <palmer@dabbelt.com>
-CC: Albert Ou <aou@eecs.berkeley.edu>
-CC: Brendan Higgins <brendan.higgins@linux.dev>
-CC: David Gow <davidgow@google.com>
-CC: Rae Moar <rmoar@google.com>
-CC: "Jason A. Donenfeld" <Jason@zx2c4.com>
-CC: Shuah Khan <shuah@kernel.org>
-CC: linux-riscv@lists.infradead.org
-CC: linux-kernel@vger.kernel.org
-CC: linux-kselftest@vger.kernel.org
-CC: kunit-dev@googlegroups.com
+CC: Jason@zx2c4.com
+CC: mareklindner@neomailbox.ch
+CC: sw@simonwunderlich.de
+CC: a@unstable.cc
+CC: sven@narfation.org
+CC: pshelar@ovn.org
+CC: andriy.shevchenko@linux.intel.com
 CC: wireguard@lists.zx2c4.com
-CC: netdev@vger.kernel.org
+CC: dev@openvswitch.org
 ---
- arch/riscv/Kconfig.socs                                    | 3 ---
- arch/riscv/configs/defconfig                               | 2 +-
- arch/riscv/configs/nommu_virt_defconfig                    | 2 +-
- tools/testing/kunit/qemu_configs/riscv.py                  | 2 +-
- tools/testing/selftests/wireguard/qemu/arch/riscv32.config | 2 +-
- tools/testing/selftests/wireguard/qemu/arch/riscv64.config | 2 +-
- 6 files changed, 5 insertions(+), 8 deletions(-)
+ drivers/net/wireguard/main.c      |  2 +-
+ include/linux/genetlink.h         | 14 --------------
+ include/linux/genl_magic_struct.h |  2 +-
+ include/net/genetlink.h           |  9 ++++++++-
+ net/batman-adv/main.c             |  2 +-
+ net/batman-adv/netlink.c          |  1 -
+ net/openvswitch/datapath.c        |  1 -
+ 7 files changed, 11 insertions(+), 20 deletions(-)
+ delete mode 100644 include/linux/genetlink.h
 
-diff --git a/arch/riscv/Kconfig.socs b/arch/riscv/Kconfig.socs
-index e85ffb63c48d..dcbfb659839c 100644
---- a/arch/riscv/Kconfig.socs
-+++ b/arch/riscv/Kconfig.socs
-@@ -52,9 +52,6 @@ config ARCH_THEAD
- 	  This enables support for the RISC-V based T-HEAD SoCs.
+diff --git a/drivers/net/wireguard/main.c b/drivers/net/wireguard/main.c
+index ee4da9ab8013..a00671b58701 100644
+--- a/drivers/net/wireguard/main.c
++++ b/drivers/net/wireguard/main.c
+@@ -14,7 +14,7 @@
  
- config ARCH_VIRT
--	def_bool SOC_VIRT
+ #include <linux/init.h>
+ #include <linux/module.h>
+-#include <linux/genetlink.h>
++#include <net/genetlink.h>
+ #include <net/rtnetlink.h>
+ 
+ static int __init wg_mod_init(void)
+diff --git a/include/linux/genetlink.h b/include/linux/genetlink.h
+deleted file mode 100644
+index 9dbd7ba9b858..000000000000
+--- a/include/linux/genetlink.h
++++ /dev/null
+@@ -1,14 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0 */
+-#ifndef __LINUX_GENERIC_NETLINK_H
+-#define __LINUX_GENERIC_NETLINK_H
 -
--config SOC_VIRT
- 	bool "QEMU Virt Machine"
- 	select CLINT_TIMER if RISCV_M_MODE
- 	select POWER_RESET
-diff --git a/arch/riscv/configs/defconfig b/arch/riscv/configs/defconfig
-index ab3bab313d56..8d46a9137b1e 100644
---- a/arch/riscv/configs/defconfig
-+++ b/arch/riscv/configs/defconfig
-@@ -32,7 +32,7 @@ CONFIG_ARCH_SOPHGO=y
- CONFIG_SOC_STARFIVE=y
- CONFIG_ARCH_SUNXI=y
- CONFIG_ARCH_THEAD=y
--CONFIG_SOC_VIRT=y
-+CONFIG_ARCH_VIRT=y
- CONFIG_SMP=y
- CONFIG_HOTPLUG_CPU=y
- CONFIG_PM=y
-diff --git a/arch/riscv/configs/nommu_virt_defconfig b/arch/riscv/configs/nommu_virt_defconfig
-index b794e2f8144e..de8143d1f738 100644
---- a/arch/riscv/configs/nommu_virt_defconfig
-+++ b/arch/riscv/configs/nommu_virt_defconfig
-@@ -24,7 +24,7 @@ CONFIG_EXPERT=y
- CONFIG_SLUB=y
- CONFIG_SLUB_TINY=y
- # CONFIG_MMU is not set
--CONFIG_SOC_VIRT=y
-+CONFIG_ARCH_VIRT=y
- CONFIG_NONPORTABLE=y
- CONFIG_SMP=y
- CONFIG_CMDLINE="root=/dev/vda rw earlycon=uart8250,mmio,0x10000000,115200n8 console=ttyS0"
-diff --git a/tools/testing/kunit/qemu_configs/riscv.py b/tools/testing/kunit/qemu_configs/riscv.py
-index 12a1d525978a..c87758030ff7 100644
---- a/tools/testing/kunit/qemu_configs/riscv.py
-+++ b/tools/testing/kunit/qemu_configs/riscv.py
-@@ -13,7 +13,7 @@ if not os.path.isfile(OPENSBI_PATH):
+-#include <uapi/linux/genetlink.h>
+-
+-/* All generic netlink requests are serialized by a global lock.  */
+-extern void genl_lock(void);
+-extern void genl_unlock(void);
+-
+-#define MODULE_ALIAS_GENL_FAMILY(family)\
+- MODULE_ALIAS_NET_PF_PROTO_NAME(PF_NETLINK, NETLINK_GENERIC, "-family-" family)
+-
+-#endif	/* __LINUX_GENERIC_NETLINK_H */
+diff --git a/include/linux/genl_magic_struct.h b/include/linux/genl_magic_struct.h
+index a419d93789ff..621b87a87d74 100644
+--- a/include/linux/genl_magic_struct.h
++++ b/include/linux/genl_magic_struct.h
+@@ -15,8 +15,8 @@
+ #endif
  
- QEMU_ARCH = QemuArchParams(linux_arch='riscv',
- 			   kconfig='''
--CONFIG_SOC_VIRT=y
-+CONFIG_ARCH_VIRT=y
- CONFIG_SERIAL_8250=y
- CONFIG_SERIAL_8250_CONSOLE=y
- CONFIG_SERIAL_OF_PLATFORM=y
-diff --git a/tools/testing/selftests/wireguard/qemu/arch/riscv32.config b/tools/testing/selftests/wireguard/qemu/arch/riscv32.config
-index 2fc36efb166d..2500eaa9b469 100644
---- a/tools/testing/selftests/wireguard/qemu/arch/riscv32.config
-+++ b/tools/testing/selftests/wireguard/qemu/arch/riscv32.config
-@@ -2,7 +2,7 @@ CONFIG_NONPORTABLE=y
- CONFIG_ARCH_RV32I=y
- CONFIG_MMU=y
- CONFIG_FPU=y
--CONFIG_SOC_VIRT=y
-+CONFIG_ARCH_VIRT=y
- CONFIG_SERIAL_8250=y
- CONFIG_SERIAL_8250_CONSOLE=y
- CONFIG_SERIAL_OF_PLATFORM=y
-diff --git a/tools/testing/selftests/wireguard/qemu/arch/riscv64.config b/tools/testing/selftests/wireguard/qemu/arch/riscv64.config
-index dc266f3b1915..29a67ac67766 100644
---- a/tools/testing/selftests/wireguard/qemu/arch/riscv64.config
-+++ b/tools/testing/selftests/wireguard/qemu/arch/riscv64.config
-@@ -1,7 +1,7 @@
- CONFIG_ARCH_RV64I=y
- CONFIG_MMU=y
- CONFIG_FPU=y
--CONFIG_SOC_VIRT=y
-+CONFIG_ARCH_VIRT=y
- CONFIG_SERIAL_8250=y
- CONFIG_SERIAL_8250_CONSOLE=y
- CONFIG_SERIAL_OF_PLATFORM=y
+ #include <linux/args.h>
+-#include <linux/genetlink.h>
+ #include <linux/types.h>
++#include <net/genetlink.h>
+ 
+ extern int CONCATENATE(GENL_MAGIC_FAMILY, _genl_register)(void);
+ extern void CONCATENATE(GENL_MAGIC_FAMILY, _genl_unregister)(void);
+diff --git a/include/net/genetlink.h b/include/net/genetlink.h
+index 9ece6e5a3ea8..090aa3e36ce3 100644
+--- a/include/net/genetlink.h
++++ b/include/net/genetlink.h
+@@ -2,12 +2,19 @@
+ #ifndef __NET_GENERIC_NETLINK_H
+ #define __NET_GENERIC_NETLINK_H
+ 
+-#include <linux/genetlink.h>
++#include <uapi/linux/genetlink.h>
+ #include <net/netlink.h>
+ #include <net/net_namespace.h>
+ 
+ #define GENLMSG_DEFAULT_SIZE (NLMSG_DEFAULT_SIZE - GENL_HDRLEN)
+ 
++/* All generic netlink requests are serialized by a global lock.  */
++extern void genl_lock(void);
++extern void genl_unlock(void);
++
++#define MODULE_ALIAS_GENL_FAMILY(family) \
++ MODULE_ALIAS_NET_PF_PROTO_NAME(PF_NETLINK, NETLINK_GENERIC, "-family-" family)
++
+ /* Binding to multicast group requires %CAP_NET_ADMIN */
+ #define GENL_MCAST_CAP_NET_ADMIN	BIT(0)
+ /* Binding to multicast group requires %CAP_SYS_ADMIN */
+diff --git a/net/batman-adv/main.c b/net/batman-adv/main.c
+index 75119f1ffccc..8e0f44c71696 100644
+--- a/net/batman-adv/main.c
++++ b/net/batman-adv/main.c
+@@ -14,7 +14,6 @@
+ #include <linux/crc32c.h>
+ #include <linux/device.h>
+ #include <linux/errno.h>
+-#include <linux/genetlink.h>
+ #include <linux/gfp.h>
+ #include <linux/if_ether.h>
+ #include <linux/if_vlan.h>
+@@ -38,6 +37,7 @@
+ #include <linux/string.h>
+ #include <linux/workqueue.h>
+ #include <net/dsfield.h>
++#include <net/genetlink.h>
+ #include <net/rtnetlink.h>
+ #include <uapi/linux/batadv_packet.h>
+ #include <uapi/linux/batman_adv.h>
+diff --git a/net/batman-adv/netlink.c b/net/batman-adv/netlink.c
+index 0954757f0b8b..9362cd9d6f3d 100644
+--- a/net/batman-adv/netlink.c
++++ b/net/batman-adv/netlink.c
+@@ -15,7 +15,6 @@
+ #include <linux/cache.h>
+ #include <linux/err.h>
+ #include <linux/errno.h>
+-#include <linux/genetlink.h>
+ #include <linux/gfp.h>
+ #include <linux/if_ether.h>
+ #include <linux/if_vlan.h>
+diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
+index 11c69415c605..99d72543abd3 100644
+--- a/net/openvswitch/datapath.c
++++ b/net/openvswitch/datapath.c
+@@ -15,7 +15,6 @@
+ #include <linux/delay.h>
+ #include <linux/time.h>
+ #include <linux/etherdevice.h>
+-#include <linux/genetlink.h>
+ #include <linux/kernel.h>
+ #include <linux/kthread.h>
+ #include <linux/mutex.h>
 -- 
-2.43.0
+2.44.0
 
