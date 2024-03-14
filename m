@@ -4,59 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2F51C54E5D
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 14 Mar 2024 03:31:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C54EC54E5D
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 14 Mar 2024 03:40:46 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b1caddbe;
-	Thu, 14 Mar 2024 03:27:41 +0000 (UTC)
-Received: from sin.source.kernel.org (sin.source.kernel.org
- [2604:1380:40e1:4800::1])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 10ee5172
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bd76eddd;
+	Thu, 14 Mar 2024 03:36:03 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org
+ [2604:1380:4641:c500::1])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id bf9c751f
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 14 Mar 2024 03:27:39 +0000 (UTC)
+ Thu, 14 Mar 2024 03:36:01 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 01600CE1A4B
- for <wireguard@lists.zx2c4.com>; Thu, 14 Mar 2024 03:27:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A536C433F1
- for <wireguard@lists.zx2c4.com>; Thu, 14 Mar 2024 03:27:35 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id AF66A6156C
+ for <wireguard@lists.zx2c4.com>; Thu, 14 Mar 2024 03:35:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36431C433C7
+ for <wireguard@lists.zx2c4.com>; Thu, 14 Mar 2024 03:35:59 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
  dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="mGJ5hLTz"
+ header.b="BEIMofJj"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1710386854;
+ t=1710387356;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mvHFDPgOfKDs4ElWYSlkdgyoAPxlTvHb6gfuyj65NzE=;
- b=mGJ5hLTz9O+W9CMwAzNGFBmRO1n5/Gqxz9yPeV2eZpDqINyVKsEYMw701YJWriWfgKxg/H
- 2GWEYEbkH2dYzhmiRkrwE38Iy/E52ZaRPxoJRhb4rFEgCp3aaG3x11nLjLjibH4X2yo1Qm
- jz28KQyeaPZ5amNRUoJyQ/an044XWlI=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 54b793f5
+ bh=ufLxwUri9oF1Ju7jFdR1vSsQE/010F+BadmW8nZ4azo=;
+ b=BEIMofJja6FJPbS0D4BCmOSOP5We16lRSkupRoio0Bsefglkxq59tI8PtUWz+mxGScPggl
+ nnzfk+dXAQpAFpDjP6kKhsXLjJ6yh8bVDbmjQsL948nCNDUriGLP2qkrQuIlWR4RhJG7cM
+ s+LHUDHYcOrIwl2bAAdfw6NzaMaq/lQ=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f85e1aca
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 14 Mar 2024 03:27:33 +0000 (UTC)
-Received: by mail-yb1-f176.google.com with SMTP id
- 3f1490d57ef6-dc6dcd9124bso459053276.1
- for <wireguard@lists.zx2c4.com>; Wed, 13 Mar 2024 20:27:33 -0700 (PDT)
+ Thu, 14 Mar 2024 03:35:56 +0000 (UTC)
+Received: by mail-yb1-f172.google.com with SMTP id
+ 3f1490d57ef6-dcd7c526cc0so408354276.1
+ for <wireguard@lists.zx2c4.com>; Wed, 13 Mar 2024 20:35:56 -0700 (PDT)
 X-Forwarded-Encrypted: i=1;
- AJvYcCVfXkO+ldef2Onkiyh/0Po1NrJS+JLR3zAsQ/nxzl4mWGCY4GqTMYq8Xvl0C8lC+aMeF2fUc1mQJbwudgZjM4+YsXJoTFs9pA+z
-X-Gm-Message-State: AOJu0YzEjqu5tZVVvCWiTBarD7jooLpm6Nusm1bq+L7xzsj+ui26xMuK
- hlQPT236rn86XOL+PlVgw+QUxh/XEbLHUWqNiBu9gsTaHCS5PUKa3tLzQ8UMrg5kxAg00/ebqJV
- 2mm4DzDaOXa+Ui1ImZS4Pp2X+G/Y=
-X-Google-Smtp-Source: AGHT+IGipbRUywjVyzfyxsuyOdfop1QdmEURhyUqVShack9PjxKn4e+Wp5XMqX4UTwrQK7k0qQflfCUqvZnmp+9H3+s=
-X-Received: by 2002:a05:6902:110:b0:dd0:471:712 with SMTP id
- o16-20020a056902011000b00dd004710712mr569095ybh.33.1710386851905; Wed, 13 Mar
- 2024 20:27:31 -0700 (PDT)
+ AJvYcCW6o2M4MvcU2jxQtfu+CaKvC+E+gTeTi6RQRnGRSYu3TBDAF2J/jAhydQr4dmPzHbyHXMdyXUQEO0Xr8cI8CgLuIYgCmCWeecja
+X-Gm-Message-State: AOJu0YwXJ3X3ff0Rv9GYb++i1erTf6JsBd/6Du5PRdnLpsuJsoorkPFn
+ uL7/wfev3gyxazb0+nZSrhe1edQJR46HKfqm1Za3o4IsuJ0PfHWoW8tTpMROs2EWyFqkk8c8lgp
+ WrxGv5ekTcCEdOKd67b9eHPZixTA=
+X-Google-Smtp-Source: AGHT+IGUdgKF/dbUVT5otlmUuvnWc2bC3zUXkuCsUJ2i/Uqok9paRwhbAvJI8AHnKgDRCdykiRdMzw+jO45j6wnIV6c=
+X-Received: by 2002:a25:bfd1:0:b0:dc2:5553:ca12 with SMTP id
+ q17-20020a25bfd1000000b00dc25553ca12mr555095ybm.14.1710387355458; Wed, 13 Mar
+ 2024 20:35:55 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240308112746.2290505-1-leitao@debian.org>
  <ZfJtzhKJV4yo3LRF@zx2c4.com>
-In-Reply-To: <ZfJtzhKJV4yo3LRF@zx2c4.com>
+ <CAHmME9prrtWu8jkj20WKvTZV6mjQE2Vt_mFWGOuy9St1FOrEOg@mail.gmail.com>
+In-Reply-To: <CAHmME9prrtWu8jkj20WKvTZV6mjQE2Vt_mFWGOuy9St1FOrEOg@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 13 Mar 2024 21:27:19 -0600
-X-Gmail-Original-Message-ID: <CAHmME9prrtWu8jkj20WKvTZV6mjQE2Vt_mFWGOuy9St1FOrEOg@mail.gmail.com>
-Message-ID: <CAHmME9prrtWu8jkj20WKvTZV6mjQE2Vt_mFWGOuy9St1FOrEOg@mail.gmail.com>
+Date: Wed, 13 Mar 2024 21:35:43 -0600
+X-Gmail-Original-Message-ID: <CAHmME9oPPtJXd8DsA+xXvbdN7T0PbAM5kYpQj32KZXv9bKP1ng@mail.gmail.com>
+Message-ID: <CAHmME9oPPtJXd8DsA+xXvbdN7T0PbAM5kYpQj32KZXv9bKP1ng@mail.gmail.com>
 Subject: Re: [PATCH net-next v2 1/2] wireguard: Leverage core stats allocator
 To: Breno Leitao <leitao@debian.org>
 Cc: "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
@@ -80,12 +81,19 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, Mar 13, 2024 at 9:24=E2=80=AFPM Jason A. Donenfeld <Jason@zx2c4.com=
+On Wed, Mar 13, 2024 at 9:27=E2=80=AFPM Jason A. Donenfeld <Jason@zx2c4.com=
 > wrote:
 >
-> I applied this series to the wireguard tree. Thanks for the patches.
+> On Wed, Mar 13, 2024 at 9:24=E2=80=AFPM Jason A. Donenfeld <Jason@zx2c4.c=
+om> wrote:
+> >
+> > I applied this series to the wireguard tree. Thanks for the patches.
+>
+> Actually, sorry, nevermind. 1/2 is fine, but 2/2 results in `ip -stats
+> link ...` returning all zeros.
 
-Actually, sorry, nevermind. 1/2 is fine, but 2/2 results in `ip -stats
-link ...` returning all zeros.
+Ahh, okay, required some more commits from 6.8. Okay, seems to be
+working. I'll let this cook a bit and then push it up in a while.
+
 
 Jason
