@@ -4,48 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8263DC5475B
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 11 Mar 2024 09:24:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A79E7C5475B
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 14 Mar 2024 03:27:24 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e533a489;
-	Mon, 11 Mar 2024 09:22:35 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 108fba74;
+	Thu, 14 Mar 2024 03:24:12 +0000 (UTC)
 Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4f17677a
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f57ee5b0
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 11 Mar 2024 09:22:34 +0000 (UTC)
+ Thu, 14 Mar 2024 03:24:10 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 32982CE0ED8;
- Mon, 11 Mar 2024 09:22:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C15C4C433C7;
- Mon, 11 Mar 2024 09:22:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1710148950;
- bh=5jwRjzBuqHsD6PpmjxxWVJQrTPGroJenGMk4S3Kn5mk=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=hPGYambr5jaJ6Z+mS4Splw3bUn17P/mw45+F/F4IKxxOGqgIy5tsW8sRz6KP1fZrg
- vacdvHj1yvz9RrE1Q79OWQgXSM4pdqnD+1cT/mb/E6f0VuRItRqEw78Rhh/POdTFH3
- mGGeZipdfIemSqwvX67bFvDrrT3tFDgCOp/7i/totLr1hopE1DVNMFNSeHtsXwp1Tj
- z0l7wRA7ksCwKFc7EO9fsSuiDdRPt9hCgTKBvj1nPePVbLi2bXufCLO0p1V+gHcbJb
- VfxAoU2YsFuhUrWGNlNuk02YkfrE/hE+p6ugdar+xaqB48S7QsG2XW5NzAGy+MKYcI
- 08YRBY5TWwc0A==
-Date: Mon, 11 Mar 2024 09:22:23 +0000
-From: Simon Horman <horms@kernel.org>
+ by sin.source.kernel.org (Postfix) with ESMTP id E1E6BCE1D00;
+ Thu, 14 Mar 2024 03:24:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BCE4C43390;
+ Thu, 14 Mar 2024 03:24:05 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="BEIJUDTD"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1710386643;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=eZuRvmWgcpTPPgj9ycM/o+D8oj337tsMLnQUeUVCjfg=;
+ b=BEIJUDTDI/ypsK5HykKPz4+WDrslSA51yjHA2iwec+V+FwVONbwptMVhFFYauWOvj7SrF+
+ S9uL0mR9pLpOCn0AXRRe8AERsw7DWP6Zkfn0tfRYBNme/w0DRQMIoSX43AT7Wnnvg+n0Im
+ bAH+sMJanbAJ4J4Q48s3atRF7K5dXUc=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a62e8f60
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Thu, 14 Mar 2024 03:24:03 +0000 (UTC)
+Date: Wed, 13 Mar 2024 21:23:58 -0600
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 To: Breno Leitao <leitao@debian.org>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- "David S. Miller" <davem@davemloft.net>,
+Cc: "David S. Miller" <davem@davemloft.net>,
  Eric Dumazet <edumazet@google.com>,
  Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- netdev@vger.kernel.org, linux-kernel@vger.kernel.org, dsahern@kernel.org,
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+ horms@kernel.org, dsahern@kernel.org,
  "open list:WIREGUARD SECURE NETWORK TUNNEL" <wireguard@lists.zx2c4.com>
-Subject: Re: [PATCH net-next v2 2/2] wireguard: Remove generic .ndo_get_stats64
-Message-ID: <20240311092223.GG24043@kernel.org>
+Subject: Re: [PATCH net-next v2 1/2] wireguard: Leverage core stats allocator
+Message-ID: <ZfJtzhKJV4yo3LRF@zx2c4.com>
 References: <20240308112746.2290505-1-leitao@debian.org>
- <20240308112746.2290505-2-leitao@debian.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240308112746.2290505-2-leitao@debian.org>
+In-Reply-To: <20240308112746.2290505-1-leitao@debian.org>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -60,18 +64,6 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Fri, Mar 08, 2024 at 03:27:45AM -0800, Breno Leitao wrote:
-> Commit 3e2f544dd8a33 ("net: get stats64 if device if driver is
-> configured") moved the callback to dev_get_tstats64() to net core, so,
-> unless the driver is doing some custom stats collection, it does not
-> need to set .ndo_get_stats64.
-> 
-> Since this driver is now relying in NETDEV_PCPU_STAT_TSTATS, then, it
-> doesn't need to set the dev_get_tstats64() generic .ndo_get_stats64
-> function pointer.
-> 
-> Signed-off-by: Breno Leitao <leitao@debian.org>
+I applied this series to the wireguard tree. Thanks for the patches.
 
-Reviewed-by: Simon Horman <horms@kernel.org>
-
-...
+Jason
