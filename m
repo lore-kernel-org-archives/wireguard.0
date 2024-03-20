@@ -4,43 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52A55C54E5D
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Mar 2024 19:36:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E033DC54E67
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 Mar 2024 12:41:48 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 885e25e7;
-	Mon, 18 Mar 2024 19:36:43 +0000 (UTC)
-Received: from mail.mokrynskyi.com
- (static.230.39.109.65.clients.your-server.de [65.109.39.230])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b8ff8d33
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3264d11c;
+	Wed, 20 Mar 2024 12:41:46 +0000 (UTC)
+Received: from gandalf.ozlabs.org (mail.ozlabs.org [2404:9400:2221:ea00::3])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a5ceee7a
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 18 Mar 2024 19:36:40 +0000 (UTC)
-Message-ID: <d5d152e4-0acd-43ea-b89a-ffa63fc1fd2f@mokrynskyi.com>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mokrynskyi.com;
- s=dkim; t=1710790599;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=S3BT4e3wUbXyrJOuykk9zQIDcFl22lvC0YUdOUO0Gvo=;
- b=MFeaOJN1RlBlZ/s0vP7oe5GKv3QCQpC4JaziFWBSZgRe/BRU6/tCvz0yEDJMKYc7MFz4J2
- hycQn1JDkERpvE9BLUUKtojcsKxHCO19DGGJEtyQlbfT6qjiT/uE1V3r2z7Xm/tS68EU9r
- v2RlftI0J2DUP2JfsBN/4uift4VQUlaX2+zSG/qBN8B/uiYXcUODu7Ovg4IuERrD1C6XP7
- 7IWm4/l3zLzPXO3+vO+QxFIdsTUf/I/xpP8mRR4IScnObJkuZI8zBY1D6sTJFm9zBTKkUV
- 5971lAuMgA+uCyAp3wWPnJg1+YbqLzWkKZDeFClAxnER4fpZEpvPrRlpGqNFlQ==
-Authentication-Results: mail.mokrynskyi.com;
- auth=pass smtp.mailfrom=nazar@mokrynskyi.com
-Date: Mon, 18 Mar 2024 21:36:37 +0200
+ Wed, 20 Mar 2024 12:41:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ellerman.id.au;
+ s=201909; t=1710938498;
+ bh=aAUO3lBXXGEBX6m0mDWiKt/o6NIO+aW9sgNR3bVCTzM=;
+ h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+ b=pDysZXTzTiDSH5YK83UMRNylp4bt3GRo9FqWpe4cSIZaBBNSpjoWU4c8LgsbhE/fO
+ X6odEhE6xCTe/ljsHRjTiypNHXMRrRuLN0Jzr1ijy3wx6sdbjDAAD6ANTVsuiYgGqP
+ KvdJhqtU/7p0prvn4cQit8rb/kknkkiYK+gl00l6bCaMDfld2Dz0EUNFKN6MHmgSHr
+ fpNcLtH5iVCiEo35T2c6jwEPJ3CF5cW8uG2cIgdO2A/Kq43uA9A2L4REaElcaavRkI
+ YYc2ExUMozicvZxsnZ7AMzsh69Li6ZSVxoSj4g4xx/z/0NrXlCrzaOmeJa1qSBOLvi
+ mHIZqaIMWlFng==
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4V07WP12Rxz4wcQ;
+ Wed, 20 Mar 2024 23:41:36 +1100 (AEDT)
+From: Michael Ellerman <mpe@ellerman.id.au>
+To: Michal =?utf-8?Q?Such=C3=A1nek?= <msuchanek@suse.de>
+Cc: netdev@vger.kernel.org, "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ linuxppc-dev@lists.ozlabs.org, wireguard@lists.zx2c4.com,
+ dtsen@linux.ibm.com, Herbert Xu <herbert@gondor.apana.org.au>
+Subject: Re: Cannot load wireguard module
+In-Reply-To: <20240319124742.GM20665@kitsune.suse.cz>
+References: <20240315122005.GG20665@kitsune.suse.cz>
+ <87jzm32h7q.fsf@mail.lhotse> <87r0g7zrl2.fsf@mail.lhotse>
+ <20240318170855.GK20665@kitsune.suse.cz>
+ <20240319124742.GM20665@kitsune.suse.cz>
+Date: Wed, 20 Mar 2024 23:41:32 +1100
+Message-ID: <87le6dyt1f.fsf@mail.lhotse>
 MIME-Version: 1.0
-Subject: Re: Android can't complete handshake
-From: Nazar Mokrynskyi <nazar@mokrynskyi.com>
-To: wireguard@lists.zx2c4.com
-References: <1ac814fd-85ba-4b73-97b2-b13ddde13873@mokrynskyi.com>
-Content-Language: en-US, uk
-In-Reply-To: <1ac814fd-85ba-4b73-97b2-b13ddde13873@mokrynskyi.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: --
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -55,24 +60,120 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Still happening, hard to believe I'm the only one.
-Anything else I can provide to help debug this?
+Michal Such=C3=A1nek <msuchanek@suse.de> writes:
+> On Mon, Mar 18, 2024 at 06:08:55PM +0100, Michal Such=C3=A1nek wrote:
+>> On Mon, Mar 18, 2024 at 10:50:49PM +1100, Michael Ellerman wrote:
+>> > Michael Ellerman <mpe@ellerman.id.au> writes:
+>> > > Michal Such=C3=A1nek <msuchanek@suse.de> writes:
+>> > >> Hello,
+>> > >>
+>> > >> I cannot load the wireguard module.
+>> > >>
+>> > >> Loading the module provides no diagnostic other than 'No such devic=
+e'.
+>> > >>
+>> > >> Please provide maningful diagnostics for loading software-only driv=
+er,
+>> > >> clearly there is no particular device needed.
+>> > >
+>> > > Presumably it's just bubbling up an -ENODEV from somewhere.
+>> > >
+>> > > Can you get a trace of it?
+>> > >
+>> > > Something like:
+>> > >
+>> > >   # trace-cmd record -p function_graph -F modprobe wireguard
+>
+> Attached.
 
-Sincerely, Nazar Mokrynskyi
-github.com/nazar-pc
+Sorry :/, you need to also trace children of modprobe, with -c.
 
-01.11.23 03:23, Nazar Mokrynskyi:
-> Basically every day I have the following in logs:
->
->> 10-16 00:46:05.380  5200  5568 D WireGuard/GoBackend/xyz: peer(8MoP…XPVc) - Handshake did not complete after 5 seconds, retrying (try 2)
->> 10-16 00:46:05.381  5200  5568 D WireGuard/GoBackend/xyz: peer(8MoP…XPVc) - Sending handshake initiation
->> 10-16 00:46:10.468  5200  5678 D WireGuard/GoBackend/xyz: peer(8MoP…XPVc) - Handshake did not complete after 5 seconds, retrying (try 3)
->> 10-16 00:46:10.469  5200  5678 D WireGuard/GoBackend/xyz: peer(8MoP…XPVc) - Sending handshake initiation
-> This is happening on Android 14 when connected to Wi-Fi.
->
-> It is definitely not a loss of Wi-Fi or Internet connectivity, I turn off and immediately turn on the VPN connection and it connects instantly and successfully, it is just those retries that are not succeeding.
->
-> Is this a know issue, maybe there is a workaround?
->
-> I have seen similar reports online that seem to be related to network connectivity, which is not the case here or else reconnection would fail too.
->
+But, I was able to reproduce the same issue here.
+
+On a P9, a kernel with CONFIG_CRYPTO_CHACHA20_P10=3Dn everything works:
+
+  $ modprobe -v wireguard
+  insmod /lib/modules/6.8.0/kernel/net/ipv4/udp_tunnel.ko
+  insmod /lib/modules/6.8.0/kernel/net/ipv6/ip6_udp_tunnel.ko
+  insmod /lib/modules/6.8.0/kernel/lib/crypto/libchacha.ko
+  insmod /lib/modules/6.8.0/kernel/lib/crypto/libchacha20poly1305.ko
+  insmod /lib/modules/6.8.0/kernel/drivers/net/wireguard/wireguard.ko
+  [   19.180564][  T692] wireguard: allowedips self-tests: pass
+  [   19.185080][  T692] wireguard: nonce counter self-tests: pass
+  [   19.310438][  T692] wireguard: ratelimiter self-tests: pass
+  [   19.310639][  T692] wireguard: WireGuard 1.0.0 loaded. See www.wiregua=
+rd.com for information.
+  [   19.310746][  T692] wireguard: Copyright (C) 2015-2019 Jason A. Donenf=
+eld <Jason@zx2c4.com>. All Rights Reserved.
+
+
+If I build CONFIG_CRYPTO_CHACHA20_P10 as a module then it breaks:
+
+  $ modprobe -v wireguard
+  insmod /lib/modules/6.8.0/kernel/net/ipv4/udp_tunnel.ko
+  insmod /lib/modules/6.8.0/kernel/net/ipv6/ip6_udp_tunnel.ko
+  insmod /lib/modules/6.8.0/kernel/lib/crypto/libchacha.ko
+  insmod /lib/modules/6.8.0/kernel/arch/powerpc/crypto/chacha-p10-crypto.ko
+  modprobe: ERROR: could not insert 'wireguard': No such device
+
+
+The ENODEV is coming from module_cpu_feature_match(), which blocks the
+driver from loading on non-p10.
+
+Looking at other arches (arm64 at least) it seems like the driver should
+instead be loading but disabling the p10 path. Which then allows
+chacha_crypt_arch() to exist, and it has a fallback to use
+chacha_crypt_generic().
+
+I don't see how module_cpu_feature_match() can co-exist with the driver
+also providing a fallback. Hopefully someone who knows crypto better
+than me can explain it.
+
+This diff fixes it for me:
+
+diff --git a/arch/powerpc/crypto/chacha-p10-glue.c b/arch/powerpc/crypto/ch=
+acha-p10-glue.c
+index 74fb86b0d209..9d2c30b0904c 100644
+--- a/arch/powerpc/crypto/chacha-p10-glue.c
++++ b/arch/powerpc/crypto/chacha-p10-glue.c
+@@ -197,6 +197,9 @@ static struct skcipher_alg algs[] =3D {
+=20
+ static int __init chacha_p10_init(void)
+ {
++	if (!cpu_has_feature(PPC_FEATURE2_ARCH_3_1))
++		return 0;
++
+ 	static_branch_enable(&have_p10);
+=20
+ 	return crypto_register_skciphers(algs, ARRAY_SIZE(algs));
+@@ -207,7 +210,7 @@ static void __exit chacha_p10_exit(void)
+ 	crypto_unregister_skciphers(algs, ARRAY_SIZE(algs));
+ }
+=20
+-module_cpu_feature_match(PPC_MODULE_FEATURE_P10, chacha_p10_init);
++module_init(chacha_p10_init);
+ module_exit(chacha_p10_exit);
+=20
+ MODULE_DESCRIPTION("ChaCha and XChaCha stream ciphers (P10 accelerated)");
+
+
+Giving me:
+
+  $ modprobe -v wireguard
+  insmod /lib/modules/6.8.0-dirty/kernel/net/ipv4/udp_tunnel.ko
+  insmod /lib/modules/6.8.0-dirty/kernel/net/ipv6/ip6_udp_tunnel.ko
+  insmod /lib/modules/6.8.0-dirty/kernel/lib/crypto/libchacha.ko
+  insmod /lib/modules/6.8.0-dirty/kernel/arch/powerpc/crypto/chacha-p10-cry=
+pto.ko
+  insmod /lib/modules/6.8.0-dirty/kernel/lib/crypto/libchacha20poly1305.ko
+  insmod /lib/modules/6.8.0-dirty/kernel/drivers/net/wireguard/wireguard.ko
+  [   19.657941][  T718] wireguard: allowedips self-tests: pass
+  [   19.662501][  T718] wireguard: nonce counter self-tests: pass
+  [   19.782933][  T718] wireguard: ratelimiter self-tests: pass
+  [   19.783114][  T718] wireguard: WireGuard 1.0.0 loaded. See www.wiregua=
+rd.com for information.
+  [   19.783223][  T718] wireguard: Copyright (C) 2015-2019 Jason A. Donenf=
+eld <Jason@zx2c4.com>. All Rights Reserved.
+=20=20
+
+cheers
