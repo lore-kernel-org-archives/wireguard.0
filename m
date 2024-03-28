@@ -4,49 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D01DCD11DD
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 26 Mar 2024 01:58:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96E75C54E67
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 28 Mar 2024 13:02:26 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7c10d1d5;
-	Tue, 26 Mar 2024 01:58:56 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org
- [2604:1380:4641:c500::1])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id dc945b20
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c7df0495;
+	Thu, 28 Mar 2024 13:02:24 +0000 (UTC)
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e1e6381c
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 26 Mar 2024 01:58:55 +0000 (UTC)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id E95776115B;
- Tue, 26 Mar 2024 01:58:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D164CC433C7;
- Tue, 26 Mar 2024 01:58:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1711418333;
- bh=UTfqvp1AuKc910NwG5qiGCGZVQiS1WHVFUCW62lxd+k=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=X4f0bpT7TpZtBq3aljAY2DZe0ImYoiEB+EPRbT0Vj999mU0Vnm5aRDDDpyedBAa4D
- O6OLrsWVZLB0adrw0iPqpdqclw83UJ0hIuylLhDtvplSTHRL7F4FJvCObeWJvJdPa6
- 3TNP2513QkRjI9/tl/BuFIY+jcKjmlTwuJUi9shZBGn0hLIJRTFDo28g4XsBjsrAJu
- wtTkHbdjvD1MaQkeQM6v0PYDjxF50OoxpDh4nr9shFSVZ3tnX/qs86TAFFjEG+2Mfo
- BVrro+Z7lPGzighwyYrPag4Y8WxQbq01MfdDdXDwZ8WwTHc5OMLSp/UoF1YG3N2zv6
- SN6JsaFxOBn4g==
-Date: Mon, 25 Mar 2024 18:58:51 -0700
-From: Jakub Kicinski <kuba@kernel.org>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: davem@davemloft.net, netdev@vger.kernel.org, edumazet@google.com,
- pabeni@redhat.com, dw@davidwei.uk, jiri@resnulli.us, Sven Eckelmann
- <sven@narfation.org>, Jason@zx2c4.com, mareklindner@neomailbox.ch,
- sw@simonwunderlich.de, a@unstable.cc, pshelar@ovn.org,
- wireguard@lists.zx2c4.com, dev@openvswitch.org
-Subject: Re: [PATCH net-next v2 3/3] genetlink: remove linux/genetlink.h
-Message-ID: <20240325185851.1c876761@kernel.org>
-In-Reply-To: <ZgG4IebcrI1RCKAe@smile.fi.intel.com>
-References: <20240325173716.2390605-1-kuba@kernel.org>
- <20240325173716.2390605-4-kuba@kernel.org>
- <ZgG4IebcrI1RCKAe@smile.fi.intel.com>
+ Thu, 28 Mar 2024 13:02:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ellerman.id.au;
+ s=201909; t=1711630937;
+ bh=x+HARHjN6PjTasqejFvCjOWEUt0vA4nR9qlaT1Vlr5g=;
+ h=From:To:Cc:Subject:Date:From;
+ b=OxZCP8BMd8mnym1pAo2FNEHLzwJZw5ncXfQr0rV0N1Q04cZ/fJnoQoZV/Nn7DByPx
+ oY4tNYQ7ULeBCNJhVjUmRDOZf0JoFLu7trm+Cvef9XPH4YXvIBPMR8a0iuq1DA6opt
+ PNmBx1LmqFhibPkoFuLOsooOyqY3tPRK2Bd+t8qrqnravOUzyJ5nxd7swfe4WM0XHg
+ 8NfBW+VgQlBXl/ZTGzJY+o0TKPjcbW42iiQslibed/gj+H5D3H4LKUxtQ3+atdA3WS
+ QnTQuf00Th3iXc4HKt46R0Hw6ZnCcOfIxLIhbqmKg2DXlLfktNsJ1UvOctq19F8iUT
+ qJRF3UkQmxuVw==
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4V53bX1JF9z4wcq;
+ Fri, 29 Mar 2024 00:02:16 +1100 (AEDT)
+From: Michael Ellerman <mpe@ellerman.id.au>
+To: <linuxppc-dev@lists.ozlabs.org>
+Cc: msuchanek@suse.de, herbert@gondor.apana.org.au, wireguard@lists.zx2c4.com,
+ dtsen@linux.ibm.com
+Subject: [PATCH] powerpc/crypto/chacha-p10: Fix failure on non Power10
+Date: Fri, 29 Mar 2024 00:02:00 +1100
+Message-ID: <20240328130200.3041687-1-mpe@ellerman.id.au>
+X-Mailer: git-send-email 2.44.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -61,19 +55,78 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, 25 Mar 2024 19:45:05 +0200 Andy Shevchenko wrote:
-> > +/* Non-parallel generic netlink requests are serialized by a global lock.  */  
-> 
-> While at it, maybe drop extra space? (I noticed it was originally like this.
+The chacha-p10-crypto module provides optimised chacha routines for
+Power10. It also selects CRYPTO_ARCH_HAVE_LIB_CHACHA which says it
+provides chacha_crypt_arch() to generic code.
 
-Fair, I'll post v3.
+Notably the module needs to provide chacha_crypt_arch() regardless of
+whether it is loaded on Power10 or an older CPU.
 
-> > +#define MODULE_ALIAS_GENL_FAMILY(family) \
-> > + MODULE_ALIAS_NET_PF_PROTO_NAME(PF_NETLINK, NETLINK_GENERIC, "-family-" family)  
-> 
-> I would still make this TAB indented.
+The implementation of chacha_crypt_arch() already has a fallback to
+chacha_crypt_generic(), however the module as a whole fails to load on
+pre-Power10, because of the use of module_cpu_feature_match().
 
-That one I'd prefer to keep. Coin toss between going over 80 chars
-and having someone atypical indent.
+This breaks for example loading wireguard:
+
+  jostaberry-1:~ # modprobe -v wireguard
+  insmod /lib/modules/6.8.0-lp155.8.g7e0e887-default/kernel/arch/powerpc/crypto/chacha-p10-crypto.ko.zst
+  modprobe: ERROR: could not insert 'wireguard': No such device
+
+Fix it by removing module_cpu_feature_match(), and instead check the
+CPU feature manually. If the CPU feature is not found, the module
+still loads successfully, but doesn't register the Power10 specific
+algorithms. That allows chacha_crypt_generic() to remain available for
+use, fixing the problem.
+
+  [root@fedora ~]# modprobe -v wireguard
+  insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/net/ipv4/udp_tunnel.ko
+  insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/net/ipv6/ip6_udp_tunnel.ko
+  insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/lib/crypto/libchacha.ko
+  insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/arch/powerpc/crypto/chacha-p10-crypto.ko
+  insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/lib/crypto/libchacha20poly1305.ko
+  insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/drivers/net/wireguard/wireguard.ko
+  [   18.910452][  T721] wireguard: allowedips self-tests: pass
+  [   18.914999][  T721] wireguard: nonce counter self-tests: pass
+  [   19.029066][  T721] wireguard: ratelimiter self-tests: pass
+  [   19.029257][  T721] wireguard: WireGuard 1.0.0 loaded. See www.wireguard.com for information.
+  [   19.029361][  T721] wireguard: Copyright (C) 2015-2019 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
+
+Reported-by: Michal Suchánek <msuchanek@suse.de>
+Closes: https://lore.kernel.org/all/20240315122005.GG20665@kitsune.suse.cz/
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+---
+ arch/powerpc/crypto/chacha-p10-glue.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/arch/powerpc/crypto/chacha-p10-glue.c b/arch/powerpc/crypto/chacha-p10-glue.c
+index 74fb86b0d209..7c728755852e 100644
+--- a/arch/powerpc/crypto/chacha-p10-glue.c
++++ b/arch/powerpc/crypto/chacha-p10-glue.c
+@@ -197,6 +197,9 @@ static struct skcipher_alg algs[] = {
+ 
+ static int __init chacha_p10_init(void)
+ {
++	if (!cpu_has_feature(CPU_FTR_ARCH_31))
++		return 0;
++
+ 	static_branch_enable(&have_p10);
+ 
+ 	return crypto_register_skciphers(algs, ARRAY_SIZE(algs));
+@@ -204,10 +207,13 @@ static int __init chacha_p10_init(void)
+ 
+ static void __exit chacha_p10_exit(void)
+ {
++	if (!static_branch_likely(&have_p10))
++		return;
++
+ 	crypto_unregister_skciphers(algs, ARRAY_SIZE(algs));
+ }
+ 
+-module_cpu_feature_match(PPC_MODULE_FEATURE_P10, chacha_p10_init);
++module_init(chacha_p10_init);
+ module_exit(chacha_p10_exit);
+ 
+ MODULE_DESCRIPTION("ChaCha and XChaCha stream ciphers (P10 accelerated)");
 -- 
-pw-bot: cr
+2.44.0
+
