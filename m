@@ -4,42 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96E75C54E67
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 28 Mar 2024 13:02:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17F4EC6FD1F
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Mar 2024 17:57:42 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c7df0495;
-	Thu, 28 Mar 2024 13:02:24 +0000 (UTC)
-Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e1e6381c
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f481b3fb;
+	Fri, 29 Mar 2024 17:57:40 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 19c76a65
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 28 Mar 2024 13:02:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ellerman.id.au;
- s=201909; t=1711630937;
- bh=x+HARHjN6PjTasqejFvCjOWEUt0vA4nR9qlaT1Vlr5g=;
- h=From:To:Cc:Subject:Date:From;
- b=OxZCP8BMd8mnym1pAo2FNEHLzwJZw5ncXfQr0rV0N1Q04cZ/fJnoQoZV/Nn7DByPx
- oY4tNYQ7ULeBCNJhVjUmRDOZf0JoFLu7trm+Cvef9XPH4YXvIBPMR8a0iuq1DA6opt
- PNmBx1LmqFhibPkoFuLOsooOyqY3tPRK2Bd+t8qrqnravOUzyJ5nxd7swfe4WM0XHg
- 8NfBW+VgQlBXl/ZTGzJY+o0TKPjcbW42iiQslibed/gj+H5D3H4LKUxtQ3+atdA3WS
- QnTQuf00Th3iXc4HKt46R0Hw6ZnCcOfIxLIhbqmKg2DXlLfktNsJ1UvOctq19F8iUT
- qJRF3UkQmxuVw==
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4V53bX1JF9z4wcq;
- Fri, 29 Mar 2024 00:02:16 +1100 (AEDT)
-From: Michael Ellerman <mpe@ellerman.id.au>
-To: <linuxppc-dev@lists.ozlabs.org>
-Cc: msuchanek@suse.de, herbert@gondor.apana.org.au, wireguard@lists.zx2c4.com,
- dtsen@linux.ibm.com
-Subject: [PATCH] powerpc/crypto/chacha-p10: Fix failure on non Power10
-Date: Fri, 29 Mar 2024 00:02:00 +1100
-Message-ID: <20240328130200.3041687-1-mpe@ellerman.id.au>
+ Fri, 29 Mar 2024 17:57:39 +0000 (UTC)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 8202A6193C;
+ Fri, 29 Mar 2024 17:57:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E58DC43141;
+ Fri, 29 Mar 2024 17:57:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1711735057;
+ bh=hIRRsEx1XBPA7pUjubB3zkyGY300A+bQs58u9ZYCOos=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=S02ySGQqcL7ebc1K0bY6V20Us359KenYlT+WCkdf4NjY6GVn927bwA3fPiGarjKGG
+ jEqn/yya0L1NaC28pg5HWltRBuULXsVPLJhvE3fG9T3QWAq6VdJRjKi+R8MSNc9oO3
+ 1Xlh+Ri1nTha0S41lT58sha1Y331RPENtKDC8LABkh7/QXFvCaTO7xKFSrldt/oz/2
+ qyBBE4hDTjzdxEAwO0cPDbhy+QAUwMMx4G0Hep5WkQoYmL6dSJRyg+vI1/GvStwzZp
+ 6OOYVy1DIK/CSt3gIpg4Ih7F3fmyyAd7Sa3HWiIzcNx+z+pPGvDDMTeTWU4ZTOWHJx
+ 0frUTuitNIKnQ==
+From: Jakub Kicinski <kuba@kernel.org>
+To: davem@davemloft.net
+Cc: netdev@vger.kernel.org, edumazet@google.com, pabeni@redhat.com,
+ dw@davidwei.uk, jiri@resnulli.us, andriy.shevchenko@linux.intel.com,
+ Jakub Kicinski <kuba@kernel.org>, Sven Eckelmann <sven@narfation.org>,
+ Jason@zx2c4.com, mareklindner@neomailbox.ch, sw@simonwunderlich.de,
+ a@unstable.cc, pshelar@ovn.org, wireguard@lists.zx2c4.com,
+ dev@openvswitch.org
+Subject: [PATCH net-next v3 3/3] genetlink: remove linux/genetlink.h
+Date: Fri, 29 Mar 2024 10:57:10 -0700
+Message-ID: <20240329175710.291749-4-kuba@kernel.org>
 X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240329175710.291749-1-kuba@kernel.org>
+References: <20240329175710.291749-1-kuba@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -55,78 +59,159 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-The chacha-p10-crypto module provides optimised chacha routines for
-Power10. It also selects CRYPTO_ARCH_HAVE_LIB_CHACHA which says it
-provides chacha_crypt_arch() to generic code.
+genetlink.h is a shell of what used to be a combined uAPI
+and kernel header over a decade ago. It has fewer than
+10 lines of code. Merge it into net/genetlink.h.
+In some ways it'd be better to keep the combined header
+under linux/ but it would make looking through git history
+harder.
 
-Notably the module needs to provide chacha_crypt_arch() regardless of
-whether it is loaded on Power10 or an older CPU.
-
-The implementation of chacha_crypt_arch() already has a fallback to
-chacha_crypt_generic(), however the module as a whole fails to load on
-pre-Power10, because of the use of module_cpu_feature_match().
-
-This breaks for example loading wireguard:
-
-  jostaberry-1:~ # modprobe -v wireguard
-  insmod /lib/modules/6.8.0-lp155.8.g7e0e887-default/kernel/arch/powerpc/crypto/chacha-p10-crypto.ko.zst
-  modprobe: ERROR: could not insert 'wireguard': No such device
-
-Fix it by removing module_cpu_feature_match(), and instead check the
-CPU feature manually. If the CPU feature is not found, the module
-still loads successfully, but doesn't register the Power10 specific
-algorithms. That allows chacha_crypt_generic() to remain available for
-use, fixing the problem.
-
-  [root@fedora ~]# modprobe -v wireguard
-  insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/net/ipv4/udp_tunnel.ko
-  insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/net/ipv6/ip6_udp_tunnel.ko
-  insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/lib/crypto/libchacha.ko
-  insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/arch/powerpc/crypto/chacha-p10-crypto.ko
-  insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/lib/crypto/libchacha20poly1305.ko
-  insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/drivers/net/wireguard/wireguard.ko
-  [   18.910452][  T721] wireguard: allowedips self-tests: pass
-  [   18.914999][  T721] wireguard: nonce counter self-tests: pass
-  [   19.029066][  T721] wireguard: ratelimiter self-tests: pass
-  [   19.029257][  T721] wireguard: WireGuard 1.0.0 loaded. See www.wireguard.com for information.
-  [   19.029361][  T721] wireguard: Copyright (C) 2015-2019 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-
-Reported-by: Michal Suchánek <msuchanek@suse.de>
-Closes: https://lore.kernel.org/all/20240315122005.GG20665@kitsune.suse.cz/
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Acked-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 ---
- arch/powerpc/crypto/chacha-p10-glue.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+v3:
+ - fix double space in a comment
+v2:
+ - remove extern
+ - include linux/net.h
+ - improve the comment, not "all" requests are serialized
 
-diff --git a/arch/powerpc/crypto/chacha-p10-glue.c b/arch/powerpc/crypto/chacha-p10-glue.c
-index 74fb86b0d209..7c728755852e 100644
---- a/arch/powerpc/crypto/chacha-p10-glue.c
-+++ b/arch/powerpc/crypto/chacha-p10-glue.c
-@@ -197,6 +197,9 @@ static struct skcipher_alg algs[] = {
+CC: Jason@zx2c4.com
+CC: mareklindner@neomailbox.ch
+CC: sw@simonwunderlich.de
+CC: a@unstable.cc
+CC: pshelar@ovn.org
+CC: andriy.shevchenko@linux.intel.com
+CC: wireguard@lists.zx2c4.com
+CC: dev@openvswitch.org
+---
+ drivers/net/wireguard/main.c      |  2 +-
+ include/linux/genetlink.h         | 14 --------------
+ include/linux/genl_magic_struct.h |  2 +-
+ include/net/genetlink.h           | 10 +++++++++-
+ net/batman-adv/main.c             |  2 +-
+ net/batman-adv/netlink.c          |  1 -
+ net/openvswitch/datapath.c        |  1 -
+ 7 files changed, 12 insertions(+), 20 deletions(-)
+ delete mode 100644 include/linux/genetlink.h
+
+diff --git a/drivers/net/wireguard/main.c b/drivers/net/wireguard/main.c
+index ee4da9ab8013..a00671b58701 100644
+--- a/drivers/net/wireguard/main.c
++++ b/drivers/net/wireguard/main.c
+@@ -14,7 +14,7 @@
  
- static int __init chacha_p10_init(void)
- {
-+	if (!cpu_has_feature(CPU_FTR_ARCH_31))
-+		return 0;
+ #include <linux/init.h>
+ #include <linux/module.h>
+-#include <linux/genetlink.h>
++#include <net/genetlink.h>
+ #include <net/rtnetlink.h>
+ 
+ static int __init wg_mod_init(void)
+diff --git a/include/linux/genetlink.h b/include/linux/genetlink.h
+deleted file mode 100644
+index 9dbd7ba9b858..000000000000
+--- a/include/linux/genetlink.h
++++ /dev/null
+@@ -1,14 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0 */
+-#ifndef __LINUX_GENERIC_NETLINK_H
+-#define __LINUX_GENERIC_NETLINK_H
+-
+-#include <uapi/linux/genetlink.h>
+-
+-/* All generic netlink requests are serialized by a global lock.  */
+-extern void genl_lock(void);
+-extern void genl_unlock(void);
+-
+-#define MODULE_ALIAS_GENL_FAMILY(family)\
+- MODULE_ALIAS_NET_PF_PROTO_NAME(PF_NETLINK, NETLINK_GENERIC, "-family-" family)
+-
+-#endif	/* __LINUX_GENERIC_NETLINK_H */
+diff --git a/include/linux/genl_magic_struct.h b/include/linux/genl_magic_struct.h
+index a419d93789ff..621b87a87d74 100644
+--- a/include/linux/genl_magic_struct.h
++++ b/include/linux/genl_magic_struct.h
+@@ -15,8 +15,8 @@
+ #endif
+ 
+ #include <linux/args.h>
+-#include <linux/genetlink.h>
+ #include <linux/types.h>
++#include <net/genetlink.h>
+ 
+ extern int CONCATENATE(GENL_MAGIC_FAMILY, _genl_register)(void);
+ extern void CONCATENATE(GENL_MAGIC_FAMILY, _genl_unregister)(void);
+diff --git a/include/net/genetlink.h b/include/net/genetlink.h
+index 9ece6e5a3ea8..9ab49bfeae78 100644
+--- a/include/net/genetlink.h
++++ b/include/net/genetlink.h
+@@ -2,12 +2,20 @@
+ #ifndef __NET_GENERIC_NETLINK_H
+ #define __NET_GENERIC_NETLINK_H
+ 
+-#include <linux/genetlink.h>
++#include <linux/net.h>
+ #include <net/netlink.h>
+ #include <net/net_namespace.h>
++#include <uapi/linux/genetlink.h>
+ 
+ #define GENLMSG_DEFAULT_SIZE (NLMSG_DEFAULT_SIZE - GENL_HDRLEN)
+ 
++/* Non-parallel generic netlink requests are serialized by a global lock. */
++void genl_lock(void);
++void genl_unlock(void);
 +
- 	static_branch_enable(&have_p10);
- 
- 	return crypto_register_skciphers(algs, ARRAY_SIZE(algs));
-@@ -204,10 +207,13 @@ static int __init chacha_p10_init(void)
- 
- static void __exit chacha_p10_exit(void)
- {
-+	if (!static_branch_likely(&have_p10))
-+		return;
++#define MODULE_ALIAS_GENL_FAMILY(family) \
++ MODULE_ALIAS_NET_PF_PROTO_NAME(PF_NETLINK, NETLINK_GENERIC, "-family-" family)
 +
- 	crypto_unregister_skciphers(algs, ARRAY_SIZE(algs));
- }
- 
--module_cpu_feature_match(PPC_MODULE_FEATURE_P10, chacha_p10_init);
-+module_init(chacha_p10_init);
- module_exit(chacha_p10_exit);
- 
- MODULE_DESCRIPTION("ChaCha and XChaCha stream ciphers (P10 accelerated)");
+ /* Binding to multicast group requires %CAP_NET_ADMIN */
+ #define GENL_MCAST_CAP_NET_ADMIN	BIT(0)
+ /* Binding to multicast group requires %CAP_SYS_ADMIN */
+diff --git a/net/batman-adv/main.c b/net/batman-adv/main.c
+index 75119f1ffccc..8e0f44c71696 100644
+--- a/net/batman-adv/main.c
++++ b/net/batman-adv/main.c
+@@ -14,7 +14,6 @@
+ #include <linux/crc32c.h>
+ #include <linux/device.h>
+ #include <linux/errno.h>
+-#include <linux/genetlink.h>
+ #include <linux/gfp.h>
+ #include <linux/if_ether.h>
+ #include <linux/if_vlan.h>
+@@ -38,6 +37,7 @@
+ #include <linux/string.h>
+ #include <linux/workqueue.h>
+ #include <net/dsfield.h>
++#include <net/genetlink.h>
+ #include <net/rtnetlink.h>
+ #include <uapi/linux/batadv_packet.h>
+ #include <uapi/linux/batman_adv.h>
+diff --git a/net/batman-adv/netlink.c b/net/batman-adv/netlink.c
+index 0954757f0b8b..9362cd9d6f3d 100644
+--- a/net/batman-adv/netlink.c
++++ b/net/batman-adv/netlink.c
+@@ -15,7 +15,6 @@
+ #include <linux/cache.h>
+ #include <linux/err.h>
+ #include <linux/errno.h>
+-#include <linux/genetlink.h>
+ #include <linux/gfp.h>
+ #include <linux/if_ether.h>
+ #include <linux/if_vlan.h>
+diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
+index 11c69415c605..99d72543abd3 100644
+--- a/net/openvswitch/datapath.c
++++ b/net/openvswitch/datapath.c
+@@ -15,7 +15,6 @@
+ #include <linux/delay.h>
+ #include <linux/time.h>
+ #include <linux/etherdevice.h>
+-#include <linux/genetlink.h>
+ #include <linux/kernel.h>
+ #include <linux/kthread.h>
+ #include <linux/mutex.h>
 -- 
 2.44.0
 
