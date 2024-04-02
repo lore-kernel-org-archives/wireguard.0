@@ -4,30 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02940CD1284
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 31 Mar 2024 14:53:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7762BCD1284
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  2 Apr 2024 06:36:55 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 10afbc3e;
-	Sun, 31 Mar 2024 14:50:15 +0000 (UTC)
-Received: from mail.servers.dxld.at (mail.servers.dxld.at
- [2001:678:4d8:200::1a57])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 99f58ec3
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e43ee3eb;
+	Tue, 2 Apr 2024 06:36:53 +0000 (UTC)
+Received: from abb.hmeau.com (abb.hmeau.com [144.6.53.87])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 991b1cc0
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Sun, 31 Mar 2024 14:50:14 +0000 (UTC)
-Received: mail.servers.dxld.at;
-	Sun, 31 Mar 2024 16:50:13 +0200
-Date: Sun, 31 Mar 2024 16:50:08 +0200
-From: Daniel =?utf-8?Q?Gr=C3=B6ber?= <dxld@darkboxed.org>
-To: Peter Lister <peter@bikeshed.quignogs.org.uk>
-Cc: wireguard@lists.zx2c4.com
-Subject: Re: WG on LXC
-Message-ID: <20240331145008.dwkxa2iuviksnppv@darkboxed.org>
-References: <7d701aaa-b9fd-4b59-b8db-ce360a94280e@bikeshed.quignogs.org.uk>
+ for <wireguard@lists.zx2c4.com>; Tue, 2 Apr 2024 06:36:50 +0000 (UTC)
+Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
+ by formenos.hmeau.com with smtp (Exim 4.94.2 #2 (Debian))
+ id 1rrXl4-00DyL0-Uh; Tue, 02 Apr 2024 14:36:36 +0800
+Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation);
+ Tue, 02 Apr 2024 14:36:51 +0800
+Date: Tue, 2 Apr 2024 14:36:51 +0800
+From: Herbert Xu <herbert@gondor.apana.org.au>
+To: Michael Ellerman <mpe@ellerman.id.au>
+Cc: linuxppc-dev@lists.ozlabs.org, msuchanek@suse.de,
+ wireguard@lists.zx2c4.com, dtsen@linux.ibm.com
+Subject: Re: [PATCH] powerpc/crypto/chacha-p10: Fix failure on non Power10
+Message-ID: <Zgung5L70rQYLNbA@gondor.apana.org.au>
+References: <20240328130200.3041687-1-mpe@ellerman.id.au>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <7d701aaa-b9fd-4b59-b8db-ce360a94280e@bikeshed.quignogs.org.uk>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240328130200.3041687-1-mpe@ellerman.id.au>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -42,36 +45,54 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Peter,
-
-On Fri, Mar 22, 2024 at 06:52:16PM +0000, Peter Lister wrote:
-> I'm using wg on my home network, using a Linux router with OpenWRT and
-> running services (e.g. IMAP) on LXC containers.
+On Fri, Mar 29, 2024 at 12:02:00AM +1100, Michael Ellerman wrote:
+> The chacha-p10-crypto module provides optimised chacha routines for
+> Power10. It also selects CRYPTO_ARCH_HAVE_LIB_CHACHA which says it
+> provides chacha_crypt_arch() to generic code.
 > 
-> Having read how wg is intended to work within name spaces, I expected to
-> easily create LXC containers with *only* a wg interface, 
+> Notably the module needs to provide chacha_crypt_arch() regardless of
+> whether it is loaded on Power10 or an older CPU.
+> 
+> The implementation of chacha_crypt_arch() already has a fallback to
+> chacha_crypt_generic(), however the module as a whole fails to load on
+> pre-Power10, because of the use of module_cpu_feature_match().
+> 
+> This breaks for example loading wireguard:
+> 
+>   jostaberry-1:~ # modprobe -v wireguard
+>   insmod /lib/modules/6.8.0-lp155.8.g7e0e887-default/kernel/arch/powerpc/crypto/chacha-p10-crypto.ko.zst
+>   modprobe: ERROR: could not insert 'wireguard': No such device
+> 
+> Fix it by removing module_cpu_feature_match(), and instead check the
+> CPU feature manually. If the CPU feature is not found, the module
+> still loads successfully, but doesn't register the Power10 specific
+> algorithms. That allows chacha_crypt_generic() to remain available for
+> use, fixing the problem.
+> 
+>   [root@fedora ~]# modprobe -v wireguard
+>   insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/net/ipv4/udp_tunnel.ko
+>   insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/net/ipv6/ip6_udp_tunnel.ko
+>   insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/lib/crypto/libchacha.ko
+>   insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/arch/powerpc/crypto/chacha-p10-crypto.ko
+>   insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/lib/crypto/libchacha20poly1305.ko
+>   insmod /lib/modules/6.8.0-00001-g786a790c4d79/kernel/drivers/net/wireguard/wireguard.ko
+>   [   18.910452][  T721] wireguard: allowedips self-tests: pass
+>   [   18.914999][  T721] wireguard: nonce counter self-tests: pass
+>   [   19.029066][  T721] wireguard: ratelimiter self-tests: pass
+>   [   19.029257][  T721] wireguard: WireGuard 1.0.0 loaded. See www.wireguard.com for information.
+>   [   19.029361][  T721] wireguard: Copyright (C) 2015-2019 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
+> 
+> Reported-by: Michal Suchánek <msuchanek@suse.de>
+> Closes: https://lore.kernel.org/all/20240315122005.GG20665@kitsune.suse.cz/
+> Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+> ---
+>  arch/powerpc/crypto/chacha-p10-glue.c | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
 
-This is a relatively new way of doing things, not every tool is going to
-support it.
+Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
 
-What exactly are you trying to accomplish by doing this? In my mind you can
-simply have *one* wg tunnel on the LXC host machine and use routed veth
-networking to connect the containers to this uplink, but I'm probably
-missing something.
-
-> It also seems odd that client hosts need each wg client to use per-server
-> endpoint addresses when they are all hosted on one physical server's network
-> interface.
-
-I'm not sure I've understood your current setup. Could you make your
-explaination a bit more concrete? Wg configs snippets from the Host and
-container would be helpful.
-
-> I'm sure it's possible to script a solution, but ideally I want to specify
-> lxc.net.0.type as "wireguard", give it a key pair and that should be that,
-> with all config living outside the container.
-
-Sounds nice but you'll want to talk to the LXC project instead of WireGuard
-if getting that supported is your goal.
-
---Daniel
+Thanks,
+-- 
+Email: Herbert Xu <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
