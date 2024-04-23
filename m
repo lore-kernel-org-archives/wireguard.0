@@ -4,62 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79255D49212
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 12:36:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77D09D4920F
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 12:40:42 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2590916e;
-	Mon, 18 Nov 2024 12:36:03 +0000 (UTC)
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com
- [2a00:1450:4864:20::42f])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7bed7b9f
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 66a99bb2;
+	Mon, 18 Nov 2024 12:36:08 +0000 (UTC)
+Received: from mail-40132.protonmail.ch (mail-40132.protonmail.ch
+ [185.70.40.132])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b3312ee1
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 22 Apr 2024 09:24:27 +0000 (UTC)
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-345b857d7adso3238637f8f.1
- for <wireguard@lists.zx2c4.com>; Mon, 22 Apr 2024 02:24:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=googlemail.com; s=20230601; t=1713777866; x=1714382666; darn=lists.zx2c4.com;
- h=content-transfer-encoding:mime-version:subject:message-id:to:from
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=VmagK9dZEyNoXL/780AtHiu2a6ROIPhkSm2Jj6Wx0Ik=;
- b=hzcgic1V9XBOSjby4cw7BM1EWGbx36gh3MIaViZw5kXLwd3Yd4wT1gxTlHf10bDtc+
- 2aw70o/Fmwgh8adsYGphtMp0JLwtQwRyNuzgHfAQSPKTi9CQoAH3DB7r6Tx6rqqFz9T1
- vUGnHCg7IvRf9oI8IiLQ2douGjDG89Smqi+ZhB5xeovqviym9AwiI1+njEhx0i+jSDKD
- fytnc37vUmwkuFT8HWQzRwG4CxJCuINCKBsWt1cWtReUS9W85yhovFLeeq3SPrzrBXcj
- sDBSqK1EbCPIXksnzFVSaVHDIK9h2px7xj/0NtoN9KF9s2CB0YPm2oTWUVvqJ1bHhxcS
- vOcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1713777866; x=1714382666;
- h=content-transfer-encoding:mime-version:subject:message-id:to:from
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VmagK9dZEyNoXL/780AtHiu2a6ROIPhkSm2Jj6Wx0Ik=;
- b=DiyRn8exU6gp/B+tQWXmpDSMkt3Bg0rboqI9Cd2xW4DX/izGljniOCZJUAdcUyyFt7
- S9z46ItJotUM8k/tQ7CGRS0NbAfoQAi4ITs6k9JRVKJtnay9cMpQL4c2Efv1oRwbs2iB
- 7VVox5c42/NWVri1c8wwS4rPritsX04pSpAfG5e6UgwFoSOYMgKW9lHPzv4ZDYNCbChs
- QcytGw+Wg9AY5dF9LJTJ2uwj6KA1DAV6wBGzZs9Oo8DdRqcFYMoeuyacAc/DcTTfgRrf
- lI+dmSGsvdGUDOttFP9mMOUhAd95/eFtHbU8NZCT7Ai1TqPMb55WKqCcxfWch6PT3W7n
- LyVA==
-X-Gm-Message-State: AOJu0Ywi/DYOx6oBuaBUqeHsSWg1hKn61WJff1r0//HrARvPSfaD3z4I
- k7lvRv3umgmEjXSP6Z2iBuDE0lBFJ6EQS/ACdKIOud3Jz8PzsnAOBpOA8w==
-X-Google-Smtp-Source: AGHT+IF64SfVgt/DcZ+O8eDc2fbKMtX5/Y7iIgYGIltSELVTov1SdcnlczbhHkMhOxIuz3wrcfQlgg==
-X-Received: by 2002:a05:6000:1291:b0:34b:4afc:5d52 with SMTP id
- f17-20020a056000129100b0034b4afc5d52mr191699wrx.9.1713777866138; 
- Mon, 22 Apr 2024 02:24:26 -0700 (PDT)
-Received: from [127.0.0.1] ([88.133.67.48]) by smtp.gmail.com with ESMTPSA id
- g18-20020adfa492000000b0033e9d9f891csm11635358wrb.58.2024.04.22.02.24.25
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Apr 2024 02:24:25 -0700 (PDT)
-Date: Mon, 22 Apr 2024 11:24:25 +0200 (GMT+02:00)
-From: Thomas Butz <btom1990@googlemail.com>
+ Tue, 23 Apr 2024 08:12:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+ s=protonmail3; t=1713859943; x=1714119143;
+ bh=aSKAC6MDt1Y6G5whkuNKvayh55d4bNwv0oDSMMUKsAk=;
+ h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+ Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+ b=Vx0LmuGD53fZPMZFMt6eZRb8z/04PSC9dMSJIZSRbr39ERVS7sncqNC/s3wRjFpaX
+ a3Gk5s0dkyQI9ag7hJmSn0l8YMNR2YJgBkyWhMlTXMGEGvrkyjY72sdfcMqsV+Cuz3
+ E0af9gAsP1Q4/yjDhJfd07+f7OgrVJc5TvmHRcHIuEpiNqEMUHIKmitLRu1Yt6RM0y
+ 6fq7gDXshhI0SBsJoT9ONp22DMp05N5QUsfaCPQDyWP6ChQvjLD0Ryg51CJBM/KqLf
+ 9W4uLMmCT2yNQBkCWANMfs/xgmBeS6ywSrjyzNyroVR+m/AVs9iVto7OGEZyudMBif
+ y3fNxrY+HXqvg==
+Date: Tue, 23 Apr 2024 08:12:19 +0000
 To: wireguard@lists.zx2c4.com
-Message-ID: <a1e54eb6-ed75-46c2-9482-93f082635eb3@googlemail.com>
-Subject: wireguard-go: potentially faulty GSO detection
+From: Andrew Aladjev <andrew.aladjev@protonmail.com>
+Cc: Andrew Aladjev <andrew.aladjev@gmail.com>
+Subject: [PATCH] added global lock to linux wg quick,
+ fixed race condition when 2 wg interfaces wanted to have the same
+ table number
+Message-ID: <20240423081212.12537-1-andrew.aladjev@protonmail.com>
+Feedback-ID: 69562842:user:proton
+X-Pm-Message-ID: 8767f2fd65e1bf3de58c69e96f38b0272cd06ae7
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Correlation-ID: <a1e54eb6-ed75-46c2-9482-93f082635eb3@googlemail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-Mailman-Approved-At: Mon, 18 Nov 2024 12:35:39 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -75,8 +54,103 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Both wireguard-go and quic-go currently use the same syscall logic to 
-check if GSO is available. According to a recent quic-go issue, it's not 
-enough to check for an error, you also need to check the return value:
+From: Andrew Aladjev <andrew.aladjev@gmail.com>
 
-https://github.com/quic-go/quic-go/issues/4446
+Signed-off-by: Andrew Aladjev <andrew.aladjev@gmail.com>
+---
+ src/wg-quick/linux.bash | 29 ++++++++++++++++++++++++++---
+ 1 file changed, 26 insertions(+), 3 deletions(-)
+
+diff --git a/src/wg-quick/linux.bash b/src/wg-quick/linux.bash
+index 4193ce5..2a8fa16 100755
+--- a/src/wg-quick/linux.bash
++++ b/src/wg-quick/linux.bash
+@@ -27,6 +27,17 @@ CONFIG_FILE=3D""
+ PROGRAM=3D"${0##*/}"
+ ARGS=3D( "$@" )
+=20
++LOCK_DIR_PATH=3D"/var/lock"
++mkdir -p "$LOCK_DIR_PATH"
++
++WG_QUICK_LOCK_PATH=3D"${LOCK_DIR_PATH}/wg-quick.lock"
++
++get_lock() {
++=09exec {FD}>"$WG_QUICK_LOCK_PATH" || exit 1
++=09flock -x "$FD" || exit 1
++=09trap "rm -f $WG_QUICK_LOCK_PATH" EXIT
++}
++
+ cmd() {
+ =09echo "[#] $*" >&2
+ =09"$@"
+@@ -210,16 +221,22 @@ remove_firewall() {
+=20
+ HAVE_SET_FIREWALL=3D0
+ add_default() {
+-=09local table line
++=09local proto=3D-4 iptables=3Diptables pf=3Dip
++=09[[ $1 =3D=3D *:* ]] && proto=3D-6 iptables=3Dip6tables pf=3Dip6
++
++=09local table
+ =09if ! get_fwmark table; then
++=09=09# We are trying to get next global table number and use it with defa=
+ult route.
++=09        # This process should be globaly locked.
++=09        get_lock
++
+ =09=09table=3D51820
+ =09=09while [[ -n $(ip -4 route show table $table 2>/dev/null) || -n $(ip =
+-6 route show table $table 2>/dev/null) ]]; do
+ =09=09=09((table++))
+ =09=09done
+ =09=09cmd wg set "$INTERFACE" fwmark $table
+ =09fi
+-=09local proto=3D-4 iptables=3Diptables pf=3Dip
+-=09[[ $1 =3D=3D *:* ]] && proto=3D-6 iptables=3Dip6tables pf=3Dip6
++
+ =09cmd ip $proto rule add not fwmark $table table $table
+ =09cmd ip $proto rule add table main suppress_prefixlength 0
+ =09cmd ip $proto route add "$1" dev "$INTERFACE" table $table
+@@ -229,20 +246,26 @@ add_default() {
+ =09printf -v nftcmd '%sadd chain %s %s preraw { type filter hook preroutin=
+g priority -300; }\n' "$nftcmd" "$pf" "$nftable"
+ =09printf -v nftcmd '%sadd chain %s %s premangle { type filter hook prerou=
+ting priority -150; }\n' "$nftcmd" "$pf" "$nftable"
+ =09printf -v nftcmd '%sadd chain %s %s postmangle { type filter hook postr=
+outing priority -150; }\n' "$nftcmd" "$pf" "$nftable"
++
++=09local line
+ =09while read -r line; do
+ =09=09[[ $line =3D~ .*inet6?\ ([0-9a-f:.]+)/[0-9]+.* ]] || continue
+ =09=09printf -v restore '%s-I PREROUTING ! -i %s -d %s -m addrtype ! --src=
+-type LOCAL -j DROP %s\n' "$restore" "$INTERFACE" "${BASH_REMATCH[1]}" "$ma=
+rker"
+ =09=09printf -v nftcmd '%sadd rule %s %s preraw iifname !=3D "%s" %s daddr=
+ %s fib saddr type !=3D local drop\n' "$nftcmd" "$pf" "$nftable" "$INTERFAC=
+E" "$pf" "${BASH_REMATCH[1]}"
+ =09done < <(ip -o $proto addr show dev "$INTERFACE" 2>/dev/null)
++
+ =09printf -v restore '%sCOMMIT\n*mangle\n-I POSTROUTING -m mark --mark %d =
+-p udp -j CONNMARK --save-mark %s\n-I PREROUTING -p udp -j CONNMARK --resto=
+re-mark %s\nCOMMIT\n' "$restore" $table "$marker" "$marker"
+ =09printf -v nftcmd '%sadd rule %s %s postmangle meta l4proto udp mark %d =
+ct mark set mark \n' "$nftcmd" "$pf" "$nftable" $table
+ =09printf -v nftcmd '%sadd rule %s %s premangle meta l4proto udp meta mark=
+ set ct mark \n' "$nftcmd" "$pf" "$nftable"
++
+ =09[[ $proto =3D=3D -4 ]] && cmd sysctl -q net.ipv4.conf.all.src_valid_mar=
+k=3D1
++
+ =09if type -p nft >/dev/null; then
+ =09=09cmd nft -f <(echo -n "$nftcmd")
+ =09else
+ =09=09echo -n "$restore" | cmd $iptables-restore -n
+ =09fi
++
+ =09HAVE_SET_FIREWALL=3D1
+ =09return 0
+ }
+--=20
+2.40.1
+
+
