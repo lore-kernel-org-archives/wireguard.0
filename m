@@ -4,73 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9696CD128A
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  3 Apr 2024 18:22:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C09CC10F16
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 24 Apr 2024 04:34:42 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 66888d66;
-	Wed, 3 Apr 2024 18:22:10 +0000 (UTC)
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com
- [2607:f8b0:4864:20::631])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3e6fdf91
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 41cb4e98;
+	Wed, 24 Apr 2024 04:32:29 +0000 (UTC)
+Received: from mail-il1-f197.google.com (mail-il1-f197.google.com
+ [209.85.166.197])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d7d86d71
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 3 Apr 2024 18:22:07 +0000 (UTC)
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1e29328289eso949615ad.0
- for <wireguard@lists.zx2c4.com>; Wed, 03 Apr 2024 11:22:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=dabbelt-com.20230601.gappssmtp.com; s=20230601; t=1712168526; x=1712773326;
- darn=lists.zx2c4.com; 
- h=content-transfer-encoding:mime-version:message-id:to:from:cc
- :in-reply-to:subject:date:from:to:cc:subject:date:message-id
- :reply-to; bh=b+6ScChiC8zS3o9tbiOgcc1DiBxz6xvmMgS5MbEqCVk=;
- b=2+nhdpgifNnjOHgUGM7aAjqip3b2tatP8wdTZihQlLAbu9nxY4J1gLV53FryaSp98N
- ig8P/xBaZ+7RSFj6rSp6Qp2cb34NgYaDOX1qZn8+7EVJOq2s6Oj1+MNbE9Q8jQUw0Lii
- 8pCJpqY/N3xyqefSbQB5t22QtpiBlSQc9bP9/IeoKRbvQ8wIlKKaek/c0V/8YG9cl/AB
- AM41OVTvZtEqQ/l8727utxjW4SoHeg8sK3saymlkbK334rP0GK2QaP074b7iXqBrpp0f
- OkcHrgHZMIr8mMPc0eN0JvYuAispMBlJLPlAyEtzoUSVqOmYAe2HpuJC078lQDSk2pQI
- lSiQ==
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 24 Apr 2024 04:32:26 +0000 (UTC)
+Received: by mail-il1-f197.google.com with SMTP id
+ e9e14a558f8ab-36bffeee98dso56791115ab.2
+ for <wireguard@lists.zx2c4.com>; Tue, 23 Apr 2024 21:32:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1712168526; x=1712773326;
- h=content-transfer-encoding:mime-version:message-id:to:from:cc
- :in-reply-to:subject:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=b+6ScChiC8zS3o9tbiOgcc1DiBxz6xvmMgS5MbEqCVk=;
- b=X4IuVCXqLTsf8Fux1ggoPf5IE88GlRVZ7d+Pgc/YUO0VAHMYkhhJP/5UN9MXDwc216
- 4VldlHhHzk+rle1kpYv7ctnXUI1YFivUmYfWKP1rpHBrZBQlV3QAFCxE31xs+Oh4ep+D
- VHMF/jBUBtqTPWZP8GogDHXViZJmcxAFgKTzfbEG4mQGIqPpZXLmpNnLYO9UIYYW5SNy
- JgYyyI6viLi+zlH9uhEeP8bfGx1I1wslJjDSgqeYwkFMmSe52K1Ub+FnfL0DGQjmARrZ
- iWVs3UyfRl1831y5hqVZ5LWfcJaz8PgV/OOSfgh7uKWT+oPTW25NKIYTMzxo3Xx695v8
- A44g==
+ d=1e100.net; s=20230601; t=1713933145; x=1714537945;
+ h=to:from:subject:message-id:date:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=BX6FBtRkiTssDymK0ex6hQc8uF3Rea2zcAOcrSHz7Os=;
+ b=CtfT1XNa/vlulRcI0LZahSJ3HzSC9CW4s2mq2hqRtTnU/kDLh5Y4quZSJ9YjhWNNKB
+ rX9RrPZ1wGSgAkNVZHAO1IVSAVBOnmJkZqBjg+aRNXwCx5EcRlqC+CGepZz3mp8lDaKC
+ 27yZHAZWOaeeBGxlgW40akVPerr2OlQ0Fa60/ArXazwX6lFm93jNR2XT2UwMdsXwvYUE
+ 99DtM6lBAOIrklQVUKwbaXoLTgMmHgkFGTK6SGqznLkAOJOosdkZiKfGfH+0XpOhB+Rm
+ betpqtFAIrtwxNNA3J+77xKjj6FVPTBYE4gYKDcqJwZzzZUBPAxUnacQv7/JY9fLMAWU
+ P4LQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUTXptMi5oKwfYU4QL9xF1Qmi1ZTfw8IfeUhI3cY07atdmyXSK6hUOYH2gU8CRIc1crwl5UOpvxBDooPeSFWodYz9gS72mxLxEi
-X-Gm-Message-State: AOJu0YwTx/shGGbnm/O+uxKe3S+9CYAWDvntroYs5OhWi8X2ESICbRhX
- c/1q/7an/JBtqhW/fmQX9ZvqARmqvBIJNaCi4XmAnAWmoedixmfuF1ySCJFmcT4=
-X-Google-Smtp-Source: AGHT+IFlUXGV4chig6oJvZqV4vGOgLfE+s5gAYd5D5SfvJ7gnZEYS1RqOGC2YxcHgRm7Hvepr5Q2zg==
-X-Received: by 2002:a17:902:c14b:b0:1e0:a7c5:b5a5 with SMTP id
- 11-20020a170902c14b00b001e0a7c5b5a5mr67760plj.37.1712168525743; 
- Wed, 03 Apr 2024 11:22:05 -0700 (PDT)
-Received: from localhost ([192.184.165.199]) by smtp.gmail.com with ESMTPSA id
- c2-20020a170902d48200b001dd652ef8d6sm13572476plg.152.2024.04.03.11.22.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Apr 2024 11:22:04 -0700 (PDT)
-Date: Wed, 03 Apr 2024 11:22:04 -0700 (PDT)
-X-Google-Original-Date: Wed, 03 Apr 2024 11:21:38 PDT (-0700)
-Subject: Re: [PATCH v1 2/2] RISC-V: drop SOC_VIRT for ARCH_VIRT
-In-Reply-To: <20240305-stress-earflap-d7ddb8655a4d@spud>
-CC: linux-riscv@lists.infradead.org, Conor Dooley <conor@kernel.org>,
- Conor Dooley <conor.dooley@microchip.com>,
- Paul Walmsley <paul.walmsley@sifive.com>, aou@eecs.berkeley.edu, 
- linux-kernel@vger.kernel.org, brendan.higgins@linux.dev, davidgow@google.com,
- rmoar@google.com, 
- Jason@zx2c4.com, shuah@kernel.org, linux-kselftest@vger.kernel.org,
- kunit-dev@googlegroups.com, 
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org
-From: Palmer Dabbelt <palmer@dabbelt.com>
-To: Conor Dooley <conor@kernel.org>
-Message-ID: <mhng-170f61cd-c3b7-413b-8279-9d50d55dbebe@palmer-ri-x1c9>
-Mime-Version: 1.0 (MHng)
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+ AJvYcCUNsKeGS24MAa0QXT5E7yTotgVhCc8AAWsgNis2DYm4k7yhmndg312Fni+LMC85myhXGGhiUgc9pP38CbzYyh/xZ2L2JQwYSXO7
+X-Gm-Message-State: AOJu0YzWY9M/GDM0faj6wRHVng8ul90Y1Rl5qSziPShBjY+0tTYzNFzP
+ Nz9dbqwmruD05Rd5foAk2XEuGTDQKR5lMlnhIu4vBxWNbpqtnRsXeMXjqNg+1NYiGS6vI3Vr1WW
+ txn/r3DyHPTdVE3sybEZUP6NGLrt90KvDreoVFXKG51/XIHAvt5eLT/8=
+X-Google-Smtp-Source: AGHT+IEW5ByicXicC6bpNxEkF2MW5qN5E3IsqNZiHhcrcHa33EpbV4gPjTB9HygJIROK0X2Xxgn2aGCz47CCFy1i0mkkSKe45qo/
+MIME-Version: 1.0
+X-Received: by 2002:a05:6e02:188f:b0:36a:276e:4fe with SMTP id
+ o15-20020a056e02188f00b0036a276e04femr212250ilu.4.1713933145432; Tue, 23 Apr
+ 2024 21:32:25 -0700 (PDT)
+Date: Tue, 23 Apr 2024 21:32:25 -0700
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <0000000000004d70290616d028d9@google.com>
+Subject: [syzbot] [wireguard?] WARNING in __kthread_bind_mask (2)
+From: syzbot <syzbot+36466e0ea21862240631@syzkaller.appspotmail.com>
+To: Jason@zx2c4.com, davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+ linux-kernel@vger.kernel.org, netdev@vger.kernel.org, pabeni@redhat.com, 
+ syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -85,120 +63,83 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Tue, 05 Mar 2024 10:37:06 PST (-0800), Conor Dooley wrote:
-> From: Conor Dooley <conor.dooley@microchip.com>
->
-> The ARCH_ and SOC_ versions of this symbol have persisted for quite a
-> while now in parallel. Generated .config files from previous LTS kernels
-> should have both. Finally remove SOC_VIRT and update all config files
-> using it.
->
-> Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-> ---
-> I had a 1.5 year old ack from Jason that I dropped due to the passage of
-> time.
->
-> CC: Paul Walmsley <paul.walmsley@sifive.com>
-> CC: Palmer Dabbelt <palmer@dabbelt.com>
-> CC: Albert Ou <aou@eecs.berkeley.edu>
-> CC: Brendan Higgins <brendan.higgins@linux.dev>
-> CC: David Gow <davidgow@google.com>
-> CC: Rae Moar <rmoar@google.com>
-> CC: "Jason A. Donenfeld" <Jason@zx2c4.com>
-> CC: Shuah Khan <shuah@kernel.org>
-> CC: linux-riscv@lists.infradead.org
-> CC: linux-kernel@vger.kernel.org
-> CC: linux-kselftest@vger.kernel.org
-> CC: kunit-dev@googlegroups.com
-> CC: wireguard@lists.zx2c4.com
-> CC: netdev@vger.kernel.org
-> ---
->  arch/riscv/Kconfig.socs                                    | 3 ---
->  arch/riscv/configs/defconfig                               | 2 +-
->  arch/riscv/configs/nommu_virt_defconfig                    | 2 +-
->  tools/testing/kunit/qemu_configs/riscv.py                  | 2 +-
->  tools/testing/selftests/wireguard/qemu/arch/riscv32.config | 2 +-
->  tools/testing/selftests/wireguard/qemu/arch/riscv64.config | 2 +-
->  6 files changed, 5 insertions(+), 8 deletions(-)
->
-> diff --git a/arch/riscv/Kconfig.socs b/arch/riscv/Kconfig.socs
-> index e85ffb63c48d..dcbfb659839c 100644
-> --- a/arch/riscv/Kconfig.socs
-> +++ b/arch/riscv/Kconfig.socs
-> @@ -52,9 +52,6 @@ config ARCH_THEAD
->  	  This enables support for the RISC-V based T-HEAD SoCs.
->
->  config ARCH_VIRT
-> -	def_bool SOC_VIRT
-> -
-> -config SOC_VIRT
->  	bool "QEMU Virt Machine"
->  	select CLINT_TIMER if RISCV_M_MODE
->  	select POWER_RESET
-> diff --git a/arch/riscv/configs/defconfig b/arch/riscv/configs/defconfig
-> index ab3bab313d56..8d46a9137b1e 100644
-> --- a/arch/riscv/configs/defconfig
-> +++ b/arch/riscv/configs/defconfig
-> @@ -32,7 +32,7 @@ CONFIG_ARCH_SOPHGO=y
->  CONFIG_SOC_STARFIVE=y
->  CONFIG_ARCH_SUNXI=y
->  CONFIG_ARCH_THEAD=y
-> -CONFIG_SOC_VIRT=y
-> +CONFIG_ARCH_VIRT=y
->  CONFIG_SMP=y
->  CONFIG_HOTPLUG_CPU=y
->  CONFIG_PM=y
-> diff --git a/arch/riscv/configs/nommu_virt_defconfig b/arch/riscv/configs/nommu_virt_defconfig
-> index b794e2f8144e..de8143d1f738 100644
-> --- a/arch/riscv/configs/nommu_virt_defconfig
-> +++ b/arch/riscv/configs/nommu_virt_defconfig
-> @@ -24,7 +24,7 @@ CONFIG_EXPERT=y
->  CONFIG_SLUB=y
->  CONFIG_SLUB_TINY=y
->  # CONFIG_MMU is not set
-> -CONFIG_SOC_VIRT=y
-> +CONFIG_ARCH_VIRT=y
->  CONFIG_NONPORTABLE=y
->  CONFIG_SMP=y
->  CONFIG_CMDLINE="root=/dev/vda rw earlycon=uart8250,mmio,0x10000000,115200n8 console=ttyS0"
-> diff --git a/tools/testing/kunit/qemu_configs/riscv.py b/tools/testing/kunit/qemu_configs/riscv.py
-> index 12a1d525978a..c87758030ff7 100644
-> --- a/tools/testing/kunit/qemu_configs/riscv.py
-> +++ b/tools/testing/kunit/qemu_configs/riscv.py
-> @@ -13,7 +13,7 @@ if not os.path.isfile(OPENSBI_PATH):
->
->  QEMU_ARCH = QemuArchParams(linux_arch='riscv',
->  			   kconfig='''
-> -CONFIG_SOC_VIRT=y
-> +CONFIG_ARCH_VIRT=y
->  CONFIG_SERIAL_8250=y
->  CONFIG_SERIAL_8250_CONSOLE=y
->  CONFIG_SERIAL_OF_PLATFORM=y
-> diff --git a/tools/testing/selftests/wireguard/qemu/arch/riscv32.config b/tools/testing/selftests/wireguard/qemu/arch/riscv32.config
-> index 2fc36efb166d..2500eaa9b469 100644
-> --- a/tools/testing/selftests/wireguard/qemu/arch/riscv32.config
-> +++ b/tools/testing/selftests/wireguard/qemu/arch/riscv32.config
-> @@ -2,7 +2,7 @@ CONFIG_NONPORTABLE=y
->  CONFIG_ARCH_RV32I=y
->  CONFIG_MMU=y
->  CONFIG_FPU=y
-> -CONFIG_SOC_VIRT=y
-> +CONFIG_ARCH_VIRT=y
->  CONFIG_SERIAL_8250=y
->  CONFIG_SERIAL_8250_CONSOLE=y
->  CONFIG_SERIAL_OF_PLATFORM=y
-> diff --git a/tools/testing/selftests/wireguard/qemu/arch/riscv64.config b/tools/testing/selftests/wireguard/qemu/arch/riscv64.config
-> index dc266f3b1915..29a67ac67766 100644
-> --- a/tools/testing/selftests/wireguard/qemu/arch/riscv64.config
-> +++ b/tools/testing/selftests/wireguard/qemu/arch/riscv64.config
-> @@ -1,7 +1,7 @@
->  CONFIG_ARCH_RV64I=y
->  CONFIG_MMU=y
->  CONFIG_FPU=y
-> -CONFIG_SOC_VIRT=y
-> +CONFIG_ARCH_VIRT=y
->  CONFIG_SERIAL_8250=y
->  CONFIG_SERIAL_8250_CONSOLE=y
->  CONFIG_SERIAL_OF_PLATFORM=y
+Hello,
 
-Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
+syzbot found the following issue on:
+
+HEAD commit:    3cdb45594619 Merge tag 's390-6.9-4' of git://git.kernel.or..
+git tree:       upstream
+console output: https://syzkaller.appspot.com/x/log.txt?x=12c9866f180000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=85dbe39cf8e4f599
+dashboard link: https://syzkaller.appspot.com/bug?extid=36466e0ea21862240631
+compiler:       gcc (Debian 12.2.0-14) 12.2.0, GNU ld (GNU Binutils for Debian) 2.40
+
+Unfortunately, I don't have any reproducer for this issue yet.
+
+Downloadable assets:
+disk image: https://storage.googleapis.com/syzbot-assets/04e2e4bee9fb/disk-3cdb4559.raw.xz
+vmlinux: https://storage.googleapis.com/syzbot-assets/65456769dc43/vmlinux-3cdb4559.xz
+kernel image: https://storage.googleapis.com/syzbot-assets/09504bbdec9e/bzImage-3cdb4559.xz
+
+IMPORTANT: if you fix the issue, please add the following tag to the commit:
+Reported-by: syzbot+36466e0ea21862240631@syzkaller.appspotmail.com
+
+------------[ cut here ]------------
+WARNING: CPU: 1 PID: 54 at kernel/kthread.c:524 __kthread_bind_mask+0x35/0xc0 kernel/kthread.c:524
+Modules linked in:
+CPU: 1 PID: 54 Comm: kworker/u8:4 Not tainted 6.9.0-rc4-syzkaller-00173-g3cdb45594619 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
+Workqueue: netns cleanup_net
+RIP: 0010:__kthread_bind_mask+0x35/0xc0 kernel/kthread.c:524
+Code: 48 89 fb e8 8d 52 33 00 89 ee 48 89 df e8 d3 94 04 00 31 ff 48 89 c5 48 89 c6 e8 86 4d 33 00 48 85 ed 75 14 e8 6c 52 33 00 90 <0f> 0b 90 5b 5d 41 5c 41 5d e9 5d 52 33 00 e8 58 52 33 00 4c 8d ab
+RSP: 0018:ffffc90000bf7870 EFLAGS: 00010293
+RAX: 0000000000000000 RBX: ffff888060bfbc00 RCX: ffffffff815a6fda
+RDX: ffff88801c690000 RSI: ffffffff815a6fe4 RDI: 0000000000000007
+RBP: 0000000000000000 R08: 0000000000000007 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000005 R12: ffffffff8b0b2f08
+R13: 0000000000000001 R14: ffff88805e2c0ca0 R15: ffff88801fde54c0
+FS:  0000000000000000(0000) GS:ffff8880b9500000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 000000c0039d0000 CR3: 000000002eb24000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ __kthread_bind kernel/kthread.c:537 [inline]
+ kthread_unpark+0x147/0x1a0 kernel/kthread.c:630
+ kthread_stop+0x177/0x670 kernel/kthread.c:706
+ destroy_workqueue+0x154/0xaa0 kernel/workqueue.c:5685
+ wg_destruct+0x24d/0x3d0 drivers/net/wireguard/device.c:257
+ netdev_run_todo+0x775/0x1260 net/core/dev.c:10593
+ default_device_exit_batch+0x860/0xae0 net/core/dev.c:11641
+ ops_exit_list+0x128/0x180 net/core/net_namespace.c:175
+ cleanup_net+0x5b7/0xbf0 net/core/net_namespace.c:637
+ process_one_work+0x9a9/0x1ac0 kernel/workqueue.c:3254
+ process_scheduled_works kernel/workqueue.c:3335 [inline]
+ worker_thread+0x6c8/0xf70 kernel/workqueue.c:3416
+ kthread+0x2c1/0x3a0 kernel/kthread.c:388
+ ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+ </TASK>
+
+
+---
+This report is generated by a bot. It may contain errors.
+See https://goo.gl/tpsmEJ for more information about syzbot.
+syzbot engineers can be reached at syzkaller@googlegroups.com.
+
+syzbot will keep track of this issue. See:
+https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
+
+If the report is already addressed, let syzbot know by replying with:
+#syz fix: exact-commit-title
+
+If you want to overwrite report's subsystems, reply with:
+#syz set subsystems: new-subsystem
+(See the list of subsystem names on the web dashboard)
+
+If the report is a duplicate of another one, reply with:
+#syz dup: exact-subject-of-another-report
+
+If you want to undo deduplication, reply with:
+#syz undup
