@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB3D8C4345F
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 29 Apr 2024 11:21:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E275C4345F
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  2 May 2024 12:38:31 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 933e509b;
-	Mon, 29 Apr 2024 11:19:27 +0000 (UTC)
-Received: from mail-il1-f197.google.com (mail-il1-f197.google.com
- [209.85.166.197])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5db66f58
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b6b3357f;
+	Thu, 2 May 2024 12:38:29 +0000 (UTC)
+Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
+ [209.85.166.70])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id cce76e0a
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 29 Apr 2024 11:19:25 +0000 (UTC)
-Received: by mail-il1-f197.google.com with SMTP id
- e9e14a558f8ab-36c520ec766so4138295ab.0
- for <wireguard@lists.zx2c4.com>; Mon, 29 Apr 2024 04:19:25 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Thu, 2 May 2024 12:38:26 +0000 (UTC)
+Received: by mail-io1-f70.google.com with SMTP id
+ ca18e2360f4ac-7decb47ceebso498927039f.2
+ for <wireguard@lists.zx2c4.com>; Thu, 02 May 2024 05:38:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1714389564; x=1714994364;
+ d=1e100.net; s=20230601; t=1714653505; x=1715258305;
  h=to:from:subject:message-id:date:mime-version:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=QrwA6ccGS9ZzNPR7IhbU5qe0XHxBzNl13GT3NqqI0h4=;
- b=iGU8sUFYUJDAfbcFyGgQTIG0bTNc1EGEo96fUA/9kboRfax9eYCLfd+9+/gCSSBqqf
- ecWF2k7lYXjHVZrQdqBAcw/nID21WcC6bQNK7zr1smAlw17iMRDA1aYb5CYnIboFpUp8
- IZKYgtA7+OU9URAFWUcoCKKDyurqdhwZBrBBddhbuI8V47Dcl/hCHUOK9KdIO3S+0srE
- yK64cnY6tscmglJmIHGqi/rrXBcbL2Pgvv07picP/mfMUZl8ClfzddpLbJkeldpr6HVp
- H2wZgZlMgga1H+wHx48SFu939PYPoEYoOir2hbhnZKPKxjYW90nC1FR/3SOvhp44+Svh
- xiGA==
+ bh=F/8KyUbi4Pj7yz3Rv0CBXW74l59ObuU0YwVCbxEM8D0=;
+ b=qcI1mYmG/E8yAnM2aXv0Z5rknlw1OzXkSFCxgXaRzZG02AnkqE6mcO1G86hA7zmdrV
+ 1eL/V2VVEbqSFgzqn44kE6ewCHJdNvQMiDxzp8h7qcDnpBM0KCkF+fXHfMkP0mf7spv3
+ I9ofaDrxBIId8fKMlkLCJOKjnlqreDOUYyf5nzJd5Re1irIqTvmZhI43/FyZrw49bDD4
+ hD4Mou3YdSZeihH1MmMY3OPlFBnX4LRSSGtvBhNWu+VE153nh9VoOVArSgfGvCtinMtj
+ cw8RJwFYYcxUJgnLiCsZevM5HedoYY+AInomhHTiVlF9KjFHxXPXhTNQbLHhgZMIXiTG
+ +00w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVRWHPGLVpvefl4h2xAjVaLlJx2Ig8SK1dzUkJyN4n9qVR+kSS00uFFbwuIW2X5hj0iSXMU9O5mNB+ZhGDzTwV8r66zWQHU5NP/
-X-Gm-Message-State: AOJu0YybAdraIqXuHWgaJ9uLFrDolaFxaIdgDHAqFa9iRqiqd8Kq39T4
- 2zMIr6nzTSF4b2LicSSA26fdCM3T6RxapQC80IQgn/ogqOIB4vuDkWPy6wtwgvERN8JLf1AgKJr
- DHWyjjmPjdqMr4CUk4XEP9wYR+cHBtdSCbEm2EDUmLTt75qCOJWR4jRY=
-X-Google-Smtp-Source: AGHT+IEuBysXCKvQBTo3DClN56b7Q9v0iwRmrIhf4Pv5vVS3luhq3wf2TCIcfYJ4S307Tb3KgsL7+z5qXAHrkkKR3Fv5/gubb9XN
+ AJvYcCVr7h55K62SZE32HvBQDLRjBxv5U+weGU+Gw72LT7majaeMpf7Lbg9iq9/bsT6sPVjJTjkcuuyhp+054R0OHkO7ZaxR3hzNFnJ4
+X-Gm-Message-State: AOJu0YwT/qhXUwgdle4Z1clPhv8RY/RLPV7Tzyerwz+fZ4kO1gTcB6Gc
+ jSO2cqDxKV+R/Aw9nr0kkZV+lceiHA2yoeiLwJkwJZZ0u70VdMnPQrz4N1G0dYymWGiCDEWXEPl
+ qt6S1NKYqbGlb/S7vbSWkF3zVYf26NWh5dRF5aZBgRBl7gpiRWqCGIhk=
+X-Google-Smtp-Source: AGHT+IEizWOs2nvSEGGx8eJbCmEYpesqO999HC9/7yfeOUOjG3N8S5stcbzSboBiOmCGDOvdbP1z7jEJgbHslwXpAQAPvtUEDpdv
 MIME-Version: 1.0
-X-Received: by 2002:a05:6e02:11a1:b0:36c:48c5:d59e with SMTP id
- 1-20020a056e0211a100b0036c48c5d59emr178826ilj.6.1714389563938; Mon, 29 Apr
- 2024 04:19:23 -0700 (PDT)
-Date: Mon, 29 Apr 2024 04:19:23 -0700
+X-Received: by 2002:a05:6638:8c1a:b0:488:1050:6a2f with SMTP id
+ jl26-20020a0566388c1a00b0048810506a2fmr26697jab.5.1714653505498; Thu, 02 May
+ 2024 05:38:25 -0700 (PDT)
+Date: Thu, 02 May 2024 05:38:25 -0700
 X-Google-Appengine-App-Id: s~syzkaller
 X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <000000000000f72e8a06173a6c61@google.com>
-Subject: [syzbot] [wireguard?] WARNING in wg_packet_send_staged_packets
-From: syzbot <syzbot+c369d311130fba58211b@syzkaller.appspotmail.com>
-To: Jason@zx2c4.com, davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
- linux-kernel@vger.kernel.org, netdev@vger.kernel.org, pabeni@redhat.com, 
+Message-ID: <0000000000001bc267061777e143@google.com>
+Subject: [syzbot] Monthly wireguard report (May 2024)
+From: syzbot <syzbot+listc4826f4184213affe703@syzkaller.appspotmail.com>
+To: Jason@zx2c4.com, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
  syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -63,231 +61,34 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
+Hello wireguard maintainers/developers,
 
-syzbot found the following issue on:
+This is a 31-day syzbot report for the wireguard subsystem.
+All related reports/information can be found at:
+https://syzkaller.appspot.com/upstream/s/wireguard
 
-HEAD commit:    443574b03387 riscv, bpf: Fix kfunc parameters incompatibil..
-git tree:       bpf
-console output: https://syzkaller.appspot.com/x/log.txt?x=124bc980980000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=6fb1be60a193d440
-dashboard link: https://syzkaller.appspot.com/bug?extid=c369d311130fba58211b
-compiler:       Debian clang version 15.0.6, GNU ld (GNU Binutils for Debian) 2.40
+During the period, 2 new issues were detected and 0 were fixed.
+In total, 4 issues are still open and 16 have been fixed so far.
 
-Unfortunately, I don't have any reproducer for this issue yet.
+Some of the still happening issues:
 
-Downloadable assets:
-disk image: https://storage.googleapis.com/syzbot-assets/3f355021a085/disk-443574b0.raw.xz
-vmlinux: https://storage.googleapis.com/syzbot-assets/44cf4de7472a/vmlinux-443574b0.xz
-kernel image: https://storage.googleapis.com/syzbot-assets/a99a36c7ad65/bzImage-443574b0.xz
-
-IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+c369d311130fba58211b@syzkaller.appspotmail.com
-
-------------[ cut here ]------------
-raw_local_irq_restore() called with IRQs enabled
-WARNING: CPU: 1 PID: 4522 at kernel/locking/irqflag-debug.c:10 warn_bogus_irq_restore+0x29/0x40 kernel/locking/irqflag-debug.c:10
-Modules linked in:
-CPU: 1 PID: 4522 Comm: udevd Not tainted 6.8.0-syzkaller-05236-g443574b03387 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
-RIP: 0010:warn_bogus_irq_restore+0x29/0x40 kernel/locking/irqflag-debug.c:10
-Code: 90 f3 0f 1e fa 90 80 3d de 59 01 04 00 74 06 90 c3 cc cc cc cc c6 05 cf 59 01 04 01 90 48 c7 c7 20 ba aa 8b e8 f8 d5 e7 f5 90 <0f> 0b 90 90 90 c3 cc cc cc cc 66 2e 0f 1f 84 00 00 00 00 00 0f 1f
-RSP: 0018:ffffc90000a088f8 EFLAGS: 00010246
-
-RAX: 4f8ab1c1a13e3e00 RBX: 0000000000000200 RCX: ffff88804d5abc00
-RDX: 0000000080000301 RSI: 0000000000000000 RDI: 0000000000000000
-RBP: ffffc90000a089d0 R08: ffffffff8157cc12 R09: 1ffff110172a51a2
-R10: dffffc0000000000 R11: ffffed10172a51a3 R12: 0000000000000200
-R13: 0000000000000000 R14: 0000000000000246 R15: 1ffff92000141124
-FS:  00007f0b23ab9c80(0000) GS:ffff8880b9500000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000001b31125000 CR3: 000000002c066000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <IRQ>
- queue_work_on+0x1ea/0x250 kernel/workqueue.c:2439
- wg_queue_enqueue_per_device_and_peer drivers/net/wireguard/queueing.h:176 [inline]
- wg_packet_create_data drivers/net/wireguard/send.c:320 [inline]
- wg_packet_send_staged_packets+0x11d6/0x1900 drivers/net/wireguard/send.c:388
- call_timer_fn+0x17e/0x600 kernel/time/timer.c:1792
-------------[ cut here ]------------
-WARNING: CPU: 1 PID: 4522 at kernel/softirq.c:307 __local_bh_disable_ip+0x1f6/0x220 kernel/softirq.c:307
-Modules linked in:
-CPU: 1 PID: 4522 Comm: udevd Not tainted 6.8.0-syzkaller-05236-g443574b03387 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
-RIP: 0010:__local_bh_disable_ip+0x1f6/0x220 kernel/softirq.c:307
-Code: 2c 0b 00 65 48 8b 04 25 28 00 00 00 48 3b 84 24 80 00 00 00 75 33 48 8d 65 d8 5b 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc 90 <0f> 0b 90 e9 99 fe ff ff e8 4d 84 16 0a 41 f7 c6 00 02 00 00 0f 85
-RSP: 0018:ffffc90000a07aa0 EFLAGS: 00010006
-
-RAX: 0000000000010306 RBX: ffffffff895fca60 RCX: ffff88804d5abc00
-RDX: dffffc0000000000 RSI: 0000000000000201 RDI: ffffffff895fca60
-RBP: ffffc90000a07b68 R08: 0000000000000005 R09: ffffffff89600d7e
-R10: 000000000000000c R11: ffff88804d5abc00 R12: dffffc0000000000
-R13: 1ffff92000140f58 R14: ffffc90000a07b00 R15: 0000000000000201
-FS:  00007f0b23ab9c80(0000) GS:ffff8880b9500000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000001b31125000 CR3: 000000002c066000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <IRQ>
- __raw_spin_lock_bh include/linux/spinlock_api_smp.h:125 [inline]
- _raw_spin_lock_bh+0x1c/0x50 kernel/locking/spinlock.c:178
- spin_lock_bh include/linux/spinlock.h:356 [inline]
- sock_hash_delete_elem+0xb0/0x300 net/core/sock_map.c:939
- bpf_prog_bc4ba9860fbb0da4+0x46/0x4a
- bpf_dispatcher_nop_func include/linux/bpf.h:1234 [inline]
- __bpf_prog_run include/linux/filter.h:657 [inline]
- bpf_prog_run include/linux/filter.h:664 [inline]
- __bpf_trace_run kernel/trace/bpf_trace.c:2381 [inline]
- bpf_trace_run3+0x238/0x460 kernel/trace/bpf_trace.c:2421
- trace_workqueue_queue_work include/trace/events/workqueue.h:23 [inline]
- __queue_work+0xe5b/0xec0 kernel/workqueue.c:2382
- queue_work_on+0x14f/0x250 kernel/workqueue.c:2435
- queue_work include/linux/workqueue.h:605 [inline]
- stats_request+0xd0/0x100 drivers/virtio/virtio_balloon.c:374
- vring_interrupt+0x21d/0x380 drivers/virtio/virtio_ring.c:2595
- __handle_irq_event_percpu+0x28a/0xa30 kernel/irq/handle.c:158
- handle_irq_event_percpu kernel/irq/handle.c:193 [inline]
- handle_irq_event+0x89/0x1f0 kernel/irq/handle.c:210
- handle_edge_irq+0x25f/0xc20 kernel/irq/chip.c:831
- generic_handle_irq_desc include/linux/irqdesc.h:161 [inline]
- handle_irq arch/x86/kernel/irq.c:238 [inline]
- __common_interrupt+0x138/0x230 arch/x86/kernel/irq.c:257
- common_interrupt+0x4f/0xd0 arch/x86/kernel/irq.c:247
- asm_common_interrupt+0x26/0x40 arch/x86/include/asm/idtentry.h:693
-RIP: 0010:console_flush_all+0x9cd/0xec0 kernel/printk/printk.c:2962
-Code: 48 21 c3 0f 85 fa 01 00 00 e8 1f 6a 1f 00 48 8b 5c 24 38 4d 85 f6 75 07 e8 10 6a 1f 00 eb 06 e8 09 6a 1f 00 fb 48 8b 44 24 58 <42> 0f b6 04 28 84 c0 0f 85 4a 02 00 00 0f b6 1b 31 ff 89 de e8 ea
-RSP: 0018:ffffc90000a08180 EFLAGS: 00000246
-
-RAX: 1ffff9200014107c RBX: ffffc90000a083e0 RCX: ffff88804d5abc00
-RDX: 0000000000000303 RSI: 0000000000000000 RDI: 0000000000000000
-RBP: ffffc90000a08330 R08: ffffffff8175863e R09: 1ffffffff1f0d5cd
-R10: dffffc0000000000 R11: fffffbfff1f0d5ce R12: ffffffff8e8f47e0
-R13: dffffc0000000000 R14: 0000000000000200 R15: ffffffff8e8f4838
- console_unlock+0x13b/0x4d0 kernel/printk/printk.c:3025
- vprintk_emit+0x509/0x720 kernel/printk/printk.c:2292
- _printk+0xd5/0x120 kernel/printk/printk.c:2317
- printk_stack_address arch/x86/kernel/dumpstack.c:72 [inline]
- show_trace_log_lvl+0x43a/0x520 arch/x86/kernel/dumpstack.c:285
- __warn+0x163/0x4b0 kernel/panic.c:675
- __report_bug lib/bug.c:199 [inline]
- report_bug+0x2b3/0x500 lib/bug.c:219
- handle_bug+0x3e/0x70 arch/x86/kernel/traps.c:239
- exc_invalid_op+0x1a/0x50 arch/x86/kernel/traps.c:260
- asm_exc_invalid_op+0x1a/0x20 arch/x86/include/asm/idtentry.h:621
-RIP: 0010:warn_bogus_irq_restore+0x29/0x40 kernel/locking/irqflag-debug.c:10
-Code: 90 f3 0f 1e fa 90 80 3d de 59 01 04 00 74 06 90 c3 cc cc cc cc c6 05 cf 59 01 04 01 90 48 c7 c7 20 ba aa 8b e8 f8 d5 e7 f5 90 <0f> 0b 90 90 90 c3 cc cc cc cc 66 2e 0f 1f 84 00 00 00 00 00 0f 1f
-RSP: 0018:ffffc90000a088f8 EFLAGS: 00010246
-
-RAX: 4f8ab1c1a13e3e00 RBX: 0000000000000200 RCX: ffff88804d5abc00
-RDX: 0000000080000301 RSI: 0000000000000000 RDI: 0000000000000000
-RBP: ffffc90000a089d0 R08: ffffffff8157cc12 R09: 1ffff110172a51a2
-R10: dffffc0000000000 R11: ffffed10172a51a3 R12: 0000000000000200
-R13: 0000000000000000 R14: 0000000000000246 R15: 1ffff92000141124
- queue_work_on+0x1ea/0x250 kernel/workqueue.c:2439
- wg_queue_enqueue_per_device_and_peer drivers/net/wireguard/queueing.h:176 [inline]
- wg_packet_create_data drivers/net/wireguard/send.c:320 [inline]
- wg_packet_send_staged_packets+0x11d6/0x1900 drivers/net/wireguard/send.c:388
- call_timer_fn+0x17e/0x600 kernel/time/timer.c:1792
- expire_timers kernel/time/timer.c:1843 [inline]
- __run_timers kernel/time/timer.c:2408 [inline]
- __run_timer_base+0x66a/0x8e0 kernel/time/timer.c:2419
- run_timer_base kernel/time/timer.c:2428 [inline]
- run_timer_softirq+0xb7/0x170 kernel/time/timer.c:2438
- __do_softirq+0x2bc/0x943 kernel/softirq.c:554
- invoke_softirq kernel/softirq.c:428 [inline]
- __irq_exit_rcu+0xf2/0x1c0 kernel/softirq.c:633
- irq_exit_rcu+0x9/0x30 kernel/softirq.c:645
- instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1043 [inline]
- sysvec_apic_timer_interrupt+0xa6/0xc0 arch/x86/kernel/apic/apic.c:1043
- </IRQ>
- <TASK>
- asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:702
-RIP: 0010:check_kcov_mode kernel/kcov.c:175 [inline]
-RIP: 0010:write_comp_data kernel/kcov.c:236 [inline]
-RIP: 0010:__sanitizer_cov_trace_const_cmp8+0x2f/0x90 kernel/kcov.c:311
-Code: 8b 04 24 65 48 8b 0c 25 80 ce 03 00 65 8b 05 20 d9 6e 7e a9 00 01 ff 00 74 10 a9 00 01 00 00 74 57 83 b9 14 16 00 00 00 74 4e <8b> 81 f0 15 00 00 83 f8 03 75 43 48 8b 91 f8 15 00 00 44 8b 89 f4
-RSP: 0018:ffffc9000318f7b8 EFLAGS: 00000246
-
-RAX: 0000000080000001 RBX: ffffc9000318f948 RCX: ffff88804d5abc00
-RDX: ffffc9000318f935 RSI: ffffffff8140c1eb RDI: 0000000000000000
-RBP: ffffffff8140c1ec R08: ffffffff8140911c R09: 0000000000000000
-R10: ffffc9000318f900 R11: fffff52000631f2c R12: ffffc9000318f900
-R13: ffffc9000318f950 R14: dffffc0000000000 R15: ffffffff8140c1ec
- orc_find arch/x86/kernel/unwind_orc.c:202 [inline]
- unwind_next_frame+0x1ac/0x2a00 arch/x86/kernel/unwind_orc.c:494
- __unwind_start+0x641/0x7c0 arch/x86/kernel/unwind_orc.c:760
- unwind_start arch/x86/include/asm/unwind.h:64 [inline]
- arch_stack_walk+0x103/0x1b0 arch/x86/kernel/stacktrace.c:24
- stack_trace_save+0x118/0x1d0 kernel/stacktrace.c:122
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x3f/0x80 mm/kasan/common.c:68
- unpoison_slab_object mm/kasan/common.c:312 [inline]
- __kasan_slab_alloc+0x66/0x80 mm/kasan/common.c:338
- kasan_slab_alloc include/linux/kasan.h:201 [inline]
- slab_post_alloc_hook mm/slub.c:3813 [inline]
- slab_alloc_node mm/slub.c:3860 [inline]
- kmem_cache_alloc+0x172/0x350 mm/slub.c:3867
- getname_flags+0xbd/0x4f0 fs/namei.c:140
- user_path_at_empty+0x2c/0x60 fs/namei.c:2921
- do_readlinkat+0x118/0x3b0 fs/stat.c:499
- __do_sys_readlink fs/stat.c:532 [inline]
- __se_sys_readlink fs/stat.c:529 [inline]
- __x64_sys_readlink+0x7f/0x90 fs/stat.c:529
- do_syscall_64+0xfb/0x240
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-RIP: 0033:0x7f0b23b90d47
-Code: 73 01 c3 48 8b 0d e1 90 0d 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 b8 59 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d b1 90 0d 00 f7 d8 64 89 01 48
-RSP: 002b:00007fff186caf58 EFLAGS: 00000246
- ORIG_RAX: 0000000000000059
-RAX: ffffffffffffffda RBX: 00007fff186caf68 RCX: 00007f0b23b90d47
-RDX: 0000000000000400 RSI: 00007fff186caf68 RDI: 00007fff186cb448
-RBP: 0000000000000400 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 00007fff186cb448
-R13: 00007fff186cb3b8 R14: 0000561d6917e910 R15: 0000000000000000
- </TASK>
-----------------
-Code disassembly (best guess):
-   0:	48 21 c3             	and    %rax,%rbx
-   3:	0f 85 fa 01 00 00    	jne    0x203
-   9:	e8 1f 6a 1f 00       	call   0x1f6a2d
-   e:	48 8b 5c 24 38       	mov    0x38(%rsp),%rbx
-  13:	4d 85 f6             	test   %r14,%r14
-  16:	75 07                	jne    0x1f
-  18:	e8 10 6a 1f 00       	call   0x1f6a2d
-  1d:	eb 06                	jmp    0x25
-  1f:	e8 09 6a 1f 00       	call   0x1f6a2d
-  24:	fb                   	sti
-  25:	48 8b 44 24 58       	mov    0x58(%rsp),%rax
-* 2a:	42 0f b6 04 28       	movzbl (%rax,%r13,1),%eax <-- trapping instruction
-  2f:	84 c0                	test   %al,%al
-  31:	0f 85 4a 02 00 00    	jne    0x281
-  37:	0f b6 1b             	movzbl (%rbx),%ebx
-  3a:	31 ff                	xor    %edi,%edi
-  3c:	89 de                	mov    %ebx,%esi
-  3e:	e8                   	.byte 0xe8
-  3f:	ea                   	(bad)
-
+Ref Crashes Repro Title
+<1> 939     No    KCSAN: data-race in wg_packet_send_staged_packets / wg_packet_send_staged_packets (3)
+                  https://syzkaller.appspot.com/bug?extid=6ba34f16b98fe40daef1
+<2> 1       No    WARNING in __kthread_bind_mask (2)
+                  https://syzkaller.appspot.com/bug?extid=36466e0ea21862240631
+<3> 1       No    WARNING in wg_packet_send_staged_packets
+                  https://syzkaller.appspot.com/bug?extid=c369d311130fba58211b
 
 ---
 This report is generated by a bot. It may contain errors.
 See https://goo.gl/tpsmEJ for more information about syzbot.
 syzbot engineers can be reached at syzkaller@googlegroups.com.
 
-syzbot will keep track of this issue. See:
-https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
+To disable reminders for individual bugs, reply with the following command:
+#syz set <Ref> no-reminders
 
-If the report is already addressed, let syzbot know by replying with:
-#syz fix: exact-commit-title
+To change bug's subsystems, reply with:
+#syz set <Ref> subsystems: new-subsystem
 
-If you want to overwrite report's subsystems, reply with:
-#syz set subsystems: new-subsystem
-(See the list of subsystem names on the web dashboard)
-
-If the report is a duplicate of another one, reply with:
-#syz dup: exact-subject-of-another-report
-
-If you want to undo deduplication, reply with:
-#syz undup
+You may send multiple commands in a single email message.
