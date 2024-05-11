@@ -4,77 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1717EC10F1A
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 10 May 2024 00:12:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AC35C04FFE
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 11 May 2024 21:47:37 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 57368cea;
-	Fri, 10 May 2024 00:12:13 +0000 (UTC)
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com
- [2607:f8b0:4864:20::449])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f1686c3e
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d7e4678d;
+	Sat, 11 May 2024 21:47:35 +0000 (UTC)
+Received: from mail-io1-f78.google.com (mail-io1-f78.google.com
+ [209.85.166.78])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b727b15f
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 10 May 2024 00:12:10 +0000 (UTC)
-Received: by mail-pf1-x449.google.com with SMTP id
- d2e1a72fcca58-6f452eb2108so1205140b3a.0
- for <wireguard@lists.zx2c4.com>; Thu, 09 May 2024 17:12:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1715299928; x=1715904728; darn=lists.zx2c4.com;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=uRjTqL5jZBxzwk8RtqE4pMuTf8/KsRch8ACUgOLR1L4=;
- b=hZw1XrG3U7A1GvaYUPfcwEugAVewvhbygHeItx87IRAKtOfjW29T+PANMkhuQ27bIJ
- Dln0mmFevWQ1N7ktElXwZi5QWkqecVoeXiCtfk8ZvSSVfdjsnkJnBOXwuBfZ3SnyHFID
- Q2h3xBU4C/KRwxwWCMbt36keSz+HfPbUPZdCcOUu/OFEpdP6yfi/QV3P3qxX4kcaR9cD
- gk7H+oBtoPnJ9VEfKPK/vXXlKq7VsOKgGsol7ESJiY2nmLuxzK1D4S8tikp/C4rvZ6Xt
- +uFsKMtYPELtXSldll5BcgZpeTmHxlJ4hFT0UpS09pt1x6R2u+MsA0XvCuu3nrMKW1ux
- wVFg==
+ Sat, 11 May 2024 21:47:32 +0000 (UTC)
+Received: by mail-io1-f78.google.com with SMTP id
+ ca18e2360f4ac-7da4360bbacso396940739f.2
+ for <wireguard@lists.zx2c4.com>; Sat, 11 May 2024 14:47:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715299928; x=1715904728;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uRjTqL5jZBxzwk8RtqE4pMuTf8/KsRch8ACUgOLR1L4=;
- b=bABQpWaQzXLQzs5a7khC7FdBlmN/jD+tuq9zdpXMejU5chxjxWA8IkftNiuOyO824T
- Ek4lA1Eo2DxapmruP6R0+N5w0zgc4Boh3XgDUaxNn0sxz4KvGltbgwXMCAwdKpn1KEOh
- /CdSYSYTwLgJA8L7d+kCe3dDpmfvhE3TH0Ss9WvcgYB97zboR2WBZUgaA3fEcmKVB8FG
- pUHHcu1JoBvAzHS+P6Ier1YCsE2vDdQ6TvcZHtXUQMfMxJi69nVwysGb4S4w+lxVNgdd
- I/4344v6+RzIe276Ge3ieJ335n82sXcnKNsbvcM1xLrPpphhKVHDj/+WRLT34OijHLJL
- SfEg==
+ d=1e100.net; s=20230601; t=1715464051; x=1716068851;
+ h=to:from:subject:message-id:date:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=lX/OlSQmXWwWmSNmAsxqiLeBJGVZs/7FIdqQkxiZXNc=;
+ b=Kdzb7JQ+4JZPjCU6NxydLXNWF0ZRmOx/flPQHaS5sceqawdflaIQC29Fw0RUFmEd9p
+ S+WEXlSxxEcElena8cXSobgOoLEb47KzWUJ3alTnv857kcD2XnpDu+y5wFIyE7hiYALv
+ 4KZ++euN3o6GGlcmACgGgScdeCvv2r2kpviDESj31dMJm6Cj1ppE0rTlVaN9xeyGZcKG
+ mEswmqvQuK/RuYPENm43x5JXyovIpcd0FfuOcwQncDcVxjukhw+oCkZSvIy/jB/OAQJ1
+ OYe5UHUAeHTlGdweIvDjZOU1K3LiSzuRJHgm9LE41cRFofTe2SQF6ROpU28Kee4NxRMe
+ bPDw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUv8ywT8DDo7qCzS541oATzOlZxs6b1vtPg+dpOJ6B8r0IbSwpAXOPdOCw2W2BTocKepAEHuYZcHgL5d6C6uVbX1OjzKIzk3atv
-X-Gm-Message-State: AOJu0YxEqTXnQHRbwfkKs1RRgTZWuSxtZCRZlaX6wqkmTwyoGD95+EFz
- 1fywjOPCKhtAgSVDk5Y3okDUJrOHTaE2djpOk7BVpRNd66O6LWtv6laiZzmoi2XvLtHrscO+7eO
- EpA==
-X-Google-Smtp-Source: AGHT+IGSF9WzQWuvr2wMEGyozUQO7K9UVp16MtXq9kPeGzg8zdiMSf7txQHGnyzqkIc1hkialPRFYFdBrZE=
-X-Received: from edliaw.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:305d])
- (user=edliaw job=sendgmr) by 2002:a05:6a00:8c82:b0:6ea:df4b:86d0 with SMTP id
- d2e1a72fcca58-6f4c91f346dmr13199b3a.2.1715299928188; Thu, 09 May 2024
- 17:12:08 -0700 (PDT)
-Date: Fri, 10 May 2024 00:07:22 +0000
-In-Reply-To: <20240510000842.410729-1-edliaw@google.com>
-Mime-Version: 1.0
-References: <20240510000842.410729-1-edliaw@google.com>
-X-Mailer: git-send-email 2.45.0.118.g7fe29c98d7-goog
-Message-ID: <20240510000842.410729-66-edliaw@google.com>
-Subject: [PATCH v4 65/66] selftests/wireguard: Drop define _GNU_SOURCE
-From: Edward Liaw <edliaw@google.com>
-To: shuah@kernel.org,
- "=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?=" <mic@digikod.net>, 
- "=?UTF-8?q?G=C3=BCnther=20Noack?=" <gnoack@google.com>,
- Christian Brauner <brauner@kernel.org>, 
- Richard Cochran <richardcochran@gmail.com>,
- Paul Walmsley <paul.walmsley@sifive.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexei Starovoitov <ast@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>, 
- "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, 
- Jesper Dangaard Brouer <hawk@kernel.org>,
- John Fastabend <john.fastabend@gmail.com>, 
- "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: linux-kernel@vger.kernel.org, linux-kselftest@vger.kernel.org, 
- kernel-team@android.com, Edward Liaw <edliaw@google.com>, 
- linux-security-module@vger.kernel.org, netdev@vger.kernel.org, 
- linux-riscv@lists.infradead.org, bpf@vger.kernel.org, 
- wireguard@lists.zx2c4.com
+ AJvYcCU2pC3ZC/sk5CZMo0NKiWtckSzA7bGM1S5kZ05F1vS94dPAn0Ns02z4dT2l+NRZBwiKloTBnPBvTIe8MxAjZobxJCcMRRDexYbA
+X-Gm-Message-State: AOJu0YwHXjFE6102YNzE298LpMRVT5/SUE1iEQGo76XTkChuzQ87dB1m
+ AIpGj8CG0DffgmmsEUL7u08O8b4G5mSAhK8DPBrLoZeQuNw3yN/VqZGC+zWYDqLFM+jwrccgL1E
+ 725g52loEy7Bv7nBLohiFpna98TI/m1zzD25IC5c3BCdI5riTU0sN39M=
+X-Google-Smtp-Source: AGHT+IEyr2MkkKyLxyXOc+YEXYbowgrmBfs5RPY6U+6VNVoVl2iR5wT0v1mJpSOk2ghUAttu5B/oGm/+NE73g+AbzzChM0rrVUWq
+MIME-Version: 1.0
+X-Received: by 2002:a05:6638:8305:b0:488:59cc:eb5b with SMTP id
+ 8926c6da1cb9f-48958afa76fmr419094173.3.1715464050944; Sat, 11 May 2024
+ 14:47:30 -0700 (PDT)
+Date: Sat, 11 May 2024 14:47:30 -0700
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <00000000000061c0a106183499ec@google.com>
+Subject: [syzbot] [wireguard?] WARNING in kthread_unpark (2)
+From: syzbot <syzbot+943d34fa3cf2191e3068@syzkaller.appspotmail.com>
+To: Jason@zx2c4.com, davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+ linux-kernel@vger.kernel.org, netdev@vger.kernel.org, pabeni@redhat.com, 
+ syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -90,27 +63,88 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-_GNU_SOURCE is provided by lib.mk, so it should be dropped to prevent
-redefinition warnings.
+Hello,
 
-Signed-off-by: Edward Liaw <edliaw@google.com>
+syzbot found the following issue on:
+
+HEAD commit:    75fa778d74b7 Add linux-next specific files for 20240510
+git tree:       linux-next
+console output: https://syzkaller.appspot.com/x/log.txt?x=13d483c0980000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=ccdd3ebd6715749a
+dashboard link: https://syzkaller.appspot.com/bug?extid=943d34fa3cf2191e3068
+compiler:       Debian clang version 15.0.6, GNU ld (GNU Binutils for Debian) 2.40
+
+Unfortunately, I don't have any reproducer for this issue yet.
+
+Downloadable assets:
+disk image: https://storage.googleapis.com/syzbot-assets/ad9391835bcf/disk-75fa778d.raw.xz
+vmlinux: https://storage.googleapis.com/syzbot-assets/d827b3da9a26/vmlinux-75fa778d.xz
+kernel image: https://storage.googleapis.com/syzbot-assets/8f32f0182388/bzImage-75fa778d.xz
+
+IMPORTANT: if you fix the issue, please add the following tag to the commit:
+Reported-by: syzbot+943d34fa3cf2191e3068@syzkaller.appspotmail.com
+
+------------[ cut here ]------------
+WARNING: CPU: 0 PID: 11 at kernel/kthread.c:525 __kthread_bind_mask kernel/kthread.c:525 [inline]
+WARNING: CPU: 0 PID: 11 at kernel/kthread.c:525 __kthread_bind kernel/kthread.c:538 [inline]
+WARNING: CPU: 0 PID: 11 at kernel/kthread.c:525 kthread_unpark+0x16b/0x210 kernel/kthread.c:631
+Modules linked in:
+
+CPU: 0 PID: 11 Comm: kworker/u8:0 Not tainted 6.9.0-rc7-next-20240510-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/02/2024
+Workqueue: netns cleanup_net
+
+RIP: 0010:__kthread_bind_mask kernel/kthread.c:525 [inline]
+RIP: 0010:__kthread_bind kernel/kthread.c:538 [inline]
+RIP: 0010:kthread_unpark+0x16b/0x210 kernel/kthread.c:631
+Code: 00 fc ff df 41 0f b6 04 06 84 c0 0f 85 93 00 00 00 41 80 4d 03 04 4c 89 e7 48 8b 34 24 e8 bd c5 32 0a eb 09 e8 46 88 33 00 90 <0f> 0b 90 48 89 ef be 08 00 00 00 e8 75 43 99 00 f0 80 65 00 fb 4c
+RSP: 0018:ffffc90000107758 EFLAGS: 00010293
+
+RAX: ffffffff8162943a RBX: 0000000000000000 RCX: ffff8880172c3c00
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
+RBP: ffff88802e430800 R08: ffffffff816293c7 R09: 1ffffffff25f64cd
+R10: dffffc0000000000 R11: fffffbfff25f64ce R12: 0000000000000001
+R13: ffff8880296eda2c R14: 1ffff110052ddb45 R15: ffff8880296eda00
+FS:  0000000000000000(0000) GS:ffff8880b9400000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007ffd40918ff8 CR3: 000000002e664000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ kthread_stop+0x17a/0x630 kernel/kthread.c:707
+ destroy_workqueue+0x136/0xc40 kernel/workqueue.c:5810
+ wg_destruct+0x1e2/0x2e0 drivers/net/wireguard/device.c:257
+ netdev_run_todo+0xe1a/0x1000 net/core/dev.c:10693
+ default_device_exit_batch+0xa14/0xa90 net/core/dev.c:11769
+ ops_exit_list net/core/net_namespace.c:178 [inline]
+ cleanup_net+0x89d/0xcc0 net/core/net_namespace.c:640
+ process_one_work kernel/workqueue.c:3231 [inline]
+ process_scheduled_works+0xa2c/0x1830 kernel/workqueue.c:3312
+ worker_thread+0x86d/0xd70 kernel/workqueue.c:3393
+ kthread+0x2f0/0x390 kernel/kthread.c:389
+ ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+ </TASK>
+
+
 ---
- tools/testing/selftests/wireguard/qemu/init.c | 2 --
- 1 file changed, 2 deletions(-)
+This report is generated by a bot. It may contain errors.
+See https://goo.gl/tpsmEJ for more information about syzbot.
+syzbot engineers can be reached at syzkaller@googlegroups.com.
 
-diff --git a/tools/testing/selftests/wireguard/qemu/init.c b/tools/testing/selftests/wireguard/qemu/init.c
-index 3e49924dd77e..08113f3c6189 100644
---- a/tools/testing/selftests/wireguard/qemu/init.c
-+++ b/tools/testing/selftests/wireguard/qemu/init.c
-@@ -2,8 +2,6 @@
- /*
-  * Copyright (C) 2015-2019 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-  */
--
--#define _GNU_SOURCE
- #include <unistd.h>
- #include <errno.h>
- #include <string.h>
--- 
-2.45.0.118.g7fe29c98d7-goog
+syzbot will keep track of this issue. See:
+https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
 
+If the report is already addressed, let syzbot know by replying with:
+#syz fix: exact-commit-title
+
+If you want to overwrite report's subsystems, reply with:
+#syz set subsystems: new-subsystem
+(See the list of subsystem names on the web dashboard)
+
+If the report is a duplicate of another one, reply with:
+#syz dup: exact-subject-of-another-report
+
+If you want to undo deduplication, reply with:
+#syz undup
