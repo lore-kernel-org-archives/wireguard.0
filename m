@@ -4,51 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AC35C04FFE
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 11 May 2024 21:47:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49BEDC04FFE
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 May 2024 10:59:28 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d7e4678d;
-	Sat, 11 May 2024 21:47:35 +0000 (UTC)
-Received: from mail-io1-f78.google.com (mail-io1-f78.google.com
- [209.85.166.78])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b727b15f
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1ab193b7;
+	Tue, 14 May 2024 10:56:34 +0000 (UTC)
+Received: from smtp.ungleich.ch (smtp.ungleich.ch [185.203.114.86])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e77c3170
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 11 May 2024 21:47:32 +0000 (UTC)
-Received: by mail-io1-f78.google.com with SMTP id
- ca18e2360f4ac-7da4360bbacso396940739f.2
- for <wireguard@lists.zx2c4.com>; Sat, 11 May 2024 14:47:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1715464051; x=1716068851;
- h=to:from:subject:message-id:date:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lX/OlSQmXWwWmSNmAsxqiLeBJGVZs/7FIdqQkxiZXNc=;
- b=Kdzb7JQ+4JZPjCU6NxydLXNWF0ZRmOx/flPQHaS5sceqawdflaIQC29Fw0RUFmEd9p
- S+WEXlSxxEcElena8cXSobgOoLEb47KzWUJ3alTnv857kcD2XnpDu+y5wFIyE7hiYALv
- 4KZ++euN3o6GGlcmACgGgScdeCvv2r2kpviDESj31dMJm6Cj1ppE0rTlVaN9xeyGZcKG
- mEswmqvQuK/RuYPENm43x5JXyovIpcd0FfuOcwQncDcVxjukhw+oCkZSvIy/jB/OAQJ1
- OYe5UHUAeHTlGdweIvDjZOU1K3LiSzuRJHgm9LE41cRFofTe2SQF6ROpU28Kee4NxRMe
- bPDw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU2pC3ZC/sk5CZMo0NKiWtckSzA7bGM1S5kZ05F1vS94dPAn0Ns02z4dT2l+NRZBwiKloTBnPBvTIe8MxAjZobxJCcMRRDexYbA
-X-Gm-Message-State: AOJu0YwHXjFE6102YNzE298LpMRVT5/SUE1iEQGo76XTkChuzQ87dB1m
- AIpGj8CG0DffgmmsEUL7u08O8b4G5mSAhK8DPBrLoZeQuNw3yN/VqZGC+zWYDqLFM+jwrccgL1E
- 725g52loEy7Bv7nBLohiFpna98TI/m1zzD25IC5c3BCdI5riTU0sN39M=
-X-Google-Smtp-Source: AGHT+IEyr2MkkKyLxyXOc+YEXYbowgrmBfs5RPY6U+6VNVoVl2iR5wT0v1mJpSOk2ghUAttu5B/oGm/+NE73g+AbzzChM0rrVUWq
+ Tue, 14 May 2024 10:56:31 +0000 (UTC)
+Received: from bridge.localdomain (localhost [IPv6:::1])
+ by smtp.ungleich.ch (Postfix) with ESMTP id 8AC7B202E4
+ for <wireguard@lists.zx2c4.com>; Tue, 14 May 2024 12:56:31 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ungleich.ch;
+ s=202201; t=1715684191;
+ bh=C8vNyRBBPMPphAsxnvTRNaFlZhL3TK/czRzw3vDkZfw=;
+ h=From:To:Subject:Date:From;
+ b=IZjXwY7GM08EN1EZ/+GfJ66TL7b4cWgJp2ySmaMAgRdIsboh2qThi/HRXn/hd7wsI
+ CVAYCohJRGqAghd8a9oIx1jC8DdiaFrj9Xw+WNR151fohdYuRazDDHbPw4YKVFL8ht
+ C0VsYI3DdjspONTxfWkh6yz3J0L74SdMCx64FQ/jK9FWYSafJzlOtE3gWL4WqP6CPI
+ bC/9SPDZs2No7JQ2C2kCUUZSaj4ktg2qlAjOGIydsPRklZuK4Gp4G4yf2hFWWXX3o2
+ C9ywrbOsouMUfEuzieCuv+KR/77IsAeK/YDUtulEudnhTN+cZ8/YuYI5OH60VIw/fF
+ 1ulvsTpcWvYVQ==
+Received: by bridge.localdomain (Postfix, from userid 1000)
+ id AFE021A6597C; Tue, 14 May 2024 12:50:25 +0200 (CEST)
+From: Nico Schottelius <nico.schottelius@ungleich.ch>
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Wireguard address binding - how to fix?
+User-Agent: mu4e 1.12.4; emacs 29.3
+Date: Tue, 14 May 2024 12:50:25 +0200
+Message-ID: <87le4cfz0u.fsf@ungleich.ch>
 MIME-Version: 1.0
-X-Received: by 2002:a05:6638:8305:b0:488:59cc:eb5b with SMTP id
- 8926c6da1cb9f-48958afa76fmr419094173.3.1715464050944; Sat, 11 May 2024
- 14:47:30 -0700 (PDT)
-Date: Sat, 11 May 2024 14:47:30 -0700
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <00000000000061c0a106183499ec@google.com>
-Subject: [syzbot] [wireguard?] WARNING in kthread_unpark (2)
-From: syzbot <syzbot+943d34fa3cf2191e3068@syzkaller.appspotmail.com>
-To: Jason@zx2c4.com, davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
- linux-kernel@vger.kernel.org, netdev@vger.kernel.org, pabeni@redhat.com, 
- syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; boundary="=-=-=";
+ micalg=pgp-sha512; protocol="application/pgp-signature"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -63,88 +52,51 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
+
+
 Hello,
 
-syzbot found the following issue on:
+the problem of wireguard being unable to bind to an IP address are
+hunting us over and over again. Isolation via namespace is not always a
+solution and I would consider it a hack in the first place.
 
-HEAD commit:    75fa778d74b7 Add linux-next specific files for 20240510
-git tree:       linux-next
-console output: https://syzkaller.appspot.com/x/log.txt?x=13d483c0980000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=ccdd3ebd6715749a
-dashboard link: https://syzkaller.appspot.com/bug?extid=943d34fa3cf2191e3068
-compiler:       Debian clang version 15.0.6, GNU ld (GNU Binutils for Debian) 2.40
+To the wireguard authors: what needs to be done to add IP address
+binding so that packets are always sent from a specific IP address?
 
-Unfortunately, I don't have any reproducer for this issue yet.
+Virtually every other network software out there has that option for a
+good reason, only wireguard does not support it and thus does not work
+properly on devices with multiple IP addresses.
 
-Downloadable assets:
-disk image: https://storage.googleapis.com/syzbot-assets/ad9391835bcf/disk-75fa778d.raw.xz
-vmlinux: https://storage.googleapis.com/syzbot-assets/d827b3da9a26/vmlinux-75fa778d.xz
-kernel image: https://storage.googleapis.com/syzbot-assets/8f32f0182388/bzImage-75fa778d.xz
+What does it take to add IP address binding in wireguard?
 
-IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+943d34fa3cf2191e3068@syzkaller.appspotmail.com
+Best regards,
 
-------------[ cut here ]------------
-WARNING: CPU: 0 PID: 11 at kernel/kthread.c:525 __kthread_bind_mask kernel/kthread.c:525 [inline]
-WARNING: CPU: 0 PID: 11 at kernel/kthread.c:525 __kthread_bind kernel/kthread.c:538 [inline]
-WARNING: CPU: 0 PID: 11 at kernel/kthread.c:525 kthread_unpark+0x16b/0x210 kernel/kthread.c:631
-Modules linked in:
+Nico
 
-CPU: 0 PID: 11 Comm: kworker/u8:0 Not tainted 6.9.0-rc7-next-20240510-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/02/2024
-Workqueue: netns cleanup_net
+=2D-=20
+Sustainable and modern Infrastructures by ungleich.ch
 
-RIP: 0010:__kthread_bind_mask kernel/kthread.c:525 [inline]
-RIP: 0010:__kthread_bind kernel/kthread.c:538 [inline]
-RIP: 0010:kthread_unpark+0x16b/0x210 kernel/kthread.c:631
-Code: 00 fc ff df 41 0f b6 04 06 84 c0 0f 85 93 00 00 00 41 80 4d 03 04 4c 89 e7 48 8b 34 24 e8 bd c5 32 0a eb 09 e8 46 88 33 00 90 <0f> 0b 90 48 89 ef be 08 00 00 00 e8 75 43 99 00 f0 80 65 00 fb 4c
-RSP: 0018:ffffc90000107758 EFLAGS: 00010293
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
 
-RAX: ffffffff8162943a RBX: 0000000000000000 RCX: ffff8880172c3c00
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-RBP: ffff88802e430800 R08: ffffffff816293c7 R09: 1ffffffff25f64cd
-R10: dffffc0000000000 R11: fffffbfff25f64ce R12: 0000000000000001
-R13: ffff8880296eda2c R14: 1ffff110052ddb45 R15: ffff8880296eda00
-FS:  0000000000000000(0000) GS:ffff8880b9400000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007ffd40918ff8 CR3: 000000002e664000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- kthread_stop+0x17a/0x630 kernel/kthread.c:707
- destroy_workqueue+0x136/0xc40 kernel/workqueue.c:5810
- wg_destruct+0x1e2/0x2e0 drivers/net/wireguard/device.c:257
- netdev_run_todo+0xe1a/0x1000 net/core/dev.c:10693
- default_device_exit_batch+0xa14/0xa90 net/core/dev.c:11769
- ops_exit_list net/core/net_namespace.c:178 [inline]
- cleanup_net+0x89d/0xcc0 net/core/net_namespace.c:640
- process_one_work kernel/workqueue.c:3231 [inline]
- process_scheduled_works+0xa2c/0x1830 kernel/workqueue.c:3312
- worker_thread+0x86d/0xd70 kernel/workqueue.c:3393
- kthread+0x2f0/0x390 kernel/kthread.c:389
- ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
- </TASK>
+-----BEGIN PGP SIGNATURE-----
 
-
----
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
-
-syzbot will keep track of this issue. See:
-https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
-
-If the report is already addressed, let syzbot know by replying with:
-#syz fix: exact-commit-title
-
-If you want to overwrite report's subsystems, reply with:
-#syz set subsystems: new-subsystem
-(See the list of subsystem names on the web dashboard)
-
-If the report is a duplicate of another one, reply with:
-#syz dup: exact-subject-of-another-report
-
-If you want to undo deduplication, reply with:
-#syz undup
+iQJRBAEBCgA7FiEEZZsNkehufiT9FWnQxykhoSk/LSQFAmZDQfEdHG5pY28uc2No
+b3R0ZWxpdXNAdW5nbGVpY2guY2gACgkQxykhoSk/LSTakg/9FHMgkR5Dqq2FuXS0
+HukkhRbu8B5YK8YIdM3I1KrWtnxg3TA6GI8CwPahsTI63AUGpVWK5MzJl5Vw5tpF
+aOCywQZbMJlINn2WJzLcPhIqB1qrLMBGE/w308Zy9eQF6jZ02Bkx8NT/mH3mtQ9l
+8nyFeNBcE57aFiD9jf1QH8cIpngndKHkkp1ZzOdk6bR0MJebZdnv8t8diXwBIcP6
+6AiWVvbLw9InC3hD240SEYDE1Fo9xpNouRoQG0F9Go00n9/gfmhxUIRz7uDb5NKk
+GdATWJ8AkNKOPJJw4zShPZiTT7FyQSeAX7t95FndfD0NGb1kWGzOu7A8kpGaX1bc
+WUMI2tUST0yXHoYAfth4+oP0xQIESxR9ysrt8YYtReOC4XyRPljnGh0zExYTXtyb
+RyP5oRRDHjMwnIAIgY06xZft9glJHKMvYP2BReOzyfxohGTK8gd3TkuJJdMQkqbH
+8k3LQUMnuxJ2BfQOTgrStLyvZK5uxvLAyEIbzwozlzspj2j0KTo9Es8WpH3WLGAK
+x3hODqh+2vNhG78gMoETgAP9pgLsFw6iVuBjbxHKTpq5jNiGdqZ6sYwj0Gkf0Jx8
+QbGlbrCePzKuAHy/0nwKc4SQnnZoo3Di6fgzmT7rgZOC1qG61RLC6U+DN4brt1gX
+beP5CTzDy+FA8OBF/rJIsnJBbuE=
+=IYUn
+-----END PGP SIGNATURE-----
+--=-=-=--
