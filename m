@@ -4,66 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 090B1C25B75
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 21 May 2024 11:11:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1492FC25B74
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 21 May 2024 13:04:11 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6e670a03;
-	Tue, 21 May 2024 11:11:16 +0000 (UTC)
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com
- [2607:f8b0:4864:20::102a])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 04d5a67f
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5e730ddb;
+	Tue, 21 May 2024 13:04:09 +0000 (UTC)
+Received: from smtp.ungleich.ch (smtp.ungleich.ch
+ [2a0a:e5c0:2:2:0:c8ff:fe68:bf1c])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9d93b5e7
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 21 May 2024 11:11:14 +0000 (UTC)
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-2bd70bd741bso1599026a91.1
- for <wireguard@lists.zx2c4.com>; Tue, 21 May 2024 04:11:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1716289873; x=1716894673; darn=lists.zx2c4.com;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=NHsRr4y7m2U14O1yEcxY/DhfVKdlwJQjccZ03YF+KSE=;
- b=Qy/qgey6CkJDEKVaxE9uV5REwcAQbJQMy5X0xSZ03jJ1gGcnccr731HdNwavOfRuQc
- eFaJz/9pBqloRQrD2jRiglQOBYEURiS7eSerLF+c+3cCl52PzRwdEZbp74ghSG7WG/Zj
- ewrrQyEZo/EN15ReMUwHNb/f9Nr9EdWcUIPeuG7Zbi+SmsTv7gD4fIPfke4qjS8N0kc9
- bY6lAHUokGA83KMRU1j89nA74Eyn/XJ1G7Y69E+3zF0+tle5tyADItpv+QoXc02mzuiZ
- H1QXpleUSHNG4L+Q1PZEvfM0fVvuFhQ2T7dvQVsaXgjGQ8j+D4P2QGVkW1qz599XTi01
- RyUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1716289873; x=1716894673;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=NHsRr4y7m2U14O1yEcxY/DhfVKdlwJQjccZ03YF+KSE=;
- b=WTXd3ZN20yuPzjntsQTtCS+por8xQRse8YqUHnzaHLxuTweOcx7qsbC3FR91uemGKq
- wRTWceJ5zUj8E9l5OKn0F1ZRmHP9WPCAgGUMvk2BkFFHpIkEvU4t94XEtLiH3LlmRWlN
- 3LKCd2w0S/sZfDBe3ZLO3/mYUA9c8w78yk2GY0IgLFjv5zf+ZYIlx1cHNXRugLHExCoD
- P/4PAryDXOdorTIehVAlRREqd+Rce5PMPCUsazCKY/FBzPQG4b7GA2p2Zgj+E/O+HlqB
- 1ZYkK/ygiWiJRJJy9fhJmDvooDp2af/gFwDQWw4Htvz4oTJ6NpqMUD2EPl5Ac+ErjDcO
- 84xw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXDmcZquTotwEGQdtn+lgAMChqI/SP7LVPmduEaSVzxHpLkVnE+itA8Cbb9moZ6KxRJMOz7vrBTRUkQ3MQn+gXBKFI0RbuBipsV
-X-Gm-Message-State: AOJu0YwSo6zgGAY7bwfhLSr1KQT7+0K7YrAaQz4NCvJ8IbMQf8iRX6pc
- 5cJD95pnDIiq5yQi6edtev5V0dvZHoHJbn4Ud96XOL1e5pRGar6xWM2Eer+tTMcvYqooarhuFis
- lbAi1XzeVyo2NdIG5NUwsfowY4jE=
-X-Google-Smtp-Source: AGHT+IEItJuUj3MocTicN4wG2poWxor+c7hektK5NaU5ZKExNbjmeYwYktlKMcmbeIUomI0vyGUPijRxvzIwEBcyXnk=
-X-Received: by 2002:a17:90a:bf15:b0:2bd:85e8:79de with SMTP id
- 98e67ed59e1d1-2bd85e87aa2mr6104368a91.11.1716289872444; Tue, 21 May 2024
- 04:11:12 -0700 (PDT)
-MIME-Version: 1.0
+ Tue, 21 May 2024 13:04:07 +0000 (UTC)
+Received: from nb3.localdomain (localhost [IPv6:::1])
+ by smtp.ungleich.ch (Postfix) with ESMTP id EC00D20CF7;
+ Tue, 21 May 2024 15:04:06 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ungleich.ch;
+ s=202201; t=1716296646;
+ bh=UMMXmz5Whd33/z46MHA7pkC+G53iU9DlKZJWfTqYP8g=;
+ h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+ b=pT4yoSAPnjNCG0JEApqpnCYTDdoIcQ5j2mrq0eAKWGg8G4MpEq8lFnpisSOvECoGv
+ hctKUcpkhQcFKIcJz2vzyhF2dKYK6foEiuuaBGyKBB0JiTihv9shNkEP0kCyPKR4q3
+ Co54hubRfUGfBLItz9u4gDt3/Sd1eamUotuh09DTMBIwbvv2WRtYcMKjBvXEZ86XPk
+ r4KupJ6xh1irJxQao+BNbNu66lDDRyr26sZ2BEbaCaU7U+Gq5/NDkuBflTS0jCttXh
+ QrLt/kcP0A6GDr9xu+Zq94oEPdwUTtAB8pr+oxcFqdmsk0RSSGQ7nBF1/5ttXbbIW7
+ 0i+PWjxa8r4rw==
+Received: by nb3.localdomain (Postfix, from userid 1000)
+ id 6AF6A14C01B1; Tue, 21 May 2024 14:58:40 +0200 (CEST)
+From: Nico Schottelius <nico.schottelius@ungleich.ch>
+To: Janne Johansson <icepic.dz@gmail.com>
+Cc: Daniel =?utf-8?Q?Gr=C3=B6ber?= <dxld@darkboxed.org>,  WireGuard mailing
+ list <wireguard@lists.zx2c4.com>,  "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: Re: Wireguard address binding - how to fix?
+In-Reply-To: <CAA6-MF-npREucdWneVw+DWMQi3bG+3zp98VNctErfLMuRkvY9A@mail.gmail.com>
+ (Janne Johansson's message of "Tue, 21 May 2024 13:11:00 +0200")
 References: <87le4cfz0u.fsf@ungleich.ch>
  <20240514113648.neaj6kfazx4fi7af@House.clients.dxld.at>
  <87msojhbq0.fsf@ungleich.ch>
-In-Reply-To: <87msojhbq0.fsf@ungleich.ch>
-From: Janne Johansson <icepic.dz@gmail.com>
-Date: Tue, 21 May 2024 13:11:00 +0200
-Message-ID: <CAA6-MF-npREucdWneVw+DWMQi3bG+3zp98VNctErfLMuRkvY9A@mail.gmail.com>
-Subject: Re: Wireguard address binding - how to fix?
-To: Nico Schottelius <nico.schottelius@ungleich.ch>
-Cc: =?UTF-8?Q?Daniel_Gr=C3=B6ber?= <dxld@darkboxed.org>, 
- WireGuard mailing list <wireguard@lists.zx2c4.com>,
- "Jason A. Donenfeld" <Jason@zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+ <CAA6-MF-npREucdWneVw+DWMQi3bG+3zp98VNctErfLMuRkvY9A@mail.gmail.com>
+Date: Tue, 21 May 2024 14:58:40 +0200
+Message-ID: <87a5kjgw3j.fsf@ungleich.ch>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="=-=-="
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -78,45 +59,94 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Den tis 21 maj 2024 kl 09:50 skrev Nico Schottelius
-<nico.schottelius@ungleich.ch>:
-> Hello Jason,
-> do you mind applying the patch from Daniel? Or is there anything wrong with it?
+--=-=-=
+Content-Type: text/plain
+
+
+Hello Janne,
+
+Janne Johansson <icepic.dz@gmail.com> writes:
+
+> Den tis 21 maj 2024 kl 09:50 skrev Nico Schottelius
+> <nico.schottelius@ungleich.ch>:
+>> Hello Jason,
+>> do you mind applying the patch from Daniel? Or is there anything wrong with it?
+>>
+>> Daniel: amazing work, I was not aware that you have already put in the
+>> hard work, thank you so very much!
+>>
+>> The world (*) is suffering because of the lack of IP address binding in wireguard.
+>>
+>> (*) With world I refer to every engineer that needs to run wireguard in
+>> non-trivial situations with multiple IP addresses on one host, which is
+>> extremely common for anything that routes.
 >
-> Daniel: amazing work, I was not aware that you have already put in the
-> hard work, thank you so very much!
->
-> The world (*) is suffering because of the lack of IP address binding in wireguard.
->
-> (*) With world I refer to every engineer that needs to run wireguard in
-> non-trivial situations with multiple IP addresses on one host, which is
-> extremely common for anything that routes.
+> Well, the main reason for wg to NOT do anything special is because
+> routing generally is done by looking at the destination ip and then
 
-Well, the main reason for wg to NOT do anything special is because
-routing generally is done by looking at the destination ip and then
-using the routing rules which the kernel uses to tell the packet which
-interface is considered "best" in order to reach that ip, which is why
-icmp and udp acts like this. I am certain that many engineers
-hope/think it would be more logical (or fit their designs better) if
-it responded on the same interface as the packet came in or whatever
-but the reason for wg to act like it does is because this is how
-connection-less packets have been acting since ages. The point that
-many engineers design wg endpoints "the wrong way" is probably a fault
-of education when it comes to how TCP/IP stacks did and do manage IP
-output.
+No. Generally speaking that is incorrect.
+It is not special to reply with the same IP address.
 
-I have zero power to decide anything regarding how wg chooses to
-implement a workaround for IP being designed the way it is designed,
-but I can at least see why it hasn't immediately been accepted even if
-it would make some engineers suffer(*) less, at least in the short
-term.
+Generally speaking, when you have systems with multiple IP addresses you
+want to be able to steer the binding to an IP address. And even if you
+don't do that, you reply with the same IP address you have been
+contacted with. Wireguard does neither of it at the moment.  I have
+written this already many times on this list, but the reason is very
+easy:
 
-There are a lot of workarounds for the times when you did design the
-udp service as if it would act like tcp does in multihomed situations,
-which includes firewall tricks, or VRF/namespace/routing-domains to
-make sure the inner and outer address-pairs for the wg tunnel see
-different views of the network to handle this without changing how wg
-sends packets.
+- A connection is initiated from device A, connecting to router B on IP adddress a.b.c.d
+- The packet is correctly received by router B
+- The router replies incorrectly with address f.d.g.h
+- The reply packet is correctly blocked at the firewall of device A, because it comes
+  from a random, unknown IP address
 
--- 
-May the most significant bit of your life be positive.
+This is the basic 101 of networking is to reply with the same address
+you have been contacted with, there is no discussion necessary. The
+whole world does it, even A-patch-y httpd (*) supports it. Since 1980 or
+so.
+
+Routing choices are independent of that, replying with the same IP
+address is a standard behaviour.
+
+Nico
+
+(*) As does ssh, nginx, ipsec protocols, openvpn, any rails application,
+any python application - I am not sure which software that binds to a
+socket does not support it, with the exception of wireguard.
+
+
+--=-=-=
+Content-Type: multipart/signed; boundary="==-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+
+--==-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
+
+
+=2D-=20
+Sustainable and modern Infrastructures by ungleich.ch
+
+--==-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJRBAEBCgA7FiEEZZsNkehufiT9FWnQxykhoSk/LSQFAmZMmoAdHG5pY28uc2No
+b3R0ZWxpdXNAdW5nbGVpY2guY2gACgkQxykhoSk/LSTLtg/+O60XhhvoE1CGmeR1
+x77CvLy80Go9cexErsIhi24qkCDYiCdTW9YdZGiIiiqhZiw3IMwNuGSmFXrlRO3X
+RBomeXGqGgldp9HiH1zI3eRjdPwIJ4HMWIWc2TpZLyfRl3MszuzwaSjBjh1J7B4x
+7QGcTIHX+aRVUvhLIRRYR1qrUeEbpJubIYCcGVe3BMYjEEl6CPtUsIOtNAW4hEEO
+GoPa7XJBZ8XEcSHfJx20MRtsCvsPC+VVdfNC8my5V09GQ5Ajn5i+eRwzB+DQfPMC
+JP/oCG32wZ9XDirCMMr7f0FC0Ni1IDntz7EgVQ2xWM8jyCG6+SxTa7+auzXAXyuz
+eqNYT7RgtgQpt8ouU7kkoiUBowKhpLP5VV4HLsARsUvcvEH8pqF1qSdj+MKj2EUg
+M6BWjX2vQGGMdL36dnbVPU2HahLoXOY+1V32A3vLvMos09hWtsY3ibwKe77MI3zT
+KIe85wBm1DFlNhd5BmgITziD2WMFNC5aVv92V3O2Q8RxIFaHFmKBmPVIe5MnE+yB
+Q4zuOPMjeoRPFUuTN6RLdysbQieHE4oHblgqI2kCNjo8ZRSwE0fadoqccsgFoy9W
+tDJK2+eMqZbWou/VtM+9GCcizX/JRmbvF+CVe0RpzS2NhuCtJGjEw1+2/44YgjRl
+7Jt7iL8wCRHp1U/muVXuRRL+Niw=
+=MkyS
+-----END PGP SIGNATURE-----
+--==-=-=--
+
+--=-=-=--
