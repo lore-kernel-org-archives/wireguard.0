@@ -4,62 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD09CC04FFE
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 17 May 2024 14:48:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AFA1C25B74
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 21 May 2024 07:24:11 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 32657307;
-	Fri, 17 May 2024 14:48:19 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 72c3ebfd
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1c8cdca3;
+	Tue, 21 May 2024 07:24:09 +0000 (UTC)
+Received: from smtp.ungleich.ch (smtp.ungleich.ch
+ [2a0a:e5c0:2:2:0:c8ff:fe68:bf1c])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 773ab7ce
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 17 May 2024 14:48:16 +0000 (UTC)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id DC3D361D26;
- Fri, 17 May 2024 14:48:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C99DC2BD10;
- Fri, 17 May 2024 14:48:12 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="QNIiwpei"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1715957290;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0cBkPJS4a5BxMhrLDaw8NzLtBZZCj9gi/zQctsonxVI=;
- b=QNIiwpeic5qa/l6WvUy8VnPkDhwOw2O5t+Zqc3jVrwko+I6pojUkkvxst2Jk4OyqKLfd3J
- wK3xBSDhEAAJSz2SFq6ZkSt6Q5XXRnLGDdX/Nfp8hnhqgf1R4vLiNcFi+jHwY6DQZ+aShR
- 9DLIWT0iMqYDchSnSp1S9+BJggdRqMU=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 8ba86458
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Fri, 17 May 2024 14:48:09 +0000 (UTC)
-Date: Fri, 17 May 2024 16:48:02 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Edward Liaw <edliaw@google.com>
-Cc: shuah@kernel.org, =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>,
- =?utf-8?Q?G=C3=BCnther?= Noack <gnoack@google.com>,
- Christian Brauner <brauner@kernel.org>,
- Richard Cochran <richardcochran@gmail.com>,
- Paul Walmsley <paul.walmsley@sifive.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexei Starovoitov <ast@kernel.org>,
- Daniel Borkmann <daniel@iogearbox.net>,
- "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>,
- Jesper Dangaard Brouer <hawk@kernel.org>,
- John Fastabend <john.fastabend@gmail.com>,
- linux-kernel@vger.kernel.org, linux-kselftest@vger.kernel.org,
- kernel-team@android.com, linux-security-module@vger.kernel.org,
- netdev@vger.kernel.org, linux-riscv@lists.infradead.org,
- bpf@vger.kernel.org, wireguard@lists.zx2c4.com
-Subject: Re: [PATCH v4 65/66] selftests/wireguard: Drop define _GNU_SOURCE
-Message-ID: <ZkduIlhF2XswiAJr@zx2c4.com>
-References: <20240510000842.410729-1-edliaw@google.com>
- <20240510000842.410729-66-edliaw@google.com>
+ Tue, 21 May 2024 07:24:07 +0000 (UTC)
+Received: from nb3.localdomain (localhost [IPv6:::1])
+ by smtp.ungleich.ch (Postfix) with ESMTP id 03DA820CF7;
+ Tue, 21 May 2024 09:24:07 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ungleich.ch;
+ s=202201; t=1716276247;
+ bh=gBnV57qfS7DSYLNucYbvP3KF8Gw5MOmH4h/FubDVBZ0=;
+ h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+ b=gAz8M6LMBKvlzZey+m5oo4xtvvwITGjtlBLC7zMc4vrGBRLecx8AO9szc9mejDyVg
+ I4N14vnPYXBH/86qajCJdOadO2A9srmLgDp4ADbwvZGu47/Xu1Alyb0AJ8uyhFn7hx
+ NGrCG9BeD9tO/WLjbZYXoLTYYUpXuM8j6FcJ8VUb7WuEVltOsn+NqgY3EMv17fmufC
+ GZyQBn343OjyxL9w/K5EwvRULnOflhjtHRvUkszWxOQK0NYIcv/ANAn2ZVNGxYiij3
+ MtHIdazj5qKaD43dZvKnVph91fueREjwbeMqdC+GgTJjDe1rwekKu+nLywjccKaxPo
+ AUks2OnUjne7A==
+Received: by nb3.localdomain (Postfix, from userid 1000)
+ id 3CD2E14C01B3; Tue, 21 May 2024 09:21:11 +0200 (CEST)
+From: Nico Schottelius <nico.schottelius@ungleich.ch>
+To: Daniel =?utf-8?Q?Gr=C3=B6ber?= <dxld@darkboxed.org>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>, "Jason A. Donenfeld"
+ <Jason@zx2c4.com>
+Subject: Re: Wireguard address binding - how to fix?
+In-Reply-To: <20240514113648.neaj6kfazx4fi7af@House.clients.dxld.at> ("Daniel
+ =?utf-8?Q?Gr=C3=B6ber=22's?= message of "Tue, 14 May 2024 13:36:48 +0200")
+References: <87le4cfz0u.fsf@ungleich.ch>
+ <20240514113648.neaj6kfazx4fi7af@House.clients.dxld.at>
+Date: Tue, 21 May 2024 09:21:11 +0200
+Message-ID: <87msojhbq0.fsf@ungleich.ch>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240510000842.410729-66-edliaw@google.com>
+Content-Type: multipart/mixed; boundary="=-=-="
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -74,28 +57,74 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Fri, May 10, 2024 at 12:07:22AM +0000, Edward Liaw wrote:
-> _GNU_SOURCE is provided by lib.mk, so it should be dropped to prevent
-> redefinition warnings.
-> 
-> Signed-off-by: Edward Liaw <edliaw@google.com>
-> ---
->  tools/testing/selftests/wireguard/qemu/init.c | 2 --
->  1 file changed, 2 deletions(-)
-> 
-> diff --git a/tools/testing/selftests/wireguard/qemu/init.c b/tools/testing/selftests/wireguard/qemu/init.c
-> index 3e49924dd77e..08113f3c6189 100644
-> --- a/tools/testing/selftests/wireguard/qemu/init.c
-> +++ b/tools/testing/selftests/wireguard/qemu/init.c
-> @@ -2,8 +2,6 @@
->  /*
->   * Copyright (C) 2015-2019 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
->   */
-> -
-> -#define _GNU_SOURCE
->  #include <unistd.h>
->  #include <errno.h>
->  #include <string.h>
-> -- 
+--=-=-=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-But this file doesn't use lib.mk.
+
+Hello Jason,
+
+do you mind applying the patch from Daniel? Or is there anything wrong with=
+ it?
+
+Daniel: amazing work, I was not aware that you have already put in the
+hard work, thank you so very much!
+
+The world (*) is suffering because of the lack of IP address binding in wir=
+eguard.
+
+Best regards,
+
+Nico
+
+(*) With world I refer to every engineer that needs to run wireguard in
+non-trivial situations with multiple IP addresses on one host, which is
+extremely common for anything that routes.
+
+Daniel Gr=C3=B6ber <dxld@darkboxed.org> writes:
+
+> On Tue, May 14, 2024 at 12:50:25PM +0200, Nico Schottelius wrote:
+>> To the wireguard authors: what needs to be done to add IP address
+>> binding so that packets are always sent from a specific IP address?
+>
+> Implemented, but wating for Jason to respond:
+>   https://lore.kernel.org/netdev/20240219114334.3057169-1-dxld@darkboxed.=
+org/T/
+>
+> --Daniel
+
+--=-=-=
+Content-Type: multipart/signed; boundary="==-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+
+--==-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
+
+
+=2D-=20
+Sustainable and modern Infrastructures by ungleich.ch
+
+--==-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJRBAEBCgA7FiEEZZsNkehufiT9FWnQxykhoSk/LSQFAmZMS2cdHG5pY28uc2No
+b3R0ZWxpdXNAdW5nbGVpY2guY2gACgkQxykhoSk/LSTQdg//TPn6nSpiBZ3XtOZI
+oKaSCAKL0KQImSjXzaeApMfnA6Jj//Idwr5L0abMObhzKCcEgb5wMlAE25IrQnh4
+1XlZaTtENHy7+MRMs38+xVRGb5kZOk4XarHAyt5fcmHEzmiwsA5YgOsKgLpME3IL
+ubZ+oFwxcQHlQ1dMN39j+x0UtmfyiVsjL1QE6njJ6MEz7N7zW0zui8HjXiFWEykW
+0FCmFqTWxIhU1XP+speyjMuf63niJ1hwhkncdDe1vGEUZ7j5tAG40Eu2tApTipZk
+J/IIE0bz3qLOry8y6xiSie/LC28mSpyVcd4rjXHohihLGFMfbFRSwoh8G6wHlqph
+lno6/24Qk0AgEosI0FvEIyHALwxSGG34UBgIEwCAE7a2v9TbRPd9VVDZUU6L4Z76
+QljVFQMRmz6UNUiRtIH1GUVK7jOE7aN1WPfo4iIbOp7898bT3JQyQaSKMHgROQya
+CKHgPEyz2JJQWUEZ9Qtb09yvdvy9Lva5ZMcPbdoaLN4iLmdPHuzxIJ8GK7Sh3ZLc
+HL9c+4AXuJ6toc5bXiTiXoxBYDsHq2Fu2PAhE6sOMxRuClNFhlZt6r4YKmaTQHEP
+5NSnn6JN+1IDg3pnMtggy4mJ6kepefpsdFMonZV8qeeki8dtJ17KDYpw/dT8RG8P
+wp9wMs+Eqaxc0GTD3k5nXqM5+lQ=
+=mIMS
+-----END PGP SIGNATURE-----
+--==-=-=--
+
+--=-=-=--
