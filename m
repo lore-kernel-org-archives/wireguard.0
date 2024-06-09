@@ -4,50 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8F2AC25B78
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  4 Jun 2024 19:56:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49E13C27C53
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  9 Jun 2024 08:27:53 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fa6ef386;
-	Tue, 4 Jun 2024 19:56:33 +0000 (UTC)
-Received: from mail-il1-f205.google.com (mail-il1-f205.google.com
- [209.85.166.205])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b28d2e07
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 4 Jun 2024 19:56:31 +0000 (UTC)
-Received: by mail-il1-f205.google.com with SMTP id
- e9e14a558f8ab-374b033db7dso5964445ab.2
- for <wireguard@lists.zx2c4.com>; Tue, 04 Jun 2024 12:56:30 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717530990; x=1718135790;
- h=to:from:subject:message-id:date:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=pIolj0LpEhW/WcCjBKxCJow6wzyZoKm2DMw6PlTaauw=;
- b=fGDso4jqzyRSj7anv8Op78DWBWkSUZ6u73CHvI4OF+X6aj8f4UCS4BeexSW2Hgg+BE
- 73b3Ec6dw1lvKxvP85dVPhRGAHBbfMFJ+yYGSKSHsfbGCHcYQ4m9jJesFNqMCo5wwJqJ
- 1KCCAC3tRQ5xMAOuSZXyew/KmWb2bA5zD3H39NsAf8ieEcIowBHpSRojJcHe9nxMVn/x
- DPpgdmHR5SnFR7MDYWy7WEpl4zYiPumtChPW46YEsd4te1S96mQKzE2haPEx0ytHxBSt
- RpdhgF0ngr/16oTT/ecefxfQHDPI6zg7YizxyAo4ClzjpqJ4XbndYYKD6Duxb/VFFcFb
- qRHA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXC03p1lBgTV16o3JDIukNflG/7vmxixiGsZvAljMecj8Iw8gwaP3Opbs2yCu8x0H7zKHiY7dqEcvhlFBxuWIQ90TMf6xy9xPFT
-X-Gm-Message-State: AOJu0Yxd/VtKyvLPSa+KFBFN0lsngHr2nxJx/ubtFzgiMowGXv0q9wR0
- CVak+NpcRAk7B3bBHoy6ukQRlkC8Hh1eKz44C/gsRtl2TDPuaatv6jHqx/ugNdBb6vX08D5RC4l
- CKu+R0Jfw/xMmfWQZfQR7hMggHaJb/PW3/LMdzj6Wefu5vPmoYhDpVs8=
-X-Google-Smtp-Source: AGHT+IHWFeJxM3i341hjN4LF5TdAFLLfKolxzY9xMIE2j0U52oFs8A2iF/r6yIhVOsQknFpaG5ss6BD50/cbhpMUXhu2H5S+PWlR
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6cab5f2f;
+	Sun, 9 Jun 2024 08:27:51 +0000 (UTC)
+Received: from mail2-relais-roc.national.inria.fr
+ (mail2-relais-roc.national.inria.fr [192.134.164.83])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 67d0fb5e
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Sun, 9 Jun 2024 08:27:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=inria.fr; s=dc;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=REYx9XJxXex1wT0g8DdBknTJa5z8s+++8BsQM1tAkdE=;
+ b=c3jg9XiAgeKcNkg9Ypz1MXA57+I6z9Upi3oqzG67AIxQoc2Tb/l9+twd
+ o1xqjWHj9bZB/XffVTZ6y3Q5wlIBrpiRIuaxP20ZifTf9z4PP9a6/uHrQ
+ jbNAr8EHCg32T8reqfZHBfM1Bu9ssqsOLmK26M8DXHwpWqbgwQfkqJwz8 I=;
+Authentication-Results: mail2-relais-roc.national.inria.fr;
+ dkim=none (message not signed) header.i=none;
+ spf=SoftFail smtp.mailfrom=Julia.Lawall@inria.fr;
+ dmarc=fail (p=none dis=none) d=inria.fr
+X-IronPort-AV: E=Sophos;i="6.08,225,1712613600"; d="scan'208";a="169696895"
+Received: from i80.paris.inria.fr (HELO i80.paris.inria.fr.) ([128.93.90.48])
+ by mail2-relais-roc.national.inria.fr with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2024 10:27:48 +0200
+From: Julia Lawall <Julia.Lawall@inria.fr>
+To: linux-block@vger.kernel.org
+Cc: kernel-janitors@vger.kernel.org, bridge@lists.linux.dev,
+ linux-trace-kernel@vger.kernel.org,
+ Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, kvm@vger.kernel.org,
+ linuxppc-dev@lists.ozlabs.org,
+ "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>,
+ Christophe Leroy <christophe.leroy@csgroup.eu>,
+ Nicholas Piggin <npiggin@gmail.com>, netdev@vger.kernel.org,
+ wireguard@lists.zx2c4.com, linux-kernel@vger.kernel.org,
+ ecryptfs@vger.kernel.org, Neil Brown <neilb@suse.de>,
+ Olga Kornievskaia <kolga@netapp.com>, Dai Ngo <Dai.Ngo@oracle.com>,
+ Tom Talpey <tom@talpey.com>, linux-nfs@vger.kernel.org,
+ linux-can@vger.kernel.org, Lai Jiangshan <jiangshanlai@gmail.com>,
+ netfilter-devel@vger.kernel.org, coreteam@netfilter.org,
+ "Paul E . McKenney" <paulmck@kernel.org>, Vlastimil Babka <vbabka@suse.cz>
+Subject: [PATCH 00/14] replace call_rcu by kfree_rcu for simple
+ kmem_cache_free callback
+Date: Sun,  9 Jun 2024 10:27:12 +0200
+Message-Id: <20240609082726.32742-1-Julia.Lawall@inria.fr>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-X-Received: by 2002:a05:6e02:1fe3:b0:36d:b5df:f478 with SMTP id
- e9e14a558f8ab-374b1f6586amr100415ab.4.1717530989806; Tue, 04 Jun 2024
- 12:56:29 -0700 (PDT)
-Date: Tue, 04 Jun 2024 12:56:29 -0700
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <00000000000089d850061a15d886@google.com>
-Subject: [syzbot] [wireguard?] WARNING: locking bug in wg_packet_decrypt_worker
-From: syzbot <syzbot+9f1d21c20c7306ca9417@syzkaller.appspotmail.com>
-To: Jason@zx2c4.com, davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
- linux-kernel@vger.kernel.org, netdev@vger.kernel.org, pabeni@redhat.com, 
- syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -62,87 +66,111 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
+Since SLOB was removed, it is not necessary to use call_rcu
+when the callback only performs kmem_cache_free. Use
+kfree_rcu() directly.
 
-syzbot found the following issue on:
+The changes were done using the following Coccinelle semantic patch.
+This semantic patch is designed to ignore cases where the callback
+function is used in another way.
 
-HEAD commit:    83814698cf48 Merge tag 'powerpc-6.10-2' of git://git.kerne..
-git tree:       upstream
-console output: https://syzkaller.appspot.com/x/log.txt?x=16746d3a980000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=733cc7a95171d8e7
-dashboard link: https://syzkaller.appspot.com/bug?extid=9f1d21c20c7306ca9417
-compiler:       gcc (Debian 12.2.0-14) 12.2.0, GNU ld (GNU Binutils for Debian) 2.40
-userspace arch: i386
+// <smpl>
+@r@
+expression e;
+local idexpression e2;
+identifier cb,f;
+position p;
+@@
 
-Unfortunately, I don't have any reproducer for this issue yet.
+(
+call_rcu(...,e2)
+|
+call_rcu(&e->f,cb@p)
+)
 
-Downloadable assets:
-disk image (non-bootable): https://storage.googleapis.com/syzbot-assets/7bc7510fe41f/non_bootable_disk-83814698.raw.xz
-vmlinux: https://storage.googleapis.com/syzbot-assets/7042fdcb685d/vmlinux-83814698.xz
-kernel image: https://storage.googleapis.com/syzbot-assets/9f795e13834f/bzImage-83814698.xz
+@r1@
+type T;
+identifier x,r.cb;
+@@
 
-IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+9f1d21c20c7306ca9417@syzkaller.appspotmail.com
+ cb(...) {
+(
+   kmem_cache_free(...);
+|
+   T x = ...;
+   kmem_cache_free(...,x);
+|
+   T x;
+   x = ...;
+   kmem_cache_free(...,x);
+)
+ }
 
-------------[ cut here ]------------
-DEBUG_LOCKS_WARN_ON(1)
-WARNING: CPU: 0 PID: 10 at kernel/locking/lockdep.c:232 hlock_class kernel/locking/lockdep.c:232 [inline]
-WARNING: CPU: 0 PID: 10 at kernel/locking/lockdep.c:232 hlock_class+0xfa/0x130 kernel/locking/lockdep.c:221
-Modules linked in:
-CPU: 0 PID: 10 Comm: kworker/0:1 Not tainted 6.10.0-rc1-syzkaller-00304-g83814698cf48 #0
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
-Workqueue: wg-crypt-wg0 wg_packet_decrypt_worker
-RIP: 0010:hlock_class kernel/locking/lockdep.c:232 [inline]
-RIP: 0010:hlock_class+0xfa/0x130 kernel/locking/lockdep.c:221
-Code: b6 14 11 38 d0 7c 04 84 d2 75 43 8b 05 b3 39 77 0e 85 c0 75 19 90 48 c7 c6 00 bd 2c 8b 48 c7 c7 a0 b7 2c 8b e8 97 47 e5 ff 90 <0f> 0b 90 90 90 31 c0 eb 9e e8 88 f7 7f 00 e9 1c ff ff ff 48 c7 c7
-RSP: 0018:ffffc900003c7a00 EFLAGS: 00010082
-RAX: 0000000000000000 RBX: 0000000000000f2b RCX: ffffffff81510229
-RDX: ffff888015f38000 RSI: ffffffff81510236 RDI: 0000000000000001
-RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000000 R11: 000000002d2d2d2d R12: 0000000000000000
-R13: 0000000000000000 R14: ffff888015f38b30 R15: 0000000000000f2b
-FS:  0000000000000000(0000) GS:ffff88802c000000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00000000f743fb94 CR3: 000000005ff86000 CR4: 0000000000350ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- check_wait_context kernel/locking/lockdep.c:4773 [inline]
- __lock_acquire+0x3f2/0x3b30 kernel/locking/lockdep.c:5087
- lock_acquire kernel/locking/lockdep.c:5754 [inline]
- lock_acquire+0x1b1/0x560 kernel/locking/lockdep.c:5719
- __raw_spin_lock_bh include/linux/spinlock_api_smp.h:126 [inline]
- _raw_spin_lock_bh+0x33/0x40 kernel/locking/spinlock.c:178
- spin_lock_bh include/linux/spinlock.h:356 [inline]
- ptr_ring_consume_bh include/linux/ptr_ring.h:365 [inline]
- wg_packet_decrypt_worker+0x2aa/0x530 drivers/net/wireguard/receive.c:499
- process_one_work+0x958/0x1ad0 kernel/workqueue.c:3231
- process_scheduled_works kernel/workqueue.c:3312 [inline]
- worker_thread+0x6c8/0xf70 kernel/workqueue.c:3393
- kthread+0x2c1/0x3a0 kernel/kthread.c:389
- ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
- </TASK>
+@s depends on r1@
+position p != r.p;
+identifier r.cb;
+@@
 
+ cb@p
+
+@script:ocaml@
+cb << r.cb;
+p << s.p;
+@@
+
+Printf.eprintf "Other use of %s at %s:%d\n"
+   cb (List.hd p).file (List.hd p).line
+
+@depends on r1 && !s@
+expression e;
+identifier r.cb,f;
+position r.p;
+@@
+
+- call_rcu(&e->f,cb@p)
++ kfree_rcu(e,f)
+
+@r1a depends on !s@
+type T;
+identifier x,r.cb;
+@@
+
+- cb(...) {
+(
+-  kmem_cache_free(...);
+|
+-  T x = ...;
+-  kmem_cache_free(...,x);
+|
+-  T x;
+-  x = ...;
+-  kmem_cache_free(...,x);
+)
+- }
+// </smpl>
+
+Signed-off-by: Julia Lawall <Julia.Lawall@inria.fr>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
 
 ---
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
 
-syzbot will keep track of this issue. See:
-https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
-
-If the report is already addressed, let syzbot know by replying with:
-#syz fix: exact-commit-title
-
-If you want to overwrite report's subsystems, reply with:
-#syz set subsystems: new-subsystem
-(See the list of subsystem names on the web dashboard)
-
-If the report is a duplicate of another one, reply with:
-#syz dup: exact-subject-of-another-report
-
-If you want to undo deduplication, reply with:
-#syz undup
+ arch/powerpc/kvm/book3s_mmu_hpte.c  |    8 +-------
+ block/blk-ioc.c                     |    9 +--------
+ drivers/net/wireguard/allowedips.c  |    9 ++-------
+ fs/ecryptfs/dentry.c                |    8 +-------
+ fs/nfsd/nfs4state.c                 |    9 +--------
+ fs/tracefs/inode.c                  |   10 +---------
+ kernel/time/posix-timers.c          |    9 +--------
+ kernel/workqueue.c                  |    8 +-------
+ net/bridge/br_fdb.c                 |    9 +--------
+ net/can/gw.c                        |   13 +++----------
+ net/ipv4/fib_trie.c                 |    8 +-------
+ net/ipv4/inetpeer.c                 |    9 ++-------
+ net/ipv6/ip6_fib.c                  |    9 +--------
+ net/ipv6/xfrm6_tunnel.c             |    8 +-------
+ net/kcm/kcmsock.c                   |   10 +---------
+ net/netfilter/nf_conncount.c        |   10 +---------
+ net/netfilter/nf_conntrack_expect.c |   10 +---------
+ net/netfilter/xt_hashlimit.c        |    9 +--------
+ 18 files changed, 22 insertions(+), 143 deletions(-)
