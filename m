@@ -4,52 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49E13C27C53
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  9 Jun 2024 08:27:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30C73C27C65
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  9 Jun 2024 08:27:56 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6cab5f2f;
-	Sun, 9 Jun 2024 08:27:51 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ef6fca17;
+	Sun, 9 Jun 2024 08:27:56 +0000 (UTC)
 Received: from mail2-relais-roc.national.inria.fr
  (mail2-relais-roc.national.inria.fr [192.134.164.83])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 67d0fb5e
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 990f87e4
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 9 Jun 2024 08:27:48 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Sun, 9 Jun 2024 08:27:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=inria.fr; s=dc;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=REYx9XJxXex1wT0g8DdBknTJa5z8s+++8BsQM1tAkdE=;
- b=c3jg9XiAgeKcNkg9Ypz1MXA57+I6z9Upi3oqzG67AIxQoc2Tb/l9+twd
- o1xqjWHj9bZB/XffVTZ6y3Q5wlIBrpiRIuaxP20ZifTf9z4PP9a6/uHrQ
- jbNAr8EHCg32T8reqfZHBfM1Bu9ssqsOLmK26M8DXHwpWqbgwQfkqJwz8 I=;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=zD7ynr/1tlkX1uaDOLGJoOQ33RKpDATGoutWutKpPm8=;
+ b=DagXZfUzdJWxwoYzmzmcEEdumUzJIa5J0CQYYbILkDG/vxnjNLrQtADH
+ Zr3+IGWHHTGjtQGCVa5ooF0J9nev/GChyQeMc6SmkGK2HoL3KVzdspOzO
+ VEuZqOgM9n6vbqQ+I7kkL+HhJhbcnrmDykDjT6SypihrjH36fewBvsXo3 Q=;
 Authentication-Results: mail2-relais-roc.national.inria.fr;
  dkim=none (message not signed) header.i=none;
  spf=SoftFail smtp.mailfrom=Julia.Lawall@inria.fr;
  dmarc=fail (p=none dis=none) d=inria.fr
-X-IronPort-AV: E=Sophos;i="6.08,225,1712613600"; d="scan'208";a="169696895"
+X-IronPort-AV: E=Sophos;i="6.08,225,1712613600"; d="scan'208";a="169696896"
 Received: from i80.paris.inria.fr (HELO i80.paris.inria.fr.) ([128.93.90.48])
  by mail2-relais-roc.national.inria.fr with
  ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2024 10:27:48 +0200
 From: Julia Lawall <Julia.Lawall@inria.fr>
-To: linux-block@vger.kernel.org
-Cc: kernel-janitors@vger.kernel.org, bridge@lists.linux.dev,
- linux-trace-kernel@vger.kernel.org,
- Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, kvm@vger.kernel.org,
- linuxppc-dev@lists.ozlabs.org,
- "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>,
- Christophe Leroy <christophe.leroy@csgroup.eu>,
- Nicholas Piggin <npiggin@gmail.com>, netdev@vger.kernel.org,
- wireguard@lists.zx2c4.com, linux-kernel@vger.kernel.org,
- ecryptfs@vger.kernel.org, Neil Brown <neilb@suse.de>,
- Olga Kornievskaia <kolga@netapp.com>, Dai Ngo <Dai.Ngo@oracle.com>,
- Tom Talpey <tom@talpey.com>, linux-nfs@vger.kernel.org,
- linux-can@vger.kernel.org, Lai Jiangshan <jiangshanlai@gmail.com>,
- netfilter-devel@vger.kernel.org, coreteam@netfilter.org,
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: kernel-janitors@vger.kernel.org, "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>, wireguard@lists.zx2c4.com,
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
  "Paul E . McKenney" <paulmck@kernel.org>, Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 00/14] replace call_rcu by kfree_rcu for simple
- kmem_cache_free callback
-Date: Sun,  9 Jun 2024 10:27:12 +0200
-Message-Id: <20240609082726.32742-1-Julia.Lawall@inria.fr>
+Subject: [PATCH 01/14] wireguard: allowedips: replace call_rcu by kfree_rcu
+ for simple kmem_cache_free callback
+Date: Sun,  9 Jun 2024 10:27:13 +0200
+Message-Id: <20240609082726.32742-2-Julia.Lawall@inria.fr>
 X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20240609082726.32742-1-Julia.Lawall@inria.fr>
+References: <20240609082726.32742-1-Julia.Lawall@inria.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -154,23 +147,39 @@ Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
 Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
 
 ---
+ drivers/net/wireguard/allowedips.c |    9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
- arch/powerpc/kvm/book3s_mmu_hpte.c  |    8 +-------
- block/blk-ioc.c                     |    9 +--------
- drivers/net/wireguard/allowedips.c  |    9 ++-------
- fs/ecryptfs/dentry.c                |    8 +-------
- fs/nfsd/nfs4state.c                 |    9 +--------
- fs/tracefs/inode.c                  |   10 +---------
- kernel/time/posix-timers.c          |    9 +--------
- kernel/workqueue.c                  |    8 +-------
- net/bridge/br_fdb.c                 |    9 +--------
- net/can/gw.c                        |   13 +++----------
- net/ipv4/fib_trie.c                 |    8 +-------
- net/ipv4/inetpeer.c                 |    9 ++-------
- net/ipv6/ip6_fib.c                  |    9 +--------
- net/ipv6/xfrm6_tunnel.c             |    8 +-------
- net/kcm/kcmsock.c                   |   10 +---------
- net/netfilter/nf_conncount.c        |   10 +---------
- net/netfilter/nf_conntrack_expect.c |   10 +---------
- net/netfilter/xt_hashlimit.c        |    9 +--------
- 18 files changed, 22 insertions(+), 143 deletions(-)
+diff --git a/drivers/net/wireguard/allowedips.c b/drivers/net/wireguard/allowedips.c
+index 0ba714ca5185..e4e1638fce1b 100644
+--- a/drivers/net/wireguard/allowedips.c
++++ b/drivers/net/wireguard/allowedips.c
+@@ -48,11 +48,6 @@ static void push_rcu(struct allowedips_node **stack,
+ 	}
+ }
+ 
+-static void node_free_rcu(struct rcu_head *rcu)
+-{
+-	kmem_cache_free(node_cache, container_of(rcu, struct allowedips_node, rcu));
+-}
+-
+ static void root_free_rcu(struct rcu_head *rcu)
+ {
+ 	struct allowedips_node *node, *stack[MAX_ALLOWEDIPS_DEPTH] = {
+@@ -330,13 +325,13 @@ void wg_allowedips_remove_by_peer(struct allowedips *table,
+ 			child = rcu_dereference_protected(
+ 					parent->bit[!(node->parent_bit_packed & 1)],
+ 					lockdep_is_held(lock));
+-		call_rcu(&node->rcu, node_free_rcu);
++		kfree_rcu(node, rcu);
+ 		if (!free_parent)
+ 			continue;
+ 		if (child)
+ 			child->parent_bit_packed = parent->parent_bit_packed;
+ 		*(struct allowedips_node **)(parent->parent_bit_packed & ~3UL) = child;
+-		call_rcu(&parent->rcu, node_free_rcu);
++		kfree_rcu(parent, rcu);
+ 	}
+ }
+ 
+
