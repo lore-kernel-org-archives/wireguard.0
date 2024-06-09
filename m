@@ -4,54 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5E9EC27C53
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  9 Jun 2024 14:32:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0051FC27C53
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  9 Jun 2024 14:40:06 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9afce11b;
-	Sun, 9 Jun 2024 14:32:22 +0000 (UTC)
-Received: from sin.source.kernel.org (sin.source.kernel.org
- [2604:1380:40e1:4800::1])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6497323e
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 9 Jun 2024 14:32:20 +0000 (UTC)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 9CC81CE0121;
- Sun,  9 Jun 2024 14:32:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 166C0C2BD10;
- Sun,  9 Jun 2024 14:32:12 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="C8YNtAKo"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1717943530;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=OGc4ydJ4eusmUomyVU3xWXMC6r5K28VTQsQGs5He7n4=;
- b=C8YNtAKo6799q3e2teULRncHewZjDG0PKWBml2ejuraEwPqTBCR0yckV5DJavzJ+nyu39/
- p5Y8SEhy3MfwXFtokJDEaF5FFt7M7tNjrCxDKO5ZMoCGZV3dWJxOCcWWyoxcBduKRF7+kR
- EBoEJdoiM9FQ0K01sCrsLnMnVZ/d3AQ=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 979f40c4
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Sun, 9 Jun 2024 14:32:09 +0000 (UTC)
-Date: Sun, 9 Jun 2024 16:32:06 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Julia Lawall <Julia.Lawall@inria.fr>
-Cc: kernel-janitors@vger.kernel.org, "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, "Paul E . McKenney" <paulmck@kernel.org>,
- Vlastimil Babka <vbabka@suse.cz>
-Subject: Re: [PATCH 01/14] wireguard: allowedips: replace call_rcu by
- kfree_rcu for simple kmem_cache_free callback
-Message-ID: <ZmW85kuO2Eje6gE9@zx2c4.com>
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 81a8fdc0;
+	Sun, 9 Jun 2024 14:36:19 +0000 (UTC)
+Received: from mail2-relais-roc.national.inria.fr
+ (mail2-relais-roc.national.inria.fr [192.134.164.83])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2b9f1149
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Sun, 9 Jun 2024 14:36:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=inria.fr; s=dc;
+ h=date:from:to:cc:subject:in-reply-to:message-id:
+ references:mime-version;
+ bh=qCa9AGh+fq/1VReLn9hghMXIAlqi9wewi4dObNvl2UE=;
+ b=h6kIxiZW/dd5uSxCiMQ/CALnhPG8doWfxvHov7Bfnq8f9kW3czxcYGrS
+ mEPMuHLltMD3xw+m4HWBjt3QCCDle7/X0SuZWD3hD1jy/dg91fiWfINpK
+ jqi1Ts2BPOeiqQUZONpCbJQGgZrL+vyhNq+VNaR8jMW4r5Xi9iJrgXLJY s=;
+Authentication-Results: mail2-relais-roc.national.inria.fr;
+ dkim=none (message not signed) header.i=none;
+ spf=SoftFail smtp.mailfrom=julia.lawall@inria.fr;
+ dmarc=fail (p=none dis=none) d=inria.fr
+X-IronPort-AV: E=Sophos;i="6.08,225,1712613600"; d="scan'208";a="169717092"
+Received: from 231.85.89.92.rev.sfr.net (HELO hadrien) ([92.89.85.231])
+ by mail2-relais-roc.national.inria.fr with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2024 16:36:16 +0200
+Date: Sun, 9 Jun 2024 16:36:15 +0200 (CEST)
+From: Julia Lawall <julia.lawall@inria.fr>
+X-X-Sender: jll@hadrien
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+cc: Julia Lawall <Julia.Lawall@inria.fr>, kernel-janitors@vger.kernel.org, 
+ "David S. Miller" <davem@davemloft.net>, 
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
+ Paolo Abeni <pabeni@redhat.com>, wireguard@lists.zx2c4.com, 
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ "Paul E . McKenney" <paulmck@kernel.org>, Vlastimil Babka <vbabka@suse.cz>
+Subject: Re: [PATCH 01/14] wireguard: allowedips: replace call_rcu by kfree_rcu
+ for simple kmem_cache_free callback
+In-Reply-To: <ZmW85kuO2Eje6gE9@zx2c4.com>
+Message-ID: <alpine.DEB.2.22.394.2406091636010.3474@hadrien>
 References: <20240609082726.32742-1-Julia.Lawall@inria.fr>
- <20240609082726.32742-2-Julia.Lawall@inria.fr>
+ <20240609082726.32742-2-Julia.Lawall@inria.fr> <ZmW85kuO2Eje6gE9@zx2c4.com>
+User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240609082726.32742-2-Julia.Lawall@inria.fr>
+Content-Type: text/plain; charset=US-ASCII
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -66,21 +62,31 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Julia & Vlastimil,
 
-On Sun, Jun 09, 2024 at 10:27:13AM +0200, Julia Lawall wrote:
-> Since SLOB was removed, it is not necessary to use call_rcu
-> when the callback only performs kmem_cache_free. Use
-> kfree_rcu() directly.
 
-Thanks, I applied this to the wireguard tree, and I'll send this out as
-a fix for 6.10. Let me know if this is unfavorable to you and if you'd
-like to take this somewhere yourself, in which case I'll give you my
-ack.
+On Sun, 9 Jun 2024, Jason A. Donenfeld wrote:
 
-Just a question, though, for Vlastimil -- I know that with the SLOB
-removal, kfree() is now allowed on kmemcache'd objects. Do you plan to
-do a blanket s/kmem_cache_free/kfree/g at some point, and then remove
-kmem_cache_free all together?
+> Hi Julia & Vlastimil,
+>
+> On Sun, Jun 09, 2024 at 10:27:13AM +0200, Julia Lawall wrote:
+> > Since SLOB was removed, it is not necessary to use call_rcu
+> > when the callback only performs kmem_cache_free. Use
+> > kfree_rcu() directly.
+>
+> Thanks, I applied this to the wireguard tree, and I'll send this out as
+> a fix for 6.10. Let me know if this is unfavorable to you and if you'd
+> like to take this somewhere yourself, in which case I'll give you my
+> ack.
 
-Jason
+Please push it onward.
+
+julia
+
+>
+> Just a question, though, for Vlastimil -- I know that with the SLOB
+> removal, kfree() is now allowed on kmemcache'd objects. Do you plan to
+> do a blanket s/kmem_cache_free/kfree/g at some point, and then remove
+> kmem_cache_free all together?
+>
+> Jason
+>
