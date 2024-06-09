@@ -4,50 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0051FC27C53
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  9 Jun 2024 14:40:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0F5EC27C53
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  9 Jun 2024 15:40:34 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 81a8fdc0;
-	Sun, 9 Jun 2024 14:36:19 +0000 (UTC)
-Received: from mail2-relais-roc.national.inria.fr
- (mail2-relais-roc.national.inria.fr [192.134.164.83])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2b9f1149
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0ffa146f;
+	Sun, 9 Jun 2024 15:40:32 +0000 (UTC)
+Received: from smtp.ungleich.ch (smtp.ungleich.ch
+ [2a0a:e5c0:2:2:0:c8ff:fe68:bf1c])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8adaa7dc
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 9 Jun 2024 14:36:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=inria.fr; s=dc;
- h=date:from:to:cc:subject:in-reply-to:message-id:
- references:mime-version;
- bh=qCa9AGh+fq/1VReLn9hghMXIAlqi9wewi4dObNvl2UE=;
- b=h6kIxiZW/dd5uSxCiMQ/CALnhPG8doWfxvHov7Bfnq8f9kW3czxcYGrS
- mEPMuHLltMD3xw+m4HWBjt3QCCDle7/X0SuZWD3hD1jy/dg91fiWfINpK
- jqi1Ts2BPOeiqQUZONpCbJQGgZrL+vyhNq+VNaR8jMW4r5Xi9iJrgXLJY s=;
-Authentication-Results: mail2-relais-roc.national.inria.fr;
- dkim=none (message not signed) header.i=none;
- spf=SoftFail smtp.mailfrom=julia.lawall@inria.fr;
- dmarc=fail (p=none dis=none) d=inria.fr
-X-IronPort-AV: E=Sophos;i="6.08,225,1712613600"; d="scan'208";a="169717092"
-Received: from 231.85.89.92.rev.sfr.net (HELO hadrien) ([92.89.85.231])
- by mail2-relais-roc.national.inria.fr with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2024 16:36:16 +0200
-Date: Sun, 9 Jun 2024 16:36:15 +0200 (CEST)
-From: Julia Lawall <julia.lawall@inria.fr>
-X-X-Sender: jll@hadrien
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-cc: Julia Lawall <Julia.Lawall@inria.fr>, kernel-janitors@vger.kernel.org, 
- "David S. Miller" <davem@davemloft.net>, 
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
- Paolo Abeni <pabeni@redhat.com>, wireguard@lists.zx2c4.com, 
- netdev@vger.kernel.org, linux-kernel@vger.kernel.org, 
- "Paul E . McKenney" <paulmck@kernel.org>, Vlastimil Babka <vbabka@suse.cz>
-Subject: Re: [PATCH 01/14] wireguard: allowedips: replace call_rcu by kfree_rcu
- for simple kmem_cache_free callback
-In-Reply-To: <ZmW85kuO2Eje6gE9@zx2c4.com>
-Message-ID: <alpine.DEB.2.22.394.2406091636010.3474@hadrien>
-References: <20240609082726.32742-1-Julia.Lawall@inria.fr>
- <20240609082726.32742-2-Julia.Lawall@inria.fr> <ZmW85kuO2Eje6gE9@zx2c4.com>
-User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
+ for <wireguard@lists.zx2c4.com>; Sun, 9 Jun 2024 15:40:29 +0000 (UTC)
+Received: from nb3.localdomain (localhost [IPv6:::1])
+ by smtp.ungleich.ch (Postfix) with ESMTP id 6004A20C8F;
+ Sun,  9 Jun 2024 17:40:29 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ungleich.ch;
+ s=202201; t=1717947629;
+ bh=PL4kNSTXCv9E7rtzAVD5iqjiTH5b/AojSl22vDsrLvI=;
+ h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+ b=RBGt7SPUPJnS/wju9s8yUw4FzYxHXJTUIediW7MTrAxAL32zVvPf0tq6qFJFJ9vR2
+ xvEYC+9JMRI3TGrAC10OWd0tY86/JVC89o3Bexbg+C7x1k9T8WIESSaCpEYFrXIgQ7
+ B+tkxiND7yeqQlt9awL5r8lh0r8twT11D7AhLAywL5PxH7jT/EURfztLvJuo6KYQ3n
+ ZrQtaTs3qhiVirHVoInJNBtws1l7d04Wfp7/NfVkXySsgrZtnXeZiQQvnLIz0SjJHj
+ 7n0YauEMR2kUR/RP00GmPaQun+CTeFiwmonaTgxK3ri+dRkMIXXgpC7DToXr7zVjTT
+ q7xeEKUNc9QdQ==
+Received: by nb3.localdomain (Postfix, from userid 1000)
+ id 7331314C01B4; Sun, 09 Jun 2024 17:39:46 +0200 (CEST)
+From: Nico Schottelius <nico.schottelius@ungleich.ch>
+To: d tbsky <tbskyd@gmail.com>
+Cc: Jason A. Donenfeld <Jason@zx2c4.com>,  WireGuard mailing list
+ <wireguard@lists.zx2c4.com>
+Subject: Re: Wireguard address binding - how to fix?
+In-Reply-To: <87bk4tc5m7.fsf@ungleich.ch> (Nico Schottelius's message of "Sun, 
+ 26 May 2024 10:57:52 +0200")
+References: <87le4cfz0u.fsf@ungleich.ch>
+ <20240514113648.neaj6kfazx4fi7af@House.clients.dxld.at>
+ <87msojhbq0.fsf@ungleich.ch>
+ <CAA6-MF-npREucdWneVw+DWMQi3bG+3zp98VNctErfLMuRkvY9A@mail.gmail.com>
+ <87a5kjgw3j.fsf@ungleich.ch>
+ <f292656a-52c8-4258-8b6a-45064a702a8a@keff.org>
+ <874jarfd43.fsf@ungleich.ch>
+ <CAC6SzHJFRNPsLNSd7_w8qQwtyfHLvZtf5SeTS-gvAcY_wAidXQ@mail.gmail.com>
+ <87bk4tc5m7.fsf@ungleich.ch>
+Date: Sun, 09 Jun 2024 17:39:46 +0200
+Message-ID: <87tti2xgzh.fsf@ungleich.ch>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: multipart/mixed; boundary="=-=-="
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -62,31 +63,71 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+--=-=-=
+Content-Type: text/plain
 
 
-On Sun, 9 Jun 2024, Jason A. Donenfeld wrote:
+Jason,
 
-> Hi Julia & Vlastimil,
+may I shortly ask what your opinion is on the patch and whether there is
+a way forward to make wireguard usable on systems with multiple IP
+addresses?
+
+Best regards,
+
+Nico
+
+Nico Schottelius <nico.schottelius@ungleich.ch> writes:
+
+> d tbsky <tbskyd@gmail.com> writes:
+>> I  remembered how exciting when I tested wireguard at 2017. until I
+>> asked muti-home question in the list.
+>> wiregurad is beautiful,elegant,fast but not easy to get along with.
+>> openvpn is not so amazing but it can get the job done.
 >
-> On Sun, Jun 09, 2024 at 10:27:13AM +0200, Julia Lawall wrote:
-> > Since SLOB was removed, it is not necessary to use call_rcu
-> > when the callback only performs kmem_cache_free. Use
-> > kfree_rcu() directly.
+> Nice summary, hits the nail quite well.
 >
-> Thanks, I applied this to the wireguard tree, and I'll send this out as
-> a fix for 6.10. Let me know if this is unfavorable to you and if you'd
-> like to take this somewhere yourself, in which case I'll give you my
-> ack.
+> Jason, do you mind having a look at the submitted patches for IP address
+> binding and comment on them? Or alternatively can you give green light
+> for generally moving forward so that a direct inclusion in the Linux
+> kernel would be accepted?
+>
+> Best regards,
+>
+> Nico
 
-Please push it onward.
+--=-=-=
+Content-Type: multipart/signed; boundary="==-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
 
-julia
+--==-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
->
-> Just a question, though, for Vlastimil -- I know that with the SLOB
-> removal, kfree() is now allowed on kmemcache'd objects. Do you plan to
-> do a blanket s/kmem_cache_free/kfree/g at some point, and then remove
-> kmem_cache_free all together?
->
-> Jason
->
+
+=2D-=20
+Sustainable and modern Infrastructures by ungleich.ch
+
+--==-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJRBAEBCgA7FiEEZZsNkehufiT9FWnQxykhoSk/LSQFAmZlzMIdHG5pY28uc2No
+b3R0ZWxpdXNAdW5nbGVpY2guY2gACgkQxykhoSk/LSQSWRAAhY5peD14jvJCrCV8
+gkbCMg1DUHh0UwCYwi9dishHEuBbTk/7RW6YHfmej2JpOBTBfCDpUEYxcupbotCG
+0SncGy3Ss812U7fnviQPVGE6g9dxeFrJ5q4332o581h0zCFPqKs7UFSriNRvI/bN
+hQ+2rbsvijYhyFTtEWZHMhagdnuTiRitqt6p04QlzMM/SecH6KHWRc26COJBtU/a
+B7AT+3lJING9xp7sPMQa5sLOKKyHe/A5D+tQAK+BMVR6UqNRUL8nIbWA2gndUG/Y
+0ydIX+25yLZsi1MUK6PNXQlHWFnSc3g18AUbQMv0RL/HvsbdOOEoKU9BCwp6beoI
+g3xscejBeY8KcgcK+vhJkxQyMKvWhL5TeBf5dan2NLsmG4DComapJmv85v/d6Eu5
+5BwPEBqbaL7k3LbP8lbu+uGU5ssCpEx1lqQ+B97JQp+9QiZr9ouO4R21nnTpU1ce
+2IaCUnoDNKGH9J+k1MKKf2PdbWYeGTyb5s4n3Bwd5sayYPRj0JraRsSC83MQatHa
+gDhRrIJuIFT1TvO/dA5z093rSBqs+Mo7Gu7CFUl2KrPimAOq29nOsYIYQr0fHduQ
+AWdJsnywFi8HMMpAtGu4H1fAUg2/Yw2r7kp68XBJ4b15+jFJDOWNUybqKaKaLo1S
+eWvxBgxDxFztoLfGyJ5GJ+gI4h0=
+=MuwN
+-----END PGP SIGNATURE-----
+--==-=-=--
+
+--=-=-=--
