@@ -4,51 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0F5EC27C53
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  9 Jun 2024 15:40:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6206AC27C55
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 10 Jun 2024 20:38:15 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0ffa146f;
-	Sun, 9 Jun 2024 15:40:32 +0000 (UTC)
-Received: from smtp.ungleich.ch (smtp.ungleich.ch
- [2a0a:e5c0:2:2:0:c8ff:fe68:bf1c])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8adaa7dc
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 9 Jun 2024 15:40:29 +0000 (UTC)
-Received: from nb3.localdomain (localhost [IPv6:::1])
- by smtp.ungleich.ch (Postfix) with ESMTP id 6004A20C8F;
- Sun,  9 Jun 2024 17:40:29 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ungleich.ch;
- s=202201; t=1717947629;
- bh=PL4kNSTXCv9E7rtzAVD5iqjiTH5b/AojSl22vDsrLvI=;
- h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
- b=RBGt7SPUPJnS/wju9s8yUw4FzYxHXJTUIediW7MTrAxAL32zVvPf0tq6qFJFJ9vR2
- xvEYC+9JMRI3TGrAC10OWd0tY86/JVC89o3Bexbg+C7x1k9T8WIESSaCpEYFrXIgQ7
- B+tkxiND7yeqQlt9awL5r8lh0r8twT11D7AhLAywL5PxH7jT/EURfztLvJuo6KYQ3n
- ZrQtaTs3qhiVirHVoInJNBtws1l7d04Wfp7/NfVkXySsgrZtnXeZiQQvnLIz0SjJHj
- 7n0YauEMR2kUR/RP00GmPaQun+CTeFiwmonaTgxK3ri+dRkMIXXgpC7DToXr7zVjTT
- q7xeEKUNc9QdQ==
-Received: by nb3.localdomain (Postfix, from userid 1000)
- id 7331314C01B4; Sun, 09 Jun 2024 17:39:46 +0200 (CEST)
-From: Nico Schottelius <nico.schottelius@ungleich.ch>
-To: d tbsky <tbskyd@gmail.com>
-Cc: Jason A. Donenfeld <Jason@zx2c4.com>,  WireGuard mailing list
- <wireguard@lists.zx2c4.com>
-Subject: Re: Wireguard address binding - how to fix?
-In-Reply-To: <87bk4tc5m7.fsf@ungleich.ch> (Nico Schottelius's message of "Sun, 
- 26 May 2024 10:57:52 +0200")
-References: <87le4cfz0u.fsf@ungleich.ch>
- <20240514113648.neaj6kfazx4fi7af@House.clients.dxld.at>
- <87msojhbq0.fsf@ungleich.ch>
- <CAA6-MF-npREucdWneVw+DWMQi3bG+3zp98VNctErfLMuRkvY9A@mail.gmail.com>
- <87a5kjgw3j.fsf@ungleich.ch>
- <f292656a-52c8-4258-8b6a-45064a702a8a@keff.org>
- <874jarfd43.fsf@ungleich.ch>
- <CAC6SzHJFRNPsLNSd7_w8qQwtyfHLvZtf5SeTS-gvAcY_wAidXQ@mail.gmail.com>
- <87bk4tc5m7.fsf@ungleich.ch>
-Date: Sun, 09 Jun 2024 17:39:46 +0200
-Message-ID: <87tti2xgzh.fsf@ungleich.ch>
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 39e7e6b3;
+	Mon, 10 Jun 2024 20:38:12 +0000 (UTC)
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3c47769f
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 10 Jun 2024 20:38:09 +0000 (UTC)
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 92E13200C8;
+ Mon, 10 Jun 2024 20:38:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+ t=1718051888; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=XxeQrYK1W1CzQMoStEUsvSWuSb8kH7BgYf+vCDWtHuA=;
+ b=eUo1fSH9gLM/mt2MZ/Xqn0WQP6BqwcDEZ2Tn+n+7ZSpn9bvqBCa3dKM6AToMOjQGR6/qzr
+ Q3vFDrf3E9W2vnQ/jnA25lf3jg/ZnayYYcEG3BnCC99WKFhSmBd1kIJETKLla8+tl6TBF/
+ 8Lik5O+rdZsRFhUev+SegfXDDULAXBM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+ s=susede2_ed25519; t=1718051888;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=XxeQrYK1W1CzQMoStEUsvSWuSb8kH7BgYf+vCDWtHuA=;
+ b=q+/oRSpqBAlvQ2Bj4clV5NObxPCqLT87ozD/Mo+AY4A2eaZ1mOfQEbXkNaHDWGQ5BEK/bn
+ 0lOfYSKCDU1EkfCQ==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.cz header.s=susede2_rsa header.b=eUo1fSH9;
+ dkim=pass header.d=suse.cz header.s=susede2_ed25519 header.b="q+/oRSpq"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+ t=1718051888; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=XxeQrYK1W1CzQMoStEUsvSWuSb8kH7BgYf+vCDWtHuA=;
+ b=eUo1fSH9gLM/mt2MZ/Xqn0WQP6BqwcDEZ2Tn+n+7ZSpn9bvqBCa3dKM6AToMOjQGR6/qzr
+ Q3vFDrf3E9W2vnQ/jnA25lf3jg/ZnayYYcEG3BnCC99WKFhSmBd1kIJETKLla8+tl6TBF/
+ 8Lik5O+rdZsRFhUev+SegfXDDULAXBM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+ s=susede2_ed25519; t=1718051888;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=XxeQrYK1W1CzQMoStEUsvSWuSb8kH7BgYf+vCDWtHuA=;
+ b=q+/oRSpqBAlvQ2Bj4clV5NObxPCqLT87ozD/Mo+AY4A2eaZ1mOfQEbXkNaHDWGQ5BEK/bn
+ 0lOfYSKCDU1EkfCQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 78F2013A7F;
+ Mon, 10 Jun 2024 20:38:08 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id LKoVHTBkZ2ZNKQAAD6G6ig
+ (envelope-from <vbabka@suse.cz>); Mon, 10 Jun 2024 20:38:08 +0000
+Message-ID: <3f58c9a6-614f-4188-9a38-72c26fb42c8e@suse.cz>
+Date: Mon, 10 Jun 2024 22:38:08 +0200
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-=-="
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/14] wireguard: allowedips: replace call_rcu by
+ kfree_rcu for simple kmem_cache_free callback
+Content-Language: en-US
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ Julia Lawall <Julia.Lawall@inria.fr>
+Cc: kernel-janitors@vger.kernel.org, "David S. Miller" <davem@davemloft.net>, 
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>, wireguard@lists.zx2c4.com,
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+ "Paul E . McKenney" <paulmck@kernel.org>,
+ Matthew Wilcox <willy@infradead.org>
+References: <20240609082726.32742-1-Julia.Lawall@inria.fr>
+ <20240609082726.32742-2-Julia.Lawall@inria.fr> <ZmW85kuO2Eje6gE9@zx2c4.com>
+From: Vlastimil Babka <vbabka@suse.cz>
+Autocrypt: addr=vbabka@suse.cz; keydata=
+ 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
+ EP+ylKVEKb0Q2A==
+In-Reply-To: <ZmW85kuO2Eje6gE9@zx2c4.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [-4.50 / 50.00]; BAYES_HAM(-3.00)[99.98%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ XM_UA_NO_VERSION(0.01)[]; MX_GOOD(-0.01)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ DWL_DNSWL_BLOCKED(0.00)[suse.cz:dkim];
+ RCPT_COUNT_TWELVE(0.00)[12]; MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+ TO_DN_SOME(0.00)[]; FROM_HAS_DN(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ DKIM_TRACE(0.00)[suse.cz:+]
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 92E13200C8
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -63,71 +160,30 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---=-=-=
-Content-Type: text/plain
+On 6/9/24 4:32 PM, Jason A. Donenfeld wrote:
+> Hi Julia & Vlastimil,
+> 
+> On Sun, Jun 09, 2024 at 10:27:13AM +0200, Julia Lawall wrote:
+>> Since SLOB was removed, it is not necessary to use call_rcu
+>> when the callback only performs kmem_cache_free. Use
+>> kfree_rcu() directly.
+> 
+> Thanks, I applied this to the wireguard tree, and I'll send this out as
+> a fix for 6.10. Let me know if this is unfavorable to you and if you'd
+> like to take this somewhere yourself, in which case I'll give you my
+> ack.
+> 
+> Just a question, though, for Vlastimil -- I know that with the SLOB
+> removal, kfree() is now allowed on kmemcache'd objects. Do you plan to
+> do a blanket s/kmem_cache_free/kfree/g at some point, and then remove
+> kmem_cache_free all together?
 
+Hmm, not really, but obligatory Cc for willy who'd love to have "one free()
+to rule them all" IIRC.
 
-Jason,
-
-may I shortly ask what your opinion is on the patch and whether there is
-a way forward to make wireguard usable on systems with multiple IP
-addresses?
-
-Best regards,
-
-Nico
-
-Nico Schottelius <nico.schottelius@ungleich.ch> writes:
-
-> d tbsky <tbskyd@gmail.com> writes:
->> I  remembered how exciting when I tested wireguard at 2017. until I
->> asked muti-home question in the list.
->> wiregurad is beautiful,elegant,fast but not easy to get along with.
->> openvpn is not so amazing but it can get the job done.
->
-> Nice summary, hits the nail quite well.
->
-> Jason, do you mind having a look at the submitted patches for IP address
-> binding and comment on them? Or alternatively can you give green light
-> for generally moving forward so that a direct inclusion in the Linux
-> kernel would be accepted?
->
-> Best regards,
->
-> Nico
-
---=-=-=
-Content-Type: multipart/signed; boundary="==-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-
---==-=-=
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
-
-
-=2D-=20
-Sustainable and modern Infrastructures by ungleich.ch
-
---==-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQJRBAEBCgA7FiEEZZsNkehufiT9FWnQxykhoSk/LSQFAmZlzMIdHG5pY28uc2No
-b3R0ZWxpdXNAdW5nbGVpY2guY2gACgkQxykhoSk/LSQSWRAAhY5peD14jvJCrCV8
-gkbCMg1DUHh0UwCYwi9dishHEuBbTk/7RW6YHfmej2JpOBTBfCDpUEYxcupbotCG
-0SncGy3Ss812U7fnviQPVGE6g9dxeFrJ5q4332o581h0zCFPqKs7UFSriNRvI/bN
-hQ+2rbsvijYhyFTtEWZHMhagdnuTiRitqt6p04QlzMM/SecH6KHWRc26COJBtU/a
-B7AT+3lJING9xp7sPMQa5sLOKKyHe/A5D+tQAK+BMVR6UqNRUL8nIbWA2gndUG/Y
-0ydIX+25yLZsi1MUK6PNXQlHWFnSc3g18AUbQMv0RL/HvsbdOOEoKU9BCwp6beoI
-g3xscejBeY8KcgcK+vhJkxQyMKvWhL5TeBf5dan2NLsmG4DComapJmv85v/d6Eu5
-5BwPEBqbaL7k3LbP8lbu+uGU5ssCpEx1lqQ+B97JQp+9QiZr9ouO4R21nnTpU1ce
-2IaCUnoDNKGH9J+k1MKKf2PdbWYeGTyb5s4n3Bwd5sayYPRj0JraRsSC83MQatHa
-gDhRrIJuIFT1TvO/dA5z093rSBqs+Mo7Gu7CFUl2KrPimAOq29nOsYIYQr0fHduQ
-AWdJsnywFi8HMMpAtGu4H1fAUg2/Yw2r7kp68XBJ4b15+jFJDOWNUybqKaKaLo1S
-eWvxBgxDxFztoLfGyJ5GJ+gI4h0=
-=MuwN
------END PGP SIGNATURE-----
---==-=-=--
-
---=-=-=--
+My current thinking is that kmem_cache_free() can save the kmem_cache
+lookup, or serve as a double check if debugging is enabled, and doesn't have
+much downside. If someone wants to not care about the kmem_cache pointer,
+they can use kfree(). Even convert their subsystem at will. But a mass
+conversion of everything would be rather lot of churn for not much of a
+benefit, IMHO.
