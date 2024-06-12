@@ -4,37 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3877C27C53
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 12 Jun 2024 23:04:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C70A3C27C53
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 12 Jun 2024 23:35:03 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f7b4f567;
-	Wed, 12 Jun 2024 23:04:26 +0000 (UTC)
-Received: from sin.source.kernel.org (sin.source.kernel.org
- [2604:1380:40e1:4800::1])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 42299628
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a2c37c60;
+	Wed, 12 Jun 2024 23:32:11 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org
+ [2604:1380:4641:c500::1])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7127778a
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 12 Jun 2024 23:04:23 +0000 (UTC)
+ Wed, 12 Jun 2024 23:32:09 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 83765CE235E;
- Wed, 12 Jun 2024 23:04:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C77F8C116B1;
- Wed, 12 Jun 2024 23:04:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1718233459;
- bh=r4XcvG9Zjydzkd1AmkZAP2xPiok2w/W0tDdIGWsKLlE=;
- h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
- b=ajo5INMFOIdUK8bTKJSOMTORqSBUVoTQMoTueScDlw6P7fEKN6L6KudGm8A/f9DV2
- vac6aDF6zFHvqVhLnecDeXpTWqKjsgyaGlyYA4jn+sYSI8iPlTZA780P5FZZ2QLokd
- TW2/efoa0ILfQDom5zYPZYttH0Zay//A6W3sEm47ScK9OEZvoBo/K4BvF3RIs/Le4w
- ckCQrAXr3PM4+Pd067rXKPEm+1PxdYqAXhlaQm4dv5OxvWFhB3hvQnXvNmk7dvAr7L
- /vanj8BKtPfnTrKefLFEyaIqF22+2EqJuMoTh97FTwq7ijzvQEu32ydoZbQcPLyXRl
- tC6o2QGNB+peQ==
-Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
- id 6C26FCE0DEA; Wed, 12 Jun 2024 16:04:19 -0700 (PDT)
-Date: Wed, 12 Jun 2024 16:04:19 -0700
-From: "Paul E. McKenney" <paulmck@kernel.org>
-To: Jens Axboe <axboe@kernel.dk>
+ by dfw.source.kernel.org (Postfix) with ESMTP id EA5CF6179A;
+ Wed, 12 Jun 2024 23:32:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79393C116B1;
+ Wed, 12 Jun 2024 23:32:05 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="KuRtSsoX"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1718235123;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qSAYPgRWQjgO94CvH8azZnzUEXB1002L22u56bSmdYM=;
+ b=KuRtSsoXnhoWtj8ILW+HbvJl66iT9qTq9bSBLEsqlgbz+NueejOfai90fuwt9YC44f1xei
+ hmuw3gt1QJJwUC0wpdH+Cc3bGwXliu0JUoPBoQ3fEIPyMnLEjglwvNilIrEYYHTX8Rku8B
+ FH2QYFekE0pqYf5XHoYxT03jyvV2YLs=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7c292bc0
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Wed, 12 Jun 2024 23:32:03 +0000 (UTC)
+Date: Thu, 13 Jun 2024 01:31:57 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: "Paul E. McKenney" <paulmck@kernel.org>
 Cc: Jakub Kicinski <kuba@kernel.org>, Julia Lawall <Julia.Lawall@inria.fr>,
  linux-block@vger.kernel.org, kernel-janitors@vger.kernel.org,
  bridge@lists.linux.dev, linux-trace-kernel@vger.kernel.org,
@@ -52,15 +55,14 @@ Cc: Jakub Kicinski <kuba@kernel.org>, Julia Lawall <Julia.Lawall@inria.fr>,
  Vlastimil Babka <vbabka@suse.cz>
 Subject: Re: [PATCH 00/14] replace call_rcu by kfree_rcu for simple
  kmem_cache_free callback
-Message-ID: <fc3fb837-6f3c-4955-899d-1be002d17d70@paulmck-laptop>
+Message-ID: <Zmov7ZaL-54T9GiM@zx2c4.com>
 References: <20240609082726.32742-1-Julia.Lawall@inria.fr>
  <20240612143305.451abf58@kernel.org>
  <baee4d58-17b4-4918-8e45-4d8068a23e8c@paulmck-laptop>
- <7e58e73d-4173-49fe-8f05-38a3699bc2c1@kernel.dk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <7e58e73d-4173-49fe-8f05-38a3699bc2c1@kernel.dk>
+In-Reply-To: <baee4d58-17b4-4918-8e45-4d8068a23e8c@paulmck-laptop>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -72,27 +74,41 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Reply-To: paulmck@kernel.org
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, Jun 12, 2024 at 04:52:57PM -0600, Jens Axboe wrote:
-> On 6/12/24 4:37 PM, Paul E. McKenney wrote:
-> > [PATCH 09/14] block: replace call_rcu by kfree_rcu for simple kmem_cache_free callback
-> > 	I don't see a kmem_cache_destroy(), but then again, I also don't
-> > 	see the kmem_cache_create().  Unless someone can see what I am
-> > 	not seeing, let's wait.
+On Wed, Jun 12, 2024 at 03:37:55PM -0700, Paul E. McKenney wrote:
+> On Wed, Jun 12, 2024 at 02:33:05PM -0700, Jakub Kicinski wrote:
+> > On Sun,  9 Jun 2024 10:27:12 +0200 Julia Lawall wrote:
+> > > Since SLOB was removed, it is not necessary to use call_rcu
+> > > when the callback only performs kmem_cache_free. Use
+> > > kfree_rcu() directly.
+> > > 
+> > > The changes were done using the following Coccinelle semantic patch.
+> > > This semantic patch is designed to ignore cases where the callback
+> > > function is used in another way.
+> > 
+> > How does the discussion on:
+> >   [PATCH] Revert "batman-adv: prefer kfree_rcu() over call_rcu() with free-only callbacks"
+> >   https://lore.kernel.org/all/20240612133357.2596-1-linus.luessing@c0d3.blue/
+> > reflect on this series? IIUC we should hold off..
 > 
-> It's in that same file:
+> We do need to hold off for the ones in kernel modules (such as 07/14)
+> where the kmem_cache is destroyed during module unload.
 > 
-> blk_ioc_init()
+> OK, I might as well go through them...
 > 
-> the cache itself never goes away, as the ioc code is not unloadable. So
-> I think the change there should be fine.
+> [PATCH 01/14] wireguard: allowedips: replace call_rcu by kfree_rcu for simple kmem_cache_free callback
+> 	Needs to wait, see wg_allowedips_slab_uninit().
 
-Thank you, Jens!  (And to Jakub for motivating me to go look.)
+Right, this has exactly the same pattern as the batman-adv issue:
 
-So to update the scorecared, 05/14, 09/14, 11/14 and 12/14 are OK and
-can go ahead.
+    void wg_allowedips_slab_uninit(void)
+    {
+            rcu_barrier();
+            kmem_cache_destroy(node_cache);
+    }
 
-							Thanx, Paul
+I'll hold off on sending that up until this matter is resolved.
+
+Jason
