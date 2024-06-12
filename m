@@ -4,60 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A112C27C5F
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 10 Jun 2024 20:59:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D18C4C27C53
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 12 Jun 2024 14:11:19 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ac4a741a;
-	Mon, 10 Jun 2024 20:59:21 +0000 (UTC)
-Received: from sin.source.kernel.org (sin.source.kernel.org
- [2604:1380:40e1:4800::1])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 91af510a
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b5628d22;
+	Wed, 12 Jun 2024 14:11:15 +0000 (UTC)
+Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com
+ [2607:f8b0:4864:20::1130])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0c2ae9aa
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 10 Jun 2024 20:59:18 +0000 (UTC)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 7458FCE189B;
- Mon, 10 Jun 2024 20:59:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 630D7C2BBFC;
- Mon, 10 Jun 2024 20:59:12 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="cpT0ldoO"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1718053150;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Y3HZtUU+Y3QR8/1rdZRdvvoYvPoLUFO5M0rso02kr/8=;
- b=cpT0ldoOcMMVc8Lu9sEv9JV4FT2gTFNNnFlTrxNiLJUPtVER7849+99XWSMC4dmFLxycci
- BCA83osgbke5yqf5HGbFJ6JH7hBD0GO5RNBDtny2uMzpTlaHxR7xeFWYSu8mdmTNMAopCL
- r2vKizCfZM+DSxqKGxM4HWQMRMdLxTs=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id d9ebcf05
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Mon, 10 Jun 2024 20:59:09 +0000 (UTC)
-Date: Mon, 10 Jun 2024 22:59:07 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Julia Lawall <Julia.Lawall@inria.fr>, kernel-janitors@vger.kernel.org,
- "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, "Paul E . McKenney" <paulmck@kernel.org>,
- Matthew Wilcox <willy@infradead.org>, linux-mm@kvack.org
-Subject: Re: [PATCH 01/14] wireguard: allowedips: replace call_rcu by
- kfree_rcu for simple kmem_cache_free callback
-Message-ID: <ZmdpG7sVdPqikphi@zx2c4.com>
-References: <20240609082726.32742-1-Julia.Lawall@inria.fr>
- <20240609082726.32742-2-Julia.Lawall@inria.fr>
- <ZmW85kuO2Eje6gE9@zx2c4.com>
- <3f58c9a6-614f-4188-9a38-72c26fb42c8e@suse.cz>
+ Wed, 12 Jun 2024 14:11:13 +0000 (UTC)
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-62f39fcb010so16522627b3.1
+ for <wireguard@lists.zx2c4.com>; Wed, 12 Jun 2024 07:11:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1718201471; x=1718806271; darn=lists.zx2c4.com;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=8uehACsPxP1YviqAxtnu/AQYY5YWZ8oSsPpfhXKhbjs=;
+ b=Z1iN1E6GduLDQ52Q+OkHADryO+CE/MsLv8U9b+LLrQCxPN0d3EiPRF04XZHaHn5dAo
+ vmPXxTR7koQhc0Ed9mLbUudJ2xqEavzuqjvzu86TeiX1B7v+32IMyngSnI4YcDXLTtUd
+ TODGor9Ff9bCIox/qEF4+Xxj0L0fwtFxQZpcWYSuaIp9oshclfm8lrAS41O2ObP2TnG6
+ TJUc/MqMbgCRyb8A8ARpUgsb+IhDijF4h3pZof5KI46NTBEnMDv7AdpTpxm8CQ0MoAd3
+ G4Rf5Tk0L6SQfYPX1kA8KFLWG/j9h+7W2BtvrFGWUkXw+WxwOh8FtFPK5ERdSnD9KogR
+ i2Sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718201471; x=1718806271;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8uehACsPxP1YviqAxtnu/AQYY5YWZ8oSsPpfhXKhbjs=;
+ b=FMzgUQqaRhQGuUor1WJqY6D0lZad7JH/NVaBtOaznOrLmndYaRnzdsGvrzdMqIHv7c
+ HL81zUtNj04+yZ+jkmL0Q8VwTpWKYn+fw3iuqmADhRBAUfiZW3Ib8ggs70jGETFVLyud
+ sOdnrD8KNrU9gLf3g0hBZV63VyD3W/hvqUrEQrNJKLeOOoHH0LqaCoud9nScZa4hUndL
+ 67NZVjUf5guEDZTw9SZxm22fVE4ER332/0dm5sHMs1VjOqAfZMdrV+Hh6bNCZwhgK6q3
+ IiC+Br2XshescqNy/OZ2tHSYH7LpAOHMo9rJJEABZ5xbkW1IAhZcokf4LNi6Pa7sIVrN
+ AURw==
+X-Gm-Message-State: AOJu0YzvTuNXfs/9I1L9kgMq0iTKA6WgCxBWpZ0pYqzb7En2Vj6bgLzo
+ yH2SgZLeyGHehlkYgmayX9bj9UwEbqzXNl4kucSSeZtipWF5kUnZZguWWbgtdrF9ET6f4EfuKie
+ WxKe65t9pjpU8Z4agKj0EBaDuZtZdey9p
+X-Google-Smtp-Source: AGHT+IEQs/d+vs5TncAvqjrFDJZt0zuQZBplGPtGw+ENC6qYFGv+seQYLKpqDH2aEC+JOQWQ3hd8H1fFixIFGX9uuyM=
+X-Received: by 2002:a81:7cd4:0:b0:61b:3454:8ff9 with SMTP id
+ 00721157ae682-62fbb7f66b4mr18810307b3.10.1718201471425; Wed, 12 Jun 2024
+ 07:11:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3f58c9a6-614f-4188-9a38-72c26fb42c8e@suse.cz>
+From: Germano Massullo <germano.massullo@gmail.com>
+Date: Wed, 12 Jun 2024 16:11:00 +0200
+Message-ID: <CAGa=++TLvS2y=-D8mk0zx_J7CvYWYQqKBWDv_3+qaQ2NSdiJ1w@mail.gmail.com>
+Subject: Mini PCIE HW accelerator for ChaCha20
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -72,54 +68,7 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Vlastimil,
-
-On Mon, Jun 10, 2024 at 10:38:08PM +0200, Vlastimil Babka wrote:
-> On 6/9/24 4:32 PM, Jason A. Donenfeld wrote:
-> > Hi Julia & Vlastimil,
-> > 
-> > On Sun, Jun 09, 2024 at 10:27:13AM +0200, Julia Lawall wrote:
-> >> Since SLOB was removed, it is not necessary to use call_rcu
-> >> when the callback only performs kmem_cache_free. Use
-> >> kfree_rcu() directly.
-> > 
-> > Thanks, I applied this to the wireguard tree, and I'll send this out as
-> > a fix for 6.10. Let me know if this is unfavorable to you and if you'd
-> > like to take this somewhere yourself, in which case I'll give you my
-> > ack.
-> > 
-> > Just a question, though, for Vlastimil -- I know that with the SLOB
-> > removal, kfree() is now allowed on kmemcache'd objects. Do you plan to
-> > do a blanket s/kmem_cache_free/kfree/g at some point, and then remove
-> > kmem_cache_free all together?
-> 
-> Hmm, not really, but obligatory Cc for willy who'd love to have "one free()
-> to rule them all" IIRC.
-> 
-> My current thinking is that kmem_cache_free() can save the kmem_cache
-> lookup, or serve as a double check if debugging is enabled, and doesn't have
-> much downside. If someone wants to not care about the kmem_cache pointer,
-> they can use kfree(). Even convert their subsystem at will. But a mass
-> conversion of everything would be rather lot of churn for not much of a
-> benefit, IMHO.
-
-Huh, interesting. I can see the practical sense in that, not causing
-unnecessary churn and such.
-
-At the same time, this doesn't appeal much to some sort of orderly part
-of my mind. Either all kmalloc/kmem_cache memory is kfree()d as the rule
-for what is best, or a kmalloc pairs with a kfree and a kmem_cache_alloc
-pairs with a kmem_cache_free and that's the rule. And those can be
-checked and enforced and so forth. But saying, "oh, well, they might
-work a bit different, but whatever you want is basically fine; there's
-no rhyme or reason" is somehow dissatisfying. Maybe the rule is
-actually, "use kmem_cache_free if you can because it saves a pointer
-lookup, but don't go out of your way to do that and certainly don't
-bloat .text to make it happen," then maybe that makes sense? But I
-dunno, I find myself wanting a rule and consistency. (Did you find it
-annoying that in this paragraph, I used () on only one function mention
-but not on the others? If so, maybe you're like me.) Maybe I should just
-chill though. Anyway, only my 2¢, and my opinion here isn't worth much,
-so please regard this as only a gut statement from a bystander.
-
-Jason
+Hello, I would like to ask if you are aware of any mini PCI express
+card that provides hardware acceleration for ChaCha20 algorithm. I
+would need it to improve Turris Omnia Wireguard throughput
+Cheers!
