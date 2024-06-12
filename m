@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D18C4C27C53
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 12 Jun 2024 14:11:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6485C27C53
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 12 Jun 2024 21:33:14 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b5628d22;
-	Wed, 12 Jun 2024 14:11:15 +0000 (UTC)
-Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com
- [2607:f8b0:4864:20::1130])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0c2ae9aa
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4e702c24;
+	Wed, 12 Jun 2024 21:33:12 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org
+ [2604:1380:4641:c500::1])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 220b1fdf
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 12 Jun 2024 14:11:13 +0000 (UTC)
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-62f39fcb010so16522627b3.1
- for <wireguard@lists.zx2c4.com>; Wed, 12 Jun 2024 07:11:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718201471; x=1718806271; darn=lists.zx2c4.com;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=8uehACsPxP1YviqAxtnu/AQYY5YWZ8oSsPpfhXKhbjs=;
- b=Z1iN1E6GduLDQ52Q+OkHADryO+CE/MsLv8U9b+LLrQCxPN0d3EiPRF04XZHaHn5dAo
- vmPXxTR7koQhc0Ed9mLbUudJ2xqEavzuqjvzu86TeiX1B7v+32IMyngSnI4YcDXLTtUd
- TODGor9Ff9bCIox/qEF4+Xxj0L0fwtFxQZpcWYSuaIp9oshclfm8lrAS41O2ObP2TnG6
- TJUc/MqMbgCRyb8A8ARpUgsb+IhDijF4h3pZof5KI46NTBEnMDv7AdpTpxm8CQ0MoAd3
- G4Rf5Tk0L6SQfYPX1kA8KFLWG/j9h+7W2BtvrFGWUkXw+WxwOh8FtFPK5ERdSnD9KogR
- i2Sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718201471; x=1718806271;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8uehACsPxP1YviqAxtnu/AQYY5YWZ8oSsPpfhXKhbjs=;
- b=FMzgUQqaRhQGuUor1WJqY6D0lZad7JH/NVaBtOaznOrLmndYaRnzdsGvrzdMqIHv7c
- HL81zUtNj04+yZ+jkmL0Q8VwTpWKYn+fw3iuqmADhRBAUfiZW3Ib8ggs70jGETFVLyud
- sOdnrD8KNrU9gLf3g0hBZV63VyD3W/hvqUrEQrNJKLeOOoHH0LqaCoud9nScZa4hUndL
- 67NZVjUf5guEDZTw9SZxm22fVE4ER332/0dm5sHMs1VjOqAfZMdrV+Hh6bNCZwhgK6q3
- IiC+Br2XshescqNy/OZ2tHSYH7LpAOHMo9rJJEABZ5xbkW1IAhZcokf4LNi6Pa7sIVrN
- AURw==
-X-Gm-Message-State: AOJu0YzvTuNXfs/9I1L9kgMq0iTKA6WgCxBWpZ0pYqzb7En2Vj6bgLzo
- yH2SgZLeyGHehlkYgmayX9bj9UwEbqzXNl4kucSSeZtipWF5kUnZZguWWbgtdrF9ET6f4EfuKie
- WxKe65t9pjpU8Z4agKj0EBaDuZtZdey9p
-X-Google-Smtp-Source: AGHT+IEQs/d+vs5TncAvqjrFDJZt0zuQZBplGPtGw+ENC6qYFGv+seQYLKpqDH2aEC+JOQWQ3hd8H1fFixIFGX9uuyM=
-X-Received: by 2002:a81:7cd4:0:b0:61b:3454:8ff9 with SMTP id
- 00721157ae682-62fbb7f66b4mr18810307b3.10.1718201471425; Wed, 12 Jun 2024
- 07:11:11 -0700 (PDT)
+ Wed, 12 Jun 2024 21:33:09 +0000 (UTC)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id C593661740;
+ Wed, 12 Jun 2024 21:33:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B31DEC116B1;
+ Wed, 12 Jun 2024 21:33:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1718227987;
+ bh=D7/e9lxK/rDnF5q2wBJbSwFKBep+OjF1zHYFBRsOwHY=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=J4gew7GXSUxZyxXl6G49+4erFfWm/fvqP8jJMq7QuXBUHyR17gKVbI8IJ3y71epYo
+ 81Eq4piaIn37sHAKw45pOJJnpiTeuc2KSFxdSD1+2LioYDUAwYQQ8KGiGECKgXZ1Bt
+ BQIkYrv1Z3RNFkSAHVf81GTPLI5u7plWmLvmv2tSr8XWK2kuYVByujH0Xm2sSG3rLe
+ dcH3Q/OlBdRCiuZINoD5hS74CGC35ok/tQmpHn36JG4CCNQB6ctPj6kIhn5MA8jO7+
+ XDUBrtlraXPQiItIjFfHu36XD/1shI91JiWJHwx90qz33buNQ2dew6BWeH46IO/yU8
+ gdQU9P2cQi32g==
+Date: Wed, 12 Jun 2024 14:33:05 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: Julia Lawall <Julia.Lawall@inria.fr>
+Cc: linux-block@vger.kernel.org, kernel-janitors@vger.kernel.org,
+ bridge@lists.linux.dev, linux-trace-kernel@vger.kernel.org, Mathieu
+ Desnoyers <mathieu.desnoyers@efficios.com>, kvm@vger.kernel.org,
+ linuxppc-dev@lists.ozlabs.org, "Naveen N. Rao"
+ <naveen.n.rao@linux.ibm.com>, Christophe Leroy
+ <christophe.leroy@csgroup.eu>, Nicholas Piggin <npiggin@gmail.com>,
+ netdev@vger.kernel.org, wireguard@lists.zx2c4.com,
+ linux-kernel@vger.kernel.org, ecryptfs@vger.kernel.org, Neil Brown
+ <neilb@suse.de>, Olga Kornievskaia <kolga@netapp.com>, Dai Ngo
+ <Dai.Ngo@oracle.com>, Tom Talpey <tom@talpey.com>,
+ linux-nfs@vger.kernel.org, linux-can@vger.kernel.org, Lai Jiangshan
+ <jiangshanlai@gmail.com>, netfilter-devel@vger.kernel.org,
+ coreteam@netfilter.org, "Paul E . McKenney" <paulmck@kernel.org>, Vlastimil
+ Babka <vbabka@suse.cz>
+Subject: Re: [PATCH 00/14] replace call_rcu by kfree_rcu for simple
+ kmem_cache_free callback
+Message-ID: <20240612143305.451abf58@kernel.org>
+In-Reply-To: <20240609082726.32742-1-Julia.Lawall@inria.fr>
+References: <20240609082726.32742-1-Julia.Lawall@inria.fr>
 MIME-Version: 1.0
-From: Germano Massullo <germano.massullo@gmail.com>
-Date: Wed, 12 Jun 2024 16:11:00 +0200
-Message-ID: <CAGa=++TLvS2y=-D8mk0zx_J7CvYWYQqKBWDv_3+qaQ2NSdiJ1w@mail.gmail.com>
-Subject: Mini PCIE HW accelerator for ChaCha20
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -68,7 +69,16 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello, I would like to ask if you are aware of any mini PCI express
-card that provides hardware acceleration for ChaCha20 algorithm. I
-would need it to improve Turris Omnia Wireguard throughput
-Cheers!
+On Sun,  9 Jun 2024 10:27:12 +0200 Julia Lawall wrote:
+> Since SLOB was removed, it is not necessary to use call_rcu
+> when the callback only performs kmem_cache_free. Use
+> kfree_rcu() directly.
+> 
+> The changes were done using the following Coccinelle semantic patch.
+> This semantic patch is designed to ignore cases where the callback
+> function is used in another way.
+
+How does the discussion on:
+  [PATCH] Revert "batman-adv: prefer kfree_rcu() over call_rcu() with free-only callbacks"
+  https://lore.kernel.org/all/20240612133357.2596-1-linus.luessing@c0d3.blue/
+reflect on this series? IIUC we should hold off..
