@@ -4,46 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CB32C27C4F
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 13 Jun 2024 14:53:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69AE6C27C4F
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 13 Jun 2024 14:53:33 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 13d54eec;
-	Thu, 13 Jun 2024 14:52:32 +0000 (UTC)
-Received: from cynic.org (harbard.cynic.org [75.144.22.203])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e1124685
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 58885324;
+	Thu, 13 Jun 2024 14:53:32 +0000 (UTC)
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5062b387
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 13 Jun 2024 14:52:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cynic.org;
- s=default; t=1718290349;
- bh=8ocqDfqFvyqS3ErR7BTI27QK1Z6jhfVgDE86sDflBDs=;
- h=Subject:From:Date:To;
- b=lALFyZYv0b/4AjEv4FLxMwvO9xr+zFsZMjUDj9GHpTd1yjCTU1GN+5QBEG/VlaAIi
- 0nUUlvPN4G8gWbbodioU3OtU11Y9pqX6MRFpvuyUFAJW0WRoHasDbLBlzzd90uFSbr
- OZ9E+wp/VhWtpxHtZDAcjOvDp5UpOcWncwz5L3On38KgWS0mj4nfKWmc372aDf5uRQ
- eAqgCWAK8rG+RrzipJeckPluz2eWk58OShjFZoub4KnuhwnfbqBhFBvGhEeyr/l4Oz
- MKJ/xYiOy0cEj15AnPXb9K7FFB0FKEPIhojt6GEjXz5ZUDmex0q1byxEBHZHpg79Ab
- ehKNwdobJie6Q==
-X-Default-Received-SPF: pass (skip=loggedin (res=PASS)) x-ip-name=10.10.10.100;
- envelope-from=<perry@cynic.org>; 
-Received: from smtpclient.apple (unverified [10.10.10.100]) 
- by cynic.org (SurgeMail 7.8b) with ESMTP (TLS) id 10693-1278429 
- for multiple; Thu, 13 Jun 2024 07:52:28 -0700
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.500.171.1.1\))
-Subject: Re: Wireguard, iPhone, and cruise ships
-From: Perry The Cynic <perry@cynic.org>
-In-Reply-To: <d592d6a9-8d4f-4d0e-935d-73735c37bc7d@unstable.cc>
-Date: Thu, 13 Jun 2024 07:52:19 -0700
-Cc: wireguard@lists.zx2c4.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <DEFB63D6-D7B8-4774-85CF-A8B387401D52@cynic.org>
-References: <60B826FA-3FCA-40B5-9771-8FFEDA6278AB@cynic.org>
- <d592d6a9-8d4f-4d0e-935d-73735c37bc7d@unstable.cc>
-To: Antonio Quartulli <a@unstable.cc>
-X-Mailer: Apple Mail (2.3774.500.171.1.1)
-X-Qnum: 10693
-X-Authenticated-User: perry@cynic.org 
+ Thu, 13 Jun 2024 14:53:30 +0000 (UTC)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sin.source.kernel.org (Postfix) with ESMTP id 08E4FCE26A8;
+ Thu, 13 Jun 2024 14:53:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADC65C2BBFC;
+ Thu, 13 Jun 2024 14:53:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1718290404;
+ bh=mv116xzS15vzP9cCgyxl+fMi+NNgkWtSKInvv0qYaOs=;
+ h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
+ b=JrpLVmcHw+1vVdhz0hr4zlMOLXiUKHV49VrNryd9CK9X7dHErNGXoNPragvwwBCL6
+ SI+TwOrU0FMj0xU+2UtPCWQYN40GnerBvRUWBRAdFC6tFr6qz/km2rV7Chl1lUoJ9m
+ GkMihacipvdMQvdeIh6blgyiwV88h8rLs6V0Mnkla0nj4SuiDXJa+6y8vT55UDyDCg
+ 17cVFuyxwkGgEp3TDCWzn0VlfqZ9umP1GCUkgnyIY+4CdHl8IwPus+2YunewlR6OZN
+ LcIgWzpaZOEsxjLA0loXbAyOPGV2Su96HAd1dBvN9u04caeK6yBd20pCVyC1ZFFfIw
+ qT4yEmqTp71dA==
+Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
+ id 556E8CE09E0; Thu, 13 Jun 2024 07:53:24 -0700 (PDT)
+Date: Thu, 13 Jun 2024 07:53:24 -0700
+From: "Paul E. McKenney" <paulmck@kernel.org>
+To: Jakub Kicinski <kuba@kernel.org>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ Julia Lawall <Julia.Lawall@inria.fr>, linux-block@vger.kernel.org,
+ kernel-janitors@vger.kernel.org, bridge@lists.linux.dev,
+ linux-trace-kernel@vger.kernel.org,
+ Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+ kvm@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+ "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>,
+ Christophe Leroy <christophe.leroy@csgroup.eu>,
+ Nicholas Piggin <npiggin@gmail.com>, netdev@vger.kernel.org,
+ wireguard@lists.zx2c4.com, linux-kernel@vger.kernel.org,
+ ecryptfs@vger.kernel.org, Neil Brown <neilb@suse.de>,
+ Olga Kornievskaia <kolga@netapp.com>, Dai Ngo <Dai.Ngo@oracle.com>,
+ Tom Talpey <tom@talpey.com>, linux-nfs@vger.kernel.org,
+ linux-can@vger.kernel.org, Lai Jiangshan <jiangshanlai@gmail.com>,
+ netfilter-devel@vger.kernel.org, coreteam@netfilter.org,
+ Vlastimil Babka <vbabka@suse.cz>
+Subject: Re: [PATCH 00/14] replace call_rcu by kfree_rcu for simple
+ kmem_cache_free callback
+Message-ID: <62757652-8874-45d7-afec-734edeb03831@paulmck-laptop>
+References: <20240609082726.32742-1-Julia.Lawall@inria.fr>
+ <20240612143305.451abf58@kernel.org>
+ <baee4d58-17b4-4918-8e45-4d8068a23e8c@paulmck-laptop>
+ <Zmov7ZaL-54T9GiM@zx2c4.com> <Zmo9-YGraiCj5-MI@zx2c4.com>
+ <08ee7eb2-8d08-4f1f-9c46-495a544b8c0e@paulmck-laptop>
+ <20240613071738.0655ff4f@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240613071738.0655ff4f@kernel.org>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -55,42 +74,30 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
+Reply-To: paulmck@kernel.org
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-That works when I=E2=80=99m in my room/cabin/place. I=E2=80=99m actually =
-building a Raspberry Pi-based travel box right now (so next time I have =
-linux tools to diagnose problems), and it can do tcp =
-wrapping/forwarding. But carrying a battery-powered router-sized thing =
-around on vacation somewhat defeats the point of carrying an iPhone on =
-travel. Another box to break, another battery to run out. And my wife =
-wants vpn access too, even if she=E2=80=99s away from me.
+On Thu, Jun 13, 2024 at 07:17:38AM -0700, Jakub Kicinski wrote:
+> On Wed, 12 Jun 2024 20:38:02 -0700 Paul E. McKenney wrote:
+> > o	Make rcu_barrier() wait for kfree_rcu() objects.  (This is
+> > 	surprisingly complex and will wait unnecessarily in some cases.
+> > 	However, it does preserve current code.)
+> 
+> Not sure how much mental capacity for API variations we expect from
+> people using caches, but I feel like this would score the highest
+> on Rusty's API scale. I'd even venture an opinion that it's less
+> confusing to require cache users to have their own (trivial) callbacks
+> than add API variants we can't error check even at runtime...
 
-Cheers
-  =E2=80=94 perry
+Fair point, though please see Jason's emails.
 
+And the underlying within-RCU mechanism is the same either way, so that
+API decision can be deferred for some time.
 
-> On Jun 13, 2024, at 7:45=E2=80=AFAM, Antonio Quartulli <a@unstable.cc> =
-wrote:
->=20
-> Hi,
->=20
-> On 13/06/2024 16:34, Perry The Cynic wrote:
->> So what are the practically available options here? I can set up =
-whatever is needed on the server endpoint (it=E2=80=99s Debian), but =
-what can I do on my phone to make wg work through an HTTP(s)-shaped =
-pinhole? I=E2=80=99d hate to have to ditch wg for some other vpn just =
-for that rare case=E2=80=A6 but what=E2=80=99s the answer?
->=20
-> How about simply getting a small travel router that you can install =
-between your devices and the uplink connection (being this wifi or =
-ethernet)?
->=20
-> The travel router could be running OpenWRT and thus allow you to play =
-any wanted trick.
->=20
-> Cheers,
->=20
-> --=20
-> Antonio Quartulli
+But the within-slab mechanism does have the advantage of also possibly
+simplifying reference-counting and the potential upcoming hazard pointers.
+On the other hand, I currently have no idea what level of violence this
+change would make to the slab subsystem.
 
+							Thanx, Paul
