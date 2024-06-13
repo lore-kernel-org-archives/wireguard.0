@@ -4,71 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A7D3C27C4F
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 13 Jun 2024 14:12:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E8DAC27C6E
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 13 Jun 2024 14:23:30 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7fee98ff;
-	Thu, 13 Jun 2024 14:12:12 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f35f3772;
+	Thu, 13 Jun 2024 14:17:48 +0000 (UTC)
 Received: from sin.source.kernel.org (sin.source.kernel.org
  [2604:1380:40e1:4800::1])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c65b4b56
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c1c96bff
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 13 Jun 2024 14:12:10 +0000 (UTC)
+ Thu, 13 Jun 2024 14:17:46 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 49BAFCE2601;
- Thu, 13 Jun 2024 14:12:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 414C2C2BBFC;
- Thu, 13 Jun 2024 14:12:02 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="L2OdeEdD"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1718287920;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Fjz4ZCmXLkYKy1WwR1BKUB9SOdktn0OQ80YKkl5C07A=;
- b=L2OdeEdDbAYwCCQIo0q3Y5svBHl6HUoVii7Ipx/YqW9msnW5nLiQCcmVhvT3d2aYbXekmX
- 6vGp/7RezmQfWwaVJxWqE0MwVUi9dk5ylrevWbLPzxAvc9yHIJFCNMr0XP5ij6Ppv2K3la
- u18h46ekO5C4iutUHhucdp/z23ziWUY=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 9cf22b43
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Thu, 13 Jun 2024 14:11:58 +0000 (UTC)
-Date: Thu, 13 Jun 2024 16:11:52 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+ by sin.source.kernel.org (Postfix) with ESMTP id AB4D2CE235F;
+ Thu, 13 Jun 2024 14:17:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5DC4C2BBFC;
+ Thu, 13 Jun 2024 14:17:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1718288260;
+ bh=cY+0iwxjfi/10UJxN+zolp0hxf4e2REnIO+nP7ilZd8=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=q809wP6KZ6dZ2KKSNToRWIFGS+TU6NU5CCFFg8KWmjJdi9aaszmfpaIVjMuKfhLBq
+ UJN5SEQEE8k67Ilrcup/14dWJNiWzw0Gq+kTmnOl3cxHd/hbJzGBv+df0UJzjBy5rb
+ ZUDfjc8O2vhrMLxae6+zOsoY3P2BzyKzw8yVcyNwWMpzV3fPJ6TSsnQvWxZdGFCxDT
+ 3B33zlCsYWklU7myIP2EJ3nyLUoXLsT69r0HpVC2VQfvEe7SoXPLmc6THf+m1HnZiR
+ lCoP/WG4vm/wiMYunXqBSRWXb9Hw5BHuRVJlFTqnizqyGgcBHJWG9D5e2NvdeRzYGl
+ RfuQc0M2cv//A==
+Date: Thu, 13 Jun 2024 07:17:38 -0700
+From: Jakub Kicinski <kuba@kernel.org>
 To: "Paul E. McKenney" <paulmck@kernel.org>
-Cc: Jakub Kicinski <kuba@kernel.org>, Julia Lawall <Julia.Lawall@inria.fr>,
- linux-block@vger.kernel.org, kernel-janitors@vger.kernel.org,
- bridge@lists.linux.dev, linux-trace-kernel@vger.kernel.org,
- Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
- kvm@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
- "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>,
- Christophe Leroy <christophe.leroy@csgroup.eu>,
- Nicholas Piggin <npiggin@gmail.com>, netdev@vger.kernel.org,
- wireguard@lists.zx2c4.com, linux-kernel@vger.kernel.org,
- ecryptfs@vger.kernel.org, Neil Brown <neilb@suse.de>,
- Olga Kornievskaia <kolga@netapp.com>, Dai Ngo <Dai.Ngo@oracle.com>,
- Tom Talpey <tom@talpey.com>, linux-nfs@vger.kernel.org,
- linux-can@vger.kernel.org, Lai Jiangshan <jiangshanlai@gmail.com>,
- netfilter-devel@vger.kernel.org, coreteam@netfilter.org,
- Vlastimil Babka <vbabka@suse.cz>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, Julia Lawall
+ <Julia.Lawall@inria.fr>, linux-block@vger.kernel.org,
+ kernel-janitors@vger.kernel.org, bridge@lists.linux.dev,
+ linux-trace-kernel@vger.kernel.org, Mathieu Desnoyers
+ <mathieu.desnoyers@efficios.com>, kvm@vger.kernel.org,
+ linuxppc-dev@lists.ozlabs.org, "Naveen N. Rao"
+ <naveen.n.rao@linux.ibm.com>, Christophe Leroy
+ <christophe.leroy@csgroup.eu>, Nicholas Piggin <npiggin@gmail.com>,
+ netdev@vger.kernel.org, wireguard@lists.zx2c4.com,
+ linux-kernel@vger.kernel.org, ecryptfs@vger.kernel.org, Neil Brown
+ <neilb@suse.de>, Olga Kornievskaia <kolga@netapp.com>, Dai Ngo
+ <Dai.Ngo@oracle.com>, Tom Talpey <tom@talpey.com>,
+ linux-nfs@vger.kernel.org, linux-can@vger.kernel.org, Lai Jiangshan
+ <jiangshanlai@gmail.com>, netfilter-devel@vger.kernel.org,
+ coreteam@netfilter.org, Vlastimil Babka <vbabka@suse.cz>
 Subject: Re: [PATCH 00/14] replace call_rcu by kfree_rcu for simple
  kmem_cache_free callback
-Message-ID: <Zmr-KPG9F6w-uzys@zx2c4.com>
+Message-ID: <20240613071738.0655ff4f@kernel.org>
+In-Reply-To: <08ee7eb2-8d08-4f1f-9c46-495a544b8c0e@paulmck-laptop>
 References: <20240609082726.32742-1-Julia.Lawall@inria.fr>
  <20240612143305.451abf58@kernel.org>
  <baee4d58-17b4-4918-8e45-4d8068a23e8c@paulmck-laptop>
  <Zmov7ZaL-54T9GiM@zx2c4.com> <Zmo9-YGraiCj5-MI@zx2c4.com>
  <08ee7eb2-8d08-4f1f-9c46-495a544b8c0e@paulmck-laptop>
- <Zmrkkel0Fo4_g75a@zx2c4.com>
- <e06440e2-9121-4c92-8bf2-945977987052@paulmck-laptop>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <e06440e2-9121-4c92-8bf2-945977987052@paulmck-laptop>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -83,49 +74,13 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Thu, Jun 13, 2024 at 05:46:11AM -0700, Paul E. McKenney wrote:
-> How about a kmem_cache_destroy_rcu() that marks that specified cache
-> for destruction, and then a kmem_cache_destroy_barrier() that waits?
-> 
-> I took the liberty of adding your name to the Google document [1] and
-> adding this section:
+On Wed, 12 Jun 2024 20:38:02 -0700 Paul E. McKenney wrote:
+> o	Make rcu_barrier() wait for kfree_rcu() objects.  (This is
+> 	surprisingly complex and will wait unnecessarily in some cases.
+> 	However, it does preserve current code.)
 
-Cool, though no need to make me yellow!
-
-> > But then, if that mechanism generally works, we don't really need a new
-> > function and we can just go with the first option of making
-> > kmem_cache_destroy() asynchronously wait. It'll wait, as you described,
-> > but then we adjust the tail of every kfree_rcu batch freeing cycle to
-> > check if there are _still_ any old outstanding kmem_cache_destroy()
-> > requests. If so, then we can splat and keep the old debugging info we
-> > currently have for finding memleaks.
-> 
-> The mechanism can always be sabotaged by memory-leak bugs on the part
-> of the user of the kmem_cache structure in play, right?
-> 
-> OK, but I see your point.  I added this to the existing
-> "kmem_cache_destroy() Lingers for kfree_rcu()" section:
-> 
-> 	One way of preserving this debugging information is to splat if
-> 	all of the slab’s memory has not been freed within a reasonable
-> 	timeframe, perhaps the same 21 seconds that causes an RCU CPU
-> 	stall warning.
-> 
-> Does that capture it?
-
-Not quite what I was thinking. Your 21 seconds as a time-based thing I
-guess could be fine. But I was mostly thinking:
-
-1) kmem_cache_destroy() is called, but there are outstanding objects, so
-   it defers.
-
-2) Sometime later, a kfree_rcu_work batch freeing operation runs.
-
-3) At the end of this batch freeing, the kernel notices that the
-   kmem_cache whose destruction was previously deferred still has
-   outstanding objects and has not been destroyed. It can conclude that
-   there's thus been a memory leak.
-
-In other words, instead of having to do this based on timers, you can
-just have the batch freeing code ask, "did those pending kmem_cache
-destructions get completed as a result of this last operation?"
+Not sure how much mental capacity for API variations we expect from
+people using caches, but I feel like this would score the highest
+on Rusty's API scale. I'd even venture an opinion that it's less
+confusing to require cache users to have their own (trivial) callbacks
+than add API variants we can't error check even at runtime...
