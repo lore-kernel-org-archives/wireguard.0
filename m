@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C70A3C27C53
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 12 Jun 2024 23:35:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39CBFC27C53
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 13 Jun 2024 00:32:11 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a2c37c60;
-	Wed, 12 Jun 2024 23:32:11 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org
- [2604:1380:4641:c500::1])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7127778a
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c20eb280;
+	Thu, 13 Jun 2024 00:32:09 +0000 (UTC)
+Received: from sin.source.kernel.org (sin.source.kernel.org
+ [2604:1380:40e1:4800::1])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0c75f31f
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 12 Jun 2024 23:32:09 +0000 (UTC)
+ Thu, 13 Jun 2024 00:32:07 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id EA5CF6179A;
- Wed, 12 Jun 2024 23:32:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79393C116B1;
- Wed, 12 Jun 2024 23:32:05 +0000 (UTC)
+ by sin.source.kernel.org (Postfix) with ESMTP id 6FE6ACE2314;
+ Thu, 13 Jun 2024 00:32:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E47C116B1;
+ Thu, 13 Jun 2024 00:32:00 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
  dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="KuRtSsoX"
+ header.b="eF1VsvRJ"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1718235123;
+ t=1718238717;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=qSAYPgRWQjgO94CvH8azZnzUEXB1002L22u56bSmdYM=;
- b=KuRtSsoXnhoWtj8ILW+HbvJl66iT9qTq9bSBLEsqlgbz+NueejOfai90fuwt9YC44f1xei
- hmuw3gt1QJJwUC0wpdH+Cc3bGwXliu0JUoPBoQ3fEIPyMnLEjglwvNilIrEYYHTX8Rku8B
- FH2QYFekE0pqYf5XHoYxT03jyvV2YLs=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7c292bc0
+ bh=GLUb85oLbjyoG+FcfWhggv8KT8bN6SBWkCY+yvZAHV8=;
+ b=eF1VsvRJdSDlt+jjhJiKZ5eDDi+CCrqpbP2qILiWHB7HfEnI5D10gtd4TmY1udoArULYFC
+ 3p47U2iNEXteOz8cl56PqFBBedrFExfiroU7FcnCZmp/raJumk5hGsmXBZe7KI+jDx3FRz
+ mt6afVKn9JVqLJRPjTB0wjVVNYzZzWI=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 0c052d48
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Wed, 12 Jun 2024 23:32:03 +0000 (UTC)
-Date: Thu, 13 Jun 2024 01:31:57 +0200
+ Thu, 13 Jun 2024 00:31:57 +0000 (UTC)
+Date: Thu, 13 Jun 2024 02:31:53 +0200
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 To: "Paul E. McKenney" <paulmck@kernel.org>
 Cc: Jakub Kicinski <kuba@kernel.org>, Julia Lawall <Julia.Lawall@inria.fr>,
@@ -55,14 +55,15 @@ Cc: Jakub Kicinski <kuba@kernel.org>, Julia Lawall <Julia.Lawall@inria.fr>,
  Vlastimil Babka <vbabka@suse.cz>
 Subject: Re: [PATCH 00/14] replace call_rcu by kfree_rcu for simple
  kmem_cache_free callback
-Message-ID: <Zmov7ZaL-54T9GiM@zx2c4.com>
+Message-ID: <Zmo9-YGraiCj5-MI@zx2c4.com>
 References: <20240609082726.32742-1-Julia.Lawall@inria.fr>
  <20240612143305.451abf58@kernel.org>
  <baee4d58-17b4-4918-8e45-4d8068a23e8c@paulmck-laptop>
+ <Zmov7ZaL-54T9GiM@zx2c4.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <baee4d58-17b4-4918-8e45-4d8068a23e8c@paulmck-laptop>
+In-Reply-To: <Zmov7ZaL-54T9GiM@zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -77,38 +78,69 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, Jun 12, 2024 at 03:37:55PM -0700, Paul E. McKenney wrote:
-> On Wed, Jun 12, 2024 at 02:33:05PM -0700, Jakub Kicinski wrote:
-> > On Sun,  9 Jun 2024 10:27:12 +0200 Julia Lawall wrote:
-> > > Since SLOB was removed, it is not necessary to use call_rcu
-> > > when the callback only performs kmem_cache_free. Use
-> > > kfree_rcu() directly.
+On Thu, Jun 13, 2024 at 01:31:57AM +0200, Jason A. Donenfeld wrote:
+> On Wed, Jun 12, 2024 at 03:37:55PM -0700, Paul E. McKenney wrote:
+> > On Wed, Jun 12, 2024 at 02:33:05PM -0700, Jakub Kicinski wrote:
+> > > On Sun,  9 Jun 2024 10:27:12 +0200 Julia Lawall wrote:
+> > > > Since SLOB was removed, it is not necessary to use call_rcu
+> > > > when the callback only performs kmem_cache_free. Use
+> > > > kfree_rcu() directly.
+> > > > 
+> > > > The changes were done using the following Coccinelle semantic patch.
+> > > > This semantic patch is designed to ignore cases where the callback
+> > > > function is used in another way.
 > > > 
-> > > The changes were done using the following Coccinelle semantic patch.
-> > > This semantic patch is designed to ignore cases where the callback
-> > > function is used in another way.
+> > > How does the discussion on:
+> > >   [PATCH] Revert "batman-adv: prefer kfree_rcu() over call_rcu() with free-only callbacks"
+> > >   https://lore.kernel.org/all/20240612133357.2596-1-linus.luessing@c0d3.blue/
+> > > reflect on this series? IIUC we should hold off..
 > > 
-> > How does the discussion on:
-> >   [PATCH] Revert "batman-adv: prefer kfree_rcu() over call_rcu() with free-only callbacks"
-> >   https://lore.kernel.org/all/20240612133357.2596-1-linus.luessing@c0d3.blue/
-> > reflect on this series? IIUC we should hold off..
+> > We do need to hold off for the ones in kernel modules (such as 07/14)
+> > where the kmem_cache is destroyed during module unload.
+> > 
+> > OK, I might as well go through them...
+> > 
+> > [PATCH 01/14] wireguard: allowedips: replace call_rcu by kfree_rcu for simple kmem_cache_free callback
+> > 	Needs to wait, see wg_allowedips_slab_uninit().
 > 
-> We do need to hold off for the ones in kernel modules (such as 07/14)
-> where the kmem_cache is destroyed during module unload.
+> Right, this has exactly the same pattern as the batman-adv issue:
 > 
-> OK, I might as well go through them...
+>     void wg_allowedips_slab_uninit(void)
+>     {
+>             rcu_barrier();
+>             kmem_cache_destroy(node_cache);
+>     }
 > 
-> [PATCH 01/14] wireguard: allowedips: replace call_rcu by kfree_rcu for simple kmem_cache_free callback
-> 	Needs to wait, see wg_allowedips_slab_uninit().
+> I'll hold off on sending that up until this matter is resolved.
 
-Right, this has exactly the same pattern as the batman-adv issue:
+BTW, I think this whole thing might be caused by:
 
-    void wg_allowedips_slab_uninit(void)
-    {
-            rcu_barrier();
-            kmem_cache_destroy(node_cache);
-    }
+    a35d16905efc ("rcu: Add basic support for kfree_rcu() batching")
 
-I'll hold off on sending that up until this matter is resolved.
+The commit message there mentions:
+
+    There is an implication with rcu_barrier() with this patch. Since the
+    kfree_rcu() calls can be batched, and may not be handed yet to the RCU
+    machinery in fact, the monitor may not have even run yet to do the
+    queue_rcu_work(), there seems no easy way of implementing rcu_barrier()
+    to wait for those kfree_rcu()s that are already made. So this means a
+    kfree_rcu() followed by an rcu_barrier() does not imply that memory will
+    be freed once rcu_barrier() returns.
+
+Before that, a kfree_rcu() used to just add a normal call_rcu() into the
+list, but with the function offset < 4096 as a special marker. So the
+kfree_rcu() calls would be treated alongside the other call_rcu() ones
+and thus affected by rcu_barrier(). Looks like that behavior is no more
+since this commit.
+
+Rather than getting rid of the batching, which seems good for
+efficiency, I wonder if the right fix to this would be adding a
+`should_destroy` boolean to kmem_cache, which kmem_cache_destroy() sets
+to true. And then right after it checks `if (number_of_allocations == 0)
+actually_destroy()`, and likewise on each kmem_cache_free(), it could
+check `if (should_destroy && number_of_allocations == 0)
+actually_destroy()`. This way, the work is delayed until it's safe to do
+so. This might also mitigate other lurking bugs of bad code that calls
+kmem_cache_destroy() before kmem_cache_free().
 
 Jason
