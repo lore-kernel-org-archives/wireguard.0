@@ -4,62 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E8DAC27C6E
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 13 Jun 2024 14:23:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F71DC27C4F
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 13 Jun 2024 14:34:44 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f35f3772;
-	Thu, 13 Jun 2024 14:17:48 +0000 (UTC)
-Received: from sin.source.kernel.org (sin.source.kernel.org
- [2604:1380:40e1:4800::1])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c1c96bff
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 87377fd4;
+	Thu, 13 Jun 2024 14:34:41 +0000 (UTC)
+Received: from cynic.org (harbard.cynic.org [75.144.22.203])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0022fa30
  for <wireguard@lists.zx2c4.com>;
- Thu, 13 Jun 2024 14:17:46 +0000 (UTC)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id AB4D2CE235F;
- Thu, 13 Jun 2024 14:17:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5DC4C2BBFC;
- Thu, 13 Jun 2024 14:17:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1718288260;
- bh=cY+0iwxjfi/10UJxN+zolp0hxf4e2REnIO+nP7ilZd8=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=q809wP6KZ6dZ2KKSNToRWIFGS+TU6NU5CCFFg8KWmjJdi9aaszmfpaIVjMuKfhLBq
- UJN5SEQEE8k67Ilrcup/14dWJNiWzw0Gq+kTmnOl3cxHd/hbJzGBv+df0UJzjBy5rb
- ZUDfjc8O2vhrMLxae6+zOsoY3P2BzyKzw8yVcyNwWMpzV3fPJ6TSsnQvWxZdGFCxDT
- 3B33zlCsYWklU7myIP2EJ3nyLUoXLsT69r0HpVC2VQfvEe7SoXPLmc6THf+m1HnZiR
- lCoP/WG4vm/wiMYunXqBSRWXb9Hw5BHuRVJlFTqnizqyGgcBHJWG9D5e2NvdeRzYGl
- RfuQc0M2cv//A==
-Date: Thu, 13 Jun 2024 07:17:38 -0700
-From: Jakub Kicinski <kuba@kernel.org>
-To: "Paul E. McKenney" <paulmck@kernel.org>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, Julia Lawall
- <Julia.Lawall@inria.fr>, linux-block@vger.kernel.org,
- kernel-janitors@vger.kernel.org, bridge@lists.linux.dev,
- linux-trace-kernel@vger.kernel.org, Mathieu Desnoyers
- <mathieu.desnoyers@efficios.com>, kvm@vger.kernel.org,
- linuxppc-dev@lists.ozlabs.org, "Naveen N. Rao"
- <naveen.n.rao@linux.ibm.com>, Christophe Leroy
- <christophe.leroy@csgroup.eu>, Nicholas Piggin <npiggin@gmail.com>,
- netdev@vger.kernel.org, wireguard@lists.zx2c4.com,
- linux-kernel@vger.kernel.org, ecryptfs@vger.kernel.org, Neil Brown
- <neilb@suse.de>, Olga Kornievskaia <kolga@netapp.com>, Dai Ngo
- <Dai.Ngo@oracle.com>, Tom Talpey <tom@talpey.com>,
- linux-nfs@vger.kernel.org, linux-can@vger.kernel.org, Lai Jiangshan
- <jiangshanlai@gmail.com>, netfilter-devel@vger.kernel.org,
- coreteam@netfilter.org, Vlastimil Babka <vbabka@suse.cz>
-Subject: Re: [PATCH 00/14] replace call_rcu by kfree_rcu for simple
- kmem_cache_free callback
-Message-ID: <20240613071738.0655ff4f@kernel.org>
-In-Reply-To: <08ee7eb2-8d08-4f1f-9c46-495a544b8c0e@paulmck-laptop>
-References: <20240609082726.32742-1-Julia.Lawall@inria.fr>
- <20240612143305.451abf58@kernel.org>
- <baee4d58-17b4-4918-8e45-4d8068a23e8c@paulmck-laptop>
- <Zmov7ZaL-54T9GiM@zx2c4.com> <Zmo9-YGraiCj5-MI@zx2c4.com>
- <08ee7eb2-8d08-4f1f-9c46-495a544b8c0e@paulmck-laptop>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+ Thu, 13 Jun 2024 14:34:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cynic.org;
+ s=default; t=1718289279;
+ bh=ZrZVMDn9JmOvArXQpWiM69qEw26hyhAfK09aJNtrM1k=;
+ h=From:Subject:Date:To;
+ b=gxY0vFiz4JVi5OJ3N6PlbVim13ulzN+1S7H6MMjVNpb6obRe5eM5C9gvW5KmwZhCv
+ R2ZdpzX24ZRqj5O/MgJhdQEHkMsDX1rA52O/NPn/9RptNpPK4As5SHqL204OgA1HdH
+ NiXpRGJ3M4VrO3fZ3y9wbmPsz+sNrqKv3LJFMDvwj8485zTIATr7kkzCPFjM4V7i0+
+ qq83yvGtWhTSU9LNDZM+6J64zQ+myMPkC9pGNP3XFgdLHFwPSDKHoDgT2R52JB8Bgm
+ 93NBRi8zP6TrYlBklN6YxPtVh9mAIpShaIi+w3yDdWnazN5hICTspK6t+rfiSVklRM
+ 9Hw+cCpW3V7fw==
+X-Default-Received-SPF: pass (skip=loggedin (res=PASS)) x-ip-name=10.10.10.100;
+ envelope-from=<perry@cynic.org>; 
+Received: from smtpclient.apple (unverified [10.10.10.100]) 
+ by cynic.org (SurgeMail 7.8b) with ESMTP (TLS) id 10681-1278429 
+ for <wireguard@lists.zx2c4.com>; Thu, 13 Jun 2024 07:34:38 -0700
+From: Perry The Cynic <perry@cynic.org>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.500.171.1.1\))
+Subject: Wireguard, iPhone, and cruise ships
+Message-Id: <60B826FA-3FCA-40B5-9771-8FFEDA6278AB@cynic.org>
+Date: Thu, 13 Jun 2024 07:34:32 -0700
+To: wireguard@lists.zx2c4.com
+X-Mailer: Apple Mail (2.3774.500.171.1.1)
+X-Qnum: 10681
+X-Authenticated-User: perry@cynic.org 
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -74,13 +54,53 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, 12 Jun 2024 20:38:02 -0700 Paul E. McKenney wrote:
-> o	Make rcu_barrier() wait for kfree_rcu() objects.  (This is
-> 	surprisingly complex and will wait unnecessarily in some cases.
-> 	However, it does preserve current code.)
+Dear wg community,
 
-Not sure how much mental capacity for API variations we expect from
-people using caches, but I feel like this would score the highest
-on Rusty's API scale. I'd even venture an opinion that it's less
-confusing to require cache users to have their own (trivial) callbacks
-than add API variants we can't error check even at runtime...
+I recently enjoyed a cruise to Alaska. Fun and easy, and with Starlink =
+on board, the WiFi connectivity was actually not bad (some sporadic =
+packet drops, mostly). Sadly, the cruise company=E2=80=99s network =
+unceremoniously drops UDP of most kinds, leading to my Wireguard VPN (to =
+my inside network at home) failing entirely. The cruise line is utterly =
+immovable on this: =E2=80=9Cit=E2=80=99s someone else=E2=80=99s fault, =
+and how dare you want to do this nonstandard thing?=E2=80=9D Yes, I =
+actually talked to their onboard IT guy. =E2=80=9CIt=E2=80=99s on the =
+network path somewhere, and they don=E2=80=99t even tell me how and =
+why."
+
+Now I totally understand Wireguard=E2=80=99s attitude towards this: =
+It=E2=80=99s not a =E2=80=9Ccore=E2=80=9D wg problem, and should be =
+solved on the outside by whatever tools happen to fit the problem. If =
+this was a linux-to-linux connection, I=E2=80=99d just pop in my =
+favorite TCP-ish tunnel tool and move on. But it=E2=80=99s an iPhone =
+(and iPad). And iOS doesn=E2=80=99t seem to like network composability. =
+At all. Once you move outside the =E2=80=9Cit=E2=80=99s a VPN =
+endpoint=E2=80=9D paradigm, things get stuck very quickly. I realize =
+this is all Apple=E2=80=99s fault, and they should allow building =
+arbitrary network stacks in iOS. But they don=E2=80=99t (yet). =
+NWConnection is getting pretty good, but it requires in-app code =
+composition. AFAIK, you can=E2=80=99t stack two iOS VPNs on top of each =
+other (right?).
+
+So what are the practically available options here? I can set up =
+whatever is needed on the server endpoint (it=E2=80=99s Debian), but =
+what can I do on my phone to make wg work through an HTTP(s)-shaped =
+pinhole? I=E2=80=99d hate to have to ditch wg for some other vpn just =
+for that rare case=E2=80=A6 but what=E2=80=99s the answer?
+
+And, to prefetch a possible ending of this discussion: if I coded up =
+patches to the iOS client that add some tcp-wrapper option, would you =
+take it?
+
+Cheers
+  =E2=80=94 perry
+=
+--------------------------------------------------------------------------=
+-
+Perry The Cynic                                             =
+perry@cynic.org
+To a blind optimist, an optimistic realist must seem like an Accursed =
+Cynic.
+=
+--------------------------------------------------------------------------=
+-
+
