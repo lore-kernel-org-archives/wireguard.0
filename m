@@ -4,72 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABFC5C27C6E
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 14 Jun 2024 19:34:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6A66C27C53
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 16 Jun 2024 13:47:44 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1441c287;
-	Fri, 14 Jun 2024 19:34:02 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 54965eae
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 37893aa6;
+	Sun, 16 Jun 2024 13:47:42 +0000 (UTC)
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.133])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b71ee90e
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 14 Jun 2024 19:34:00 +0000 (UTC)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 6794862003;
- Fri, 14 Jun 2024 19:33:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF8CBC2BD10;
- Fri, 14 Jun 2024 19:33:55 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="Piy7/8cY"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1718393634;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=DXA9wvv5IhNhdgqqoog09hrS0W28PIbc3nCXFgq2mxA=;
- b=Piy7/8cYE5kX8QxCb1ovvf7Oew+mzdXJL4F6If9Frkz4X0RUzqFF12WjwrhUhRlUy+iIKO
- DoV+j//Avs/4vzAsOjkSD1yxY/bbFo9eXQkn/oEw9txGMiy9XDfptZ5hiqtMHXpzOrUrXv
- cPfOpW6hB2UusbVHO75CZUsDVUtb8kw=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 6d22401f
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Fri, 14 Jun 2024 19:33:52 +0000 (UTC)
-Date: Fri, 14 Jun 2024 21:33:45 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Uladzislau Rezki <urezki@gmail.com>
-Cc: "Paul E. McKenney" <paulmck@kernel.org>,
- Vlastimil Babka <vbabka@suse.cz>, Jakub Kicinski <kuba@kernel.org>,
- Julia Lawall <Julia.Lawall@inria.fr>, linux-block@vger.kernel.org,
- kernel-janitors@vger.kernel.org, bridge@lists.linux.dev,
- linux-trace-kernel@vger.kernel.org,
- Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
- kvm@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
- "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>,
- Christophe Leroy <christophe.leroy@csgroup.eu>,
- Nicholas Piggin <npiggin@gmail.com>, netdev@vger.kernel.org,
- wireguard@lists.zx2c4.com, linux-kernel@vger.kernel.org,
- ecryptfs@vger.kernel.org, Neil Brown <neilb@suse.de>,
- Olga Kornievskaia <kolga@netapp.com>, Dai Ngo <Dai.Ngo@oracle.com>,
- Tom Talpey <tom@talpey.com>, linux-nfs@vger.kernel.org,
- linux-can@vger.kernel.org, Lai Jiangshan <jiangshanlai@gmail.com>,
- netfilter-devel@vger.kernel.org, coreteam@netfilter.org
-Subject: Re: [PATCH 00/14] replace call_rcu by kfree_rcu for simple
- kmem_cache_free callback
-Message-ID: <ZmybGZDbXkw7JTjc@zx2c4.com>
-References: <baee4d58-17b4-4918-8e45-4d8068a23e8c@paulmck-laptop>
- <ZmrfA1p2zSVIaYam@zx2c4.com>
- <80e03b02-7e24-4342-af0b-ba5117b19828@paulmck-laptop>
- <Zmru7hhz8kPDPsyz@pc636>
- <7efde25f-6af5-4a67-abea-b26732a8aca1@paulmck-laptop>
- <Zmsuswo8OPIhY5KJ@pc636>
- <cb51bc57-47b8-456a-9ac0-f8aa0931b144@paulmck-laptop>
- <ZmszOd5idhf2Cb-v@pc636>
- <b03b007f-3afa-4ad4-b76b-dea7b3aa2bc3@paulmck-laptop>
- <Zmw5FTX752g0vtlD@pc638.lan>
+ Sun, 16 Jun 2024 13:47:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=online.de;
+ s=s42582890; t=1718545658; x=1719150458; i=max.schulze@online.de;
+ bh=Oq5+6GzBXNIs7lKsbawGMgp3IBQt8ddVjiqM1XPfTM4=;
+ h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
+ References:From:In-Reply-To:Content-Type:
+ Content-Transfer-Encoding:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=kla3XsASLmLjXrVN69/UTB6HmGrkyvx1B5wW1/EWTwk7lFJwingPKUxvJ5I+D3Qi
+ O9PouaS1TKhpjRu2RZPB08snEw84ud9FKuk7eQbedxh6mhwHrc9sFXXRnRn6sDRHw
+ XTiJTZzqp8q2m5Kb0Mu1HKLpg2QsmkG1Qxm/l9gMgK8CnMWlDVyf7x+NiDQBtSJIL
+ NbDLuf4DMD2GJ/8o+QT1SxnYzQNj50y6S8yGpZx9vEOsvYuosFX+kIPqjfrTI2pSN
+ p8F5Mt5IQjYbrlP43RlTGBbMl9Y/YMa8s9e/EnEojRJBUHjhPYER0IuC9x41FE8Z8
+ 8/uCBoI7mFL99oHxpw==
+X-UI-Sender-Class: 6003b46c-3fee-4677-9b8b-2b628d989298
+Received: from [192.168.151.46] ([84.160.50.175]) by mrelayeu.kundenserver.de
+ (mreue010 [212.227.15.167]) with ESMTPSA (Nemesis) id
+ 1MN5S1-1s0LTb1jEr-00TMJH; Sun, 16 Jun 2024 15:47:38 +0200
+Message-ID: <78a56a8e-59d2-4948-a761-f1f1b3a6b26a@online.de>
+Date: Sun, 16 Jun 2024 15:47:38 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Zmw5FTX752g0vtlD@pc638.lan>
+User-Agent: Mozilla Thunderbird
+Subject: Re: Mini PCIE HW accelerator for ChaCha20
+To: Germano Massullo <germano.massullo@gmail.com>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <CAGa=++TLvS2y=-D8mk0zx_J7CvYWYQqKBWDv_3+qaQ2NSdiJ1w@mail.gmail.com>
+Content-Language: en-US
+From: Max Schulze <max.schulze@online.de>
+In-Reply-To: <CAGa=++TLvS2y=-D8mk0zx_J7CvYWYQqKBWDv_3+qaQ2NSdiJ1w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:/iUe6hHtyK87oCnkKp/3mMgXyRDcbN+aoS7K94zwyPyem+2Vb3f
+ Mo+5YZIUrbr20guoRpG9qPaE6obiS6dPmyDR2FjAAsos+KKo1WYyZjSJXSMRH+fhQ8JwCqm
+ XNVzXS16JRHJn5cPKGAUubS+8x30yTjzi1zRW01rjuJ3dH/2C9SGqMAMKX2oxhftISXbrmh
+ UPEYV0VFJ+aF9ayNuGD7Q==
+UI-OutboundReport: notjunk:1;M01:P0:MdBETrh/QYM=;i0ghAPCg56Tr1qxoXPsDC1FLhZC
+ gJB6xoOjXnzskvXUohaT4UFvAlCstFIZ54l56XcRvLvfArI5/V/8KSZgqaJlNN3GZkb1mzqgu
+ huZHSibw829HkRJPq6oCF0/B9mBEtSEZDNZLHblXMF6j7S542bQu5DatvB58ye9eQQDEYkOa2
+ /UuejmCNIcQ10RPKgdelBJO06rV9iK/EUYqbkooBZMKi6bRlm45To4SAuKKvhw9Q6ACHTfTJr
+ 4zAkup6vI2+L3e1wIHjR8cspjJMPJwJ9LB6codSY8ojmImYkSRr07YhkgrrdDqEyA0+PwlXdH
+ BDfAr4n+B7rMxiB3dcKN05g7P7W8DXX8pHx7D0yLPqErrIlKaOCLUnz9uHW2cLqJBYCJObDoY
+ EvL+BMTKoTPoJtnWE6N9TpAxziDEjn6hJdtAAnjdR5/JDN0DL4WK5EO9ojqHYXp15fMN/xIlx
+ 3fwkOHR4lVyN995gKEIyQnUNQTo/6treaRTRhGjRJ0Sm2P3fwm7yu4dW+k9XfrTnThdUvbSgF
+ 15IXQQPygvv0jJGSRfzZ0ypkY8AKxSUiC9aUYxH6L0ioPokWK6qcWRY5KmRi4OUh6WPebXm8b
+ FczX+8Byxn3GojfKHadmd5nAH23OvsJHDKLrmuBhQHl+pFm708L4xbuahNCOtKbNk8LrMCnQ+
+ r5e9Ttxaea5VmHwKnSvkBmT5fVOu5d5l2IHzo3tpocdyV1uiPsi2brsjHNz86iHUq1s5oNck6
+ F8sNXAeJdJ57XNwI7PANfCwR32/0xNiojS5Nv6wEsKNse/w3VWJhsk=
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -84,24 +75,14 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Fri, Jun 14, 2024 at 02:35:33PM +0200, Uladzislau Rezki wrote:
-> +	/* Should a destroy process be deferred? */
-> +	if (s->flags & SLAB_DEFER_DESTROY) {
-> +		list_move_tail(&s->list, &slab_caches_defer_destroy);
-> +		schedule_delayed_work(&slab_caches_defer_destroy_work, HZ);
-> +		goto out_unlock;
-> +	}
+Hi,
 
-Wouldn't it be smoother to have the actual kmem_cache_free() function
-check to see if it's been marked for destruction and the refcount is
-zero, rather than polling every one second? I mentioned this approach
-in: https://lore.kernel.org/all/Zmo9-YGraiCj5-MI@zx2c4.com/ -
+On 12.06.24 16:11, Germano Massullo wrote:
+> Hello, I would like to ask if you are aware of any mini PCI express
+> card that provides hardware acceleration for ChaCha20 algorithm. I
+> would need it to improve Turris Omnia Wireguard throughput
 
-    I wonder if the right fix to this would be adding a `should_destroy`
-    boolean to kmem_cache, which kmem_cache_destroy() sets to true. And
-    then right after it checks `if (number_of_allocations == 0)
-    actually_destroy()`, and likewise on each kmem_cache_free(), it
-    could check `if (should_destroy && number_of_allocations == 0)
-    actually_destroy()`. 
 
-Jason
+why do you think this is the bottleneck and at what speed are you hitting a limit?
+
+Curious, as I always found wg performance to be excellent, even on ARM.
