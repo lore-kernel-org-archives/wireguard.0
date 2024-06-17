@@ -4,65 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66D91C27C53
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 16 Jun 2024 19:00:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 598CCC27C77
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 Jun 2024 09:21:23 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5d9f71ce;
-	Sun, 16 Jun 2024 19:00:41 +0000 (UTC)
-Received: from mout.kundenserver.de (mout.kundenserver.de [217.72.192.74])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a9d665d3
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a2148953;
+	Mon, 17 Jun 2024 09:21:20 +0000 (UTC)
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com
+ [2a00:1450:4864:20::434])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ba5b9e59
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 16 Jun 2024 19:00:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=online.de;
- s=s42582890; t=1718564438; x=1719169238; i=max.schulze@online.de;
- bh=0r1Cbi6Uc/CyCAzROVa03TnIA85T+2ua/5DVo80qHhA=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=abQRmTBaVoW/Gz+83uVM6/FYSsa1vWyGT9UHufZHl1IjVgX3w5pTDE4DDBlaYrO3
- DzyhCPRWc9chnYUDJG4dQZ7DeFdAZXmIKL8D6WbMbmEoHojrU8bkIQTvAEq9j2hCm
- CopQSJ+Hg7EYRDZXCtQfE8j8Tk9jIxnXIcTVF+Pt6qxSgsggJUWgQOdqP4E9GH67e
- ZXbmsVKR3ob0O+oFWaI5pltDT2h+s6M9y0XbNT9FvIscYJjwdy4fmv3sOJcuIafXU
- brOKvJJPEr8lsuYwS2AdKLRPf+z2L1stTH9onBrD74OnOXUnFB5/Mlbc3461OiOdt
- Zr6yQgVIQd3SDm1Shw==
-X-UI-Sender-Class: 6003b46c-3fee-4677-9b8b-2b628d989298
-Received: from [192.168.151.46] ([84.160.50.175]) by mrelayeu.kundenserver.de
- (mreue108 [212.227.15.183]) with ESMTPSA (Nemesis) id
- 1Mwwm5-1sc5gz0z7r-014Pvw; Sun, 16 Jun 2024 21:00:38 +0200
-Message-ID: <f0279e84-9425-4bfe-be3c-009217bf24f8@online.de>
-Date: Sun, 16 Jun 2024 21:00:37 +0200
+ Mon, 17 Jun 2024 09:21:18 +0000 (UTC)
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-35f1c209893so4420892f8f.2
+ for <wireguard@lists.zx2c4.com>; Mon, 17 Jun 2024 02:21:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1718616078; x=1719220878; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=X0OCGUA0SSUS+tLo5R0xhtHdxgBO5TW50vvbyK4a5wk=;
+ b=kuSGLfGWthpSjNw9VBzSQsZWe2UuydXNMQmiCBAtVW1RD9DOo27e68kvZ7MxNIM2To
+ Avg5z2hB0bgkQXP//N2HyQ0FZkTNsg+wQ3QmU88lSFYH0jCDpyqnrYcKennIIcstE2GN
+ iwHHrRrGj/KHM+DSwQoVx/fjfh95/aPBQlfVBeXZlByEmx8wqw+mRZiErktDHU5MrXt+
+ lWm29fvgLUtPUojU7QHOWFbMpoHQJSPEh7iyrufmlYgCMpvldnLb9KC5+ZugHJmCHr7R
+ fAb+snNfdS+g7Mq4SPdwhZgimppi1SQTx2x+/MjQFax4XkpOo4HS9ZpU41VivCjvoag7
+ OfCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718616078; x=1719220878;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=X0OCGUA0SSUS+tLo5R0xhtHdxgBO5TW50vvbyK4a5wk=;
+ b=aZ4gFCo0bvIiy1SbRNR335P0DEwnmoKIHFEf3G6QoMXjxz2KrYymvCbtbtw/CP6ZmC
+ QVGjgAOg4umN9Av5QLwV2whrGum1B09vM+xsZB/ko8/yyU8L0sjx/LTJZ5R0WmprgGul
+ e7G8fKqGpxZwmToA0Eok+P27nXWqSN4P8CrtiiKatiWXnEx0XhwTbzv0a8zadqKPbaJs
+ GX5QRhru6NSMjDnwClsPUxQkAzRSQWOwwD1DZwazuy3DSG8Lon8cP4SMPcES+ACz2xFl
+ vHIx0MstFmfQr4c7KgMHDAYY808uuh8NmMnPJLFfFory5oF0du1czprdHvhxPupQlr/k
+ R2Iw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUsDkdP7iq1Ob529wt6Lr6+gKqh5/b5QIOjDYozMYY3u93/gMAHxmVG6tCuMiBaJz2BYYOmXn4I0Q6Wq9J6w0Gif9GAc208a+vG
+X-Gm-Message-State: AOJu0YyJrw/46g6UAcTqxsiHMrAlqvHGIEsiW5/YPPWY0fIzXQQ2GX0F
+ 62iouo0koZD/xPZRZV9Ckwlf/uWC7pwhq6LMm3JSi1Dl2yg4NoCh0hp55Q==
+X-Google-Smtp-Source: AGHT+IH8PCKo6xdqx+Otqb7n5hfATDMHRBrHkrT5GoRLF+czmdf7oj49LONVE/0tbFhs1A6VJiX3ag==
+X-Received: by 2002:a05:6000:790:b0:360:9526:82a6 with SMTP id
+ ffacd0b85a97d-36095268335mr3117214f8f.28.1718616077566; 
+ Mon, 17 Jun 2024 02:21:17 -0700 (PDT)
+Received: from [192.168.1.99] (93-48-172-72.ip258.fastwebnet.it.
+ [93.48.172.72]) by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-360750f2407sm11572518f8f.72.2024.06.17.02.21.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 17 Jun 2024 02:21:17 -0700 (PDT)
+Message-ID: <cd332c8e-96c7-49e7-9632-066327a009af@gmail.com>
+Date: Mon, 17 Jun 2024 11:21:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: Mini PCIE HW accelerator for ChaCha20
-To: Germano Massullo <germano.massullo@gmail.com>,
+To: Max Schulze <max.schulze@online.de>,
  WireGuard mailing list <wireguard@lists.zx2c4.com>
 References: <CAGa=++TLvS2y=-D8mk0zx_J7CvYWYQqKBWDv_3+qaQ2NSdiJ1w@mail.gmail.com>
  <78a56a8e-59d2-4948-a761-f1f1b3a6b26a@online.de>
  <93a15ab0-1cfc-4b39-97fe-64712eafb278@gmail.com>
-Content-Language: en-US
-From: Max Schulze <max.schulze@online.de>
-In-Reply-To: <93a15ab0-1cfc-4b39-97fe-64712eafb278@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:PSgEkJl58VijEquKCX3eALr/tRuIQ4eczqM3LSu3D/Ivz/MIsog
- 6XKLYX4b099GBURq5tBTeYDBZn3mFIbDQnbkxAs1bvcie14oCFBGzNqRupM6kawRDnGwydk
- u2tfFb1Zl/VsTpY/timYGp9umxYH5ttlBQyFNd7+SxthUlco0/DJwKWs+nKOwg6a0M5L6Ci
- Ujlgr6U6+v0ZuBUtE8IsQ==
-UI-OutboundReport: notjunk:1;M01:P0:E6k6XR937UM=;e+EFZ4vAvTNfxsVFybPT8jYykqz
- Fm3JjgoIWnnc8/bjrhH39lGRvS3ep6ofDLN/39aPHzTHn136dO4PYOI+6i3y5naBHYFxX2FOK
- 6ge8XKJb+xHfTGn04KHXwxvgtrdek103INbRW4EE2S8Ik4XOZS00BI+zviDAhDi8T2R8xZa0j
- 29NVMGoTr/QQWjzQbczT0XHG5pxqVhCg10XDm3Xe96FTwmbH4WdReNbNjpfgyvIT3eRULX05k
- UDavTz9Z4JQzxFynLu72U5W8Sth+A3SdUhEJLuD6EIbdVx4SypIkxzrB0/rO9e0yEbZ7K03dv
- fgiHCP42gBIdWSLIaDbpR8H0oSOGHib6LK/d54yxzuamWic3QraTQZHs5zZEtvoXeFNxv1f+l
- AWo1cvCs+2HRieSgkTd8YlT0gRaCUfdrFZp/BR/lEtWjMhl+CrzT/9vr0quh7PliGOw3O5N7B
- 4Z5iBUAdpKUW0ZjagAXcjj9VVqAPuoIA6WiSpw75Wrgg6QtWR/d7PzwVEkrhDgMLBE0rHvCNT
- dqzWYxtknuBrIRXnBPfOCDOiZbkH2mqpKoDdLv5taWdFtFhDZh3UP3olPIqDQVGjCz2mOgHAi
- z2WzJMP8xuxUFt0RHe+TcsptzT3PS1jNSCJnyNL86xiImiSySDCURc5duguobhSvN5xFKZ/KK
- c/pX1CW3fUTMcYAcsixLHU1v847D33GjUC9hFgMw48SH9a3dCQSZouHJ4eXIdTC21yh7li3Mk
- ZC/haE7QY3k5rFds44ViFjwyYp40I8rlnOhNWXe9rEF1ORCFS3Qj/A=
+ <f0279e84-9425-4bfe-be3c-009217bf24f8@online.de>
+Content-Language: en-GB
+From: Germano Massullo <germano.massullo@gmail.com>
+In-Reply-To: <f0279e84-9425-4bfe-be3c-009217bf24f8@online.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -77,55 +85,20 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+Il 16/06/24 21:00, Max Schulze ha scritto:
+> Ok then I think you really max out the cpu. I have not heard of any acceleration card. Overall I think it's not too bad.
 
+The problem is that is far under my internet connection capabilities (1 
+Gbit/s upload)
 
-On 16.06.24 16:59, Germano Massullo wrote:
-> Il 16/06/24 15:47, Max Schulze ha scritto:
->> why do you think this is the bottleneck and at what speed are you hitti=
-ng a limit?
->
-> I get ~550 Mbit/s throughput in LAN between a Ryzen 5 3600 and the Turri=
-s Omnia which CPU goes to 100% load during iperf3 test
+> Are you running iperf3 with --bidir?
 
+Such flag halves the throughput, I am getting ~280 Mbit/s compared to 
+the previous value I got by using
+iperf3 -c 10.0.50.1 -P 4 -Z bbr
+(using the Ryzen as client)
+> Keep in mind that iperf3 itself uses some cpu.
+> You could test serving a static file and transfer via http.
 
-Ok then I think you really max out the cpu. I have not heard of any accele=
-ration card. Overall I think it's not too bad.
-
-
-Some notes:
-
-Per [1], my stock Raspberry Pi 4 B (BCM2711, quad-core), has roughly 1.5x =
-cpu-power than the dual-core Marvel Armada 385.
-
-Are you running iperf3 with --bidir?
-
-I get:
-> - - - - - - - - - - - - - - - - - - - - - - - - -
-> [ ID][Role] Interval           Transfer     Bitrate         Retr
-> [  5][TX-C]   0.00-120.00 sec  10.4 GBytes   744 Mbits/sec  1839        =
-     sender
-> [  5][TX-C]   0.00-120.00 sec  10.4 GBytes   744 Mbits/sec              =
-    receiver
-> [  7][RX-C]   0.00-120.00 sec  9.08 GBytes   650 Mbits/sec  151         =
-    sender
-> [  7][RX-C]   0.00-120.00 sec  9.08 GBytes   650 Mbits/sec              =
-    receiver
-
-Keep in mind that iperf3 itself uses some cpu.
-
-You could test serving a static file and transfer via http.
-
-( ex: dd if=3D/dev/urandom of=3D/dev/shm/test.rand bs=3D1M count=3D300
-and serve with [2], and download with "wget -O /dev/null [...]" )
-
-
-I get 848 Mbit/s when downloading to the pi and 728 Mbit/s when downloadin=
-g from it (everything via wireguard).
-
-
-
-
-
-
-[1] https://github.com/ThomasKaiser/sbc-bench/blob/master/Results.md
-[2] https://github.com/svenstaro/miniserve
+The iperf3 CPU usage is not so high, it wouldn't change much to use the 
+http transfer
