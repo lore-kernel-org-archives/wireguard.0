@@ -4,61 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A21BFC2BA1A
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 Jun 2024 18:42:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01B4CC27C79
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 Jun 2024 18:55:17 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e6c8c160;
-	Mon, 17 Jun 2024 18:42:15 +0000 (UTC)
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com
- [2a00:1450:4864:20::12c])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 255818d4
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d7ec73ec;
+	Mon, 17 Jun 2024 18:54:45 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org
+ [2604:1380:4641:c500::1])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ec4cb79e
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 17 Jun 2024 18:42:13 +0000 (UTC)
-Received: by mail-lf1-x12c.google.com with SMTP id
- 2adb3069b0e04-52bc27cfb14so5839806e87.0
- for <wireguard@lists.zx2c4.com>; Mon, 17 Jun 2024 11:42:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718649733; x=1719254533; darn=lists.zx2c4.com;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=+jO2FlPNmcOLf+hC3upZKg3SDI4/5kwrnW8GkxW5YVg=;
- b=bzxEWC7HDbYOwAFb1DsY5KkJrLtjYzdCZOKKeJHmrskqLN1V45NY3DviQB7ICf93Kz
- 3nLjm5ng4FGmZLaZLvMOJy5bT3OqNAMeSu/Rz1JdwLv1wx5TdHHVA+t8PSZ6OVRE/PYu
- 6NcqS1i/xgCO+V2lAYxlJ1824hIm0QdOdB0NKwSjq1CN2k2cjsAAyeZqzo5drnMy3bcJ
- Yy0I+vsrJapqlOj6umnHi5r7Ah3RUJrrei/lKGzAs37OQdXXCToGYCwylJ5CGw1KqMsU
- Fiti/hi1K6dF0uASy0ug59DnJ8MV8z6YsGMdFaFZLSkowdvbLtbIeK8aDSUUtqWHq+MS
- FW5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718649733; x=1719254533;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+jO2FlPNmcOLf+hC3upZKg3SDI4/5kwrnW8GkxW5YVg=;
- b=eD8OMGvZpT2woHTPV+iZQlpn5Hw33ZB3KJ1wc4XkvO/LGYBXj9ZZssSn7P+tLgjq23
- 8CYmfLigHKawxIeGSAvchTRiEnym/tGQEEpb9u3hkuPj0FZ528T5madb7R2InWjYEbuM
- 4vOjPQg+hekuZxPwvSz+Dx7VngDzL73Gc2gHHTmS8+qnkPJvch/KPaHKetnRGN+jRAX3
- bGyC55+Bl59SS1gRAZusQK1RRDengEqMgriLH9jMYJNLYtkZ530D86q4nbA/xUiF/QMQ
- oVVnJMnzhYJXtCCRfBTHEInFRJVL3uhUPGOfBXbX+S9w2x4rICrCOEG4lA5ZimYMEs0u
- qFgw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXncmd7t638sZWVM4p9UBN/5+bzScVxc58hkONoMF4AMeXMb8Zq2PbWkQAE89pG1UPzu71fa9aA3SLOzE0yrF+hauKDeQVjrkOP
-X-Gm-Message-State: AOJu0YxxgWl9fa+9/jlw1/pdUvpnFnZUF2LuCQNaxRgUDi5wXH6htJ9y
- 7e35/8xD6M9U/gTZFJz4oDOYs2I3BArcpXt5Gh0ua7OU/JnQPUnf
-X-Google-Smtp-Source: AGHT+IG+He9esutTE4DcK6Uo+MkQ9CT1wI+N+kkdrm92KSfS1cK189MGjfkb18QFb85ZwtxeC6GLJw==
-X-Received: by 2002:a05:6512:549:b0:521:cc8a:46dd with SMTP id
- 2adb3069b0e04-52ca6e56e2dmr7855127e87.11.1718649732281; 
- Mon, 17 Jun 2024 11:42:12 -0700 (PDT)
-Received: from pc636 (host-185-121-47-193.sydskane.nu. [185.121.47.193])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f56db6182sm540019666b.51.2024.06.17.11.42.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Jun 2024 11:42:11 -0700 (PDT)
-From: Uladzislau Rezki <urezki@gmail.com>
-X-Google-Original-From: Uladzislau Rezki <urezki@pc636>
-Date: Mon, 17 Jun 2024 20:42:09 +0200
+ Mon, 17 Jun 2024 18:54:41 +0000 (UTC)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 3602661257;
+ Mon, 17 Jun 2024 18:54:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4D7BC2BD10;
+ Mon, 17 Jun 2024 18:54:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1718650479;
+ bh=cmmYnDR5G/CPH+g8BcpN1MFkYmgodk2x412Uh4pRCDw=;
+ h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
+ b=htDly1viSXXYYDN2fKeKx2wmcWA279kRnzVgaC5yXX9rrUYI8hRNqQiZfGupG+pr8
+ fyvcrTaan+ehboyUpbKcuvFKbNCjyCKyP/e4RExGTWrX4Ajy4h4DpwAHm8KwpKdG8f
+ 26DRExUZipco75yWMjxicdv9Nl2afaU5pTmkMQ49C4dWem15hPJGRkh37jNjcciSwu
+ KdhAzh1W3DjA1v4yvoUAm8deglvz0XhATfntWZgp4lETgOpWqILAB065yj7IdLIRh4
+ 3ROzkDdsgzhVhI7mza08G5DAiCBpqSpMnSH5w5EUT/ZVIl1eNBKgWzLLeWzVvnHOI2
+ s5ULjvLFAuy0g==
+Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
+ id 80EC9CE09DB; Mon, 17 Jun 2024 11:54:39 -0700 (PDT)
+Date: Mon, 17 Jun 2024 11:54:39 -0700
+From: "Paul E. McKenney" <paulmck@kernel.org>
 To: Vlastimil Babka <vbabka@suse.cz>
-Cc: paulmck@kernel.org, "Jason A. Donenfeld" <Jason@zx2c4.com>,
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  "Uladzislau Rezki (Sony)" <urezki@gmail.com>,
  Jakub Kicinski <kuba@kernel.org>,
  Julia Lawall <Julia.Lawall@inria.fr>, linux-block@vger.kernel.org,
@@ -78,7 +55,7 @@ Cc: paulmck@kernel.org, "Jason A. Donenfeld" <Jason@zx2c4.com>,
  kasan-dev <kasan-dev@googlegroups.com>
 Subject: Re: [PATCH 00/14] replace call_rcu by kfree_rcu for simple
  kmem_cache_free callback
-Message-ID: <ZnCDgdg1EH6V7w5d@pc636>
+Message-ID: <1755282b-e3f5-4d18-9eab-fc6a29ca5886@paulmck-laptop>
 References: <20240609082726.32742-1-Julia.Lawall@inria.fr>
  <20240612143305.451abf58@kernel.org>
  <baee4d58-17b4-4918-8e45-4d8068a23e8c@paulmck-laptop>
@@ -103,6 +80,7 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
+Reply-To: paulmck@kernel.org
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
@@ -130,13 +108,27 @@ On Mon, Jun 17, 2024 at 07:23:36PM +0200, Vlastimil Babka wrote:
 > the implementation (marked to be replaced with the real thing) is really
 > insufficient. Note the test itself passes as this kind of error isn't wired
 > up properly.
-> 
+
+;-) ;-) ;-)
+
+Some might want confirmation that their cleanup efforts succeeded,
+but if so, I will let them make that known.
+
 > Another thing to resolve is the marked comment about kasan_shutdown() with
 > potential kfree_rcu()'s in flight.
-> 
+
+Could that simply move to the worker function?  (Hey, had to ask!)
+
 > Also you need CONFIG_SLUB_DEBUG enabled otherwise node_nr_slabs() is a no-op
 > and it might fail to notice the pending slabs. This will need to change.
-> 
+
+Agreed.
+
+Looks generally good.  A few questions below, to be taken with a
+grain of salt.
+
+							Thanx, Paul
+
 > ----8<----
 > diff --git a/lib/slub_kunit.c b/lib/slub_kunit.c
 > index e6667a28c014..e3e4d0ca40b7 100644
@@ -172,6 +164,9 @@ On Mon, Jun 17, 2024 at 07:23:36PM +0200, Vlastimil Babka wrote:
 > +	kasan_enable_current();
 > +	kfree_rcu(p, rcu);
 > +	kmem_cache_destroy(s);
+
+Looks like the type of test for this!
+
 > +}
 > +
 >  static int test_init(struct kunit *test)
@@ -260,12 +255,85 @@ On Mon, Jun 17, 2024 at 07:23:36PM +0200, Vlastimil Babka wrote:
 > +	s = container_of(work, struct kmem_cache, async_destroy_work);
 > +
 > +	// XXX use the real kmem_cache_free_barrier() or similar thing here
-It implies that we need to introduce kfree_rcu_barrier(), a new API, which i
-wanted to avoid initially. Since you do it asynchronous can we just repeat
-and wait until it a cache is furry freed?
+> +	rcu_barrier();
+> +
+> +	cpus_read_lock();
+> +	mutex_lock(&slab_mutex);
+> +
+> +	rcu_set = s->flags & SLAB_TYPESAFE_BY_RCU;
+> +
+> +	err = shutdown_cache(s, true);
 
-I am asking because inventing a new kfree_rcu_barrier() might not be so
-straight forward.
+This is currently the only call to shutdown_cache()?  So there is to be
+a way for the caller to have some influence over the value of that bool?
 
---
-Uladzislau Rezki
+> +	WARN(err, "kmem_cache_destroy %s: Slab cache still has objects",
+> +	     s->name);
+
+Don't we want to have some sort of delay here?  Or is this the
+21-second delay and/or kfree_rcu_barrier() mentioned before?
+
+> +	mutex_unlock(&slab_mutex);
+> +	cpus_read_unlock();
+> +	if (!err && !rcu_set)
+> +		kmem_cache_release(s);
+> +}
+> +
+>  void kmem_cache_destroy(struct kmem_cache *s)
+>  {
+>  	int err = -EBUSY;
+> @@ -494,9 +527,9 @@ void kmem_cache_destroy(struct kmem_cache *s)
+>  	if (s->refcount)
+>  		goto out_unlock;
+>  
+> -	err = shutdown_cache(s);
+> -	WARN(err, "%s %s: Slab cache still has objects when called from %pS",
+> -	     __func__, s->name, (void *)_RET_IP_);
+> +	err = shutdown_cache(s, false);
+> +	if (err)
+> +		schedule_work(&s->async_destroy_work);
+>  out_unlock:
+>  	mutex_unlock(&slab_mutex);
+>  	cpus_read_unlock();
+> diff --git a/mm/slub.c b/mm/slub.c
+> index 1617d8014ecd..4d435b3d2b5f 100644
+> --- a/mm/slub.c
+> +++ b/mm/slub.c
+> @@ -5342,7 +5342,8 @@ static void list_slab_objects(struct kmem_cache *s, struct slab *slab,
+>   * This is called from __kmem_cache_shutdown(). We must take list_lock
+>   * because sysfs file might still access partial list after the shutdowning.
+>   */
+> -static void free_partial(struct kmem_cache *s, struct kmem_cache_node *n)
+> +static void free_partial(struct kmem_cache *s, struct kmem_cache_node *n,
+> +			 bool warn_inuse)
+>  {
+>  	LIST_HEAD(discard);
+>  	struct slab *slab, *h;
+> @@ -5353,7 +5354,7 @@ static void free_partial(struct kmem_cache *s, struct kmem_cache_node *n)
+>  		if (!slab->inuse) {
+>  			remove_partial(n, slab);
+>  			list_add(&slab->slab_list, &discard);
+> -		} else {
+> +		} else if (warn_inuse) {
+>  			list_slab_objects(s, slab,
+>  			  "Objects remaining in %s on __kmem_cache_shutdown()");
+>  		}
+> @@ -5378,7 +5379,7 @@ bool __kmem_cache_empty(struct kmem_cache *s)
+>  /*
+>   * Release all resources used by a slab cache.
+>   */
+> -int __kmem_cache_shutdown(struct kmem_cache *s)
+> +int __kmem_cache_shutdown(struct kmem_cache *s, bool warn_inuse)
+>  {
+>  	int node;
+>  	struct kmem_cache_node *n;
+> @@ -5386,7 +5387,7 @@ int __kmem_cache_shutdown(struct kmem_cache *s)
+>  	flush_all_cpus_locked(s);
+>  	/* Attempt to free all objects */
+>  	for_each_kmem_cache_node(s, node, n) {
+> -		free_partial(s, n);
+> +		free_partial(s, n, warn_inuse);
+>  		if (n->nr_partial || node_nr_slabs(n))
+>  			return 1;
+>  	}
+> 
