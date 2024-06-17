@@ -4,78 +4,167 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51996C27C79
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 Jun 2024 14:31:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ECE6C2BA15
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 Jun 2024 14:41:38 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0ce644b1;
-	Mon, 17 Jun 2024 14:31:53 +0000 (UTC)
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com
- [2a00:1450:4864:20::434])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e3051469
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b0bc1dd9;
+	Mon, 17 Jun 2024 14:37:25 +0000 (UTC)
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b8df5a95
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 17 Jun 2024 14:31:52 +0000 (UTC)
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-356c4e926a3so4173407f8f.1
- for <wireguard@lists.zx2c4.com>; Mon, 17 Jun 2024 07:31:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718634711; x=1719239511; darn=lists.zx2c4.com;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=3lGsCpp8pxkuT25J+Z17r4q/yaK/BU3TywRd+aJXRAw=;
- b=Z/dIt8BZPno6iD9fwl5T3xo23QvTHZZEK49FRGMaKYQqEnuKLskET2UP4Aj8Xp42EI
- 2fwE80n7VUmnPvPDa4tYgQDBT8UyburTltoRueUWpFU3eT0hci6bz8hvE3Nl0uK7YqTX
- enEJTe9mYkMu8Qnsw+U3SpmAWEQDldB/BvKAInf2qF+aHRCcoGBF8xwPongHnxZBigJV
- 4j2kwhyR2ESMq3qKsLdO1J+Rf89FyhD9VfiFbZdOWdssr6/eRo7ATHvBDDMGUD0ToPD0
- LU/ETEtbFkDFH1OFFDHOSNC/7rNtUbvEU+xjQS7z2dMuNPsgsQrIc/QBJG+okyHx+s/R
- yVsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718634711; x=1719239511;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3lGsCpp8pxkuT25J+Z17r4q/yaK/BU3TywRd+aJXRAw=;
- b=nrz7kqlV3XIsl+KJQEUFTk74TDHm9NPqsB3X+pvfSKw9/QJm/Uu9+C2WJwC37lcHUF
- 4P7foLknUFUI2a6Xsp6RUwzkrLz1/lTdigwox9Gq14TeMfrCaOdTAw3ICv1a5TzP9euw
- 3JYrGBi44yra8z6coyFGAbWD/rNeNMTsSFr6xjH+EDLsZWlzWRI7Lr27KDcg9yQkOkZj
- mi+uc9YplptNb15I1mLmn1DIRro256iEbsSGPTAdXcGlsG3DIbhGkXDk0fWv9MC63dki
- CC0QOtp3vsRo78LZdC49+DXz6bmaUt6ARadAstAEcMIuxx2EFRm6iE8TV3WegDugMzqo
- 4YYQ==
-X-Gm-Message-State: AOJu0YyRmMSX6N8+FEDlSBidAsLVU97CdkUK9h0DKsNbyg2dNnZFPzt9
- 9seC+OlTHw/pgvoJP3PqnZbwtj4A1XHjGEYDG/NxCYOjeSSUVNLs/clNIQ==
-X-Google-Smtp-Source: AGHT+IFVJJ0DD1zEKFXG49wvdKoIKItzx5OZTmpJOk9YUAT/7l1kU//UiGsmewaOAEOUCRzxOWebHA==
-X-Received: by 2002:a05:6000:1547:b0:35f:1d67:cdb4 with SMTP id
- ffacd0b85a97d-3607a75c645mr7406188f8f.37.1718634711291; 
- Mon, 17 Jun 2024 07:31:51 -0700 (PDT)
-Received: from [192.168.1.99] (93-48-172-72.ip258.fastwebnet.it.
- [93.48.172.72]) by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-3609515e16dsm3280176f8f.44.2024.06.17.07.31.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Jun 2024 07:31:50 -0700 (PDT)
-Message-ID: <9e717774-c1cd-493f-abfd-fcf3d75eec8d@gmail.com>
-Date: Mon, 17 Jun 2024 16:31:49 +0200
+ Mon, 17 Jun 2024 14:37:21 +0000 (UTC)
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 028C038307;
+ Mon, 17 Jun 2024 14:37:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+ t=1718635041; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=tBpItSg2rTz9A3cM6/CQbLUXm0OnJ+ZDaZH/npYdctA=;
+ b=AtIAwrJOGKZ95YUnzoZRavtyJNPzsMkIqzRjTaWGzzqzcRfxo2zXyF0X9JGqZrr++Atk/c
+ 9hsG3lE6hBDE9SeKY5DYOFBALbEAbJEV0kxD2e/s97Shr50SvBD1ItfsnoMI8ih2MTKBkO
+ lAHTSOaU9wYHigyb55PKxDQf3HeW4H0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+ s=susede2_ed25519; t=1718635041;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=tBpItSg2rTz9A3cM6/CQbLUXm0OnJ+ZDaZH/npYdctA=;
+ b=/6mV7E+RwcoHlPKPuwAVxwA0JkB6fXZ+XRtgQukX3keIRU9RWFJWle4Z27nDutkzBZFr00
+ JlMYS3BMf1J7auBg==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.cz header.s=susede2_rsa header.b=AtIAwrJO;
+ dkim=pass header.d=suse.cz header.s=susede2_ed25519 header.b="/6mV7E+R"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+ t=1718635041; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=tBpItSg2rTz9A3cM6/CQbLUXm0OnJ+ZDaZH/npYdctA=;
+ b=AtIAwrJOGKZ95YUnzoZRavtyJNPzsMkIqzRjTaWGzzqzcRfxo2zXyF0X9JGqZrr++Atk/c
+ 9hsG3lE6hBDE9SeKY5DYOFBALbEAbJEV0kxD2e/s97Shr50SvBD1ItfsnoMI8ih2MTKBkO
+ lAHTSOaU9wYHigyb55PKxDQf3HeW4H0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+ s=susede2_ed25519; t=1718635041;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=tBpItSg2rTz9A3cM6/CQbLUXm0OnJ+ZDaZH/npYdctA=;
+ b=/6mV7E+RwcoHlPKPuwAVxwA0JkB6fXZ+XRtgQukX3keIRU9RWFJWle4Z27nDutkzBZFr00
+ JlMYS3BMf1J7auBg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id BD441139AB;
+ Mon, 17 Jun 2024 14:37:20 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id l5WXLSBKcGaxWwAAD6G6ig
+ (envelope-from <vbabka@suse.cz>); Mon, 17 Jun 2024 14:37:20 +0000
+Message-ID: <324c25c9-fe86-4d82-b4e2-5f3ad76031c7@suse.cz>
+Date: Mon, 17 Jun 2024 16:37:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Mini PCIE HW accelerator for ChaCha20
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Roman Mamedov <rm@romanrm.net>
-Cc: Antonio Quartulli <a@unstable.cc>
-References: <CAGa=++TLvS2y=-D8mk0zx_J7CvYWYQqKBWDv_3+qaQ2NSdiJ1w@mail.gmail.com>
- <78a56a8e-59d2-4948-a761-f1f1b3a6b26a@online.de>
- <93a15ab0-1cfc-4b39-97fe-64712eafb278@gmail.com>
- <f0279e84-9425-4bfe-be3c-009217bf24f8@online.de>
- <cd332c8e-96c7-49e7-9632-066327a009af@gmail.com>
- <ce8cd757-3df9-4a71-818e-ae2eda6c9690@unstable.cc>
- <ef44089b-1060-458f-906b-45fe682c6a10@gmail.com>
- <8f366adc-89a5-4b81-9a4f-8bcb1d08aad3@unstable.cc>
- <4940a8fd-6e87-49a4-83e0-8daa69e7a68f@gmail.com>
- <20240617174159.46b69d3b@nvm>
-Content-Language: en-GB
-From: Germano Massullo <germano.massullo@gmail.com>
-In-Reply-To: <20240617174159.46b69d3b@nvm>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH 00/14] replace call_rcu by kfree_rcu for simple
+ kmem_cache_free callback
+Content-Language: en-US
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Uladzislau Rezki <urezki@gmail.com>
+Cc: "Paul E. McKenney" <paulmck@kernel.org>, Jakub Kicinski
+ <kuba@kernel.org>, Julia Lawall <Julia.Lawall@inria.fr>,
+ linux-block@vger.kernel.org, kernel-janitors@vger.kernel.org,
+ bridge@lists.linux.dev, linux-trace-kernel@vger.kernel.org,
+ Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, kvm@vger.kernel.org,
+ linuxppc-dev@lists.ozlabs.org, "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>,
+ Christophe Leroy <christophe.leroy@csgroup.eu>,
+ Nicholas Piggin <npiggin@gmail.com>, netdev@vger.kernel.org,
+ wireguard@lists.zx2c4.com, linux-kernel@vger.kernel.org,
+ ecryptfs@vger.kernel.org, Neil Brown <neilb@suse.de>,
+ Olga Kornievskaia <kolga@netapp.com>, Dai Ngo <Dai.Ngo@oracle.com>,
+ Tom Talpey <tom@talpey.com>, linux-nfs@vger.kernel.org,
+ linux-can@vger.kernel.org, Lai Jiangshan <jiangshanlai@gmail.com>,
+ netfilter-devel@vger.kernel.org, coreteam@netfilter.org
+References: <baee4d58-17b4-4918-8e45-4d8068a23e8c@paulmck-laptop>
+ <ZmrfA1p2zSVIaYam@zx2c4.com>
+ <80e03b02-7e24-4342-af0b-ba5117b19828@paulmck-laptop>
+ <Zmru7hhz8kPDPsyz@pc636>
+ <7efde25f-6af5-4a67-abea-b26732a8aca1@paulmck-laptop>
+ <Zmsuswo8OPIhY5KJ@pc636>
+ <cb51bc57-47b8-456a-9ac0-f8aa0931b144@paulmck-laptop>
+ <ZmszOd5idhf2Cb-v@pc636>
+ <b03b007f-3afa-4ad4-b76b-dea7b3aa2bc3@paulmck-laptop>
+ <Zmw5FTX752g0vtlD@pc638.lan> <ZmybGZDbXkw7JTjc@zx2c4.com>
+From: Vlastimil Babka <vbabka@suse.cz>
+Autocrypt: addr=vbabka@suse.cz; keydata=
+ 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
+ EP+ylKVEKb0Q2A==
+In-Reply-To: <ZmybGZDbXkw7JTjc@zx2c4.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [-4.50 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; XM_UA_NO_VERSION(0.01)[];
+ RCVD_TLS_ALL(0.00)[]; ARC_NA(0.00)[];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]; MIME_TRACE(0.00)[0:+];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; TO_DN_SOME(0.00)[];
+ RCPT_COUNT_TWELVE(0.00)[28];
+ FREEMAIL_TO(0.00)[zx2c4.com,gmail.com];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ R_RATELIMIT(0.00)[to_ip_from(RLujeud1qp5x6qhm7ow61zc6bu)];
+ FROM_HAS_DN(0.00)[];
+ FREEMAIL_CC(0.00)[kernel.org,inria.fr,vger.kernel.org,lists.linux.dev,efficios.com,lists.ozlabs.org,linux.ibm.com,csgroup.eu,gmail.com,lists.zx2c4.com,suse.de,netapp.com,oracle.com,talpey.com,netfilter.org];
+ MID_RHS_MATCH_FROM(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.cz:+]
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 028C038307
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -90,17 +179,36 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-After having checked that iperf3 was indeed consuming a lot of a CPU 
-core on the Turris Omnia, I modified the Wireguard topology in order to 
-have the router to just be the Wireguard gateway among two LAN computers 
-( [A] <--wireguard--> [C] <--wireguard--> [B] ), and I have run the 
-iperf3 among such computers
-iperf3 -c x.x.x.x -P 4 -Z bbr
-and the throughput was ~320 Mbit/s. Considering that the router had to 
-handle two Wireguard tunnels, one could guess (without any claim of 
-accuracy due lack of more accurate tests), that the maximum Wireguard 
-throughput that such router can handle is ~2x 320 Mbit/s = ~640 Mbit/s
+On 6/14/24 9:33 PM, Jason A. Donenfeld wrote:
+> On Fri, Jun 14, 2024 at 02:35:33PM +0200, Uladzislau Rezki wrote:
+>> +	/* Should a destroy process be deferred? */
+>> +	if (s->flags & SLAB_DEFER_DESTROY) {
+>> +		list_move_tail(&s->list, &slab_caches_defer_destroy);
+>> +		schedule_delayed_work(&slab_caches_defer_destroy_work, HZ);
+>> +		goto out_unlock;
+>> +	}
+> 
+> Wouldn't it be smoother to have the actual kmem_cache_free() function
+> check to see if it's been marked for destruction and the refcount is
+> zero, rather than polling every one second? I mentioned this approach
+> in: https://lore.kernel.org/all/Zmo9-YGraiCj5-MI@zx2c4.com/ -
+> 
+>     I wonder if the right fix to this would be adding a `should_destroy`
+>     boolean to kmem_cache, which kmem_cache_destroy() sets to true. And
+>     then right after it checks `if (number_of_allocations == 0)
+>     actually_destroy()`, and likewise on each kmem_cache_free(), it
+>     could check `if (should_destroy && number_of_allocations == 0)
+>     actually_destroy()`. 
 
-[A]: Ryzen 5 3600 - kernel 5.14.0-427.18.1.el9_4.x86_64
-[B]: Ryzen 7 PRO 6850U -  kernel 6.8.11-300.fc40.x86_64
-[C]: Turris Omnia - TurrisOS 7.0.0, kernel 5.15.148
+I would prefer not to affect the performance of kmem_cache_free() by doing
+such checks, if possible. Ideally we'd have a way to wait/poll for the
+kfree_rcu() "grace period" expiring even with the batching that's
+implemented there. Even if it's pesimistically long to avoid affecting
+kfree_rcu() performance. The goal here is just to print the warnings if
+there was a leak and the precise timing of them shouldn't matter. The owning
+module could be already unloaded at that point? I guess only a kunit test
+could want to be synchronous and then it could just ask for
+kmem_cache_free() to wait synchronously.
+
+> Jason
+
