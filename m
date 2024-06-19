@@ -4,48 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9491AC27C53
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Jun 2024 10:24:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26880C41513
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Jun 2024 11:25:12 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e86a49d0;
-	Wed, 19 Jun 2024 10:18:00 +0000 (UTC)
-Received: from wilbur.contactoffice.com (wilbur.contactoffice.com
- [212.3.242.68])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a7f80249
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8f206997;
+	Wed, 19 Jun 2024 11:22:20 +0000 (UTC)
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com
+ [2a00:1450:4864:20::233])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c30fb4b5
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 19 Jun 2024 10:17:58 +0000 (UTC)
-Received: from smtpauth1.co-bxl (smtpauth1.co-bxl [10.2.0.15])
- by wilbur.contactoffice.com (Postfix) with ESMTP id EE51EE05;
- Wed, 19 Jun 2024 12:17:57 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1718792277; 
- s=20220809-q8oc; d=unstable.cc; i=a@unstable.cc;
- h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
- bh=NgS3Q7kEJ56vMRuFu200i+eUCpmc7AxvRD+L0/JlFgU=;
- b=WpEpb2kJWhXIe2FOFd3Ppe78QRz4IyQ+wwqV4unRMqSFPPa2VZl5VH283FK6IsjN
- MMuKXAqu/5yWs/LnALcn/+HQS4ORYsfcdJkLAbn34VQwnm7z8a1+SaqZyy3l0Crp8Uy
- ky7vZxmKcwJmX1c3XYLMPx+C8ItKNtJhnhA7UOQVdueXWebRPnxFfHf1D6IkQww2sKi
- v+ZvR90+Deytq3abS6lkxUa3iy0qYhA4PnB9IEV8Mr3wf83w58sV1tgxaD4q358LlGN
- dLe8C7yaIBt175ptbSuWR6RFA+yDl+ProBHbzPC0kbrKxvTRkcz8Mom1abeDHkv3jzr
- 8XK+TejbGg==
-Received: by smtp.mailfence.com with ESMTPSA ;
- Wed, 19 Jun 2024 12:17:54 +0200 (CEST)
-Message-ID: <bf5d4e97-806b-4c30-a7b2-554b74b3a51b@unstable.cc>
-Date: Wed, 19 Jun 2024 12:19:36 +0200
+ Wed, 19 Jun 2024 11:22:17 +0000 (UTC)
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-2ec0f3b9cfeso60290651fa.0
+ for <wireguard@lists.zx2c4.com>; Wed, 19 Jun 2024 04:22:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1718796136; x=1719400936; darn=lists.zx2c4.com;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=1We8+J1M8/iGwbEuKq9QLdgleuBIYYNVC3Jie6+7WKQ=;
+ b=GPrFhgLbMl8M5RiJ1lhe0g5PpBmmOJOBbBROQBkW+8CmpAbUpCQyyDYp0AZQOfpuuV
+ Za0On77EMb25ZcemWzs0Ez4IHmMQrqsw7YfRoj7pMRPoo22uPU/ebNTrxYD++Mc7SZ8Q
+ t6WCHsAvJvq6I6BhzO/BRjyiIhnPdCMKSfLgI5+/WbgQCPb3tGCY6o8NpDKwSjj3MoWg
+ 0BCHPasgREkAr9PuC5fAMocf4+EkGEFyDM+FGCrxtg5VZtXlvBVkrZ6I28e6yc68CMBG
+ 2q08Z5xvV5iTnEyKz5Oye91j4MU2b4CTVs8KIAF3iAIn7N3GCzr5TgdPSlnDXCSL7yzG
+ O6fQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718796136; x=1719400936;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1We8+J1M8/iGwbEuKq9QLdgleuBIYYNVC3Jie6+7WKQ=;
+ b=IwmCatsXleWenxE93Z/6eZcHD2w9504Hq55yyO+5M86Is30p+ub41GkBULz+wrdJPv
+ Fn5na5P2gBnnrOfPd5GOvnajhldMbqJLwHfYo17iyls1DifRYxRYV5yBlZJl9t+lYkst
+ jP4PjDQ1Qn5q3R9rXlmAyxaiu09FevyjIfPmVEGtga8tUx5eK/M8H0QSYDQiZoXC1rHa
+ JvsLchym2kEOfkj8t24sYEvVelTSKZS5vLids664IY09T/iSzfiG/TpmvZvc67DCk8PY
+ wUT44Ay/8OrWKYMWh/sJxC0cR/jWQONyD5mgsUYkXAI0FLA8NlFwG+Zv5iWWSR0mwuWG
+ xAtQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU3KzxD2w3LTteg9RuAVU2arcAZ8+/2cYq/ih3h/neYUkt2Ytapa7fNSvfYurPvJdiP3sIH4gBwh40edA/ZDulr0mtQbusMFKgD
+X-Gm-Message-State: AOJu0YzXc4aC6RcPCdKTVMD2vleWhA+5AE2xSM4xCWh+uUFxyqje4YwV
+ 8ibfgk54+FsCdCtIbAsKgFWh/GRdoxmuJiXfjVfE/5XRy08jX/2C
+X-Google-Smtp-Source: AGHT+IHY6I+1wjnfCL5bVO3aTBj0asX2DB6+TLCQy1IxnGK2EyJpAdTHcDYhDhl1lF4pI5isZiqATw==
+X-Received: by 2002:a2e:7818:0:b0:2ec:3bc4:3e36 with SMTP id
+ 38308e7fff4ca-2ec3ceb6a56mr15076241fa.14.1718796136224; 
+ Wed, 19 Jun 2024 04:22:16 -0700 (PDT)
+Received: from pc636 (host-90-233-216-238.mobileonline.telia.com.
+ [90.233.216.238]) by smtp.gmail.com with ESMTPSA id
+ 38308e7fff4ca-2ec05c78126sm19577951fa.81.2024.06.19.04.22.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 19 Jun 2024 04:22:15 -0700 (PDT)
+From: Uladzislau Rezki <urezki@gmail.com>
+X-Google-Original-From: Uladzislau Rezki <urezki@pc636>
+Date: Wed, 19 Jun 2024 13:22:12 +0200
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: Uladzislau Rezki <urezki@gmail.com>,
+ "Paul E. McKenney" <paulmck@kernel.org>,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>, Jakub Kicinski <kuba@kernel.org>,
+ Julia Lawall <Julia.Lawall@inria.fr>, linux-block@vger.kernel.org,
+ kernel-janitors@vger.kernel.org, bridge@lists.linux.dev,
+ linux-trace-kernel@vger.kernel.org,
+ Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+ kvm@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+ "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>,
+ Christophe Leroy <christophe.leroy@csgroup.eu>,
+ Nicholas Piggin <npiggin@gmail.com>, netdev@vger.kernel.org,
+ wireguard@lists.zx2c4.com, linux-kernel@vger.kernel.org,
+ ecryptfs@vger.kernel.org, Neil Brown <neilb@suse.de>,
+ Olga Kornievskaia <kolga@netapp.com>, Dai Ngo <Dai.Ngo@oracle.com>,
+ Tom Talpey <tom@talpey.com>, linux-nfs@vger.kernel.org,
+ linux-can@vger.kernel.org, Lai Jiangshan <jiangshanlai@gmail.com>,
+ netfilter-devel@vger.kernel.org, coreteam@netfilter.org,
+ kasan-dev <kasan-dev@googlegroups.com>
+Subject: Re: [PATCH 00/14] replace call_rcu by kfree_rcu for simple
+ kmem_cache_free callback
+Message-ID: <ZnK_ZLlFM6MrdEah@pc636>
+References: <Zmrkkel0Fo4_g75a@zx2c4.com>
+ <e926e3c6-05ce-4ba6-9e2e-e5f3b37bcc23@suse.cz>
+ <3b6fe525-626c-41fb-8625-3925ca820d8e@paulmck-laptop>
+ <6711935d-20b5-41c1-8864-db3fc7d7823d@suse.cz>
+ <ZnCDgdg1EH6V7w5d@pc636>
+ <36c60acd-543e-48c5-8bd2-6ed509972d28@suse.cz>
+ <ZnFT1Czb8oRb0SE7@pc636>
+ <5c8b2883-962f-431f-b2d3-3632755de3b0@paulmck-laptop>
+ <ZnKqPqlPD3Rl04DZ@pc636>
+ <c208e95d-9aa9-476f-9dee-0242a2d6a24f@suse.cz>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Wireguard broken with ip rule due to missing address binding
-To: Nico Schottelius <nico.schottelius@ungleich.ch>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-References: <87h6dpi7zp.fsf@ungleich.ch>
- <9e91adb2-b155-4eef-8604-a2f762a98d4d@unstable.cc>
- <87cyodi6la.fsf@ungleich.ch>
-Content-Language: en-US
-From: Antonio Quartulli <a@unstable.cc>
-In-Reply-To: <87cyodi6la.fsf@ungleich.ch>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ContactOffice-Account: com:375058688
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c208e95d-9aa9-476f-9dee-0242a2d6a24f@suse.cz>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -60,18 +107,75 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Nico,
+On Wed, Jun 19, 2024 at 11:56:44AM +0200, Vlastimil Babka wrote:
+> On 6/19/24 11:51 AM, Uladzislau Rezki wrote:
+> > On Tue, Jun 18, 2024 at 09:48:49AM -0700, Paul E. McKenney wrote:
+> >> On Tue, Jun 18, 2024 at 11:31:00AM +0200, Uladzislau Rezki wrote:
+> >> > > On 6/17/24 8:42 PM, Uladzislau Rezki wrote:
+> >> > > >> +
+> >> > > >> +	s = container_of(work, struct kmem_cache, async_destroy_work);
+> >> > > >> +
+> >> > > >> +	// XXX use the real kmem_cache_free_barrier() or similar thing here
+> >> > > > It implies that we need to introduce kfree_rcu_barrier(), a new API, which i
+> >> > > > wanted to avoid initially.
+> >> > > 
+> >> > > I wanted to avoid new API or flags for kfree_rcu() users and this would
+> >> > > be achieved. The barrier is used internally so I don't consider that an
+> >> > > API to avoid. How difficult is the implementation is another question,
+> >> > > depending on how the current batching works. Once (if) we have sheaves
+> >> > > proven to work and move kfree_rcu() fully into SLUB, the barrier might
+> >> > > also look different and hopefully easier. So maybe it's not worth to
+> >> > > invest too much into that barrier and just go for the potentially
+> >> > > longer, but easier to implement?
+> >> > > 
+> >> > Right. I agree here. If the cache is not empty, OK, we just defer the
+> >> > work, even we can use a big 21 seconds delay, after that we just "warn"
+> >> > if it is still not empty and leave it as it is, i.e. emit a warning and
+> >> > we are done.
+> >> > 
+> >> > Destroying the cache is not something that must happen right away. 
+> >> 
+> >> OK, I have to ask...
+> >> 
+> >> Suppose that the cache is created and destroyed by a module and
+> >> init/cleanup time, respectively.  Suppose that this module is rmmod'ed
+> >> then very quickly insmod'ed.
+> >> 
+> >> Do we need to fail the insmod if the kmem_cache has not yet been fully
+> >> cleaned up?  If not, do we have two versions of the same kmem_cache in
+> >> /proc during the overlap time?
+> >> 
+> > No fail :) If same cache is created several times, its s->refcount gets
+> > increased, so, it does not create two entries in the "slabinfo". But i
+> > agree that your point is good! We need to be carefully with removing and
+> > simultaneous creating.
+> 
+> Note that this merging may be disabled or not happen due to various flags on
+> the cache being incompatible with it. And I want to actually make sure it
+> never happens for caches being already destroyed as that would lead to
+> use-after-free (the workfn doesn't recheck the refcount in case a merge
+> would happen during the grace period)
+> 
+> --- a/mm/slab_common.c
+> +++ b/mm/slab_common.c
+> @@ -150,9 +150,10 @@ int slab_unmergeable(struct kmem_cache *s)
+>  #endif
+> 
+>         /*
+> -        * We may have set a slab to be unmergeable during bootstrap.
+> +        * We may have set a cache to be unmergeable during bootstrap.
+> +        * 0 is for cache being destroyed asynchronously
+>          */
+> -       if (s->refcount < 0)
+> +       if (s->refcount <= 0)
+>                 return 1;
+> 
+>         return 0;
+> 
+OK, i see such flags, SLAB_NO_MERGE. Then i was wrong, it can create two
+different slabs.
 
-On 19/06/2024 12:12, Nico Schottelius wrote:
-> However it does not fix the issue of selecting the right ip address on
-> systems with multiple IP addresses ("Originating / initial ip address
-> wrong").
+Thanks!
 
-you're right.
-I looked at this from a pure "server" perspective, where you always wait 
-for somebody else to originate the connection.
-
-Regards,
-
--- 
-Antonio Quartulli
+--
+Uladzislau Rezki
