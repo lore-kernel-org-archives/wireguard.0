@@ -4,71 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2535C2BB85
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Jun 2024 16:46:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48991C2BA1A
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 20 Jun 2024 14:57:12 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a84001e8;
-	Wed, 19 Jun 2024 16:46:41 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org
- [2604:1380:4641:c500::1])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 742e86ea
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 13b0b575;
+	Thu, 20 Jun 2024 14:52:19 +0000 (UTC)
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com
+ [2607:f8b0:4864:20::632])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 78c91d4c
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 19 Jun 2024 16:46:38 +0000 (UTC)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id B54DE61E8E;
- Wed, 19 Jun 2024 16:46:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E5A8C2BBFC;
- Wed, 19 Jun 2024 16:46:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1718815596;
- bh=EYkeKSbtNt6ckvuCFzfSCizaZJeveGlRlQZbS2iiRBM=;
- h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
- b=U6v5z/sdVrRwT3ywPATsj7XmP7jMC/9Ue7euI2CV/THH1rdybzupp61Q3EwrfCb0Z
- oRYlNRBfdTqybOoKx/k80D0IFIG9kqzvnBfEhD0JRlH5VjuYxCM23EMd3xBXpXT4V1
- 1uKiOxgwzsrXXxoSU+L5hezYeMeNJITqk3/QT2yQTixMKTvXNKFLINUqCcR1a6Eofa
- +OA6Ypzrq6AdcZ9WeH29C2vx0ekyMr+caeurBrnmo/hQuNhH7uVp+yJZMA3eeltGHh
- vqikZFgBg0Khso/7VAufzpVxv9ZrPvAsnpHAA9QtIEbrLcOlZKN9roRJ/XJu5hty2l
- uLXG9ZdVaWb9A==
-Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
- id EC3CDCE09D8; Wed, 19 Jun 2024 09:46:35 -0700 (PDT)
-Date: Wed, 19 Jun 2024 09:46:35 -0700
-From: "Paul E. McKenney" <paulmck@kernel.org>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Uladzislau Rezki <urezki@gmail.com>,
- "Jason A. Donenfeld" <Jason@zx2c4.com>, Jakub Kicinski <kuba@kernel.org>,
- Julia Lawall <Julia.Lawall@inria.fr>, linux-block@vger.kernel.org,
- kernel-janitors@vger.kernel.org, bridge@lists.linux.dev,
- linux-trace-kernel@vger.kernel.org,
- Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
- kvm@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
- "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>,
- Christophe Leroy <christophe.leroy@csgroup.eu>,
- Nicholas Piggin <npiggin@gmail.com>, netdev@vger.kernel.org,
- wireguard@lists.zx2c4.com, linux-kernel@vger.kernel.org,
- ecryptfs@vger.kernel.org, Neil Brown <neilb@suse.de>,
- Olga Kornievskaia <kolga@netapp.com>, Dai Ngo <Dai.Ngo@oracle.com>,
- Tom Talpey <tom@talpey.com>, linux-nfs@vger.kernel.org,
- linux-can@vger.kernel.org, Lai Jiangshan <jiangshanlai@gmail.com>,
- netfilter-devel@vger.kernel.org, coreteam@netfilter.org,
- kasan-dev <kasan-dev@googlegroups.com>
-Subject: Re: [PATCH 00/14] replace call_rcu by kfree_rcu for simple
- kmem_cache_free callback
-Message-ID: <04567347-c138-48fb-a5ab-44cc6a318549@paulmck-laptop>
-References: <e926e3c6-05ce-4ba6-9e2e-e5f3b37bcc23@suse.cz>
- <3b6fe525-626c-41fb-8625-3925ca820d8e@paulmck-laptop>
- <6711935d-20b5-41c1-8864-db3fc7d7823d@suse.cz>
- <ZnCDgdg1EH6V7w5d@pc636>
- <36c60acd-543e-48c5-8bd2-6ed509972d28@suse.cz>
- <ZnFT1Czb8oRb0SE7@pc636>
- <5c8b2883-962f-431f-b2d3-3632755de3b0@paulmck-laptop>
- <9967fdfa-e649-456d-a0cb-b4c4bf7f9d68@suse.cz>
- <6dad6e9f-e0ca-4446-be9c-1be25b2536dd@paulmck-laptop>
- <4cba4a48-902b-4fb6-895c-c8e6b64e0d5f@suse.cz>
+ Thu, 20 Jun 2024 14:52:16 +0000 (UTC)
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1f9b523a15cso7721285ad.0
+ for <wireguard@lists.zx2c4.com>; Thu, 20 Jun 2024 07:52:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1718895135; x=1719499935; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:autocrypt:subject:from:to:user-agent
+ :mime-version:date:message-id:from:to:cc:subject:date:message-id
+ :reply-to; bh=52GQsQlFwQgrwa27ImkM9ftdI2zTTD3ypg0F/kwiYpQ=;
+ b=jUZqFEC8c2q1HPatN1JN2DhniEvZcK8m+e/N7tBOxsXNsP/HJ1wFw8S08AcxnKW1Qv
+ Mqkp4ifvOYkD2taMFGun4v0EzC93Ozv1HKTdL/9aUQooMiXej6P9Wbti0FWw7wRETldu
+ 1eshqTwYWuhSSqZvByUPGE5nbMdnt1vRywV69aZqpzCTaTdmxB14914TeJQl2IjyRqv3
+ 3FuuDYmC4n0kxPGlnF5hUFB4zinjT724YqDlTrs2s4moQwnpmWEAuEWjHc3eSwyqbCLy
+ l7glq6fc3764JeQSPZ8ygexEdCIt6jfagZiLWGq5dcx7znABxdsnWJw+UfcfKR/Ye+iv
+ naYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718895135; x=1719499935;
+ h=content-transfer-encoding:autocrypt:subject:from:to:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=52GQsQlFwQgrwa27ImkM9ftdI2zTTD3ypg0F/kwiYpQ=;
+ b=b6uVfbYyenJaezgRpx9PbXUpwRuEsvL00lTDlOvj++l4wXx+TVNoY4JiKlM4S8DuPx
+ uFTw7oHhHA6JuOv77n85VUIx1IiOLJVfxS96konD3zAWzzI9Bs95ZSTCSrVRfC8LIYBa
+ 1xie2PAlOB/HFvQiFAx0tqHKnrUlL6/G25nUpOdr7bCSER3r428LqLgqeP0u9oB0hdZS
+ gjOWPpS8Ic6ZaynCqrmGA1eQvwjUWB3lVw+i+nUkUN1uTQlXY6v+XEKJUiDBGjuYP/oz
+ ypneQXOMkn029GO68zQEvs1tkv1lnLTJXUmy/9iJB3sbtjrCuxpob8NcOFE33KcNptbS
+ erSw==
+X-Gm-Message-State: AOJu0Yw+Bf8mIWFLRgQEFKsD2CNyc3lSn8yF39naSFgUSd4KbqVo6P2r
+ +QNv27LsfWGkE3BB6UD8jtpGZin/1/Ux+auPKcK+bNWxlzkzX4DETK6BIw==
+X-Google-Smtp-Source: AGHT+IE6Mp4TyAS+lQsfzdcMJ6NqvX42msgAFXSF+jeMk1+GT44ptvWzPK4oL6dA7mAABxmIWGKZPQ==
+X-Received: by 2002:a17:902:ccc3:b0:1f9:cdab:fae with SMTP id
+ d9443c01a7336-1f9cdab1131mr26766005ad.34.1718895134569; 
+ Thu, 20 Jun 2024 07:52:14 -0700 (PDT)
+Received: from 1-169-135-157.dynamic-ip.hinet.net
+ (1-169-135-157.dynamic-ip.hinet.net. [1.169.135.157])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f855f5ad14sm138197775ad.303.2024.06.20.07.52.13
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 20 Jun 2024 07:52:14 -0700 (PDT)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) 
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange ECDHE (P-384) server-signature ECDSA (P-256) server-digest
+ SHA256) (No client certificate requested)
+ by localhost (Postfix) with ESMTPSA id A490E1405AB
+ for <wireguard@lists.zx2c4.com>; Thu, 20 Jun 2024 22:52:12 +0800 (CST)
+Message-ID: <384d1fdd-a32f-4839-bb8b-2761be363b50@gmail.com>
+Date: Thu, 20 Jun 2024 22:52:10 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4cba4a48-902b-4fb6-895c-c8e6b64e0d5f@suse.cz>
+User-Agent: Mozilla Thunderbird
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Nohk Two <nohktwo@gmail.com>
+Subject: How to detect the IP CAM on LAN from WG tunnel ?
+Autocrypt: addr=nohktwo@gmail.com; keydata=
+ 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
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -80,144 +122,36 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Reply-To: paulmck@kernel.org
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, Jun 19, 2024 at 11:28:13AM +0200, Vlastimil Babka wrote:
-> On 6/18/24 7:53 PM, Paul E. McKenney wrote:
-> > On Tue, Jun 18, 2024 at 07:21:42PM +0200, Vlastimil Babka wrote:
-> >> On 6/18/24 6:48 PM, Paul E. McKenney wrote:
-> >> > On Tue, Jun 18, 2024 at 11:31:00AM +0200, Uladzislau Rezki wrote:
-> >> >> > On 6/17/24 8:42 PM, Uladzislau Rezki wrote:
-> >> >> > >> +
-> >> >> > >> +	s = container_of(work, struct kmem_cache, async_destroy_work);
-> >> >> > >> +
-> >> >> > >> +	// XXX use the real kmem_cache_free_barrier() or similar thing here
-> >> >> > > It implies that we need to introduce kfree_rcu_barrier(), a new API, which i
-> >> >> > > wanted to avoid initially.
-> >> >> > 
-> >> >> > I wanted to avoid new API or flags for kfree_rcu() users and this would
-> >> >> > be achieved. The barrier is used internally so I don't consider that an
-> >> >> > API to avoid. How difficult is the implementation is another question,
-> >> >> > depending on how the current batching works. Once (if) we have sheaves
-> >> >> > proven to work and move kfree_rcu() fully into SLUB, the barrier might
-> >> >> > also look different and hopefully easier. So maybe it's not worth to
-> >> >> > invest too much into that barrier and just go for the potentially
-> >> >> > longer, but easier to implement?
-> >> >> > 
-> >> >> Right. I agree here. If the cache is not empty, OK, we just defer the
-> >> >> work, even we can use a big 21 seconds delay, after that we just "warn"
-> >> >> if it is still not empty and leave it as it is, i.e. emit a warning and
-> >> >> we are done.
-> >> >> 
-> >> >> Destroying the cache is not something that must happen right away. 
-> >> > 
-> >> > OK, I have to ask...
-> >> > 
-> >> > Suppose that the cache is created and destroyed by a module and
-> >> > init/cleanup time, respectively.  Suppose that this module is rmmod'ed
-> >> > then very quickly insmod'ed.
-> >> > 
-> >> > Do we need to fail the insmod if the kmem_cache has not yet been fully
-> >> > cleaned up?
-> >> 
-> >> We don't have any such link between kmem_cache and module to detect that, so
-> >> we would have to start tracking that. Probably not worth the trouble.
-> > 
-> > Fair enough!
-> > 
-> >> >  If not, do we have two versions of the same kmem_cache in
-> >> > /proc during the overlap time?
-> >> 
-> >> Hm could happen in /proc/slabinfo but without being harmful other than
-> >> perhaps confusing someone. We could filter out the caches being destroyed
-> >> trivially.
-> > 
-> > Or mark them in /proc/slabinfo?  Yet another column, yay!!!  Or script
-> > breakage from flagging the name somehow, for example, trailing "/"
-> > character.
-> 
-> Yeah I've been resisting such changes to the layout and this wouldn't be
-> worth it, apart from changing the name itself but not in a dangerous way
-> like with "/" :)
+Hi,
 
-;-) ;-) ;-)
+This seems a common question but I don't know how do you solve this problem.
 
-> >> Sysfs and debugfs might be more problematic as I suppose directory names
-> >> would clash. I'll have to check... might be even happening now when we do
-> >> detect leaked objects and just leave the cache around... thanks for the
-> >> question.
-> > 
-> > "It is a service that I provide."  ;-)
-> > 
-> > But yes, we might be living with it already and there might already
-> > be ways people deal with it.
-> 
-> So it seems if the sysfs/debugfs directories already exist, they will
-> silently not be created. Wonder if we have such cases today already because
-> caches with same name exist. I think we do with the zsmalloc using 32 caches
-> with same name that we discussed elsewhere just recently.
-> 
-> Also indeed if the cache has leaked objects and won't be thus destroyed,
-> these directories indeed stay around, as well as the slabinfo entry, and can
-> prevent new ones from being created (slabinfo lines with same name are not
-> prevented).
+My machine has an ethernet interface: eth0
+   It's network is 192.168.100.1/24
 
-New one on me!
+I created a wireguard interface thru eth0: wg0
+   It's network is 192.168.128.1/24
 
-> But it wouldn't be great to introduce this possibility to happen for the
-> temporarily delayed removal due to kfree_rcu() and a module re-insert, since
-> that's a legitimate case and not buggy state due to leaks.
+I have an IP CAM on the LAN: cam1
+   It's network is 192.168.100.21/24
+   This is physically on the same LAN as my machine's eth0.
 
-Agreed.
+My machine has a MASQUERADE iptable entry in the nat table:
+   iptables -t nat -A POSTROUTING -s 192.168.128.0/24 -o eth0 -j MASQUERADE
 
-> The debugfs directory we could remove immediately before handing over to the
-> scheduled workfn, but if it turns out there was a leak and the workfn leaves
-> the cache around, debugfs dir will be gone and we can't check the
-> alloc_traces/free_traces files there (but we have the per-object info
-> including the traces in the dmesg splat).
-> 
-> The sysfs directory is currently removed only with the whole cache being
-> destryed due to sysfs/kobject lifetime model. I'd love to untangle it for
-> other reasons too, but haven't investigated it yet. But again it might be
-> useful for sysfs dir to stay around for inspection, as for the debugfs.
-> 
-> We could rename the sysfs/debugfs directories before queuing the work? Add
-> some prefix like GOING_AWAY-$name. If leak is detected and cache stays
-> forever, another rename to LEAKED-$name. (and same for the slabinfo). But
-> multiple ones with same name might pile up, so try adding a counter then?
-> Probably messy to implement, but perhaps the most robust in the end? The
-> automatic counter could also solve the general case of people using same
-> name for multiple caches.
-> 
-> Other ideas?
+My phone uses the wireguard connect to my machine's wg0.
+   This wireguard configuration allow 192.168.100.0/24.
+   My phone's wireguard VPN IP address 192.168.128.10/24.
 
-Move the going-away files/directories to some new directoriesy?  But you
-would still need a counter or whatever.  I honestly cannot say what
-would be best from the viewpoint of existing software scanning those
-files and directories.
+So my phone should be able to connect to my IP CAM without problem.
+   192.168.128.10(phone) source NAT as 192.168.100.1(eth0) then connect to 192.168.100.21(cam1)
+   192.168.100.21(cam1) reply to 192.168.100.1(eth0) then NAT rewrite to 192.168.128.10(phone)
 
-							Thanx, Paul
+However, the IP CAM's mobile App on my phone never remember the IP CAM's IP address and will always scan the network to find out the IP CAM. Then Failed if my phone uses the wireguard VPN.
 
-> Thanks,
-> Vlastimil
-> 
-> > 
-> > 							Thanx, Paul
-> > 
-> >> >> > > Since you do it asynchronous can we just repeat
-> >> >> > > and wait until it a cache is furry freed?
-> >> >> > 
-> >> >> > The problem is we want to detect the cases when it's not fully freed
-> >> >> > because there was an actual read. So at some point we'd need to stop the
-> >> >> > repeats because we know there can no longer be any kfree_rcu()'s in
-> >> >> > flight since the kmem_cache_destroy() was called.
-> >> >> > 
-> >> >> Agree. As noted above, we can go with 21 seconds(as an example) interval
-> >> >> and just perform destroy(without repeating).
-> >> >> 
-> >> >> --
-> >> >> Uladzislau Rezki
-> >> 
-> 
+Maybe the problem is that my phone and the IP CAM have different network, 192.168.128.0/24 vs 192.168.100.0/24.
+
+How do you solve this problem ?
