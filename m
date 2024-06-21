@@ -4,117 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D73FC27C4F
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 21 Jun 2024 10:39:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32F1EC27C4F
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 21 Jun 2024 10:49:18 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4b37daec;
-	Fri, 21 Jun 2024 10:39:23 +0000 (UTC)
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com
- [2607:f8b0:4864:20::633])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a1ebd12f
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 12076195;
+	Fri, 21 Jun 2024 10:47:46 +0000 (UTC)
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com
+ [2a00:1450:4864:20::22d])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7ef05ce1
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 21 Jun 2024 10:39:19 +0000 (UTC)
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-1f700e4cb92so16728065ad.2
- for <wireguard@lists.zx2c4.com>; Fri, 21 Jun 2024 03:39:19 -0700 (PDT)
+ Fri, 21 Jun 2024 10:47:42 +0000 (UTC)
+Received: by mail-lj1-x22d.google.com with SMTP id
+ 38308e7fff4ca-2ec002caf3eso26554191fa.1
+ for <wireguard@lists.zx2c4.com>; Fri, 21 Jun 2024 03:47:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718966357; x=1719571157; darn=lists.zx2c4.com;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:subject:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to;
- bh=aoRYaAoBbOCfun8nR8wpgPv5npmOmw40V42NrQAtVs8=;
- b=cZhMu5/58IWEGjUnnVQonQH+mNGOjaRLJm6QqIFZqgbU/VENW3nuTrAI1mlidfN5PT
- DWF6XdHNEvA2cprNaGwhyLI1YyO2uAGtNjAdSzRca1QHpqq6NBY/wGMWeq52ecKknBSE
- VOrSblIebqVCHlOyt837mUDYCJGLcgQKKYpNFOZxVsYtl6g+8NLany/jXRCy8etK/Km9
- AT5B24DHEDEbWa8W6auC+oSsgCsxdSuLNAoOPDXnlZBJL7rkibcoNbMlE7CQjvEr2zuQ
- lknNtkWhsjhc1xbzEtKTDZo0vTVd9KCejTOG+zOzGCXOrC75rJvHaYGOBcvdTFu+3jbM
- TAug==
+ d=tomcsanyi.net; s=google; t=1718966862; x=1719571662; darn=lists.zx2c4.com;
+ h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+ :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+ :reply-to; bh=sWFKNxi9InMKumb1Ri0fRbqC9VgQ9hPwNh5J2MiVVkk=;
+ b=ebglOeTrgqdY5n/uKteS55lmYaybCCbI7GIfU2raRwcKtGxnnxyjKzlUBH37xhLYB6
+ 3g2vDVioscHpnPNqA/K6EM46lWG6qXuB+lfoiIeMP7pINSUfubTREvmigiDji7vdV+Df
+ Lfu7NlJ7rcOHbcEYHl7xLXtDXOuG4jZoYBNzjUs5x8/P2KJLu5DQGcb2MPqfGRPa7QuP
+ Is9+RYByWOteyPA1dYz7mWOCm7M4iy8BJ3C5NWz1wMrWDXeVYRO2LzOsoAcCiaghkRcp
+ JeF6rPuwiaxZQuV1vzJnaZWvaIVwfs6WTj0MxFMl37LTlhsDfAmi7865YXpBMvlVS2Da
+ sdsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718966357; x=1719571157;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aoRYaAoBbOCfun8nR8wpgPv5npmOmw40V42NrQAtVs8=;
- b=FbpMfr3vOBmuQjCxxwqqtYRat/kSueSragDvxYR2cHR/FFkTGqS4MzZi9lPBcZEXDE
- nLEGM7zA2AK+uBqgubnIpcjvx4O9EG6BL27x3pVTWPmSnx1N96wM9y5RbUqWGNjBL5Ot
- Z/PvFjLJHFUM0Y7V7uqJgIT3fxQXQAD0lr3lKTIuBbKWzRe9AtNreLCKPhmoFKORMkx5
- YDKFQD0F0eaisoP+SMy/sCS0VDGsdZfXyXs7f83WuiRkUQqGz1neoI9SeDWXxzu9LSox
- 152E5v2RJg9MfLhPzQIcHhwfsGo5lkkuDl3ZyMI2bNhS0R+p/8mmVUDmZbYGcTFGeIKW
- QYvg==
-X-Gm-Message-State: AOJu0YwQOtxuZPQOoopIeaCndmlaevaxusxdHnqY8bC1WD++f8oE1MBm
- G8uK/+lbBtRB+FqlWZCUibYmUnXUGDctPpJMDe8qSqq+krs5xB6i15BKPg==
-X-Google-Smtp-Source: AGHT+IEWCSvISScLZO343/jj0bFUeYFql2mmE6oHLQaX73GVqUTiPND9oltcziXmKh6hQ2h/7w6XNw==
-X-Received: by 2002:a17:902:ec88:b0:1f9:d6cc:e504 with SMTP id
- d9443c01a7336-1f9d6cce83amr40671565ad.24.1718966357150; 
- Fri, 21 Jun 2024 03:39:17 -0700 (PDT)
-Received: from 1-169-135-157.dynamic-ip.hinet.net
- (1-169-135-157.dynamic-ip.hinet.net. [1.169.135.157])
+ d=1e100.net; s=20230601; t=1718966862; x=1719571662;
+ h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+ :from:content-transfer-encoding:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=sWFKNxi9InMKumb1Ri0fRbqC9VgQ9hPwNh5J2MiVVkk=;
+ b=IMq5dsavQVsiI+R/FifGAMvQEa+8Y1OWpTZhVJy5j9Lz/yh10Wq/nPerrXVZ8nIf57
+ wJNyJIBZKaEhzKpwrOXUo4Cp3fka5wgwuiTkp63WhnejD8zJTgDSdoV2obm3fF/zS3+o
+ tb4dEtP1kIScTY8UX2LgTH9zW3q3v5nHffDD3Qcy/DYBUF1dvsrWK6dB0yQFrcJRClyq
+ Lr82mWGJXBrzEG5u7U+Vk7PgRsoJlxPT/10pNkwYk6862ckUrmBK7g48112IywPT2HlH
+ jluEyl06kZIkXnsF+SzVOcA8xL9LHEcIPdqDaR0+2vlVHGQVZAfZGw6sOkSmscyriNk/
+ 64pQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWyy8e3DA+N5XWjuTXrY/c3tuEGf0vtD/wNc8dkxZCENDZTVqZiE6mXmU1qIrmD2dtbuUQw7dkvXVEG6lpal7DPKWY5qWs9ZdCb
+X-Gm-Message-State: AOJu0Yw0UpL+qZDL2fjeT8O4yKN4aKOPFih+zhA7gaiU/jrXrjzJVF/3
+ 0zuSjsd83fOjFHXRHgoYDf4rF2yJY9gQV00AtFGE9I7NRdPbfXcG4R15jJLL9bF1jPmFK8X7yLk
+ tnVs=
+X-Google-Smtp-Source: AGHT+IF7lwB2BXB6j2funLBlxwipYybbdu7Sg5qTV/YoE9p8Sb3VP37qeAaycmVbQOVTdud4X/FWYQ==
+X-Received: by 2002:a2e:9a86:0:b0:2ec:1613:a2a with SMTP id
+ 38308e7fff4ca-2ec3cfe99eamr60460101fa.42.1718966862011; 
+ Fri, 21 Jun 2024 03:47:42 -0700 (PDT)
+Received: from smtpclient.apple ([2a0a:f640:1400:663a:68c4:6282:a390:b6f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f9eb2f03desm11210875ad.1.2024.06.21.03.39.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Jun 2024 03:39:16 -0700 (PDT)
-Received: from [192.168.50.10] (blum-vo.family.era [192.168.50.10])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange ECDHE (P-384) server-signature ECDSA (P-256) server-digest
- SHA256) (No client certificate requested)
- by mail.family.era (Postfix) with ESMTPSA id 70C591406BF;
- Fri, 21 Jun 2024 18:39:14 +0800 (CST)
-Message-ID: <1f7f4177-86b1-4a33-876b-06bf4e4f1cbd@gmail.com>
-Date: Fri, 21 Jun 2024 18:39:11 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+ a640c23a62f3a-a6fcf548fe8sm70616366b.129.2024.06.21.03.47.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 21 Jun 2024 03:47:41 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: "Tomcsanyi, Domonkos" <domi@tomcsanyi.net>
+Mime-Version: 1.0 (1.0)
 Subject: Re: How to detect the IP CAM on LAN from WG tunnel ?
-To: Mark Lawrence <mark@rekudos.net>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-References: <384d1fdd-a32f-4839-bb8b-2761be363b50@gmail.com>
- <ZnVFefPIvg5DFNnl@d.rekudos.net>
-From: Nohk Two <nohktwo@gmail.com>
-Autocrypt: addr=nohktwo@gmail.com; keydata=
- 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
-In-Reply-To: <ZnVFefPIvg5DFNnl@d.rekudos.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Date: Fri, 21 Jun 2024 12:47:30 +0200
+Message-Id: <4B7285ED-C08C-4AAB-827C-AF511D606D03@tomcsanyi.net>
+References: <1f7f4177-86b1-4a33-876b-06bf4e4f1cbd@gmail.com>
+Cc: Mark Lawrence <mark@rekudos.net>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
+In-Reply-To: <1f7f4177-86b1-4a33-876b-06bf4e4f1cbd@gmail.com>
+To: Nohk Two <nohktwo@gmail.com>
+X-Mailer: iPhone Mail (21F90)
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -129,32 +82,52 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 2024/6/21 17:18, Mark Lawrence wrote:
->> How do you solve this problem ?
-> 
-> Iterative fact checking, from the lowest levels of the network stack to the highest.
-> 
->      - Are the devices actually connected where you think they are?
->          - With the tunnel disconnected, does your phone connect to the           camera?
-I use wireguard VPN while my phone is using mobile data (4G LTE). With the tunnel disconnected my phone can't connect to the camera since it scanned and cannot find the camera.
+In case the camera app uses something below IP, eg ARP to discover you don=E2=
+=80=99t have a chance, since it will never cross the wireguard tunnel.
+You should try to capture somehow what the app is doing, and then work from t=
+hat. Either they do not accept the Wireguard routes or they are using non-IP=
+ discovery that does not get routed through wg.
 
->      - Is your Wireguard tunnel set up properly?
->          - Can your phone ping the wg0 address with the tunnel active?
->          - Can your phone ping other .100 devices with the tunnel           active?
-I don't know how to ping from my phone. But the phone, with the wireguard tunnel connected, can visit my LAN website which is in the network 192.168.100.0/24.
+Good luck!
+Domi
 
->      - Does your eth0/wg0 machine have IP forwarding enabled?
->          - sysctl net.ipv4.ip_forward=1
-Yes.
-$ sysctl net.ipv4.ip_forward
-net.ipv4.ip_forward = 1
-
->      - What does packet tracing show?
->          - I.e. `ngrep -d wg0 .\* icmp` or the tcpdump equivalent, also           against eth0 for the wireguard UDP port.
-I use `ngrep -d wg0 .\* icmp`, but nothing dump. However while I open my phone's browser to visit my LAN site, it did dump something.
-
->      - Does the mobile App actually support remote (routed) cameras or       just on the local network?
-> 
-This is the point I said in my original mail that I think my phone and the camera are in different networks. I believe this App is for LAN network.
-
-For this scenario, are there solutions ?
+> 21.06.2024 d=C3=A1tummal, 12:42 id=C5=91pontban Nohk Two <nohktwo@gmail.co=
+m> =C3=ADrta:
+>=20
+> =EF=BB=BFOn 2024/6/21 17:18, Mark Lawrence wrote:
+>>> How do you solve this problem ?
+>> Iterative fact checking, from the lowest levels of the network stack to t=
+he highest.
+>>     - Are the devices actually connected where you think they are?
+>>         - With the tunnel disconnected, does your phone connect to the   =
+        camera?
+> I use wireguard VPN while my phone is using mobile data (4G LTE). With the=
+ tunnel disconnected my phone can't connect to the camera since it scanned a=
+nd cannot find the camera.
+>=20
+>>     - Is your Wireguard tunnel set up properly?
+>>         - Can your phone ping the wg0 address with the tunnel active?
+>>         - Can your phone ping other .100 devices with the tunnel         =
+  active?
+> I don't know how to ping from my phone. But the phone, with the wireguard t=
+unnel connected, can visit my LAN website which is in the network 192.168.10=
+0.0/24.
+>=20
+>>     - Does your eth0/wg0 machine have IP forwarding enabled?
+>>         - sysctl net.ipv4.ip_forward=3D1
+> Yes.
+> $ sysctl net.ipv4.ip_forward
+> net.ipv4.ip_forward =3D 1
+>=20
+>>     - What does packet tracing show?
+>>         - I.e. `ngrep -d wg0 .\* icmp` or the tcpdump equivalent, also   =
+        against eth0 for the wireguard UDP port.
+> I use `ngrep -d wg0 .\* icmp`, but nothing dump. However while I open my p=
+hone's browser to visit my LAN site, it did dump something.
+>=20
+>>     - Does the mobile App actually support remote (routed) cameras or    =
+   just on the local network?
+> This is the point I said in my original mail that I think my phone and the=
+ camera are in different networks. I believe this App is for LAN network.
+>=20
+> For this scenario, are there solutions ?
