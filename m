@@ -4,44 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C979C27C53
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 22 Jun 2024 09:25:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84F90C2BD05
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 24 Jun 2024 09:36:15 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 102452f4;
-	Sat, 22 Jun 2024 09:25:28 +0000 (UTC)
-Received: from smtp.ungleich.ch (smtp.ungleich.ch
- [2a0a:e5c0:2:2:0:c8ff:fe68:bf1c])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1b1a5aa3
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 10544c0d;
+	Mon, 24 Jun 2024 09:36:12 +0000 (UTC)
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com
+ [2a00:1450:4864:20::134])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id dba42bf9
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 22 Jun 2024 09:25:26 +0000 (UTC)
-Received: from bridge.localdomain (localhost [IPv6:::1])
- by smtp.ungleich.ch (Postfix) with ESMTP id A852C20C9C;
- Sat, 22 Jun 2024 11:25:25 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ungleich.ch;
- s=202201; t=1719048325;
- bh=G6BU+dN2ambcQOGF9VKTHVK+45kjxxQRs4aCu7EKXFw=;
- h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
- b=ku50jeH0EpwtbBv+DyUEvQl+sDA/deGOceHBoy5pjIXQUWTr280EWxkItTVoPiufM
- N6eDODy+J2PjlvYz8nJmHn++wtCyMMSuGIBbAQgL8URvWQSYJ6+DK8wi5XQuQ402sm
- GiNB7rGNs9t2yM4eV6kRnTD8cIW+SR3c0czyMcZ/IC227u5uaeoV2mZ5DoGcrl8Wio
- vaS0LHF1fcBgh2X6e0ipxdc/qQCzGGuuhSN0Q6ZqckfZ/eFyNPbnUkN4Jb4dzLoNUg
- G0MYJFKAfQPbPSretO+7yd9TIJJ8hUehwDjPzPkYYZovisdqYClloRCGH+cu9pMcmN
- V2zffJZy+Ouow==
-Received: by bridge.localdomain (Postfix, from userid 1000)
- id 63F211A6A2B4; Sat, 22 Jun 2024 11:22:28 +0200 (CEST)
-From: Nico Schottelius <nico.schottelius@ungleich.ch>
-To: Daniel =?utf-8?Q?Gr=C3=B6ber?= <dxld@darkboxed.org>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: Wireguard uses incorrect interface - routing issue
-In-Reply-To: <20240621122926.2xzt7ulno5oczqcv@House.clients.dxld.at> ("Daniel
- =?utf-8?Q?Gr=C3=B6ber=22's?= message of "Fri, 21 Jun 2024 14:29:26 +0200")
-References: <878qyyim5k.fsf@ungleich.ch> <874j9milmo.fsf@ungleich.ch>
- <20240621122926.2xzt7ulno5oczqcv@House.clients.dxld.at>
-Date: Sat, 22 Jun 2024 11:22:28 +0200
-Message-ID: <87zfrdgwmj.fsf@ungleich.ch>
+ Mon, 24 Jun 2024 09:36:09 +0000 (UTC)
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-52ce01403f6so1442275e87.0
+ for <wireguard@lists.zx2c4.com>; Mon, 24 Jun 2024 02:36:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=maidenheadbridge-com.20230601.gappssmtp.com; s=20230601; t=1719221769;
+ x=1719826569; darn=lists.zx2c4.com; 
+ h=content-transfer-encoding:in-reply-to:from:to:references
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=3nbssd+SOrPelJEl3Nfbp389m7F0H+/rGBuI8zDDknM=;
+ b=G1Mx5LNxBEwSkypezDCyV3s3vQmQICHH/3q4d87tAVTsw/t+rYLRIY5eGCeEBeiGUq
+ T0TBfXE1TcwB6psJfCIELltRaoT4r42Fe9kWLgG75TXyKKaqxmYOPApIH57WoYNF2r/L
+ w+ix4F6JO5dPWYX3Vx+vnC5haxABLHytIJe18MZkX8J5rFyacPBjPHkBSHUHm8pu8HJR
+ Y/aLht52/NBTatsYUtpV4xlP8ElHaf8Y8URfDJ3l26arinZ4fyuoaeVMDiLYrThAkLaX
+ vGpFHzb9+TmA+I60D285L3XSkRfko7rCDI4TCNG9KSr4X+0kq0XJXMu+mlT6+hY5CfDi
+ Xl+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719221769; x=1719826569;
+ h=content-transfer-encoding:in-reply-to:from:to:references
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3nbssd+SOrPelJEl3Nfbp389m7F0H+/rGBuI8zDDknM=;
+ b=itM5cwo/WWpm/sVHL1Gysl5pUYZM3s4tBVCrj4vUP0uZihS1Ax2xhjhC9DVBPISDn0
+ oq3koZBH+YqlIzweqD7BWdEWR8zWEJSrJmcOISn44G9s1Q6laCzCep3P9M3ujgvvYJYi
+ hKsbDtzwXuYAc9fMuyPXcR++GGMowlyw+1Ta7V+fNEednvq/FNBJDGPYZBaz+sLXW2O9
+ hkbOyLh5VtiJ9Lup7qCFkDJWSjHQQtZLn+tY9xuvkWH3sapLP4PvB4OGDVhNk2yNn1Zl
+ k1/IBlf+JdeUgcAYTLTMdLg47/YzjxqE+D6UMm6mBa6UwMv75AM48y0z+4wa8vzIzPtl
+ cXag==
+X-Gm-Message-State: AOJu0Yxs8TEcFr7oZvoBDcBrPCk83KLvyT508OXIhEqViPzsKu802MCc
+ WooAOzawCzRkKJD8RxOgADGiOOZBjZYIgRccH96bgEOuBid3DXfhA2qXcvbhBTv62/P78wO7AU3
+ 8+0I=
+X-Google-Smtp-Source: AGHT+IEyMfbGwpNHXMo77efQBDWp/5RdgSONKHFUn2K4VvwzKrFANMr4KoELon/4jnpcHsvAz1zl5Q==
+X-Received: by 2002:ac2:514a:0:b0:52c:df9d:7cbe with SMTP id
+ 2adb3069b0e04-52ce183bf39mr2256249e87.39.1719221768475; 
+ Mon, 24 Jun 2024 02:36:08 -0700 (PDT)
+Received: from [192.168.1.140] (82-68-6-73.dsl.in-addr.zen.co.uk. [82.68.6.73])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-424817b4ad8sm128092765e9.21.2024.06.24.02.36.07
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 Jun 2024 02:36:08 -0700 (PDT)
+Message-ID: <43aac110-8699-41b3-bad8-7a38bf984b45@maidenheadbridge.com>
+Date: Mon, 24 Jun 2024 10:36:06 +0100
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-=-="
+User-Agent: Mozilla Thunderbird
+Subject: Fwd: Wireguard address binding - how to fix?
+Content-Language: en-US, en-GB
+References: <740ee793-0ed2-4cf6-ba4a-07268b46b761@maidenheadbridge.com>
+To: wireguard@lists.zx2c4.com
+From: Adrian Larsen <alarsen@maidenheadbridge.com>
+In-Reply-To: <740ee793-0ed2-4cf6-ba4a-07268b46b761@maidenheadbridge.com>
+X-Forwarded-Message-Id: <740ee793-0ed2-4cf6-ba4a-07268b46b761@maidenheadbridge.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -56,120 +83,64 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---=-=-=
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Hi Friends,
 
+You can achieve address binding on a Linux box with a mix of marking, ip 
+rules, ip route and Source NAT.
 
-Good morning Daniel,
+1) On WG interface, add "FwMark = 0x34" (the value 0x34 is an example, 
+you can put any value here)
 
-Daniel Gr=C3=B6ber <dxld@darkboxed.org> writes:
->> wireguard still uses the wrong interface:
->>=20
->> 11:20:13.115154 eth0  Out IP 192.168.1.149.60031 > 194.187.90.23.4000: U=
-DP, length 148
+2) Create IP Rule "from all fwmark 0x34 lookup rt_wg0_out" -> this will 
+force the outgoing packet to use the route table "rt_wg0_out"
+
+3) On the route table "rt_wg0_out" create the default or specific route 
+to force the packet market with 0x34 to leave using the interface where 
+your desire "IP address" resides.
+
+4) Create a POSTROUTING -> SNAT forcing mark 0x34 via the desired "IP 
+address". This will bind your "IP address".
+
+Done! The packet with mark 0x34 will be routed via the correct interface 
+using the source IP you want.
+
+I hope this helps.
+
+Best regards,
+
+Adrian Larsen
+Maidenhead Bridge
+Cloud Security Connectors for SSE vendors.
+m: +44 7487640352
+e:alarsen@maidenheadbridge.com
+
+On 09/06/2024 16:39, Nico Schottelius wrote:
+> Jason,
 >
-> I haven't looked at the details yet but this smells like the same route
-> caching issue I found a while ago:
-> https://lists.zx2c4.com/pipermail/wireguard/2023-July/008111.html
+> may I shortly ask what your opinion is on the patch and whether there is
+> a way forward to make wireguard usable on systems with multiple IP
+> addresses?
 >
-> Does up/down'ing the interface make the problem go away? IIRC that will
-> re-initialize the udp socket and thus clear the route chache.
-
-Up & down does *not* fix it, however a *reboot* did. I've the feeling
-that this is a race condition together with bird running on the
-machine. I suspect the following is happening:
-
-- machine starts
-- ip rule is used to move traffic into table 42 (part of the container star=
-tup)
-- table 42 is populated by bird with static routes (part of bird
-  startup)
-
--- at this stage wireguard works
-
-- bird establishes iBGP sessions and receives alternate routes for the
-  target in the main routing table
-- wireguard restart is triggered and from that moment on wireguard uses
-  the route from the main table
-
--- at this stage wireguard is broken/takes the route from the main table
-
-This is so far a theory, I'll need to verify that, maybe a simple test
-script as you suggested makes sense.
-
-> FYI Nico: It may be time to escalate these bugs to the network subsystem
-> maintainers on netdev@vger.kernel.org since Jason is not reading this list
-> anymore AFAICT.
-
-That is a very good point and I shall do so next week!
-
-> get_maintainer.pl spits out this list of emails to send To:
+> Best regards,
 >
->     Jason A. Donenfeld" <Jason@zx2c4.com>,
->     "David S. Miller" <davem@davemloft.net>,
->     Eric Dumazet <edumazet@google.com>,=20
->     Jakub Kicinski <kuba@kernel.org>,
->     Paolo Abeni <pabeni@redhat.com>,
->     wireguard@lists.zx2c4.com,=20
->     netdev@vger.kernel.org,
->     linux-kernel@vger.kernel.org
+> Nico
+>
+> Nico Schottelius<nico.schottelius@ungleich.ch>  writes:
+>
+>> d tbsky<tbskyd@gmail.com>  writes:
+>>> I  remembered how exciting when I tested wireguard at 2017. until I
+>>> asked muti-home question in the list.
+>>> wiregurad is beautiful,elegant,fast but not easy to get along with.
+>>> openvpn is not so amazing but it can get the job done.
+>> Nice summary, hits the nail quite well.
+>>
+>> Jason, do you mind having a look at the submitted patches for IP address
+>> binding and comment on them? Or alternatively can you give green light
+>> for generally moving forward so that a direct inclusion in the Linux
+>> kernel would be accepted?
+>>
+>> Best regards,
+>>
+>> Nico
+>>
 
-Thanks for looking up!
-
-> Do add me to CC as well. Before sending I'd recommend working out an
-> ip-netns based reproducer script -- makes it harder to ignore the report =
-as
-> "ugh, too much work" ;)
-
-Understood and ...
-
-
-> Let me know if you need help with that,
-
-... would certainly appreciate that.
-
-You are on matrix, too, aren't you?
-I'm @nico:ungleich.ch, might be easier for coordination.
-
-Best regards from sunny Glarus,
-
-Nico
-
-
-
---=-=-=
-Content-Type: multipart/signed; boundary="==-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-
---==-=-=
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
-
-
-=2D-=20
-Sustainable and modern Infrastructures by ungleich.ch
-
---==-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQJRBAEBCgA7FiEEZZsNkehufiT9FWnQxykhoSk/LSQFAmZ2l9QdHG5pY28uc2No
-b3R0ZWxpdXNAdW5nbGVpY2guY2gACgkQxykhoSk/LSSjGA/+LS/5svjFMHhmwpAB
-pJ/e27Dk7K55DAjk0DvD9K4ItiDk7lTCOEfkxYHagUPVqUmqCZMU4O22jnEHl4pn
-BqY/2Nb1qHv/lkCLhKHv2dlGPEB5ubEFTWFwpdRzR0406UtuVwReoOnmyHd6cjBV
-YNMF71AKadfNBXgO68CS/QzQDuxY8eeqnlptTgZitbnOoFoaHeXb40gY7FuUbX5f
-pr7J40KEFfIzrV/qGMwI0Eyl4Y8HE7B6484aYFCib+Qdkjkd4QSViNdJrmQlayGV
-YMbgz4S4IDbiUQdsK1EyFvt0iJYZPtpFpnBx6xAUrYC/ceEA7iowJ1lOGFULCf3z
-G40/LRgJXBsHEdROPnquGISy0GSTZ1arzU148d0um4dRnlkfsFCvG1Zq+ynMdglx
-YToZJVpwglnCxVD8AZofYO+0tCS1I6CAUUd2AiO8CurZp00sH3uDaY8qUumepiUE
-mbRx2ekdXeEcicqcXNhpv45tLpwP32YdU3+t2pgOxij3Q9MJu0LGcGhaFdsaVjj9
-yvS+qQ6Ccf0kCy9QOrVfjD8v/hHQmX8XFXfO0wBhrJSkW/dc732O8DWcJ/7YQdiJ
-iCl+MD6TNLfO3TPBAmS7KpND7yNU3z4Wy/YAIhPen47Lam9kpOM2xkVvO3y0XHJq
-d3G+4PG1ZTIDqlJsdwGY+2ZzzkY=
-=Ks5b
------END PGP SIGNATURE-----
---==-=-=--
-
---=-=-=--
