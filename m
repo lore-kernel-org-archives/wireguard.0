@@ -4,71 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84F90C2BD05
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 24 Jun 2024 09:36:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F24E8C2BD09
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 27 Jun 2024 11:35:31 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 10544c0d;
-	Mon, 24 Jun 2024 09:36:12 +0000 (UTC)
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com
- [2a00:1450:4864:20::134])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id dba42bf9
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 31677768;
+	Thu, 27 Jun 2024 11:35:29 +0000 (UTC)
+Received: from smtp.ungleich.ch (smtp.ungleich.ch [185.203.114.86])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c7268044
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 24 Jun 2024 09:36:09 +0000 (UTC)
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-52ce01403f6so1442275e87.0
- for <wireguard@lists.zx2c4.com>; Mon, 24 Jun 2024 02:36:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=maidenheadbridge-com.20230601.gappssmtp.com; s=20230601; t=1719221769;
- x=1719826569; darn=lists.zx2c4.com; 
- h=content-transfer-encoding:in-reply-to:from:to:references
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=3nbssd+SOrPelJEl3Nfbp389m7F0H+/rGBuI8zDDknM=;
- b=G1Mx5LNxBEwSkypezDCyV3s3vQmQICHH/3q4d87tAVTsw/t+rYLRIY5eGCeEBeiGUq
- T0TBfXE1TcwB6psJfCIELltRaoT4r42Fe9kWLgG75TXyKKaqxmYOPApIH57WoYNF2r/L
- w+ix4F6JO5dPWYX3Vx+vnC5haxABLHytIJe18MZkX8J5rFyacPBjPHkBSHUHm8pu8HJR
- Y/aLht52/NBTatsYUtpV4xlP8ElHaf8Y8URfDJ3l26arinZ4fyuoaeVMDiLYrThAkLaX
- vGpFHzb9+TmA+I60D285L3XSkRfko7rCDI4TCNG9KSr4X+0kq0XJXMu+mlT6+hY5CfDi
- Xl+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719221769; x=1719826569;
- h=content-transfer-encoding:in-reply-to:from:to:references
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3nbssd+SOrPelJEl3Nfbp389m7F0H+/rGBuI8zDDknM=;
- b=itM5cwo/WWpm/sVHL1Gysl5pUYZM3s4tBVCrj4vUP0uZihS1Ax2xhjhC9DVBPISDn0
- oq3koZBH+YqlIzweqD7BWdEWR8zWEJSrJmcOISn44G9s1Q6laCzCep3P9M3ujgvvYJYi
- hKsbDtzwXuYAc9fMuyPXcR++GGMowlyw+1Ta7V+fNEednvq/FNBJDGPYZBaz+sLXW2O9
- hkbOyLh5VtiJ9Lup7qCFkDJWSjHQQtZLn+tY9xuvkWH3sapLP4PvB4OGDVhNk2yNn1Zl
- k1/IBlf+JdeUgcAYTLTMdLg47/YzjxqE+D6UMm6mBa6UwMv75AM48y0z+4wa8vzIzPtl
- cXag==
-X-Gm-Message-State: AOJu0Yxs8TEcFr7oZvoBDcBrPCk83KLvyT508OXIhEqViPzsKu802MCc
- WooAOzawCzRkKJD8RxOgADGiOOZBjZYIgRccH96bgEOuBid3DXfhA2qXcvbhBTv62/P78wO7AU3
- 8+0I=
-X-Google-Smtp-Source: AGHT+IEyMfbGwpNHXMo77efQBDWp/5RdgSONKHFUn2K4VvwzKrFANMr4KoELon/4jnpcHsvAz1zl5Q==
-X-Received: by 2002:ac2:514a:0:b0:52c:df9d:7cbe with SMTP id
- 2adb3069b0e04-52ce183bf39mr2256249e87.39.1719221768475; 
- Mon, 24 Jun 2024 02:36:08 -0700 (PDT)
-Received: from [192.168.1.140] (82-68-6-73.dsl.in-addr.zen.co.uk. [82.68.6.73])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-424817b4ad8sm128092765e9.21.2024.06.24.02.36.07
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Jun 2024 02:36:08 -0700 (PDT)
-Message-ID: <43aac110-8699-41b3-bad8-7a38bf984b45@maidenheadbridge.com>
-Date: Mon, 24 Jun 2024 10:36:06 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Fwd: Wireguard address binding - how to fix?
-Content-Language: en-US, en-GB
+ Thu, 27 Jun 2024 11:35:26 +0000 (UTC)
+Received: from bridge.localdomain (localhost [IPv6:::1])
+ by smtp.ungleich.ch (Postfix) with ESMTP id C7BFF20CCD;
+ Thu, 27 Jun 2024 13:35:25 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ungleich.ch;
+ s=202201; t=1719488125;
+ bh=cJLrh0NKao6w16sZGADfulXouRgQ0UJeKE1T8f9f6IQ=;
+ h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+ b=fWGibKEPdB8Tw+jIeUm4cgCX/Tx5yDVksCjf4zzovUE7u4yFTW+sgxY3K7cEPrXou
+ kdRb7+IIwIoKgXUR+YawtBe4SpaT41UBO5eQYHJi9W6qY1ACUM6EOwz0ivZAjTRdLG
+ 66BBw++IWa+aMLI0Jggrl/8dFHSUsOLeWUnuphm/d6s24wOYoyE0nUUur2QkNfitpU
+ bkComK765WDXjXJKA1KZCICNftXU3edRL2zcEUQXujvE+NjZexIe9e+zuaeD5sZDCw
+ OerXYhoHnoao1I8Sikg60zB+IAagSFZk7utMZUl4QwfTzkjw7uFn+6fpTV3fT7Th+4
+ VinAHncOFlJjA==
+Received: by bridge.localdomain (Postfix, from userid 1000)
+ id 8750B1A6A2B7; Thu, 27 Jun 2024 13:33:23 +0200 (CEST)
+From: Nico Schottelius <nico.schottelius@ungleich.ch>
+To: Adrian Larsen <alarsen@maidenheadbridge.com>
+Cc: wireguard@lists.zx2c4.com
+Subject: Re: Fwd: Wireguard address binding - how to fix?
+In-Reply-To: <43aac110-8699-41b3-bad8-7a38bf984b45@maidenheadbridge.com>
+ (Adrian Larsen's message of "Mon, 24 Jun 2024 10:36:06 +0100")
 References: <740ee793-0ed2-4cf6-ba4a-07268b46b761@maidenheadbridge.com>
-To: wireguard@lists.zx2c4.com
-From: Adrian Larsen <alarsen@maidenheadbridge.com>
-In-Reply-To: <740ee793-0ed2-4cf6-ba4a-07268b46b761@maidenheadbridge.com>
-X-Forwarded-Message-Id: <740ee793-0ed2-4cf6-ba4a-07268b46b761@maidenheadbridge.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+ <43aac110-8699-41b3-bad8-7a38bf984b45@maidenheadbridge.com>
+Date: Thu, 27 Jun 2024 13:33:18 +0200
+Message-ID: <87ed8ihb7l.fsf@ungleich.ch>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="=-=-="
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -83,64 +55,146 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Friends,
+--=-=-=
+Content-Type: text/plain
 
-You can achieve address binding on a Linux box with a mix of marking, ip 
-rules, ip route and Source NAT.
 
-1) On WG interface, add "FwMark = 0x34" (the value 0x34 is an example, 
-you can put any value here)
+Hello Adrian,
 
-2) Create IP Rule "from all fwmark 0x34 lookup rt_wg0_out" -> this will 
-force the outgoing packet to use the route table "rt_wg0_out"
+I tried 1,2 and 3 and observed that wireguard seems to be taking the correct
+routing table when using fwmark:
 
-3) On the route table "rt_wg0_out" create the default or specific route 
-to force the packet market with 0x34 to leave using the interface where 
-your desire "IP address" resides.
+--------------------------------------------------------------------------------
+# cat /etc/wireguard/or3ge.conf
+[Interface]
+PrivateKey = ...
+Address = 2a0a:5480:5:2::2/64
+Table = off
+FwMark = 0x42
 
-4) Create a POSTROUTING -> SNAT forcing mark 0x34 via the desired "IP 
-address". This will bind your "IP address".
+[Peer]
+PublicKey = 3WNj2YuTTm+5wpsAOauRQ3bEMv/WXcKMDZXbJPB8fx0=
+AllowedIPs = ::/0, 0.0.0.0/0
+Endpoint = 194.5.220.43:5001
+--------------------------------------------------------------------------------
 
-Done! The packet with mark 0x34 will be routed via the correct interface 
-using the source IP you want.
 
-I hope this helps.
+--------------------------------------------------------------------------------
+[09:32] server142.place10:~# ip r sh table 42
+194.5.220.0/24 via 192.168.1.254 dev eth1 proto bird metric 32
+194.187.90.23 via 192.168.1.254 dev eth1 proto bird metric 32
+212.103.65.231 via 192.168.1.254 dev eth1 proto bird metric 32
+[09:32] server142.place10:~# ip rule ls
+0:      from all lookup local
+32765:  from all fwmark 0x42 lookup 42
+32766:  from all lookup main
+32767:  from all lookup default
+--------------------------------------------------------------------------------
+
+So the long story short is that one cannot match on the ip address with
+wireguard, potentially because it does not do the address binding by
+default.
+
+But I have to say thanks, at least one problem solevd for the moment!
 
 Best regards,
 
-Adrian Larsen
-Maidenhead Bridge
-Cloud Security Connectors for SSE vendors.
-m: +44 7487640352
-e:alarsen@maidenheadbridge.com
+Nico
 
-On 09/06/2024 16:39, Nico Schottelius wrote:
-> Jason,
+Adrian Larsen <alarsen@maidenheadbridge.com> writes:
+
+> Hi Friends,
 >
-> may I shortly ask what your opinion is on the patch and whether there is
-> a way forward to make wireguard usable on systems with multiple IP
-> addresses?
+> You can achieve address binding on a Linux box with a mix of marking,
+> ip rules, ip route and Source NAT.
+>
+> 1) On WG interface, add "FwMark = 0x34" (the value 0x34 is an example,
+> you can put any value here)
+>
+> 2) Create IP Rule "from all fwmark 0x34 lookup rt_wg0_out" -> this
+> will force the outgoing packet to use the route table "rt_wg0_out"
+>
+> 3) On the route table "rt_wg0_out" create the default or specific
+> route to force the packet market with 0x34 to leave using the
+> interface where your desire "IP address" resides.
+>
+> 4) Create a POSTROUTING -> SNAT forcing mark 0x34 via the desired "IP
+> address". This will bind your "IP address".
+>
+> Done! The packet with mark 0x34 will be routed via the correct
+> interface using the source IP you want.
+>
+> I hope this helps.
 >
 > Best regards,
 >
-> Nico
+> Adrian Larsen
+> Maidenhead Bridge
+> Cloud Security Connectors for SSE vendors.
+> m: +44 7487640352
+> e:alarsen@maidenheadbridge.com
 >
-> Nico Schottelius<nico.schottelius@ungleich.ch>  writes:
->
->> d tbsky<tbskyd@gmail.com>  writes:
->>> I  remembered how exciting when I tested wireguard at 2017. until I
->>> asked muti-home question in the list.
->>> wiregurad is beautiful,elegant,fast but not easy to get along with.
->>> openvpn is not so amazing but it can get the job done.
->> Nice summary, hits the nail quite well.
+> On 09/06/2024 16:39, Nico Schottelius wrote:
+>> Jason,
 >>
->> Jason, do you mind having a look at the submitted patches for IP address
->> binding and comment on them? Or alternatively can you give green light
->> for generally moving forward so that a direct inclusion in the Linux
->> kernel would be accepted?
+>> may I shortly ask what your opinion is on the patch and whether there is
+>> a way forward to make wireguard usable on systems with multiple IP
+>> addresses?
 >>
 >> Best regards,
 >>
 >> Nico
 >>
+>> Nico Schottelius<nico.schottelius@ungleich.ch>  writes:
+>>
+>>> d tbsky<tbskyd@gmail.com>  writes:
+>>>> I  remembered how exciting when I tested wireguard at 2017. until I
+>>>> asked muti-home question in the list.
+>>>> wiregurad is beautiful,elegant,fast but not easy to get along with.
+>>>> openvpn is not so amazing but it can get the job done.
+>>> Nice summary, hits the nail quite well.
+>>>
+>>> Jason, do you mind having a look at the submitted patches for IP address
+>>> binding and comment on them? Or alternatively can you give green light
+>>> for generally moving forward so that a direct inclusion in the Linux
+>>> kernel would be accepted?
+>>>
+>>> Best regards,
+>>>
+>>> Nico
+>>>
 
+--=-=-=
+Content-Type: multipart/signed; boundary="==-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+
+--==-=-=
+Content-Type: text/plain
+
+
+--
+Sustainable and modern Infrastructures by ungleich.ch
+
+--==-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJRBAEBCgA7FiEEZZsNkehufiT9FWnQxykhoSk/LSQFAmZ9Tf4dHG5pY28uc2No
+b3R0ZWxpdXNAdW5nbGVpY2guY2gACgkQxykhoSk/LSSeVRAAkzLOYerh+twOE6JK
+EaL0hynz2CnFDS1+B3u2dS17EdZpRlZrdBWjGv5O9yeChUoLBc+LOXAghQk/n84n
+FXcPcKJ6WLeDftnXhX7xylOWVaW1jSiAxGDgqNsPecFpDS+302ZtRMllyiuv262e
+ZZ7DBpzS0ESF5u3EjhgIHPGC13zcy53rABPJ8DabXVIIe0mJRUvojqtuHv1h1Bwq
+VfWFvfQf6EJaqZJ77UJeTmBKq7lwj9PmV2ow+W7MXzs5d+DKHde+oqJfNyMloCCO
+NdLIT50tJhkIsH7TrJIiBqRtiXS5HGY1IQKDflTk3HK8bQb8YaAbHjbtKXNTthn3
+NiIXFAeF5AgeGOIf5Zj9cEBkCPBxJAci3ky6fZ67+kyrG/F4uLtcm1JX5xtMmy9i
+STo50Pezwy+RLAZ+DGlGNs01fTXfeBy5rIk03ssCYz6ibU0KZXPfN3nioQquh9RF
+4vD/ibkn+fOeJxUJw5yHWFSFRADoi66i68++nb9GVbXaaNWQRgJhkY1nGMqr2ViI
+GuaGAVA/WyOIBYaHQr+oMlFLJDKrmGtukB7l9/V1KkODT4vSO1of9oQHS4fRqzvA
+6qFHPBqYhVakvWDTS2d2FALLvsJIOAvZyCIFmhJXZ4Ya6/rL9WpyGR7V9clumdmR
+If8VLijEzEj7o8rSilNpKFPoJkc=
+=W03H
+-----END PGP SIGNATURE-----
+--==-=-=--
+
+--=-=-=--
