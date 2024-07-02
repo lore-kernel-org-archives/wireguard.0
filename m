@@ -4,38 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7839ED4922D
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 14:51:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BF68D49228
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 14:53:34 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 23e1c102;
-	Mon, 18 Nov 2024 12:45:21 +0000 (UTC)
-Received: from mail-a10.ithnet.com (mail-a10.ithnet.com [217.64.83.105])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 66fa074f
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 24 Jun 2024 10:02:06 +0000 (UTC)
-Received: (qmail 24927 invoked by uid 0); 24 Jun 2024 10:02:05 -0000
-Received: from skraw.ml@ithnet.com by mail-a10 
- (Processed in 2.097347 secs); 24 Jun 2024 10:02:05 -0000
-X-Virus-Status: No
-X-ExecutableContent: No
-Received: from dialin014-sr.ithnet.com (HELO ithnet.com) (217.64.64.14)
- by mail-a10.ithnet.com with ESMTPS (ECDHE-RSA-AES256-GCM-SHA384 encrypted);
- 24 Jun 2024 10:02:03 -0000
-X-Sender-Authentication: SMTP AUTH verified <skraw.ml@ithnet.com>
-Date: Mon, 24 Jun 2024 12:02:02 +0200
-From: Stephan von Krawczynski <skraw.ml@ithnet.com>
-To: Adrian Larsen <alarsen@maidenheadbridge.com>
-Cc: wireguard@lists.zx2c4.com
-Subject: Re: Wireguard address binding - how to fix?
-Message-ID: <20240624120202.6fb011be@ithnet.com>
-In-Reply-To: <43aac110-8699-41b3-bad8-7a38bf984b45@maidenheadbridge.com>
-References: <740ee793-0ed2-4cf6-ba4a-07268b46b761@maidenheadbridge.com>
- <43aac110-8699-41b3-bad8-7a38bf984b45@maidenheadbridge.com>
-Organization: ith Kommunikationstechnik GmbH
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.39; x86_64-pc-linux-gnu)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2b3d00f0;
+	Mon, 18 Nov 2024 12:45:23 +0000 (UTC)
+Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com
+ [2607:f8b0:4864:20::42c])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1c5d3082
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Tue, 2 Jul 2024 10:02:00 +0000 (UTC)
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-70683d96d0eso2346885b3a.0
+ for <wireguard@lists.zx2c4.com>; Tue, 02 Jul 2024 03:01:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1719914517; x=1720519317; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:subject:from:to:content-language
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hWiOatSR7mntr9mVVIU53E7W5KMWYRrHlhjpfe9lb/s=;
+ b=dS4VrBlqZ4C7JOwIktfoIyzDq/fgBEELdZMoaKDas+89RE3CDo6VOZ3wVGxB1Zfh/d
+ Gp5HOJ0cGM4KuW5ASSm/KKFcapw7HSlU5rARCdw63dn+1Mr8JZNTWMZdRIOTitGhui1W
+ 3VwlQ5YKaDCzDnU8fLAtBtH1YnKCj1kbh/qMdoilbHYfMOaw4fwEfF0t0moJZ7dGb44H
+ LDW92OCexuDP8/gwTOnIHdhfs3yWN30G/iq84vtnfC2UKI31xB4EPipvqmdKU5tYn3QT
+ Q9fGXde9pRWQwdr3NZmkJq3E1YfrmWE9v83mci9oR6V3tU4iB8lk1+g/x6hX61lTUSmf
+ 24Gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719914517; x=1720519317;
+ h=content-transfer-encoding:subject:from:to:content-language
+ :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=hWiOatSR7mntr9mVVIU53E7W5KMWYRrHlhjpfe9lb/s=;
+ b=LxBh0RJ97FavhB/vtiDqO8ped4WBgEtHwsGhBkt1Sw+ypis7PPUpYxwFAaj5w0uy7+
+ OiS7uq2igEqUAnPdqDMPxojNARW9EWtknXEvi4Sxe6c1sT4SYRr9R9/rivp2mKdPF+n5
+ n5NLJ2r+L59SXvZ9WaO9u3EsBobBzaHBPsnS7i5dvYJsI2zFvrHP/foffbpaax/XZoVj
+ kvZXZTQrcDP3rwW+G+J5NOGN5ccLi87Iempj/ziKkImEq1oj70tsh+ZNByG6Uv4AiZF4
+ KbmK4DY/Kd+BnBJkaCW7vDtzrW1rZH+2pXUJmPez3mySN+Dt+ve6U8JDaSHGXH5OrewY
+ G5MQ==
+X-Gm-Message-State: AOJu0YzOUKZylEQn50IwUicRxlkPKZGcSHC+gQlZbLHF2hp4NcGtKLVI
+ gstapVF7veCrWKKBh8jPkz7a5p0hyQWNqUDT8mWagAkoCLhEp0zSpiRNbA==
+X-Google-Smtp-Source: AGHT+IEXEdeXQBkVmxNqE9BNTE9XbEEHlc9NtlAHlMULAhQ8I4ET9yHLdy+8AaPnWOJUdI0rpOAn1g==
+X-Received: by 2002:a05:6a20:840e:b0:1be:c2f7:275 with SMTP id
+ adf61e73a8af0-1bef6245512mr7381572637.50.1719914517285; 
+ Tue, 02 Jul 2024 03:01:57 -0700 (PDT)
+Received: from [192.168.188.101] (118-169-225-252.dynamic-ip.hinet.net.
+ [118.169.225.252]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1fac10e365asm82139655ad.86.2024.07.02.03.01.55
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 02 Jul 2024 03:01:56 -0700 (PDT)
+Message-ID: <caa99f73-6837-4ea4-b135-afc6a452101a@gmail.com>
+Date: Tue, 2 Jul 2024 18:01:54 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: wireguard@lists.zx2c4.com
+From: Loren Hsu <rdp.loren@gmail.com>
+Subject: Hyper-V VM can't ping host when Wireguard is started in host
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Mailman-Approved-At: Mon, 18 Nov 2024 12:44:56 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -52,81 +78,36 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Thank you Adrian,
+Hi List,
+Here is an issue when the Wireguard is running on a Windows 11, the 
+hyper-V VM can't access the host OS.
 
-but remember, we are all trained professionals here mostly "skilled in the
-art". Which means we all know _hacks_ to do just about everything.
-But honestly, do you favor a security-based project where you have to hack
-around its deficiencies to make it work how it should?
+My laptop is running Windows 11 host OS, it has a hyper-V VM created and 
+Ubuntu 22.04 LTS installed. When Wireguard is started on the Windows 11 
+host machine, the Ubuntu can't ping the host OS, but it can ping any 
+public IP, like 8.8.8.8.
 
-Btw, some of us aren't even allowed to post in the ML. Guess why ...
---
-Regards,
-Stephan
+The VM has only one virtual interface and is connected to a NAT-virtual 
+switch. The NAT-vswitch has a VM-facing IP 192.168.188.1/24, while the 
+IP in the VM is something like 192.168.188.10/24.
 
+Here are some steps that have been taken to clarify this issue:
+1. When the Wiregurad is NOT started in the host OS, the Ubuntu can ping 
+the host as well as any public IP.
+2. When the Wireguard is started, and capture network traces on the host 
+for the 192.168.188.1 interface, the ping requests are seen coming from 
+the VM, but no reply from the host.
+3. from the 'route print' in the host, the 192.168.188.1/32 is there 
+with metrics 271, which is the 2nd lowest metric that is only inferior 
+to the default route, which is 40. But I guess the longest prefix should 
+match first in this case, besides, the route print output looks the same 
+with or without wireguard enabled.
 
-On Mon, 24 Jun 2024 10:36:06 +0100 Adrian Larsen
-<alarsen@maidenheadbridge.com> wrote:
+It looks like a firewall issue, since network trace has echo requests 
+from the VM, but it's not clear to me what settings should be changed, 
+since the inbound icmp echo request is allowed already.
 
-> Hi Friends,
-> 
-> You can achieve address binding on a Linux box with a mix of marking, ip 
-> rules, ip route and Source NAT.
-> 
-> 1) On WG interface, add "FwMark = 0x34" (the value 0x34 is an example, 
-> you can put any value here)
-> 
-> 2) Create IP Rule "from all fwmark 0x34 lookup rt_wg0_out" -> this will 
-> force the outgoing packet to use the route table "rt_wg0_out"
-> 
-> 3) On the route table "rt_wg0_out" create the default or specific route 
-> to force the packet market with 0x34 to leave using the interface where 
-> your desire "IP address" resides.
-> 
-> 4) Create a POSTROUTING -> SNAT forcing mark 0x34 via the desired "IP 
-> address". This will bind your "IP address".
-> 
-> Done! The packet with mark 0x34 will be routed via the correct interface 
-> using the source IP you want.
-> 
-> I hope this helps.
-> 
-> Best regards,
-> 
-> Adrian Larsen
-> Maidenhead Bridge
-> Cloud Security Connectors for SSE vendors.
-> m: +44 7487640352
-> e:alarsen@maidenheadbridge.com
-> 
-> On 09/06/2024 16:39, Nico Schottelius wrote:
-> > Jason,
-> >
-> > may I shortly ask what your opinion is on the patch and whether there is
-> > a way forward to make wireguard usable on systems with multiple IP
-> > addresses?
-> >
-> > Best regards,
-> >
-> > Nico
-> >
-> > Nico Schottelius<nico.schottelius@ungleich.ch>  writes:
-> >  
-> >> d tbsky<tbskyd@gmail.com>  writes:  
-> >>> I  remembered how exciting when I tested wireguard at 2017. until I
-> >>> asked muti-home question in the list.
-> >>> wiregurad is beautiful,elegant,fast but not easy to get along with.
-> >>> openvpn is not so amazing but it can get the job done.  
-> >> Nice summary, hits the nail quite well.
-> >>
-> >> Jason, do you mind having a look at the submitted patches for IP address
-> >> binding and comment on them? Or alternatively can you give green light
-> >> for generally moving forward so that a direct inclusion in the Linux
-> >> kernel would be accepted?
-> >>
-> >> Best regards,
-> >>
-> >> Nico
-> >>  
-> 
+Any ideas are welcome.
+Thanks,
+Loren
 
