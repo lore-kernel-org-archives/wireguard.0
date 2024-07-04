@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FE1CC2BD09
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  3 Jul 2024 18:11:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47AF4C30653
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  4 Jul 2024 07:49:30 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1a5ed60b;
-	Wed, 3 Jul 2024 18:11:28 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org
- [2604:1380:4641:c500::1])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2e263d87
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b1696ef3;
+	Thu, 4 Jul 2024 07:49:29 +0000 (UTC)
+Received: from mail-il1-f200.google.com (mail-il1-f200.google.com
+ [209.85.166.200])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id cfe49df2
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 3 Jul 2024 18:11:26 +0000 (UTC)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 351F860347;
- Wed,  3 Jul 2024 18:11:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FB1EC2BD10;
- Wed,  3 Jul 2024 18:11:24 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="ZRmmUp+y"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1720030281;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=nxP95z8H/D5jQ1acVpMchUAdQN8JTrhlX7OCXvz9kwQ=;
- b=ZRmmUp+yHoawM9i6CE4ye6v4+uhrw5XL1V05sJWeH8bJ/BFb28hVJYr8s42ypVo6hLtbE1
- f2Lb+p++NVADqKpyDm9yUuASkqsTIjXFbJv4F+oyM5hDzpg/YFBrk9r7BjP+/VuxaGi3Jx
- 0/4hlTNikRoAD/60UEWeTujua408ac8=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a2dcc16d
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Wed, 3 Jul 2024 18:11:20 +0000 (UTC)
-Date: Wed, 3 Jul 2024 20:11:14 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Helge Deller <deller@kernel.org>
-Cc: wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-parisc@vger.kernel.org
-Subject: Re: [PATCH] wireguard: allowedips: Prevent unaligned memory accesses
-Message-ID: <ZoWUQho7noWwAqrF@zx2c4.com>
-References: <ZoV6Q6lWgVRqe7eh@p100>
+ for <wireguard@lists.zx2c4.com>; Thu, 4 Jul 2024 07:49:26 +0000 (UTC)
+Received: by mail-il1-f200.google.com with SMTP id
+ e9e14a558f8ab-37642e69d7eso3209365ab.3
+ for <wireguard@lists.zx2c4.com>; Thu, 04 Jul 2024 00:49:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720079365; x=1720684165;
+ h=to:from:subject:message-id:date:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=CESjReMpw9UUZWiMl1S2EfqE+jINbArnlNEMrzlMIIQ=;
+ b=JZ1BT0xcE3bFg/J+5E1dti7uOvTmogsC1EDtAnFU9Ss3Uk+x/efiOAdtnRRsv9OsOT
+ UIkl9GPwHaect1IPMphmnXNm9Pb90xe+mkIkjVKY8leo0oFXtcVfBzMxNH0Q53piteMp
+ QHSfa5w8mb2VSEFMClM5ukM0VMKfvFf4uDo+dKxEgZMSYaUf4rL0wdAnJ2Ma1sTPIxXF
+ j3zou6GmKA/cbUOEztdA4nWT7QQrZSPyH9ZjVH6qybycEr+PmY6TGrjRqDtAoIkdr7o2
+ 2eCYc8I/9t7ZQYJd8imbngXAb5xsSerCa1Qc3n9PyWW/A1oEWwF1mirf7rO+nPWKWJDJ
+ 7M4g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXlZXclxk0lAtBZo2l6YU2/2AMRnCyxYsBCH+X4Y2A/aFNchTe05xIwDUJizEGMBvIXdlfDNP1BSohxjP++MbU+AKdJ7D8qru75
+X-Gm-Message-State: AOJu0YxG7iX+rFm4eYZUocY01TF0L8rVWPoeywSUxWigiHf+PuUh13H+
+ gs40Vh8+GCEjqmMiClrTFdFDe9u0ATKqB21MSwXSY+uUCjmqzkBc9qdx898n0yi8Anz8AuF9/YV
+ 0raQd3c+EpMqmMMiJNMZYWtmaxg61Rt2tIb1LV+1x97bYAZjnHN2cCvQ=
+X-Google-Smtp-Source: AGHT+IHslujarCjx8vMDA/mHyCkCzDO6dHYu/JDiYkgzwH7xDCwLMC/dgOQOzT7wGhZQf683n8H/R/Xfz7pc5ktVNhBXOJd8vTMX
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZoV6Q6lWgVRqe7eh@p100>
+X-Received: by 2002:a05:6e02:10c4:b0:376:46d5:6583 with SMTP id
+ e9e14a558f8ab-3839b37d8c7mr157225ab.5.1720079365458; Thu, 04 Jul 2024
+ 00:49:25 -0700 (PDT)
+Date: Thu, 04 Jul 2024 00:49:25 -0700
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <0000000000009059a6061c672f4d@google.com>
+Subject: [syzbot] Monthly wireguard report (Jul 2024)
+From: syzbot <syzbot+list3f44d498ace31a0c4fcf@syzkaller.appspotmail.com>
+To: Jason@zx2c4.com, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
+ syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -60,42 +61,34 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Helge,
+Hello wireguard maintainers/developers,
 
-On Wed, Jul 03, 2024 at 06:20:19PM +0200, Helge Deller wrote:
-> On the parisc platform the Linux kernel issues kernel warnings because
-> swap_endian() tries to load a 128-bit IPv6 address from an unaligned
-> memory location:
->  Kernel: unaligned access to 0x55f4688c in wg_allowedips_insert_v6+0x2c/0x80 [wireguard] (iir 0xf3010df)
->  Kernel: unaligned access to 0x55f46884 in wg_allowedips_insert_v6+0x38/0x80 [wireguard] (iir 0xf2010dc)
-> 
-> Avoid such unaligned memory accesses by instead using the
-> get_unaligned_be64() helper macro.
-> 
-> Signed-off-by: Helge Deller <deller@gmx.de>
-> 
-> diff --git a/drivers/net/wireguard/allowedips.c b/drivers/net/wireguard/allowedips.c
-> index 0ba714ca5185..daf967130b72 100644
-> --- a/drivers/net/wireguard/allowedips.c
-> +++ b/drivers/net/wireguard/allowedips.c
-> @@ -15,8 +15,8 @@ static void swap_endian(u8 *dst, const u8 *src, u8 bits)
->  	if (bits == 32) {
->  		*(u32 *)dst = be32_to_cpu(*(const __be32 *)src);
->  	} else if (bits == 128) {
-> -		((u64 *)dst)[0] = be64_to_cpu(((const __be64 *)src)[0]);
-> -		((u64 *)dst)[1] = be64_to_cpu(((const __be64 *)src)[1]);
-> +		((u64 *)dst)[0] = get_unaligned_be64(src);
+This is a 31-day syzbot report for the wireguard subsystem.
+All related reports/information can be found at:
+https://syzkaller.appspot.com/upstream/s/wireguard
 
-Ahh, right, in6_addr only has a u32 member, not a u64 member, so that's
-potentially unaligned.
+During the period, 0 new issues were detected and 2 were fixed.
+In total, 8 issues are still open and 18 have been fixed so far.
 
-> +		((u64 *)dst)[1] = get_unaligned_be64(src[8]);
+Some of the still happening issues:
 
-src[8] is not correct, however. (This crashes; did you test it?) I've
-fixed it up and put it in the wireguard tree:
+Ref Crashes Repro Title
+<1> 1009    No    KCSAN: data-race in wg_packet_send_staged_packets / wg_packet_send_staged_packets (3)
+                  https://syzkaller.appspot.com/bug?extid=6ba34f16b98fe40daef1
+<2> 59      No    INFO: task hung in __tun_chr_ioctl (6)
+                  https://syzkaller.appspot.com/bug?extid=26c7b4c3afe5450b3e15
+<3> 14      No    WARNING in kthread_unpark (2)
+                  https://syzkaller.appspot.com/bug?extid=943d34fa3cf2191e3068
 
-https://git.kernel.org/pub/scm/linux/kernel/git/zx2c4/wireguard-linux.git/commit/?id=ad3d9eef8e1b304b243e63124581f97c88ce7ff9
+---
+This report is generated by a bot. It may contain errors.
+See https://goo.gl/tpsmEJ for more information about syzbot.
+syzbot engineers can be reached at syzkaller@googlegroups.com.
 
-I'll push this up to net.git soon. Thanks for the patch.
+To disable reminders for individual bugs, reply with the following command:
+#syz set <Ref> no-reminders
 
-Jason
+To change bug's subsystems, reply with:
+#syz set <Ref> subsystems: new-subsystem
+
+You may send multiple commands in a single email message.
