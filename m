@@ -4,71 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FAC4D49220
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 13:24:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA731D49221
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 13:24:10 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bc4262ab;
-	Mon, 18 Nov 2024 12:38:24 +0000 (UTC)
-Received: from wfout3-smtp.messagingengine.com
- (wfout3-smtp.messagingengine.com [64.147.123.146])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 966de530
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3e1da928;
+	Mon, 18 Nov 2024 12:38:26 +0000 (UTC)
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com
+ [2a00:1450:4864:20::230])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ef6cf6e3
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 30 Apr 2024 12:26:29 +0000 (UTC)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
- by mailfout.west.internal (Postfix) with ESMTP id DDDD81C00122
- for <wireguard@lists.zx2c4.com>; Tue, 30 Apr 2024 08:26:27 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute1.internal (MEProxy); Tue, 30 Apr 2024 08:26:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dotat.at; h=cc
- :content-type:content-type:date:date:from:from:in-reply-to
- :message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
- t=1714479987; x=1714566387; bh=OPIj1KLYErAt0piASgN2IgRauf0tRcAz
- WO6thJc5EmU=; b=PUb7Bih9RPAxQ6wQi4lzz8YEyeZrMZRTX8Be9VhG+sgalbLn
- Z9qGagrelJgdezh7NVCS3KFyMuoSBbn8xA0vSa7MWa0rsPcEQmJBAsAcSQPR/53v
- HxT6p9oaHOI3wktE2AFJoDqIyWapjA/gh8k84k8dDiHSex5FA6RXwI8BTZFuW9YJ
- l9o69uhbWOAeHY72fPzqACnLrkrvzjQfmyVKFzwDmSCOXarxQ9vH0HrznPJ0/YRI
- vPn0uJr7hxmIfa5YCC8ZEUnnFgxTsbub3Uua6SO5Ad2TGiRmJNcFGrHvLX/7X1qZ
- zH5wrhW9pGtZlnmnWM1jty39IYOg3DI+QEeSRA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:message-id
- :mime-version:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
- 1714479987; x=1714566387; bh=OPIj1KLYErAt0piASgN2IgRauf0tRcAzWO6
- thJc5EmU=; b=BXelG8H7H5oIMMdsVsWLFwpAkPYI1Tl2l1UFklAf0Htgzbq7lVD
- uATMspObTOWZnRazJoeZHE7J3eACNEg0kSx+Fjpwx1GRqNtqr/TYBDNmceLFZ4Fx
- 9zTQglSDnpcmg5eE2jxnjCnulbnndjaOyz1YE4eXlCWC/tJxCB+EizEjvLAyTgxe
- cv14f9X6GBhWMfd9RCFdLZDIGODM2dOymaRy7PK/lIe255oNs6oIYekSD6Oqo2fX
- yQMJyrDjZS2qL9KpADXA3DZB6O69maGVHG7dRZ1qPZKKVCSQskeK+PZBse5mLg3h
- CyveoKKvogIBQsHd9IPGOWa92c2OWNn87EQ==
-X-ME-Sender: <xms:c-MwZpjbZxuhOKygL257amWK1dk0q3JUtIGSiTvmeZ4tvxXBN6fcnw>
- <xme:c-MwZuArmYJ8TJtqsNmXCDfrao-ouprsvMTF3K88goYTIclw8gCZMnviO8QMotElZ
- wAeIOoJ49oRSb8>
-X-ME-Received: <xmr:c-MwZpFGg-JUunJYkZHL4G_NF9ou-mrdhDqQfwC7tAs0SqvH2pnsmknRhG-G3cEQcc1RXaWgqyB4X2YjhyUH3ag>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddufedghedtucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtsehttdertddttd
- dvnecuhfhrohhmpefvohhnhicuhfhinhgthhcuoeguohhtseguohhtrghtrdgrtheqnecu
- ggftrfgrthhtvghrnhepheelvedttdfgjeekfeevtdfgheeuteduffffhffgtedvkeejke
- ffuddttddtieefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhf
- rhhomhepughothesughothgrthdrrght
-X-ME-Proxy: <xmx:c-MwZuS92nO5FhBnDZjxWC17VvrKEgsLhTiI3btWIthfcHazB_259A>
- <xmx:c-MwZmx2Md1MXJ5ZUKQPLzzhSzazX0q0xCkwvJBp8qTrjWpo42oP7w>
- <xmx:c-MwZk4Q6_IhQ68pUCfeM1R0WmNOdAz8PoBWG_xK-YNBQZfA2aFYtg>
- <xmx:c-MwZryWQb0I2HlEGnSXqwupzU6f-ob58eB8kixrj6k6sZXGo-WfTw>
- <xmx:c-MwZrohbvTI_VQdDvGhO3wiCu9IQjQk8A_YswcGxV7mgq7xDxXsv7aA>
-Feedback-ID: i7158435c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <wireguard@lists.zx2c4.com>; Tue, 30 Apr 2024 08:26:26 -0400 (EDT)
-Date: Tue, 30 Apr 2024 13:26:25 +0100
-From: Tony Finch <dot@dotat.at>
+ for <wireguard@lists.zx2c4.com>; Tue, 9 Jul 2024 09:07:47 +0000 (UTC)
+Received: by mail-lj1-x230.google.com with SMTP id
+ 38308e7fff4ca-2eea7e2b073so25866601fa.0
+ for <wireguard@lists.zx2c4.com>; Tue, 09 Jul 2024 02:07:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1720516067; x=1721120867; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=WHj+zDmT5CDS1arrVDBySf0N0PRuCU4KzwZLCRtwx+o=;
+ b=dz3Ed7ElTXx+ONFzQq6+Ax1QzCUJQbj6geW/b6nitz3Y1zw0+PYFmd6TnQ3Qq6/ocu
+ IZ8Zg6ERNZU7jQeZ43Au7rd5rg2sePE80akxLo7zZhFcnuTog97YaDcZZl9RiBsRq2qa
+ V0FprQVy8R0RaugacY6epf3CoNbDWdUxjAlFA9B5dbABuYzpS+0/t+13JK8tJ46Rxt/9
+ ubb3gGFooOge/pc2iuvxG90EUo7kmII64ocHYqd1qTKKxPTRlw+XlL45fvu8/LiHasCf
+ fj/lrC2baTG4D7kQYYrEEe0Zyrj2FnwhUGI6IT924/xXI1oakT2DlKE9KMwIKBCNNoo5
+ OPig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720516067; x=1721120867;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=WHj+zDmT5CDS1arrVDBySf0N0PRuCU4KzwZLCRtwx+o=;
+ b=Fvto+JDoLHilBw0Zkh/8f8HHGu8rjVXYoflHI/82t5esLPTAmwn7hUH5btaOD+p4LG
+ eABJAD0s8L2UfgoM3MzYQLSI/TKEhBi9NkEsyXVnS8F0FUDmfezkewTsvTO4JVkAlY64
+ 2LA7coDO9DRN9D2mC2gTPrgOIna17he4Qe5CooZ5/DLkhTGXeY3CxjjfqD4fWRzhqQM1
+ +JIkBL48jsmvao9N7FBvf3196BsXROJWbiQ8iUl39EQm/Doz+rbSeXh6ZYo7pY8gx3uC
+ dETAIIIu4ASgo4xJwTiqoHKJj0y6S/lQBu23Xmo8bM+uKpDUWHxrCJVrazOc90SYqXrT
+ CuZw==
+X-Gm-Message-State: AOJu0YyGHssmbY8esGVsz5MTbC9Kc0eJTRg/NE+yKClDsh/zv09uOSxr
+ E3a44Qz292FzMEw1TRwdezyylL/JTy7esKvYK4YgzJ+nWvYB2ZQP1gD5lg==
+X-Google-Smtp-Source: AGHT+IHqUByf5PBIHKipFboxjlusgpwtO15qAvYPjnMrnbSgPjl36j2DrkL6NRebNB2fKQG9Rs/SPw==
+X-Received: by 2002:a05:6512:33d1:b0:52c:e047:5c38 with SMTP id
+ 2adb3069b0e04-52eb99952cemr1255487e87.15.1720516065340; 
+ Tue, 09 Jul 2024 02:07:45 -0700 (PDT)
+Received: from localhost.localdomain (77-46-243-132.dynamic.isp.telekom.rs.
+ [77.46.243.132]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42667720667sm87002695e9.33.2024.07.09.02.07.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 09 Jul 2024 02:07:44 -0700 (PDT)
+From: Ilia Shipitsin <chipitsine@gmail.com>
 To: wireguard@lists.zx2c4.com
-Subject: [PATCH] wg: add PrivateKeyFile and PresharedKeyFile configuration
- options
-Message-ID: <61a421de-e431-cae1-fc8b-259c89be509e@dotat.at>
+Cc: Ilia Shipitsin <chipitsine@gmail.com>
+Subject: [PATCH 0/1] handle potential strdup failure
+Date: Tue,  9 Jul 2024 11:06:45 +0200
+Message-ID: <20240709090728.872-1-chipitsine@gmail.com>
+X-Mailer: git-send-email 2.43.0.windows.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Mon, 18 Nov 2024 12:38:13 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -84,80 +75,14 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-The command line and config file usages can be more consistent when
-they refer to the private key in the same way. Separate key files
-allow an operator to view and edit the configuration file without
-exposing secrets. It becomes much easier to share configurations when
-they don't need to be redacted. Secrets can be kept encrypted at rest
-without also encrypting non-secret parts of the config or resorting to
-templating hacks.
+if allocation fails, strdup returns NULL. 
 
-Signed-off-by: Tony Finch <dot@dotat.at>
----
- src/config.c |  8 ++++++++
- src/man/wg.8 | 13 ++++++++++---
- 2 files changed, 18 insertions(+), 3 deletions(-)
+Ilia Shipitsin (1):
+  src/config.c: handle strdup failure
 
-diff --git src/config.c src/config.c
-index 9f15477..6e18129 100644
---- src/config.c
-+++ src/config.c
-@@ -450,6 +450,10 @@ static bool process_line(struct config_ctx *ctx, const char *line)
- 			ret = parse_key(ctx->device->private_key, value);
- 			if (ret)
- 				ctx->device->flags |= WGDEVICE_HAS_PRIVATE_KEY;
-+		} else if (key_match("PrivateKeyFile")) {
-+			ret = parse_keyfile(ctx->device->private_key, value);
-+			if (ret)
-+				ctx->device->flags |= WGDEVICE_HAS_PRIVATE_KEY;
- 		} else
- 			goto error;
- 	} else if (ctx->is_peer_section) {
-@@ -467,6 +471,10 @@ static bool process_line(struct config_ctx *ctx, const char *line)
- 			ret = parse_key(ctx->last_peer->preshared_key, value);
- 			if (ret)
- 				ctx->last_peer->flags |= WGPEER_HAS_PRESHARED_KEY;
-+		} else if (key_match("PresharedKeyFile")) {
-+			ret = parse_keyfile(ctx->last_peer->preshared_key, value);
-+			if (ret)
-+				ctx->last_peer->flags |= WGPEER_HAS_PRESHARED_KEY;
- 		} else
- 			goto error;
- 	} else
-diff --git src/man/wg.8 src/man/wg.8
-index 7984539..f1a8d6e 100644
---- src/man/wg.8
-+++ src/man/wg.8
-@@ -132,7 +132,11 @@ only one \fIInterface\fP section may be specified.
- .P
- The \fIInterface\fP section may contain the following fields:
- .IP \(bu
--PrivateKey \(em a base64 private key generated by \fIwg genkey\fP. Required.
-+PrivateKey \(em a base64 private key generated by \fIwg genkey\fP.
-+.IP \(bu
-+PrivateKeyFile \(em name of a file containing a private key.
-+.IP
-+Either PrivateKey or PrivateKeyFile are required.
- .IP \(bu
- ListenPort \(em a 16-bit port for listening. Optional; if not specified, chosen
- randomly.
-@@ -146,11 +150,14 @@ PublicKey \(em a base64 public key calculated by \fIwg pubkey\fP from a
- private key, and usually transmitted out of band to the author of the
- configuration file. Required.
- .IP \(bu
--PresharedKey \(em a base64 preshared key generated by \fIwg genpsk\fP. Optional,
--and may be omitted. This option adds an additional layer of symmetric-key
-+PresharedKey \(em a base64 preshared key generated by \fIwg genpsk\fP. Optional.
-+This option adds an additional layer of symmetric-key
- cryptography to be mixed into the already existing public-key cryptography,
- for post-quantum resistance.
- .IP \(bu
-+PresharedKeyFile \(em name of a file containing a preshared key.
-+Optional alternative to PresharedKey.
-+.IP \(bu
- AllowedIPs \(em a comma-separated list of IP (v4 or v6) addresses with
- CIDR masks from which incoming traffic for this peer is allowed and to
- which outgoing traffic for this peer is directed. The catch-all
+ src/config.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
 -- 
-2.39.2
+2.43.0.windows.1
 
