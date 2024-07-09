@@ -4,49 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47AF4C30653
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  4 Jul 2024 07:49:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5102C2BD09
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  9 Jul 2024 08:25:58 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b1696ef3;
-	Thu, 4 Jul 2024 07:49:29 +0000 (UTC)
-Received: from mail-il1-f200.google.com (mail-il1-f200.google.com
- [209.85.166.200])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id cfe49df2
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id aa7619d1;
+	Tue, 9 Jul 2024 08:23:31 +0000 (UTC)
+Received: from mx2.heinlein-support.de (mx2.heinlein-support.de
+ [91.198.250.20])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c9c6fbdf
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 4 Jul 2024 07:49:26 +0000 (UTC)
-Received: by mail-il1-f200.google.com with SMTP id
- e9e14a558f8ab-37642e69d7eso3209365ab.3
- for <wireguard@lists.zx2c4.com>; Thu, 04 Jul 2024 00:49:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720079365; x=1720684165;
- h=to:from:subject:message-id:date:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=CESjReMpw9UUZWiMl1S2EfqE+jINbArnlNEMrzlMIIQ=;
- b=JZ1BT0xcE3bFg/J+5E1dti7uOvTmogsC1EDtAnFU9Ss3Uk+x/efiOAdtnRRsv9OsOT
- UIkl9GPwHaect1IPMphmnXNm9Pb90xe+mkIkjVKY8leo0oFXtcVfBzMxNH0Q53piteMp
- QHSfa5w8mb2VSEFMClM5ukM0VMKfvFf4uDo+dKxEgZMSYaUf4rL0wdAnJ2Ma1sTPIxXF
- j3zou6GmKA/cbUOEztdA4nWT7QQrZSPyH9ZjVH6qybycEr+PmY6TGrjRqDtAoIkdr7o2
- 2eCYc8I/9t7ZQYJd8imbngXAb5xsSerCa1Qc3n9PyWW/A1oEWwF1mirf7rO+nPWKWJDJ
- 7M4g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXlZXclxk0lAtBZo2l6YU2/2AMRnCyxYsBCH+X4Y2A/aFNchTe05xIwDUJizEGMBvIXdlfDNP1BSohxjP++MbU+AKdJ7D8qru75
-X-Gm-Message-State: AOJu0YxG7iX+rFm4eYZUocY01TF0L8rVWPoeywSUxWigiHf+PuUh13H+
- gs40Vh8+GCEjqmMiClrTFdFDe9u0ATKqB21MSwXSY+uUCjmqzkBc9qdx898n0yi8Anz8AuF9/YV
- 0raQd3c+EpMqmMMiJNMZYWtmaxg61Rt2tIb1LV+1x97bYAZjnHN2cCvQ=
-X-Google-Smtp-Source: AGHT+IHslujarCjx8vMDA/mHyCkCzDO6dHYu/JDiYkgzwH7xDCwLMC/dgOQOzT7wGhZQf683n8H/R/Xfz7pc5ktVNhBXOJd8vTMX
+ for <wireguard@lists.zx2c4.com>; Tue, 9 Jul 2024 08:23:27 +0000 (UTC)
+Received: from marchiv.heinlein-support.de (marchiv.heinlein-support.de
+ [91.198.250.63])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mx2.heinlein-support.de (Postfix) with ESMTPS id 46C0B2E0B4E
+ for <wireguard@lists.zx2c4.com>; Tue,  9 Jul 2024 10:23:15 +0200 (CEST)
+Received: from MailAppDispatcher (localhost.localdomain [127.0.0.1])
+ by marchiv.heinlein-support.de (Postfix) with ESMTP id F0D2748148
+ for <wireguard@lists.zx2c4.com>; Tue,  9 Jul 2024 10:23:14 +0200 (CEST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+ by marchiv.heinlein-support.de (Postfix) with ESMTP id D15F348172
+ for <wireguard@lists.zx2c4.com>; Tue,  9 Jul 2024 10:23:14 +0200 (CEST)
+X-Virus-Scanned: Heinlein Anti-Spam at mail-archiv
+Received: from marchiv.heinlein-support.de ([127.0.0.1])
+ by localhost (marchiv.heinlein-support.de [127.0.0.1]) (amavisd-new,
+ port 10024)
+ with ESMTP id fMFbjiyqMgAp for <wireguard@lists.zx2c4.com>;
+ Tue,  9 Jul 2024 10:23:10 +0200 (CEST)
+Received: from plasma4.jpberlin.de (plasma4.jpberlin.de [80.241.57.33])
+ by marchiv.heinlein-support.de (Postfix) with ESMTPS
+ for <wireguard@lists.zx2c4.com>; Tue,  9 Jul 2024 10:23:10 +0200 (CEST)
+Received: from [192.168.102.183] (i689719B5.versanet.de [104.151.25.181])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ (Authenticated sender: r.sander@heinlein-support.de)
+ by plasma.jpberlin.de (Postfix) with ESMTPSA id ADC94C3641
+ for <wireguard@lists.zx2c4.com>; Tue,  9 Jul 2024 10:23:10 +0200 (CEST)
+Message-ID: <5f5fe5f9-fa9d-4d11-a33f-9d7e326823f5@heinlein-support.de>
+Date: Tue, 9 Jul 2024 10:23:10 +0200
 MIME-Version: 1.0
-X-Received: by 2002:a05:6e02:10c4:b0:376:46d5:6583 with SMTP id
- e9e14a558f8ab-3839b37d8c7mr157225ab.5.1720079365458; Thu, 04 Jul 2024
- 00:49:25 -0700 (PDT)
-Date: Thu, 04 Jul 2024 00:49:25 -0700
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <0000000000009059a6061c672f4d@google.com>
-Subject: [syzbot] Monthly wireguard report (Jul 2024)
-From: syzbot <syzbot+list3f44d498ace31a0c4fcf@syzkaller.appspotmail.com>
-To: Jason@zx2c4.com, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
- syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+To: wireguard@lists.zx2c4.com
+Content-Language: en-US, de-DE
+From: Robert Sander <r.sander@heinlein-support.de>
+Subject: disable roaming?
+Autocrypt: addr=r.sander@heinlein-support.de; keydata=
+ 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
+ Wy3fgftV2MQ=
+Organization: Heinlein Consulting GmbH
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Mailarchiv-ID: 9905716
+X-MBO-SPAM-Probability: 
+X-Rspamd-Score: -8.93 / 15.00 / 15.00
+X-Rspamd-Queue-Id: 46C0B2E0B4E
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -61,34 +113,31 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello wireguard maintainers/developers,
+Hi,
 
-This is a 31-day syzbot report for the wireguard subsystem.
-All related reports/information can be found at:
-https://syzkaller.appspot.com/upstream/s/wireguard
+I want to setup a wg tunnel between an office and a pair of routers 
+which use keepalived for a service IP.
 
-During the period, 0 new issues were detected and 2 were fixed.
-In total, 8 issues are still open and 18 have been fixed so far.
+The office router would have the service IP in its config.
 
-Some of the still happening issues:
+As soon as the IP failover happens between the two routers the office 
+router gets a new peer address for its connection (which is not reachable).
 
-Ref Crashes Repro Title
-<1> 1009    No    KCSAN: data-race in wg_packet_send_staged_packets / wg_packet_send_staged_packets (3)
-                  https://syzkaller.appspot.com/bug?extid=6ba34f16b98fe40daef1
-<2> 59      No    INFO: task hung in __tun_chr_ioctl (6)
-                  https://syzkaller.appspot.com/bug?extid=26c7b4c3afe5450b3e15
-<3> 14      No    WARNING in kthread_unpark (2)
-                  https://syzkaller.appspot.com/bug?extid=943d34fa3cf2191e3068
+How do I disable the wireguard roaming on the server side?
 
----
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
+Wireguard on the office router should always connect to the service IP.
+Both routers have the same private/public key so that should be possible.
 
-To disable reminders for individual bugs, reply with the following command:
-#syz set <Ref> no-reminders
+Regards
+-- 
+Robert Sander
+Heinlein Consulting GmbH
+Schwedter Str. 8/9b, 10119 Berlin
 
-To change bug's subsystems, reply with:
-#syz set <Ref> subsystems: new-subsystem
+https://www.heinlein-support.de
 
-You may send multiple commands in a single email message.
+Tel: 030 / 405051-43
+Fax: 030 / 405051-19
+
+Amtsgericht Berlin-Charlottenburg - HRB 220009 B
+Geschäftsführer: Peer Heinlein - Sitz: Berlin
