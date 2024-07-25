@@ -4,42 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FAB0C3DA4A
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  2 Aug 2024 16:23:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E63CC3DA4A
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  2 Aug 2024 16:40:07 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b856c22f;
-	Fri, 2 Aug 2024 16:20:23 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d92825a4;
+	Fri, 2 Aug 2024 16:20:26 +0000 (UTC)
 Received: from smtp2.eurecom.fr (smtp2.eurecom.fr [193.55.113.211])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id daf99fd5
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 885d0822
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 25 Jul 2024 20:49:28 +0000 (UTC)
+ Thu, 25 Jul 2024 20:49:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
  d=eurecom.fr; i=@eurecom.fr; q=dns/txt; s=default;
- t=1721940569; x=1753476569;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=3aEztgTVBhbM1fPogn1tXuE16lRm2oUtKCXwkFnq2lQ=;
- b=tbTvnExcS+exJHKSJIauIU09DB2bWEeNEaXEem4skRlNzih9mFcJrBQv
- YMj/BQ5QmEUy8ffa6H9YaUcrJvtB36EnLdA8Zyd1H47MYxmGqzJMyICC6
- 40/wGUmJs8IOrE8K+3w59ZLRSOHmPJV/0qyqA8p/yzSw8ILVvW10AgA9j g=;
-X-CSE-ConnectionGUID: pfn4yj3BShKrN1vxlzQRIQ==
-X-CSE-MsgGUID: 7eqg5YHpQdCZtDFO6dq+ng==
-X-IronPort-AV: E=Sophos;i="6.09,236,1716242400"; d="scan'208";a="15981992"
+ t=1721940576; x=1753476576;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=912Uk+Gje1PVMC8wL02J/UxOYyqiI3APSTFP4Ds6/JE=;
+ b=IRTxfmLvRjpbaEN518IenUfRfBNixp2dnkYOJiMa9n8EGiEQT8zCjbuI
+ w1DZ9PPw5bgrjqrJ8vptfZmWD44qrmKu6CN0imS6OifZ3KPw4T6gzZzwO
+ 4Qb0RpNEBzyX8891ZZ6B9PDFUSiaKsBYrba4805//vyCdE4zOGPe0EQtB w=;
+X-CSE-ConnectionGUID: vSRKG81kSv6fEEC43uiThA==
+X-CSE-MsgGUID: EWG7py2LRsKqdiCHhwcFlg==
+X-IronPort-AV: E=Sophos;i="6.09,236,1716242400"; d="scan'208";a="15981993"
 Received: from waha.eurecom.fr (HELO smtps.eurecom.fr) ([10.3.2.236])
- by drago2i.eurecom.fr with ESMTP; 25 Jul 2024 22:49:28 +0200
+ by drago2i.eurecom.fr with ESMTP; 25 Jul 2024 22:49:35 +0200
 Received: from arc.fortinet-emea.com (91-175-7-2.subs.proxad.net [91.175.7.2])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
  bits)) (No client certificate requested)
- by smtps.eurecom.fr (Postfix) with ESMTPSA id B8F3320CA;
- Thu, 25 Jul 2024 22:49:27 +0200 (CEST)
+ by smtps.eurecom.fr (Postfix) with ESMTPSA id 2FF8B20CB;
+ Thu, 25 Jul 2024 22:49:35 +0200 (CEST)
 From: Ariel Otilibili <otilibil@eurecom.fr>
 To: wireguard@lists.zx2c4.com
 Cc: Ariel Otilibili <otilibil@eurecom.fr>
-Subject: Extracted error message for the sake of legibility
-Date: Thu, 25 Jul 2024 22:42:37 +0200
-Message-ID: <20240725204917.192647-2-otilibil@eurecom.fr>
+Subject: [PATCH] Extracted error message for the sake of legibility
+Date: Thu, 25 Jul 2024 22:42:38 +0200
+Message-ID: <20240725204917.192647-3-otilibil@eurecom.fr>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240725204917.192647-2-otilibil@eurecom.fr>
+References: <20240725204917.192647-2-otilibil@eurecom.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -56,14 +58,36 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
+Signed-off-by: Ariel Otilibili <otilibil@eurecom.fr>
+---
+ src/set.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-I have been using WireGuard for some time; it does ease the configuration of
-VPNs. This is my first patch to the list, I asked to be subscribed; please
-confirm me it is the case.
-
-I would like to improve my C programming skills; your feedback will be much
-appreciated.
-
-Ariel
+diff --git a/src/set.c b/src/set.c
+index 75560fd..b2fbd54 100644
+--- a/src/set.c
++++ b/src/set.c
+@@ -16,9 +16,19 @@ int set_main(int argc, const char *argv[])
+ {
+ 	struct wgdevice *device = NULL;
+ 	int ret = 1;
++	const char *error_message = "Usage: %s %s <interface>"
++	  " [listen-port <port>]"
++	  " [fwmark <mark>]"
++	  " [private-key <file path>]"
++	  " [peer <base64 public key> [remove]"
++	  " [preshared-key <file path>]"
++	  " [endpoint <ip>:<port>]"
++	  " [persistent-keepalive <interval seconds>]"
++	  " [allowed-ips <ip1>/<cidr1>[,<ip2>/<cidr2>]...]"
++	  " ]...\n";
+ 
+ 	if (argc < 3) {
+-		fprintf(stderr, "Usage: %s %s <interface> [listen-port <port>] [fwmark <mark>] [private-key <file path>] [peer <base64 public key> [remove] [preshared-key <file path>] [endpoint <ip>:<port>] [persistent-keepalive <interval seconds>] [allowed-ips <ip1>/<cidr1>[,<ip2>/<cidr2>]...] ]...\n", PROG_NAME, argv[0]);
++		fprintf(stderr, error_message, PROG_NAME, argv[0]);
+ 		return 1;
+ 	}
+ 
+-- 
+2.45.2
 
