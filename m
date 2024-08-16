@@ -4,55 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BA95C5321E
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Aug 2024 08:47:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38DCBC5472E
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Aug 2024 08:47:37 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5782753f;
-	Mon, 26 Aug 2024 08:38:03 +0000 (UTC)
-Received: from mail-io1-f69.google.com (mail-io1-f69.google.com
- [209.85.166.69])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b8021ec3
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d3c41789;
+	Mon, 26 Aug 2024 08:38:14 +0000 (UTC)
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com
+ [2607:f8b0:4864:20::104a])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id bc50e286
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 12 Aug 2024 04:53:04 +0000 (UTC)
-Received: by mail-io1-f69.google.com with SMTP id
- ca18e2360f4ac-822372161efso381200339f.0
- for <wireguard@lists.zx2c4.com>; Sun, 11 Aug 2024 21:53:03 -0700 (PDT)
+ Fri, 16 Aug 2024 18:24:39 +0000 (UTC)
+Received: by mail-pj1-x104a.google.com with SMTP id
+ 98e67ed59e1d1-2d3baf38457so2231739a91.0
+ for <wireguard@lists.zx2c4.com>; Fri, 16 Aug 2024 11:24:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1723832677; x=1724437477; darn=lists.zx2c4.com;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=4RwvB+WPYoDnWK8A0tq8EiazLJfKL2CtNS7fQiVukC0=;
+ b=bOEs/6nyPp2rgrCkw/phN0vqRag+gbpfnZIdzFKR5Q75pJL+XcyAqy5qYZavZrE4g1
+ aKUw9Bxp0tZ6jOLh3InLftHUe8M+Uf6vTPPS4eCRBKPDVU4Po7KG7dnhZraXhA6j0stj
+ BuOe+LwL44QP9yavLa00nB7yWxeN0B0wmbNCVrG2GcaAK20dAC5WpDEZoc+1T7xXWlVK
+ 6fbXTCOqIRwPU4uyj10g6wraQ6bTUbKGYmU2D4sXZfeX8r9gKvqfCgpb0jG1GrTA7TH0
+ edFQvK1SvK8sApd7V25ftc40pI2tstrkmL19mkNbvogRnvLStsg4aLMTCQW649LJhMEK
+ Jp2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723438383; x=1724043183;
- h=to:from:subject:message-id:in-reply-to:date:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DCIUv5W1hQZANZ1PEvV4VxKZP1pSyOaOOcCYK3C1sQI=;
- b=vO3HOXdLArhx9C7PYcvr48emp8N4t6wtVw9yHxFw/sD2jRM7qXUTwesUjt34RjmNJs
- tKk1TEPb1enDpJbfVvzsTlsYM0Jk2c++xsNalm9RCR+mMrNwmUsZX4oxOAFrIoYCNDu4
- MR5a0wPg6uyF8mKJ3/iOaf5JqEW8gb8Loa/PN4wRq936nbTvSp0Bl6LC1GoGYN+AUJyk
- LG8mIjQZDBAZn1ApBhB8SsILA4GaFNzxKy/7JyzDpn00clgkseQkS8ksCcKbGE2hpAXd
- 8+tBW0KX7R74bDwpNznuhpXk1pTu80VdgBFicDfLERd3rc0uN+WoKHuoytGdPA8nce4h
- 0wAw==
+ d=1e100.net; s=20230601; t=1723832677; x=1724437477;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4RwvB+WPYoDnWK8A0tq8EiazLJfKL2CtNS7fQiVukC0=;
+ b=tKsHTItSnPoILmHxC9OM9cZSoShNLh1WgW13R0BVIDHTfCYTjl52wi/YmCFsx7ze7w
+ rWcDVo1SO/eOythLTFQta4e0OOlxRfVjzwLaWurWRKCyt7lwBuHRwiAHaqebwfzCs9MF
+ 3Vqi7NXu7lCoYBrwMWyhnPj1x8OHZ7/6HWXSI+q6A3008Zj0RuJ8+0yQzcH4ScAVw7km
+ G2lJtXYNR6w55fC6LbYDxj3nJ2t509SrQNqu1QYpfNyQNPrVwwS9mFf/2zSOkii5YZna
+ +U6sYWpp5Uqhp2izHOMnbf+jZ5LFgyPMH73YVOetHZ57QdFPQsT1LQp+ssFq2VKMDZoY
+ H94Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWUatgcUFVtzvEf630Kd5LHzxaNK33Z4as3I82wZBWXHpGbygZ7s3ulGSaEbwdPYgWTeCPfu2rRv1gWxqHQOQpk59mwqBbmlr1e
-X-Gm-Message-State: AOJu0YyYu/w27nzqngwASjN8dIRqMDe3TXcrvktANIG2qOb9UcHEPqCP
- hKgY/fsLdp4LmLjm98Bk/1lo2S5EhS2EoVo2QWw6O+FWG9TifuJPiwtwiA36WEFwJhCQfS0Rx/J
- huI3LOveCoUes1Iy+U7eVc3iFgs3maN7YZdakdquy8DYR9QW69JCtXW4=
-X-Google-Smtp-Source: AGHT+IHYd+OnzWf3WONlYUINKA2XYz4D597wPU1q1yxE0VsRcZoM2LIA3Gz9v5hY/DdXx/pnUZRWQH+QReSO0PWFGZ2UzuXHaJcN
-MIME-Version: 1.0
-X-Received: by 2002:a05:6602:640d:b0:806:bf73:1167 with SMTP id
- ca18e2360f4ac-8225ee96f73mr27822739f.3.1723438382830; Sun, 11 Aug 2024
- 21:53:02 -0700 (PDT)
-Date: Sun, 11 Aug 2024 21:53:02 -0700
-In-Reply-To: <00000000000061c0a106183499ec@google.com>
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <00000000000099eca4061f754420@google.com>
-Subject: Re: [syzbot] [wireguard?] WARNING in kthread_unpark (2)
-From: syzbot <syzbot+943d34fa3cf2191e3068@syzkaller.appspotmail.com>
-To: Jason@zx2c4.com, davem@davemloft.net, edumazet@google.com, 
- gregkh@linuxfoundation.org, hdanton@sina.com, jason@zx2c4.com, 
- kuba@kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
- oneukum@suse.com, pabeni@redhat.com, stern@rowland.harvard.edu, 
- syzkaller-bugs@googlegroups.com, tglx@linutronix.de, tj@kernel.org, 
- wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+ AJvYcCVozn6W4b18VWazFvmWUyv6UWFy9TFOCoVk3eNB3+XGuwKF7A1S4jb0sr5t1g+OpWzVE56mOrqRTUx+yALhjT/JMenGZ2Bw62hT
+X-Gm-Message-State: AOJu0YwOxdxTZfAueo30hU/UfaWrUWHh9lXQ1SMfwd8SoCZTgTcfhiW2
+ 34lCAtk79G8AfOinE0mPkTTPFiANeCyEWU2Rdqkkj8D6Fh6IjYG/bB65JNCahFCi+xpjFkprUqO
+ Kpw==
+X-Google-Smtp-Source: AGHT+IFTs6mafYXYQyMdbVzMHx30DteW5lbCrThkaAk8B3G1fl2Zt7Rvnd8UnKlKrq/X37xDttudYA8SWrg=
+X-Received: from zagreus.c.googlers.com
+ ([fda3:e722:ac3:cc00:7f:e700:c0a8:5c37])
+ (user=seanjc job=sendgmr) by 2002:a17:90b:1906:b0:2c9:5ca5:4d20 with SMTP id
+ 98e67ed59e1d1-2d3c3723c6amr46011a91.0.1723832677231; Fri, 16 Aug 2024
+ 11:24:37 -0700 (PDT)
+Date: Fri, 16 Aug 2024 11:24:35 -0700
+In-Reply-To: <0000000000006eb03a061b20c079@google.com>
+Mime-Version: 1.0
+References: <0000000000006eb03a061b20c079@google.com>
+Message-ID: <Zr-ZY8HSGfVuoQpl@google.com>
+Subject: Re: [syzbot] [kvm?] general protection fault in get_work_pool (2)
+From: Sean Christopherson <seanjc@google.com>
+To: syzbot <syzbot+0dc211bc2adb944e1fd6@syzkaller.appspotmail.com>
+Cc: Jason@zx2c4.com, davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+ kvm@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
+ pabeni@redhat.com, syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="us-ascii"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -67,24 +77,29 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-syzbot has bisected this issue to:
+On Mon, Jun 17, 2024, syzbot wrote:
+> Hello,
+> 
+> syzbot found the following issue on:
+> 
+> HEAD commit:    2ccbdf43d5e7 Merge tag 'for-linus' of git://git.kernel.org..
+> git tree:       upstream
+> console output: https://syzkaller.appspot.com/x/log.txt?x=16f23146980000
+> kernel config:  https://syzkaller.appspot.com/x/.config?x=81c0d76ceef02b39
+> dashboard link: https://syzkaller.appspot.com/bug?extid=0dc211bc2adb944e1fd6
+> compiler:       gcc (Debian 12.2.0-14) 12.2.0, GNU ld (GNU Binutils for Debian) 2.40
+> userspace arch: i386
+> 
+> Unfortunately, I don't have any reproducer for this issue yet.
+> 
+> Downloadable assets:
+> disk image (non-bootable): https://storage.googleapis.com/syzbot-assets/7bc7510fe41f/non_bootable_disk-2ccbdf43.raw.xz
+> vmlinux: https://storage.googleapis.com/syzbot-assets/13cdb5bfbafa/vmlinux-2ccbdf43.xz
+> kernel image: https://storage.googleapis.com/syzbot-assets/7a14f5d07f81/bzImage-2ccbdf43.xz
+> 
+> IMPORTANT: if you fix the issue, please add the following tag to the commit:
+> Reported-by: syzbot+0dc211bc2adb944e1fd6@syzkaller.appspotmail.com
 
-commit b3e40fc85735b787ce65909619fcd173107113c2
-Author: Oliver Neukum <oneukum@suse.com>
-Date:   Thu May 2 11:51:40 2024 +0000
+See https://lore.kernel.org/all/Zr-Ydj8FBpiqmY_c@google.com for an explanation.
 
-    USB: usb_parse_endpoint: ignore reserved bits
-
-bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=11ca267d980000
-start commit:   dc1c8034e31b minmax: simplify min()/max()/clamp() implemen..
-git tree:       upstream
-final oops:     https://syzkaller.appspot.com/x/report.txt?x=13ca267d980000
-console output: https://syzkaller.appspot.com/x/log.txt?x=15ca267d980000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=2258b49cd9b339fa
-dashboard link: https://syzkaller.appspot.com/bug?extid=943d34fa3cf2191e3068
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=1022b573980000
-
-Reported-by: syzbot+943d34fa3cf2191e3068@syzkaller.appspotmail.com
-Fixes: b3e40fc85735 ("USB: usb_parse_endpoint: ignore reserved bits")
-
-For information about bisection process see: https://goo.gl/tpsmEJ#bisection
+#syz invalid
