@@ -4,65 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38DCBC5472E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25FF8C5321D
 	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Aug 2024 08:47:37 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d3c41789;
-	Mon, 26 Aug 2024 08:38:14 +0000 (UTC)
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com
- [2607:f8b0:4864:20::104a])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id bc50e286
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 96f3bf72;
+	Mon, 26 Aug 2024 08:38:19 +0000 (UTC)
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7c07adda
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 16 Aug 2024 18:24:39 +0000 (UTC)
-Received: by mail-pj1-x104a.google.com with SMTP id
- 98e67ed59e1d1-2d3baf38457so2231739a91.0
- for <wireguard@lists.zx2c4.com>; Fri, 16 Aug 2024 11:24:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1723832677; x=1724437477; darn=lists.zx2c4.com;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=4RwvB+WPYoDnWK8A0tq8EiazLJfKL2CtNS7fQiVukC0=;
- b=bOEs/6nyPp2rgrCkw/phN0vqRag+gbpfnZIdzFKR5Q75pJL+XcyAqy5qYZavZrE4g1
- aKUw9Bxp0tZ6jOLh3InLftHUe8M+Uf6vTPPS4eCRBKPDVU4Po7KG7dnhZraXhA6j0stj
- BuOe+LwL44QP9yavLa00nB7yWxeN0B0wmbNCVrG2GcaAK20dAC5WpDEZoc+1T7xXWlVK
- 6fbXTCOqIRwPU4uyj10g6wraQ6bTUbKGYmU2D4sXZfeX8r9gKvqfCgpb0jG1GrTA7TH0
- edFQvK1SvK8sApd7V25ftc40pI2tstrkmL19mkNbvogRnvLStsg4aLMTCQW649LJhMEK
- Jp2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723832677; x=1724437477;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4RwvB+WPYoDnWK8A0tq8EiazLJfKL2CtNS7fQiVukC0=;
- b=tKsHTItSnPoILmHxC9OM9cZSoShNLh1WgW13R0BVIDHTfCYTjl52wi/YmCFsx7ze7w
- rWcDVo1SO/eOythLTFQta4e0OOlxRfVjzwLaWurWRKCyt7lwBuHRwiAHaqebwfzCs9MF
- 3Vqi7NXu7lCoYBrwMWyhnPj1x8OHZ7/6HWXSI+q6A3008Zj0RuJ8+0yQzcH4ScAVw7km
- G2lJtXYNR6w55fC6LbYDxj3nJ2t509SrQNqu1QYpfNyQNPrVwwS9mFf/2zSOkii5YZna
- +U6sYWpp5Uqhp2izHOMnbf+jZ5LFgyPMH73YVOetHZ57QdFPQsT1LQp+ssFq2VKMDZoY
- H94Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVozn6W4b18VWazFvmWUyv6UWFy9TFOCoVk3eNB3+XGuwKF7A1S4jb0sr5t1g+OpWzVE56mOrqRTUx+yALhjT/JMenGZ2Bw62hT
-X-Gm-Message-State: AOJu0YwOxdxTZfAueo30hU/UfaWrUWHh9lXQ1SMfwd8SoCZTgTcfhiW2
- 34lCAtk79G8AfOinE0mPkTTPFiANeCyEWU2Rdqkkj8D6Fh6IjYG/bB65JNCahFCi+xpjFkprUqO
- Kpw==
-X-Google-Smtp-Source: AGHT+IFTs6mafYXYQyMdbVzMHx30DteW5lbCrThkaAk8B3G1fl2Zt7Rvnd8UnKlKrq/X37xDttudYA8SWrg=
-X-Received: from zagreus.c.googlers.com
- ([fda3:e722:ac3:cc00:7f:e700:c0a8:5c37])
- (user=seanjc job=sendgmr) by 2002:a17:90b:1906:b0:2c9:5ca5:4d20 with SMTP id
- 98e67ed59e1d1-2d3c3723c6amr46011a91.0.1723832677231; Fri, 16 Aug 2024
- 11:24:37 -0700 (PDT)
-Date: Fri, 16 Aug 2024 11:24:35 -0700
-In-Reply-To: <0000000000006eb03a061b20c079@google.com>
-Mime-Version: 1.0
-References: <0000000000006eb03a061b20c079@google.com>
-Message-ID: <Zr-ZY8HSGfVuoQpl@google.com>
+ Fri, 16 Aug 2024 22:16:16 +0000 (UTC)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sin.source.kernel.org (Postfix) with ESMTP id 6A286CE0D9A;
+ Fri, 16 Aug 2024 22:16:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF1FC32782;
+ Fri, 16 Aug 2024 22:16:11 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="mQ0ktfPa"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1723846569;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=S0q5my1Gxzq5sbks3fTcsMFKFgho8smshyrb0IyHeLE=;
+ b=mQ0ktfPaKJsESX8PGs+iJxyLhHMGhfX7ELVZWdMlnGzpmLCL5qUJa0seVqE5J/uuPZV7IL
+ 2Kb+ri7T0cvXYDAm6nzX/fHuKW++B9UzLHgg5VE3YFOetb4/pXxYKgCu8OaOtV9HBcbV1e
+ bL+me1+63vABwBzimD/a1Rz4d3ze6Yc=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 1169246f
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Fri, 16 Aug 2024 22:16:08 +0000 (UTC)
+Date: Fri, 16 Aug 2024 22:16:03 +0000
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Sean Christopherson <seanjc@google.com>
+Cc: syzbot <syzbot+0dc211bc2adb944e1fd6@syzkaller.appspotmail.com>,
+ davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+ kvm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ netdev@vger.kernel.org, pabeni@redhat.com,
+ syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
 Subject: Re: [syzbot] [kvm?] general protection fault in get_work_pool (2)
-From: Sean Christopherson <seanjc@google.com>
-To: syzbot <syzbot+0dc211bc2adb944e1fd6@syzkaller.appspotmail.com>
-Cc: Jason@zx2c4.com, davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
- kvm@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
- pabeni@redhat.com, syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="us-ascii"
+Message-ID: <Zr_Po5Rj7wsDj_BX@zx2c4.com>
+References: <0000000000006eb03a061b20c079@google.com>
+ <Zr-ZY8HSGfVuoQpl@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Zr-ZY8HSGfVuoQpl@google.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -77,29 +64,35 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, Jun 17, 2024, syzbot wrote:
-> Hello,
+On Fri, Aug 16, 2024 at 11:24:35AM -0700, Sean Christopherson wrote:
+> On Mon, Jun 17, 2024, syzbot wrote:
+> > Hello,
+> > 
+> > syzbot found the following issue on:
+> > 
+> > HEAD commit:    2ccbdf43d5e7 Merge tag 'for-linus' of git://git.kernel.org..
+> > git tree:       upstream
+> > console output: https://syzkaller.appspot.com/x/log.txt?x=16f23146980000
+> > kernel config:  https://syzkaller.appspot.com/x/.config?x=81c0d76ceef02b39
+> > dashboard link: https://syzkaller.appspot.com/bug?extid=0dc211bc2adb944e1fd6
+> > compiler:       gcc (Debian 12.2.0-14) 12.2.0, GNU ld (GNU Binutils for Debian) 2.40
+> > userspace arch: i386
+> > 
+> > Unfortunately, I don't have any reproducer for this issue yet.
+> > 
+> > Downloadable assets:
+> > disk image (non-bootable): https://storage.googleapis.com/syzbot-assets/7bc7510fe41f/non_bootable_disk-2ccbdf43.raw.xz
+> > vmlinux: https://storage.googleapis.com/syzbot-assets/13cdb5bfbafa/vmlinux-2ccbdf43.xz
+> > kernel image: https://storage.googleapis.com/syzbot-assets/7a14f5d07f81/bzImage-2ccbdf43.xz
+> > 
+> > IMPORTANT: if you fix the issue, please add the following tag to the commit:
+> > Reported-by: syzbot+0dc211bc2adb944e1fd6@syzkaller.appspotmail.com
 > 
-> syzbot found the following issue on:
+> See https://lore.kernel.org/all/Zr-Ydj8FBpiqmY_c@google.com for an explanation.
 > 
-> HEAD commit:    2ccbdf43d5e7 Merge tag 'for-linus' of git://git.kernel.org..
-> git tree:       upstream
-> console output: https://syzkaller.appspot.com/x/log.txt?x=16f23146980000
-> kernel config:  https://syzkaller.appspot.com/x/.config?x=81c0d76ceef02b39
-> dashboard link: https://syzkaller.appspot.com/bug?extid=0dc211bc2adb944e1fd6
-> compiler:       gcc (Debian 12.2.0-14) 12.2.0, GNU ld (GNU Binutils for Debian) 2.40
-> userspace arch: i386
-> 
-> Unfortunately, I don't have any reproducer for this issue yet.
-> 
-> Downloadable assets:
-> disk image (non-bootable): https://storage.googleapis.com/syzbot-assets/7bc7510fe41f/non_bootable_disk-2ccbdf43.raw.xz
-> vmlinux: https://storage.googleapis.com/syzbot-assets/13cdb5bfbafa/vmlinux-2ccbdf43.xz
-> kernel image: https://storage.googleapis.com/syzbot-assets/7a14f5d07f81/bzImage-2ccbdf43.xz
-> 
-> IMPORTANT: if you fix the issue, please add the following tag to the commit:
-> Reported-by: syzbot+0dc211bc2adb944e1fd6@syzkaller.appspotmail.com
+> #syz invalid
 
-See https://lore.kernel.org/all/Zr-Ydj8FBpiqmY_c@google.com for an explanation.
+Oh. Thanks very much for following up on this. I spent some time puzzling
+over it and didn't find a wireguard bug. Glad that turned out to be so.
 
-#syz invalid
+Jason
