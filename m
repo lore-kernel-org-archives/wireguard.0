@@ -4,63 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14101C5321D
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Aug 2024 09:14:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08962C5321E
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Aug 2024 09:16:53 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cd2b67dd;
-	Mon, 26 Aug 2024 09:04:59 +0000 (UTC)
-Received: from nyc.source.kernel.org (nyc.source.kernel.org
- [2604:1380:45d1:ec00::3])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 29ff1e70
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b0521ccf;
+	Mon, 26 Aug 2024 09:14:31 +0000 (UTC)
+Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net
+ [217.70.183.197])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6aee3380
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 26 Aug 2024 09:04:57 +0000 (UTC)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id 0226FA41DB3
- for <wireguard@lists.zx2c4.com>; Mon, 26 Aug 2024 09:04:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7415EC8CDC4
- for <wireguard@lists.zx2c4.com>; Mon, 26 Aug 2024 09:04:55 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="k737Ynit"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1724663093;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2JsEUMJ9tTiCXdom+eIaZI90ccncfSERtL93pMw0JPE=;
- b=k737YnitoHe0CG/knvt6Ne5d6da+ErPyUAn3R1nvPeODTxVY8RvvX7w1454F6vD3OUMHHE
- jdx8371ZfPivKO8xb1ar39M134B+RiCiKkItyPCdJdjQmJeJHsGOlO2ZfeMHZiMljE9y7Y
- lPP/w+0kyJg1Wm83fZJAzx9Wb1tqhPo=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 9c180e8e
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 26 Aug 2024 09:04:53 +0000 (UTC)
-Received: by mail-oo1-f45.google.com with SMTP id
- 006d021491bc7-5d5c8c1006eso3041088eaf.3
- for <wireguard@lists.zx2c4.com>; Mon, 26 Aug 2024 02:04:53 -0700 (PDT)
-X-Gm-Message-State: AOJu0YzeR1FAens5IOIEdnpcNmJa3IQz6bMmBSeInYy7mlWgPFn7pEmX
- P86Qei3TcH26RoSx5gfPQVBI8Kqi9CSPNjYI6APp6Q6yXWPmLhQTXl+PEnnui4qy0t4XBNj5Pz9
- 89zvGWdw2Z71xRZrRXIo8xHDBCBo=
-X-Google-Smtp-Source: AGHT+IH53KKQQ6EzcMKktnQssaZPwL8qQAflcJ2RpSa1BTyaT+L51Z3BfOJilIyTatEZEf55p2QCavusNIers5ENdIQ=
-X-Received: by 2002:a05:6870:2251:b0:264:9161:82cb with SMTP id
- 586e51a60fabf-273e6624980mr10694755fac.31.1724663092558; Mon, 26 Aug 2024
- 02:04:52 -0700 (PDT)
-MIME-Version: 1.0
+ Mon, 26 Aug 2024 09:14:29 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 6401C1C0009;
+ Mon, 26 Aug 2024 09:14:28 +0000 (UTC)
+Received: from peko by dell.be.48ers.dk with local (Exim 4.96)
+ (envelope-from <peter@korsgaard.com>) id 1siVnv-00G0R4-1f;
+ Mon, 26 Aug 2024 11:14:27 +0200
+From: Peter Korsgaard <peter@korsgaard.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: wireguard@lists.zx2c4.com
+Subject: Re: wireguard-tools-1.0.20210914.tar.xz hash changed
 References: <87a5h6e4fk.fsf@dell.be.48ers.dk>
  <CAHmME9qXiEmKTZ56+bz3-ZP3udQsgZHcKtV3RU_WK1as9c=e4Q@mail.gmail.com>
  <87bk1fbqro.fsf@dell.be.48ers.dk>
-In-Reply-To: <87bk1fbqro.fsf@dell.be.48ers.dk>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 26 Aug 2024 11:04:41 +0200
-X-Gmail-Original-Message-ID: <CAHmME9qot4_njP1DnBTRYhkRC93cetwi-ttwM_77ibm2X90Cng@mail.gmail.com>
-Message-ID: <CAHmME9qot4_njP1DnBTRYhkRC93cetwi-ttwM_77ibm2X90Cng@mail.gmail.com>
-Subject: Re: wireguard-tools-1.0.20210914.tar.xz hash changed
-To: Peter Korsgaard <peter@korsgaard.com>
-Cc: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+ <CAHmME9qot4_njP1DnBTRYhkRC93cetwi-ttwM_77ibm2X90Cng@mail.gmail.com>
+Date: Mon, 26 Aug 2024 11:14:27 +0200
+In-Reply-To: <CAHmME9qot4_njP1DnBTRYhkRC93cetwi-ttwM_77ibm2X90Cng@mail.gmail.com>
+ (Jason A. Donenfeld's message of "Mon, 26 Aug 2024 11:04:41 +0200")
+Message-ID: <877cc3bq8c.fsf@dell.be.48ers.dk>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-GND-Sasl: peter@korsgaard.com
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -75,28 +50,23 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, Aug 26, 2024 at 11:02=E2=80=AFAM Peter Korsgaard <peter@korsgaard.c=
-om> wrote:
->
-> >>>>> "Jason" =3D=3D Jason A Donenfeld <Jason@zx2c4.com> writes:
->
-> Hi Jason,
->
->  >> It would be great if we could have a bit-identical .tar.xz.
->
->  > I updated xz on the system. Bah, that's annoying.
->
->  > I've downgraded it now and the hash should check out. But this issue
->  > is sure to come up again in the future....
->
-> Thanks! I've verified that it is indeed correct again. Out of interest,
-> what xz versions were this about exactly?
+>>>>> "Jason" == Jason A Donenfeld <Jason@zx2c4.com> writes:
 
-I downgraded from the latest one to the one that existed before Jia
-Tan appeared.
+Hi,
 
-> For Buildroot I will have a look at moving these autogenerated /
-> snapshot downloads to the .tar.gz variant that is probably more stable
-> over versions.
+ >> For Buildroot I will have a look at moving these autogenerated /
+ >> snapshot downloads to the .tar.gz variant that is probably more stable
+ >> over versions.
 
-Long term I intend to move everything over to .zst, I think.
+ > Long term I intend to move everything over to .zst, I think.
+
+OK. Do you have reasons to expect .zst output to be bit identical
+between versions? It presumably means that the compression ratio can not
+improve over time, hence my suggestion for a legacy format like .gz.
+
+The trigger for all of this is the on the fly snapshot generation from
+cgit. How about archiving the snapshot tarballs somewhere permanent
+instead?
+
+-- 
+Bye, Peter Korsgaard
