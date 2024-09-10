@@ -4,65 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BF68D49228
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 14:53:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62A34D4922F
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 14:58:41 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2b3d00f0;
-	Mon, 18 Nov 2024 12:45:23 +0000 (UTC)
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com
- [2607:f8b0:4864:20::42c])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1c5d3082
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b7d3b3be;
+	Mon, 18 Nov 2024 12:45:24 +0000 (UTC)
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com
+ [2607:f8b0:4864:20::b2e])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f74222eb
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 2 Jul 2024 10:02:00 +0000 (UTC)
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-70683d96d0eso2346885b3a.0
- for <wireguard@lists.zx2c4.com>; Tue, 02 Jul 2024 03:01:59 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 10 Sep 2024 06:34:06 +0000 (UTC)
+Received: by mail-yb1-xb2e.google.com with SMTP id
+ 3f1490d57ef6-e1a9dc3efc1so5896799276.2
+ for <wireguard@lists.zx2c4.com>; Mon, 09 Sep 2024 23:34:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719914517; x=1720519317; darn=lists.zx2c4.com;
- h=content-transfer-encoding:subject:from:to:content-language
- :user-agent:mime-version:date:message-id:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hWiOatSR7mntr9mVVIU53E7W5KMWYRrHlhjpfe9lb/s=;
- b=dS4VrBlqZ4C7JOwIktfoIyzDq/fgBEELdZMoaKDas+89RE3CDo6VOZ3wVGxB1Zfh/d
- Gp5HOJ0cGM4KuW5ASSm/KKFcapw7HSlU5rARCdw63dn+1Mr8JZNTWMZdRIOTitGhui1W
- 3VwlQ5YKaDCzDnU8fLAtBtH1YnKCj1kbh/qMdoilbHYfMOaw4fwEfF0t0moJZ7dGb44H
- LDW92OCexuDP8/gwTOnIHdhfs3yWN30G/iq84vtnfC2UKI31xB4EPipvqmdKU5tYn3QT
- Q9fGXde9pRWQwdr3NZmkJq3E1YfrmWE9v83mci9oR6V3tU4iB8lk1+g/x6hX61lTUSmf
- 24Gg==
+ d=gmail.com; s=20230601; t=1725950045; x=1726554845; darn=lists.zx2c4.com;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=lejK35/pWLaQaNOp+LtO8VnEssDIJMb5nbshBedk3/4=;
+ b=JUvB97s9APhwJhlaHdFatOHowVTmYwMM1qyzEL4nzTitdB3Y2kJVl5s0wT9UfEDGm3
+ 0VLnbvkLoV3HG1n9S/4mdLlQJ2T3WOfPN9odZPIB17MlPtcq+PyuujMzz13Wyw/SkYh0
+ nqvOTHgBAveH+2L7nfbO4gW+w+jXct0vps3YIoWC6vYosBCSFYW4UrmGoIVuxOEA8zmq
+ sHC+dnlZTCS8AqY1ZjtBDbEY2C5I1wlbkaD/Pdt6IGf4ZVnxiIgzbUqDyVFi5GDKSN3A
+ /Xadls7/CUywlu3HMQIHFidvmMQjBaWY1V0H5UEezYaVFhoH5NpQcFxAusRduf8SchCC
+ PNnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719914517; x=1720519317;
- h=content-transfer-encoding:subject:from:to:content-language
- :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=hWiOatSR7mntr9mVVIU53E7W5KMWYRrHlhjpfe9lb/s=;
- b=LxBh0RJ97FavhB/vtiDqO8ped4WBgEtHwsGhBkt1Sw+ypis7PPUpYxwFAaj5w0uy7+
- OiS7uq2igEqUAnPdqDMPxojNARW9EWtknXEvi4Sxe6c1sT4SYRr9R9/rivp2mKdPF+n5
- n5NLJ2r+L59SXvZ9WaO9u3EsBobBzaHBPsnS7i5dvYJsI2zFvrHP/foffbpaax/XZoVj
- kvZXZTQrcDP3rwW+G+J5NOGN5ccLi87Iempj/ziKkImEq1oj70tsh+ZNByG6Uv4AiZF4
- KbmK4DY/Kd+BnBJkaCW7vDtzrW1rZH+2pXUJmPez3mySN+Dt+ve6U8JDaSHGXH5OrewY
- G5MQ==
-X-Gm-Message-State: AOJu0YzOUKZylEQn50IwUicRxlkPKZGcSHC+gQlZbLHF2hp4NcGtKLVI
- gstapVF7veCrWKKBh8jPkz7a5p0hyQWNqUDT8mWagAkoCLhEp0zSpiRNbA==
-X-Google-Smtp-Source: AGHT+IEXEdeXQBkVmxNqE9BNTE9XbEEHlc9NtlAHlMULAhQ8I4ET9yHLdy+8AaPnWOJUdI0rpOAn1g==
-X-Received: by 2002:a05:6a20:840e:b0:1be:c2f7:275 with SMTP id
- adf61e73a8af0-1bef6245512mr7381572637.50.1719914517285; 
- Tue, 02 Jul 2024 03:01:57 -0700 (PDT)
-Received: from [192.168.188.101] (118-169-225-252.dynamic-ip.hinet.net.
- [118.169.225.252]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fac10e365asm82139655ad.86.2024.07.02.03.01.55
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Jul 2024 03:01:56 -0700 (PDT)
-Message-ID: <caa99f73-6837-4ea4-b135-afc6a452101a@gmail.com>
-Date: Tue, 2 Jul 2024 18:01:54 +0800
+ d=1e100.net; s=20230601; t=1725950045; x=1726554845;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=lejK35/pWLaQaNOp+LtO8VnEssDIJMb5nbshBedk3/4=;
+ b=NY5jcjGlp2zYRuxVheyV+oAon2TDup0wq2VmGS7uKD/Yb7ZFUlaIbnYniS0Hb0x2Re
+ f1OCTyJvSeWJsp+VzkojKgr/k+bDVyK/hn6s8VnGXfauudUruVSWQv8uY+lULECJj2UK
+ MvN40Y7Ua9A4vcd7BeyYDrsCnZWjR8hpfF+wL15pm3HzeW3IuNzwY8SJxAu56N//04Cs
+ hE9vo82nnF8xs3jeBPAOKGT6KNgvM1Q5ZCvtbgLYOK7/TU4a4nYFNN+gPocGUZKdvOqJ
+ /CdDCrigYpJNLUHIEpNlj6MyREACn4O+/7FfVF8DJQId20FuA1euL2OP0WcZwHZrn0/h
+ V79g==
+X-Gm-Message-State: AOJu0YzmeGgcUQGMG85tk4jlxqSJmDK/xprKVIu69AMhCnDqeyRiEc3G
+ UWrFglg9IOjfhJKXkE5K1H+0LEJgwYt5YG2RLPzuiYNl8CEsIpSTJ4sEEkT/GeJ6SlHUfQHh/NU
+ br9WQ9rlWnH1Zi2V/TRCrJTMm3rOxuGW8
+X-Google-Smtp-Source: AGHT+IF7D/RLtzC9/TwW5liR7/bpQcE6mY5BeBCHhoMhHpJhgxNObMBjsQfIWa3FzQeDAHQRK53TPL4Ftp6+6sMIH+g=
+X-Received: by 2002:a05:6902:2785:b0:e13:ec5b:f699 with SMTP id
+ 3f1490d57ef6-e1d34897e90mr14634161276.31.1725950044686; Mon, 09 Sep 2024
+ 23:34:04 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
+From: Mirco Barone <mirco.barone.3@gmail.com>
+Date: Tue, 10 Sep 2024 08:33:54 +0200
+Message-ID: <CANRMffDRX+i7N0JpH=fJBJ=BJ4vNsk6QbbfUkqguT0F3FFO22A@mail.gmail.com>
+Subject: [PATCH] Enabling Threaded NAPI by Default
 To: wireguard@lists.zx2c4.com
-From: Loren Hsu <rdp.loren@gmail.com>
-Subject: Hyper-V VM can't ping host when Wireguard is started in host
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="UTF-8"
 X-Mailman-Approved-At: Mon, 18 Nov 2024 12:44:56 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -78,36 +69,65 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi List,
-Here is an issue when the Wireguard is running on a Windows 11, the 
-hyper-V VM can't access the host OS.
+Hi everyone,
 
-My laptop is running Windows 11 host OS, it has a hyper-V VM created and 
-Ubuntu 22.04 LTS installed. When Wireguard is started on the Windows 11 
-host machine, the Ubuntu can't ping the host OS, but it can ping any 
-public IP, like 8.8.8.8.
 
-The VM has only one virtual interface and is connected to a NAT-virtual 
-switch. The NAT-vswitch has a VM-facing IP 192.168.188.1/24, while the 
-IP in the VM is something like 192.168.188.10/24.
+While testing Wireguard with a large number of tunnels, we noticed a
+bottleneck caused by the superimposition of multiple NAPI functions on
+the same CPU core, hence preventing the system to scale effectively.
+More details are described in this paper on page 3:
+https://netdevconf.info/0x18/docs/netdev-0x18-paper23-talk-paper.pdf
 
-Here are some steps that have been taken to clarify this issue:
-1. When the Wiregurad is NOT started in the host OS, the Ubuntu can ping 
-the host as well as any public IP.
-2. When the Wireguard is started, and capture network traces on the host 
-for the 192.168.188.1 interface, the ping requests are seen coming from 
-the VM, but no reply from the host.
-3. from the 'route print' in the host, the 192.168.188.1/32 is there 
-with metrics 271, which is the 2nd lowest metric that is only inferior 
-to the default route, which is 40. But I guess the longest prefix should 
-match first in this case, besides, the route print output looks the same 
-with or without wireguard enabled.
 
-It looks like a firewall issue, since network trace has echo requests 
-from the VM, but it's not clear to me what settings should be changed, 
-since the inbound icmp echo request is allowed already.
+Since each peer has its own NAPI struct, the problem can potentially
+occur when many peers are created on the same machine. The simple
+solution we found is to enable threaded NAPI, which improves
+considerably the throughput in our testing conditions while, at the
+same time, showing no drawbacks in case of traditional deployment
+scenarios (i.e., single tunnel). Hence, we feel we could slightly
+modify the code and move to threaded NAPI as the new default.
 
-Any ideas are welcome.
-Thanks,
-Loren
 
+Any comment?
+
+The option to revert to NAPI handled by a softirq is still preserved,
+by simply changing the `/sys/class/net/<iface>/threaded` flag.
+
+diff --git a/drivers/net/wireguard/device.c b/drivers/net/wireguard/device.c
+
+old mode 100644
+
+new mode 100755
+
+index 3feb36ee5bfb..60554b7c405a
+
+--- a/drivers/net/wireguard/device.c
+
++++ b/drivers/net/wireguard/device.c
+
+@@ -363,6 +363,8 @@ static int wg_newlink(struct net *src_net, struct
+net_device *dev,
+
+        ret = wg_ratelimiter_init();
+
+        if (ret < 0)
+
+                goto err_free_handshake_queue;
+
++
+
++       dev_set_threaded(dev,true);
+
+
+        ret = register_netdevice(dev);
+
+        if (ret < 0)
+
+
+
+Kind regards
+
+<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>
+Privo di virus.www.avast.com
+<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>
+<#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2>
