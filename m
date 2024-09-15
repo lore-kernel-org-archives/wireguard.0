@@ -4,65 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F90FD10F3B
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 01:36:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 089BDD10F3B
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 01:39:54 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 570ed5b6;
-	Mon, 18 Nov 2024 01:36:51 +0000 (UTC)
-Received: from mail-il1-x149.google.com (mail-il1-x149.google.com
- [2607:f8b0:4864:20::149])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8b9bd0e4
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5744ce9a;
+	Mon, 18 Nov 2024 01:36:54 +0000 (UTC)
+Received: from mail-io1-f69.google.com (mail-io1-f69.google.com
+ [209.85.166.69])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4cd9f522
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 5 Sep 2024 20:07:32 +0000 (UTC)
-Received: by mail-il1-x149.google.com with SMTP id
- e9e14a558f8ab-39d5101012eso34484035ab.0
- for <wireguard@lists.zx2c4.com>; Thu, 05 Sep 2024 13:07:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1725566851; x=1726171651; darn=lists.zx2c4.com;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=ZzjZRbzMO+xdboEtQpI9uNMfcqo1XHcSdNxQ2YjUwqA=;
- b=HBQuQmRK6HbyLdpI6amsuQcPMYKxwcUGIzR7f48FXhFzMrBYNej/SBi05pa9f1maUq
- J8iJDHGeRlU3kBIJHWxcvD2XQW+8W2ANjDHrreqNZlsbTKPlgPtjgAuB2yvuYpntT10m
- DYEugQceXD/e1xEjpufKLBwC7caEh2DXkw+5o7uXfD1gc2QyR4CXvew+sE8Xntg6QbaV
- CIa6RJMe288PfnehJQH+fUR3uMiML3qs8zmeyp5lx0iAdwpKrk2vWvCQZO1++oYxgdBY
- nz8sVUkDLmjXwFAIHI+lx5khBYsB1blRPRYuNAzeRL1Ie6cuRkjo9wqOeIditilU8DIE
- B6vw==
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 15 Sep 2024 19:59:28 +0000 (UTC)
+Received: by mail-io1-f69.google.com with SMTP id
+ ca18e2360f4ac-82cf2a9da36so469362039f.2
+ for <wireguard@lists.zx2c4.com>; Sun, 15 Sep 2024 12:59:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725566851; x=1726171651;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ d=1e100.net; s=20230601; t=1726430367; x=1727035167;
+ h=to:from:subject:message-id:date:mime-version:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ZzjZRbzMO+xdboEtQpI9uNMfcqo1XHcSdNxQ2YjUwqA=;
- b=AZe51SpUSfWUH5kp+qht2sUdAo5VPJVIqHvBiErfjsf2J8QJZRdEo2SwoFzS8VyViS
- e9+9iLp2sQPyxJ9S6yiaCA/s2k9gpOpc4opIksTnjn7estsAsY5EqhQUzEXs1v/jN7eU
- 2GxJ3iNCP4+Hre5bpWp1wyM+Q/U1MtrKH5Rj3pYZ50LYXqNSNb8ODQe4OSrjA/9/YZj/
- pbtUbLlYNXdXFeievxiftySp8UoserZmooyjT9+syP/Nokj7/Jc8J2juK2rEiUzSTGDW
- B2vzPQKG+GpegempWJs4cbjmvEZZ996MhzSEh17FewyeH/UrT8+ZtLln9rP5vck5mt6g
- u3xg==
+ bh=r+R46sj0H/ECJLW7wH8uaFfa8zNjK2RSDJLcygibxVA=;
+ b=ZjhaIYmwP23XAR3N0/6mBp44nuhzLGMvG8unfPRqX7tEANr/Q6b1xrzfIDA/Tlej2S
+ TodTZqWCUwa/cjMdB3BnPZzufmbwc+9E8bSgiZ0g6SYTEZmCr+jENVdzvMOZgQa1s+HG
+ GVt8Gqnwp6+C56o6fyv1jnL4WPGP49TACa7gU/fT/W34I5ciJ4dRxW73sCTgMUt7Rcjo
+ cNZEjhS6z4USabufpJjtxOk3GYauRpKrq9/N1gEudMqE6ZdtIQCnGKuIiBl4eWt0MBVC
+ 2u6780K8lLd2mYhaw9/d5hZKjB1z2UCNIP6cStBuC3ZeaigmzT8cVBJXGe8ttVIyTdR1
+ Vxpw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUof+lYP/dgENsk3D9LBZMVni+HzAQvtrCJMLdgicp41iCU9/7CdwqaEtfY3Ww9TpMuy5ZaR70R+7g=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YyrWcMlFfEbGc3VgahPuzgFxIFhvg4xGuGxbVsa4PtbUVoZCUCC
- VeU6IENFV3dKz816Qg/Rasc1QZ0tFDC2ZFBc3JMKSTptYxniJR/2wBcH+Ln3Cfv0Mw+vDVuWzA=
- =
-X-Google-Smtp-Source: AGHT+IHEd+lsFnYs+0GqUENZHjM8rPmqmtwsqnAVXOkz3OUkiQAmcfLytMWw9/rGVtchSpKTLiUG5g52Cg==
-X-Received: from jrife.c.googlers.com ([fda3:e722:ac3:cc00:2b:ff92:c0a8:1e5])
- (user=jrife job=sendgmr) by 2002:a05:6e02:1b07:b0:39f:549d:e39d
- with SMTP id
- e9e14a558f8ab-3a04f105a48mr32695ab.5.1725566851549; Thu, 05 Sep 2024 13:07:31
- -0700 (PDT)
-Date: Thu,  5 Sep 2024 15:05:41 -0500
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.46.0.598.g6f2099f65c-goog
-Message-ID: <20240905200551.4099064-1-jrife@google.com>
-Subject: [PATCH v2 net-next] wireguard: allowedips: Add WGALLOWEDIP_F_REMOVE_ME
- flag
-From: Jordan Rife <jrife@google.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, wireguard@lists.zx2c4.com
-Cc: Jordan Rife <jrife@google.com>, "David S. Miller" <davem@davemloft.net>, 
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, 
- Shuah Khan <shuah@kernel.org>, netdev@vger.kernel.org,
- linux-kselftest@vger.kernel.org
+ AJvYcCVC1fFmsEkNMl2EleRODM0Jfu45qCmKFd84TDCOOS1vHofJPy9896RUasWcKkBOYv1a7VKIpoj0avE=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0Yy5scgwnqqeAuVRmTS6KdE9NOwuAUpfqohEC1yZdHAq3UdFeprc
+ dcoU92PUh1A0dLY2PZHU3I+IfUfe2e/OJOqTcAWZK3Bffxv1/V3wtx4ddpVEar7EwpMHlPFFmce
+ Xe7/uY7SSwc+NOcwJm72GKh7/fhMrUq4JkLm3GU7RCgb1s9zA4x+OJN8=
+X-Google-Smtp-Source: AGHT+IEp3HvOQmQs1z8FNNGe24MblIC1ocazuM84Ta50vr+h7lVmC579ik8Zk3vFgY7Ztfs6xpuWtC6h0VtgvLeH2jw+GNNHGqqP
+MIME-Version: 1.0
+X-Received: by 2002:a05:6e02:1cad:b0:3a0:9fc6:5437 with SMTP id
+ e9e14a558f8ab-3a09fc656cfmr15932415ab.18.1726430366748; Sun, 15 Sep 2024
+ 12:59:26 -0700 (PDT)
+Date: Sun, 15 Sep 2024 12:59:26 -0700
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <000000000000bd671b06222de427@google.com>
+Subject: [syzbot] [wireguard?] INFO: task hung in tun_chr_close (5)
+From: syzbot <syzbot+b0ae8f1abf7d891e0426@syzkaller.appspotmail.com>
+To: Jason@zx2c4.com, davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+ linux-kernel@vger.kernel.org, netdev@vger.kernel.org, pabeni@redhat.com, 
+ syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -78,590 +63,225 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-With the current API the only way to remove an allowed IP is to
-completely rebuild the allowed IPs set for a peer using
-WGPEER_F_REPLACE_ALLOWEDIPS. In other words, if my current configuration
-is such that a peer has allowed IP IPs 192.168.0.2 and 192.168.0.3 and I
-want to remove 192.168.0.2 the actual transition looks like this.
+Hello,
 
-[192.168.0.2, 192.168.0.3] <-- Initial state
-[]                         <-- Step 1: Allowed IPs removed for peer
-[192.168.0.3]              <-- Step 2: Allowed IPs added back for peer
+syzbot found the following issue on:
 
-This is true even if the allowed IP list is small and the update does
-not need to be batched into multiple WG_CMD_SET_DEVICE requests, as
-the removal and subsequent addition of IPs is non-atomic within a single
-request. Consequently, wg_allowedips_lookup_dst and
-wg_allowedips_lookup_src may return NULL while reconfiguring a peer even
-for packets bound for IPs a user did not intend to remove leading to
-unintended interruptions in connectivity. This presents in userspace as
-failed calls to sendto and sendmsg for UDP sockets. In my case, I ran
-netperf while repeatedly reconfiguring the allowed IPs for a peer with
-wg.
+HEAD commit:    7c6a3a65ace7 minmax: reduce min/max macro expansion in ato..
+git tree:       upstream
+console output: https://syzkaller.appspot.com/x/log.txt?x=140a20a9980000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=28869f34c32848cf
+dashboard link: https://syzkaller.appspot.com/bug?extid=b0ae8f1abf7d891e0426
+compiler:       gcc (Debian 12.2.0-14) 12.2.0, GNU ld (GNU Binutils for Debian) 2.40
 
-/usr/local/bin/netperf -H 10.102.73.72 -l 10m -t UDP_STREAM -- -R 1 -m 1024
-send_data: data send error: No route to host (errno 113)
-netperf: send_omni: send_data failed: No route to host
+Unfortunately, I don't have any reproducer for this issue yet.
 
-While this may not be of particular concern for environments where peers
-and allowed IPs are mostly static, Cilium manages peers and allowed IPs
-in a dynamic environment where peers (i.e. Kubernetes nodes) and allowed
-IPs (i.e. Pods running on those nodes) can frequently change. Cilium
-must continually keep its WireGuard device's configuration in sync with
-its cluster state leading to unnecessary churn and packet drops.
+Downloadable assets:
+disk image: https://storage.googleapis.com/syzbot-assets/57e94d370ef7/disk-7c6a3a65.raw.xz
+vmlinux: https://storage.googleapis.com/syzbot-assets/9ce7cfa54ff9/vmlinux-7c6a3a65.xz
+kernel image: https://storage.googleapis.com/syzbot-assets/bfe1c98724fe/bzImage-7c6a3a65.xz
 
-This patch introduces a new flag called WGALLOWEDIP_F_REMOVE_ME which
-in the same way that WGPEER_F_REMOVE_ME allows a user to remove a single
-peer from a WireGuard device's configuration allows a user to remove an
-IP from a peer's set of allowed IPs. This has two benefits. First, it
-allows systems such as Cilium to avoid introducing connectivity blips
-while reconfiguring a WireGuard device. Second, it allows us to more
-efficiently keep the device's configuration in sync with the cluster
-state, as we no longer need to do frequent rebuilds of the allowed IPs
-list for each peer. Instead, the device's configuration can be
-incrementally updated. This patch also bumps WG_GENL_VERSION which can
-be used by clients to detect whether or not their system supports the
-WGALLOWEDIP_F_REMOVE_ME flag.
+IMPORTANT: if you fix the issue, please add the following tag to the commit:
+Reported-by: syzbot+b0ae8f1abf7d891e0426@syzkaller.appspotmail.com
 
-=======
-Changes
-=======
+INFO: task syz-executor:5223 blocked for more than 143 seconds.
+      Not tainted 6.11.0-rc7-syzkaller-00021-g7c6a3a65ace7 #0
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+task:syz-executor    state:D stack:21792 pid:5223  tgid:5223  ppid:1      flags:0x00004006
+Call Trace:
+ <TASK>
+ context_switch kernel/sched/core.c:5188 [inline]
+ __schedule+0xe37/0x5490 kernel/sched/core.c:6529
+ __schedule_loop kernel/sched/core.c:6606 [inline]
+ schedule+0xe7/0x350 kernel/sched/core.c:6621
+ schedule_preempt_disabled+0x13/0x30 kernel/sched/core.c:6678
+ __mutex_lock_common kernel/locking/mutex.c:684 [inline]
+ __mutex_lock+0x5b8/0x9c0 kernel/locking/mutex.c:752
+ tun_detach drivers/net/tun.c:698 [inline]
+ tun_chr_close+0x3e/0x230 drivers/net/tun.c:3510
+ __fput+0x408/0xbb0 fs/file_table.c:422
+ task_work_run+0x14e/0x250 kernel/task_work.c:228
+ exit_task_work include/linux/task_work.h:40 [inline]
+ do_exit+0xaa3/0x2bb0 kernel/exit.c:882
+ do_group_exit+0xd3/0x2a0 kernel/exit.c:1031
+ get_signal+0x25fb/0x2770 kernel/signal.c:2917
+ arch_do_signal_or_restart+0x90/0x7e0 arch/x86/kernel/signal.c:310
+ exit_to_user_mode_loop kernel/entry/common.c:111 [inline]
+ exit_to_user_mode_prepare include/linux/entry-common.h:328 [inline]
+ __syscall_exit_to_user_mode_work kernel/entry/common.c:207 [inline]
+ syscall_exit_to_user_mode+0x150/0x2a0 kernel/entry/common.c:218
+ do_syscall_64+0xda/0x250 arch/x86/entry/common.c:89
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f6f4917c93c
+RSP: 002b:00007ffd64f1bea0 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
+RAX: fffffffffffffe00 RBX: 0000000000000003 RCX: 00007f6f4917c93c
+RDX: 0000000000000028 RSI: 00007ffd64f1bf50 RDI: 00000000000000f9
+RBP: 00007ffd64f1befc R08: 0000000000000000 R09: 0079746972756365
+R10: 00007f6f493087e0 R11: 0000000000000246 R12: 000000000000005f
+R13: 00000000000529a3 R14: 000000000005292a R15: 00007ffd64f1bf50
+ </TASK>
+INFO: task syz-executor:5234 blocked for more than 143 seconds.
+      Not tainted 6.11.0-rc7-syzkaller-00021-g7c6a3a65ace7 #0
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+task:syz-executor    state:D stack:23040 pid:5234  tgid:5234  ppid:1      flags:0x00004006
+Call Trace:
+ <TASK>
+ context_switch kernel/sched/core.c:5188 [inline]
+ __schedule+0xe37/0x5490 kernel/sched/core.c:6529
+ __schedule_loop kernel/sched/core.c:6606 [inline]
+ schedule+0xe7/0x350 kernel/sched/core.c:6621
+ schedule_preempt_disabled+0x13/0x30 kernel/sched/core.c:6678
+ __mutex_lock_common kernel/locking/mutex.c:684 [inline]
+ __mutex_lock+0x5b8/0x9c0 kernel/locking/mutex.c:752
+ tun_detach drivers/net/tun.c:698 [inline]
+ tun_chr_close+0x3e/0x230 drivers/net/tun.c:3510
+ __fput+0x408/0xbb0 fs/file_table.c:422
+ task_work_run+0x14e/0x250 kernel/task_work.c:228
+ exit_task_work include/linux/task_work.h:40 [inline]
+ do_exit+0xaa3/0x2bb0 kernel/exit.c:882
+ do_group_exit+0xd3/0x2a0 kernel/exit.c:1031
+ get_signal+0x25fb/0x2770 kernel/signal.c:2917
+ arch_do_signal_or_restart+0x90/0x7e0 arch/x86/kernel/signal.c:310
+ exit_to_user_mode_loop kernel/entry/common.c:111 [inline]
+ exit_to_user_mode_prepare include/linux/entry-common.h:328 [inline]
+ __syscall_exit_to_user_mode_work kernel/entry/common.c:207 [inline]
+ syscall_exit_to_user_mode+0x150/0x2a0 kernel/entry/common.c:218
+ do_syscall_64+0xda/0x250 arch/x86/entry/common.c:89
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f4023d7fdea
+RSP: 002b:00007ffcbd595968 EFLAGS: 00000206 ORIG_RAX: 0000000000000036
+RAX: 0000000000000000 RBX: 00007ffcbd5959f0 RCX: 00007f4023d7fdea
+RDX: 0000000000000040 RSI: 0000000000000029 RDI: 0000000000000003
+RBP: 0000000000000003 R08: 0000000000000558 R09: 0079746972756365
+R10: 00007f4023f07a60 R11: 0000000000000206 R12: 00007f4023f07a00
+R13: 00007ffcbd59598c R14: 0000000000000000 R15: 00007f4023f08e40
+ </TASK>
 
-v1->v2
-------
-* Fixed some Sparse warnings
+Showing all locks held in the system:
+2 locks held by kworker/0:1/9:
+3 locks held by kworker/u8:0/11:
+ #0: ffff88801ac89148 ((wq_completion)events_unbound){+.+.}-{0:0}, at: process_one_work+0x1277/0x1b40 kernel/workqueue.c:3206
+ #1: ffffc90000107d80 ((linkwatch_work).work){+.+.}-{0:0}, at: process_one_work+0x921/0x1b40 kernel/workqueue.c:3207
+ #2: ffffffff8fa35ca8 (rtnl_mutex){+.+.}-{3:3}, at: linkwatch_event+0x51/0xc0 net/core/link_watch.c:276
+4 locks held by kworker/1:0/25:
+1 lock held by khungtaskd/30:
+ #0: ffffffff8ddb9fe0 (rcu_read_lock){....}-{1:2}, at: rcu_lock_acquire include/linux/rcupdate.h:326 [inline]
+ #0: ffffffff8ddb9fe0 (rcu_read_lock){....}-{1:2}, at: rcu_read_lock include/linux/rcupdate.h:838 [inline]
+ #0: ffffffff8ddb9fe0 (rcu_read_lock){....}-{1:2}, at: debug_show_all_locks+0x75/0x340 kernel/locking/lockdep.c:6626
+4 locks held by kworker/u8:5/63:
+ #0: ffff88801bae3148 ((wq_completion)netns){+.+.}-{0:0}, at: process_one_work+0x1277/0x1b40 kernel/workqueue.c:3206
+ #1: ffffc900015e7d80 (net_cleanup_work){+.+.}-{0:0}, at: process_one_work+0x921/0x1b40 kernel/workqueue.c:3207
+ #2: ffffffff8fa20290 (pernet_ops_rwsem){++++}-{3:3}, at: cleanup_net+0xbb/0xbb0 net/core/net_namespace.c:594
+ #3: ffffffff8fa35ca8 (rtnl_mutex){+.+.}-{3:3}, at: wg_netns_pre_exit+0x1b/0x230 drivers/net/wireguard/device.c:414
+2 locks held by kworker/u8:8/2961:
+2 locks held by getty/4978:
+ #0: ffff88823bd5c8a0 (&tty->ldisc_sem){++++}-{0:0}, at: tty_ldisc_ref_wait+0x24/0x80 drivers/tty/tty_ldisc.c:243
+ #1: ffffc90002f062f0 (&ldata->atomic_read_lock){+.+.}-{3:3}, at: n_tty_read+0xfc8/0x1490 drivers/tty/n_tty.c:2211
+1 lock held by syz-executor/5223:
+ #0: ffffffff8fa35ca8 (rtnl_mutex){+.+.}-{3:3}, at: tun_detach drivers/net/tun.c:698 [inline]
+ #0: ffffffff8fa35ca8 (rtnl_mutex){+.+.}-{3:3}, at: tun_chr_close+0x3e/0x230 drivers/net/tun.c:3510
+1 lock held by syz-executor/5225:
+ #0: ffffffff8fa35ca8 (rtnl_mutex){+.+.}-{3:3}, at: tun_detach drivers/net/tun.c:698 [inline]
+ #0: ffffffff8fa35ca8 (rtnl_mutex){+.+.}-{3:3}, at: tun_chr_close+0x3e/0x230 drivers/net/tun.c:3510
+1 lock held by syz-executor/5234:
+ #0: ffffffff8fa35ca8 (rtnl_mutex){+.+.}-{3:3}, at: tun_detach drivers/net/tun.c:698 [inline]
+ #0: ffffffff8fa35ca8 (rtnl_mutex){+.+.}-{3:3}, at: tun_chr_close+0x3e/0x230 drivers/net/tun.c:3510
+1 lock held by syz-executor/5233:
+2 locks held by kworker/1:5/5281:
+2 locks held by kworker/1:6/5283:
+5 locks held by kworker/0:4/5312:
+3 locks held by kworker/0:5/5313:
+3 locks held by kworker/0:6/5320:
+3 locks held by kworker/0:7/5321:
+ #0: ffff88801ac80948 ((wq_completion)events){+.+.}-{0:0}, at: process_one_work+0x1277/0x1b40 kernel/workqueue.c:3206
+ #1: ffffc900040a7d80 ((work_completion)(&w->work)#2){+.+.}-{0:0}, at: process_one_work+0x921/0x1b40 kernel/workqueue.c:3207
+ #2: ffffffff8fae8fe8 (nf_conntrack_mutex){+.+.}-{3:3}, at: nf_ct_iterate_cleanup+0x4b/0x500 net/netfilter/nf_conntrack_core.c:2403
+3 locks held by kworker/1:9/10282:
+2 locks held by syz-executor/10298:
+1 lock held by syz-executor/10299:
 
-Signed-off-by: Jordan Rife <jrife@google.com>
+=============================================
+
+NMI backtrace for cpu 1
+CPU: 1 UID: 0 PID: 30 Comm: khungtaskd Not tainted 6.11.0-rc7-syzkaller-00021-g7c6a3a65ace7 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:93 [inline]
+ dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:119
+ nmi_cpu_backtrace+0x27b/0x390 lib/nmi_backtrace.c:113
+ nmi_trigger_cpumask_backtrace+0x29c/0x300 lib/nmi_backtrace.c:62
+ trigger_all_cpu_backtrace include/linux/nmi.h:162 [inline]
+ check_hung_uninterruptible_tasks kernel/hung_task.c:223 [inline]
+ watchdog+0xf0c/0x1240 kernel/hung_task.c:379
+ kthread+0x2c1/0x3a0 kernel/kthread.c:389
+ ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+ </TASK>
+Sending NMI from CPU 1 to CPUs 0:
+NMI backtrace for cpu 0
+CPU: 0 UID: 0 PID: 5312 Comm: kworker/0:4 Not tainted 6.11.0-rc7-syzkaller-00021-g7c6a3a65ace7 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
+Workqueue: events nsim_dev_trap_report_work
+RIP: 0010:__sanitizer_cov_trace_pc+0x18/0x70 kernel/kcov.c:212
+Code: 00 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3 0f 1e fa 65 48 8b 15 a4 0a 78 7e 65 8b 05 a5 0a 78 7e a9 00 01 ff 00 <48> 8b 34 24 74 1d f6 c4 01 74 43 a9 00 00 0f 00 75 3c a9 00 00 f0
+RSP: 0018:ffffc90000007978 EFLAGS: 00000206
+RAX: 0000000000000102 RBX: 0000000000000001 RCX: ffffffff88f20744
+RDX: ffff888032b89e00 RSI: 0000000000000000 RDI: 0000000000000001
+RBP: ffff88806b965500 R08: 0000000000000001 R09: 0000000000000000
+R10: 0000000000000001 R11: 0000000000000000 R12: ffffc90000007c00
+R13: 000000000003db0c R14: ffffffff88f244f1 R15: 000000000000001b
+FS:  0000000000000000(0000) GS:ffff8880b8800000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fb6cf5ffd00 CR3: 00000000693da000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <NMI>
+ </NMI>
+ <IRQ>
+ __netif_receive_skb_core.constprop.0+0x139/0x4330 net/core/dev.c:5463
+ __netif_receive_skb_one_core+0xb1/0x1e0 net/core/dev.c:5659
+ __netif_receive_skb+0x1d/0x160 net/core/dev.c:5775
+ process_backlog+0x443/0x15f0 net/core/dev.c:6108
+ __napi_poll.constprop.0+0xb7/0x550 net/core/dev.c:6772
+ napi_poll net/core/dev.c:6841 [inline]
+ net_rx_action+0xa92/0x1010 net/core/dev.c:6963
+ handle_softirqs+0x216/0x8f0 kernel/softirq.c:554
+ do_softirq kernel/softirq.c:455 [inline]
+ do_softirq+0xb2/0xf0 kernel/softirq.c:442
+ </IRQ>
+ <TASK>
+ __local_bh_enable_ip+0x100/0x120 kernel/softirq.c:382
+ spin_unlock_bh include/linux/spinlock.h:396 [inline]
+ nsim_dev_trap_report drivers/net/netdevsim/dev.c:820 [inline]
+ nsim_dev_trap_report_work+0x870/0xc80 drivers/net/netdevsim/dev.c:850
+ process_one_work+0x9c5/0x1b40 kernel/workqueue.c:3231
+ process_scheduled_works kernel/workqueue.c:3312 [inline]
+ worker_thread+0x6c8/0xed0 kernel/workqueue.c:3389
+ kthread+0x2c1/0x3a0 kernel/kthread.c:389
+ ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+ </TASK>
+
+
 ---
- drivers/net/wireguard/allowedips.c            | 103 ++++++++++----
- drivers/net/wireguard/allowedips.h            |   4 +
- drivers/net/wireguard/netlink.c               |  45 +++++--
- drivers/net/wireguard/selftest/allowedips.c   |  30 +++++
- include/uapi/linux/wireguard.h                |  11 +-
- tools/testing/selftests/wireguard/Makefile    |  18 +++
- tools/testing/selftests/wireguard/netns.sh    |  38 ++++++
- tools/testing/selftests/wireguard/remove-ip.c | 126 ++++++++++++++++++
- 8 files changed, 333 insertions(+), 42 deletions(-)
- create mode 100644 tools/testing/selftests/wireguard/Makefile
- create mode 100644 tools/testing/selftests/wireguard/remove-ip.c
+This report is generated by a bot. It may contain errors.
+See https://goo.gl/tpsmEJ for more information about syzbot.
+syzbot engineers can be reached at syzkaller@googlegroups.com.
 
-diff --git a/drivers/net/wireguard/allowedips.c b/drivers/net/wireguard/allowedips.c
-index 4b8528206cc8a..ff52259dd8d81 100644
---- a/drivers/net/wireguard/allowedips.c
-+++ b/drivers/net/wireguard/allowedips.c
-@@ -249,6 +249,56 @@ static int add(struct allowedips_node __rcu **trie, u8 bits, const u8 *key,
- 	return 0;
- }
- 
-+static void _remove(struct allowedips_node *node, struct mutex *lock)
-+{
-+	struct allowedips_node *child, **parent_bit, *parent;
-+	bool free_parent;
-+
-+	list_del_init(&node->peer_list);
-+	RCU_INIT_POINTER(node->peer, NULL);
-+	if (node->bit[0] && node->bit[1])
-+		return;
-+	child = rcu_dereference_protected(node->bit[!rcu_access_pointer(node->bit[0])],
-+					  lockdep_is_held(lock));
-+	if (child)
-+		child->parent_bit_packed = node->parent_bit_packed;
-+	parent_bit = (struct allowedips_node **)(node->parent_bit_packed & ~3UL);
-+	*parent_bit = child;
-+	parent = (void *)parent_bit -
-+			offsetof(struct allowedips_node, bit[node->parent_bit_packed & 1]);
-+	free_parent = !rcu_access_pointer(node->bit[0]) &&
-+			!rcu_access_pointer(node->bit[1]) &&
-+			(node->parent_bit_packed & 3) <= 1 &&
-+			!rcu_access_pointer(parent->peer);
-+	if (free_parent)
-+		child = rcu_dereference_protected(parent->bit[!(node->parent_bit_packed & 1)],
-+						  lockdep_is_held(lock));
-+	call_rcu(&node->rcu, node_free_rcu);
-+	if (!free_parent)
-+		return;
-+	if (child)
-+		child->parent_bit_packed = parent->parent_bit_packed;
-+	*(struct allowedips_node **)(parent->parent_bit_packed & ~3UL) = child;
-+	call_rcu(&parent->rcu, node_free_rcu);
-+}
-+
-+static int remove(struct allowedips_node __rcu **trie, u8 bits, const u8 *key,
-+		  u8 cidr, struct wg_peer *peer, struct mutex *lock)
-+{
-+	struct allowedips_node *node;
-+
-+	if (unlikely(cidr > bits || !peer))
-+		return -EINVAL;
-+	if (!rcu_access_pointer(*trie) ||
-+	    !node_placement(*trie, key, cidr, bits, &node, lock) ||
-+	    peer != rcu_access_pointer(node->peer))
-+		return 0;
-+
-+	_remove(node, lock);
-+
-+	return 0;
-+}
-+
- void wg_allowedips_init(struct allowedips *table)
- {
- 	table->root4 = table->root6 = NULL;
-@@ -300,43 +350,38 @@ int wg_allowedips_insert_v6(struct allowedips *table, const struct in6_addr *ip,
- 	return add(&table->root6, 128, key, cidr, peer, lock);
- }
- 
-+int wg_allowedips_remove_v4(struct allowedips *table, const struct in_addr *ip,
-+			    u8 cidr, struct wg_peer *peer, struct mutex *lock)
-+{
-+	/* Aligned so it can be passed to fls */
-+	u8 key[4] __aligned(__alignof(u32));
-+
-+	++table->seq;
-+	swap_endian(key, (const u8 *)ip, 32);
-+	return remove(&table->root4, 32, key, cidr, peer, lock);
-+}
-+
-+int wg_allowedips_remove_v6(struct allowedips *table, const struct in6_addr *ip,
-+			    u8 cidr, struct wg_peer *peer, struct mutex *lock)
-+{
-+	/* Aligned so it can be passed to fls64 */
-+	u8 key[16] __aligned(__alignof(u64));
-+
-+	++table->seq;
-+	swap_endian(key, (const u8 *)ip, 128);
-+	return remove(&table->root6, 128, key, cidr, peer, lock);
-+}
-+
- void wg_allowedips_remove_by_peer(struct allowedips *table,
- 				  struct wg_peer *peer, struct mutex *lock)
- {
--	struct allowedips_node *node, *child, **parent_bit, *parent, *tmp;
--	bool free_parent;
-+	struct allowedips_node *node, *tmp;
- 
- 	if (list_empty(&peer->allowedips_list))
- 		return;
- 	++table->seq;
- 	list_for_each_entry_safe(node, tmp, &peer->allowedips_list, peer_list) {
--		list_del_init(&node->peer_list);
--		RCU_INIT_POINTER(node->peer, NULL);
--		if (node->bit[0] && node->bit[1])
--			continue;
--		child = rcu_dereference_protected(node->bit[!rcu_access_pointer(node->bit[0])],
--						  lockdep_is_held(lock));
--		if (child)
--			child->parent_bit_packed = node->parent_bit_packed;
--		parent_bit = (struct allowedips_node **)(node->parent_bit_packed & ~3UL);
--		*parent_bit = child;
--		parent = (void *)parent_bit -
--			 offsetof(struct allowedips_node, bit[node->parent_bit_packed & 1]);
--		free_parent = !rcu_access_pointer(node->bit[0]) &&
--			      !rcu_access_pointer(node->bit[1]) &&
--			      (node->parent_bit_packed & 3) <= 1 &&
--			      !rcu_access_pointer(parent->peer);
--		if (free_parent)
--			child = rcu_dereference_protected(
--					parent->bit[!(node->parent_bit_packed & 1)],
--					lockdep_is_held(lock));
--		call_rcu(&node->rcu, node_free_rcu);
--		if (!free_parent)
--			continue;
--		if (child)
--			child->parent_bit_packed = parent->parent_bit_packed;
--		*(struct allowedips_node **)(parent->parent_bit_packed & ~3UL) = child;
--		call_rcu(&parent->rcu, node_free_rcu);
-+		_remove(node, lock);
- 	}
- }
- 
-diff --git a/drivers/net/wireguard/allowedips.h b/drivers/net/wireguard/allowedips.h
-index 2346c797eb4d8..931958cb6e100 100644
---- a/drivers/net/wireguard/allowedips.h
-+++ b/drivers/net/wireguard/allowedips.h
-@@ -38,6 +38,10 @@ int wg_allowedips_insert_v4(struct allowedips *table, const struct in_addr *ip,
- 			    u8 cidr, struct wg_peer *peer, struct mutex *lock);
- int wg_allowedips_insert_v6(struct allowedips *table, const struct in6_addr *ip,
- 			    u8 cidr, struct wg_peer *peer, struct mutex *lock);
-+int wg_allowedips_remove_v4(struct allowedips *table, const struct in_addr *ip,
-+			    u8 cidr, struct wg_peer *peer, struct mutex *lock);
-+int wg_allowedips_remove_v6(struct allowedips *table, const struct in6_addr *ip,
-+			    u8 cidr, struct wg_peer *peer, struct mutex *lock);
- void wg_allowedips_remove_by_peer(struct allowedips *table,
- 				  struct wg_peer *peer, struct mutex *lock);
- /* The ip input pointer should be __aligned(__alignof(u64))) */
-diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlink.c
-index f7055180ba4aa..5f2a8553ab43d 100644
---- a/drivers/net/wireguard/netlink.c
-+++ b/drivers/net/wireguard/netlink.c
-@@ -46,7 +46,8 @@ static const struct nla_policy peer_policy[WGPEER_A_MAX + 1] = {
- static const struct nla_policy allowedip_policy[WGALLOWEDIP_A_MAX + 1] = {
- 	[WGALLOWEDIP_A_FAMILY]		= { .type = NLA_U16 },
- 	[WGALLOWEDIP_A_IPADDR]		= NLA_POLICY_MIN_LEN(sizeof(struct in_addr)),
--	[WGALLOWEDIP_A_CIDR_MASK]	= { .type = NLA_U8 }
-+	[WGALLOWEDIP_A_CIDR_MASK]	= { .type = NLA_U8 },
-+	[WGALLOWEDIP_A_FLAGS]		= { .type = NLA_U32 }
- };
- 
- static struct wg_device *lookup_interface(struct nlattr **attrs,
-@@ -329,6 +330,7 @@ static int set_port(struct wg_device *wg, u16 port)
- static int set_allowedip(struct wg_peer *peer, struct nlattr **attrs)
- {
- 	int ret = -EINVAL;
-+	u32 flags = 0;
- 	u16 family;
- 	u8 cidr;
- 
-@@ -337,19 +339,38 @@ static int set_allowedip(struct wg_peer *peer, struct nlattr **attrs)
- 		return ret;
- 	family = nla_get_u16(attrs[WGALLOWEDIP_A_FAMILY]);
- 	cidr = nla_get_u8(attrs[WGALLOWEDIP_A_CIDR_MASK]);
-+	if (attrs[WGALLOWEDIP_A_FLAGS])
-+		flags = nla_get_u32(attrs[WGALLOWEDIP_A_FLAGS]);
- 
- 	if (family == AF_INET && cidr <= 32 &&
--	    nla_len(attrs[WGALLOWEDIP_A_IPADDR]) == sizeof(struct in_addr))
--		ret = wg_allowedips_insert_v4(
--			&peer->device->peer_allowedips,
--			nla_data(attrs[WGALLOWEDIP_A_IPADDR]), cidr, peer,
--			&peer->device->device_update_lock);
--	else if (family == AF_INET6 && cidr <= 128 &&
--		 nla_len(attrs[WGALLOWEDIP_A_IPADDR]) == sizeof(struct in6_addr))
--		ret = wg_allowedips_insert_v6(
--			&peer->device->peer_allowedips,
--			nla_data(attrs[WGALLOWEDIP_A_IPADDR]), cidr, peer,
--			&peer->device->device_update_lock);
-+	    nla_len(attrs[WGALLOWEDIP_A_IPADDR]) == sizeof(struct in_addr)) {
-+		if (flags & WGALLOWEDIP_F_REMOVE_ME)
-+			ret = wg_allowedips_remove_v4(&peer->device->peer_allowedips,
-+						      nla_data(attrs[WGALLOWEDIP_A_IPADDR]),
-+						      cidr,
-+						      peer,
-+						      &peer->device->device_update_lock);
-+		else
-+			ret = wg_allowedips_insert_v4(&peer->device->peer_allowedips,
-+						      nla_data(attrs[WGALLOWEDIP_A_IPADDR]),
-+						      cidr,
-+						      peer,
-+						      &peer->device->device_update_lock);
-+	} else if (family == AF_INET6 && cidr <= 128 &&
-+		   nla_len(attrs[WGALLOWEDIP_A_IPADDR]) == sizeof(struct in6_addr)) {
-+		if (flags & WGALLOWEDIP_F_REMOVE_ME)
-+			ret = wg_allowedips_remove_v6(&peer->device->peer_allowedips,
-+						      nla_data(attrs[WGALLOWEDIP_A_IPADDR]),
-+						      cidr,
-+						      peer,
-+						      &peer->device->device_update_lock);
-+		else
-+			ret = wg_allowedips_insert_v6(&peer->device->peer_allowedips,
-+						      nla_data(attrs[WGALLOWEDIP_A_IPADDR]),
-+						      cidr,
-+						      peer,
-+						      &peer->device->device_update_lock);
-+	}
- 
- 	return ret;
- }
-diff --git a/drivers/net/wireguard/selftest/allowedips.c b/drivers/net/wireguard/selftest/allowedips.c
-index 3d1f64ff2e122..9f6458a889e96 100644
---- a/drivers/net/wireguard/selftest/allowedips.c
-+++ b/drivers/net/wireguard/selftest/allowedips.c
-@@ -461,6 +461,10 @@ static __init struct wg_peer *init_peer(void)
- 	wg_allowedips_insert_v##version(&t, ip##version(ipa, ipb, ipc, ipd), \
- 					cidr, mem, &mutex)
- 
-+#define remove(version, mem, ipa, ipb, ipc, ipd, cidr)                      \
-+	wg_allowedips_remove_v##version(&t, ip##version(ipa, ipb, ipc, ipd), \
-+					cidr, mem, &mutex)
-+
- #define maybe_fail() do {                                               \
- 		++i;                                                    \
- 		if (!_s) {                                              \
-@@ -586,6 +590,32 @@ bool __init wg_allowedips_selftest(void)
- 	test_negative(4, a, 192, 0, 0, 0);
- 	test_negative(4, a, 255, 0, 0, 0);
- 
-+	insert(4, a, 1, 0, 0, 0, 32);
-+	insert(4, a, 192, 0, 0, 0, 24);
-+	insert(6, a, 0x24446801, 0x40e40800, 0xdeaebeef, 0xdefbeef, 128);
-+	insert(6, a, 0x24446800, 0xf0e40800, 0xeeaebeef, 0, 98);
-+	test(4, a, 1, 0, 0, 0);
-+	test(4, a, 192, 0, 0, 1);
-+	test(6, a, 0x24446801, 0x40e40800, 0xdeaebeef, 0xdefbeef);
-+	test(6, a, 0x24446800, 0xf0e40800, 0xeeaebeef, 0x10101010);
-+	/* Must be an exact match to remove */
-+	remove(4, a, 192, 0, 0, 0, 32);
-+	test(4, a, 192, 0, 0, 1);
-+	remove(4, a, 192, 0, 0, 0, 24);
-+	test_negative(4, a, 192, 0, 0, 1);
-+	remove(4, a, 1, 0, 0, 0, 32);
-+	test_negative(4, a, 1, 0, 0, 0);
-+	/* Must be an exact match to remove */
-+	remove(6, a, 0x24446801, 0x40e40800, 0xdeaebeef, 0xdefbeef, 96);
-+	test(6, a, 0x24446801, 0x40e40800, 0xdeaebeef, 0xdefbeef);
-+	remove(6, a, 0x24446801, 0x40e40800, 0xdeaebeef, 0xdefbeef, 128);
-+	test_negative(6, a, 0x24446801, 0x40e40800, 0xdeaebeef, 0xdefbeef);
-+	/* Must match the peer to remove */
-+	remove(6, b, 0x24446800, 0xf0e40800, 0xeeaebeef, 0, 98);
-+	test(6, a, 0x24446800, 0xf0e40800, 0xeeaebeef, 0x10101010);
-+	remove(6, a, 0x24446800, 0xf0e40800, 0xeeaebeef, 0, 98);
-+	test_negative(6, a, 0x24446800, 0xf0e40800, 0xeeaebeef, 0x10101010);
-+
- 	wg_allowedips_free(&t, &mutex);
- 	wg_allowedips_init(&t);
- 	insert(4, a, 192, 168, 0, 0, 16);
-diff --git a/include/uapi/linux/wireguard.h b/include/uapi/linux/wireguard.h
-index ae88be14c9478..e219194cb9f5a 100644
---- a/include/uapi/linux/wireguard.h
-+++ b/include/uapi/linux/wireguard.h
-@@ -101,6 +101,10 @@
-  *                    WGALLOWEDIP_A_FAMILY: NLA_U16
-  *                    WGALLOWEDIP_A_IPADDR: struct in_addr or struct in6_addr
-  *                    WGALLOWEDIP_A_CIDR_MASK: NLA_U8
-+ *                    WGALLOWEDIP_A_FLAGS: NLA_U32, WGALLOWEDIP_F_REMOVE_ME if
-+ *                                         the specified IP should be removed,
-+ *                                         otherwise this IP will be added if
-+ *                                         it is not already present.
-  *                0: NLA_NESTED
-  *                    ...
-  *                0: NLA_NESTED
-@@ -132,7 +136,7 @@
- #define _WG_UAPI_WIREGUARD_H
- 
- #define WG_GENL_NAME "wireguard"
--#define WG_GENL_VERSION 1
-+#define WG_GENL_VERSION 2
- 
- #define WG_KEY_LEN 32
- 
-@@ -184,11 +188,16 @@ enum wgpeer_attribute {
- };
- #define WGPEER_A_MAX (__WGPEER_A_LAST - 1)
- 
-+enum wgallowedip_flag {
-+	WGALLOWEDIP_F_REMOVE_ME = 1U << 0,
-+	__WGALLOWEDIP_F_ALL = WGALLOWEDIP_F_REMOVE_ME
-+};
- enum wgallowedip_attribute {
- 	WGALLOWEDIP_A_UNSPEC,
- 	WGALLOWEDIP_A_FAMILY,
- 	WGALLOWEDIP_A_IPADDR,
- 	WGALLOWEDIP_A_CIDR_MASK,
-+	WGALLOWEDIP_A_FLAGS,
- 	__WGALLOWEDIP_A_LAST
- };
- #define WGALLOWEDIP_A_MAX (__WGALLOWEDIP_A_LAST - 1)
-diff --git a/tools/testing/selftests/wireguard/Makefile b/tools/testing/selftests/wireguard/Makefile
-new file mode 100644
-index 0000000000000..4f4db54f89cb3
---- /dev/null
-+++ b/tools/testing/selftests/wireguard/Makefile
-@@ -0,0 +1,18 @@
-+# SPDX-License-Identifier: GPL-2.0
-+#
-+# Note: To build this you must install libnl-3 and libnl-genl-3 development
-+# packages.
-+remove-ip:
-+	gcc -I/usr/include/libnl3 \
-+	    -I../../../../usr/include \
-+	    remove-ip.c \
-+	    -o remove-ip \
-+	    -lnl-genl-3 \
-+	    -lnl-3
-+
-+.PHONY: all
-+all: remove-ip
-+
-+.PHONY: clean
-+clean:
-+	rm remove-ip
-diff --git a/tools/testing/selftests/wireguard/netns.sh b/tools/testing/selftests/wireguard/netns.sh
-index 405ff262ca93d..70058d6ebbe85 100755
---- a/tools/testing/selftests/wireguard/netns.sh
-+++ b/tools/testing/selftests/wireguard/netns.sh
-@@ -28,6 +28,7 @@ exec 3>&1
- export LANG=C
- export WG_HIDE_KEYS=never
- NPROC=( /sys/devices/system/cpu/cpu+([0-9]) ); NPROC=${#NPROC[@]}
-+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
- netns0="wg-test-$$-0"
- netns1="wg-test-$$-1"
- netns2="wg-test-$$-2"
-@@ -610,6 +611,43 @@ n0 wg set wg0 peer "$pub2" allowed-ips "$allowedips"
- } < <(n0 wg show wg0 allowed-ips)
- ip0 link del wg0
- 
-+# Test IP removal
-+allowedips=( )
-+for i in {1..197}; do
-+        allowedips+=( 192.168.0.$i )
-+        allowedips+=( abcd::$i )
-+done
-+saved_ifs="$IFS"
-+IFS=,
-+allowedips="${allowedips[*]}"
-+IFS="$saved_ifs"
-+ip0 link add wg0 type wireguard
-+n0 wg set wg0 peer "$pub1" allowed-ips "$allowedips"
-+pub1_hex=$(echo "$pub1" | base64 -d | xxd -p -c 50)
-+n0 $SCRIPT_DIR/remove-ip wg0 "$pub1_hex" 4 192.168.0.1
-+n0 $SCRIPT_DIR/remove-ip wg0 "$pub1_hex" 4 192.168.0.20
-+n0 $SCRIPT_DIR/remove-ip wg0 "$pub1_hex" 4 192.168.0.100
-+n0 $SCRIPT_DIR/remove-ip wg0 "$pub1_hex" 6 abcd::1
-+n0 $SCRIPT_DIR/remove-ip wg0 "$pub1_hex" 6 abcd::20
-+n0 $SCRIPT_DIR/remove-ip wg0 "$pub1_hex" 6 abcd::100
-+n0 wg show wg0 allowed-ips
-+{
-+	read -r pub allowedips
-+	[[ $pub == "$pub1" ]]
-+	i=0
-+	for ip in $allowedips; do
-+		[[ "$ip" != "192.168.0.1" ]]
-+		[[ "$ip" != "192.168.0.20" ]]
-+		[[ "$ip" != "192.168.0.100" ]]
-+		[[ "$ip" != "abcd::1" ]]
-+		[[ "$ip" != "abcd::20" ]]
-+		[[ "$ip" != "abcd::100" ]]
-+		((++i))
-+	done
-+	((i == 388))
-+} < <(n0 wg show wg0 allowed-ips)
-+ip0 link del wg0
-+
- ! n0 wg show doesnotexist || false
- 
- ip0 link add wg0 type wireguard
-diff --git a/tools/testing/selftests/wireguard/remove-ip.c b/tools/testing/selftests/wireguard/remove-ip.c
-new file mode 100644
-index 0000000000000..242f922d99b56
---- /dev/null
-+++ b/tools/testing/selftests/wireguard/remove-ip.c
-@@ -0,0 +1,126 @@
-+// SPDX-License-Identifier: GPL-2.0
-+#include <linux/wireguard.h>
-+#include <sys/socket.h>
-+#include <netinet/in.h>
-+#include <arpa/inet.h>
-+#include <netlink/socket.h>
-+#include <netlink/netlink.h>
-+#include <netlink/genl/ctrl.h>
-+#include <netlink/genl/genl.h>
-+#include <netlink/genl/family.h>
-+
-+#define CURVE25519_KEY_SIZE 32
-+
-+const char *usage = "Usage: remove-ip INTERFACE_NAME PEER_PUBLIC_KEY_HEX IP_VERSION IP";
-+
-+char h2b(char c)
-+{
-+	if ('0' <= c && c <= '9')
-+		return c - '0';
-+	else if ('a' <= c && c <= 'f')
-+		return 10 + (c - 'a');
-+
-+	return -1;
-+}
-+
-+int parse_key(const char *raw, unsigned char key[CURVE25519_KEY_SIZE])
-+{
-+	int ret = 0;
-+	int i;
-+
-+	for (i = 0; i < CURVE25519_KEY_SIZE; i++) {
-+		char h, l;
-+
-+		h = h2b(raw[0]);
-+		if (h < 0)
-+			return -1;
-+
-+		l = h2b(raw[1]);
-+		if (l < 0)
-+			return -1;
-+
-+		key[i] = (h << 4) | l;
-+		raw += 2;
-+	}
-+
-+	return 0;
-+}
-+
-+int main(int argc, char **argv)
-+{
-+	unsigned char addr[sizeof(struct in6_addr)];
-+	unsigned char pub_key[CURVE25519_KEY_SIZE];
-+	struct nl_sock *sock;
-+	struct nl_msg *msg;
-+	int addr_len;
-+	int family;
-+	int cidr;
-+	int af;
-+
-+	if (argc < 5) {
-+		printf("Not enough arguments.\n\n%s\n", usage);
-+		return -1;
-+	}
-+
-+	if (parse_key(argv[2], pub_key)) {
-+		printf("Could not parse public key\n");
-+		return -1;
-+	}
-+
-+	switch (argv[3][0]) {
-+	case '4':
-+		af = AF_INET;
-+		addr_len = sizeof(struct in_addr);
-+		cidr = 32;
-+		break;
-+	case '6':
-+		af = AF_INET6;
-+		addr_len = sizeof(struct in6_addr);
-+		cidr = 128;
-+		break;
-+	default:
-+		printf("Invalid IP version\n");
-+		return -1;
-+	}
-+
-+	if (inet_pton(af, argv[4], &addr) <= 0) {
-+		printf("Could not parse IP address\n");
-+		return -1;
-+	}
-+
-+	sock = nl_socket_alloc();
-+	genl_connect(sock);
-+	family = genl_ctrl_resolve(sock, WG_GENL_NAME);
-+	msg = nlmsg_alloc();
-+	genlmsg_put(msg, NL_AUTO_PID, NL_AUTO_SEQ, family, 0, NLM_F_ECHO,
-+		    WG_CMD_SET_DEVICE, WG_GENL_VERSION);
-+	nla_put_string(msg, WGDEVICE_A_IFNAME, argv[1]);
-+
-+	struct nlattr *peers = nla_nest_start(msg, WGDEVICE_A_PEERS);
-+	struct nlattr *peer0 = nla_nest_start(msg, 0);
-+
-+	nla_put(msg, WGPEER_A_PUBLIC_KEY, CURVE25519_KEY_SIZE, pub_key);
-+
-+	struct nlattr *allowed_ips = nla_nest_start(msg, WGPEER_A_ALLOWEDIPS);
-+	struct nlattr *allowed_ip0 = nla_nest_start(msg, 0);
-+
-+	nla_put_u16(msg, WGALLOWEDIP_A_FAMILY, af);
-+	nla_put(msg, WGALLOWEDIP_A_IPADDR, addr_len, &addr);
-+	nla_put_u8(msg, WGALLOWEDIP_A_CIDR_MASK, cidr);
-+	nla_put_u32(msg, WGALLOWEDIP_A_FLAGS, WGALLOWEDIP_F_REMOVE_ME);
-+	nla_nest_end(msg, allowed_ip0);
-+	nla_nest_end(msg, allowed_ips);
-+	nla_nest_end(msg, peer0);
-+	nla_nest_end(msg, peers);
-+
-+	int err = nl_send_sync(sock, msg);
-+
-+	if (err < 0) {
-+		char message[256];
-+
-+		nl_perror(err, message);
-+		printf("An error occurred: %d - %s\n", err, message);
-+	}
-+
-+	return err;
-+}
--- 
-2.46.0.598.g6f2099f65c-goog
+syzbot will keep track of this issue. See:
+https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
 
+If the report is already addressed, let syzbot know by replying with:
+#syz fix: exact-commit-title
+
+If you want to overwrite report's subsystems, reply with:
+#syz set subsystems: new-subsystem
+(See the list of subsystem names on the web dashboard)
+
+If the report is a duplicate of another one, reply with:
+#syz dup: exact-subject-of-another-report
+
+If you want to undo deduplication, reply with:
+#syz undup
