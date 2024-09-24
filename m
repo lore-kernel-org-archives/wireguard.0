@@ -4,70 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4378D10F40
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 01:54:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EE89D10F3D
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 02:03:10 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6432f52c;
-	Mon, 18 Nov 2024 01:37:18 +0000 (UTC)
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com
- [2a00:1450:4864:20::136])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2c4a3c6c
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 75492eb4;
+	Mon, 18 Nov 2024 01:37:22 +0000 (UTC)
+Received: from mail-il1-f199.google.com (mail-il1-f199.google.com
+ [209.85.166.199])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id feed4b67
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 23 Sep 2024 18:46:58 +0000 (UTC)
-Received: by mail-lf1-x136.google.com with SMTP id
- 2adb3069b0e04-5365392cfafso4867908e87.0
- for <wireguard@lists.zx2c4.com>; Mon, 23 Sep 2024 11:46:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1727117217; x=1727722017; darn=lists.zx2c4.com;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=o9SxBKtVnKUNRcU2l8i9+tr7LGseNTvA1HmjIgiJZ6c=;
- b=kbwWg4+w/OGDIJJfgTUcjzgC6DTtV+xgbC7E6OPU4TlzWMak1qmQ/48prKmKnWn4cL
- Mm78va3T3Cw9dfha8rv813F15cxcI2WZCgd+ypb8zMkpKPdAgTw0Y0uSUaCAxphrv/o2
- N2tpQCKJcIdabSSVBlMZyCf139rbeQ7JVQvhmtnzOUI969kTThKkO09kLSzo1IxF58uV
- Xb38xk1D7PpmQX6dh6u4ih4AUNZVX2mgenFIYCY6zfqm7eF5TeaPvMJfhkuIZ2plWIX6
- xDt5uAHCaZ6XEeowAbxWLqhlCtXkE32UoJ3Mn1hl/wYq5AkWs/IIbp6IyI3I0chuKKe1
- J9uw==
+ Tue, 24 Sep 2024 12:55:23 +0000 (UTC)
+Received: by mail-il1-f199.google.com with SMTP id
+ e9e14a558f8ab-3a195122f09so25521375ab.2
+ for <wireguard@lists.zx2c4.com>; Tue, 24 Sep 2024 05:55:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727117217; x=1727722017;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=o9SxBKtVnKUNRcU2l8i9+tr7LGseNTvA1HmjIgiJZ6c=;
- b=Gpd1ud9JztO0ku5kVHMPGu1SoGoikTAy7aw65vN6YyClt0zVxx+lgKUVplWLIxCpDR
- owIXFpTtEHGA8LbZ+D4wXIYsWTnw2kUHUzn5/iTO4kdERKkFwcTa5ORqHAinm9vvxnZM
- D2+vLOtZ5fDEH/kMC7Ak7XLzVcNEEBqYoXgyCSjoEJTD6lvn+EHc+gZIZWQIMbDUbCVV
- RYAyfa/NHj+jMEam9J1g0CMAXdp0Azg0uAVnhclzMfwcRdyypj8y0MXOfiifsQi7mV0k
- OGpF0671Ut7sLOiFc09rDRGQmYeDQAWmx2Z86tqFcukEPOZjL/fqi8B45vHcwJUwvV3T
- gpTQ==
+ d=1e100.net; s=20230601; t=1727182522; x=1727787322;
+ h=to:from:subject:message-id:date:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=IaV95rr5dy/KVsLIv10Xol1401VIYQE+FUIMdKezUfQ=;
+ b=HFLfN33BLik8S66XEppYFxKNf2gWIACE9Gd2+wwPV1ODzM9Qg3GX1QKgrluzvzt0Xh
+ dMP1J0cNjXgSni+osAtrAzgtIE0LBVr2ylDUYyCHq1eNXDx7GiCNzeNXeD2LBQuGxAD8
+ T148/ndf/+rqWGHOxy9UgGOsa9Y50Q7gV4DILDmqRj/IpNJSuUxynEyNWnQNp70J1jLv
+ bMOAgwCQONRVD/0d/3MHwWbH2mBWaU+zGecIkWPzj/f9bWWq+SY10m7SI44FBJqFZysk
+ 2EZGppYiHzvgjOZB3o+6MiVir4JwpK7KM9XgiIMVaBOZhyGSdThsEbPW1yL0Upf5/7QR
+ uHvg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUwxnQVYlE4PbdizF6OrtTfwRuZBs+Nh0xIUu0P8WkkWDe5poQqqpoPxgvGA4WuXMj7Fj5whRT7rwc=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0Yzdp4xPpQbnRu+6LtHgN7/WE6ZTppMdhwJ4eddY7mbPZY6b7mi4
- qRy7mrRuElbWq87meFnNbKMvb6QHv4gXa/PuyJQNNF6wc4rVCukHxDmDUSfcijiDMhvFyDp17zI
- Ypq1P2b2SPM3GbStJaqoBha6XN/v/9mOO/YeJ
-X-Google-Smtp-Source: AGHT+IEdUO93R9RfshiaEfkPtfC8Xl5uT3xw9/r+1yE0jsL1ViaO/11BK3hy0Now0uX6vpEhuQza2skF49C4GNi/gfc=
-X-Received: by 2002:a05:6512:1293:b0:535:82eb:21d1 with SMTP id
- 2adb3069b0e04-536ac34094fmr5590163e87.57.1727117217312; Mon, 23 Sep 2024
- 11:46:57 -0700 (PDT)
+ AJvYcCXzS9aUF/ksviaSqawHW2/BA176JBPHu3JF9Lm4AMBBjDLelobQFJFkeEqErHq9bP9O5h/I4n5GBdA=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0Yxj3uN1ToQCi9qPUkNuWdt0ZYJ42fejloDcaQSe/Z0xHF4g+/xp
+ DVqGHf/WjjuEh/lLhy6e1CpMBYXsNpwRkoFHXKbHOSlbTK5igqSBbVoKFmPBKwejhMlM5FmRk4g
+ V/1VxD6Wl8Gpi1m9UwisR0GIGEUmNOKSvcudEcjj6YMC7Gj7igfuzrn0=
+X-Google-Smtp-Source: AGHT+IGq40g22mDZUFKmiOpfVUYhLa9vtDZ2VP6Os/1gCKULwWxLmxccUHWx94qpFOxL4brhVAKl3m2cUsFQ3azOoRa2hqZwC+qB
 MIME-Version: 1.0
-References: <CALrw=nGoSW=M-SApcvkP4cfYwWRj=z7WonKi6fEksWjMZTs81A@mail.gmail.com>
-In-Reply-To: <CALrw=nGoSW=M-SApcvkP4cfYwWRj=z7WonKi6fEksWjMZTs81A@mail.gmail.com>
-From: Eric Dumazet <edumazet@google.com>
-Date: Mon, 23 Sep 2024 20:46:44 +0200
-Message-ID: <CANn89iJRoJQ5XXZxbC4mA=-N2sHyY8QNG-ftyQZT7w3RUw-g6w@mail.gmail.com>
-Subject: Re: wireguard/napi stuck in napi_disable
-To: Ignat Korchagin <ignat@cloudflare.com>
-Cc: Jason@zx2c4.com, "David S. Miller" <davem@davemloft.net>,
- Jakub Kicinski <kuba@kernel.org>, 
- Paolo Abeni <pabeni@redhat.com>, wireguard@lists.zx2c4.com, 
- netdev <netdev@vger.kernel.org>, linux-kernel <linux-kernel@vger.kernel.org>,
- jiri@resnulli.us, Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
- Lorenzo Bianconi <lorenzo@kernel.org>, 
- kernel-team <kernel-team@cloudflare.com>
+X-Received: by 2002:a05:6e02:1c2f:b0:3a0:8d60:8ba7 with SMTP id
+ e9e14a558f8ab-3a0c8d0eee3mr141058945ab.14.1727182521817; Tue, 24 Sep 2024
+ 05:55:21 -0700 (PDT)
+Date: Tue, 24 Sep 2024 05:55:21 -0700
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <66f2b6b9.050a0220.3eed3.002d.GAE@google.com>
+Subject: [syzbot] [wireguard?] general protection fault in wg_packet_receive
+ (2)
+From: syzbot <syzbot+c0f4a2553a2527b3fc1f@syzkaller.appspotmail.com>
+To: Jason@zx2c4.com, davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+ linux-kernel@vger.kernel.org, netdev@vger.kernel.org, pabeni@redhat.com, 
+ syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -82,87 +64,135 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, Sep 23, 2024 at 8:23=E2=80=AFPM Ignat Korchagin <ignat@cloudflare.c=
-om> wrote:
->
-> Hello,
->
-> We run calico on our Kubernetes cluster, which uses Wireguard to
-> encrypt in-cluster traffic [1]. Recently we tried to improve the
-> throughput of the cluster and eliminate some packet drops we=E2=80=99re s=
-eeing
-> by switching on threaded NAPI [2] on these managed Wireguard
-> interfaces. However, our Kubernetes hosts started to lock up once in a
-> while.
->
-> Analyzing one stuck host with drgn we were able to confirm that the
-> code is just waiting in this loop [3] for the NAPI_STATE_SCHED bit to
-> be cleared for the Wireguard peer napi instance, but that never
-> happens for some reason. For context the full state of the stuck napi
-> instance is 0b100110111. What makes things worse - this happens when
-> calico removes a Wireguard peer, which happens while holding the
-> global rtnl_mutex, so all the other tasks requiring that mutex get
-> stuck as well.
->
-> Full stacktrace of the =E2=80=9Clooping=E2=80=9D task:
->
-> #0  context_switch (linux/kernel/sched/core.c:5380:2)
-> #1  __schedule (linux/kernel/sched/core.c:6698:8)
-> #2  schedule (linux/kernel/sched/core.c:6772:3)
-> #3  schedule_hrtimeout_range_clock (linux/kernel/time/hrtimer.c:2311:3)
-> #4  usleep_range_state (linux/kernel/time/timer.c:2363:8)
-> #5  usleep_range (linux/include/linux/delay.h:68:2)
-> #6  napi_disable (linux/net/core/dev.c:6477:4)
-> #7  peer_remove_after_dead (linux/drivers/net/wireguard/peer.c:120:2)
-> #8  set_peer (linux/drivers/net/wireguard/netlink.c:425:3)
-> #9  wg_set_device (linux/drivers/net/wireguard/netlink.c:592:10)
-> #10 genl_family_rcv_msg_doit (linux/net/netlink/genetlink.c:971:8)
-> #11 genl_family_rcv_msg (linux/net/netlink/genetlink.c:1051:10)
-> #12 genl_rcv_msg (linux/net/netlink/genetlink.c:1066:8)
-> #13 netlink_rcv_skb (linux/net/netlink/af_netlink.c:2545:9)
-> #14 genl_rcv (linux/net/netlink/genetlink.c:1075:2)
-> #15 netlink_unicast_kernel (linux/net/netlink/af_netlink.c:1342:3)
-> #16 netlink_unicast (linux/net/netlink/af_netlink.c:1368:10)
-> #17 netlink_sendmsg (linux/net/netlink/af_netlink.c:1910:8)
-> #18 sock_sendmsg_nosec (linux/net/socket.c:730:12)
-> #19 __sock_sendmsg (linux/net/socket.c:745:16)
-> #20 ____sys_sendmsg (linux/net/socket.c:2560:8)
-> #21 ___sys_sendmsg (linux/net/socket.c:2614:8)
-> #22 __sys_sendmsg (linux/net/socket.c:2643:8)
-> #23 do_syscall_x64 (linux/arch/x86/entry/common.c:51:14)
-> #24 do_syscall_64 (linux/arch/x86/entry/common.c:81:7)
-> #25 entry_SYSCALL_64+0x9c/0x184 (linux/arch/x86/entry/entry_64.S:121)
->
-> We have also noticed that a similar issue is observed, when we switch
-> Wireguard threaded NAPI back to off: removing a Wireguard peer task
-> may still spend a considerable amount of time in the above loop (and
-> hold rtnl_mutex), however the host eventually recovers from this
-> state.
->
-> So the questions are:
-> 1. Any ideas why NAPI_STATE_SCHED bit never gets cleared for the
-> threaded NAPI case in Wireguard?
-> 2. Is it generally a good idea for Wireguard to loop for an
-> indeterminate amount of time, while holding the rtnl_mutex? Or can it
-> be refactored?
->
-> We have observed the problem on Linux 6.6.47 and 6.6.48. We did try to
-> downgrade the kernel a couple of patch revisions, but it did not help
-> and our logs indicate that at least the non-threaded prolonged holding
-> of the rtnl_mutex is happening for a while now.
->
-> [1]: https://docs.tigera.io/calico/latest/network-policy/encrypt-cluster-=
-pod-traffic
-> [2]: https://docs.kernel.org/networking/napi.html#threaded
-> [3]: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tre=
-e/net/core/dev.c?h=3Dv6.6.48#n6476
+Hello,
 
-Somehow wireguard continuously feeds packets without checking it
-should not (IFF_UP or some other bit)
+syzbot found the following issue on:
 
-napi_schedule() detects NAPIF_STATE_DISABLE, and
-napi_disable_pending() is also used
-from __napi_poll() to avoid adding back the napi if the whole budget
-was consumed.
+HEAD commit:    de5cb0dcb74c Merge branch 'address-masking'
+git tree:       upstream
+console output: https://syzkaller.appspot.com/x/log.txt?x=167ce19f980000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=74ffdb3b3fad1a43
+dashboard link: https://syzkaller.appspot.com/bug?extid=c0f4a2553a2527b3fc1f
+compiler:       Debian clang version 15.0.6, GNU ld (GNU Binutils for Debian) 2.40
 
-Not sure, more debugging might be needed.
+Unfortunately, I don't have any reproducer for this issue yet.
+
+Downloadable assets:
+disk image: https://storage.googleapis.com/syzbot-assets/6dde53474dba/disk-de5cb0dc.raw.xz
+vmlinux: https://storage.googleapis.com/syzbot-assets/6a60a36c2a3b/vmlinux-de5cb0dc.xz
+kernel image: https://storage.googleapis.com/syzbot-assets/f3f799d774bf/bzImage-de5cb0dc.xz
+
+IMPORTANT: if you fix the issue, please add the following tag to the commit:
+Reported-by: syzbot+c0f4a2553a2527b3fc1f@syzkaller.appspotmail.com
+
+Oops: general protection fault, probably for non-canonical address 0xedfd63131ffff113: 0000 [#1] PREEMPT SMP KASAN PTI
+KASAN: maybe wild-memory-access in range [0x6feb3898ffff8898-0x6feb3898ffff889f]
+CPU: 1 UID: 0 PID: 6046 Comm: kworker/1:8 Not tainted 6.11.0-syzkaller-08833-gde5cb0dcb74c #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
+Workqueue: wg-kex-wg0 wg_packet_handshake_receive_worker
+RIP: 0010:__lock_acquire+0x69/0x2050 kernel/locking/lockdep.c:5062
+Code: b6 04 30 84 c0 0f 85 9b 16 00 00 45 31 f6 83 3d 88 66 ab 0e 00 0f 84 b6 13 00 00 89 54 24 54 89 5c 24 68 4c 89 f8 48 c1 e8 03 <80> 3c 30 00 74 12 4c 89 ff e8 f9 27 8b 00 48 be 00 00 00 00 00 fc
+RSP: 0018:ffffc90000a17fd0 EFLAGS: 00010002
+RAX: 0dfd67131ffff113 RBX: 0000000000000000 RCX: 0000000000000000
+RDX: 0000000000000000 RSI: dffffc0000000000 RDI: 6feb3898ffff8898
+RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000001
+R10: dffffc0000000000 R11: fffffbfff2036ac6 R12: ffff88801e783c00
+R13: 0000000000000001 R14: 0000000000000000 R15: 6feb3898ffff8898
+FS:  0000000000000000(0000) GS:ffff8880b8700000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fd8f5bfa440 CR3: 0000000029774000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <IRQ>
+ lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5822
+ __raw_spin_lock include/linux/spinlock_api_smp.h:133 [inline]
+ _raw_spin_lock+0x2e/0x40 kernel/locking/spinlock.c:154
+ __queue_work+0x759/0xf50
+ queue_work_on+0x1c2/0x380 kernel/workqueue.c:2390
+ wg_packet_receive+0x133a/0x2570 drivers/net/wireguard/receive.c:570
+ wg_receive+0x75/0xa0 drivers/net/wireguard/socket.c:326
+ udpv6_queue_rcv_one_skb+0x1695/0x18a0 net/ipv6/udp.c:726
+ udp6_unicast_rcv_skb+0x230/0x370 net/ipv6/udp.c:928
+ ip6_protocol_deliver_rcu+0xccf/0x1580 net/ipv6/ip6_input.c:436
+ ip6_input_finish+0x187/0x2d0 net/ipv6/ip6_input.c:481
+ NF_HOOK+0x3a4/0x450 include/linux/netfilter.h:314
+ NF_HOOK+0x3a4/0x450 include/linux/netfilter.h:314
+ __netif_receive_skb_one_core net/core/dev.c:5662 [inline]
+ __netif_receive_skb+0x1ea/0x650 net/core/dev.c:5775
+ process_backlog+0x662/0x15b0 net/core/dev.c:6107
+ __napi_poll+0xcb/0x490 net/core/dev.c:6771
+ napi_poll net/core/dev.c:6840 [inline]
+ net_rx_action+0x89b/0x1240 net/core/dev.c:6962
+ handle_softirqs+0x2c5/0x980 kernel/softirq.c:554
+ do_softirq+0x11b/0x1e0 kernel/softirq.c:455
+ </IRQ>
+ <TASK>
+ __local_bh_enable_ip+0x1bb/0x200 kernel/softirq.c:382
+ wg_socket_send_skb_to_peer+0x176/0x1d0 drivers/net/wireguard/socket.c:184
+ wg_packet_send_handshake_response+0x198/0x2e0 drivers/net/wireguard/send.c:103
+ wg_receive_handshake_packet drivers/net/wireguard/receive.c:154 [inline]
+ wg_packet_handshake_receive_worker+0x5e6/0xf50 drivers/net/wireguard/receive.c:213
+ process_one_work kernel/workqueue.c:3229 [inline]
+ process_scheduled_works+0xa63/0x1850 kernel/workqueue.c:3310
+ worker_thread+0x870/0xd30 kernel/workqueue.c:3391
+ kthread+0x2f0/0x390 kernel/kthread.c:389
+ ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+ </TASK>
+Modules linked in:
+---[ end trace 0000000000000000 ]---
+RIP: 0010:__lock_acquire+0x69/0x2050 kernel/locking/lockdep.c:5062
+Code: b6 04 30 84 c0 0f 85 9b 16 00 00 45 31 f6 83 3d 88 66 ab 0e 00 0f 84 b6 13 00 00 89 54 24 54 89 5c 24 68 4c 89 f8 48 c1 e8 03 <80> 3c 30 00 74 12 4c 89 ff e8 f9 27 8b 00 48 be 00 00 00 00 00 fc
+RSP: 0018:ffffc90000a17fd0 EFLAGS: 00010002
+RAX: 0dfd67131ffff113 RBX: 0000000000000000 RCX: 0000000000000000
+RDX: 0000000000000000 RSI: dffffc0000000000 RDI: 6feb3898ffff8898
+RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000001
+R10: dffffc0000000000 R11: fffffbfff2036ac6 R12: ffff88801e783c00
+R13: 0000000000000001 R14: 0000000000000000 R15: 6feb3898ffff8898
+FS:  0000000000000000(0000) GS:ffff8880b8700000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fd8f5bfa440 CR3: 0000000029774000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+----------------
+Code disassembly (best guess):
+   0:	b6 04                	mov    $0x4,%dh
+   2:	30 84 c0 0f 85 9b 16 	xor    %al,0x169b850f(%rax,%rax,8)
+   9:	00 00                	add    %al,(%rax)
+   b:	45 31 f6             	xor    %r14d,%r14d
+   e:	83 3d 88 66 ab 0e 00 	cmpl   $0x0,0xeab6688(%rip)        # 0xeab669d
+  15:	0f 84 b6 13 00 00    	je     0x13d1
+  1b:	89 54 24 54          	mov    %edx,0x54(%rsp)
+  1f:	89 5c 24 68          	mov    %ebx,0x68(%rsp)
+  23:	4c 89 f8             	mov    %r15,%rax
+  26:	48 c1 e8 03          	shr    $0x3,%rax
+* 2a:	80 3c 30 00          	cmpb   $0x0,(%rax,%rsi,1) <-- trapping instruction
+  2e:	74 12                	je     0x42
+  30:	4c 89 ff             	mov    %r15,%rdi
+  33:	e8 f9 27 8b 00       	call   0x8b2831
+  38:	48                   	rex.W
+  39:	be 00 00 00 00       	mov    $0x0,%esi
+  3e:	00 fc                	add    %bh,%ah
+
+
+---
+This report is generated by a bot. It may contain errors.
+See https://goo.gl/tpsmEJ for more information about syzbot.
+syzbot engineers can be reached at syzkaller@googlegroups.com.
+
+syzbot will keep track of this issue. See:
+https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
+
+If the report is already addressed, let syzbot know by replying with:
+#syz fix: exact-commit-title
+
+If you want to overwrite report's subsystems, reply with:
+#syz set subsystems: new-subsystem
+(See the list of subsystem names on the web dashboard)
+
+If the report is a duplicate of another one, reply with:
+#syz dup: exact-subject-of-another-report
+
+If you want to undo deduplication, reply with:
+#syz undup
