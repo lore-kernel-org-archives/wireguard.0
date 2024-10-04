@@ -4,51 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1298D10F41
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 02:40:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBB35D10F54
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 02:40:41 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a8cdf19a;
-	Mon, 18 Nov 2024 01:37:39 +0000 (UTC)
-Received: from mail-il1-f197.google.com (mail-il1-f197.google.com
- [209.85.166.197])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e8dc3a9e
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 88c3d82e;
+	Mon, 18 Nov 2024 01:37:47 +0000 (UTC)
+Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4b6603b9
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 2 Oct 2024 20:19:26 +0000 (UTC)
-Received: by mail-il1-f197.google.com with SMTP id
- e9e14a558f8ab-3a2762bfcbbso2719195ab.3
- for <wireguard@lists.zx2c4.com>; Wed, 02 Oct 2024 13:19:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1727900365; x=1728505165;
- h=to:from:subject:message-id:in-reply-to:date:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3PFkAPPKwfTQWiVZb5ZOx5qOX0H/RJSBzFS6dCYqRuo=;
- b=wSa0q1C9/beAvkCp8sc9/T1y3UqqE2HZlDm/P6pprW3KoWwaQFyyuvDVF3a0arGaKo
- la5X1+8CeULO2pljWAIo5yDQBd3OfLd8mAk3YNdiyUirK3EAS/yt2qyaRt0zfwP5JTP/
- +lYvZuWsIF/kEjBp+Sw5XhCEAH1zu5RcqEw892s1qnGKgQoo6FFhSxw5eecp+rI2ypK0
- WvVQaP0dFsA8Z8hBVzyJiUSwMD6Ma5MlzJexjFbzeMM2CGh7g2RZI6eB2dM6n2TJTKG9
- iAgh5ePICZqM8rVqvYsBHbfuucKkkuUYs/cv+n5MIsvyX7qeL0iGW0Yr0Lc0TxyqAi2Y
- OH0g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX/QLzxBYTSgVbIGza6PaFIh/MIYtvM0gMJCzwUbJF3VQH7A+Kmfw0kbEFgK/Ic6Ui2SY1GpBIusFg=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0Yx3mjczuf1c24SnDD7Xt/g5yKFB4kY0TX9A/9lgPRENWAf6Zrjh
- XbP6fEtWTG6wQDz7RWFs+60KwBJQcEmINKyWlje5sMfw6cuHO1y4x67spQ0fsknm+drkFQgy2/z
- cg7EPot1xGeTiZIjLl4jiU9QPWi8tLDitnl3WZPmGUlgavjLhD7Nmfus=
-X-Google-Smtp-Source: AGHT+IGSCHZ2qmL4P8hsojoVJiai/t2SaXYnyuZpjgm6vWOIeXXdW9A0w6ygjc+Wi6TRaWLxoB829FArc5YIXlWOor1+9xjbM3+C
+ for <wireguard@lists.zx2c4.com>; Fri, 4 Oct 2024 16:55:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:MIME-Version:
+ Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:In-Reply-To:References;
+ bh=7Ko7Q6y/3q1OHxisxRoOV/IlFJ79OSMVDcxVRFjuJ9E=; b=RGmROZbv2BU0U1qwQN4zgQTReN
+ 4eABstxC2VQbVOSw1xrPlYS5YDR+2LeeZ8M5vt/5siUlWDfLtQ1txmzzt6K9hZ6HOqQE9qFB0gn8o
+ +tLBtGpU1qZme7VIeV4Ht/3cyz0yAalVeKJG9LkoAZMQ1NclVTJU0k9j1BKy4T0ixEtoQuaHJ3hHy
+ N8ia5ZGVbqINP8AqIzEZwnoerGTOy5I3t8OZVjnpDoA4VZUDVfs5DaX8XVRQgB9e5S52FLGbuLZfm
+ SOJt4m/etW5fNgmFlvzyAAwdSZHLrxK4N7ijrLUdH170t/wRtD6reg3FqKgDCuOSDYyxz+0xKBgCD
+ izmYx+Hw==;
+Received: from 47.249.197.178.dynamic.cust.swisscom.net ([178.197.249.47]
+ helo=localhost)
+ by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.94.2) (envelope-from <daniel@iogearbox.net>)
+ id 1swlaJ-000HW1-0j; Fri, 04 Oct 2024 18:55:18 +0200
+From: Daniel Borkmann <daniel@iogearbox.net>
+To: kuba@kernel.org
+Cc: edumazet@google.com, Jason@zx2c4.com, aspsk@isovalent.com, m@lambda.lt,
+ netdev@vger.kernel.org, wireguard@lists.zx2c4.com
+Subject: [PATCH net-next v2] wireguard: Wire-up big tcp support
+Date: Fri,  4 Oct 2024 18:55:18 +0200
+Message-Id: <20241004165518.120567-1-daniel@iogearbox.net>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-X-Received: by 2002:a05:6e02:1c03:b0:39f:93a7:e788 with SMTP id
- e9e14a558f8ab-3a3659135dfmr48707985ab.2.1727900364931; Wed, 02 Oct 2024
- 13:19:24 -0700 (PDT)
-Date: Wed, 02 Oct 2024 13:19:24 -0700
-In-Reply-To: <66fa2708.050a0220.aab67.0025.GAE@google.com>
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <66fdaacc.050a0220.40bef.0023.GAE@google.com>
-Subject: Re: [syzbot] [wireguard?] INFO: task hung in wg_destruct (2)
-From: syzbot <syzbot+7da6c19dc528c2ebc612@syzkaller.appspotmail.com>
-To: Jason@zx2c4.com, davem@davemloft.net, edumazet@google.com, jason@zx2c4.com,
- kuba@kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
- pabeni@redhat.com, syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Authenticated-Sender: daniel@iogearbox.net
+X-Virus-Scanned: Clear (ClamAV 0.103.10/27417/Fri Oct  4 10:53:24 2024)
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -63,138 +55,34 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-syzbot has found a reproducer for the following issue on:
+Advertise GSO_MAX_SIZE as TSO max size in order support BIG TCP for wireguard.
+This helps to improve wireguard performance a bit when enabled as it allows
+wireguard to aggregate larger skbs in wg_packet_consume_data_done() via
+napi_gro_receive(), but also allows the stack to build larger skbs on xmit
+where the driver then segments them before encryption inside wg_xmit().
 
-HEAD commit:    e32cde8d2bd7 Merge tag 'sched_ext-for-6.12-rc1-fixes-1' of..
-git tree:       upstream
-console output: https://syzkaller.appspot.com/x/log.txt?x=1670339f980000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=286b31f2cf1c36b5
-dashboard link: https://syzkaller.appspot.com/bug?extid=7da6c19dc528c2ebc612
-compiler:       Debian clang version 15.0.6, GNU ld (GNU Binutils for Debian) 2.40
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=146ae580580000
-
-Downloadable assets:
-disk image: https://storage.googleapis.com/syzbot-assets/f7f2dc1bf47b/disk-e32cde8d.raw.xz
-vmlinux: https://storage.googleapis.com/syzbot-assets/063e4eafb554/vmlinux-e32cde8d.xz
-kernel image: https://storage.googleapis.com/syzbot-assets/7ce38bae7b74/bzImage-e32cde8d.xz
-
-IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+7da6c19dc528c2ebc612@syzkaller.appspotmail.com
-
-INFO: task kworker/u8:5:1092 blocked for more than 145 seconds.
-      Not tainted 6.12.0-rc1-syzkaller-00031-ge32cde8d2bd7 #0
-"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-task:kworker/u8:5    state:D stack:22072 pid:1092  tgid:1092  ppid:2      flags:0x00004000
-Workqueue: netns cleanup_net
-Call Trace:
- <TASK>
- context_switch kernel/sched/core.c:5315 [inline]
- __schedule+0x1895/0x4b30 kernel/sched/core.c:6675
- __schedule_loop kernel/sched/core.c:6752 [inline]
- schedule+0x14b/0x320 kernel/sched/core.c:6767
- schedule_preempt_disabled+0x13/0x30 kernel/sched/core.c:6824
- __mutex_lock_common kernel/locking/mutex.c:684 [inline]
- __mutex_lock+0x6a7/0xd70 kernel/locking/mutex.c:752
- wg_destruct+0x25/0x2e0 drivers/net/wireguard/device.c:246
- netdev_run_todo+0xe1a/0x1000 net/core/dev.c:10805
- default_device_exit_batch+0xa24/0xaa0 net/core/dev.c:11945
- ops_exit_list net/core/net_namespace.c:178 [inline]
- cleanup_net+0x89d/0xcc0 net/core/net_namespace.c:626
- process_one_work kernel/workqueue.c:3229 [inline]
- process_scheduled_works+0xa63/0x1850 kernel/workqueue.c:3310
- worker_thread+0x870/0xd30 kernel/workqueue.c:3391
- kthread+0x2f0/0x390 kernel/kthread.c:389
- ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
- </TASK>
-INFO: task dhcpcd:4899 blocked for more than 153 seconds.
-      Not tainted 6.12.0-rc1-syzkaller-00031-ge32cde8d2bd7 #0
-"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-task:dhcpcd          state:D stack:20352 pid:4899  tgid:4899  ppid:4898   flags:0x00000002
-Call Trace:
- <TASK>
- context_switch kernel/sched/core.c:5315 [inline]
- __schedule+0x1895/0x4b30 kernel/sched/core.c:6675
- __schedule_loop kernel/sched/core.c:6752 [inline]
- schedule+0x14b/0x320 kernel/sched/core.c:6767
- schedule_preempt_disabled+0x13/0x30 kernel/sched/core.c:6824
- __mutex_lock_common kernel/locking/mutex.c:684 [inline]
- __mutex_lock+0x6a7/0xd70 kernel/locking/mutex.c:752
- rtnl_lock net/core/rtnetlink.c:79 [inline]
- rtnl_dumpit+0x99/0x200 net/core/rtnetlink.c:6505
- netlink_dump+0x647/0xd80 net/netlink/af_netlink.c:2325
- __netlink_dump_start+0x5a2/0x790 net/netlink/af_netlink.c:2440
- netlink_dump_start include/linux/netlink.h:339 [inline]
- rtnetlink_dump_start net/core/rtnetlink.c:6535 [inline]
- rtnetlink_rcv_msg+0xb3d/0xcf0 net/core/rtnetlink.c:6602
- netlink_rcv_skb+0x1e3/0x430 net/netlink/af_netlink.c:2550
- netlink_unicast_kernel net/netlink/af_netlink.c:1331 [inline]
- netlink_unicast+0x7f6/0x990 net/netlink/af_netlink.c:1357
- netlink_sendmsg+0x8e4/0xcb0 net/netlink/af_netlink.c:1901
- sock_sendmsg_nosec net/socket.c:729 [inline]
- __sock_sendmsg+0x221/0x270 net/socket.c:744
- __sys_sendto+0x39b/0x4f0 net/socket.c:2209
- __do_sys_sendto net/socket.c:2221 [inline]
- __se_sys_sendto net/socket.c:2217 [inline]
- __x64_sys_sendto+0xde/0x100 net/socket.c:2217
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f33cf298ad7
-RSP: 002b:00007ffdc403cb38 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
-RAX: ffffffffffffffda RBX: 00007ffdc403dc60 RCX: 00007f33cf298ad7
-RDX: 0000000000000014 RSI: 00007ffdc403db80 RDI: 0000000000000013
-RBP: 00007ffdc403dbf0 R08: 00007ffdc403db64 R09: 000000000000000c
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000012
-R13: 00007ffdc403db64 R14: 00007ffdc403db80 R15: 0000000000000105
- </TASK>
-
-Showing all locks held in the system:
-6 locks held by kworker/0:0/8:
-1 lock held by khungtaskd/30:
- #0: ffffffff8e937de0 (rcu_read_lock){....}-{1:2}, at: rcu_lock_acquire include/linux/rcupdate.h:337 [inline]
- #0: ffffffff8e937de0 (rcu_read_lock){....}-{1:2}, at: rcu_read_lock include/linux/rcupdate.h:849 [inline]
- #0: ffffffff8e937de0 (rcu_read_lock){....}-{1:2}, at: debug_show_all_locks+0x55/0x2a0 kernel/locking/lockdep.c:6720
-3 locks held by kworker/u8:3/52:
-5 locks held by kworker/u9:0/54:
- #0: ffff888064184948 ((wq_completion)hci2){+.+.}-{0:0}, at: process_one_work kernel/workqueue.c:3204 [inline]
- #0: ffff888064184948 ((wq_completion)hci2){+.+.}-{0:0}, at: process_scheduled_works+0x93b/0x1850 kernel/workqueue.c:3310
- #1: ffffc90000bf7d00 ((work_completion)(&hdev->cmd_sync_work)){+.+.}-{0:0}, at: process_one_work kernel/workqueue.c:3205 [inline]
- #1: ffffc90000bf7d00 ((work_completion)(&hdev->cmd_sync_work)){+.+.}-{0:0}, at: process_scheduled_works+0x976/0x1850 kernel/workqueue.c:3310
- #2: ffff888028a88d80 (&hdev->req_lock){+.+.}-{3:3}, at: hci_cmd_sync_work+0x1ec/0x400 net/bluetooth/hci_sync.c:327
- #3: ffff888028a88078 (&hdev->lock){+.+.}-{3:3}, at: hci_abort_conn_sync+0x1ea/0xde0 net/bluetooth/hci_sync.c:5567
- #4: ffffffff8fe3dfa8 (hci_cb_list_lock){+.+.}-{3:3}, at: hci_connect_cfm include/net/bluetooth/hci_core.h:1957 [inline]
- #4: ffffffff8fe3dfa8 (hci_cb_list_lock){+.+.}-{3:3}, at: hci_conn_failed+0x15d/0x300 net/bluetooth/hci_conn.c:1262
-1 lock held by kswapd0/88:
-1 lock held by kswapd1/89:
-3 locks held by kworker/1:2/937:
- #0: ffff88801ac81948 ((wq_completion)events_power_efficient){+.+.}-{0:0}, at: process_one_work kernel/workqueue.c:3204 [inline]
- #0: ffff88801ac81948 ((wq_completion)events_power_efficient){+.+.}-{0:0}, at: process_scheduled_works+0x93b/0x1850 kernel/workqueue.c:3310
- #1: ffffc90003907d00 ((reg_check_chans).work){+.+.}-{0:0}, at: process_one_work kernel/workqueue.c:3205 [inline]
- #1: ffffc90003907d00 ((reg_check_chans).work){+.+.}-{0:0}, at: process_scheduled_works+0x976/0x1850 kernel/workqueue.c:3310
- #2: ffffffff8fcd1748 (rtnl_mutex){+.+.}-{3:3}, at: reg_check_chans_work+0x99/0xfd0 net/wireless/reg.c:2480
-4 locks held by kworker/u8:5/1092:
- #0: ffff88801baed948 ((wq_completion)netns){+.+.}-{0:0}, at: process_one_work kernel/workqueue.c:3204 [inline]
- #0: ffff88801baed948 ((wq_completion)netns){+.+.}-{0:0}, at: process_scheduled_works+0x93b/0x1850 kernel/workqueue.c:3310
- #1: ffffc90003e07d00 (net_cleanup_work){+.+.}-{0:0}, at: process_one_work kernel/workqueue.c:3205 [inline]
- #1: ffffc90003e07d00 (net_cleanup_work){+.+.}-{0:0}, at: process_scheduled_works+0x976/0x1850 kernel/workqueue.c:3310
- #2: ffffffff8fcc4c50 (pernet_ops_rwsem){++++}-{3:3}, at: cleanup_net+0x16a/0xcc0 net/core/net_namespace.c:580
- #3: ffffffff8fcd1748 (rtnl_mutex){+.+.}-{3:3}, at: wg_destruct+0x25/0x2e0 drivers/net/wireguard/device.c:246
-3 locks held by kworker/u8:6/2919:
-3 locks held by kworker/u8:8/3822:
- #0: ffff88802d6e7148 ((wq_completion)ipv6_addrconf){+.+.}-{0:0}, at: process_one_work kernel/workqueue.c:3204 [inline]
- #0: ffff88802d6e7148 ((wq_completion)ipv6_addrconf){+.+.}-{0:0}, at: process_scheduled_works+0x93b/0x1850 kernel/workqueue.c:3310
- #1: ffffc9000bd0fd00 ((work_completion)(&(&ifa->dad_work)->work)){+.+.}-{0:0}, at: process_one_work kernel/workqueue.c:3205 [inline]
- #1: ffffc9000bd0fd00 ((work_completion)(&(&ifa->dad_work)->work)){+.+.}-{0:0}, at: process_scheduled_works+0x976/0x1850 kernel/workqueue.c:3310
- #2: ffffffff8fcd1748 (rtnl_mutex){+.+.}-{3:3}, at: addrconf_dad_work+0xd0/0x16f0 net/ipv6/addrconf.c:4196
-2 locks held by syslogd/4667:
-1 lock held by klogd/4674:
-4 locks held by udevd/4685:
-2 locks held by dhcpcd/4899:
- #0: ffff8880245f86c8 (nlk_cb_mutex-ROUTE){+.+.}-{3:3}, at: __netlink_dump_start+0x119/0x790 net/netlink/af_netlink.c:2404
-
-
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Jason A. Donenfeld <Jason@zx2c4.com>
+Cc: Anton Protopopov <aspsk@isovalent.com>
+Cc: Martynas Pumputis <m@lambda.lt>
 ---
-If you want syzbot to run the reproducer, reply with:
-#syz test: git://repo/address.git branch-or-commit-hash
-If you attach or paste a git patch, syzbot will apply it before testing.
+ v2: fixed up my gitconfig and Cc's now
+
+ drivers/net/wireguard/device.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/net/wireguard/device.c b/drivers/net/wireguard/device.c
+index 45e9b908dbfb..79be517b2216 100644
+--- a/drivers/net/wireguard/device.c
++++ b/drivers/net/wireguard/device.c
+@@ -301,6 +301,7 @@ static void wg_setup(struct net_device *dev)
+ 
+ 	/* We need to keep the dst around in case of icmp replies. */
+ 	netif_keep_dst(dev);
++	netif_set_tso_max_size(dev, GSO_MAX_SIZE);
+ 
+ 	memset(wg, 0, sizeof(*wg));
+ 	wg->dev = dev;
+-- 
+2.43.0
+
