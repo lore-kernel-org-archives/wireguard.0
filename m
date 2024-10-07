@@ -4,157 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EDF3D10F41
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 02:40:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A328FD10F56
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 02:40:43 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5081f675;
-	Mon, 18 Nov 2024 01:38:00 +0000 (UTC)
-Received: from smtp-out1.suse.de (smtp-out1.suse.de
- [2a07:de40:b251:101:10:150:64:1])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9a12f80b
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c5b80bd9;
+	Mon, 18 Nov 2024 01:37:56 +0000 (UTC)
+Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 434e68a9
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 8 Oct 2024 16:36:12 +0000 (UTC)
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 341EC21D5B;
- Tue,  8 Oct 2024 16:36:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
- t=1728405371; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=BMUPyVXLd+LDl/ZL7ymEeTwuIs5yS/vjsLxKqhtCqaw=;
- b=mQlP9E5s/11e/CjftGGrRoU6j7K/s36FGlOqcFLpbhBLLkMQ/ljT5HzNIZEr4ZzK5XYYOZ
- am2BUh542vweWyC83EybNarwaLWVq6x/eeNNR4UW5ZFL69mVlGB7P9Q5u65UZYyw/Ka8o6
- lBm8cnkhDd4YKqdTevX8+1KnCMgFQ10=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
- s=susede2_ed25519; t=1728405371;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=BMUPyVXLd+LDl/ZL7ymEeTwuIs5yS/vjsLxKqhtCqaw=;
- b=hwesBxXanA3ymRC+PkaTSPZd29rMLk9C+fEk/Am2Y4bZMgwG/qKzPXTKF6SSYgtUEgQJkY
- 5MTzEj/k8e9GZXAQ==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.cz header.s=susede2_rsa header.b=mQlP9E5s;
- dkim=pass header.d=suse.cz header.s=susede2_ed25519 header.b=hwesBxXa
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
- t=1728405371; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=BMUPyVXLd+LDl/ZL7ymEeTwuIs5yS/vjsLxKqhtCqaw=;
- b=mQlP9E5s/11e/CjftGGrRoU6j7K/s36FGlOqcFLpbhBLLkMQ/ljT5HzNIZEr4ZzK5XYYOZ
- am2BUh542vweWyC83EybNarwaLWVq6x/eeNNR4UW5ZFL69mVlGB7P9Q5u65UZYyw/Ka8o6
- lBm8cnkhDd4YKqdTevX8+1KnCMgFQ10=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
- s=susede2_ed25519; t=1728405371;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=BMUPyVXLd+LDl/ZL7ymEeTwuIs5yS/vjsLxKqhtCqaw=;
- b=hwesBxXanA3ymRC+PkaTSPZd29rMLk9C+fEk/Am2Y4bZMgwG/qKzPXTKF6SSYgtUEgQJkY
- 5MTzEj/k8e9GZXAQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id F0ECE137CF;
- Tue,  8 Oct 2024 16:36:10 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id c4GBOnpfBWeLSwAAD6G6ig
- (envelope-from <vbabka@suse.cz>); Tue, 08 Oct 2024 16:36:10 +0000
-Message-ID: <1585a3fc-ade2-4e1e-a016-e04336c0a103@suse.cz>
-Date: Tue, 8 Oct 2024 18:36:10 +0200
+ for <wireguard@lists.zx2c4.com>; Mon, 7 Oct 2024 17:50:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+ :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+ Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=rNeJjWHR0x0soD8IDWMYjDsVxOWsQp0gDDBefvqbzBM=; b=PLPh7v5VA5eCdGogHSAC0ChFCI
+ GkYDixeucqicVGJ9oOyHzrxHWtaHnRqLbgoUfDcs3cYOBSj05YbG7RrZCWmdd3Pg9xAmZ6eMTNCaw
+ s6xxX7cWv4tofNziKjKcSYuileLz9fuBlUFes+9HsYTUVfpvhrIQkeUdac8QDMugP2TJqHDImr2yY
+ iZQSKLvr1pqOWkvlENA6kActuS0v0UF7a1mKhmKB1FUD361ZcHY7h1tRYQftvmlGk+L4xENz/QvSQ
+ hq7z6FUPaLrKQ8qR1Q/ot8DtHVk5MbwNTJZzfkquRzvQDqJcuq1Yokf+5DfBAaiUsDfZ9NF8CEaM4
+ lL0y7FEw==;
+Received: from sslproxy01.your-server.de ([78.46.139.224])
+ by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.94.2) (envelope-from <daniel@iogearbox.net>)
+ id 1sxrry-000L7K-FQ; Mon, 07 Oct 2024 19:50:06 +0200
+Received: from [78.155.22.211] (helo=[172.29.54.133])
+ by sslproxy01.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.96) (envelope-from <daniel@iogearbox.net>)
+ id 1sxrrx-00059R-22; Mon, 07 Oct 2024 19:50:05 +0200
+Message-ID: <b58d8075-cf21-4560-ac89-b8ad860f19cd@iogearbox.net>
+Date: Mon, 7 Oct 2024 19:50:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/14] replace call_rcu by kfree_rcu for simple
- kmem_cache_free callback
+Subject: Re: [PATCH net-next v2] wireguard: Wire-up big tcp support
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: kuba@kernel.org, edumazet@google.com, aspsk@isovalent.com, m@lambda.lt,
+ netdev@vger.kernel.org, wireguard@lists.zx2c4.com
+References: <20241004165518.120567-1-daniel@iogearbox.net>
+ <ZwQPgbwio38LWqKS@zx2c4.com>
 Content-Language: en-US
-To: Julia Lawall <Julia.Lawall@inria.fr>, linux-block@vger.kernel.org
-Cc: kernel-janitors@vger.kernel.org, bridge@lists.linux.dev,
- linux-trace-kernel@vger.kernel.org,
- Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, kvm@vger.kernel.org,
- linuxppc-dev@lists.ozlabs.org, "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>,
- Christophe Leroy <christophe.leroy@csgroup.eu>,
- Nicholas Piggin <npiggin@gmail.com>, netdev@vger.kernel.org,
- wireguard@lists.zx2c4.com, linux-kernel@vger.kernel.org,
- ecryptfs@vger.kernel.org, Neil Brown <neilb@suse.de>,
- Olga Kornievskaia <kolga@netapp.com>, Dai Ngo <Dai.Ngo@oracle.com>,
- Tom Talpey <tom@talpey.com>, linux-nfs@vger.kernel.org,
- linux-can@vger.kernel.org, Lai Jiangshan <jiangshanlai@gmail.com>,
- netfilter-devel@vger.kernel.org, coreteam@netfilter.org,
- "Paul E . McKenney" <paulmck@kernel.org>,
- "Uladzislau Rezki (Sony)" <urezki@gmail.com>,
- "Jason A. Donenfeld" <Jason@zx2c4.com>, Steven Rostedt <rostedt@goodmis.org>
-References: <20240609082726.32742-1-Julia.Lawall@inria.fr>
-From: Vlastimil Babka <vbabka@suse.cz>
-Autocrypt: addr=vbabka@suse.cz; keydata=
- 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
- EP+ylKVEKb0Q2A==
-In-Reply-To: <20240609082726.32742-1-Julia.Lawall@inria.fr>
-Content-Type: text/plain; charset=UTF-8
+From: Daniel Borkmann <daniel@iogearbox.net>
+Autocrypt: addr=daniel@iogearbox.net; keydata=
+ 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
+In-Reply-To: <ZwQPgbwio38LWqKS@zx2c4.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 341EC21D5B
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; ARC_NA(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[28]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- R_RATELIMIT(0.00)[to_ip_from(RLujeud1qp5x6qhm7ow61zc6bu)];
- FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[vger.kernel.org,lists.linux.dev,efficios.com,lists.ozlabs.org,linux.ibm.com,csgroup.eu,gmail.com,lists.zx2c4.com,suse.de,netapp.com,oracle.com,talpey.com,netfilter.org,kernel.org,zx2c4.com,goodmis.org];
- MID_RHS_MATCH_FROM(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.cz:+]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
+X-Authenticated-Sender: daniel@iogearbox.net
+X-Virus-Scanned: Clear (ClamAV 0.103.10/27420/Mon Oct  7 10:43:46 2024)
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -169,121 +106,27 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 6/9/24 10:27, Julia Lawall wrote:
-> Since SLOB was removed, it is not necessary to use call_rcu
-> when the callback only performs kmem_cache_free. Use
-> kfree_rcu() directly.
+Hi Jason,
 
-FYI, as of 6.12-rc1 - commit 6c6c47b063b5 ("mm, slab: call
-kvfree_rcu_barrier() from kmem_cache_destroy()")
-it should be possible to restart this effort for the remaining cases which
-had to be postponed until kmem_cache_destroy() / module unload is sorted out.
+On 10/7/24 6:42 PM, Jason A. Donenfeld wrote:
+> On Fri, Oct 04, 2024 at 06:55:18PM +0200, Daniel Borkmann wrote:
+>> Advertise GSO_MAX_SIZE as TSO max size in order support BIG TCP for wireguard.
+>> This helps to improve wireguard performance a bit when enabled as it allows
+>> wireguard to aggregate larger skbs in wg_packet_consume_data_done() via
+>> napi_gro_receive(), but also allows the stack to build larger skbs on xmit
+>> where the driver then segments them before encryption inside wg_xmit().
+> 
+> Thanks, I'll queue this up. Do you have any perf numbers on the speedup,
+> btw?
+
+Awesome, thanks! Few weeks back we had an LPC session with some initial work
+around wireguard performance (https://lpc.events/event/18/contributions/1968/)
+including benchmarks. It depends on the specific scenario, but this as well as
+an L2 GRO implementation (yet to come as patches in the next weeks) we got
+~+15% for host-host in case of TCP STREAM. In case of Cilium I haven't done
+the measurement yet, but I expect that there would be further gains as bigger
+packets can traverse the stack and thus less processing in upper layers (e.g.
+our tcx BPF code).
 
 Thanks,
-Vlastimil
-
-> The changes were done using the following Coccinelle semantic patch.
-> This semantic patch is designed to ignore cases where the callback
-> function is used in another way.
-> 
-> // <smpl>
-> @r@
-> expression e;
-> local idexpression e2;
-> identifier cb,f;
-> position p;
-> @@
-> 
-> (
-> call_rcu(...,e2)
-> |
-> call_rcu(&e->f,cb@p)
-> )
-> 
-> @r1@
-> type T;
-> identifier x,r.cb;
-> @@
-> 
->  cb(...) {
-> (
->    kmem_cache_free(...);
-> |
->    T x = ...;
->    kmem_cache_free(...,x);
-> |
->    T x;
->    x = ...;
->    kmem_cache_free(...,x);
-> )
->  }
-> 
-> @s depends on r1@
-> position p != r.p;
-> identifier r.cb;
-> @@
-> 
->  cb@p
-> 
-> @script:ocaml@
-> cb << r.cb;
-> p << s.p;
-> @@
-> 
-> Printf.eprintf "Other use of %s at %s:%d\n"
->    cb (List.hd p).file (List.hd p).line
-> 
-> @depends on r1 && !s@
-> expression e;
-> identifier r.cb,f;
-> position r.p;
-> @@
-> 
-> - call_rcu(&e->f,cb@p)
-> + kfree_rcu(e,f)
-> 
-> @r1a depends on !s@
-> type T;
-> identifier x,r.cb;
-> @@
-> 
-> - cb(...) {
-> (
-> -  kmem_cache_free(...);
-> |
-> -  T x = ...;
-> -  kmem_cache_free(...,x);
-> |
-> -  T x;
-> -  x = ...;
-> -  kmem_cache_free(...,x);
-> )
-> - }
-> // </smpl>
-> 
-> Signed-off-by: Julia Lawall <Julia.Lawall@inria.fr>
-> Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
-> Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-> 
-> ---
-> 
->  arch/powerpc/kvm/book3s_mmu_hpte.c  |    8 +-------
->  block/blk-ioc.c                     |    9 +--------
->  drivers/net/wireguard/allowedips.c  |    9 ++-------
->  fs/ecryptfs/dentry.c                |    8 +-------
->  fs/nfsd/nfs4state.c                 |    9 +--------
->  fs/tracefs/inode.c                  |   10 +---------
->  kernel/time/posix-timers.c          |    9 +--------
->  kernel/workqueue.c                  |    8 +-------
->  net/bridge/br_fdb.c                 |    9 +--------
->  net/can/gw.c                        |   13 +++----------
->  net/ipv4/fib_trie.c                 |    8 +-------
->  net/ipv4/inetpeer.c                 |    9 ++-------
->  net/ipv6/ip6_fib.c                  |    9 +--------
->  net/ipv6/xfrm6_tunnel.c             |    8 +-------
->  net/kcm/kcmsock.c                   |   10 +---------
->  net/netfilter/nf_conncount.c        |   10 +---------
->  net/netfilter/nf_conntrack_expect.c |   10 +---------
->  net/netfilter/xt_hashlimit.c        |    9 +--------
->  18 files changed, 22 insertions(+), 143 deletions(-)
-
+Daniel
