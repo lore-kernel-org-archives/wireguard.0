@@ -4,55 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3525D10F58
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 03:01:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD0D9D10F59
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 03:01:59 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ab5efe70;
-	Mon, 18 Nov 2024 01:38:12 +0000 (UTC)
-Received: from mail-il1-f197.google.com (mail-il1-f197.google.com
- [209.85.166.197])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 10792feb
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 9 Oct 2024 07:44:05 +0000 (UTC)
-Received: by mail-il1-f197.google.com with SMTP id
- e9e14a558f8ab-3a342e872a7so68304515ab.3
- for <wireguard@lists.zx2c4.com>; Wed, 09 Oct 2024 00:44:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1728459843; x=1729064643;
- h=to:from:subject:message-id:in-reply-to:date:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/cIM4FzGaC91vtdSI5kp+oxCUFiOwgoAfMBzSugYPic=;
- b=e6npuzrTFRtbERzV44IlXQ9aaYLAtzuAgDs9rBObMfpJ3OClq/Vpo4O3IEOYJomuvV
- MfGfrI25evWorV+/44AccQ979bvlprMcgTT8vhgG78IAmItMzghfIJ1Y8kJu49fL26Rf
- h2WOvGd1RtV6PfigZtfrwLcd4VDmZOxz1c5/d95tSQjnaiXIcvK5/sKeyzdY1RyfNW8W
- Nb/4XzrvsMMwhcDZSRhPDUsVmqelkOSih+/LLUCSfTDLlso/GO3XKUy6kjyRB3STMb1v
- aNHAsIfE3b7WRdFBvujeXEc/B+QMTMbc9ZT0B3geRdOQi4aXUlg2o2TLT0jY30q1gLZA
- MQUA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXWcja/qgNrA2o48zX3gOlfcxNco6yBxJ4bA+zW+iQ+JurrxBFa8Nb46JJmq/bhxt0fCXnHOfp55Iw=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0Yz+669vGR/gZ3npoBmd0J64VPxr6041Y3BP/QRfe34duM/rOvR3
- BOQwNP1onU1bSpTN/JDXZE/4MBG7vy0akOaCjjJF/BAKVtcuu0/rSTs39Jl7kw3Vp/WhRNfPGIR
- 9wGuSHxmRrzR2vAls/naKG1/1Bqu174oICiLrQF0q5dWQtC0HLLVBZGI=
-X-Google-Smtp-Source: AGHT+IGQUQlE1emHK5BMoVHftqjMHMKZ9WzpGESuX/WJupIlx748u5PWWxzaIpPs7tVEVvN3RxleI5Ir+epplxZsh4OdZn5wVcaV
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2c8a28ab;
+	Mon, 18 Nov 2024 01:38:15 +0000 (UTC)
+Received: from mail3-relais-sop.national.inria.fr
+ (mail3-relais-sop.national.inria.fr [192.134.164.104])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 986fe3ae
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Wed, 9 Oct 2024 17:09:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=inria.fr; s=dc;
+ h=date:from:to:cc:subject:in-reply-to:message-id:
+ references:mime-version;
+ bh=Ei5tc3PfylWx64diDodItk/7guQ0rWtWfXKiWLfUtgQ=;
+ b=P2PqLt2RJ+Vn9j341bwlMFTU0FcgGXEDMFVS+UK6LZzeDKmKGXto1w8j
+ K/UPWGc5Oo6GHXmTdg8fStaJMC/k3hx+pSQdL8w3lyFTdpS8OkkG5zDEG
+ Y7Pccq9IONrVVfDA82M2vhDcH9SREB3ieHiHQ3R+Ik67CNB3LEXQoDFz1 4=;
+Authentication-Results: mail3-relais-sop.national.inria.fr;
+ dkim=none (message not signed) header.i=none;
+ spf=SoftFail smtp.mailfrom=julia.lawall@inria.fr;
+ dmarc=fail (p=none dis=none) d=inria.fr
+X-IronPort-AV: E=Sophos;i="6.11,190,1725314400"; d="scan'208";a="98667983"
+Received: from dt-lawall.paris.inria.fr ([128.93.67.65])
+ by mail3-relais-sop.national.inria.fr with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Oct 2024 19:08:59 +0200
+Date: Wed, 9 Oct 2024 19:08:58 +0200 (CEST)
+From: Julia Lawall <julia.lawall@inria.fr>
+To: "Paul E. McKenney" <paulmck@kernel.org>
+cc: Vlastimil Babka <vbabka@suse.cz>, Uladzislau Rezki <urezki@gmail.com>, 
+ "Jason A. Donenfeld" <Jason@zx2c4.com>, Jakub Kicinski <kuba@kernel.org>, 
+ Julia Lawall <Julia.Lawall@inria.fr>, linux-block@vger.kernel.org, 
+ kernel-janitors@vger.kernel.org, bridge@lists.linux.dev, 
+ linux-trace-kernel@vger.kernel.org, 
+ Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, kvm@vger.kernel.org, 
+ linuxppc-dev@lists.ozlabs.org, 
+ "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>, 
+ Christophe Leroy <christophe.leroy@csgroup.eu>, 
+ Nicholas Piggin <npiggin@gmail.com>, netdev@vger.kernel.org, 
+ wireguard@lists.zx2c4.com, linux-kernel@vger.kernel.org, 
+ ecryptfs@vger.kernel.org, Neil Brown <neilb@suse.de>, 
+ Olga Kornievskaia <kolga@netapp.com>, Dai Ngo <Dai.Ngo@oracle.com>, 
+ Tom Talpey <tom@talpey.com>, linux-nfs@vger.kernel.org, 
+ linux-can@vger.kernel.org, Lai Jiangshan <jiangshanlai@gmail.com>, 
+ netfilter-devel@vger.kernel.org, coreteam@netfilter.org, 
+ kasan-dev <kasan-dev@googlegroups.com>
+Subject: Re: [PATCH 00/14] replace call_rcu by kfree_rcu for simple
+ kmem_cache_free callback
+In-Reply-To: <acf7a96b-facb-469b-8079-edbec7770780@paulmck-laptop>
+Message-ID: <2ae9cb0-b16e-58a-693b-7cd927657946@inria.fr>
+References: <36c60acd-543e-48c5-8bd2-6ed509972d28@suse.cz>
+ <ZnFT1Czb8oRb0SE7@pc636>
+ <5c8b2883-962f-431f-b2d3-3632755de3b0@paulmck-laptop>
+ <9967fdfa-e649-456d-a0cb-b4c4bf7f9d68@suse.cz>
+ <6dad6e9f-e0ca-4446-be9c-1be25b2536dd@paulmck-laptop>
+ <4cba4a48-902b-4fb6-895c-c8e6b64e0d5f@suse.cz> <ZnVInAV8BXhgAjP_@pc636>
+ <df0716ac-c995-498c-83ee-b8c25302f9ed@suse.cz>
+ <b3d9710a-805e-4e37-8295-b5ec1133d15c@paulmck-laptop>
+ <37807ec7-d521-4f01-bcfc-a32650d5de25@suse.cz>
+ <acf7a96b-facb-469b-8079-edbec7770780@paulmck-laptop>
 MIME-Version: 1.0
-X-Received: by 2002:a05:6e02:152b:b0:3a2:463f:fd9e with SMTP id
- e9e14a558f8ab-3a397ce4910mr11518575ab.6.1728459843585; Wed, 09 Oct 2024
- 00:44:03 -0700 (PDT)
-Date: Wed, 09 Oct 2024 00:44:03 -0700
-In-Reply-To: <66fa2708.050a0220.aab67.0025.GAE@google.com>
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <67063443.050a0220.22840d.000f.GAE@google.com>
-Subject: Re: [syzbot] [wireguard?] INFO: task hung in wg_destruct (2)
-From: syzbot <syzbot+7da6c19dc528c2ebc612@syzkaller.appspotmail.com>
-To: Jason@zx2c4.com, bsegall@google.com, davem@davemloft.net, 
- dietmar.eggemann@arm.com, dsahern@kernel.org, edumazet@google.com, 
- jason@zx2c4.com, juri.lelli@redhat.com, kuba@kernel.org, 
- linux-kernel@vger.kernel.org, mgorman@suse.de, mingo@redhat.com, 
- netdev@vger.kernel.org, pabeni@redhat.com, peterz@infradead.org, 
- rostedt@goodmis.org, syzkaller-bugs@googlegroups.com, 
- vincent.guittot@linaro.org, vschneid@redhat.com, wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -67,24 +79,479 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-syzbot has bisected this issue to:
+Hello,
 
-commit dfa0a574cbc47bfd5f8985f74c8ea003a37fa078
-Author: Peter Zijlstra <peterz@infradead.org>
-Date:   Wed Jun 5 10:09:11 2024 +0000
+I have rerun the semantic patch that removes call_rcu calls in cases where
+the callback function just does some pointer arithmetic and calls
+kmem_cache_free.  Let me know if this looks ok, and if so, I can make a
+more formal patch submission.
 
-    sched/uclamg: Handle delayed dequeue
+This is against:
 
-bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=13c2d7d0580000
-start commit:   e32cde8d2bd7 Merge tag 'sched_ext-for-6.12-rc1-fixes-1' of..
-git tree:       upstream
-final oops:     https://syzkaller.appspot.com/x/report.txt?x=1022d7d0580000
-console output: https://syzkaller.appspot.com/x/log.txt?x=17c2d7d0580000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=286b31f2cf1c36b5
-dashboard link: https://syzkaller.appspot.com/bug?extid=7da6c19dc528c2ebc612
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=146ae580580000
+commit 75b607fab38d149f232f01eae5e6392b394dd659 (HEAD -> master, origin/master, origin/HEAD)
+Merge: 5b7c893ed5ed e0ed52154e86
+Author: Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Tue Oct 8 12:54:04 2024 -0700
 
-Reported-by: syzbot+7da6c19dc528c2ebc612@syzkaller.appspotmail.com
-Fixes: dfa0a574cbc4 ("sched/uclamg: Handle delayed dequeue")
+    Merge tag 'sched_ext-for-6.12-rc2-fixes' of git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext
 
-For information about bisection process see: https://goo.gl/tpsmEJ#bisection
+
+julia
+
+diff -u -p a/arch/powerpc/kvm/book3s_mmu_hpte.c b/arch/powerpc/kvm/book3s_mmu_hpte.c
+--- a/arch/powerpc/kvm/book3s_mmu_hpte.c
++++ b/arch/powerpc/kvm/book3s_mmu_hpte.c
+@@ -92,12 +92,6 @@ void kvmppc_mmu_hpte_cache_map(struct kv
+ 	spin_unlock(&vcpu3s->mmu_lock);
+ }
+
+-static void free_pte_rcu(struct rcu_head *head)
+-{
+-	struct hpte_cache *pte = container_of(head, struct hpte_cache, rcu_head);
+-	kmem_cache_free(hpte_cache, pte);
+-}
+-
+ static void invalidate_pte(struct kvm_vcpu *vcpu, struct hpte_cache *pte)
+ {
+ 	struct kvmppc_vcpu_book3s *vcpu3s = to_book3s(vcpu);
+@@ -126,7 +120,7 @@ static void invalidate_pte(struct kvm_vc
+
+ 	spin_unlock(&vcpu3s->mmu_lock);
+
+-	call_rcu(&pte->rcu_head, free_pte_rcu);
++	kfree_rcu(pte, rcu_head);
+ }
+
+ static void kvmppc_mmu_pte_flush_all(struct kvm_vcpu *vcpu)
+diff -u -p a/block/blk-ioc.c b/block/blk-ioc.c
+--- a/block/blk-ioc.c
++++ b/block/blk-ioc.c
+@@ -32,13 +32,6 @@ static void get_io_context(struct io_con
+ 	atomic_long_inc(&ioc->refcount);
+ }
+
+-static void icq_free_icq_rcu(struct rcu_head *head)
+-{
+-	struct io_cq *icq = container_of(head, struct io_cq, __rcu_head);
+-
+-	kmem_cache_free(icq->__rcu_icq_cache, icq);
+-}
+-
+ /*
+  * Exit an icq. Called with ioc locked for blk-mq, and with both ioc
+  * and queue locked for legacy.
+@@ -102,7 +95,7 @@ static void ioc_destroy_icq(struct io_cq
+ 	 */
+ 	icq->__rcu_icq_cache = et->icq_cache;
+ 	icq->flags |= ICQ_DESTROYED;
+-	call_rcu(&icq->__rcu_head, icq_free_icq_rcu);
++	kfree_rcu(icq, __rcu_head);
+ }
+
+ /*
+diff -u -p a/drivers/net/wireguard/allowedips.c b/drivers/net/wireguard/allowedips.c
+--- a/drivers/net/wireguard/allowedips.c
++++ b/drivers/net/wireguard/allowedips.c
+@@ -48,11 +48,6 @@ static void push_rcu(struct allowedips_n
+ 	}
+ }
+
+-static void node_free_rcu(struct rcu_head *rcu)
+-{
+-	kmem_cache_free(node_cache, container_of(rcu, struct allowedips_node, rcu));
+-}
+-
+ static void root_free_rcu(struct rcu_head *rcu)
+ {
+ 	struct allowedips_node *node, *stack[MAX_ALLOWEDIPS_DEPTH] = {
+@@ -330,13 +325,13 @@ void wg_allowedips_remove_by_peer(struct
+ 			child = rcu_dereference_protected(
+ 					parent->bit[!(node->parent_bit_packed & 1)],
+ 					lockdep_is_held(lock));
+-		call_rcu(&node->rcu, node_free_rcu);
++		kfree_rcu(node, rcu);
+ 		if (!free_parent)
+ 			continue;
+ 		if (child)
+ 			child->parent_bit_packed = parent->parent_bit_packed;
+ 		*(struct allowedips_node **)(parent->parent_bit_packed & ~3UL) = child;
+-		call_rcu(&parent->rcu, node_free_rcu);
++		kfree_rcu(parent, rcu);
+ 	}
+ }
+
+diff -u -p a/fs/ecryptfs/dentry.c b/fs/ecryptfs/dentry.c
+--- a/fs/ecryptfs/dentry.c
++++ b/fs/ecryptfs/dentry.c
+@@ -51,12 +51,6 @@ static int ecryptfs_d_revalidate(struct
+
+ struct kmem_cache *ecryptfs_dentry_info_cache;
+
+-static void ecryptfs_dentry_free_rcu(struct rcu_head *head)
+-{
+-	kmem_cache_free(ecryptfs_dentry_info_cache,
+-		container_of(head, struct ecryptfs_dentry_info, rcu));
+-}
+-
+ /**
+  * ecryptfs_d_release
+  * @dentry: The ecryptfs dentry
+@@ -68,7 +62,7 @@ static void ecryptfs_d_release(struct de
+ 	struct ecryptfs_dentry_info *p = dentry->d_fsdata;
+ 	if (p) {
+ 		path_put(&p->lower_path);
+-		call_rcu(&p->rcu, ecryptfs_dentry_free_rcu);
++		kfree_rcu(p, rcu);
+ 	}
+ }
+
+diff -u -p a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -572,13 +572,6 @@ opaque_hashval(const void *ptr, int nbyt
+ 	return x;
+ }
+
+-static void nfsd4_free_file_rcu(struct rcu_head *rcu)
+-{
+-	struct nfs4_file *fp = container_of(rcu, struct nfs4_file, fi_rcu);
+-
+-	kmem_cache_free(file_slab, fp);
+-}
+-
+ void
+ put_nfs4_file(struct nfs4_file *fi)
+ {
+@@ -586,7 +579,7 @@ put_nfs4_file(struct nfs4_file *fi)
+ 		nfsd4_file_hash_remove(fi);
+ 		WARN_ON_ONCE(!list_empty(&fi->fi_clnt_odstate));
+ 		WARN_ON_ONCE(!list_empty(&fi->fi_delegations));
+-		call_rcu(&fi->fi_rcu, nfsd4_free_file_rcu);
++		kfree_rcu(fi, fi_rcu);
+ 	}
+ }
+
+diff -u -p a/kernel/time/posix-timers.c b/kernel/time/posix-timers.c
+--- a/kernel/time/posix-timers.c
++++ b/kernel/time/posix-timers.c
+@@ -413,18 +413,11 @@ static struct k_itimer * alloc_posix_tim
+ 	return tmr;
+ }
+
+-static void k_itimer_rcu_free(struct rcu_head *head)
+-{
+-	struct k_itimer *tmr = container_of(head, struct k_itimer, rcu);
+-
+-	kmem_cache_free(posix_timers_cache, tmr);
+-}
+-
+ static void posix_timer_free(struct k_itimer *tmr)
+ {
+ 	put_pid(tmr->it_pid);
+ 	sigqueue_free(tmr->sigq);
+-	call_rcu(&tmr->rcu, k_itimer_rcu_free);
++	kfree_rcu(tmr, rcu);
+ }
+
+ static void posix_timer_unhash_and_free(struct k_itimer *tmr)
+diff -u -p a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
+--- a/net/batman-adv/translation-table.c
++++ b/net/batman-adv/translation-table.c
+@@ -408,19 +408,6 @@ static void batadv_tt_global_size_dec(st
+ }
+
+ /**
+- * batadv_tt_orig_list_entry_free_rcu() - free the orig_entry
+- * @rcu: rcu pointer of the orig_entry
+- */
+-static void batadv_tt_orig_list_entry_free_rcu(struct rcu_head *rcu)
+-{
+-	struct batadv_tt_orig_list_entry *orig_entry;
+-
+-	orig_entry = container_of(rcu, struct batadv_tt_orig_list_entry, rcu);
+-
+-	kmem_cache_free(batadv_tt_orig_cache, orig_entry);
+-}
+-
+-/**
+  * batadv_tt_orig_list_entry_release() - release tt orig entry from lists and
+  *  queue for free after rcu grace period
+  * @ref: kref pointer of the tt orig entry
+@@ -433,7 +420,7 @@ static void batadv_tt_orig_list_entry_re
+ 				  refcount);
+
+ 	batadv_orig_node_put(orig_entry->orig_node);
+-	call_rcu(&orig_entry->rcu, batadv_tt_orig_list_entry_free_rcu);
++	kfree_rcu(orig_entry, rcu);
+ }
+
+ /**
+diff -u -p a/net/bridge/br_fdb.c b/net/bridge/br_fdb.c
+--- a/net/bridge/br_fdb.c
++++ b/net/bridge/br_fdb.c
+@@ -73,13 +73,6 @@ static inline int has_expired(const stru
+ 	       time_before_eq(fdb->updated + hold_time(br), jiffies);
+ }
+
+-static void fdb_rcu_free(struct rcu_head *head)
+-{
+-	struct net_bridge_fdb_entry *ent
+-		= container_of(head, struct net_bridge_fdb_entry, rcu);
+-	kmem_cache_free(br_fdb_cache, ent);
+-}
+-
+ static int fdb_to_nud(const struct net_bridge *br,
+ 		      const struct net_bridge_fdb_entry *fdb)
+ {
+@@ -329,7 +322,7 @@ static void fdb_delete(struct net_bridge
+ 	if (test_and_clear_bit(BR_FDB_DYNAMIC_LEARNED, &f->flags))
+ 		atomic_dec(&br->fdb_n_learned);
+ 	fdb_notify(br, f, RTM_DELNEIGH, swdev_notify);
+-	call_rcu(&f->rcu, fdb_rcu_free);
++	kfree_rcu(f, rcu);
+ }
+
+ /* Delete a local entry if no other port had the same address.
+diff -u -p a/net/can/gw.c b/net/can/gw.c
+--- a/net/can/gw.c
++++ b/net/can/gw.c
+@@ -577,13 +577,6 @@ static inline void cgw_unregister_filter
+ 			  gwj->ccgw.filter.can_mask, can_can_gw_rcv, gwj);
+ }
+
+-static void cgw_job_free_rcu(struct rcu_head *rcu_head)
+-{
+-	struct cgw_job *gwj = container_of(rcu_head, struct cgw_job, rcu);
+-
+-	kmem_cache_free(cgw_cache, gwj);
+-}
+-
+ static int cgw_notifier(struct notifier_block *nb,
+ 			unsigned long msg, void *ptr)
+ {
+@@ -603,7 +596,7 @@ static int cgw_notifier(struct notifier_
+ 			if (gwj->src.dev == dev || gwj->dst.dev == dev) {
+ 				hlist_del(&gwj->list);
+ 				cgw_unregister_filter(net, gwj);
+-				call_rcu(&gwj->rcu, cgw_job_free_rcu);
++				kfree_rcu(gwj, rcu);
+ 			}
+ 		}
+ 	}
+@@ -1168,7 +1161,7 @@ static void cgw_remove_all_jobs(struct n
+ 	hlist_for_each_entry_safe(gwj, nx, &net->can.cgw_list, list) {
+ 		hlist_del(&gwj->list);
+ 		cgw_unregister_filter(net, gwj);
+-		call_rcu(&gwj->rcu, cgw_job_free_rcu);
++		kfree_rcu(gwj, rcu);
+ 	}
+ }
+
+@@ -1236,7 +1229,7 @@ static int cgw_remove_job(struct sk_buff
+
+ 		hlist_del(&gwj->list);
+ 		cgw_unregister_filter(net, gwj);
+-		call_rcu(&gwj->rcu, cgw_job_free_rcu);
++		kfree_rcu(gwj, rcu);
+ 		err = 0;
+ 		break;
+ 	}
+diff -u -p a/net/ipv4/fib_trie.c b/net/ipv4/fib_trie.c
+--- a/net/ipv4/fib_trie.c
++++ b/net/ipv4/fib_trie.c
+@@ -292,15 +292,9 @@ static const int inflate_threshold = 50;
+ static const int halve_threshold_root = 15;
+ static const int inflate_threshold_root = 30;
+
+-static void __alias_free_mem(struct rcu_head *head)
+-{
+-	struct fib_alias *fa = container_of(head, struct fib_alias, rcu);
+-	kmem_cache_free(fn_alias_kmem, fa);
+-}
+-
+ static inline void alias_free_mem_rcu(struct fib_alias *fa)
+ {
+-	call_rcu(&fa->rcu, __alias_free_mem);
++	kfree_rcu(fa, rcu);
+ }
+
+ #define TNODE_VMALLOC_MAX \
+diff -u -p a/net/ipv4/inetpeer.c b/net/ipv4/inetpeer.c
+--- a/net/ipv4/inetpeer.c
++++ b/net/ipv4/inetpeer.c
+@@ -128,11 +128,6 @@ static struct inet_peer *lookup(const st
+ 	return NULL;
+ }
+
+-static void inetpeer_free_rcu(struct rcu_head *head)
+-{
+-	kmem_cache_free(peer_cachep, container_of(head, struct inet_peer, rcu));
+-}
+-
+ /* perform garbage collect on all items stacked during a lookup */
+ static void inet_peer_gc(struct inet_peer_base *base,
+ 			 struct inet_peer *gc_stack[],
+@@ -168,7 +163,7 @@ static void inet_peer_gc(struct inet_pee
+ 		if (p) {
+ 			rb_erase(&p->rb_node, &base->rb_root);
+ 			base->total--;
+-			call_rcu(&p->rcu, inetpeer_free_rcu);
++			kfree_rcu(p, rcu);
+ 		}
+ 	}
+ }
+@@ -242,7 +237,7 @@ void inet_putpeer(struct inet_peer *p)
+ 	WRITE_ONCE(p->dtime, (__u32)jiffies);
+
+ 	if (refcount_dec_and_test(&p->refcnt))
+-		call_rcu(&p->rcu, inetpeer_free_rcu);
++		kfree_rcu(p, rcu);
+ }
+ EXPORT_SYMBOL_GPL(inet_putpeer);
+
+diff -u -p a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
+--- a/net/ipv6/ip6_fib.c
++++ b/net/ipv6/ip6_fib.c
+@@ -198,16 +198,9 @@ static void node_free_immediate(struct n
+ 	net->ipv6.rt6_stats->fib_nodes--;
+ }
+
+-static void node_free_rcu(struct rcu_head *head)
+-{
+-	struct fib6_node *fn = container_of(head, struct fib6_node, rcu);
+-
+-	kmem_cache_free(fib6_node_kmem, fn);
+-}
+-
+ static void node_free(struct net *net, struct fib6_node *fn)
+ {
+-	call_rcu(&fn->rcu, node_free_rcu);
++	kfree_rcu(fn, rcu);
+ 	net->ipv6.rt6_stats->fib_nodes--;
+ }
+
+diff -u -p a/net/ipv6/xfrm6_tunnel.c b/net/ipv6/xfrm6_tunnel.c
+--- a/net/ipv6/xfrm6_tunnel.c
++++ b/net/ipv6/xfrm6_tunnel.c
+@@ -178,12 +178,6 @@ __be32 xfrm6_tunnel_alloc_spi(struct net
+ }
+ EXPORT_SYMBOL(xfrm6_tunnel_alloc_spi);
+
+-static void x6spi_destroy_rcu(struct rcu_head *head)
+-{
+-	kmem_cache_free(xfrm6_tunnel_spi_kmem,
+-			container_of(head, struct xfrm6_tunnel_spi, rcu_head));
+-}
+-
+ static void xfrm6_tunnel_free_spi(struct net *net, xfrm_address_t *saddr)
+ {
+ 	struct xfrm6_tunnel_net *xfrm6_tn = xfrm6_tunnel_pernet(net);
+@@ -200,7 +194,7 @@ static void xfrm6_tunnel_free_spi(struct
+ 			if (refcount_dec_and_test(&x6spi->refcnt)) {
+ 				hlist_del_rcu(&x6spi->list_byaddr);
+ 				hlist_del_rcu(&x6spi->list_byspi);
+-				call_rcu(&x6spi->rcu_head, x6spi_destroy_rcu);
++				kfree_rcu(x6spi, rcu_head);
+ 				break;
+ 			}
+ 		}
+diff -u -p a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
+--- a/net/kcm/kcmsock.c
++++ b/net/kcm/kcmsock.c
+@@ -1584,14 +1584,6 @@ static int kcm_ioctl(struct socket *sock
+ 	return err;
+ }
+
+-static void free_mux(struct rcu_head *rcu)
+-{
+-	struct kcm_mux *mux = container_of(rcu,
+-	    struct kcm_mux, rcu);
+-
+-	kmem_cache_free(kcm_muxp, mux);
+-}
+-
+ static void release_mux(struct kcm_mux *mux)
+ {
+ 	struct kcm_net *knet = mux->knet;
+@@ -1619,7 +1611,7 @@ static void release_mux(struct kcm_mux *
+ 	knet->count--;
+ 	mutex_unlock(&knet->mutex);
+
+-	call_rcu(&mux->rcu, free_mux);
++	kfree_rcu(mux, rcu);
+ }
+
+ static void kcm_done(struct kcm_sock *kcm)
+diff -u -p a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
+--- a/net/netfilter/nf_conncount.c
++++ b/net/netfilter/nf_conncount.c
+@@ -275,14 +275,6 @@ bool nf_conncount_gc_list(struct net *ne
+ }
+ EXPORT_SYMBOL_GPL(nf_conncount_gc_list);
+
+-static void __tree_nodes_free(struct rcu_head *h)
+-{
+-	struct nf_conncount_rb *rbconn;
+-
+-	rbconn = container_of(h, struct nf_conncount_rb, rcu_head);
+-	kmem_cache_free(conncount_rb_cachep, rbconn);
+-}
+-
+ /* caller must hold tree nf_conncount_locks[] lock */
+ static void tree_nodes_free(struct rb_root *root,
+ 			    struct nf_conncount_rb *gc_nodes[],
+@@ -295,7 +287,7 @@ static void tree_nodes_free(struct rb_ro
+ 		spin_lock(&rbconn->list.list_lock);
+ 		if (!rbconn->list.count) {
+ 			rb_erase(&rbconn->node, root);
+-			call_rcu(&rbconn->rcu_head, __tree_nodes_free);
++			kfree_rcu(rbconn, rcu_head);
+ 		}
+ 		spin_unlock(&rbconn->list.list_lock);
+ 	}
+diff -u -p a/net/netfilter/nf_conntrack_expect.c b/net/netfilter/nf_conntrack_expect.c
+--- a/net/netfilter/nf_conntrack_expect.c
++++ b/net/netfilter/nf_conntrack_expect.c
+@@ -367,18 +367,10 @@ void nf_ct_expect_init(struct nf_conntra
+ }
+ EXPORT_SYMBOL_GPL(nf_ct_expect_init);
+
+-static void nf_ct_expect_free_rcu(struct rcu_head *head)
+-{
+-	struct nf_conntrack_expect *exp;
+-
+-	exp = container_of(head, struct nf_conntrack_expect, rcu);
+-	kmem_cache_free(nf_ct_expect_cachep, exp);
+-}
+-
+ void nf_ct_expect_put(struct nf_conntrack_expect *exp)
+ {
+ 	if (refcount_dec_and_test(&exp->use))
+-		call_rcu(&exp->rcu, nf_ct_expect_free_rcu);
++		kfree_rcu(exp, rcu);
+ }
+ EXPORT_SYMBOL_GPL(nf_ct_expect_put);
+
+diff -u -p a/net/netfilter/xt_hashlimit.c b/net/netfilter/xt_hashlimit.c
+--- a/net/netfilter/xt_hashlimit.c
++++ b/net/netfilter/xt_hashlimit.c
+@@ -256,18 +256,11 @@ dsthash_alloc_init(struct xt_hashlimit_h
+ 	return ent;
+ }
+
+-static void dsthash_free_rcu(struct rcu_head *head)
+-{
+-	struct dsthash_ent *ent = container_of(head, struct dsthash_ent, rcu);
+-
+-	kmem_cache_free(hashlimit_cachep, ent);
+-}
+-
+ static inline void
+ dsthash_free(struct xt_hashlimit_htable *ht, struct dsthash_ent *ent)
+ {
+ 	hlist_del_rcu(&ent->node);
+-	call_rcu(&ent->rcu, dsthash_free_rcu);
++	kfree_rcu(ent, rcu);
+ 	ht->count--;
+ }
+ static void htable_gc(struct work_struct *work);
