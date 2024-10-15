@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A69E9D10F41
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 03:22:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3B9AD10F56
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 03:38:58 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 04bbec80;
-	Mon, 18 Nov 2024 01:38:37 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4684aef8
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9c12f5ee;
+	Mon, 18 Nov 2024 01:38:40 +0000 (UTC)
+Received: from nyc.source.kernel.org (nyc.source.kernel.org
+ [2604:1380:45d1:ec00::3])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5b20ea59
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 15 Oct 2024 13:40:28 +0000 (UTC)
+ Tue, 15 Oct 2024 18:00:37 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id E51EB5C58C6;
- Tue, 15 Oct 2024 13:40:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1D07C4CEC6;
- Tue, 15 Oct 2024 13:40:26 +0000 (UTC)
+ by nyc.source.kernel.org (Postfix) with ESMTP id 374E6A4215E;
+ Tue, 15 Oct 2024 18:00:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAE2EC4CEC7;
+ Tue, 15 Oct 2024 18:00:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1728999626;
- bh=+eg5Ogets9SiLlYwP2uE1cyuHarfu0eMJpCc1LNOyZk=;
+ s=k20201202; t=1729015235;
+ bh=Sa6sgGhK0f0PdlrPB+pJBNsb8BQKXN13Ox+Haom2HEI=;
  h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
- b=uX00nqRbj0TEG1Tz8shbGOT2WxuN/MzsJ0/O8D6fMk7nTY7nynwkrPoV5Izq1912G
- MCNxilzGTiCcfUAS5pjSXwW6q3cRG/BW6D6YbtnmlO0q+fhZtWAV8iW5Tl912r9gZP
- jE929Z//XzSjfIYVBdbbV+yN6bRsMcoaXu9P5SmP/HpGUsX8oWRvpS3y/CHIagsxmZ
- wSs02+S5+DmmcEkoZwbxu00ArbFRTvF91bDqH9pPk66sN6FjSlgd1oE0CGyqAvnLq/
- xoAmzPiMCVa7yA7fqt68pGzpMEomnxnAVW+/H1RaLmsld8vRk3GlFiM5j84R4We9bm
- NTYamxloL6Fqw==
+ b=KuGT0VK8S5iZkpWwdj4icg6/wNAAUrBPevfh4SZqoijO/LK0M//4+TxvzWdvkTnPh
+ ej10iYjREMrmMJ2Gu5Npr2RUIAnkdhPsv3wpjIS9oD4lasA8tAu3GCw1fTFYauLrpu
+ 3RuHOcS958KJIGxUYsp0ERB1QMGW0dSsPNdQ80PsrTJLr49xkilO6b+UUnJ05d1/wn
+ JClelGibXCeLsadFDN2D9J1PR77WpKnQ3JH6qPkguuPszYj5ShJSHAIV1To4/BfUf4
+ 6EO69W5HKU6Kiqfv8lDFOsDsbIiS0OIBybyVPrn0xkepuW1lWPDAUwAp49hj4XETun
+ TYtKkZ3F14U8g==
 Received: from [10.30.226.235] (localhost [IPv6:::1])
  by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id
- 33B943809A8A; Tue, 15 Oct 2024 13:40:33 +0000 (UTC)
+ 33D453809A8A; Tue, 15 Oct 2024 18:00:42 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Subject: Re: [PATCH 00/17] replace call_rcu by kfree_rcu for simple
  kmem_cache_free callback
 From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: <172899963173.1165800.13282848624565322990.git-patchwork-notify@kernel.org>
-Date: Tue, 15 Oct 2024 13:40:31 +0000
+Message-Id: <172901524099.1243233.14809044192149107515.git-patchwork-notify@kernel.org>
+Date: Tue, 15 Oct 2024 18:00:40 +0000
 References: <20241013201704.49576-1-Julia.Lawall@inria.fr>
 In-Reply-To: <20241013201704.49576-1-Julia.Lawall@inria.fr>
 To: Julia Lawall <julia.lawall@inria.fr>
@@ -69,7 +70,7 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 Hello:
 
 This series was applied to netdev/net-next.git (main)
-by Simon Wunderlich <sw@simonwunderlich.de>:
+by Jakub Kicinski <kuba@kernel.org>:
 
 On Sun, 13 Oct 2024 22:16:47 +0200 you wrote:
 > Since SLOB was removed and since
@@ -87,21 +88,21 @@ Here is the summary with links:
   - [01/17] wireguard: allowedips: replace call_rcu by kfree_rcu for simple kmem_cache_free callback
     (no matching commit)
   - [02/17] ipv4: replace call_rcu by kfree_rcu for simple kmem_cache_free callback
-    (no matching commit)
+    https://git.kernel.org/netdev/net-next/c/497e17d80759
   - [03/17] inetpeer: replace call_rcu by kfree_rcu for simple kmem_cache_free callback
-    (no matching commit)
+    https://git.kernel.org/netdev/net-next/c/bb5810d4236b
   - [04/17] ipv6: replace call_rcu by kfree_rcu for simple kmem_cache_free callback
-    (no matching commit)
+    https://git.kernel.org/netdev/net-next/c/85e48bcf294c
   - [05/17] xfrm6_tunnel: replace call_rcu by kfree_rcu for simple kmem_cache_free callback
     (no matching commit)
   - [06/17] batman-adv: replace call_rcu by kfree_rcu for simple kmem_cache_free callback
-    https://git.kernel.org/netdev/net-next/c/356c81b6c494
-  - [08/17] net: bridge: replace call_rcu by kfree_rcu for simple kmem_cache_free callback
     (no matching commit)
+  - [08/17] net: bridge: replace call_rcu by kfree_rcu for simple kmem_cache_free callback
+    https://git.kernel.org/netdev/net-next/c/4ac64e570c33
   - [10/17] can: gw: replace call_rcu by kfree_rcu for simple kmem_cache_free callback
     (no matching commit)
   - [14/17] kcm: replace call_rcu by kfree_rcu for simple kmem_cache_free callback
-    (no matching commit)
+    https://git.kernel.org/netdev/net-next/c/7bb3ecbc2b6b
   - [15/17] netfilter: nf_conncount: replace call_rcu by kfree_rcu for simple kmem_cache_free callback
     (no matching commit)
   - [16/17] netfilter: expect: replace call_rcu by kfree_rcu for simple kmem_cache_free callback
