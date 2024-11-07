@@ -4,56 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62A34D4922F
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 14:58:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79DCDD49232
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 15:15:36 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b7d3b3be;
-	Mon, 18 Nov 2024 12:45:24 +0000 (UTC)
-Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com
- [2607:f8b0:4864:20::b2e])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f74222eb
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9c311881;
+	Mon, 18 Nov 2024 12:45:25 +0000 (UTC)
+Received: from orbyte.nwl.cc (orbyte.nwl.cc [2001:41d0:e:133a::1])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2af5f875
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 10 Sep 2024 06:34:06 +0000 (UTC)
-Received: by mail-yb1-xb2e.google.com with SMTP id
- 3f1490d57ef6-e1a9dc3efc1so5896799276.2
- for <wireguard@lists.zx2c4.com>; Mon, 09 Sep 2024 23:34:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1725950045; x=1726554845; darn=lists.zx2c4.com;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=lejK35/pWLaQaNOp+LtO8VnEssDIJMb5nbshBedk3/4=;
- b=JUvB97s9APhwJhlaHdFatOHowVTmYwMM1qyzEL4nzTitdB3Y2kJVl5s0wT9UfEDGm3
- 0VLnbvkLoV3HG1n9S/4mdLlQJ2T3WOfPN9odZPIB17MlPtcq+PyuujMzz13Wyw/SkYh0
- nqvOTHgBAveH+2L7nfbO4gW+w+jXct0vps3YIoWC6vYosBCSFYW4UrmGoIVuxOEA8zmq
- sHC+dnlZTCS8AqY1ZjtBDbEY2C5I1wlbkaD/Pdt6IGf4ZVnxiIgzbUqDyVFi5GDKSN3A
- /Xadls7/CUywlu3HMQIHFidvmMQjBaWY1V0H5UEezYaVFhoH5NpQcFxAusRduf8SchCC
- PNnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1725950045; x=1726554845;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lejK35/pWLaQaNOp+LtO8VnEssDIJMb5nbshBedk3/4=;
- b=NY5jcjGlp2zYRuxVheyV+oAon2TDup0wq2VmGS7uKD/Yb7ZFUlaIbnYniS0Hb0x2Re
- f1OCTyJvSeWJsp+VzkojKgr/k+bDVyK/hn6s8VnGXfauudUruVSWQv8uY+lULECJj2UK
- MvN40Y7Ua9A4vcd7BeyYDrsCnZWjR8hpfF+wL15pm3HzeW3IuNzwY8SJxAu56N//04Cs
- hE9vo82nnF8xs3jeBPAOKGT6KNgvM1Q5ZCvtbgLYOK7/TU4a4nYFNN+gPocGUZKdvOqJ
- /CdDCrigYpJNLUHIEpNlj6MyREACn4O+/7FfVF8DJQId20FuA1euL2OP0WcZwHZrn0/h
- V79g==
-X-Gm-Message-State: AOJu0YzmeGgcUQGMG85tk4jlxqSJmDK/xprKVIu69AMhCnDqeyRiEc3G
- UWrFglg9IOjfhJKXkE5K1H+0LEJgwYt5YG2RLPzuiYNl8CEsIpSTJ4sEEkT/GeJ6SlHUfQHh/NU
- br9WQ9rlWnH1Zi2V/TRCrJTMm3rOxuGW8
-X-Google-Smtp-Source: AGHT+IF7D/RLtzC9/TwW5liR7/bpQcE6mY5BeBCHhoMhHpJhgxNObMBjsQfIWa3FzQeDAHQRK53TPL4Ftp6+6sMIH+g=
-X-Received: by 2002:a05:6902:2785:b0:e13:ec5b:f699 with SMTP id
- 3f1490d57ef6-e1d34897e90mr14634161276.31.1725950044686; Mon, 09 Sep 2024
- 23:34:04 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Thu, 7 Nov 2024 08:23:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=nwl.cc;
+ s=mail2022; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
+ Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive;
+ bh=M/3rlViT9D+L9ncSWn/0ufpEXuzN61pptP4kPOAdcPw=; b=FIcGb/bOLHOj6ThuUTFYD8+Fqa
+ Vk9oPPYaWZ87+u6pui+N/daP9ZApO6BmSkH6KhvuOZH1++/hMzbVkLi7PM1J4vxOWXTwIEqPyMj8q
+ yJ9LDjIywQ9xEv+PN1cjIcuvwC4c8+Gp717OUrE/hbrNrS0HNgNwM7GNh5TJMpgjG6HAEKxuSOtgW
+ LnOa476D9WYCETQAV19j3Jtwc4UAh3GKIg9t+B2YlFyMpGTvwd+P8DV0qelR59o3S9LRDrsGr0xc1
+ FgOpQsBIbPU9iiXWLBtNjUI+XhLS6qxrrkKL9Avkz3ATLRV2ZyNzMq0v0nUwgMXGUui98qznHnlRJ
+ E3V08nCQ==;
+Received: from n0-1 by orbyte.nwl.cc with local (Exim 4.97.1)
+ (envelope-from <phil@nwl.cc>) id 1t8xnE-000000003Lz-2FDx;
+ Thu, 07 Nov 2024 09:23:04 +0100
+Date: Thu, 7 Nov 2024 09:23:04 +0100
+From: Phil Sutter <phil@nwl.cc>
+To: Hangbin Liu <liuhangbin@gmail.com>
+Cc: netdev@vger.kernel.org, "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ Shuah Khan <shuah@kernel.org>, "David S. Miller" <davem@davemloft.net>,
+ Florian Westphal <fw@strlen.de>, wireguard@lists.zx2c4.com,
+ linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net-next] selftests: wireguards: use nft by default
+Message-ID: <Zyx46O0qLtXAs80X@orbyte.nwl.cc>
+Mail-Followup-To: Phil Sutter <phil@nwl.cc>,
+ Hangbin Liu <liuhangbin@gmail.com>, netdev@vger.kernel.org,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ Shuah Khan <shuah@kernel.org>,
+ "David S. Miller" <davem@davemloft.net>,
+ Florian Westphal <fw@strlen.de>, wireguard@lists.zx2c4.com,
+ linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20241107025438.3766-1-liuhangbin@gmail.com>
 MIME-Version: 1.0
-From: Mirco Barone <mirco.barone.3@gmail.com>
-Date: Tue, 10 Sep 2024 08:33:54 +0200
-Message-ID: <CANRMffDRX+i7N0JpH=fJBJ=BJ4vNsk6QbbfUkqguT0F3FFO22A@mail.gmail.com>
-Subject: [PATCH] Enabling Threaded NAPI by Default
-To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241107025438.3766-1-liuhangbin@gmail.com>
 X-Mailman-Approved-At: Mon, 18 Nov 2024 12:44:56 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -69,65 +64,74 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi everyone,
+Hi Liu Hangbin,
 
+On Thu, Nov 07, 2024 at 02:54:38AM +0000, Hangbin Liu wrote:
+> Use nft by default if it's supported, as nft is the replacement for iptables,
+> which is used by default in some releases. Additionally, iptables is dropped
+> in some releases.
+> 
+> Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+> ---
+> CC nft developers to see if there are any easier configurations,
+> as I'm not very familiar with nft commands.
 
-While testing Wireguard with a large number of tunnels, we noticed a
-bottleneck caused by the superimposition of multiple NAPI functions on
-the same CPU core, hence preventing the system to scale effectively.
-More details are described in this paper on page 3:
-https://netdevconf.info/0x18/docs/netdev-0x18-paper23-talk-paper.pdf
+Basically looks good, just a few minor remarks:
 
+> ---
+>  tools/testing/selftests/wireguard/netns.sh | 63 ++++++++++++++++++----
+>  1 file changed, 53 insertions(+), 10 deletions(-)
+> 
+> diff --git a/tools/testing/selftests/wireguard/netns.sh b/tools/testing/selftests/wireguard/netns.sh
+> index 405ff262ca93..4e29c1a7003c 100755
+> --- a/tools/testing/selftests/wireguard/netns.sh
+> +++ b/tools/testing/selftests/wireguard/netns.sh
+> @@ -44,6 +44,7 @@ sleep() { read -t "$1" -N 1 || true; }
+>  waitiperf() { pretty "${1//*-}" "wait for iperf:${3:-5201} pid $2"; while [[ $(ss -N "$1" -tlpH "sport = ${3:-5201}") != *\"iperf3\",pid=$2,fd=* ]]; do sleep 0.1; done; }
+>  waitncatudp() { pretty "${1//*-}" "wait for udp:1111 pid $2"; while [[ $(ss -N "$1" -ulpH 'sport = 1111') != *\"ncat\",pid=$2,fd=* ]]; do sleep 0.1; done; }
+>  waitiface() { pretty "${1//*-}" "wait for $2 to come up"; ip netns exec "$1" bash -c "while [[ \$(< \"/sys/class/net/$2/operstate\") != up ]]; do read -t .1 -N 0 || true; done;"; }
+> +use_nft() { nft --version &> /dev/null; }
+>  
+>  cleanup() {
+>  	set +e
+> @@ -196,13 +197,23 @@ ip1 link set wg0 mtu 1300
+>  ip2 link set wg0 mtu 1300
+>  n1 wg set wg0 peer "$pub2" endpoint 127.0.0.1:2
+>  n2 wg set wg0 peer "$pub1" endpoint 127.0.0.1:1
+> -n0 iptables -A INPUT -m length --length 1360 -j DROP
+> +if use_nft; then
+> +	n0 nft add table inet filter
 
-Since each peer has its own NAPI struct, the problem can potentially
-occur when many peers are created on the same machine. The simple
-solution we found is to enable threaded NAPI, which improves
-considerably the throughput in our testing conditions while, at the
-same time, showing no drawbacks in case of traditional deployment
-scenarios (i.e., single tunnel). Hence, we feel we could slightly
-modify the code and move to threaded NAPI as the new default.
+Using inet family captures IPv6 traffic, too. You don't seem to
+explicitly configure it, but the usual auto-config traffic may offset
+rule counters. If you care about such side-effects, you may want to use
+ip family instead.
 
+Tables are family-specific, but generic otherwise. So you could add a
+table for testing in each netns up front:
 
-Any comment?
+| if use_nft; then
+| 	n0 nft add table ip wgtest
+| 	n1 nft add table ip wgtest
+| 	n2 nft add table ip wgtest
+| fi
 
-The option to revert to NAPI handled by a softirq is still preserved,
-by simply changing the `/sys/class/net/<iface>/threaded` flag.
+> +	n0 nft add chain inet filter INPUT { type filter hook input priority filter \; policy accept \; }
+> +	n0 nft add rule inet filter INPUT meta length 1360 counter drop
+> +else
+> +	n0 iptables -A INPUT -m length --length 1360 -j DROP
+> +fi
+>  n1 ip route add 192.168.241.2/32 dev wg0 mtu 1299
+>  n2 ip route add 192.168.241.1/32 dev wg0 mtu 1299
+>  n2 ping -c 1 -W 1 -s 1269 192.168.241.1
+>  n2 ip route delete 192.168.241.1/32 dev wg0 mtu 1299
+>  n1 ip route delete 192.168.241.2/32 dev wg0 mtu 1299
+> -n0 iptables -F INPUT
+> +if use_nft; then
+> +	n0 nft delete table inet filter
 
-diff --git a/drivers/net/wireguard/device.c b/drivers/net/wireguard/device.c
+Here just flush the table (drops only the rules):
 
-old mode 100644
+| n0 nft flush table ip wgtest
 
-new mode 100755
-
-index 3feb36ee5bfb..60554b7c405a
-
---- a/drivers/net/wireguard/device.c
-
-+++ b/drivers/net/wireguard/device.c
-
-@@ -363,6 +363,8 @@ static int wg_newlink(struct net *src_net, struct
-net_device *dev,
-
-        ret = wg_ratelimiter_init();
-
-        if (ret < 0)
-
-                goto err_free_handshake_queue;
-
-+
-
-+       dev_set_threaded(dev,true);
-
-
-        ret = register_netdevice(dev);
-
-        if (ret < 0)
-
-
-
-Kind regards
-
-<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>
-Privo di virus.www.avast.com
-<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>
-<#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2>
+Cheers, Phil
