@@ -4,51 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79DCDD49232
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 15:15:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B6D6D49233
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 15:15:37 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9c311881;
-	Mon, 18 Nov 2024 12:45:25 +0000 (UTC)
-Received: from orbyte.nwl.cc (orbyte.nwl.cc [2001:41d0:e:133a::1])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2af5f875
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b03c43f8;
+	Mon, 18 Nov 2024 12:45:26 +0000 (UTC)
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com
+ [2607:f8b0:4864:20::1033])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id cf8e66d3
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 7 Nov 2024 08:23:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=nwl.cc;
- s=mail2022; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
- Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive;
- bh=M/3rlViT9D+L9ncSWn/0ufpEXuzN61pptP4kPOAdcPw=; b=FIcGb/bOLHOj6ThuUTFYD8+Fqa
- Vk9oPPYaWZ87+u6pui+N/daP9ZApO6BmSkH6KhvuOZH1++/hMzbVkLi7PM1J4vxOWXTwIEqPyMj8q
- yJ9LDjIywQ9xEv+PN1cjIcuvwC4c8+Gp717OUrE/hbrNrS0HNgNwM7GNh5TJMpgjG6HAEKxuSOtgW
- LnOa476D9WYCETQAV19j3Jtwc4UAh3GKIg9t+B2YlFyMpGTvwd+P8DV0qelR59o3S9LRDrsGr0xc1
- FgOpQsBIbPU9iiXWLBtNjUI+XhLS6qxrrkKL9Avkz3ATLRV2ZyNzMq0v0nUwgMXGUui98qznHnlRJ
- E3V08nCQ==;
-Received: from n0-1 by orbyte.nwl.cc with local (Exim 4.97.1)
- (envelope-from <phil@nwl.cc>) id 1t8xnE-000000003Lz-2FDx;
- Thu, 07 Nov 2024 09:23:04 +0100
-Date: Thu, 7 Nov 2024 09:23:04 +0100
-From: Phil Sutter <phil@nwl.cc>
-To: Hangbin Liu <liuhangbin@gmail.com>
-Cc: netdev@vger.kernel.org, "Jason A. Donenfeld" <Jason@zx2c4.com>,
- Shuah Khan <shuah@kernel.org>, "David S. Miller" <davem@davemloft.net>,
- Florian Westphal <fw@strlen.de>, wireguard@lists.zx2c4.com,
- linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next] selftests: wireguards: use nft by default
-Message-ID: <Zyx46O0qLtXAs80X@orbyte.nwl.cc>
-Mail-Followup-To: Phil Sutter <phil@nwl.cc>,
- Hangbin Liu <liuhangbin@gmail.com>, netdev@vger.kernel.org,
- "Jason A. Donenfeld" <Jason@zx2c4.com>,
- Shuah Khan <shuah@kernel.org>,
- "David S. Miller" <davem@davemloft.net>,
- Florian Westphal <fw@strlen.de>, wireguard@lists.zx2c4.com,
- linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20241107025438.3766-1-liuhangbin@gmail.com>
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 13 Nov 2024 12:57:38 +0000 (UTC)
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-2e2bb1efe78so524842a91.1
+ for <wireguard@lists.zx2c4.com>; Wed, 13 Nov 2024 04:57:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1731502656; x=1732107456; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=16RIG7XtmkaIMsGLfFdWcl8EYTUAA5lDQMgC+uoAVXA=;
+ b=KYYhxfzOm7m1RMFe8GY/6TVB7nmTGilw47RErwApyzulJS+rSkj1i5Fu3sO33aJKiY
+ ZWlBDLUCufezIkfIkG9CY1/ggCJ6ro73Ye00WPUYnHdjECVaSm+7lxuix7QkCb26w5+b
+ asPqYR+/Z5g+VrUs4mLARti4BRyhT+WBPFhJB+iE3C3Bt2mtz4EJR+wgrmqeGdwQ6JFJ
+ USUuOqyV1pq9llKRoO72zaJRR+9Os4Nl1Pdkza2U9To/bHjk+0i/WzGREZwFlU3d3VGQ
+ qUVUQ8llyDBjG8FfHK9pd/BJGEyQZhC5mGXdGgLfvONAcuWEz/njIp8dOsQP1uzzuB9E
+ OuYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1731502656; x=1732107456;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=16RIG7XtmkaIMsGLfFdWcl8EYTUAA5lDQMgC+uoAVXA=;
+ b=r0LM9J1pesxszOc4xNENI8eoZOmNw6vV1feyT0TLx/ZvqcQLH9WmaPDfcVIDPtWl8l
+ aDy9xVicjP9X1yuoQ4nZbh/J18NWBqjCnRjxaAC0KSEASefEp4mbPfZwu/OtZ4SiE6ky
+ lCjL0rKgy2OBDn9SYdXeIDuPyOXvUoVtJoPlrqVsFED3/EBuYKu2heaeHqtQz2wOLyuv
+ Vd3OPPQVzpCpCaKTzvSsajZVu9INycQyHz/WqKmcyubxSBJLOFf3gGpLzDvaN4rZv7gw
+ ublPkyfvzIITqhnXHlKAaYEwLfqLcxl2G3dEHgh1Z40nxNSVEPF6QJOrdnfXNyV4/ku4
+ EaWA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXlREF9Jw9vl4pQIPF+b5rxUw/seaszxePPB9v9kBXKDctDvgB6jTm5TsR7bKzQMD/VOQHS2Qqn/Tk=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0Yw2UPKE68E7iFmxxsMio67yFh70uyE5E4mlUu8gBPysRi7jRkb3
+ L9FEshZxIlNVc0n2f8udA6zRh8OHGKQjEcdZjQnYnJYfNFxF5tFP
+X-Google-Smtp-Source: AGHT+IG1llNssb9d3itpdlPx9GEqMX+Zp38UcErZg9PjxNGttUHCL6O3wsgZQ/zCnjJA57EpkRZP1g==
+X-Received: by 2002:a17:90b:2789:b0:2e2:bb32:73e7 with SMTP id
+ 98e67ed59e1d1-2e9b1f844damr30704968a91.15.1731502656393; 
+ Wed, 13 Nov 2024 04:57:36 -0800 (PST)
+Received: from nova-ws.. ([103.167.140.11]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2e9f3f8ed0esm1398632a91.40.2024.11.13.04.57.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 13 Nov 2024 04:57:35 -0800 (PST)
+From: Xiao Liang <shaw.leon@gmail.com>
+To: netdev@vger.kernel.org, linux-kselftest@vger.kernel.org,
+ Kuniyuki Iwashima <kuniyu@amazon.com>, Jakub Kicinski <kuba@kernel.org>,
+ Donald Hunter <donald.hunter@gmail.com>
+Cc: "David S. Miller" <davem@davemloft.net>, David Ahern <dsahern@kernel.org>,
+ Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+ Ido Schimmel <idosch@nvidia.com>, Andrew Lunn <andrew+netdev@lunn.ch>,
+ Simon Horman <horms@kernel.org>, Shuah Khan <shuah@kernel.org>,
+ Jiri Pirko <jiri@resnulli.us>, Hangbin Liu <liuhangbin@gmail.com>,
+ linux-rdma@vger.kernel.org, linux-can@vger.kernel.org,
+ osmocom-net-gprs@lists.osmocom.org, bpf@vger.kernel.org,
+ linux-ppp@vger.kernel.org, wireguard@lists.zx2c4.com,
+ linux-wireless@vger.kernel.org, b.a.t.m.a.n@lists.open-mesh.org,
+ bridge@lists.linux.dev, linux-wpan@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: [PATCH net-next v3 0/6] net: Improve netns handling in RTNL and
+ ip_tunnel
+Date: Wed, 13 Nov 2024 20:57:09 +0800
+Message-ID: <20241113125715.150201-1-shaw.leon@gmail.com>
+X-Mailer: git-send-email 2.47.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241107025438.3766-1-liuhangbin@gmail.com>
+Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Mon, 18 Nov 2024 12:44:56 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -64,74 +90,105 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Liu Hangbin,
+This patch series includes some netns-related improvements and fixes for
+RTNL and ip_tunnel, to make link creation more intuitive:
 
-On Thu, Nov 07, 2024 at 02:54:38AM +0000, Hangbin Liu wrote:
-> Use nft by default if it's supported, as nft is the replacement for iptables,
-> which is used by default in some releases. Additionally, iptables is dropped
-> in some releases.
-> 
-> Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-> ---
-> CC nft developers to see if there are any easier configurations,
-> as I'm not very familiar with nft commands.
+ - Creating link in another net namespace doesn't conflict with link names
+   in current one.
+ - Refector rtnetlink link creation. Create link in target namespace
+   directly. Pass both source and link netns to drivers via newlink()
+   callback.
 
-Basically looks good, just a few minor remarks:
+So that
 
-> ---
->  tools/testing/selftests/wireguard/netns.sh | 63 ++++++++++++++++++----
->  1 file changed, 53 insertions(+), 10 deletions(-)
-> 
-> diff --git a/tools/testing/selftests/wireguard/netns.sh b/tools/testing/selftests/wireguard/netns.sh
-> index 405ff262ca93..4e29c1a7003c 100755
-> --- a/tools/testing/selftests/wireguard/netns.sh
-> +++ b/tools/testing/selftests/wireguard/netns.sh
-> @@ -44,6 +44,7 @@ sleep() { read -t "$1" -N 1 || true; }
->  waitiperf() { pretty "${1//*-}" "wait for iperf:${3:-5201} pid $2"; while [[ $(ss -N "$1" -tlpH "sport = ${3:-5201}") != *\"iperf3\",pid=$2,fd=* ]]; do sleep 0.1; done; }
->  waitncatudp() { pretty "${1//*-}" "wait for udp:1111 pid $2"; while [[ $(ss -N "$1" -ulpH 'sport = 1111') != *\"ncat\",pid=$2,fd=* ]]; do sleep 0.1; done; }
->  waitiface() { pretty "${1//*-}" "wait for $2 to come up"; ip netns exec "$1" bash -c "while [[ \$(< \"/sys/class/net/$2/operstate\") != up ]]; do read -t .1 -N 0 || true; done;"; }
-> +use_nft() { nft --version &> /dev/null; }
->  
->  cleanup() {
->  	set +e
-> @@ -196,13 +197,23 @@ ip1 link set wg0 mtu 1300
->  ip2 link set wg0 mtu 1300
->  n1 wg set wg0 peer "$pub2" endpoint 127.0.0.1:2
->  n2 wg set wg0 peer "$pub1" endpoint 127.0.0.1:1
-> -n0 iptables -A INPUT -m length --length 1360 -j DROP
-> +if use_nft; then
-> +	n0 nft add table inet filter
+  # ip link add netns ns1 link-netns ns2 tun0 type gre ...
 
-Using inet family captures IPv6 traffic, too. You don't seem to
-explicitly configure it, but the usual auto-config traffic may offset
-rule counters. If you care about such side-effects, you may want to use
-ip family instead.
+will create tun0 in ns1, rather than create it in ns2 and move to ns1.
+And don't conflict with another interface named "tun0" in current netns.
 
-Tables are family-specific, but generic otherwise. So you could add a
-table for testing in each netns up front:
+Patch 1 from Donald is included just as a dependency.
 
-| if use_nft; then
-| 	n0 nft add table ip wgtest
-| 	n1 nft add table ip wgtest
-| 	n2 nft add table ip wgtest
-| fi
+---
 
-> +	n0 nft add chain inet filter INPUT { type filter hook input priority filter \; policy accept \; }
-> +	n0 nft add rule inet filter INPUT meta length 1360 counter drop
-> +else
-> +	n0 iptables -A INPUT -m length --length 1360 -j DROP
-> +fi
->  n1 ip route add 192.168.241.2/32 dev wg0 mtu 1299
->  n2 ip route add 192.168.241.1/32 dev wg0 mtu 1299
->  n2 ping -c 1 -W 1 -s 1269 192.168.241.1
->  n2 ip route delete 192.168.241.1/32 dev wg0 mtu 1299
->  n1 ip route delete 192.168.241.2/32 dev wg0 mtu 1299
-> -n0 iptables -F INPUT
-> +if use_nft; then
-> +	n0 nft delete table inet filter
+v3:
+ - Drop "netns_atomic" flag and module parameter. Add netns parameter to
+   newlink() instead, and convert drivers accordingly.
+ - Move python NetNSEnter helper to net selftest lib.
 
-Here just flush the table (drops only the rules):
+v2:
+ link: https://lore.kernel.org/all/20241107133004.7469-1-shaw.leon@gmail.com/
+ - Check NLM_F_EXCL to ensure only link creation is affected.
+ - Add self tests for link name/ifindex conflict and notifications
+   in different netns.
+ - Changes in dummy driver and ynl in order to add the test case.
 
-| n0 nft flush table ip wgtest
+v1:
+ link: https://lore.kernel.org/all/20241023023146.372653-1-shaw.leon@gmail.com/
 
-Cheers, Phil
+
+Donald Hunter (1):
+  Revert "tools/net/ynl: improve async notification handling"
+
+Xiao Liang (5):
+  net: ip_tunnel: Build flow in underlay net namespace
+  rtnetlink: Lookup device in target netns when creating link
+  rtnetlink: Decouple net namespaces in rtnl_newlink_create()
+  selftests: net: Add python context manager for netns entering
+  selftests: net: Add two test cases for link netns
+
+ drivers/infiniband/ulp/ipoib/ipoib_netlink.c  |  6 ++-
+ drivers/net/amt.c                             |  6 +--
+ drivers/net/bareudp.c                         |  4 +-
+ drivers/net/bonding/bond_netlink.c            |  3 +-
+ drivers/net/can/dev/netlink.c                 |  2 +-
+ drivers/net/can/vxcan.c                       |  4 +-
+ .../ethernet/qualcomm/rmnet/rmnet_config.c    |  5 +-
+ drivers/net/geneve.c                          |  4 +-
+ drivers/net/gtp.c                             |  4 +-
+ drivers/net/ipvlan/ipvlan.h                   |  2 +-
+ drivers/net/ipvlan/ipvlan_main.c              |  5 +-
+ drivers/net/ipvlan/ipvtap.c                   |  4 +-
+ drivers/net/macsec.c                          |  5 +-
+ drivers/net/macvlan.c                         |  5 +-
+ drivers/net/macvtap.c                         |  5 +-
+ drivers/net/netkit.c                          |  4 +-
+ drivers/net/pfcp.c                            |  4 +-
+ drivers/net/ppp/ppp_generic.c                 |  4 +-
+ drivers/net/team/team_core.c                  |  2 +-
+ drivers/net/veth.c                            |  4 +-
+ drivers/net/vrf.c                             |  2 +-
+ drivers/net/vxlan/vxlan_core.c                |  4 +-
+ drivers/net/wireguard/device.c                |  4 +-
+ drivers/net/wireless/virtual/virt_wifi.c      |  5 +-
+ drivers/net/wwan/wwan_core.c                  |  6 ++-
+ include/net/ip_tunnels.h                      |  5 +-
+ include/net/rtnetlink.h                       | 22 ++++++++-
+ net/8021q/vlan_netlink.c                      |  5 +-
+ net/batman-adv/soft-interface.c               |  5 +-
+ net/bridge/br_netlink.c                       |  2 +-
+ net/caif/chnl_net.c                           |  2 +-
+ net/core/rtnetlink.c                          | 25 ++++++----
+ net/hsr/hsr_netlink.c                         |  8 +--
+ net/ieee802154/6lowpan/core.c                 |  5 +-
+ net/ipv4/ip_gre.c                             | 13 +++--
+ net/ipv4/ip_tunnel.c                          | 16 +++---
+ net/ipv4/ip_vti.c                             |  5 +-
+ net/ipv4/ipip.c                               |  5 +-
+ net/ipv6/ip6_gre.c                            | 17 ++++---
+ net/ipv6/ip6_tunnel.c                         | 11 ++---
+ net/ipv6/ip6_vti.c                            | 11 ++---
+ net/ipv6/sit.c                                | 11 ++---
+ net/xfrm/xfrm_interface_core.c                | 13 +++--
+ tools/net/ynl/cli.py                          | 10 ++--
+ tools/net/ynl/lib/ynl.py                      | 49 ++++++++-----------
+ tools/testing/selftests/net/Makefile          |  1 +
+ .../testing/selftests/net/lib/py/__init__.py  |  2 +-
+ tools/testing/selftests/net/lib/py/netns.py   | 18 +++++++
+ tools/testing/selftests/net/netns-name.sh     | 10 ++++
+ tools/testing/selftests/net/netns_atomic.py   | 38 ++++++++++++++
+ 50 files changed, 255 insertions(+), 157 deletions(-)
+ create mode 100755 tools/testing/selftests/net/netns_atomic.py
+
+-- 
+2.47.0
+
