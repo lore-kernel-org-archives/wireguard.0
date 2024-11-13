@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A161D49237
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 15:42:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70E02D4923D
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 15:43:01 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0ed54b3e;
-	Mon, 18 Nov 2024 12:45:31 +0000 (UTC)
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com
- [2607:f8b0:4864:20::1034])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 90a5e3f4
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e15309b5;
+	Mon, 18 Nov 2024 12:45:33 +0000 (UTC)
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com
+ [2607:f8b0:4864:20::102a])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id df6b3782
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 13 Nov 2024 12:58:03 +0000 (UTC)
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-2e2d1858cdfso5277979a91.1
- for <wireguard@lists.zx2c4.com>; Wed, 13 Nov 2024 04:58:02 -0800 (PST)
+ Wed, 13 Nov 2024 12:58:20 +0000 (UTC)
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-2e30db524c2so5448983a91.1
+ for <wireguard@lists.zx2c4.com>; Wed, 13 Nov 2024 04:58:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731502681; x=1732107481; darn=lists.zx2c4.com;
+ d=gmail.com; s=20230601; t=1731502699; x=1732107499; darn=lists.zx2c4.com;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=r30qTLZF8ANhBKyxqq0VyimbMaQgwK/VTM3BE1AEUlA=;
- b=RUd11Vj89hzXCHhmL+BAjO7Xo1XgJvLsphCysc9e76tGx2yGpmkChNuG8hSbKVELOC
- 59GY2l6hvav6/TSgTUsnN8cIYJyEPxalRPsH8rMpWv8LSjSAE2zpQ5oaMLMwokvtzlAu
- xq5AtVRV3XQKmDIKwvp9YewMbdYFq2kdRnuF4d1R1Hj9WA/VmIAlpIhczLIYfXQ0xogp
- IcF2iJcqO8dFb+L7zXvtkcMfkAxhmCJ5D66HE+jiEarjQKOO3k+1xbEdHr4Gz6vHIWbW
- j/+sZoisddJe7DUYrkVWNyAb3n5uOEaOUA8C5hoJmTe5d9U6E/cNLpbITWZh5jnEPgdj
- TFDw==
+ bh=dFTsOSdSHxPXXC/kmCtPA19UOd1z5UErpUP4tQUDFm4=;
+ b=bT41UoNyyNdV7qGiMxlIsLBzmOGhrBmLtwOHybID3NDTRZtqnPkUs/clzQekS96INu
+ jiYW7E8+AoQwCyukTAjeYpiQre6x/HhGykKJddcrasazAwbNt2i5yMr4oWrZuqdpXlJS
+ 4Vekhh0JbOGIeo61AQEQtzIrTGk5n9fAWHGJHthtSNfWBpq5QF1UyZ0FzmpiSdXjbXpd
+ CX4cJxqdLfVqODp5mBEpdoeT3NuX44wVdinUYmapFx2oVDmz+Ymi+qT0SZdOvaIboTOE
+ z7dvO4/GXnagrwe/hv5VMKP0iWYTUFnyP7GY33XUdrHE1VUCa74Y8xZTGsTSkdiTStyN
+ EnEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731502681; x=1732107481;
+ d=1e100.net; s=20230601; t=1731502699; x=1732107499;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=r30qTLZF8ANhBKyxqq0VyimbMaQgwK/VTM3BE1AEUlA=;
- b=T5aqRaGHX4XfOXvnImV/ULIvSiBdRbNjSN9Uu0Te2eY19pCW5Kk+654IDJ/thdkr1v
- 6D/BDBnFDB4OLenBZB6V0BxwTXiF8b+j2c6PDbNVVJ0ErheHn1/pBGCSmf//it91BYuC
- lwozNnEugpSTd1grNFRleIib755NdRMwcEufbxghd8pQ4u42/1NdicnlHELxvumeYnF8
- 86kCFAuLHosgsqcUWgrZyKHIxnHYJozS6CFTydDbSsqPdx0VNqH1EfAhrKR1VkhQc5/N
- egzAfdYiZ5lKsrF4z4PA7u+6mtPtynMYdeKWZLeqy9S+vEB2CAkjAwBecKXJKz9FhnpG
- Xwzg==
+ bh=dFTsOSdSHxPXXC/kmCtPA19UOd1z5UErpUP4tQUDFm4=;
+ b=JL7sI0hHvmdpGhH0Bq5v/uhj6q5oGL8MbuELy0Gs1r8gAa74QccC+0fYTPCc/A3+aZ
+ NMrVXAr9YShqSytPJY0YpP/xw60v23coOeB8Q6tys/FnAmom7/19hR9ArVhFs/yJTFmd
+ zSdRRC+TNKutxHdpvbeDZ4qE/dtm7eB2QaFcIc07WtZFG9SdgXcB7Hz60kZVOvOflDWN
+ E3BIBnUxOEoExNsyzNe2oJdvME+4gs10mMZddQQhCQrJ67D6ub7YqBXstkPOTQCeRFLc
+ dIhFV/jN2EvS+nbf1S8K6Vop6MQI+iDzA/0GyFzIlFqO+2I+AfA8yH9fNO3AaQ1rHiVf
+ htEg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWbEF1AxR9d+P1U0tEf7TaknECFnqewgVj1hYKpVz1XRn3aZIhmN4AvpOjJCdCG092O9h/qoWr6pxk=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YyFzdpTZxGJGUeAePBM0ID9UiQhPPAQ8MLJjWjWM576t6963Plg
- 8/3pQ7jusLBxt2IESTcbFag68GIXNC7hnSocxR2CKkPXZux8Eq/Y
-X-Google-Smtp-Source: AGHT+IGHbWu6TztKh6tN8Sp6Cv2pF+0T1uVgEKu2tiVbycxbLB+U4mJhCEtmHq5ke3dUIYABcOdsZA==
-X-Received: by 2002:a17:90b:3907:b0:2c9:df1c:4a58 with SMTP id
- 98e67ed59e1d1-2e9b177fdcdmr24476632a91.23.1731502681391; 
- Wed, 13 Nov 2024 04:58:01 -0800 (PST)
+ AJvYcCW9w228tQR/0jIQGi4ht8sA2LSXmywzOAZ/rSDk6H3kLDLlQFcLOaEAN66ls8Y5qctM695v/BMvZAA=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YzI4wbA+83CQb9dWD6AqBXaBebF4uAPKZoK/yGJKBvvkmUkZjJr
+ zEqyHgC24G0DQ8oiNZrJM2yZdRywoabqcAJL5RbBJ0KnQyBfHtBh
+X-Google-Smtp-Source: AGHT+IG3aP3jfG+H+mqTGfWaQF6eC/hcm8KAxQSToRubUMwTZod3v43r/5qYZbnllxo9jc+4RsAB2Q==
+X-Received: by 2002:a17:90b:1810:b0:2e2:cd5e:7eef with SMTP id
+ 98e67ed59e1d1-2e9b1773411mr26583707a91.27.1731502698852; 
+ Wed, 13 Nov 2024 04:58:18 -0800 (PST)
 Received: from nova-ws.. ([103.167.140.11]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e9f3f8ed0esm1398632a91.40.2024.11.13.04.57.53
+ 98e67ed59e1d1-2e9f3f8ed0esm1398632a91.40.2024.11.13.04.58.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 Nov 2024 04:58:00 -0800 (PST)
+ Wed, 13 Nov 2024 04:58:18 -0800 (PST)
 From: Xiao Liang <shaw.leon@gmail.com>
 To: netdev@vger.kernel.org, linux-kselftest@vger.kernel.org,
  Kuniyuki Iwashima <kuniyu@amazon.com>, Jakub Kicinski <kuba@kernel.org>,
@@ -69,10 +69,10 @@ Cc: "David S. Miller" <davem@davemloft.net>, David Ahern <dsahern@kernel.org>,
  linux-wireless@vger.kernel.org, b.a.t.m.a.n@lists.open-mesh.org,
  bridge@lists.linux.dev, linux-wpan@vger.kernel.org,
  linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v3 3/6] rtnetlink: Lookup device in target netns when
- creating link
-Date: Wed, 13 Nov 2024 20:57:12 +0800
-Message-ID: <20241113125715.150201-4-shaw.leon@gmail.com>
+Subject: [PATCH net-next v3 5/6] selftests: net: Add python context manager
+ for netns entering
+Date: Wed, 13 Nov 2024 20:57:14 +0800
+Message-ID: <20241113125715.150201-6-shaw.leon@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241113125715.150201-1-shaw.leon@gmail.com>
 References: <20241113125715.150201-1-shaw.leon@gmail.com>
@@ -93,53 +93,69 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-When creating link, lookup for existing device in target net namespace
-instead of current one.
-For example, two links created by:
+Change netns of current thread and switch back on context exit.
+For example:
 
-  # ip link add dummy1 type dummy
-  # ip link add netns ns1 dummy1 type dummy
+    with NetNSEnter("ns1"):
+        ip("link add dummy0 type dummy")
 
-should have no conflict since they are in different namespaces.
+The command be executed in netns "ns1".
 
 Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
 ---
- net/core/rtnetlink.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ tools/testing/selftests/net/lib/py/__init__.py |  2 +-
+ tools/testing/selftests/net/lib/py/netns.py    | 18 ++++++++++++++++++
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index 327fa4957929..f573ace60234 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -3846,20 +3846,26 @@ static int __rtnl_newlink(struct sk_buff *skb, struct nlmsghdr *nlh,
- {
- 	struct nlattr ** const tb = tbs->tb;
- 	struct net *net = sock_net(skb->sk);
-+	struct net *device_net;
- 	struct net_device *dev;
- 	struct ifinfomsg *ifm;
- 	bool link_specified;
+diff --git a/tools/testing/selftests/net/lib/py/__init__.py b/tools/testing/selftests/net/lib/py/__init__.py
+index 54d8f5eba810..e2d6c7b63019 100644
+--- a/tools/testing/selftests/net/lib/py/__init__.py
++++ b/tools/testing/selftests/net/lib/py/__init__.py
+@@ -2,7 +2,7 @@
  
-+	/* When creating, lookup for existing device in target net namespace */
-+	device_net = (nlh->nlmsg_flags & NLM_F_CREATE) &&
-+		     (nlh->nlmsg_flags & NLM_F_EXCL) ?
-+		     tgt_net : net;
+ from .consts import KSRC
+ from .ksft import *
+-from .netns import NetNS
++from .netns import NetNS, NetNSEnter
+ from .nsim import *
+ from .utils import *
+ from .ynl import NlError, YnlFamily, EthtoolFamily, NetdevFamily, RtnlFamily
+diff --git a/tools/testing/selftests/net/lib/py/netns.py b/tools/testing/selftests/net/lib/py/netns.py
+index ecff85f9074f..8e9317044eef 100644
+--- a/tools/testing/selftests/net/lib/py/netns.py
++++ b/tools/testing/selftests/net/lib/py/netns.py
+@@ -1,9 +1,12 @@
+ # SPDX-License-Identifier: GPL-2.0
+ 
+ from .utils import ip
++import ctypes
+ import random
+ import string
+ 
++libc = ctypes.cdll.LoadLibrary('libc.so.6')
 +
- 	ifm = nlmsg_data(nlh);
- 	if (ifm->ifi_index > 0) {
- 		link_specified = true;
--		dev = __dev_get_by_index(net, ifm->ifi_index);
-+		dev = __dev_get_by_index(device_net, ifm->ifi_index);
- 	} else if (ifm->ifi_index < 0) {
- 		NL_SET_ERR_MSG(extack, "ifindex can't be negative");
- 		return -EINVAL;
- 	} else if (tb[IFLA_IFNAME] || tb[IFLA_ALT_IFNAME]) {
- 		link_specified = true;
--		dev = rtnl_dev_get(net, tb);
-+		dev = rtnl_dev_get(device_net, tb);
- 	} else {
- 		link_specified = false;
- 		dev = NULL;
+ 
+ class NetNS:
+     def __init__(self, name=None):
+@@ -29,3 +32,18 @@ class NetNS:
+ 
+     def __repr__(self):
+         return f"NetNS({self.name})"
++
++
++class NetNSEnter:
++    def __init__(self, ns_name):
++        self.ns_path = f"/run/netns/{ns_name}"
++
++    def __enter__(self):
++        self.saved = open("/proc/thread-self/ns/net")
++        with open(self.ns_path) as ns_file:
++            libc.setns(ns_file.fileno(), 0)
++        return self
++
++    def __exit__(self, exc_type, exc_value, traceback):
++        libc.setns(self.saved.fileno(), 0)
++        self.saved.close()
 -- 
 2.47.0
 
