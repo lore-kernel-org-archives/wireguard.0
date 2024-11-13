@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D738D49231
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 15:15:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE4C1D49233
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 15:19:00 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8eb281da;
-	Mon, 18 Nov 2024 12:45:28 +0000 (UTC)
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com
- [2607:f8b0:4864:20::1034])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 06412c7a
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 26c50ed6;
+	Mon, 18 Nov 2024 12:45:29 +0000 (UTC)
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com
+ [2607:f8b0:4864:20::1033])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id cc6c0e77
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 13 Nov 2024 12:57:46 +0000 (UTC)
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-2e9e377aeadso1739717a91.1
- for <wireguard@lists.zx2c4.com>; Wed, 13 Nov 2024 04:57:46 -0800 (PST)
+ Wed, 13 Nov 2024 12:57:54 +0000 (UTC)
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-2e5a0177531so5402939a91.2
+ for <wireguard@lists.zx2c4.com>; Wed, 13 Nov 2024 04:57:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731502665; x=1732107465; darn=lists.zx2c4.com;
+ d=gmail.com; s=20230601; t=1731502673; x=1732107473; darn=lists.zx2c4.com;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9sIZI/WV8nhbNfyJEUDND2yz+m6sbgKmtk/cQXv5cxc=;
- b=YMwvyCrdxfDL6KGKVc5RaMuEUpJuzZwICHBUxJttqQNBac1LNEw6TcP+4YmPR1JKjg
- J2cswryR4mgq4rUh7lHNwI2xYmWGzybszq76LNvzkzIJBnEr3Cl/i0BnlVobfoiDnRjO
- avhoWA8qJkyfTb8+Y1iPRF0Bd7Mev6ZHFEHEu9f7mwX5mElVTWFNepCz0o+chk2sTAlL
- BjjcYQ6sWdY5UNnlkpR/5G7c6i1weu6tMogoNB9vp5jW8TvnLoumQeI55DsUuFn3wDhm
- mf+bb5S8kjMdFJ/xBmSOr3OJs+z8+nqkTLCrpMyUpJL87T4JyChYUoPWSn4dP5b/t2WP
- fG+Q==
+ bh=IrCaarQptqoPnVIGF6Rw6t9hI+Rf9ZxQVNSlbFD1HYQ=;
+ b=DEUNZvRW0tp28bLPkC4eLeMCzaYBZ6JwB1CyUfaFtWkwYQQsCnu7ReXI6N+EhNKXWh
+ g4SLEuy3e3op1cx7QHdHR8vO1+zUHqaFLHwmVGxNj+qyWlRMS7VQ7y5yyrF71MX24EtL
+ 8t2beK0bQPY5F6nnQYKv/BIdYIIlxKQFSUATV/k17mHAw6XVUxzkgm8jmo32ZcxPjT53
+ AFv0k54ISJC7A1GZhYW9BjZP6gXzPLTBCl/CQ+an/RAMt5TWDxznQpUVOhw8auGjm9zr
+ qmD8ekCIIKEuLY6spJx+cNsFDBXbag2aM8pSpKh7oDaZdoB+35m8prMNVgSjLATgGQU7
+ 3Y7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731502665; x=1732107465;
+ d=1e100.net; s=20230601; t=1731502673; x=1732107473;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9sIZI/WV8nhbNfyJEUDND2yz+m6sbgKmtk/cQXv5cxc=;
- b=F/2STo7Sv3I7jVZvpZL/C30Nl1hckdJYUu/HFI+jiVQwpI4d+/gd3jpzLevSWaa05v
- A/NKiC0rI9qMhZYEL+tzxL+HKlB2mAKkl5Vsb5ffO+OVMJy7+QL58ENVfB5cuCiSv52R
- 95OIkbVlqw1xm/QlMeEW0SDPf7zltGBDeJKtlWUtY10Ec8KtL6B+TBpUu/ut8etGdiVS
- wX2VZclPD32pXaL32115vh2ReLCnkcCTD05YadpkxZXGslc386qIEXue1fXdC9tcyw0C
- fXP3JJke0/mba5tMrSEP8ZuhOyINJ+Ihwqak/3bes+5iIbDPYBkq9N5NrYra8kQDdiwd
- 8pDA==
+ bh=IrCaarQptqoPnVIGF6Rw6t9hI+Rf9ZxQVNSlbFD1HYQ=;
+ b=ii/xp725YXpSeXXEN4920+nvjfSwGTjM5AIq89nCcvSoUWpOAXkEc9k1oeRLJKH5SW
+ 5Bl57L2lo869yRZ/GJ/0APjNF60LlFv5BBl9Ix0zhRej/FKtDGfHlQEknWuXRuSNeBe7
+ /iTzvjh4bLvRNdbbOEtXsOkEChC7UQWz3usYIXsQAB2uXWGUsE3uOduh66FNEDPPCUsD
+ vgyaSDMtjW8pgpyQ3l3J+EvX0Pa4cRekAdO/fMCIObfg3io7QTnixR4ZCKfBMMrON0wa
+ hObKP21koUA0P8XBGuW1nR1SKheaaYkGwLDiZe01u9uU4eJIEJRMuPDSFy9k5HP5gONp
+ r6/A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWrV+hK3KIDMX8rz60iupJ+kaXvgg1rdDv+rJdeuEML2Xzk4kLOt+f/KM1a4O1x9ng49KZcDRj+raw=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0Yzw0jQ4E8k+YeBdKulKWbptEYy1YM6kvCBHSCJJKI68rgZqzyul
- bdOEmg9HKKpyrAj/msMoh5u1TFrVc4Gnu2kBsNZ6uQB4+tSTLClM
-X-Google-Smtp-Source: AGHT+IFBBLW/otzoU3VQWNkQ98rdfNz5WHNkXJFNuYVXzuqAWCzWf4F656wLCdVO3Ph+9deaw1I3JA==
-X-Received: by 2002:a17:90b:48c8:b0:2e2:c40c:6e8a with SMTP id
- 98e67ed59e1d1-2e9f2d5da7amr2684315a91.26.1731502664731; 
- Wed, 13 Nov 2024 04:57:44 -0800 (PST)
+ AJvYcCVbHxaMS1oj/9W31NcQUz+yCRGFdI8y9RjA8yyEbKhOnEVcYvyQwG+Y3fgAp2xYPF0j2o9ptunMYVQ=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YxUrsmBNPem1kdEaTZgcPcsYmczj+Kfi9L81cEcAzKUMfGAzH8d
+ rYOrp5qnT0qKWHaSlUJ9vvgwZzGeiWnhYo0CHNZgpexpKbHGVDsB
+X-Google-Smtp-Source: AGHT+IGJi6Tp37K+i8d+pRtqcGbSCXzQQJQiHEkYvBXRMyT+Ytmcy1PnetStqWOPaDWwW+msVvcvjQ==
+X-Received: by 2002:a17:90b:38c4:b0:2e2:c6a6:84da with SMTP id
+ 98e67ed59e1d1-2e9b1799123mr24937176a91.34.1731502673070; 
+ Wed, 13 Nov 2024 04:57:53 -0800 (PST)
 Received: from nova-ws.. ([103.167.140.11]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2e9f3f8ed0esm1398632a91.40.2024.11.13.04.57.36
+ 98e67ed59e1d1-2e9f3f8ed0esm1398632a91.40.2024.11.13.04.57.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 Nov 2024 04:57:44 -0800 (PST)
+ Wed, 13 Nov 2024 04:57:52 -0800 (PST)
 From: Xiao Liang <shaw.leon@gmail.com>
 To: netdev@vger.kernel.org, linux-kselftest@vger.kernel.org,
  Kuniyuki Iwashima <kuniyu@amazon.com>, Jakub Kicinski <kuba@kernel.org>,
@@ -69,10 +69,10 @@ Cc: "David S. Miller" <davem@davemloft.net>, David Ahern <dsahern@kernel.org>,
  linux-wireless@vger.kernel.org, b.a.t.m.a.n@lists.open-mesh.org,
  bridge@lists.linux.dev, linux-wpan@vger.kernel.org,
  linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v3 1/6] Revert "tools/net/ynl: improve async
- notification handling"
-Date: Wed, 13 Nov 2024 20:57:10 +0800
-Message-ID: <20241113125715.150201-2-shaw.leon@gmail.com>
+Subject: [PATCH net-next v3 2/6] net: ip_tunnel: Build flow in underlay net
+ namespace
+Date: Wed, 13 Nov 2024 20:57:11 +0800
+Message-ID: <20241113125715.150201-3-shaw.leon@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241113125715.150201-1-shaw.leon@gmail.com>
 References: <20241113125715.150201-1-shaw.leon@gmail.com>
@@ -93,143 +93,45 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-From: Donald Hunter <donald.hunter@gmail.com>
+Build IPv4 flow in underlay net namespace, where encapsulated packets
+are routed.
 
-This reverts commit 1bf70e6c3a5346966c25e0a1ff492945b25d3f80.
-
-This modification to check_ntf() is being reverted so that its behaviour
-remains equivalent to ynl_ntf_check() in the C YNL. Instead a new
-poll_ntf() will be added in a separate patch.
-
-Signed-off-by: Donald Hunter <donald.hunter@gmail.com>
+Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
 ---
- tools/net/ynl/cli.py     | 10 +++-----
- tools/net/ynl/lib/ynl.py | 49 ++++++++++++++++------------------------
- 2 files changed, 23 insertions(+), 36 deletions(-)
+ net/ipv4/ip_tunnel.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/net/ynl/cli.py b/tools/net/ynl/cli.py
-index 9e95016b85b3..b8481f401376 100755
---- a/tools/net/ynl/cli.py
-+++ b/tools/net/ynl/cli.py
-@@ -5,7 +5,6 @@ import argparse
- import json
- import pprint
- import time
--import signal
+diff --git a/net/ipv4/ip_tunnel.c b/net/ipv4/ip_tunnel.c
+index 25505f9b724c..09b73acf037a 100644
+--- a/net/ipv4/ip_tunnel.c
++++ b/net/ipv4/ip_tunnel.c
+@@ -294,7 +294,7 @@ static int ip_tunnel_bind_dev(struct net_device *dev)
  
- from lib import YnlFamily, Netlink, NlError
+ 		ip_tunnel_init_flow(&fl4, iph->protocol, iph->daddr,
+ 				    iph->saddr, tunnel->parms.o_key,
+-				    iph->tos & INET_DSCP_MASK, dev_net(dev),
++				    iph->tos & INET_DSCP_MASK, tunnel->net,
+ 				    tunnel->parms.link, tunnel->fwmark, 0, 0);
+ 		rt = ip_route_output_key(tunnel->net, &fl4);
  
-@@ -18,8 +17,6 @@ class YnlEncoder(json.JSONEncoder):
-             return list(obj)
-         return json.JSONEncoder.default(self, obj)
+@@ -611,7 +611,7 @@ void ip_md_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
+ 	}
+ 	ip_tunnel_init_flow(&fl4, proto, key->u.ipv4.dst, key->u.ipv4.src,
+ 			    tunnel_id_to_key32(key->tun_id),
+-			    tos & INET_DSCP_MASK, dev_net(dev), 0, skb->mark,
++			    tos & INET_DSCP_MASK, tunnel->net, 0, skb->mark,
+ 			    skb_get_hash(skb), key->flow_flags);
  
--def handle_timeout(sig, frame):
--    exit(0)
+ 	if (!tunnel_hlen)
+@@ -774,7 +774,7 @@ void ip_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
  
- def main():
-     description = """
-@@ -84,8 +81,7 @@ def main():
-         ynl.ntf_subscribe(args.ntf)
+ 	ip_tunnel_init_flow(&fl4, protocol, dst, tnl_params->saddr,
+ 			    tunnel->parms.o_key, tos & INET_DSCP_MASK,
+-			    dev_net(dev), READ_ONCE(tunnel->parms.link),
++			    tunnel->net, READ_ONCE(tunnel->parms.link),
+ 			    tunnel->fwmark, skb_get_hash(skb), 0);
  
-     if args.sleep:
--        signal.signal(signal.SIGALRM, handle_timeout)
--        signal.alarm(args.sleep)
-+        time.sleep(args.sleep)
- 
-     if args.list_ops:
-         for op_name, op in ynl.ops.items():
-@@ -110,8 +106,8 @@ def main():
-         exit(1)
- 
-     if args.ntf:
--        for msg in ynl.check_ntf():
--            output(msg)
-+        ynl.check_ntf()
-+        output(ynl.async_msg_queue)
- 
- 
- if __name__ == "__main__":
-diff --git a/tools/net/ynl/lib/ynl.py b/tools/net/ynl/lib/ynl.py
-index 92f85698c50e..c22c22bf2cb7 100644
---- a/tools/net/ynl/lib/ynl.py
-+++ b/tools/net/ynl/lib/ynl.py
-@@ -12,8 +12,6 @@ import sys
- import yaml
- import ipaddress
- import uuid
--import queue
--import time
- 
- from .nlspec import SpecFamily
- 
-@@ -491,7 +489,7 @@ class YnlFamily(SpecFamily):
-         self.sock.setsockopt(Netlink.SOL_NETLINK, Netlink.NETLINK_GET_STRICT_CHK, 1)
- 
-         self.async_msg_ids = set()
--        self.async_msg_queue = queue.Queue()
-+        self.async_msg_queue = []
- 
-         for msg in self.msgs.values():
-             if msg.is_async:
-@@ -905,39 +903,32 @@ class YnlFamily(SpecFamily):
- 
-         msg['name'] = op['name']
-         msg['msg'] = attrs
--        self.async_msg_queue.put(msg)
-+        self.async_msg_queue.append(msg)
- 
--    def check_ntf(self, interval=0.1):
-+    def check_ntf(self):
-         while True:
-             try:
-                 reply = self.sock.recv(self._recv_size, socket.MSG_DONTWAIT)
--                nms = NlMsgs(reply)
--                self._recv_dbg_print(reply, nms)
--                for nl_msg in nms:
--                    if nl_msg.error:
--                        print("Netlink error in ntf!?", os.strerror(-nl_msg.error))
--                        print(nl_msg)
--                        continue
--                    if nl_msg.done:
--                        print("Netlink done while checking for ntf!?")
--                        continue
-+            except BlockingIOError:
-+                return
- 
--                    decoded = self.nlproto.decode(self, nl_msg, None)
--                    if decoded.cmd() not in self.async_msg_ids:
--                        print("Unexpected msg id while checking for ntf", decoded)
--                        continue
-+            nms = NlMsgs(reply)
-+            self._recv_dbg_print(reply, nms)
-+            for nl_msg in nms:
-+                if nl_msg.error:
-+                    print("Netlink error in ntf!?", os.strerror(-nl_msg.error))
-+                    print(nl_msg)
-+                    continue
-+                if nl_msg.done:
-+                    print("Netlink done while checking for ntf!?")
-+                    continue
- 
--                    self.handle_ntf(decoded)
--            except BlockingIOError:
--                pass
-+                decoded = self.nlproto.decode(self, nl_msg, None)
-+                if decoded.cmd() not in self.async_msg_ids:
-+                    print("Unexpected msg id done while checking for ntf", decoded)
-+                    continue
- 
--            try:
--                yield self.async_msg_queue.get_nowait()
--            except queue.Empty:
--                try:
--                    time.sleep(interval)
--                except KeyboardInterrupt:
--                    return
-+                self.handle_ntf(decoded)
- 
-     def operation_do_attributes(self, name):
-       """
+ 	if (ip_tunnel_encap(skb, &tunnel->encap, &protocol, &fl4) < 0)
 -- 
 2.47.0
 
