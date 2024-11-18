@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AACB8D49207
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 16:28:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CAE7D6DDC4
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Nov 2024 16:28:45 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 785cb2b0;
-	Mon, 18 Nov 2024 14:33:29 +0000 (UTC)
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com
- [2607:f8b0:4864:20::1032])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 83ca61ec
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1e95acb1;
+	Mon, 18 Nov 2024 14:33:34 +0000 (UTC)
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com
+ [2607:f8b0:4864:20::102d])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0fbdd988
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 18 Nov 2024 14:33:23 +0000 (UTC)
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-2ea1bc2a9c5so1994049a91.0
- for <wireguard@lists.zx2c4.com>; Mon, 18 Nov 2024 06:33:23 -0800 (PST)
+ Mon, 18 Nov 2024 14:33:32 +0000 (UTC)
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-2ea527ae14aso967048a91.1
+ for <wireguard@lists.zx2c4.com>; Mon, 18 Nov 2024 06:33:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1731940402; x=1732545202; darn=lists.zx2c4.com;
+ d=gmail.com; s=20230601; t=1731940410; x=1732545210; darn=lists.zx2c4.com;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IrCaarQptqoPnVIGF6Rw6t9hI+Rf9ZxQVNSlbFD1HYQ=;
- b=KsN/0NEepS7MVxRuGceBgNyBK60tUaRJdVQ21p8w4J/UUlAMwZbGveuMuE6Ln1h/ZR
- IL4Hh7hwBBF4UHgwE2uZH6+oxTydymauC46mUax2ot292n2zQiF4HSheQhvQo++EE0Bi
- nopXfZ3PiN9hKOFBaF4T21Ctk8gHppABSbRyhIrFZtu0HohrLK3CfDBDXuUfoiEFd9tR
- 6du2Dqlshpx92rXNEOckgT2A9kg/9gxQ9SlfeziqMGkUNyKH3derQlcKapjp3ac8yheT
- IJ3IJQVwsuCYcF252hP6atvcTKLw6BMKOEhXOh85cQhD6bDRWLi3lSna9WrncJavTV/C
- cJfw==
+ bh=XYvUg1T5qt/avqeB8QMtp6GEfshi9DuIrKXfHc0mOQw=;
+ b=cw5wK7Q++7jVdzfxffr2/iwUSq4JzTZyfKc/U5A8myzBiAF9E4zVw+IyZioNkPZNAO
+ Or/xBm/iW6lrRn7Fh1B+wUGes3U+fZK2/lqd9qK8GIzRNgtY26tWlcPjjiGHCvZRhast
+ HzbZDYq/4vBYONokXQkpVyZdpIZ73sk4yLwOG7k+0ggGDq6d+P9zMl4jjbPgO+gW+FDW
+ Le53kNALd+DS8F65CHwH/5ONyIoFyh1Ky3ZZXHUZSx976Unz9ClO2a1d/uEXhzPew5MA
+ m1DOgURbVJRFA63zVG6cQox5gaOrs/fjxiSBt+Qm1EFwbhkfft/z9vUGHUAs8+h7hx7A
+ UqRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1731940402; x=1732545202;
+ d=1e100.net; s=20230601; t=1731940410; x=1732545210;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IrCaarQptqoPnVIGF6Rw6t9hI+Rf9ZxQVNSlbFD1HYQ=;
- b=BLsHbh/n2ECo2AQ7qB003yFSpK8tzmjNSLZUgBLZcVejhFkGDhuV5FFthVoFIfggxB
- gH6zl2ckyhuS7KefX/2o8sNsV+jNDQWES5FX5HmjkrPbcT2sy5PQGBrEcKS9KC/5pC87
- jQQ/4gusX+qAiqJfWcaNNowZXCUhsSlwNySVcfkJthGldhp6lQbBSHe6FovmWoCIDYkF
- KwLIevseMuTJ0S1hl5a/TFP4Gos90cykLJcmHyKyVpaJCZ3AMBaYcKZbLBVAsbmsqdAU
- aT7NMKt0GdmTI+amQhI2hN+E5/Vw0RqdSzQGsvRXe0asKWD/oaasFT4vaypB2A6UfqKb
- Lu9Q==
+ bh=XYvUg1T5qt/avqeB8QMtp6GEfshi9DuIrKXfHc0mOQw=;
+ b=RQCedtS9FbqiFKylf56MBr2sJaFPO9q9Nw43AU7WsXah2V3S64Ql+PjiXmu4JuXzGq
+ /yDi7DlXIZ/fHuXVRmp5T8ipfkX4k0HHwOUPpeR+fdPH1xXMgCo9bG+b++ZHoJcIP0xP
+ qVWXdyf0GD/36V3uGoCbNvP7y5RdvHj8WYL7VskXq2MObh25t4T4jDoRKqZvEnVRz69q
+ /3OxR/2Bium1Dg93/C7w5t+vPg8TsiV/DA6JGwCmjWeKg181Nx22IWOLMEV/88bWiUJo
+ 98u2xoNgiVzX9hhudLkEyC9ht1y90nIicuvc+idkpRnIbq09Wd+G2hsc9kbKyMLQqeIL
+ ZQIQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV/1A0tLt5Pag+rptwU8GuWgsb/gLZtvgLZElIfY98li+LAKzzDmq8yE2yCWLkMlHEA0AKlCC81fDI=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0Yz44wdLUGnS3jlv/oP6e7sJYApcpOeuOFL5KBSTfxWuqWKO/D/C
- q6qdv0EFmdbtA6KO/LFjrXle03sul9NCTyBaKADm78g5AWXOpych
-X-Google-Smtp-Source: AGHT+IGzbRz7s9CT801paPWPDasO606/jlaO2UpnfJMF7tMlUetZpF6RTCqXaMFrG8I7wghYj9+EFA==
-X-Received: by 2002:a17:90b:3c4e:b0:2ea:9ccb:d206 with SMTP id
- 98e67ed59e1d1-2ea9ccbd33amr1559048a91.8.1731940401993; 
- Mon, 18 Nov 2024 06:33:21 -0800 (PST)
+ AJvYcCWvINJ6jg6pS/kvFrUB12tTCw1rt0zN2Ronn2JqINdKIc3v0UGQsSyF6hvNDlHtFIV2mTRh9xtNwY0=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0Yz2aqmPUYYzb+6cWrKXbwv8u7mf/314zQOxzXbZ06ZNKBLOaORx
+ ljIEC1+BWauTYdkDu+PWYbv5Z+IQqykGbZOsamX1jN8Rl6Y/4PnilmGhD7PDs7s=
+X-Google-Smtp-Source: AGHT+IHPKnavfiiQCNCjr1NezmwMnBacyheV8zyl63QTPg6m3L868R+a4UJrSv5jLV5RsxhfHcRfpA==
+X-Received: by 2002:a17:90b:2687:b0:2ea:3f34:f1a0 with SMTP id
+ 98e67ed59e1d1-2ea3f34f38amr9406817a91.30.1731940410205; 
+ Mon, 18 Nov 2024 06:33:30 -0800 (PST)
 Received: from nova-ws.. ([103.167.140.11]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ea81b0e2fasm1616926a91.52.2024.11.18.06.33.14
+ 98e67ed59e1d1-2ea81b0e2fasm1616926a91.52.2024.11.18.06.33.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 Nov 2024 06:33:21 -0800 (PST)
+ Mon, 18 Nov 2024 06:33:29 -0800 (PST)
 From: Xiao Liang <shaw.leon@gmail.com>
 To: netdev@vger.kernel.org, linux-kselftest@vger.kernel.org,
  Kuniyuki Iwashima <kuniyu@amazon.com>, Jakub Kicinski <kuba@kernel.org>,
@@ -69,10 +69,10 @@ Cc: "David S. Miller" <davem@davemloft.net>, David Ahern <dsahern@kernel.org>,
  linux-wireless@vger.kernel.org, b.a.t.m.a.n@lists.open-mesh.org,
  bridge@lists.linux.dev, linux-wpan@vger.kernel.org,
  linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v4 1/5] net: ip_tunnel: Build flow in underlay net
- namespace
-Date: Mon, 18 Nov 2024 22:32:40 +0800
-Message-ID: <20241118143244.1773-2-shaw.leon@gmail.com>
+Subject: [PATCH net-next v4 2/5] rtnetlink: Lookup device in target netns when
+ creating link
+Date: Mon, 18 Nov 2024 22:32:41 +0800
+Message-ID: <20241118143244.1773-3-shaw.leon@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241118143244.1773-1-shaw.leon@gmail.com>
 References: <20241118143244.1773-1-shaw.leon@gmail.com>
@@ -92,45 +92,53 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Build IPv4 flow in underlay net namespace, where encapsulated packets
-are routed.
+When creating link, lookup for existing device in target net namespace
+instead of current one.
+For example, two links created by:
+
+  # ip link add dummy1 type dummy
+  # ip link add netns ns1 dummy1 type dummy
+
+should have no conflict since they are in different namespaces.
 
 Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
 ---
- net/ipv4/ip_tunnel.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/core/rtnetlink.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/ip_tunnel.c b/net/ipv4/ip_tunnel.c
-index 25505f9b724c..09b73acf037a 100644
---- a/net/ipv4/ip_tunnel.c
-+++ b/net/ipv4/ip_tunnel.c
-@@ -294,7 +294,7 @@ static int ip_tunnel_bind_dev(struct net_device *dev)
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index dd142f444659..bc9d0ecd3a1e 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -3846,20 +3846,26 @@ static int __rtnl_newlink(struct sk_buff *skb, struct nlmsghdr *nlh,
+ {
+ 	struct nlattr ** const tb = tbs->tb;
+ 	struct net *net = sock_net(skb->sk);
++	struct net *device_net;
+ 	struct net_device *dev;
+ 	struct ifinfomsg *ifm;
+ 	bool link_specified;
  
- 		ip_tunnel_init_flow(&fl4, iph->protocol, iph->daddr,
- 				    iph->saddr, tunnel->parms.o_key,
--				    iph->tos & INET_DSCP_MASK, dev_net(dev),
-+				    iph->tos & INET_DSCP_MASK, tunnel->net,
- 				    tunnel->parms.link, tunnel->fwmark, 0, 0);
- 		rt = ip_route_output_key(tunnel->net, &fl4);
- 
-@@ -611,7 +611,7 @@ void ip_md_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
- 	}
- 	ip_tunnel_init_flow(&fl4, proto, key->u.ipv4.dst, key->u.ipv4.src,
- 			    tunnel_id_to_key32(key->tun_id),
--			    tos & INET_DSCP_MASK, dev_net(dev), 0, skb->mark,
-+			    tos & INET_DSCP_MASK, tunnel->net, 0, skb->mark,
- 			    skb_get_hash(skb), key->flow_flags);
- 
- 	if (!tunnel_hlen)
-@@ -774,7 +774,7 @@ void ip_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
- 
- 	ip_tunnel_init_flow(&fl4, protocol, dst, tnl_params->saddr,
- 			    tunnel->parms.o_key, tos & INET_DSCP_MASK,
--			    dev_net(dev), READ_ONCE(tunnel->parms.link),
-+			    tunnel->net, READ_ONCE(tunnel->parms.link),
- 			    tunnel->fwmark, skb_get_hash(skb), 0);
- 
- 	if (ip_tunnel_encap(skb, &tunnel->encap, &protocol, &fl4) < 0)
++	/* When creating, lookup for existing device in target net namespace */
++	device_net = (nlh->nlmsg_flags & NLM_F_CREATE) &&
++		     (nlh->nlmsg_flags & NLM_F_EXCL) ?
++		     tgt_net : net;
++
+ 	ifm = nlmsg_data(nlh);
+ 	if (ifm->ifi_index > 0) {
+ 		link_specified = true;
+-		dev = __dev_get_by_index(net, ifm->ifi_index);
++		dev = __dev_get_by_index(device_net, ifm->ifi_index);
+ 	} else if (ifm->ifi_index < 0) {
+ 		NL_SET_ERR_MSG(extack, "ifindex can't be negative");
+ 		return -EINVAL;
+ 	} else if (tb[IFLA_IFNAME] || tb[IFLA_ALT_IFNAME]) {
+ 		link_specified = true;
+-		dev = rtnl_dev_get(net, tb);
++		dev = rtnl_dev_get(device_net, tb);
+ 	} else {
+ 		link_specified = false;
+ 		dev = NULL;
 -- 
 2.47.0
 
