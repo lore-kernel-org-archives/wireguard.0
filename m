@@ -4,55 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF19DD60D15
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 19 Nov 2024 03:09:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08880D591D4
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 19 Nov 2024 07:22:55 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fa564865;
-	Tue, 19 Nov 2024 03:07:06 +0000 (UTC)
-Received: from nyc.source.kernel.org (nyc.source.kernel.org [147.75.193.91])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6a4d0374
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1f32c92d;
+	Tue, 19 Nov 2024 07:22:33 +0000 (UTC)
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com
+ [2607:f8b0:4864:20::52e])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e461bde4
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 19 Nov 2024 03:07:04 +0000 (UTC)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id 95061A42574;
- Tue, 19 Nov 2024 03:05:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD48C4CECF;
- Tue, 19 Nov 2024 03:07:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1731985622;
- bh=PGoG8fEB7llM322/jpcOwn3LGAi0gafsk5SM9vL39KQ=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=oGWzVf9fm47IURqF82sBjxlSLSQaSxQvnftln+sAaadyrOaTpKmG1QB1++Q+XtGq2
- iqnrNBO0CyTqqEwlU/q+011kC2hwIrbq/6K0SGXImw3qfRg1+XKGoOsssJ5vIMkYcz
- Z6YQRFxP4izqrZoqEbsdoy+taGRJqRWgfpsrekJKESn6nbT7e6NOHGhh6GN5IbeTmn
- lzthFeg7CnYNFnEs0XFbrLEZd2ql/Jl9IGwusT5cDv1Qr6Psf8Q5n6XqbkH/peqmPn
- uwk0TjN/tbOC/IkQ2CmF/L5xISUzVUBpQQlxdujGCk9lYUVk7IvT7QmP1ZZAPQtMkX
- AVNlOOjcQBmSw==
-Date: Mon, 18 Nov 2024 19:07:00 -0800
-From: Jakub Kicinski <kuba@kernel.org>
-To: Xiao Liang <shaw.leon@gmail.com>
-Cc: netdev@vger.kernel.org, linux-kselftest@vger.kernel.org, Kuniyuki
- Iwashima <kuniyu@amazon.com>, Donald Hunter <donald.hunter@gmail.com>,
- "David S. Miller" <davem@davemloft.net>, David Ahern <dsahern@kernel.org>,
- Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>, Ido
- Schimmel <idosch@nvidia.com>, Andrew Lunn <andrew+netdev@lunn.ch>, Simon
- Horman <horms@kernel.org>, Shuah Khan <shuah@kernel.org>, Jiri Pirko
- <jiri@resnulli.us>, Hangbin Liu <liuhangbin@gmail.com>,
- linux-rdma@vger.kernel.org, linux-can@vger.kernel.org,
- osmocom-net-gprs@lists.osmocom.org, bpf@vger.kernel.org,
- linux-ppp@vger.kernel.org, wireguard@lists.zx2c4.com,
- linux-wireless@vger.kernel.org, b.a.t.m.a.n@lists.open-mesh.org,
- bridge@lists.linux.dev, linux-wpan@vger.kernel.org,
+ Tue, 19 Nov 2024 07:22:31 +0000 (UTC)
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-7f8c7ca7f3cso3017554a12.2
+ for <wireguard@lists.zx2c4.com>; Mon, 18 Nov 2024 23:22:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1732000949; x=1732605749; darn=lists.zx2c4.com;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=R2hYIOgm2Uff4u1jweT3m4e9LzzXMUoAloHgshXGR88=;
+ b=JPTRlu2nbGYYGWTXlp0KPf/sryn5/orXFM+/7QRM/MSPfZ2K+lYvTATSXJCNBnwpk2
+ WxX0Jtm+NmGOLHeEnFdRqd7EBEAA/t/I0URRJbgIiQfM5HEDyKfy5GdGwn68GH/wOqxU
+ IGOslDUowS7ytfuZpWvyJJLvPFCKr9EdQOMYsZlL+NIfRnyH6fVeI4aFgNqZPFQ2BaU6
+ E8pWhrEajvLm4AWID1z20CHfHNBYe39mvX3NqSIRpoioJfZ3xauJgXL69JE6rt03Sszh
+ CeLkbWTlvzIksID4++OZ6VhG8Rths+GjE9bg8DPSyQyA0/Biso+ddjYIywZ4XatgWaIv
+ CHQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1732000949; x=1732605749;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=R2hYIOgm2Uff4u1jweT3m4e9LzzXMUoAloHgshXGR88=;
+ b=JCYGuaiDZUPOp7AaFGTN3SqHwPRkYH2AhsMfyrCyht1xfQiAsWGrZQ4AbCCEMsm5Be
+ HqrYt9lk7DsTNGVrJtiQ1+QZQKzQNRl8k69wyAPtXnMeBLfa3k48tmWKrCsaoPCRT6MB
+ LtO29NDU6EwOVUJdJlJsXgvPD55pCxZyRGwT9kwvceUlDqHOW+aIBJhdAV/6cqFSrtlj
+ +3PSnBIwFjuhtK4LtWWq9IIV+wuQ69pDlhvqlf0ByfP/TKMGoOr/nQdE6C3j9596WEDD
+ he7dqtnGDFrSjrtLOJTJniAInCZysIlDiHoyIaya56gWDpNnIeEn9//VVP06/ei3ShDj
+ h+kw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUxSo+J+VtBI/byaDht2v/ePG5lQZuES9KOxESWZky4/D14MkNJK//CmUW/9zbRuin3ThyNqF8JWeY=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0Yw2kBMMhcOofg3/YzH8VK+VqHIulEKrNj5MZQBE67XebNqTstq/
+ Hr6Tb1gSKZa4aCjzNrxhAo9Ahi9SzMomWVshOTN+kEywzxn6OUv/
+X-Google-Smtp-Source: AGHT+IHpjvOJ/TXR1vPPwp8b3+0f5TCsPpSfNMW9tcKmYwoCx3JQ4QjniS/QesuBZjjSmzoHklC+3A==
+X-Received: by 2002:a05:6a20:918b:b0:1dc:c19a:3a08 with SMTP id
+ adf61e73a8af0-1dcc19a3e8emr2133510637.17.1732000949359; 
+ Mon, 18 Nov 2024 23:22:29 -0800 (PST)
+Received: from fedora ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2ea28300b26sm6257086a91.16.2024.11.18.23.22.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 18 Nov 2024 23:22:28 -0800 (PST)
+Date: Tue, 19 Nov 2024 07:22:21 +0000
+From: Hangbin Liu <liuhangbin@gmail.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: netdev@vger.kernel.org, Shuah Khan <shuah@kernel.org>,
+ "David S. Miller" <davem@davemloft.net>,
+ Florian Westphal <fw@strlen.de>, Phil Sutter <phil@nwl.cc>,
+ wireguard@lists.zx2c4.com, linux-kselftest@vger.kernel.org,
  linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next v4 0/5] net: Improve netns handling in RTNL and
- ip_tunnel
-Message-ID: <20241118190700.4c1b8156@kernel.org>
-In-Reply-To: <20241118143244.1773-1-shaw.leon@gmail.com>
-References: <20241118143244.1773-1-shaw.leon@gmail.com>
+Subject: Re: [PATCHv2 net-next] selftests: wireguards: use nft by default
+Message-ID: <Zzw8rb202R6FWVHs@fedora>
+References: <20241111041902.25814-1-liuhangbin@gmail.com>
+ <ZzpNXM17NX3nVzMl@zx2c4.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZzpNXM17NX3nVzMl@zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -67,34 +83,38 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, 18 Nov 2024 22:32:39 +0800 Xiao Liang wrote:
-> This patch series includes some netns-related improvements and fixes for
-> RTNL and ip_tunnel, to make link creation more intuitive:
-> 
->  - Creating link in another net namespace doesn't conflict with link names
->    in current one.
->  - Refector rtnetlink link creation. Create link in target namespace
->    directly. Pass both source and link netns to drivers via newlink()
->    callback.
-> 
-> So that
-> 
->   # ip link add netns ns1 link-netns ns2 tun0 type gre ...
-> 
-> will create tun0 in ns1, rather than create it in ns2 and move to ns1.
-> And don't conflict with another interface named "tun0" in current netns.
+On Sun, Nov 17, 2024 at 09:09:00PM +0100, Jason A. Donenfeld wrote:
+> On Mon, Nov 11, 2024 at 04:19:02AM +0000, Hangbin Liu wrote:
+> > Use nft by default if it's supported, as nft is the replacement for iptables,
+> > which is used by default in some releases. Additionally, iptables is dropped
+> > in some releases.
+>  
+> Rather than having this optionality, I'd rather just do everything in
+> one way or the other. So if you're adamant that we need to use nft, just
+> convert the whole thing. And then subsequently, make sure that the qemu
+> test harness supports it. That should probably be a series.
 
-## Form letter - net-next-closed
+Hmm, try build nft but got error
 
-The merge window for v6.13 has begun and net-next is closed for new drivers,
-features, code refactoring and optimizations. We are currently accepting
-bug fixes only.
+# make -C tools/testing/selftests/wireguard/qemu/
+make: Entering directory '/home/net/tools/testing/selftests/wireguard/qemu'
+Building for x86_64-linux-musl using x86_64-redhat-linux
+cd /home/net/tools/testing/selftests/wireguard/qemu/build/x86_64/nftables-1.0.9 && ./configure --prefix=/ --build=x86_64-redhat-linux --host=x86_64-linux-musl --enable-static --disable-shared
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+...
+checking for pkg-config... /usr/bin/pkg-config
+configure: WARNING: using cross tools not prefixed with host triplet
+checking pkg-config is at least version 0.9.0... yes
+checking for libmnl >= 1.0.4... yes
+checking for libnftnl >= 1.2.6... yes
+checking for __gmpz_init in -lgmp... no
+configure: error: No suitable version of libgmp found
 
-Please repost when net-next reopens after Dec 2nd.
+But I can config it manually like: ./configure --prefix=/ --build=x86_64-redhat-linux --host=x86_64-linux-musl --enable-static
+--disable-shared correctly
 
-RFC patches sent for review only are welcome at any time.
+Do you have any idea?
 
-See: https://www.kernel.org/doc/html/next/process/maintainer-netdev.html#development-cycle
--- 
-pw-bot: defer
-
+Thanks
+Hangbin
