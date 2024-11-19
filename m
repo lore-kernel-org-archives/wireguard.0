@@ -4,48 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E03ECD60D09
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 19 Nov 2024 01:47:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF19DD60D15
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 19 Nov 2024 03:09:58 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 47e0e36c;
-	Tue, 19 Nov 2024 01:43:10 +0000 (UTC)
-Received: from smtp.eurecom.fr (smtp.eurecom.fr [193.55.113.210])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1fe2d613
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fa564865;
+	Tue, 19 Nov 2024 03:07:06 +0000 (UTC)
+Received: from nyc.source.kernel.org (nyc.source.kernel.org [147.75.193.91])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6a4d0374
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 18 Nov 2024 22:58:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=eurecom.fr; i=@eurecom.fr; q=dns/txt; s=default;
- t=1731970699; x=1763506699;
- h=from:date:cc:to:mime-version:message-id:subject:
- content-transfer-encoding;
- bh=uOCkzoSHiJAiDYZFusLJ9OBEz5FlpCa8Y8HqQeFA+1E=;
- b=vEVJDwTSZwRKUxNBZC44UmQRxmxBvAGUgoEWVz18QpjStNI5H09D/JsH
- ieQiV28nGTSsaLxNLUzZXOUj2Clzygnz6W1/V5Sf0f5Thn1u1xYz1A1ci
- boh7S+WqSMAgR6BgPUCa+GhgaP4NwPOuE7ohZSFMODdWct+uq3ORHc+wq 8=;
-X-CSE-ConnectionGUID: kke0BuBSRh+JtWNKrNCVXw==
-X-CSE-MsgGUID: 74tnPZa7RO2m9bpH3+iY2Q==
-X-IronPort-AV: E=Sophos;i="6.12,165,1728943200"; d="scan'208";a="27706713"
-Received: from quovadis.eurecom.fr ([10.3.2.233])
- by drago1i.eurecom.fr with ESMTP; 18 Nov 2024 23:58:18 +0100
-From: "Ariel Otilibili-Anieli" <Ariel.Otilibili-Anieli@eurecom.fr>
-Content-Type: text/plain; charset="utf-8"
-X-Forward: 88.183.119.157
-Date: Mon, 18 Nov 2024 23:58:18 +0100
-Cc: =?utf-8?q?Jason_A=2E_Donenfeld?= <Jason@zx2c4.com>,
- "Andrew Lunn" <andrew+netdev@lunn.ch>,
- =?utf-8?q?David_S=2E_Miller?= <davem@davemloft.net>,
- "Eric Dumazet" <edumazet@google.com>, "Jakub Kicinski" <kuba@kernel.org>,
- "Paolo Abeni" <pabeni@redhat.com>
-To: wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
+ Tue, 19 Nov 2024 03:07:04 +0000 (UTC)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by nyc.source.kernel.org (Postfix) with ESMTP id 95061A42574;
+ Tue, 19 Nov 2024 03:05:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD48C4CECF;
+ Tue, 19 Nov 2024 03:07:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1731985622;
+ bh=PGoG8fEB7llM322/jpcOwn3LGAi0gafsk5SM9vL39KQ=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=oGWzVf9fm47IURqF82sBjxlSLSQaSxQvnftln+sAaadyrOaTpKmG1QB1++Q+XtGq2
+ iqnrNBO0CyTqqEwlU/q+011kC2hwIrbq/6K0SGXImw3qfRg1+XKGoOsssJ5vIMkYcz
+ Z6YQRFxP4izqrZoqEbsdoy+taGRJqRWgfpsrekJKESn6nbT7e6NOHGhh6GN5IbeTmn
+ lzthFeg7CnYNFnEs0XFbrLEZd2ql/Jl9IGwusT5cDv1Qr6Psf8Q5n6XqbkH/peqmPn
+ uwk0TjN/tbOC/IkQ2CmF/L5xISUzVUBpQQlxdujGCk9lYUVk7IvT7QmP1ZZAPQtMkX
+ AVNlOOjcQBmSw==
+Date: Mon, 18 Nov 2024 19:07:00 -0800
+From: Jakub Kicinski <kuba@kernel.org>
+To: Xiao Liang <shaw.leon@gmail.com>
+Cc: netdev@vger.kernel.org, linux-kselftest@vger.kernel.org, Kuniyuki
+ Iwashima <kuniyu@amazon.com>, Donald Hunter <donald.hunter@gmail.com>,
+ "David S. Miller" <davem@davemloft.net>, David Ahern <dsahern@kernel.org>,
+ Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>, Ido
+ Schimmel <idosch@nvidia.com>, Andrew Lunn <andrew+netdev@lunn.ch>, Simon
+ Horman <horms@kernel.org>, Shuah Khan <shuah@kernel.org>, Jiri Pirko
+ <jiri@resnulli.us>, Hangbin Liu <liuhangbin@gmail.com>,
+ linux-rdma@vger.kernel.org, linux-can@vger.kernel.org,
+ osmocom-net-gprs@lists.osmocom.org, bpf@vger.kernel.org,
+ linux-ppp@vger.kernel.org, wireguard@lists.zx2c4.com,
+ linux-wireless@vger.kernel.org, b.a.t.m.a.n@lists.open-mesh.org,
+ bridge@lists.linux.dev, linux-wpan@vger.kernel.org,
  linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net-next v4 0/5] net: Improve netns handling in RTNL and
+ ip_tunnel
+Message-ID: <20241118190700.4c1b8156@kernel.org>
+In-Reply-To: <20241118143244.1773-1-shaw.leon@gmail.com>
+References: <20241118143244.1773-1-shaw.leon@gmail.com>
 MIME-Version: 1.0
-Message-ID: <15e782-673bc680-4ed-422b5480@29006332>
-Subject: [PATCH] =?utf-8?q?wireguard-tools=3A?= Extracted error message for
- the sake of legibility
-User-Agent: SOGoMail 5.11.1
-Content-Transfer-Encoding: quoted-printable
-X-Mailman-Approved-At: Tue, 19 Nov 2024 01:43:09 +0000
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -60,78 +67,34 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
+On Mon, 18 Nov 2024 22:32:39 +0800 Xiao Liang wrote:
+> This patch series includes some netns-related improvements and fixes for
+> RTNL and ip_tunnel, to make link creation more intuitive:
+> 
+>  - Creating link in another net namespace doesn't conflict with link names
+>    in current one.
+>  - Refector rtnetlink link creation. Create link in target namespace
+>    directly. Pass both source and link netns to drivers via newlink()
+>    callback.
+> 
+> So that
+> 
+>   # ip link add netns ns1 link-netns ns2 tun0 type gre ...
+> 
+> will create tun0 in ns1, rather than create it in ns2 and move to ns1.
+> And don't conflict with another interface named "tun0" in current netns.
 
-This is a reminder about a patch sent to the WireGuard mailing list; CC=
-ing the maintainers of drivers/net/wireguard/; below a verbatim of my c=
-over letter.
+## Form letter - net-next-closed
 
-Thank you,
+The merge window for v6.13 has begun and net-next is closed for new drivers,
+features, code refactoring and optimizations. We are currently accepting
+bug fixes only.
 
-**
+Please repost when net-next reopens after Dec 2nd.
 
-I have been using WireGuard for some time; it does ease the configurati=
-on of
-VPNs. This is my first patch to the list, I asked to be subscribed; ple=
-ase
-confirm me it is the case.
+RFC patches sent for review only are welcome at any time.
 
-I would like to improve my C programming skills; your feedback will be =
-much
-appreciated.
-
-Ariel
-
--------- Original Message --------
-Subject: [PATCH] wireguard-tools: Extracted error message for the sake =
-of legibility
-Date: Thursday, August 01, 2024 11:43 CEST
-From: Ariel Otilibili <Ariel.Otilibili-Anieli@eurecom.fr>
-Reply-To: Ariel Otilibili <Ariel.Otilibili-Anieli@eurecom.fr>
-
-To: wireguard@lists.zx2c4.com
-CC: "Jason A . Donenfeld" <Jason@zx2c4.com>,	Ariel Otilibili <Ariel.Oti=
-libili-Anieli@eurecom.fr>
-
-References: <20240725204917.192647-2-otilibil@eurecom.fr> <202408010949=
-32.4502-1-otilibil@eurecom.fr>
-
-
-
-Signed-off-by: Ariel Otilibili <otilibil@eurecom.fr>
----
- src/set.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
-
-diff --git a/src/set.c b/src/set.c
-index 75560fd..b2fbd54 100644
---- a/src/set.c
-+++ b/src/set.c
-@@ -16,9 +16,19 @@ int set=5Fmain(int argc, const char *argv[])
- {
- 	struct wgdevice *device =3D NULL;
- 	int ret =3D 1;
-+	const char *error=5Fmessage =3D "Usage: %s %s <interface>"
-+	  " [listen-port <port>]"
-+	  " [fwmark <mark>]"
-+	  " [private-key <file path>]"
-+	  " [peer <base64 public key> [remove]"
-+	  " [preshared-key <file path>]"
-+	  " [endpoint <ip>:<port>]"
-+	  " [persistent-keepalive <interval seconds>]"
-+	  " [allowed-ips <ip1>/<cidr1>[,<ip2>/<cidr2>]...]"
-+	  " ]...\n";
-=20
- 	if (argc < 3) {
--		fprintf(stderr, "Usage: %s %s <interface> [listen-port <port>] [fwma=
-rk <mark>] [private-key <file path>] [peer <base64 public key> [remove]=
- [preshared-key <file path>] [endpoint <ip>:<port>] [persistent-keepali=
-ve <interval seconds>] [allowed-ips <ip1>/<cidr1>[,<ip2>/<cidr2>]...] ]=
-...\n", PROG=5FNAME, argv[0]);
-+		fprintf(stderr, error=5Fmessage, PROG=5FNAME, argv[0]);
- 		return 1;
- 	}
-=20
---=20
-2.45.2
+See: https://www.kernel.org/doc/html/next/process/maintainer-netdev.html#development-cycle
+-- 
+pw-bot: defer
 
