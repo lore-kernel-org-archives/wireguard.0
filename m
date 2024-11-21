@@ -4,53 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 369FFD44162
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 19 Nov 2024 14:37:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA7ACE64018
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Nov 2024 21:45:27 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 052df058;
-	Tue, 19 Nov 2024 14:37:32 +0000 (UTC)
-Received: from orbyte.nwl.cc (orbyte.nwl.cc [2001:41d0:e:133a::1])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5e141dfc
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4a20a669;
+	Thu, 21 Nov 2024 21:45:05 +0000 (UTC)
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2986988c
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 19 Nov 2024 14:37:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=nwl.cc;
- s=mail2022; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
- Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive;
- bh=D9+QT/PGS7TNywt2V5GvWPp0z/RDdp7emmM5ESDUzdg=; b=ea30Z+f/yyDdDbUYNySDZ+u9gt
- DhDZP1ZwNTOKp91YVMeM06M7lliHi/hSiMDLj7Qykf7LjXucE+eNwapyPxHDsuHeQq+FIxX1ieh2S
- oynuuq7thdxh9lFkFu4d2vtwoA4oFahrr2I6cAnXDAXjPcVdCF8RkU2bUREDWqInwtx7wqAQv17kh
- EiPO5N+YwVK4Caso1gJKQ27e1OZWw9Q0HBQ6H888jT8ZLV5FbuPFq+8ZpKfMVX9Uw9e7E+OmbMciF
- NeQPyGzAjj0Hbi4V82PH4nNUqQyrGRNI5BuC9jd2XpD0TQj31dUril7ZmGu8e0ThNX4r46IHeL7lk
- JBHC8CYw==;
-Received: from n0-1 by orbyte.nwl.cc with local (Exim 4.97.1)
- (envelope-from <phil@nwl.cc>) id 1tDPM3-000000002ZO-15PU;
- Tue, 19 Nov 2024 15:37:23 +0100
-Date: Tue, 19 Nov 2024 15:37:23 +0100
-From: Phil Sutter <phil@nwl.cc>
-To: Hangbin Liu <liuhangbin@gmail.com>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, netdev@vger.kernel.org,
- Shuah Khan <shuah@kernel.org>, "David S. Miller" <davem@davemloft.net>,
- Florian Westphal <fw@strlen.de>, wireguard@lists.zx2c4.com,
- linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCHv2 net-next] selftests: wireguards: use nft by default
-Message-ID: <Zzyio98xh1GN08wN@orbyte.nwl.cc>
-Mail-Followup-To: Phil Sutter <phil@nwl.cc>,
- Hangbin Liu <liuhangbin@gmail.com>,
- "Jason A. Donenfeld" <Jason@zx2c4.com>, netdev@vger.kernel.org,
- Shuah Khan <shuah@kernel.org>,
- "David S. Miller" <davem@davemloft.net>,
- Florian Westphal <fw@strlen.de>, wireguard@lists.zx2c4.com,
- linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20241111041902.25814-1-liuhangbin@gmail.com>
- <ZzpNXM17NX3nVzMl@zx2c4.com> <Zzw8rb202R6FWVHs@fedora>
+ Thu, 21 Nov 2024 21:45:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1732225503; x=1763761503;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=NIUcN6+T+wki60rCRnwepyQ8KRF0PBbMkb47VLXLqKM=;
+ b=ammfg0ynJgRWRWQk47QUPfT6ChebBozDFsVhcLCrrrEgJdFn7JTKL8r3
+ oRU3QxzIYeR0OMJ5lUXD5ohYpUB+eBGbHNx5hlrdki0gOIv6peoKVOPGu
+ 7mbFfVkFb1VignFjLdUZxuUpb3z5bpTJDsyE4YMk+6JkcZZkJsupaTJuD
+ GhvrN945ZruWyhUzHRYQIMVgBaLArxNdNvAQ84NZyts/gXuObUHTNYVRx
+ McK9ALPXJJRGGUWLiUGlGsdBMwDcccQtj12HM8Vybm0BGM0pkwp92OEdD
+ MeSLBuT49OIpI0W/yg4ZSlFf2erOtbEb2bYdj0UTYLl/2B7ya6uS4j9M+ g==;
+X-CSE-ConnectionGUID: UT5pzXvUQR6NN3lPMkjGUw==
+X-CSE-MsgGUID: IMk2o2q8SlCcFBO96tkH9w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11263"; a="32514208"
+X-IronPort-AV: E=Sophos;i="6.12,173,1728975600"; d="scan'208";a="32514208"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Nov 2024 13:45:01 -0800
+X-CSE-ConnectionGUID: xdpPO1RmQrC72kpFCsgzmg==
+X-CSE-MsgGUID: zhZedUIBSeupQFYJAgkZ8A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,173,1728975600"; d="scan'208";a="90753178"
+Received: from lkp-server01.sh.intel.com (HELO 8122d2fc1967) ([10.239.97.150])
+ by fmviesa010.fm.intel.com with ESMTP; 21 Nov 2024 13:44:56 -0800
+Received: from kbuild by 8122d2fc1967 with local (Exim 4.96)
+ (envelope-from <lkp@intel.com>) id 1tEEyr-0003O1-1A;
+ Thu, 21 Nov 2024 21:44:53 +0000
+Date: Fri, 22 Nov 2024 05:43:56 +0800
+From: kernel test robot <lkp@intel.com>
+To: Xiao Liang <shaw.leon@gmail.com>, netdev@vger.kernel.org,
+ linux-kselftest@vger.kernel.org, Kuniyuki Iwashima <kuniyu@amazon.com>,
+ Jakub Kicinski <kuba@kernel.org>, Donald Hunter <donald.hunter@gmail.com>
+Cc: oe-kbuild-all@lists.linux.dev, David Ahern <dsahern@kernel.org>,
+ Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+ Ido Schimmel <idosch@nvidia.com>, Andrew Lunn <andrew+netdev@lunn.ch>,
+ Simon Horman <horms@kernel.org>, Shuah Khan <skhan@linuxfoundation.org>,
+ Jiri Pirko <jiri@resnulli.us>, Hangbin Liu <liuhangbin@gmail.com>,
+ linux-rdma@vger.kernel.org, linux-can@vger.kernel.org,
+ osmocom-net-gprs@lists.osmocom.org, bpf@vger.kernel.org,
+ linux-ppp@vger.kernel.org, wireguard@lists.zx2c4.com,
+ linux-wireless@vger.kernel.org, b.a.t.m.a.n@lists.open-mesh.org,
+ bridge@lists.linux.dev, linux-wpan@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net-next v4 3/5] rtnetlink: Decouple net namespaces in
+ rtnl_newlink_create()
+Message-ID: <202411220516.rokej98E-lkp@intel.com>
+References: <20241118143244.1773-4-shaw.leon@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Zzw8rb202R6FWVHs@fedora>
+In-Reply-To: <20241118143244.1773-4-shaw.leon@gmail.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -65,47 +80,67 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hangbin,
+Hi Xiao,
 
-On Tue, Nov 19, 2024 at 07:22:21AM +0000, Hangbin Liu wrote:
-> On Sun, Nov 17, 2024 at 09:09:00PM +0100, Jason A. Donenfeld wrote:
-> > On Mon, Nov 11, 2024 at 04:19:02AM +0000, Hangbin Liu wrote:
-> > > Use nft by default if it's supported, as nft is the replacement for iptables,
-> > > which is used by default in some releases. Additionally, iptables is dropped
-> > > in some releases.
-> >  
-> > Rather than having this optionality, I'd rather just do everything in
-> > one way or the other. So if you're adamant that we need to use nft, just
-> > convert the whole thing. And then subsequently, make sure that the qemu
-> > test harness supports it. That should probably be a series.
-> 
-> Hmm, try build nft but got error
-> 
-> # make -C tools/testing/selftests/wireguard/qemu/
-> make: Entering directory '/home/net/tools/testing/selftests/wireguard/qemu'
-> Building for x86_64-linux-musl using x86_64-redhat-linux
-> cd /home/net/tools/testing/selftests/wireguard/qemu/build/x86_64/nftables-1.0.9 && ./configure --prefix=/ --build=x86_64-redhat-linux --host=x86_64-linux-musl --enable-static --disable-shared
-> checking for a BSD-compatible install... /usr/bin/install -c
-> checking whether build environment is sane... yes
-> ...
-> checking for pkg-config... /usr/bin/pkg-config
-> configure: WARNING: using cross tools not prefixed with host triplet
-> checking pkg-config is at least version 0.9.0... yes
-> checking for libmnl >= 1.0.4... yes
-> checking for libnftnl >= 1.2.6... yes
-> checking for __gmpz_init in -lgmp... no
-> configure: error: No suitable version of libgmp found
+kernel test robot noticed the following build warnings:
 
-You may find proper details about the failure in config.log. My guess is
-the cross build prevents host libraries from being used. (No idea why
-your manual call works, though.)
+[auto build test WARNING on net-next/main]
 
-> But I can config it manually like: ./configure --prefix=/ --build=x86_64-redhat-linux --host=x86_64-linux-musl --enable-static
-> --disable-shared correctly
-> 
-> Do you have any idea?
+url:    https://github.com/intel-lab-lkp/linux/commits/Xiao-Liang/net-ip_tunnel-Build-flow-in-underlay-net-namespace/20241121-112705
+base:   net-next/main
+patch link:    https://lore.kernel.org/r/20241118143244.1773-4-shaw.leon%40gmail.com
+patch subject: [PATCH net-next v4 3/5] rtnetlink: Decouple net namespaces in rtnl_newlink_create()
+config: arc-randconfig-002-20241122 (https://download.01.org/0day-ci/archive/20241122/202411220516.rokej98E-lkp@intel.com/config)
+compiler: arceb-elf-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241122/202411220516.rokej98E-lkp@intel.com/reproduce)
 
-You may just pass '--with-mini-gmp' to nftables' configure call to avoid
-the external dependency.
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202411220516.rokej98E-lkp@intel.com/
 
-Cheers, Phil
+All warnings (new ones prefixed by >>):
+
+>> net/batman-adv/soft-interface.c:1075: warning: Function parameter or struct member 'params' not described in 'batadv_softif_newlink'
+>> net/batman-adv/soft-interface.c:1075: warning: Excess function parameter 'nets' description in 'batadv_softif_newlink'
+>> net/batman-adv/soft-interface.c:1075: warning: Excess function parameter 'dev' description in 'batadv_softif_newlink'
+>> net/batman-adv/soft-interface.c:1075: warning: Excess function parameter 'tb' description in 'batadv_softif_newlink'
+>> net/batman-adv/soft-interface.c:1075: warning: Excess function parameter 'data' description in 'batadv_softif_newlink'
+>> net/batman-adv/soft-interface.c:1075: warning: Excess function parameter 'extack' description in 'batadv_softif_newlink'
+
+
+vim +1075 net/batman-adv/soft-interface.c
+
+128254ceea6ffe Sven Eckelmann 2020-10-11  1063  
+128254ceea6ffe Sven Eckelmann 2020-10-11  1064  /**
+128254ceea6ffe Sven Eckelmann 2020-10-11  1065   * batadv_softif_newlink() - pre-initialize and register new batadv link
+c19808cb1d05d1 Xiao Liang     2024-11-18  1066   * @nets: the applicable net namespaces
+128254ceea6ffe Sven Eckelmann 2020-10-11  1067   * @dev: network device to register
+128254ceea6ffe Sven Eckelmann 2020-10-11  1068   * @tb: IFLA_INFO_DATA netlink attributes
+128254ceea6ffe Sven Eckelmann 2020-10-11  1069   * @data: enum batadv_ifla_attrs attributes
+128254ceea6ffe Sven Eckelmann 2020-10-11  1070   * @extack: extended ACK report struct
+128254ceea6ffe Sven Eckelmann 2020-10-11  1071   *
+128254ceea6ffe Sven Eckelmann 2020-10-11  1072   * Return: 0 if successful or error otherwise.
+128254ceea6ffe Sven Eckelmann 2020-10-11  1073   */
+c19808cb1d05d1 Xiao Liang     2024-11-18  1074  static int batadv_softif_newlink(struct rtnl_newlink_params *params)
+128254ceea6ffe Sven Eckelmann 2020-10-11 @1075  {
+c19808cb1d05d1 Xiao Liang     2024-11-18  1076  	struct net_device *dev = params->dev;
+c19808cb1d05d1 Xiao Liang     2024-11-18  1077  	struct nlattr **data = params->data;
+a5ad457eea41ef Sven Eckelmann 2020-10-11  1078  	struct batadv_priv *bat_priv = netdev_priv(dev);
+a5ad457eea41ef Sven Eckelmann 2020-10-11  1079  	const char *algo_name;
+a5ad457eea41ef Sven Eckelmann 2020-10-11  1080  	int err;
+a5ad457eea41ef Sven Eckelmann 2020-10-11  1081  
+a5ad457eea41ef Sven Eckelmann 2020-10-11  1082  	if (data && data[IFLA_BATADV_ALGO_NAME]) {
+a5ad457eea41ef Sven Eckelmann 2020-10-11  1083  		algo_name = nla_data(data[IFLA_BATADV_ALGO_NAME]);
+a5ad457eea41ef Sven Eckelmann 2020-10-11  1084  		err = batadv_algo_select(bat_priv, algo_name);
+a5ad457eea41ef Sven Eckelmann 2020-10-11  1085  		if (err)
+a5ad457eea41ef Sven Eckelmann 2020-10-11  1086  			return -EINVAL;
+a5ad457eea41ef Sven Eckelmann 2020-10-11  1087  	}
+a5ad457eea41ef Sven Eckelmann 2020-10-11  1088  
+128254ceea6ffe Sven Eckelmann 2020-10-11  1089  	return register_netdevice(dev);
+128254ceea6ffe Sven Eckelmann 2020-10-11  1090  }
+128254ceea6ffe Sven Eckelmann 2020-10-11  1091  
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
