@@ -4,87 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC327C54E65
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 08:29:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBC06C2D0CD
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 08:30:08 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2bb93362;
-	Tue, 20 May 2025 19:41:42 +0000 (UTC)
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com
- [2607:f8b0:4864:20::62d])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id fa1f265f
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2b3a5116;
+	Tue, 20 May 2025 19:49:39 +0000 (UTC)
+Received: from dispatch1-us1.ppe-hosted.com (dispatch1-us1.ppe-hosted.com
+ [148.163.129.48])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2e3ef3af
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 19 Feb 2025 12:52:16 +0000 (UTC)
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-220f4dd756eso93415045ad.3
- for <wireguard@lists.zx2c4.com>; Wed, 19 Feb 2025 04:52:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1739969535; x=1740574335; darn=lists.zx2c4.com;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=PyZ7Oa5HQm/CyDGlUAOCpKikT+Z0UZAcxIZ482ECX9g=;
- b=YQxQZJYptBWkViHB+y1HoMtoKZrWvRAXp9PQwalIDFWPMC0wTzT61YYPt89Sq2S1b1
- rLlhsNB6xXrJHtBjSJi0MGU99WSmUz/9+EWkBa2PplknmvjbvssIlty6iWp/v3gUGD1h
- We+1JuLPvuxLA65udTCwLXnKhWOmx3yz1AVEKrvtiefCLAGELk/INOCwd/gyC0u6CC01
- 6B7hoWrcprvlACKox6pv4csnNuYyr/Arub8OHN2uRGwpTo+ohFc8LkZKEDZNVauSIOVi
- GmbqWAhnqmz8N8TTOYLLR0PG6y6Q8gNuBDiOCHZCk12L3tUQdc98wsXkoGj866V47Zqj
- p4Sg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739969535; x=1740574335;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=PyZ7Oa5HQm/CyDGlUAOCpKikT+Z0UZAcxIZ482ECX9g=;
- b=HshyFsyklA2m8S9A/QRHhJbvmuS0FMPwIb1mwio9PoH/OtbRiDPWfipv+NoTvf4oxz
- GEUFSvjujLd369be05qD4ZwhG9EnECwtjpOb/Ds7LkDOENagSyg0aGFcXoaB2rmTckOw
- 7ImrEFBYmwwE+4dvO6TodOiuILtLO7n+9LzcA+Yd5SbEUrHld+s1wfuCegwwj9zlviuL
- JRhVKQqiuiBEffw9ks9ZqauC2d/LnJy44wUaFoOZYwuUBj4VkyyrC0ts5Ux/n4aQUjvM
- XKC8I/aB5Ap+rOyYkqEGy1VB2Q+IHVyuOGF2Tj7XsKmpdkEPJPE+LzKUTUfqh55MREKI
- HIFQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVdDpYmhSrAxM/1tFHRoFJe4r1jfTIt9Z5NRzfB22ZeNP82eRwFaEdEiadP+KBuEXxHp9jN7PJ/CVs=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YxKq5fO3PKkBzl5isiwne0p6geDMy+qjO/uzhUNIOxg+3KJ5L9s
- 48bER3XEbKChcJ6Q+Ba5IL0vw1X1GgeI8jk6ajvqGrolQHeBR4BE
-X-Gm-Gg: ASbGncvwO4NrNZAIzyC4MpEKuxU0qOmVW4zCi+Ot/tOsBiTFFcNkc7Ki7w9WktQShkp
- Q9+ZXinxBvFj9knfyi0mjlO/vDOS9CobZAnLj3Suzl16eCAJ0pQ6nfczoplYz5BGsK/IXDzB9vb
- hZbT0w06doDC9jy3G9fA8vXAo5/l6nFIhEPuCSCi92qthH9NGy0HdyYSgtFyhxlW/QwRACxpm81
- cjZ1/fB6jlAPEnoP27kOTk6rjPDNTFyPjkzoRlcoJDFLbis2hUZvpNsUX9D/TBOFbWAedgVzlH6
- phH7/g==
-X-Google-Smtp-Source: AGHT+IGEFP67zSY2isKHwZ8c/HiTSEQrpqN9J90h0hy0pUrJ6TwQBaUnsvMftR+A8p8DsBy8+Vg8gQ==
-X-Received: by 2002:a17:902:d502:b0:21f:dc3:890e with SMTP id
- d9443c01a7336-221040255fcmr244598235ad.18.1739969534802; 
- Wed, 19 Feb 2025 04:52:14 -0800 (PST)
-Received: from ws.. ([103.167.140.11]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-220d536436fsm103427175ad.64.2025.02.19.04.52.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Feb 2025 04:52:14 -0800 (PST)
-From: Xiao Liang <shaw.leon@gmail.com>
-To: netdev@vger.kernel.org, linux-kselftest@vger.kernel.org,
- Kuniyuki Iwashima <kuniyu@amazon.com>, Jakub Kicinski <kuba@kernel.org>
-Cc: "David S. Miller" <davem@davemloft.net>, David Ahern <dsahern@kernel.org>,
- Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
- Andrew Lunn <andrew+netdev@lunn.ch>, Simon Horman <horms@kernel.org>,
- Shuah Khan <shuah@kernel.org>, Donald Hunter <donald.hunter@gmail.com>,
- Alexander Aring <alex.aring@gmail.com>,
- Stefan Schmidt <stefan@datenfreihafen.org>,
- Miquel Raynal <miquel.raynal@bootlin.com>,
- Steffen Klassert <steffen.klassert@secunet.com>,
- Herbert Xu <herbert@gondor.apana.org.au>, linux-rdma@vger.kernel.org,
- linux-can@vger.kernel.org, osmocom-net-gprs@lists.osmocom.org,
- bpf@vger.kernel.org, linux-ppp@vger.kernel.org, wireguard@lists.zx2c4.com,
- linux-wireless@vger.kernel.org, b.a.t.m.a.n@lists.open-mesh.org,
- bridge@lists.linux.dev, linux-wpan@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v10 09/13] net: xfrm: Use link netns in newlink() of
- rtnl_link_ops
-Date: Wed, 19 Feb 2025 20:50:35 +0800
-Message-ID: <20250219125039.18024-10-shaw.leon@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250219125039.18024-1-shaw.leon@gmail.com>
-References: <20250219125039.18024-1-shaw.leon@gmail.com>
+ Mon, 25 Nov 2024 21:21:23 +0000 (UTC)
+X-Virus-Scanned: Proofpoint Essentials engine
+Received: from mail3.candelatech.com (mail.candelatech.com [208.74.158.173])
+ by mx1-us1.ppe-hosted.com (PPE Hosted ESMTP Server) with ESMTP id AA75D100081; 
+ Mon, 25 Nov 2024 21:21:16 +0000 (UTC)
+Received: from ben-dt5.candelatech.com (unknown [50.251.239.81])
+ by mail3.candelatech.com (Postfix) with ESMTP id C505913C2B0;
+ Mon, 25 Nov 2024 13:21:15 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail3.candelatech.com C505913C2B0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=candelatech.com;
+ s=default; t=1732569676;
+ bh=bzhEM8/865tyqN1e3zeR/py6wHGMQNG0xrMe5mBbW9M=;
+ h=From:To:Cc:Subject:Date:From;
+ b=AIQ0PAmdh6AdqtvIgGR26OlrlMn5M3wrHY+BEdE8IBaudqdqY9dt+gq8IwLddiKzq
+ BHxQY/MX3jmSkQna/06mMOhcyuVUJ3Rovr4rcxDSsDLeVt6CCuZSM11ae7wsHQGmF/
+ FJWVWayEL93cmH4opnxRIdLR04Jcm33dWPcvSbrA=
+From: greearb@candelatech.com
+To: netdev@vger.kernel.org
+Cc: Jason@zx2c4.com, wireguard@lists.zx2c4.com, dsahern@kernel.org,
+ Ben Greear <greearb@candelatech.com>
+Subject: [PATCH] net: wireguard: Allow binding to specific ifindex
+Date: Mon, 25 Nov 2024 13:21:11 -0800
+Message-ID: <20241125212111.1533982-1-greearb@candelatech.com>
+X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-MDID: 1732569677-UWMuRmxcx1dG
+X-MDID-O: us5; ut7; 1732569677; UWMuRmxcx1dG; <greearb@candelatech.com>;
+ 2cb6a4bd943e67fe8a6fabf2d7a930d0
+X-PPE-TRUSTED: V=1;DIR=OUT;
+X-Mailman-Approved-At: Tue, 20 May 2025 19:45:56 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -99,54 +59,140 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-When link_net is set, use it as link netns instead of dev_net(). This
-prepares for rtnetlink core to create device in target netns directly,
-in which case the two namespaces may be different.
+From: Ben Greear <greearb@candelatech.com>
 
-Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
+Which allows us to bind to VRF.
+
+Signed-off-by: Ben Greear <greearb@candelatech.com>
 ---
- net/xfrm/xfrm_interface_core.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/xfrm/xfrm_interface_core.c b/net/xfrm/xfrm_interface_core.c
-index 5659a6cadd51..622445f041d3 100644
---- a/net/xfrm/xfrm_interface_core.c
-+++ b/net/xfrm/xfrm_interface_core.c
-@@ -242,10 +242,9 @@ static void xfrmi_dev_free(struct net_device *dev)
- 	gro_cells_destroy(&xi->gro_cells);
- }
+NOTE:  Modified user-space to utilize this may be found here:
+https://github.com/greearb/wireguard-tools-ct
+Only the 'wg' part has been tested with this new feature as of today.
+
+ drivers/net/wireguard/device.h  |  1 +
+ drivers/net/wireguard/netlink.c | 12 +++++++++++-
+ drivers/net/wireguard/socket.c  |  8 +++++++-
+ include/uapi/linux/wireguard.h  |  3 +++
+ 4 files changed, 22 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/net/wireguard/device.h b/drivers/net/wireguard/device.h
+index 43c7cebbf50b..9698d9203915 100644
+--- a/drivers/net/wireguard/device.h
++++ b/drivers/net/wireguard/device.h
+@@ -53,6 +53,7 @@ struct wg_device {
+ 	atomic_t handshake_queue_len;
+ 	unsigned int num_peers, device_update_gen;
+ 	u32 fwmark;
++	int lowerdev; /* ifindex of lower level device to bind UDP transport */
+ 	u16 incoming_port;
+ };
  
--static int xfrmi_create(struct net_device *dev)
-+static int xfrmi_create(struct net *net, struct net_device *dev)
- {
- 	struct xfrm_if *xi = netdev_priv(dev);
--	struct net *net = dev_net(dev);
- 	struct xfrmi_net *xfrmn = net_generic(net, xfrmi_net_id);
- 	int err;
+diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlink.c
+index f7055180ba4a..5de3d59a17b0 100644
+--- a/drivers/net/wireguard/netlink.c
++++ b/drivers/net/wireguard/netlink.c
+@@ -27,7 +27,8 @@ static const struct nla_policy device_policy[WGDEVICE_A_MAX + 1] = {
+ 	[WGDEVICE_A_FLAGS]		= { .type = NLA_U32 },
+ 	[WGDEVICE_A_LISTEN_PORT]	= { .type = NLA_U16 },
+ 	[WGDEVICE_A_FWMARK]		= { .type = NLA_U32 },
+-	[WGDEVICE_A_PEERS]		= { .type = NLA_NESTED }
++	[WGDEVICE_A_PEERS]		= { .type = NLA_NESTED },
++	[WGDEVICE_A_LOWERDEV]		= { .type = NLA_U32 },
+ };
  
-@@ -819,11 +818,12 @@ static int xfrmi_newlink(struct net_device *dev,
- 			 struct netlink_ext_ack *extack)
- {
- 	struct nlattr **data = params->data;
--	struct net *net = dev_net(dev);
- 	struct xfrm_if_parms p = {};
- 	struct xfrm_if *xi;
-+	struct net *net;
- 	int err;
+ static const struct nla_policy peer_policy[WGPEER_A_MAX + 1] = {
+@@ -232,6 +233,7 @@ static int wg_get_device_dump(struct sk_buff *skb, struct netlink_callback *cb)
+ 		if (nla_put_u16(skb, WGDEVICE_A_LISTEN_PORT,
+ 				wg->incoming_port) ||
+ 		    nla_put_u32(skb, WGDEVICE_A_FWMARK, wg->fwmark) ||
++		    nla_put_u32(skb, WGDEVICE_A_LOWERDEV, wg->lowerdev) ||
+ 		    nla_put_u32(skb, WGDEVICE_A_IFINDEX, wg->dev->ifindex) ||
+ 		    nla_put_string(skb, WGDEVICE_A_IFNAME, wg->dev->name))
+ 			goto out;
+@@ -530,6 +532,14 @@ static int wg_set_device(struct sk_buff *skb, struct genl_info *info)
+ 			wg_socket_clear_peer_endpoint_src(peer);
+ 	}
  
-+	net = params->link_net ? : dev_net(dev);
- 	xfrmi_netlink_parms(data, &p);
- 	if (p.collect_md) {
- 		struct xfrmi_net *xfrmn = net_generic(net, xfrmi_net_id);
-@@ -852,7 +852,7 @@ static int xfrmi_newlink(struct net_device *dev,
- 	xi->net = net;
- 	xi->dev = dev;
++	if (info->attrs[WGDEVICE_A_LOWERDEV]) {
++		struct wg_peer *peer;
++
++		wg->lowerdev = nla_get_u32(info->attrs[WGDEVICE_A_LOWERDEV]);
++		list_for_each_entry(peer, &wg->peer_list, peer_list)
++			wg_socket_clear_peer_endpoint_src(peer);
++	}
++
+ 	if (info->attrs[WGDEVICE_A_LISTEN_PORT]) {
+ 		ret = set_port(wg,
+ 			nla_get_u16(info->attrs[WGDEVICE_A_LISTEN_PORT]));
+diff --git a/drivers/net/wireguard/socket.c b/drivers/net/wireguard/socket.c
+index 0414d7a6ce74..a7cb1c7c3112 100644
+--- a/drivers/net/wireguard/socket.c
++++ b/drivers/net/wireguard/socket.c
+@@ -25,7 +25,8 @@ static int send4(struct wg_device *wg, struct sk_buff *skb,
+ 		.daddr = endpoint->addr4.sin_addr.s_addr,
+ 		.fl4_dport = endpoint->addr4.sin_port,
+ 		.flowi4_mark = wg->fwmark,
+-		.flowi4_proto = IPPROTO_UDP
++		.flowi4_proto = IPPROTO_UDP,
++		.flowi4_oif = wg->lowerdev,
+ 	};
+ 	struct rtable *rt = NULL;
+ 	struct sock *sock;
+@@ -111,6 +112,9 @@ static int send6(struct wg_device *wg, struct sk_buff *skb,
+ 	struct sock *sock;
+ 	int ret = 0;
  
--	err = xfrmi_create(dev);
-+	err = xfrmi_create(net, dev);
- 	return err;
- }
- 
++	if (wg->lowerdev)
++		fl.flowi6_oif = wg->lowerdev,
++
+ 	skb_mark_not_on_list(skb);
+ 	skb->dev = wg->dev;
+ 	skb->mark = wg->fwmark;
+@@ -360,6 +364,7 @@ int wg_socket_init(struct wg_device *wg, u16 port)
+ 		.family = AF_INET,
+ 		.local_ip.s_addr = htonl(INADDR_ANY),
+ 		.local_udp_port = htons(port),
++		.bind_ifindex = wg->lowerdev,
+ 		.use_udp_checksums = true
+ 	};
+ #if IS_ENABLED(CONFIG_IPV6)
+@@ -369,6 +374,7 @@ int wg_socket_init(struct wg_device *wg, u16 port)
+ 		.local_ip6 = IN6ADDR_ANY_INIT,
+ 		.use_udp6_tx_checksums = true,
+ 		.use_udp6_rx_checksums = true,
++		.bind_ifindex = wg->lowerdev,
+ 		.ipv6_v6only = true
+ 	};
+ #endif
+diff --git a/include/uapi/linux/wireguard.h b/include/uapi/linux/wireguard.h
+index ae88be14c947..f3784885389a 100644
+--- a/include/uapi/linux/wireguard.h
++++ b/include/uapi/linux/wireguard.h
+@@ -29,6 +29,7 @@
+  *    WGDEVICE_A_PUBLIC_KEY: NLA_EXACT_LEN, len WG_KEY_LEN
+  *    WGDEVICE_A_LISTEN_PORT: NLA_U16
+  *    WGDEVICE_A_FWMARK: NLA_U32
++ *    WGDEVICE_A_LOWERDEV: NLA_U32
+  *    WGDEVICE_A_PEERS: NLA_NESTED
+  *        0: NLA_NESTED
+  *            WGPEER_A_PUBLIC_KEY: NLA_EXACT_LEN, len WG_KEY_LEN
+@@ -83,6 +84,7 @@
+  *    WGDEVICE_A_PRIVATE_KEY: len WG_KEY_LEN, all zeros to remove
+  *    WGDEVICE_A_LISTEN_PORT: NLA_U16, 0 to choose randomly
+  *    WGDEVICE_A_FWMARK: NLA_U32, 0 to disable
++ *    WGDEVICE_A_LOWERDEV: NLA_U32, ifindex to bind lower transport, 0 to disable
+  *    WGDEVICE_A_PEERS: NLA_NESTED
+  *        0: NLA_NESTED
+  *            WGPEER_A_PUBLIC_KEY: len WG_KEY_LEN
+@@ -157,6 +159,7 @@ enum wgdevice_attribute {
+ 	WGDEVICE_A_LISTEN_PORT,
+ 	WGDEVICE_A_FWMARK,
+ 	WGDEVICE_A_PEERS,
++	WGDEVICE_A_LOWERDEV,
+ 	__WGDEVICE_A_LAST
+ };
+ #define WGDEVICE_A_MAX (__WGDEVICE_A_LAST - 1)
 -- 
-2.48.1
+2.42.0
 
