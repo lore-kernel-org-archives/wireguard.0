@@ -4,44 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CC1EC54ED0
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 14:22:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B8B3C54ED1
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 14:22:11 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2c10ea49;
-	Tue, 20 May 2025 23:22:05 +0000 (UTC)
-Received: from tor.source.kernel.org (tor.source.kernel.org
- [2600:3c04:e001:324:0:1991:8:25])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 474ecebf
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2c532c1a;
+	Tue, 20 May 2025 19:49:44 +0000 (UTC)
+Received: from dispatch1-us1.ppe-hosted.com (dispatch1-us1.ppe-hosted.com
+ [67.231.154.184])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c5ee3658
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 20 May 2025 23:22:01 +0000 (UTC)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 06035614B8
- for <wireguard@lists.zx2c4.com>; Tue, 20 May 2025 23:22:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C485C4CEE9
- for <wireguard@lists.zx2c4.com>; Tue, 20 May 2025 23:21:59 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="dkCkqUg5"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1747783317;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type;
- bh=jJTt0J77G8xE4lODgmNYOAQO4ubazvBrm3lXy2NT1X8=;
- b=dkCkqUg52YXZ0vBKu+wC1zoPee12M2jvl380Z6O0rUNFaD2Njdb9CKNmSKdPz4S/ZaUzje
- Q8e+9Rn69ZPAfDs2QnubpaTORsJwD5i2NE18ETUvnsfBIweodZOxpPCvFiqMgT42c+llCA
- vC0ciD0zmtL80yZROGaOGqDYn3+bgtM=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 622cd0d3
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 20 May 2025 23:21:57 +0000 (UTC)
-Date: Wed, 21 May 2025 01:21:55 +0200
-Message-ID: <5343c669ed36696c5dde065a1675a298@thinkpad.zx2c4.com>
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [ANNOUNCE] wireguard-tools v1.0.20250521 released 
+ for <wireguard@lists.zx2c4.com>; Tue, 3 Dec 2024 19:39:54 +0000 (UTC)
+X-Virus-Scanned: Proofpoint Essentials engine
+Received: from mail3.candelatech.com (mail.candelatech.com [208.74.158.173])
+ by mx1-us1.ppe-hosted.com (PPE Hosted ESMTP Server) with ESMTP id D4E5D900071; 
+ Tue,  3 Dec 2024 19:39:50 +0000 (UTC)
+Received: from ben-dt5.candelatech.com (unknown [50.251.239.81])
+ by mail3.candelatech.com (Postfix) with ESMTP id F188713C2B6;
+ Tue,  3 Dec 2024 11:39:48 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail3.candelatech.com F188713C2B6
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=candelatech.com;
+ s=default; t=1733254789;
+ bh=jst4k0lpwWz/JgrqCgkdYIhbXw0yvHwbQqc+zlYC3PQ=;
+ h=From:To:Cc:Subject:Date:From;
+ b=c6re080E8gutaQBxvtsLi0qivBQsDaZrDcjH/oxx4rOUYjikZmHYvwD9AbYtCF1wC
+ /MnV5tqvil2NfUfbU4FfrjRHuM8m/GbogtIeXImHnjVWc45mQjW+KR0+RMfDRShpoh
+ aHMRUp7zLZ6Z975uUs40a0UIlNpX+xwd1SNBYDPc=
+From: greearb@candelatech.com
+To: netdev@vger.kernel.org
+Cc: Jason@zx2c4.com, wireguard@lists.zx2c4.com, dsahern@kernel.org,
+ Ben Greear <greearb@candelatech.com>
+Subject: [PATCH v2] net: wireguard: Allow binding to specific ifindex
+Date: Tue,  3 Dec 2024 11:39:39 -0800
+Message-ID: <20241203193939.1953303-1-greearb@candelatech.com>
+X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-MDID: 1733254792-XQiFu4kcUtCa
+X-MDID-O: us5; at1; 1733254792; XQiFu4kcUtCa; <greearb@candelatech.com>;
+ 2cb6a4bd943e67fe8a6fabf2d7a930d0
+X-PPE-TRUSTED: V=1;DIR=OUT;
+X-Mailman-Approved-At: Tue, 20 May 2025 19:45:56 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -56,88 +58,138 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+From: Ben Greear <greearb@candelatech.com>
 
-Hello,
+Which allows us to bind to VRF.
 
-A new version, v1.0.20250521, of wireguard-tools has been tagged in the git
-repository, containing various required userspace utilities, such as the
-wg(8) and wg-quick(8) commands and documentation.
+Signed-off-by: Ben Greear <greearb@candelatech.com>
+---
 
-== Changes ==
+v2:  Fix bad use of comma, semicolon now used instead.
 
-  * ipc: use more clever PnP enumerator
-  * embeddable-wg-library: add named wg_endpoint union
-  * reresolve-dns: use $EPOCHSECONDS instead of $(date +%s)
-  * wg-quick: android: use right regex for host-vs-IP
-  * global: dual license core files as MIT for FreeBSD
-  * wg-quick: linux: prevent traffic from momentarily leaking into tunnel
-  * ipc: freebsd: move if_wg path to reflect new in-tree location
-  * show: apply const to right part of pointer
-  * ipc: freebsd: avoid leaking memory in kernel_get_device()
-  * ipc: freebsd: NULL out some freed memory in kernel_set_device()
-  * show: fix show all endpoints output
-  * man: set private key in PreUp rather than PostUp
-  * ipc: linux: enforce IFNAMSIZ limit
-  * ipc: freebsd: use AF_LOCAL for the control socket
-  * wg-quick: linux: add 'dev' to 'ip link add' to avoid keyword conflicts
-  * config: handle strdup failure
-  
-  * wg-quick: run PreUp hook after creating interface
-  
-  This makes PreUp actually useful.
-  
-  * ipc: linux: support incremental allowed ips updates
-  * ipc: add stub for allowedips flags on other platforms
-  
-  These two are neat and worth mentioning. Soon it will be possible to run:
-  
-    # wg set wg0 peer ... allowed-ips +1.2.3.4/32,-2.4.6.8/32
-  
-  in order to add and remove allowedips without first clearing all of them.
-  
+ drivers/net/wireguard/device.h  |  1 +
+ drivers/net/wireguard/netlink.c | 12 +++++++++++-
+ drivers/net/wireguard/socket.c  |  8 +++++++-
+ include/uapi/linux/wireguard.h  |  3 +++
+ 4 files changed, 22 insertions(+), 2 deletions(-)
 
-This release contains commits from: Jason A. Donenfeld, Kyle Evans, 
-TriangleSnake, Tom Yan, Mikael Magnusson, Jordan Rife, Ilia Shipitsin, Dmitry 
-Selivanov, and Daniel Gröber.
+diff --git a/drivers/net/wireguard/device.h b/drivers/net/wireguard/device.h
+index 43c7cebbf50b..9698d9203915 100644
+--- a/drivers/net/wireguard/device.h
++++ b/drivers/net/wireguard/device.h
+@@ -53,6 +53,7 @@ struct wg_device {
+ 	atomic_t handshake_queue_len;
+ 	unsigned int num_peers, device_update_gen;
+ 	u32 fwmark;
++	int lowerdev; /* ifindex of lower level device to bind UDP transport */
+ 	u16 incoming_port;
+ };
+ 
+diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlink.c
+index f7055180ba4a..5de3d59a17b0 100644
+--- a/drivers/net/wireguard/netlink.c
++++ b/drivers/net/wireguard/netlink.c
+@@ -27,7 +27,8 @@ static const struct nla_policy device_policy[WGDEVICE_A_MAX + 1] = {
+ 	[WGDEVICE_A_FLAGS]		= { .type = NLA_U32 },
+ 	[WGDEVICE_A_LISTEN_PORT]	= { .type = NLA_U16 },
+ 	[WGDEVICE_A_FWMARK]		= { .type = NLA_U32 },
+-	[WGDEVICE_A_PEERS]		= { .type = NLA_NESTED }
++	[WGDEVICE_A_PEERS]		= { .type = NLA_NESTED },
++	[WGDEVICE_A_LOWERDEV]		= { .type = NLA_U32 },
+ };
+ 
+ static const struct nla_policy peer_policy[WGPEER_A_MAX + 1] = {
+@@ -232,6 +233,7 @@ static int wg_get_device_dump(struct sk_buff *skb, struct netlink_callback *cb)
+ 		if (nla_put_u16(skb, WGDEVICE_A_LISTEN_PORT,
+ 				wg->incoming_port) ||
+ 		    nla_put_u32(skb, WGDEVICE_A_FWMARK, wg->fwmark) ||
++		    nla_put_u32(skb, WGDEVICE_A_LOWERDEV, wg->lowerdev) ||
+ 		    nla_put_u32(skb, WGDEVICE_A_IFINDEX, wg->dev->ifindex) ||
+ 		    nla_put_string(skb, WGDEVICE_A_IFNAME, wg->dev->name))
+ 			goto out;
+@@ -530,6 +532,14 @@ static int wg_set_device(struct sk_buff *skb, struct genl_info *info)
+ 			wg_socket_clear_peer_endpoint_src(peer);
+ 	}
+ 
++	if (info->attrs[WGDEVICE_A_LOWERDEV]) {
++		struct wg_peer *peer;
++
++		wg->lowerdev = nla_get_u32(info->attrs[WGDEVICE_A_LOWERDEV]);
++		list_for_each_entry(peer, &wg->peer_list, peer_list)
++			wg_socket_clear_peer_endpoint_src(peer);
++	}
++
+ 	if (info->attrs[WGDEVICE_A_LISTEN_PORT]) {
+ 		ret = set_port(wg,
+ 			nla_get_u16(info->attrs[WGDEVICE_A_LISTEN_PORT]));
+diff --git a/drivers/net/wireguard/socket.c b/drivers/net/wireguard/socket.c
+index 0414d7a6ce74..7cef4b27f6ba 100644
+--- a/drivers/net/wireguard/socket.c
++++ b/drivers/net/wireguard/socket.c
+@@ -25,7 +25,8 @@ static int send4(struct wg_device *wg, struct sk_buff *skb,
+ 		.daddr = endpoint->addr4.sin_addr.s_addr,
+ 		.fl4_dport = endpoint->addr4.sin_port,
+ 		.flowi4_mark = wg->fwmark,
+-		.flowi4_proto = IPPROTO_UDP
++		.flowi4_proto = IPPROTO_UDP,
++		.flowi4_oif = wg->lowerdev,
+ 	};
+ 	struct rtable *rt = NULL;
+ 	struct sock *sock;
+@@ -111,6 +112,9 @@ static int send6(struct wg_device *wg, struct sk_buff *skb,
+ 	struct sock *sock;
+ 	int ret = 0;
+ 
++	if (wg->lowerdev)
++		fl.flowi6_oif = wg->lowerdev;
++
+ 	skb_mark_not_on_list(skb);
+ 	skb->dev = wg->dev;
+ 	skb->mark = wg->fwmark;
+@@ -360,6 +364,7 @@ int wg_socket_init(struct wg_device *wg, u16 port)
+ 		.family = AF_INET,
+ 		.local_ip.s_addr = htonl(INADDR_ANY),
+ 		.local_udp_port = htons(port),
++		.bind_ifindex = wg->lowerdev,
+ 		.use_udp_checksums = true
+ 	};
+ #if IS_ENABLED(CONFIG_IPV6)
+@@ -369,6 +374,7 @@ int wg_socket_init(struct wg_device *wg, u16 port)
+ 		.local_ip6 = IN6ADDR_ANY_INIT,
+ 		.use_udp6_tx_checksums = true,
+ 		.use_udp6_rx_checksums = true,
++		.bind_ifindex = wg->lowerdev,
+ 		.ipv6_v6only = true
+ 	};
+ #endif
+diff --git a/include/uapi/linux/wireguard.h b/include/uapi/linux/wireguard.h
+index ae88be14c947..f3784885389a 100644
+--- a/include/uapi/linux/wireguard.h
++++ b/include/uapi/linux/wireguard.h
+@@ -29,6 +29,7 @@
+  *    WGDEVICE_A_PUBLIC_KEY: NLA_EXACT_LEN, len WG_KEY_LEN
+  *    WGDEVICE_A_LISTEN_PORT: NLA_U16
+  *    WGDEVICE_A_FWMARK: NLA_U32
++ *    WGDEVICE_A_LOWERDEV: NLA_U32
+  *    WGDEVICE_A_PEERS: NLA_NESTED
+  *        0: NLA_NESTED
+  *            WGPEER_A_PUBLIC_KEY: NLA_EXACT_LEN, len WG_KEY_LEN
+@@ -83,6 +84,7 @@
+  *    WGDEVICE_A_PRIVATE_KEY: len WG_KEY_LEN, all zeros to remove
+  *    WGDEVICE_A_LISTEN_PORT: NLA_U16, 0 to choose randomly
+  *    WGDEVICE_A_FWMARK: NLA_U32, 0 to disable
++ *    WGDEVICE_A_LOWERDEV: NLA_U32, ifindex to bind lower transport, 0 to disable
+  *    WGDEVICE_A_PEERS: NLA_NESTED
+  *        0: NLA_NESTED
+  *            WGPEER_A_PUBLIC_KEY: len WG_KEY_LEN
+@@ -157,6 +159,7 @@ enum wgdevice_attribute {
+ 	WGDEVICE_A_LISTEN_PORT,
+ 	WGDEVICE_A_FWMARK,
+ 	WGDEVICE_A_PEERS,
++	WGDEVICE_A_LOWERDEV,
+ 	__WGDEVICE_A_LAST
+ };
+ #define WGDEVICE_A_MAX (__WGDEVICE_A_LAST - 1)
+-- 
+2.42.0
 
-As always, the source is available at https://git.zx2c4.com/wireguard-tools/ and
-information about the project is available at https://www.wireguard.com/ .
-
-This release is available in compressed tarball form here:
-  https://git.zx2c4.com/wireguard-tools/snapshot/wireguard-tools-1.0.20250521.tar.xz
-  SHA2-256: b6f2628b85b1b23cc06517ec9c74f82d52c4cdbd020f3dd2f00c972a1782950e
-
-A PGP signature of that file decompressed is available here:
-  https://git.zx2c4.com/wireguard-tools/snapshot/wireguard-tools-1.0.20250521.tar.asc
-  Signing key: AB9942E6D4A4CFC3412620A749FC7012A5DE03AE
-  Remember to unxz the tarball before verifying the signature.
-
-If you're a package maintainer, please bump your package version. If you're a
-user, the WireGuard team welcomes any and all feedback on this latest version.
-
-Finally, WireGuard development thrives on donations. By popular demand, we
-have a webpage for this: https://www.wireguard.com/donations/
-
-Thank you,
-Jason Donenfeld
-
-
------BEGIN PGP SIGNATURE-----
-
-iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAmgtDoIQHGphc29uQHp4
-MmM0LmNvbQAKCRBJ/HASpd4DrqIuEACLc6L9YTFeIdMux9b4z2D7EiiX2+7+skp5
-S0fEh07EelPTbPFPbLswvogyJrOK7SWXfLdeHgPSSxBFH95OZUhdnorM8XfOC5ST
-VmMktVy9UZwxmrCVDd401rXRdZpkv4Dfob9iDU7McOcLoV+QnugEofljRuQbQExy
-LB7e99hj06TP8eFBsQydfxv8OGSHu9H61ypVHCESZFFheFCfcJWjo8OzQu+CuhFl
-fIklPiiAQL3ZQQA+v7r6wm93QuYwyQKfwNUC4F0quwwDMtWpgKs2hXRxMa93fZ3W
-f2GlemJVWO5bj7VQKf6qZpILkCOLeIXPvAi8PIZX5QOvX2Yon88KiCw2caZqrm67
-XWoqD75c1xZX78wHR0xniyAi5w12Hzpcnci7mBm7RBNBDN15ZQY01V5t4H6VulM2
-uOUGspm/rcK1tCYDFV9DWAFon6881JJllXOe30n/dBsE0mNL2r4k5R5qCNxbWMmB
-vp1qP6Thu3XO1vLo42A5EmJEbu04blCSVi3BKfby/21VTzCbrgufvv3JKAauTFEz
-mmNwP1OW927/4C0aypkxUSkAv8aOwfrC+VWX5UAiFm9Zirc1nBgGFGjxZDQ+biV5
-FT4zoEfqQQJ2pwZQq2leNKiFQE7pIcbvmY1O7LB1WXA92Ba4pGk7m1fP0Q8jLl7L
-YBEORDlgig==
-=de0O
------END PGP SIGNATURE-----
