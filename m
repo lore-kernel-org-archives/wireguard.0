@@ -4,76 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08D84C54E92
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 09:18:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D993CC2D0CD
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 09:18:19 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fc6b1dc6;
-	Tue, 20 May 2025 19:54:44 +0000 (UTC)
-Received: from fhigh-b6-smtp.messagingengine.com
- (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d30fc49a
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5b04a251;
+	Tue, 20 May 2025 19:34:48 +0000 (UTC)
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com
+ [2607:f8b0:4864:20::649])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e29c9162
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Sun, 16 Feb 2025 22:51:09 +0000 (UTC)
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal
- [10.202.2.42])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 810862540172
- for <wireguard@lists.zx2c4.com>; Sun, 16 Feb 2025 17:51:07 -0500 (EST)
-Received: from phl-imap-13 ([10.202.2.103])
- by phl-compute-02.internal (MEProxy); Sun, 16 Feb 2025 17:51:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=eizinger.io; h=
- cc:content-transfer-encoding:content-type:content-type:date:date
- :from:from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to; s=fm3; t=1739746267; x=1739832667; bh=2WMizP00uf
- lSMmkU7mF27Kvs4UxwxG0DyqJ0P8VSQu0=; b=qVB28UygiSGoiHhS7peNZM1Njh
- SMW0VHHeUMonj38FLhzKMUEouZtGofcYPeYk+LSc2gZdJn13HVOCI6lQRTwjBLG5
- 5zhjfzng90hUUpyQDYP3V/PaXKhW/jgMrWx7JICBKTp7P8HHk0JEmngPloJtLe4e
- OUqJHU9rFjq8+jaJqCteqp1epbUvmv1F+inSYCTUzq5pF9Xj9aAq5/DdDBdNNseC
- RsHCkPJSyQJ4LdavSzVRtf/JijJCwFd3rpwe+Q1B4XzpVZ9leDRP4SMkezuF171G
- xn3y1KcASIuDZZq1ceP50Hapr/aBE/44uv1I8Vv7NcADO1IvWVJpBnOmAA9Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:content-type
- :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:message-id:mime-version:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
- 1739746267; x=1739832667; bh=2WMizP00uflSMmkU7mF27Kvs4UxwxG0DyqJ
- 0P8VSQu0=; b=ZkpiSdYf0Qk+G1fbZhH1S0hRtaB/rpg2SggQL4LTXmRPKi+t4Fb
- ui4ZqiXErg0T64oE5gTSeH6XiCJNk5Yk0nlQnwgwhmcohsGKQpU1wzBrdyMeDttx
- /iLuRu7f7yk0iJ8z/w2XvwogGHxkojYGoAubU+nfyirQ70Ijq1/BCsHvQNOgcfp1
- 15R3XBR5TodCSkn0W5PQU0D4mWC9hSasAwnaBwiZvSXJM4KE+vlMeo/QPlsl8pby
- 0m1Kcg8brThkjVOtr2sT5J8nDa0t8x+vZO4KoMlTb22rGtD4h83BvxWt7FxlIvuy
- 7FNKwDR287IiCPcwaKU5YoO+x6jXpjZ0ogQ==
-X-ME-Sender: <xms:2muyZ_RPxyoPRl8jv89fRWbJrHqLwuFK3KOG05CsbBXH7SrLfgivlg>
- <xme:2muyZwxfmN2Qy_GnGJZaiEqqTE3nwf2-7-MRU_ruHBRG55HjT4cBoti1ckVg2YvVi
- 91yUvgMy2U1NQ33Mh4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdehieejfecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
- uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepofggff
- fhvffkufgtgfesthejredtredttdenucfhrhhomhepfdfvhhhomhgrshcugfhiiihinhhg
- vghrfdcuoehthhhomhgrshesvghiiihinhhgvghrrdhioheqnecuggftrfgrthhtvghrnh
- eptefghedvhefgfedvvdegfeeiheduheejjeethefgkefhvdetieevkefgueekgfeunecu
- ffhomhgrihhnpeiigidvtgegrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
- hrrghmpehmrghilhhfrhhomhepthhhohhmrghssegvihiiihhnghgvrhdrihhopdhnsggp
- rhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeifihhrvghguh
- grrhgusehlihhsthhsrdiigidvtgegrdgtohhm
-X-ME-Proxy: <xmx:2muyZ02YtT1jbCjp8K6ZWwF1l53p8pw3Okg3SGH1HxS1kzs1Z5nV6Q>
- <xmx:2muyZ_ByBt8mK3atABozxvrTwRiqQdKPvPp6PbJgfbiZIEqYGFpf1g>
- <xmx:2muyZ4hUhhIF8qa3DSLEkBefrnxjrUCubkC1ZMmeXymFuXhv8B8XWg>
- <xmx:2muyZzrKavEgEaRalvGF9Z4vGDdyLV5TIKhEvFPXzINTYFyiu4FPyA>
- <xmx:22uyZwKSbrw8Oy9xK93XmgtJX1tedtKwiJwBFTItaJMsl2VCzWSfIw_1>
-Feedback-ID: i89514918:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
- id C8CD51F00072; Sun, 16 Feb 2025 17:51:06 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-MIME-Version: 1.0
-Date: Mon, 17 Feb 2025 09:50:33 +1100
-From: "Thomas Eizinger" <thomas@eizinger.io>
-To: wireguard@lists.zx2c4.com
-Message-Id: <3026a6c9-ee83-43b4-97a1-0904d85b8ad7@app.fastmail.com>
-Subject: Race-condition when removing instance of WinTUN adapter?
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-Mailman-Approved-At: Tue, 20 May 2025 19:52:08 +0000
+ for <wireguard@lists.zx2c4.com>; Wed, 4 Dec 2024 01:53:40 +0000 (UTC)
+Received: by mail-pl1-x649.google.com with SMTP id
+ d9443c01a7336-2154e1cdf72so41511175ad.3
+ for <wireguard@lists.zx2c4.com>; Tue, 03 Dec 2024 17:53:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1733277219; x=1733882019; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:cc:to:from:subject:message-id
+ :mime-version:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=Dv4heYaGR4g4M8CWYEn3h62ZBrXdPkty7ZaSDudDp5s=;
+ b=SMj25BjAByLsF99oBU/Q5fLTyW3X2jXrTpW66/XrfeER0t2uuYTDcx/DOrw05liPSk
+ wW4sNkLnpT4A+l1wyrSGjxd3dGMO5QWZkJmns3e4IVPfPc3MoafuoMBwJ2Awd7L/n8mx
+ pembT3hcX1HwBaqQDunH4t2glNDazomune0wjPV6IeeRZJM+ycfqgSzZ5QUUN+GnDFfL
+ vWtojVso0L27UXzfy+4mJN8FS2+bTK3uCXjO2oBjECYG7ealaVS0SsBeLWFhmK2VzHV+
+ xKed8CjKftAX8pxacdcP38CtMkef6OsdGAbbHqjGLnK7wExlL3AF4rFMFPYHdIcxIzkt
+ TvNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733277219; x=1733882019;
+ h=content-transfer-encoding:cc:to:from:subject:message-id
+ :mime-version:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Dv4heYaGR4g4M8CWYEn3h62ZBrXdPkty7ZaSDudDp5s=;
+ b=oriS/GZg8uXvFN/tJcFCRlkXxhRE7vDR/1jlvXF2AGxzFUGiTxQdbjIrHffCYvDCkb
+ jKGEV2NGb3lSTNsgU/BjxWtWFEjw/8pLvsqBxuQ5gxHZHGCVvC8OKcuOFslw7XJGKRhK
+ uDnOMV5DwNoYQN7LvATHQK30yyuYHs0yxJHXtllRe6b72UA+IoFCwECqOYFlRWxfHRnv
+ 0I2MPCByunM9TRZyFxAVfxBUCOsGrPgL2CEB/ZQsCI08bVIIShp84uDXCG1/nX1yw4o5
+ MGa+eDhDyJnOxBCoAQXdKm61G0qNSYsAxiBq3ojJe0YIfi8MpOjhqgHwnWNsay6uNMsd
+ af2Q==
+X-Gm-Message-State: AOJu0YwGfMT/IGbONTmn5NYeIM2xSHCZu7eVxjTuyTlwzD2rfqZ27w3D
+ TrtqPPxc6iuLl2WxToBeI6KBBQCmZNusOMeoeUlKK3ODwd1Arnb8597JuVVqhLp4EiN5UxvflAu
+ oKnEeVDm2xvdyXX4zOvoghv885aBSu7LoiaEutXKoCIA10DWsxaDQAxK0Bn3kV3x4T8rkF2JO9X
+ mvfOQj4IuzcON41qZ5AfePJUBiNZIMv2o=
+X-Google-Smtp-Source: AGHT+IEbzu2XR7hhQrgQOY8r3QB7p/qGzcYT0LPhErf/K+agwOnfYuVJLMhAPMMEmhxSuKhAJa7EQEN43Q==
+X-Received: from pllj12.prod.google.com ([2002:a17:902:758c:b0:215:515c:124e])
+ (user=jrife job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a17:903:32cc:b0:215:aecf:802f
+ with SMTP id d9443c01a7336-215bd1585a5mr61249285ad.37.1733277218956; Tue, 03
+ Dec 2024 17:53:38 -0800 (PST)
+Date: Wed,  4 Dec 2024 01:53:27 +0000
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.47.0.338.g60cca15819-goog
+Message-ID: <20241204015331.2762169-1-jrife@google.com>
+Subject: [PATCH v1 wireguard-tools] ipc: linux: Support incremental allowed
+ ips updates
+From: Jordan Rife <jrife@google.com>
+To: wireguard@lists.zx2c4.com, "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: Jordan Rife <jrife@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -88,29 +75,238 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello!
+[1] adds support for the WGALLOWEDIP_F_REMOVE_ME flag to WireGuard's
+Linux driver which is a direct way of removing a single allowed ip from
+a peer. Extend the interface of `wg set` to leverage this feature,
+allowing for incremental updates to a peer's configuration. By default,
+allowed-ips fully replaces a peer's allowed ips using
+WGPEER_REPLACE_ALLOWEDIPS under the hood. When '+' or '-' is prepended
+to any ip in the list, wg clears WGPEER_F_REPLACE_ALLOWEDIPS and sets
+the WGALLOWEDIP_F_REMOVE_ME flag on any ip prefixed with '-'.
 
-We are receiving variations of the following errors on multiple Windows machines from customers. The UUID is what we are setting as the tunnel adapter ID.
+$ wg set wg0 peer <PUBKEY> allowed-ips +192.168.88.0/24,-192.168.0.1/32
 
-```
-Spawning native process to remove instance
-Error executing worker process: "SWD\WINTUN\{E9245BC1-B8C1-44CA-AB1D-C6AAD4F13B9C}": The system cannot find the path specified. (Code 0x00000003)
-```
+This command means "add 192.168.88.0/24 to this peer's allowed ips if
+not present, and remove 192.168.0.1/32 if present".
 
-and
+Currently, this feature is only enabled for Linux builds.
 
-```
-Spawning native process to remove instance
-Failed to create process: rundll32 "C:\Windows\Temp\ab11b60bba2fb3bcc9a355e9e3a89003522ede647bc6c00704e734a8447c1ce5\setupapihost.dll",RemoveInstance "SWD\WINTUN\{E9245BC1-B8C1-44CA-AB1D-C6AAD4F13B9C}": Het systeem kan het opgegeven pad niet vinden. (Code 0x00000003)
-```
+[1]: https://lore.kernel.org/netdev/20241204014909.2760696-1-jrife@google.c=
+om/T/#u
 
-(Error message here is Dutch because that particular customer is in the Netherlands. It means "The system cannot find the path specified")
+Signed-off-by: Jordan Rife <jrife@google.com>
+---
+ src/config.c                     | 27 +++++++++++++++++++++++++++
+ src/containers.h                 |  5 +++++
+ src/ipc-linux.h                  |  2 ++
+ src/man/wg.8                     |  8 ++++++--
+ src/set.c                        |  2 +-
+ src/uapi/linux/linux/wireguard.h |  9 +++++++++
+ 6 files changed, 50 insertions(+), 3 deletions(-)
 
-From reading the source code at [0], I suspect that this is "only" a race condition where the adapter is simply no longer present at the time we want to remove it? I am not very well versed at C code which is why I figured I'd ask here before attempting to patch the code. Would it make sense to add a check for this particular error code and not fail as a result, making the function idempotent?
+diff --git a/src/config.c b/src/config.c
+index 81ccb47..b740f73 100644
+--- a/src/config.c
++++ b/src/config.c
+@@ -337,6 +337,29 @@ static bool validate_netmask(struct wgallowedip *allow=
+edip)
+ 	return true;
+ }
+=20
++#if defined(__linux__)
++static inline void parse_ip_prefix(struct wgpeer *peer, uint32_t *flags, c=
+har **mask)
++{
++	/* If the IP is prefixed with either '+' or '-' consider
++	 * this an incremental change. Disable WGPEER_REPLACE_ALLOWEDIPS.
++	 */
++	switch ((*mask)[0]) {
++	case '-':
++		*flags |=3D WGALLOWEDIP_REMOVE_ME;
++		/* fall through */
++	case '+':
++		peer->flags &=3D ~WGPEER_REPLACE_ALLOWEDIPS;
++		(*mask)++;
++	}
++}
++#else
++static inline void parse_ip_prefix(struct wgpeer *peer __attribute__ ((unu=
+sed)),
++				   uint32_t *flags     __attribute__ ((unused)),
++				   char **mask         __attribute__ ((unused)))
++{
++}
++#endif
++
+ static inline bool parse_allowedips(struct wgpeer *peer, struct wgallowedi=
+p **last_allowedip, const char *value)
+ {
+ 	struct wgallowedip *allowedip =3D *last_allowedip, *new_allowedip;
+@@ -353,9 +376,12 @@ static inline bool parse_allowedips(struct wgpeer *pee=
+r, struct wgallowedip **la
+ 	}
+ 	sep =3D mutable;
+ 	while ((mask =3D strsep(&sep, ","))) {
++		uint32_t flags =3D 0;
+ 		unsigned long cidr;
+ 		char *end, *ip;
+=20
++		parse_ip_prefix(peer, &flags, &mask);
++
+ 		saved_entry =3D strdup(mask);
+ 		ip =3D strsep(&mask, "/");
+=20
+@@ -387,6 +413,7 @@ static inline bool parse_allowedips(struct wgpeer *peer=
+, struct wgallowedip **la
+ 		else
+ 			goto err;
+ 		new_allowedip->cidr =3D cidr;
++		new_allowedip->flags =3D flags;
+=20
+ 		if (!validate_netmask(new_allowedip))
+ 			fprintf(stderr, "Warning: AllowedIP has nonzero host part: %s/%s\n", ip=
+, mask);
+diff --git a/src/containers.h b/src/containers.h
+index a82e8dd..8fd813a 100644
+--- a/src/containers.h
++++ b/src/containers.h
+@@ -28,6 +28,10 @@ struct timespec64 {
+ 	int64_t tv_nsec;
+ };
+=20
++enum {
++	WGALLOWEDIP_REMOVE_ME =3D 1U << 0,
++};
++
+ struct wgallowedip {
+ 	uint16_t family;
+ 	union {
+@@ -35,6 +39,7 @@ struct wgallowedip {
+ 		struct in6_addr ip6;
+ 	};
+ 	uint8_t cidr;
++	uint32_t flags;
+ 	struct wgallowedip *next_allowedip;
+ };
+=20
+diff --git a/src/ipc-linux.h b/src/ipc-linux.h
+index d29c0c5..01247f1 100644
+--- a/src/ipc-linux.h
++++ b/src/ipc-linux.h
+@@ -228,6 +228,8 @@ again:
+ 				}
+ 				if (!mnl_attr_put_u8_check(nlh, SOCKET_BUFFER_SIZE, WGALLOWEDIP_A_CIDR=
+_MASK, allowedip->cidr))
+ 					goto toobig_allowedips;
++				if (allowedip->flags && !mnl_attr_put_u32_check(nlh, SOCKET_BUFFER_SIZ=
+E, WGALLOWEDIP_A_FLAGS, allowedip->flags))
++					goto toobig_allowedips;
+ 				mnl_attr_nest_end(nlh, allowedip_nest);
+ 				allowedip_nest =3D NULL;
+ 			}
+diff --git a/src/man/wg.8 b/src/man/wg.8
+index 7984539..1ec68df 100644
+--- a/src/man/wg.8
++++ b/src/man/wg.8
+@@ -55,7 +55,7 @@ transfer-rx, transfer-tx, persistent-keepalive.
+ Shows the current configuration of \fI<interface>\fP in the format describ=
+ed
+ by \fICONFIGURATION FILE FORMAT\fP below.
+ .TP
+-\fBset\fP \fI<interface>\fP [\fIlisten-port\fP \fI<port>\fP] [\fIfwmark\fP=
+ \fI<fwmark>\fP] [\fIprivate-key\fP \fI<file-path>\fP] [\fIpeer\fP \fI<base=
+64-public-key>\fP [\fIremove\fP] [\fIpreshared-key\fP \fI<file-path>\fP] [\=
+fIendpoint\fP \fI<ip>:<port>\fP] [\fIpersistent-keepalive\fP \fI<interval s=
+econds>\fP] [\fIallowed-ips\fP \fI<ip1>/<cidr1>\fP[,\fI<ip2>/<cidr2>\fP]...=
+] ]...
++\fBset\fP \fI<interface>\fP [\fIlisten-port\fP \fI<port>\fP] [\fIfwmark\fP=
+ \fI<fwmark>\fP] [\fIprivate-key\fP \fI<file-path>\fP] [\fIpeer\fP \fI<base=
+64-public-key>\fP [\fIremove\fP] [\fIpreshared-key\fP \fI<file-path>\fP] [\=
+fIendpoint\fP \fI<ip>:<port>\fP] [\fIpersistent-keepalive\fP \fI<interval s=
+econds>\fP] [\fIallowed-ips\fP \fI[+|-]<ip1>/<cidr1>\fP[,\fI[+|-]<ip2>/<cid=
+r2>\fP]...] ]...
+ Sets configuration values for the specified \fI<interface>\fP. Multiple
+ \fIpeer\fPs may be specified, and if the \fIremove\fP argument is given
+ for a peer, that peer is removed, not configured. If \fIlisten-port\fP
+@@ -72,7 +72,11 @@ the device. The use of \fIpreshared-key\fP is optional, =
+and may be omitted;
+ it adds an additional layer of symmetric-key cryptography to be mixed into
+ the already existing public-key cryptography, for post-quantum resistance.
+ If \fIallowed-ips\fP is specified, but the value is the empty string, all
+-allowed ips are removed from the peer. The use of \fIpersistent-keepalive\=
+fP
++allowed ips are removed from the peer. By default, \fIallowed-ips\fP repla=
+ces
++a peer's allowed ips. (Linux only) If + or - is prepended to any of the ip=
+s then
++the update is incremental; ips prefixed with '+' or '' are added to the pe=
+er's
++allowed ips if not present while ips prefixed with '-' are removed if pres=
+ent.
++The use of \fIpersistent-keepalive\fP
+ is optional and is by default off; setting it to 0 or "off" disables it.
+ Otherwise it represents, in seconds, between 1 and 65535 inclusive, how of=
+ten
+ to send an authenticated empty packet to the peer, for the purpose of keep=
+ing
+diff --git a/src/set.c b/src/set.c
+index 75560fd..992ffa2 100644
+--- a/src/set.c
++++ b/src/set.c
+@@ -18,7 +18,7 @@ int set_main(int argc, const char *argv[])
+ 	int ret =3D 1;
+=20
+ 	if (argc < 3) {
+-		fprintf(stderr, "Usage: %s %s <interface> [listen-port <port>] [fwmark <=
+mark>] [private-key <file path>] [peer <base64 public key> [remove] [presha=
+red-key <file path>] [endpoint <ip>:<port>] [persistent-keepalive <interval=
+ seconds>] [allowed-ips <ip1>/<cidr1>[,<ip2>/<cidr2>]...] ]...\n", PROG_NAM=
+E, argv[0]);
++		fprintf(stderr, "Usage: %s %s <interface> [listen-port <port>] [fwmark <=
+mark>] [private-key <file path>] [peer <base64 public key> [remove] [presha=
+red-key <file path>] [endpoint <ip>:<port>] [persistent-keepalive <interval=
+ seconds>] [allowed-ips [+|-]<ip1>/<cidr1>[,[+|-]<ip2>/<cidr2>]...] ]...\n"=
+, PROG_NAME, argv[0]);
+ 		return 1;
+ 	}
+=20
+diff --git a/src/uapi/linux/linux/wireguard.h b/src/uapi/linux/linux/wiregu=
+ard.h
+index 0efd52c..6ca266a 100644
+--- a/src/uapi/linux/linux/wireguard.h
++++ b/src/uapi/linux/linux/wireguard.h
+@@ -101,6 +101,10 @@
+  *                    WGALLOWEDIP_A_FAMILY: NLA_U16
+  *                    WGALLOWEDIP_A_IPADDR: struct in_addr or struct in6_a=
+ddr
+  *                    WGALLOWEDIP_A_CIDR_MASK: NLA_U8
++ *                    WGALLOWEDIP_A_FLAGS: NLA_U32, WGALLOWEDIP_F_REMOVE_M=
+E if
++ *                                         the specified IP should be remo=
+ved;
++ *                                         otherwise, this IP will be adde=
+d if
++ *                                         it is not already present.
+  *                0: NLA_NESTED
+  *                    ...
+  *                0: NLA_NESTED
+@@ -184,11 +188,16 @@ enum wgpeer_attribute {
+ };
+ #define WGPEER_A_MAX (__WGPEER_A_LAST - 1)
+=20
++enum wgallowedip_flag {
++	WGALLOWEDIP_F_REMOVE_ME =3D 1U << 0,
++	__WGALLOWEDIP_F_ALL =3D WGALLOWEDIP_F_REMOVE_ME
++};
+ enum wgallowedip_attribute {
+ 	WGALLOWEDIP_A_UNSPEC,
+ 	WGALLOWEDIP_A_FAMILY,
+ 	WGALLOWEDIP_A_IPADDR,
+ 	WGALLOWEDIP_A_CIDR_MASK,
++	WGALLOWEDIP_A_FLAGS,
+ 	__WGALLOWEDIP_A_LAST
+ };
+ #define WGALLOWEDIP_A_MAX (__WGALLOWEDIP_A_LAST - 1)
+--=20
+2.47.0.338.g60cca15819-goog
 
-Any insight is much appreciated.
-
-Kind regards,
-Thomas Eizinger
-
-[0]: https://git.zx2c4.com/wintun/tree/api/rundll32.c#n160
