@@ -4,84 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C23CAC54E92
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 00:00:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A527DC3DA6D
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 00:00:14 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a5198522;
-	Tue, 20 May 2025 19:41:45 +0000 (UTC)
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com
- [2607:f8b0:4864:20::636])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id efdede1f
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a58ec060;
+	Tue, 20 May 2025 19:34:51 +0000 (UTC)
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com
+ [2607:f8b0:4864:20::633])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8b9276d0
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 19 Feb 2025 12:52:25 +0000 (UTC)
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-220e989edb6so137428005ad.1
- for <wireguard@lists.zx2c4.com>; Wed, 19 Feb 2025 04:52:25 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Mon, 9 Dec 2024 14:02:30 +0000 (UTC)
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2166651f752so4243975ad.3
+ for <wireguard@lists.zx2c4.com>; Mon, 09 Dec 2024 06:02:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1739969544; x=1740574344; darn=lists.zx2c4.com;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HRequyiks98F4TvQO/vmtwESixnPXuO1TfB2/aKs1TA=;
- b=F28w4oWlrjn0onNuO0A5sWQRL2rbGIbD2Dj/qgo+GiaIDunXoYiXMoPJsjaAovxEmM
- L9rQpE8hvy6E4Rt5JwIxc0a9A1c9LONWLc6MJHyz17jJDYzy/WbdMflE41qpNasc5w/X
- 9kYGCrPKSaBVTuCwl2O2/g9SSjh8tUyAF3mHYJM7mUK+YUbiLuG/lL5U0vWil67tgSvK
- AXV8IuJcHA0prrsRWGAK1TrkggjWduekb0uXbKh1i8fq2E+BRKJTnN49FfOEWOCzm7+i
- xn3JORPhtMplVhhEJIUnv8Z6u0DUu2k3DwzwHoKwTB70GPnXAswF8IGy2kZE4kpXpL6q
- C3wQ==
+ d=gmail.com; s=20230601; t=1733752948; x=1734357748; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=OAhPp2pGpsvDTqVI2eQ221kABd4Y8/kh7k1mWyeQzTw=;
+ b=O0a8iYMR19QJxeIbtl3nO4JKB7tVff3lgMxkpa8pHsRLsZ5rZ4xDSCH0Z5UgygpepN
+ 8IDb5OxJ0oUUmMrWl+ARE5RuDXf+g9MqF4zWaaJCtpoU4jTboRexIKKcvff8zBlZVZzS
+ xam2G2X6VxTejiqmyJc9mfYcW4z8a0AhLTfBKjiaIu+Sgq7rwX8ZvtQU5/1+urH+oXkM
+ NDii09sP/T0NTZvq+pV2ntGpOzZKdDR6fQviYjqb9EbRs45hP3OctdgTICrfQDeUgwwT
+ QMx3SDuDaPpyudhQYAzXrd1olDaVo1R7dSc2wKthsFgWbHaA+vLX96qRVfpvx6cgaSf4
+ WRvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739969544; x=1740574344;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HRequyiks98F4TvQO/vmtwESixnPXuO1TfB2/aKs1TA=;
- b=KT6kSiw4/EjsqGocs98B8GSXafZ2rm4MdMZZn28CribZFXKkTQ27Esxhnom8H+ORfD
- bznrSU9Y+6vSk83p8OpBo9H09xjoiYoGfqMOje7QnVY/IZWWwlKxSFYyDIRBC92Sf2d7
- lUHVn0IAQxEESQbOwq0bKWb+Ozde2Sx/kIzt0PVz3TeCIh4cbysAE8KBuh+v9+eGzlqx
- YitksujEuS3HE950E0YEZ0cx35uqlAc4w7v2KlYFAc3264UvysaRaEX10eZOQuxooQTP
- /BoKKFlbQABitBBL0R/sJHop4FAhOX9sccSTlCBSesmNpslCj23iXCI6KCKTKwdQ85o3
- Strg==
+ d=1e100.net; s=20230601; t=1733752948; x=1734357748;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=OAhPp2pGpsvDTqVI2eQ221kABd4Y8/kh7k1mWyeQzTw=;
+ b=O1Nnw+wucLr2ZTcK/tkKVzUuDyZYceTGoTS8/cyHvNVCyl9P24HmRvPzf+pex0w2jL
+ NQrwdiWvSuMVhd/SFisXahhZAjZKqbd5GOACz9Pm/Q5AuFqK9iCjS2c3q9+0x0b1IBKf
+ UDW3VW4z4aeBiXeubE4CEs/g221f2LrnMavts7D+DQWh6Z7SFqSzo42xOMUh2kpqnmZO
+ Kx8pYtnTH8PLTkJZoWT15zGw3UeKOtOpI8KF4CJDRPKS+QgjTrkaxU4qsPdXV4zfwbQo
+ bQ4UDnrpQrf+QB5F7vw2jlfI6AgRaNyZyRs5VYkGxndRCO2qE4UkNmhUkz2d+D5/CqjP
+ JOug==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUYGRXdqzIJ7XXcYfK0RzRHQMptTDR7lGBgR7bd5Zr+N7OP01SRS6jh/kVP4IDjt276Fr/OAldfSts=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0Yx/OID85tKHEMZoSog+779KCnZzZyI7s0wlf2cMPxo2byuY5LGd
- KOHBIZTRPHKaIn+suUyCp9DOn2okzy73rNihIwK75bfY2GgnO8d5
-X-Gm-Gg: ASbGncvF51mEWQzx728AZopdl5hoslfWnqWUbM99uuou7McBWr7YeZ2R6G1bDcvyhmM
- HuD782PljHPgpe7fN8zTxzGiMNWVhnZYbdst8o84PCitVG2oesz/vx6eshi2lrp52m4K9I4ozH0
- sDAHYTSQWna5ATRvqGZWvhe/WlUquzBaI3cmbXf4y9ltQ8vebwg3J6jES+TDq11AcY3/QZkUJi4
- wN+2zOcwr1F8dZdc3BWoQFztvK2ETQPaxNbfaRkXX2IMvshpPr+iSOwGg/g8yLJq5e1t/4nLJUV
- gU3q6g==
-X-Google-Smtp-Source: AGHT+IHnb5v62m0BvDxfIowP9iMNtE/Y7pYhM/eIGIlagffbyppVP0uCqTnvfVFz3C1LICvyxAmpug==
-X-Received: by 2002:a17:902:e841:b0:21f:564:80a4 with SMTP id
- d9443c01a7336-221040a9a0emr294098225ad.33.1739969543796; 
- Wed, 19 Feb 2025 04:52:23 -0800 (PST)
-Received: from ws.. ([103.167.140.11]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-220d536436fsm103427175ad.64.2025.02.19.04.52.15
+ AJvYcCUgsRI7tGnBpYqQckSpnBXnITBbxaOVtKUpqX1hhqARKO+fc/8Rc2Hsh1/wyse01KEJ4Bm+cmwK4ZQ=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YyNgt2z+ZUpritarW3nVh3EEXJViKpP1sDjw8vfhFP+HshqyCaX
+ 6mNQ5ff7XmQMd2TBtJ4m18lL3f7ub2HsjLCl41fkswqXHNLdJM4D
+X-Gm-Gg: ASbGncsQohmUfjvuwaBLD1+rnKPMoKv1rErQbznwvF9uzqvB/umDVNS4IARoj1jEOxD
+ YxaAw2WYSBnuHEPXnAfJVza0ZrU2vXSOavb4kNbb9fIKzdddtK8PfAubz0gIFh4bB2BaCA5X1C3
+ T360YLMr7Fhq0Gfkdne2zG+/IWjMbocjsVYkAoqdxmCwRhpQeYxmZ4EZGNzsRX8Vy/4rUofiMpl
+ ESrLuRaegF+beBQWt2iIp+NNC0m6HLLu4cuPPUnvY4x6/c=
+X-Google-Smtp-Source: AGHT+IEziqjANISe8V7T1b1Vo9dS8nge43qoErTxjCtNhfTplDp9qnHGPIzO4tjQCtyFccSJFTBRCw==
+X-Received: by 2002:a17:902:e74f:b0:216:4122:925f with SMTP id
+ d9443c01a7336-21641229442mr90363145ad.14.1733752948110; 
+ Mon, 09 Dec 2024 06:02:28 -0800 (PST)
+Received: from nova-ws.. ([103.167.140.11]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-216221db645sm49605645ad.46.2024.12.09.06.02.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Feb 2025 04:52:23 -0800 (PST)
+ Mon, 09 Dec 2024 06:02:26 -0800 (PST)
 From: Xiao Liang <shaw.leon@gmail.com>
 To: netdev@vger.kernel.org, linux-kselftest@vger.kernel.org,
- Kuniyuki Iwashima <kuniyu@amazon.com>, Jakub Kicinski <kuba@kernel.org>
+ Kuniyuki Iwashima <kuniyu@amazon.com>, Jakub Kicinski <kuba@kernel.org>,
+ Donald Hunter <donald.hunter@gmail.com>
 Cc: "David S. Miller" <davem@davemloft.net>, David Ahern <dsahern@kernel.org>,
  Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
- Andrew Lunn <andrew+netdev@lunn.ch>, Simon Horman <horms@kernel.org>,
- Shuah Khan <shuah@kernel.org>, Donald Hunter <donald.hunter@gmail.com>,
- Alexander Aring <alex.aring@gmail.com>,
- Stefan Schmidt <stefan@datenfreihafen.org>,
- Miquel Raynal <miquel.raynal@bootlin.com>,
- Steffen Klassert <steffen.klassert@secunet.com>,
- Herbert Xu <herbert@gondor.apana.org.au>, linux-rdma@vger.kernel.org,
- linux-can@vger.kernel.org, osmocom-net-gprs@lists.osmocom.org,
- bpf@vger.kernel.org, linux-ppp@vger.kernel.org, wireguard@lists.zx2c4.com,
+ Ido Schimmel <idosch@nvidia.com>, Andrew Lunn <andrew+netdev@lunn.ch>,
+ Simon Horman <horms@kernel.org>, Shuah Khan <shuah@kernel.org>,
+ Jiri Pirko <jiri@resnulli.us>, Hangbin Liu <liuhangbin@gmail.com>,
+ linux-rdma@vger.kernel.org, linux-can@vger.kernel.org,
+ osmocom-net-gprs@lists.osmocom.org, bpf@vger.kernel.org,
+ linux-ppp@vger.kernel.org, wireguard@lists.zx2c4.com,
  linux-wireless@vger.kernel.org, b.a.t.m.a.n@lists.open-mesh.org,
  bridge@lists.linux.dev, linux-wpan@vger.kernel.org,
  linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v10 10/13] rtnetlink: Remove "net" from newlink params
-Date: Wed, 19 Feb 2025 20:50:36 +0800
-Message-ID: <20250219125039.18024-11-shaw.leon@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250219125039.18024-1-shaw.leon@gmail.com>
-References: <20250219125039.18024-1-shaw.leon@gmail.com>
+Subject: [PATCH net-next v5 0/5] net: Improve netns handling in RTNL and
+ ip_tunnel
+Date: Mon,  9 Dec 2024 22:01:46 +0800
+Message-ID: <20241209140151.231257-1-shaw.leon@gmail.com>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -98,52 +92,108 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Now that devices have been converted to use the specific netns instead
-of ambiguous "net", let's remove it from newlink parameters.
+This patch series includes some netns-related improvements and fixes for
+RTNL and ip_tunnel, to make link creation more intuitive:
 
-Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
+ - Creating link in another net namespace doesn't conflict with link names
+   in current one.
+ - Refector rtnetlink link creation. Create link in target namespace
+   directly. Pass both source and link netns to drivers via newlink()
+   callback.
+
+So that
+
+  # ip link add netns ns1 link-netns ns2 tun0 type gre ...
+
+will create tun0 in ns1, rather than create it in ns2 and move to ns1.
+And don't conflict with another interface named "tun0" in current netns.
+
 ---
- include/net/rtnetlink.h | 2 --
- net/core/rtnetlink.c    | 6 ------
- 2 files changed, 8 deletions(-)
 
-diff --git a/include/net/rtnetlink.h b/include/net/rtnetlink.h
-index b22a106621fb..ec65a8cebb99 100644
---- a/include/net/rtnetlink.h
-+++ b/include/net/rtnetlink.h
-@@ -72,7 +72,6 @@ static inline int rtnl_msg_family(const struct nlmsghdr *nlh)
- /**
-  * struct rtnl_newlink_params - parameters of rtnl_link_ops::newlink()
-  *
-- * @net: Netns of interest
-  * @src_net: Source netns of rtnetlink socket
-  * @link_net: Link netns by IFLA_LINK_NETNSID, NULL if not specified
-  * @peer_net: Peer netns
-@@ -80,7 +79,6 @@ static inline int rtnl_msg_family(const struct nlmsghdr *nlh)
-  * @data: IFLA_INFO_DATA attributes
-  */
- struct rtnl_newlink_params {
--	struct net *net;
- 	struct net *src_net;
- 	struct net *link_net;
- 	struct net *peer_net;
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index 9ebbde0d131c..e980481bdd28 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -3798,12 +3798,6 @@ static int rtnl_newlink_create(struct sk_buff *skb, struct ifinfomsg *ifm,
- 
- 	dev->ifindex = ifm->ifi_index;
- 
--	params.net = params.src_net;
--	if (link_net)
--		params.net = link_net;
--	if (peer_net)
--		params.net = peer_net;
--
- 	if (ops->newlink)
- 		err = ops->newlink(dev, &params, extack);
- 	else
+v5:
+ - Fix function doc in batman-adv.
+ - Include peer_net in rtnl newlink parameters.
+
+v4:
+ link: https://lore.kernel.org/all/20241118143244.1773-1-shaw.leon@gmail.com/
+ - Pack newlink() parameters to a single struct.
+ - Use ynl async_msg_queue.empty() in selftest.
+
+v3:
+ link: https://lore.kernel.org/all/20241113125715.150201-1-shaw.leon@gmail.com/
+ - Drop "netns_atomic" flag and module parameter. Add netns parameter to
+   newlink() instead, and convert drivers accordingly.
+ - Move python NetNSEnter helper to net selftest lib.
+
+v2:
+ link: https://lore.kernel.org/all/20241107133004.7469-1-shaw.leon@gmail.com/
+ - Check NLM_F_EXCL to ensure only link creation is affected.
+ - Add self tests for link name/ifindex conflict and notifications
+   in different netns.
+ - Changes in dummy driver and ynl in order to add the test case.
+
+v1:
+ link: https://lore.kernel.org/all/20241023023146.372653-1-shaw.leon@gmail.com/
+
+
+Xiao Liang (5):
+  net: ip_tunnel: Build flow in underlay net namespace
+  rtnetlink: Lookup device in target netns when creating link
+  rtnetlink: Decouple net namespaces in rtnl_newlink_create()
+  selftests: net: Add python context manager for netns entering
+  selftests: net: Add two test cases for link netns
+
+ drivers/infiniband/ulp/ipoib/ipoib_netlink.c  | 11 +++--
+ drivers/net/amt.c                             | 13 +++---
+ drivers/net/bareudp.c                         | 11 +++--
+ drivers/net/bonding/bond_netlink.c            |  8 ++--
+ drivers/net/can/dev/netlink.c                 |  4 +-
+ drivers/net/can/vxcan.c                       |  9 ++--
+ .../ethernet/qualcomm/rmnet/rmnet_config.c    | 11 +++--
+ drivers/net/geneve.c                          | 11 +++--
+ drivers/net/gtp.c                             |  9 ++--
+ drivers/net/ipvlan/ipvlan.h                   |  4 +-
+ drivers/net/ipvlan/ipvlan_main.c              | 11 +++--
+ drivers/net/ipvlan/ipvtap.c                   |  7 ++-
+ drivers/net/macsec.c                          | 11 +++--
+ drivers/net/macvlan.c                         |  8 ++--
+ drivers/net/macvtap.c                         |  8 ++--
+ drivers/net/netkit.c                          |  9 ++--
+ drivers/net/pfcp.c                            |  8 ++--
+ drivers/net/ppp/ppp_generic.c                 | 10 +++--
+ drivers/net/team/team_core.c                  |  7 +--
+ drivers/net/veth.c                            |  9 ++--
+ drivers/net/vrf.c                             |  7 +--
+ drivers/net/vxlan/vxlan_core.c                | 11 +++--
+ drivers/net/wireguard/device.c                |  8 ++--
+ drivers/net/wireless/virtual/virt_wifi.c      | 10 +++--
+ drivers/net/wwan/wwan_core.c                  | 15 +++++--
+ include/net/ip_tunnels.h                      |  5 ++-
+ include/net/rtnetlink.h                       | 44 ++++++++++++++++---
+ net/8021q/vlan_netlink.c                      | 11 +++--
+ net/batman-adv/soft-interface.c               | 12 ++---
+ net/bridge/br_netlink.c                       |  8 ++--
+ net/caif/chnl_net.c                           |  6 +--
+ net/core/rtnetlink.c                          | 35 ++++++++-------
+ net/hsr/hsr_netlink.c                         | 14 +++---
+ net/ieee802154/6lowpan/core.c                 |  9 ++--
+ net/ipv4/ip_gre.c                             | 27 ++++++++----
+ net/ipv4/ip_tunnel.c                          | 16 ++++---
+ net/ipv4/ip_vti.c                             | 10 +++--
+ net/ipv4/ipip.c                               | 10 +++--
+ net/ipv6/ip6_gre.c                            | 28 +++++++-----
+ net/ipv6/ip6_tunnel.c                         | 16 +++----
+ net/ipv6/ip6_vti.c                            | 15 +++----
+ net/ipv6/sit.c                                | 16 +++----
+ net/xfrm/xfrm_interface_core.c                | 14 +++---
+ tools/testing/selftests/net/Makefile          |  1 +
+ .../testing/selftests/net/lib/py/__init__.py  |  2 +-
+ tools/testing/selftests/net/lib/py/netns.py   | 18 ++++++++
+ tools/testing/selftests/net/netns-name.sh     | 10 +++++
+ tools/testing/selftests/net/netns_atomic.py   | 39 ++++++++++++++++
+ 48 files changed, 385 insertions(+), 211 deletions(-)
+ create mode 100755 tools/testing/selftests/net/netns_atomic.py
+
 -- 
-2.48.1
+2.47.1
 
