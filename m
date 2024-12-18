@@ -4,84 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A0B8C54E90
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 00:00:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0043C54E93
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 00:00:12 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 328d1d85;
-	Tue, 20 May 2025 19:39:13 +0000 (UTC)
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com
- [2607:f8b0:4864:20::62c])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7899aeb7
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a5aa20c5;
+	Tue, 20 May 2025 19:35:58 +0000 (UTC)
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com
+ [2607:f8b0:4864:20::436])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 56972ce5
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 13 Jan 2025 14:39:14 +0000 (UTC)
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-21636268e43so101789805ad.2
- for <wireguard@lists.zx2c4.com>; Mon, 13 Jan 2025 06:39:14 -0800 (PST)
+ Wed, 18 Dec 2024 13:10:16 +0000 (UTC)
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-72739105e02so7024264b3a.0
+ for <wireguard@lists.zx2c4.com>; Wed, 18 Dec 2024 05:10:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736779153; x=1737383953; darn=lists.zx2c4.com;
+ d=gmail.com; s=20230601; t=1734527415; x=1735132215; darn=lists.zx2c4.com;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=R0TVXDX/Oq9IB0mhgmi61TXIFVtPNPu1PWKjPd5bzuM=;
- b=TT23FrQQVbqjfHcZjYNx/qlbF5Ji3ztGcd/aLD/Hr7QwIrGtg/G6iMSIQslZqpoGHo
- zk5Lv/PB3HVE2C4OSsTC93fYvSpZB5y42+A150+0n3okpsRvN+hGKpmXC/GKbKnxIw3y
- 6cWiVOWGgtBNWjdD2pJleIF/BNgx/ufH8wzPxxO3AXT3FUfGo95qbDIEzrv9OhEnnm1t
- pWc2o7AaHoQULD0Wl1etZH0YCyoN7/OLJwRqca//qXVjUZPCRfPZCz6oPyu66ZzgaNoY
- B6/Obz2Yw1gsR/CjDn4gtBgRuU6WJrYmj9gWN5oiU/biid/ao5DOXxiLmHRB6bKWdHSG
- +i7A==
+ bh=pGKuR9iwJLKB00bK/9yuK8uQjR1STrnypDr+9jM2ZjQ=;
+ b=KTX0P2jk9GkfDxInCaTB8lVieNbmuR/WBLfSizn1HPBhGa/I4uXnwZncmrWpvKKH/R
+ Hw0+INf6fvrdm518eNfS1X6hGg7cYLOfgS10j8KMbieton4KIVwUu77e6sJkrabXJe5O
+ 6BK6bpoy2FlYQUuI2j03Sn8h7gwHofXwAj+6fCLTCnRn7kC5BGoX6URSzdoIR30LCGa0
+ 6N+djz6YRso4foqZYFe5ZUW2lWMWTy1M1LRp0MAZiE5YmNMy4LDhakXPTMR/5uVwiSEw
+ Ar1KHytHJMmpMhtAP24t7ri5x041rhMbn8FWJ295tKdgOJ+Q/U3oUk2KFq0YNdwrzaDr
+ BQPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736779153; x=1737383953;
+ d=1e100.net; s=20230601; t=1734527415; x=1735132215;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=R0TVXDX/Oq9IB0mhgmi61TXIFVtPNPu1PWKjPd5bzuM=;
- b=U5Th+215cABftwpLw9gIjwcRa7tIjGHcu55DNUqrmolb5oFxI8g6sE0MyAxrEsfuZ7
- ykoE6CwtPDNZUv+h4erQPM6q55NUoOlODbMY84F3AprZI95KSaLoWKAQ9NVlNN4xlJeZ
- X508KlzIeNmhCDActKxrJDiQBoctgmJ5D/igtWbfHk1PZIDD+Z3Aw00NEWAu3Czahxbo
- iiN7hrJFbUNVaHxGsqns79xTV+Hpetn6DYYMwGQa9juys7omWlnqzRHsLeiIGLT64Yr1
- Ys2SzXB4h7RIdBiXkhoWIgW1bB1Lxf6kU49w26ynF7yPdnKAb4yXb2cDhETds5dX2y3f
- 5wuQ==
+ bh=pGKuR9iwJLKB00bK/9yuK8uQjR1STrnypDr+9jM2ZjQ=;
+ b=PI8YGvqNMmTBCdmDPrein/YU5abkS6aFf1fSIK4fqZZ+2yLMaV3Iqpuaszr62G7+Rw
+ TwZ8Eaei1PQ/Ua28RsVIx4ubZTvsWi8L14narSoPcJrCTJl6t0rOrB9g0ZFfPUSx/kgh
+ vrNNC9fKIrH7pD/KfsRBPD5WJ/w/VkxbSbUclrAbnfkm5Ep+eG5r7q0oidXW1+XBDppS
+ wcWuyzH8q0+0zjGQ+WJ6i815dhxxYh4aOIaLEuVFSR8oiUePEt25byHftJlEBvyly/Fv
+ g9kE8Sq8nxciBG0m1MEyzbGVaoYFFOy2MOPvfkprclzDGip8EK97b4aoqzGEobIbcxXy
+ 74mA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUt3YjRupubCrpGGmiEqfGETFrfxpEEi3sFXjoxmYXY7KodxviTW3yKoBspp+GDJdYSDKGEMdZS/Wo=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YzzqqSAnibJxDfotFVMrWxwpMzl/FwAoRoxa0qgkODiMd8dOlnK
- CtpdXRq9wz/60ZGcsw2rSaawIY/EnfZ+TPJpGlI5CBl+2UrClS9T
-X-Gm-Gg: ASbGncv7+47JL/EkPAMDxsKVZTzmggPbKOcZcgDOJVXV46fRWG8GyBDua00SEdLyEQh
- 0KsZm5sRr1DuKkbcC80z58hu7WaLVmsZQ8FtxFT9APUledGjAAc+KJpuU5ucsxoVW7BL6/7slJP
- drHd13i6NZmXhTa5IPk39nDtEip3qrJe5jvObOMUOrvx4BQeIqfbDCqlTK0nkNLc+PKA5k7Ns7c
- ieDnZkwu/bctBFFs4LvZvM5J2pqheV13olSM7iYEYCP5MA=
-X-Google-Smtp-Source: AGHT+IFt4cEJz+p42bYm31EfJt3Zb0JLb+qW+6vXHsT58zE4AWUF4ed/u79zsBlznytyW2KBQMyVfw==
-X-Received: by 2002:a17:902:d511:b0:215:6489:cfbf with SMTP id
- d9443c01a7336-21a83f48cc0mr313835205ad.11.1736779153175; 
- Mon, 13 Jan 2025 06:39:13 -0800 (PST)
+ AJvYcCVUSwFJwTWutRLf6ASlm2sHgbDD+lcGt1f+JOFU3s6VKz5UE4MAYLfceSkTqSC8K1pabZat81BggyI=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YywkS/QQ8IfkB6QYCJ2ByX/dSQUFTJ0CfjhWRTXupiqigRDkPzZ
+ WS5cyOQuE/6HdMtr4r6IKeKSx+kN6Os40BsGijpI+7nKT8QaZBrY
+X-Gm-Gg: ASbGncus9S2qUOfbxtsozdRJxd45UfHdoWAqqPq0PmxKO+chDOOh+1X3/+5yD3CV2lO
+ S+aaDjQ97ZxtZdnJDF3vHe5yjW3qTLkM/ldLjUsWl95nwqHFZWSQyTUP26Smn+ssKUQ4uf10aCG
+ 6ta2IEE65DIw4szsQjwbiPYkkPsdQR6rKqLff9FcbMoIAinAsIX/i+v53/+W3Zmasnu2lQl2iaw
+ B54ri9/qjoW8T5yrzytuBqId5INhywYA6Wg9h9sydADEJU=
+X-Google-Smtp-Source: AGHT+IGQHpjG9Zvq9f/GAFOY7LWqEtsiV3DpqBRQY31QGrPpt7r1KVlmyyAbS3TmBXSPxo4Izh1/lg==
+X-Received: by 2002:a05:6a20:7288:b0:1e2:5c9:65e0 with SMTP id
+ adf61e73a8af0-1e5b48891d8mr4000269637.32.1734527413950; 
+ Wed, 18 Dec 2024 05:10:13 -0800 (PST)
 Received: from ws.. ([103.167.140.11]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21a9f155e00sm54328715ad.103.2025.01.13.06.39.04
+ 41be03b00d2f7-801d5c0f59asm7434754a12.67.2024.12.18.05.10.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Jan 2025 06:39:12 -0800 (PST)
+ Wed, 18 Dec 2024 05:10:13 -0800 (PST)
 From: Xiao Liang <shaw.leon@gmail.com>
 To: netdev@vger.kernel.org, linux-kselftest@vger.kernel.org,
- Kuniyuki Iwashima <kuniyu@amazon.com>, Jakub Kicinski <kuba@kernel.org>
+ Kuniyuki Iwashima <kuniyu@amazon.com>, Jakub Kicinski <kuba@kernel.org>,
+ Donald Hunter <donald.hunter@gmail.com>, Paolo Abeni <pabeni@redhat.com>
 Cc: "David S. Miller" <davem@davemloft.net>, David Ahern <dsahern@kernel.org>,
- Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+ Eric Dumazet <edumazet@google.com>, Ido Schimmel <idosch@nvidia.com>,
  Andrew Lunn <andrew+netdev@lunn.ch>, Simon Horman <horms@kernel.org>,
- Shuah Khan <shuah@kernel.org>, Donald Hunter <donald.hunter@gmail.com>,
- Alexander Aring <alex.aring@gmail.com>,
- Stefan Schmidt <stefan@datenfreihafen.org>,
- Miquel Raynal <miquel.raynal@bootlin.com>,
- Steffen Klassert <steffen.klassert@secunet.com>,
- Herbert Xu <herbert@gondor.apana.org.au>, linux-rdma@vger.kernel.org,
+ Shuah Khan <shuah@kernel.org>, Jiri Pirko <jiri@resnulli.us>,
+ Hangbin Liu <liuhangbin@gmail.com>, linux-rdma@vger.kernel.org,
  linux-can@vger.kernel.org, osmocom-net-gprs@lists.osmocom.org,
  bpf@vger.kernel.org, linux-ppp@vger.kernel.org, wireguard@lists.zx2c4.com,
  linux-wireless@vger.kernel.org, b.a.t.m.a.n@lists.open-mesh.org,
  bridge@lists.linux.dev, linux-wpan@vger.kernel.org,
  linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v8 11/11] selftests: net: Add test cases for link and
- peer netns
-Date: Mon, 13 Jan 2025 22:37:19 +0800
-Message-ID: <20250113143719.7948-12-shaw.leon@gmail.com>
+Subject: [PATCH net-next v6 06/11] net: ipv6: Use link netns in newlink() of
+ rtnl_link_ops
+Date: Wed, 18 Dec 2024 21:09:04 +0800
+Message-ID: <20241218130909.2173-7-shaw.leon@gmail.com>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250113143719.7948-1-shaw.leon@gmail.com>
-References: <20250113143719.7948-1-shaw.leon@gmail.com>
+In-Reply-To: <20241218130909.2173-1-shaw.leon@gmail.com>
+References: <20241218130909.2173-1-shaw.leon@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -98,216 +95,248 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
- - Add test for creating link in another netns when a link of the same
-   name and ifindex exists in current netns.
- - Add test to verify that link is created in target netns directly -
-   no link new/del events should be generated in link netns or current
-   netns.
- - Add test cases to verify that link-netns is set as expected for
-   various drivers and combination of namespace-related parameters.
+When link_net is set, use it as link netns instead of dev_net(). This
+prepares for rtnetlink core to create device in target netns directly,
+in which case the two namespaces may be different.
+
+Set correct netns in priv before registering device, and avoid
+overwriting it in ndo_init() path.
 
 Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
 ---
- tools/testing/selftests/net/Makefile      |   1 +
- tools/testing/selftests/net/config        |   5 +
- tools/testing/selftests/net/link_netns.py | 141 ++++++++++++++++++++++
- tools/testing/selftests/net/netns-name.sh |  10 ++
- 4 files changed, 157 insertions(+)
- create mode 100755 tools/testing/selftests/net/link_netns.py
+ net/ipv6/ip6_gre.c    | 22 ++++++++++++----------
+ net/ipv6/ip6_tunnel.c | 13 ++++++++-----
+ net/ipv6/ip6_vti.c    | 10 ++++++----
+ net/ipv6/sit.c        | 11 +++++++----
+ 4 files changed, 33 insertions(+), 23 deletions(-)
 
-diff --git a/tools/testing/selftests/net/Makefile b/tools/testing/selftests/net/Makefile
-index 73ee88d6b043..df07a38f884f 100644
---- a/tools/testing/selftests/net/Makefile
-+++ b/tools/testing/selftests/net/Makefile
-@@ -35,6 +35,7 @@ TEST_PROGS += cmsg_so_mark.sh
- TEST_PROGS += cmsg_so_priority.sh
- TEST_PROGS += cmsg_time.sh cmsg_ipv6.sh
- TEST_PROGS += netns-name.sh
-+TEST_PROGS += link_netns.py
- TEST_PROGS += nl_netdev.py
- TEST_PROGS += srv6_end_dt46_l3vpn_test.sh
- TEST_PROGS += srv6_end_dt4_l3vpn_test.sh
-diff --git a/tools/testing/selftests/net/config b/tools/testing/selftests/net/config
-index 5b9baf708950..ab55270669ec 100644
---- a/tools/testing/selftests/net/config
-+++ b/tools/testing/selftests/net/config
-@@ -107,3 +107,8 @@ CONFIG_XFRM_INTERFACE=m
- CONFIG_XFRM_USER=m
- CONFIG_IP_NF_MATCH_RPFILTER=m
- CONFIG_IP6_NF_MATCH_RPFILTER=m
-+CONFIG_IPVLAN=m
-+CONFIG_CAN=m
-+CONFIG_CAN_DEV=m
-+CONFIG_CAN_VXCAN=m
-+CONFIG_NETKIT=y
-diff --git a/tools/testing/selftests/net/link_netns.py b/tools/testing/selftests/net/link_netns.py
-new file mode 100755
-index 000000000000..aab043c59d69
---- /dev/null
-+++ b/tools/testing/selftests/net/link_netns.py
-@@ -0,0 +1,141 @@
-+#!/usr/bin/env python3
-+# SPDX-License-Identifier: GPL-2.0
-+
-+import time
-+
-+from lib.py import ksft_run, ksft_exit, ksft_true
-+from lib.py import ip
-+from lib.py import NetNS, NetNSEnter
-+from lib.py import RtnlFamily
-+
-+
-+LINK_NETNSID = 100
-+
-+
-+def test_event() -> None:
-+    with NetNS() as ns1, NetNS() as ns2:
-+        with NetNSEnter(str(ns2)):
-+            rtnl = RtnlFamily()
-+
-+        rtnl.ntf_subscribe("rtnlgrp-link")
-+
-+        ip(f"netns set {ns2} {LINK_NETNSID}", ns=str(ns1))
-+        ip(f"link add netns {ns1} link-netnsid {LINK_NETNSID} dummy1 type dummy")
-+        ip(f"link add netns {ns1} dummy2 type dummy", ns=str(ns2))
-+
-+        ip("link del dummy1", ns=str(ns1))
-+        ip("link del dummy2", ns=str(ns1))
-+
-+        time.sleep(1)
-+        rtnl.check_ntf()
-+        ksft_true(rtnl.async_msg_queue.empty(),
-+                  "Received unexpected link notification")
-+
-+
-+def validate_link_netns(netns, ifname, link_netnsid) -> bool:
-+    link_info = ip(f"-d link show dev {ifname}", ns=netns, json=True)
-+    if not link_info:
-+        return False
-+    return link_info[0].get("link_netnsid") == link_netnsid
-+
-+
-+def test_link_net() -> None:
-+    configs = [
-+        # type, common args, type args, fallback to dev_net
-+        ("ipvlan", "link dummy1", "", False),
-+        ("macsec", "link dummy1", "", False),
-+        ("macvlan", "link dummy1", "", False),
-+        ("macvtap", "link dummy1", "", False),
-+        ("vlan", "link dummy1", "id 100", False),
-+        ("gre", "", "local 192.0.2.1", True),
-+        ("vti", "", "local 192.0.2.1", True),
-+        ("ipip", "", "local 192.0.2.1", True),
-+        ("ip6gre", "", "local 2001:db8::1", True),
-+        ("ip6tnl", "", "local 2001:db8::1", True),
-+        ("vti6", "", "local 2001:db8::1", True),
-+        ("sit", "", "local 192.0.2.1", True),
-+        ("xfrm", "", "if_id 1", True),
-+    ]
-+
-+    with NetNS() as ns1, NetNS() as ns2, NetNS() as ns3:
-+        net1, net2, net3 = str(ns1), str(ns2), str(ns3)
-+
-+        # prepare link netnsid  and a dummy link needed by certain drivers
-+        ip(f"netns set {net3} {LINK_NETNSID}", ns=str(net2))
-+        ip("link add dummy1 type dummy", ns=net3)
-+
-+        cases = [
-+            # source, "netns", "link-netns", expected link-netns
-+            (net3, None, None, None, None),
-+            (net3, net2, None, None, LINK_NETNSID),
-+            (net2, None, net3, LINK_NETNSID, LINK_NETNSID),
-+            (net1, net2, net3, LINK_NETNSID, LINK_NETNSID),
-+        ]
-+
-+        for src_net, netns, link_netns, exp1, exp2 in cases:
-+            tgt_net = netns or src_net
-+            for typ, cargs, targs, fb_dev_net in configs:
-+                cmd = "link add"
-+                if netns:
-+                    cmd += f" netns {netns}"
-+                if link_netns:
-+                    cmd += f" link-netns {link_netns}"
-+                cmd += f" {cargs} foo type {typ} {targs}"
-+                ip(cmd, ns=src_net)
-+                if fb_dev_net:
-+                    ksft_true(validate_link_netns(tgt_net, "foo", exp1),
-+                              f"{typ} link_netns validation failed")
-+                else:
-+                    ksft_true(validate_link_netns(tgt_net, "foo", exp2),
-+                              f"{typ} link_netns validation failed")
-+                ip(f"link del foo", ns=tgt_net)
-+
-+
-+def test_peer_net() -> None:
-+    types = [
-+        "vxcan",
-+        "netkit",
-+        "veth",
-+    ]
-+
-+    with NetNS() as ns1, NetNS() as ns2, NetNS() as ns3, NetNS() as ns4:
-+        net1, net2, net3, net4 = str(ns1), str(ns2), str(ns3), str(ns4)
-+
-+        ip(f"netns set {net3} {LINK_NETNSID}", ns=str(net2))
-+
-+        cases = [
-+            # source, "netns", "link-netns", "peer netns", expected
-+            (net1, None, None, None, None),
-+            (net1, net2, None, None, None),
-+            (net2, None, net3, None, LINK_NETNSID),
-+            (net1, net2, net3, None, None),
-+            (net2, None, None, net3, LINK_NETNSID),
-+            (net1, net2, None, net3, LINK_NETNSID),
-+            (net2, None, net2, net3, LINK_NETNSID),
-+            (net1, net2, net4, net3, LINK_NETNSID),
-+        ]
-+
-+        for src_net, netns, link_netns, peer_netns, exp in cases:
-+            tgt_net = netns or src_net
-+            for typ in types:
-+                cmd = "link add"
-+                if netns:
-+                    cmd += f" netns {netns}"
-+                if link_netns:
-+                    cmd += f" link-netns {link_netns}"
-+                cmd += f" foo type {typ}"
-+                if peer_netns:
-+                    cmd += f" peer netns {peer_netns}"
-+                ip(cmd, ns=src_net)
-+                ksft_true(validate_link_netns(tgt_net, "foo", exp),
-+                          f"{typ} peer_netns validation failed")
-+                ip(f"link del foo", ns=tgt_net)
-+
-+
-+def main() -> None:
-+    ksft_run([test_event, test_link_net, test_peer_net])
-+    ksft_exit()
-+
-+
-+if __name__ == "__main__":
-+    main()
-diff --git a/tools/testing/selftests/net/netns-name.sh b/tools/testing/selftests/net/netns-name.sh
-index 6974474c26f3..0be1905d1f2f 100755
---- a/tools/testing/selftests/net/netns-name.sh
-+++ b/tools/testing/selftests/net/netns-name.sh
-@@ -78,6 +78,16 @@ ip -netns $NS link show dev $ALT_NAME 2> /dev/null &&
-     fail "Can still find alt-name after move"
- ip -netns $test_ns link del $DEV || fail
+diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
+index 3efd51f0d7d2..1d47c229068d 100644
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -1498,7 +1498,8 @@ static int ip6gre_tunnel_init_common(struct net_device *dev)
+ 	tunnel = netdev_priv(dev);
  
-+#
-+# Test no conflict of the same name/ifindex in different netns
-+#
-+ip -netns $NS link add name $DEV index 100 type dummy || fail
-+ip -netns $NS link add netns $test_ns name $DEV index 100 type dummy ||
-+    fail "Can create in netns without moving"
-+ip -netns $test_ns link show dev $DEV >> /dev/null || fail "Device not found"
-+ip -netns $NS link del $DEV || fail
-+ip -netns $test_ns link del $DEV || fail
-+
- echo -ne "$(basename $0) \t\t\t\t"
- if [ $RET_CODE -eq 0 ]; then
-     echo "[  OK  ]"
+ 	tunnel->dev = dev;
+-	tunnel->net = dev_net(dev);
++	if (!tunnel->net)
++		tunnel->net = dev_net(dev);
+ 	strcpy(tunnel->parms.name, dev->name);
+ 
+ 	ret = dst_cache_init(&tunnel->dst_cache, GFP_KERNEL);
+@@ -1882,7 +1883,8 @@ static int ip6erspan_tap_init(struct net_device *dev)
+ 	tunnel = netdev_priv(dev);
+ 
+ 	tunnel->dev = dev;
+-	tunnel->net = dev_net(dev);
++	if (!tunnel->net)
++		tunnel->net = dev_net(dev);
+ 	strcpy(tunnel->parms.name, dev->name);
+ 
+ 	ret = dst_cache_init(&tunnel->dst_cache, GFP_KERNEL);
+@@ -1971,7 +1973,7 @@ static bool ip6gre_netlink_encap_parms(struct nlattr *data[],
+ 	return ret;
+ }
+ 
+-static int ip6gre_newlink_common(struct net *src_net, struct net_device *dev,
++static int ip6gre_newlink_common(struct net *link_net, struct net_device *dev,
+ 				 struct nlattr *tb[], struct nlattr *data[],
+ 				 struct netlink_ext_ack *extack)
+ {
+@@ -1992,7 +1994,7 @@ static int ip6gre_newlink_common(struct net *src_net, struct net_device *dev,
+ 		eth_hw_addr_random(dev);
+ 
+ 	nt->dev = dev;
+-	nt->net = dev_net(dev);
++	nt->net = link_net;
+ 
+ 	err = register_netdevice(dev);
+ 	if (err)
+@@ -2010,13 +2012,13 @@ static int ip6gre_newlink(struct rtnl_newlink_params *params)
+ 	struct netlink_ext_ack *extack = params->extack;
+ 	struct net_device *dev = params->dev;
+ 	struct nlattr **data = params->data;
+-	struct net *src_net = params->net;
+ 	struct nlattr **tb = params->tb;
+-	struct net *net = dev_net(dev);
+ 	struct ip6gre_net *ign;
+ 	struct ip6_tnl *nt;
++	struct net *net;
+ 	int err;
+ 
++	net = params->link_net ? : dev_net(dev);
+ 	nt = netdev_priv(dev);
+ 	ip6gre_netlink_parms(data, &nt->parms);
+ 	ign = net_generic(net, ip6gre_net_id);
+@@ -2029,7 +2031,7 @@ static int ip6gre_newlink(struct rtnl_newlink_params *params)
+ 			return -EEXIST;
+ 	}
+ 
+-	err = ip6gre_newlink_common(src_net, dev, tb, data, extack);
++	err = ip6gre_newlink_common(net, dev, tb, data, extack);
+ 	if (!err) {
+ 		ip6gre_tnl_link_config(nt, !tb[IFLA_MTU]);
+ 		ip6gre_tunnel_link_md(ign, nt);
+@@ -2250,13 +2252,13 @@ static int ip6erspan_newlink(struct rtnl_newlink_params *params)
+ 	struct netlink_ext_ack *extack = params->extack;
+ 	struct net_device *dev = params->dev;
+ 	struct nlattr **data = params->data;
+-	struct net *src_net = params->net;
+ 	struct nlattr **tb = params->tb;
+-	struct net *net = dev_net(dev);
+ 	struct ip6gre_net *ign;
+ 	struct ip6_tnl *nt;
++	struct net *net;
+ 	int err;
+ 
++	net = params->link_net ? : dev_net(dev);
+ 	nt = netdev_priv(dev);
+ 	ip6gre_netlink_parms(data, &nt->parms);
+ 	ip6erspan_set_version(data, &nt->parms);
+@@ -2270,7 +2272,7 @@ static int ip6erspan_newlink(struct rtnl_newlink_params *params)
+ 			return -EEXIST;
+ 	}
+ 
+-	err = ip6gre_newlink_common(src_net, dev, tb, data, extack);
++	err = ip6gre_newlink_common(net, dev, tb, data, extack);
+ 	if (!err) {
+ 		ip6erspan_tnl_link_config(nt, !tb[IFLA_MTU]);
+ 		ip6erspan_tunnel_link_md(ign, nt);
+diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
+index f4bdbabc3246..cb09cc878dee 100644
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -253,8 +253,7 @@ static void ip6_dev_free(struct net_device *dev)
+ static int ip6_tnl_create2(struct net_device *dev)
+ {
+ 	struct ip6_tnl *t = netdev_priv(dev);
+-	struct net *net = dev_net(dev);
+-	struct ip6_tnl_net *ip6n = net_generic(net, ip6_tnl_net_id);
++	struct ip6_tnl_net *ip6n = net_generic(t->net, ip6_tnl_net_id);
+ 	int err;
+ 
+ 	dev->rtnl_link_ops = &ip6_link_ops;
+@@ -1878,7 +1877,8 @@ ip6_tnl_dev_init_gen(struct net_device *dev)
+ 	int t_hlen;
+ 
+ 	t->dev = dev;
+-	t->net = dev_net(dev);
++	if (!t->net)
++		t->net = dev_net(dev);
+ 
+ 	ret = dst_cache_init(&t->dst_cache, GFP_KERNEL);
+ 	if (ret)
+@@ -2007,13 +2007,16 @@ static int ip6_tnl_newlink(struct rtnl_newlink_params *params)
+ 	struct net_device *dev = params->dev;
+ 	struct nlattr **data = params->data;
+ 	struct nlattr **tb = params->tb;
+-	struct net *net = dev_net(dev);
+-	struct ip6_tnl_net *ip6n = net_generic(net, ip6_tnl_net_id);
+ 	struct ip_tunnel_encap ipencap;
++	struct ip6_tnl_net *ip6n;
+ 	struct ip6_tnl *nt, *t;
++	struct net *net;
+ 	int err;
+ 
++	net = params->link_net ? : dev_net(dev);
++	ip6n = net_generic(net, ip6_tnl_net_id);
+ 	nt = netdev_priv(dev);
++	nt->net = net;
+ 
+ 	if (ip_tunnel_netlink_encap_parms(data, &ipencap)) {
+ 		err = ip6_tnl_encap_setup(nt, &ipencap);
+diff --git a/net/ipv6/ip6_vti.c b/net/ipv6/ip6_vti.c
+index 79e601e629d2..a3108a7464c7 100644
+--- a/net/ipv6/ip6_vti.c
++++ b/net/ipv6/ip6_vti.c
+@@ -177,8 +177,7 @@ vti6_tnl_unlink(struct vti6_net *ip6n, struct ip6_tnl *t)
+ static int vti6_tnl_create2(struct net_device *dev)
+ {
+ 	struct ip6_tnl *t = netdev_priv(dev);
+-	struct net *net = dev_net(dev);
+-	struct vti6_net *ip6n = net_generic(net, vti6_net_id);
++	struct vti6_net *ip6n = net_generic(t->net, vti6_net_id);
+ 	int err;
+ 
+ 	dev->rtnl_link_ops = &vti6_link_ops;
+@@ -925,7 +924,8 @@ static inline int vti6_dev_init_gen(struct net_device *dev)
+ 	struct ip6_tnl *t = netdev_priv(dev);
+ 
+ 	t->dev = dev;
+-	t->net = dev_net(dev);
++	if (!t->net)
++		t->net = dev_net(dev);
+ 	netdev_hold(dev, &t->dev_tracker, GFP_KERNEL);
+ 	netdev_lockdep_set_classes(dev);
+ 	return 0;
+@@ -1001,13 +1001,15 @@ static int vti6_newlink(struct rtnl_newlink_params *params)
+ {
+ 	struct net_device *dev = params->dev;
+ 	struct nlattr **data = params->data;
+-	struct net *net = dev_net(dev);
+ 	struct ip6_tnl *nt;
++	struct net *net;
+ 
++	net = params->link_net ? : dev_net(dev);
+ 	nt = netdev_priv(dev);
+ 	vti6_netlink_parms(data, &nt->parms);
+ 
+ 	nt->parms.proto = IPPROTO_IPV6;
++	nt->net = net;
+ 
+ 	if (vti6_locate(net, &nt->parms, 0))
+ 		return -EEXIST;
+diff --git a/net/ipv6/sit.c b/net/ipv6/sit.c
+index 4dd1309d1eb3..8888fc51fa0b 100644
+--- a/net/ipv6/sit.c
++++ b/net/ipv6/sit.c
+@@ -201,8 +201,7 @@ static void ipip6_tunnel_clone_6rd(struct net_device *dev, struct sit_net *sitn)
+ static int ipip6_tunnel_create(struct net_device *dev)
+ {
+ 	struct ip_tunnel *t = netdev_priv(dev);
+-	struct net *net = dev_net(dev);
+-	struct sit_net *sitn = net_generic(net, sit_net_id);
++	struct sit_net *sitn = net_generic(t->net, sit_net_id);
+ 	int err;
+ 
+ 	__dev_addr_set(dev, &t->parms.iph.saddr, 4);
+@@ -270,6 +269,7 @@ static struct ip_tunnel *ipip6_tunnel_locate(struct net *net,
+ 	nt = netdev_priv(dev);
+ 
+ 	nt->parms = *parms;
++	nt->net = net;
+ 	if (ipip6_tunnel_create(dev) < 0)
+ 		goto failed_free;
+ 
+@@ -1449,7 +1449,8 @@ static int ipip6_tunnel_init(struct net_device *dev)
+ 	int err;
+ 
+ 	tunnel->dev = dev;
+-	tunnel->net = dev_net(dev);
++	if (!tunnel->net)
++		tunnel->net = dev_net(dev);
+ 	strcpy(tunnel->parms.name, dev->name);
+ 
+ 	ipip6_tunnel_bind_dev(dev);
+@@ -1555,15 +1556,17 @@ static int ipip6_newlink(struct rtnl_newlink_params *params)
+ 	struct net_device *dev = params->dev;
+ 	struct nlattr **data = params->data;
+ 	struct nlattr **tb = params->tb;
+-	struct net *net = dev_net(dev);
+ 	struct ip_tunnel *nt;
+ 	struct ip_tunnel_encap ipencap;
+ #ifdef CONFIG_IPV6_SIT_6RD
+ 	struct ip_tunnel_6rd ip6rd;
+ #endif
++	struct net *net;
+ 	int err;
+ 
++	net = params->link_net ? : dev_net(dev);
+ 	nt = netdev_priv(dev);
++	nt->net = net;
+ 
+ 	if (ip_tunnel_netlink_encap_parms(data, &ipencap)) {
+ 		err = ip_tunnel_encap_setup(nt, &ipencap);
 -- 
 2.47.1
 
