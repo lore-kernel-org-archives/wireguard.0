@@ -4,66 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9EEDC54E71
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 20 May 2025 20:20:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2ECAC3DA6D
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 20 May 2025 20:22:44 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e9e2811d;
-	Tue, 20 May 2025 19:42:13 +0000 (UTC)
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com
- [2607:f8b0:4864:20::1049])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 15bf06a7
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6ccd0283;
+	Tue, 20 May 2025 19:36:14 +0000 (UTC)
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com
+ [2607:f8b0:4864:20::631])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ce9027f1
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 4 Mar 2025 00:39:13 +0000 (UTC)
-Received: by mail-pj1-x1049.google.com with SMTP id
- 98e67ed59e1d1-2feb5cd04a0so7744704a91.2
- for <wireguard@lists.zx2c4.com>; Mon, 03 Mar 2025 16:39:12 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 18 Dec 2024 13:10:56 +0000 (UTC)
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2165448243fso63145935ad.1
+ for <wireguard@lists.zx2c4.com>; Wed, 18 Dec 2024 05:10:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1741048751; x=1741653551; darn=lists.zx2c4.com;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=7lSj6hon2k0Ex4bMW8YDFcX1YGPAUyh0GIUnw8CEX58=;
- b=dXOokvfhpVsbiAxU4MNLsYQth9eEUn8TW1YHzb/2KVk3iFgL9kyQiGrSH2w6QiICMO
- bS3dHv1ctBEVacZmSgPRZajBLZv7abGJreMPP/sbLyObvQFq3HM8n2p7ow07/xy26UDQ
- uR6UDsbj1oKAEY10z8FcxRzyx1rJO8n4VAEWoS9Fopc4SuLXaWtYDemu/yS2LcigLB59
- wtcM5Z3hU5zVglkZ7mLAa64uXPJ0OXILG7+fjXPAQJkUYJjuY5n4MEWakoo5d5T7HdJ/
- oa6pWtMWFyq47iszFbc87XUtT6nERKAkN4QWGKEyXzi5bcy/3g4mIoic3WSm2x+Jaysl
- L6Dg==
+ d=gmail.com; s=20230601; t=1734527454; x=1735132254; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cEe2srsfNQuo3cFtk4Exr0i8mchzSjDC/1TEtzbMZ8U=;
+ b=HuM9unMM9oDr6MlgShUJ+U5+8N5ZMTf7EaKMjd+71V3jd95YrslQcPTmZjJ/Nh+Q66
+ UUt94ek1ob7Lj/GORHizWGyHcGfqEIBaYCE2cvNWfaCdqDgwls6HagCGB0NkzUlFQEOC
+ +b/gdZW5ju4pOOcXA7VeKhV8yafOaqqjyzpck6RZGtdjeWvYm3Q2XsxnU9q8F+5+yee/
+ fqoIVhdgXPJqvNsoqmYuGseYU9DhbN0fBNlQRmlPqg9184MZeK3DuRImhAlICJxJ2ae2
+ yNvzWsH+nDyiSaQHExcOcheHJAuooDB7rZMGA68bQLjksjyKbEGvv6KgN2ffcZr34va+
+ P9Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1741048751; x=1741653551;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7lSj6hon2k0Ex4bMW8YDFcX1YGPAUyh0GIUnw8CEX58=;
- b=jEKbumBTIFs3dlyivFSpOOSEndDpb9s5CbWgQROcuEiTIiv1fWhJ7MLGXVhtjfLUNX
- uzsQE0XAe2T86SNlx9WVwDLULo0rvIqM1XRnz1f3yLvLvrA+gdEXl2KBYdDeNEQdPeh0
- B3LFWXoYwhFhfbzAh+y6LIJRhLbimIA4hyxiXT8PiD4GqUPgjRRl9vur5QW2ow6gCWr7
- g9W1YwfTMhPFRPT1u1vQarE2hvvR9QRRV/lq3ztM8IFMHSAmtEXZxmMhlW5uVpnO/N+S
- Gk8O4WvnogSVvuWyRMdG3jSRAd1vEC/9cQZmTru4xQ7WabYmWXQdwJGyk4zsDC8oHCzV
- wdGg==
+ d=1e100.net; s=20230601; t=1734527454; x=1735132254;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cEe2srsfNQuo3cFtk4Exr0i8mchzSjDC/1TEtzbMZ8U=;
+ b=F+pt3jqs2skysYHTJwi6Zvn2MUifQ7/p5zSi+h4IVqm9bdTV6R6T0TnnCwxjkG6QlG
+ LCUYbLUKC/SEa+nXepfmbjSGZaq9+9+gU+eEylqH3cxPXvBJI7ETDnsMLVveyvO14Qoe
+ 24nEvHObgh/foNJrcaNjuusucHADy89F1Pxu5vk1ahPgp3sT/tS7tN73uRf3ytu9ayCN
+ 6hxIMlIS+y3hj+g1qWYtoY9TN2iBOT4R94ihKKmOU112zfVkXWwapMfasACbutAEF0J7
+ aVNm8e7nmL7cwT00IRImRdnEqmF3UYRLHiMv6q6Qj+7brNqjj2qwjk/eo7L0xZ0RQh8g
+ lCZQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUfBRm8gxcLOJRHvICNGk+VyW0cHmy/GqZzPXqi2aTeDTq2He4FTPwtCcxpmwpKN11i7vdfAAIKSkg=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YxY0ndwPkdh1edikK5I1g+vJFx5/MVdCGkFU0iNwDfDt1TqLl2l
- rZMcJkSsQASuGSpvL5PUug/ijd4fEQzs5wDoIJZeHChhobOdrC9WIYtsXe4rk7cbdyBgoFt6HQ=
- =
-X-Google-Smtp-Source: AGHT+IHobv1DH8ko+RSwIFVS3CBCTOlNS6iwcIE1LdjuTrCAGYG03amgUQriGV+CPWoUx8cbvvZS62OT3Q==
-X-Received: from pjbsn4.prod.google.com ([2002:a17:90b:2e84:b0:2fc:13d6:b4cb])
- (user=jrife job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:90b:4ac6:b0:2fe:b9be:216
- with SMTP id 98e67ed59e1d1-2febac10927mr20810966a91.31.1741048751397; Mon, 03
- Mar 2025 16:39:11 -0800 (PST)
-Date: Tue,  4 Mar 2025 00:38:55 +0000
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.48.1.711.g2feabab25a-goog
-Message-ID: <20250304003900.1416866-1-jrife@google.com>
-Subject: [PATCH v4 net-next] wireguard: allowedips: Add WGALLOWEDIP_F_REMOVE_ME
- flag
-From: Jordan Rife <jrife@google.com>
-To: netdev@vger.kernel.org
-Cc: Jordan Rife <jrife@google.com>, "David S. Miller" <davem@davemloft.net>, 
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, 
- wireguard@lists.zx2c4.com, "Jason A. Donenfeld" <Jason@zx2c4.com>, 
- Daniel Borkmann <daniel@iogearbox.net>
-Content-Type: text/plain; charset="UTF-8"
+ AJvYcCWyE43kLc5IImknOtsi8j9NfBzY1n/Vo3Pyyu+iFS1uRhWuBtAX1fpUlwANEycgmZDutTENmV+FyhQ=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0Yzww8BjMnhgNQB3qn8LoDyk/+bcdhNtBpgP5VVCuP6XcD8nl1G+
+ OKoS8rx6CeO4QWnD6JTg7+Mze5yIvq+nxg6kdmyx4R5g3cZgPps/
+X-Gm-Gg: ASbGncsEuSVLol0+Z0Y4LRsPj7x4EYlzRaIZ2lEb1RA1hGO/mzTI34BTgl1Tbujoffu
+ seZnAwqio4ndGlpzwEwu3GkU0XuFfRgMXqqvOQ47k0tY69irJ4UejKTqBeRu/ix9CHUvGFHqG9y
+ Y4Ir/+ySAXNnWT5OQhiUAqFFZxNg/Tjm2S+o130yHqfsMwkFcSOgNM6Y8CeQ0XM7iFMWmWOdgmF
+ KTEpPuJ7B/QUWubWrfQ1KrmzCOJuPj9/t2a+Fmr0LexHIE=
+X-Google-Smtp-Source: AGHT+IGW2ivQBr6ib7m/cmjzjnkogelPQGpBxwq3iWWAr6K+/MU6YNZqq3IUhKj+TIVnGpc4fMVSow==
+X-Received: by 2002:a17:902:f985:b0:216:6c77:7bbb with SMTP id
+ d9443c01a7336-218d70dc242mr29804885ad.17.1734527454469; 
+ Wed, 18 Dec 2024 05:10:54 -0800 (PST)
+Received: from ws.. ([103.167.140.11]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-801d5c0f59asm7434754a12.67.2024.12.18.05.10.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 18 Dec 2024 05:10:53 -0800 (PST)
+From: Xiao Liang <shaw.leon@gmail.com>
+To: netdev@vger.kernel.org, linux-kselftest@vger.kernel.org,
+ Kuniyuki Iwashima <kuniyu@amazon.com>, Jakub Kicinski <kuba@kernel.org>,
+ Donald Hunter <donald.hunter@gmail.com>, Paolo Abeni <pabeni@redhat.com>
+Cc: "David S. Miller" <davem@davemloft.net>, David Ahern <dsahern@kernel.org>,
+ Eric Dumazet <edumazet@google.com>, Ido Schimmel <idosch@nvidia.com>,
+ Andrew Lunn <andrew+netdev@lunn.ch>, Simon Horman <horms@kernel.org>,
+ Shuah Khan <shuah@kernel.org>, Jiri Pirko <jiri@resnulli.us>,
+ Hangbin Liu <liuhangbin@gmail.com>, linux-rdma@vger.kernel.org,
+ linux-can@vger.kernel.org, osmocom-net-gprs@lists.osmocom.org,
+ bpf@vger.kernel.org, linux-ppp@vger.kernel.org, wireguard@lists.zx2c4.com,
+ linux-wireless@vger.kernel.org, b.a.t.m.a.n@lists.open-mesh.org,
+ bridge@lists.linux.dev, linux-wpan@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: [PATCH net-next v6 11/11] selftests: net: Add test cases for link and
+ peer netns
+Date: Wed, 18 Dec 2024 21:09:09 +0800
+Message-ID: <20241218130909.2173-12-shaw.leon@gmail.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20241218130909.2173-1-shaw.leon@gmail.com>
+References: <20241218130909.2173-1-shaw.leon@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -78,406 +95,203 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-The current netlink API for WireGuard does not directly support removal
-of allowed ips from a peer. A user can remove an allowed ip from a peer
-in one of two ways:
+ - Add test for creating link in another netns when a link of the same
+   name and ifindex exists in current netns.
+ - Add test to verify that link is created in target netns directly -
+   no link new/del events should be generated in link netns or current
+   netns.
+ - Add test cases to verify that link-netns is set as expected for
+   various drivers and combination of namespace-related parameters.
 
-1. By using the WGPEER_F_REPLACE_ALLOWEDIPS flag and providing a new
-   list of allowed ips which omits the allowed ip that is to be removed.
-2. By reassigning an allowed ip to a "dummy" peer then removing that
-   peer with WGPEER_F_REMOVE_ME.
-
-With the first approach, the driver completely rebuilds the allowed ip
-list for a peer. If my current configuration is such that a peer has
-allowed ips 192.168.0.2 and 192.168.0.3 and I want to remove 192.168.0.2
-the actual transition looks like this.
-
-[192.168.0.2, 192.168.0.3] <-- Initial state
-[]                         <-- Step 1: Allowed ips removed for peer
-[192.168.0.3]              <-- Step 2: Allowed ips added back for peer
-
-This is true even if the allowed ip list is small and the update does
-not need to be batched into multiple WG_CMD_SET_DEVICE requests, as the
-removal and subsequent addition of ips is non-atomic within a single
-request. Consequently, wg_allowedips_lookup_dst and
-wg_allowedips_lookup_src may return NULL while reconfiguring a peer even
-for packets bound for ips a user did not intend to remove leading to
-unintended interruptions in connectivity. This presents in userspace as
-failed calls to sendto and sendmsg for UDP sockets. In my case, I ran
-netperf while repeatedly reconfiguring the allowed ips for a peer with
-wg.
-
-/usr/local/bin/netperf -H 10.102.73.72 -l 10m -t UDP_STREAM -- -R 1 -m 1024
-send_data: data send error: No route to host (errno 113)
-netperf: send_omni: send_data failed: No route to host
-
-While this may not be of particular concern for environments where peers
-and allowed ips are mostly static, systems like Cilium manage peers and
-allowed ips in a dynamic environment where peers (i.e. Kubernetes nodes)
-and allowed ips (i.e. pods running on those nodes) can frequently
-change making WGPEER_F_REPLACE_ALLOWEDIPS problematic.
-
-The second approach avoids any possible connectivity interruptions
-but is hacky and less direct, requiring the creation of a temporary
-peer just to dispose of an allowed ip.
-
-Introduce a new flag called WGALLOWEDIP_F_REMOVE_ME which in the same
-way that WGPEER_F_REMOVE_ME allows a user to remove a single peer from
-a WireGuard device's configuration allows a user to remove an ip from a
-peer's set of allowed ips. This enables incremental updates to a
-device's configuration without any connectivity blips or messy
-workarounds.
-
-NOTE
-----
-I've addressed Jason's feedback from v2, but have been unable to
-get in touch with him about v3 after several attempts. If there are no
-objections, can we accept this into net-next?
-
-v3->v4
-------
-* Remove selftests. In [1], Jason suggested that support should be
-  added to wg to exercise this new flag and that this should be used in
-  lieu of the custom remove-ip program used in v2 to implement the self
-  tests. I sent a corresponding patch for wireguard-tools (wg), but
-  that remains unreviewed and unmerged. Hence, I'm removing the self
-  tests that rely on the new wg features until we can finalize that
-  portion, after which point we can bring back the self tests that use
-  it.
-
-v2->v3
-------
-* Revert WG_GENL_VERSION back to 1.
-* Rename _remove() to remove_node().
-* Remove unnecessary !peer guard from remove().
-* Adjust line length for calls to wg_allowedips_(remove|insert)_v(4|6).
-* Fix punctuation inside uapi docs for WGALLOWEDIP_A_FLAGS.
-* Get rid of remove-ip program and use wg instead in selftests.
-* Use NLA_POLICY_MASK for WGALLOWEDIP_A_FLAGS validation.
-
-v1->v2
-------
-* Fixed some Sparse warnings.
-
-[1]: https://lore.kernel.org/netdev/ZzpXE8GlhjDYTa5l@zx2c4.com/
-
-Signed-off-by: Jordan Rife <jrife@google.com>
+Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
 ---
- drivers/net/wireguard/allowedips.c          | 106 ++++++++++++++------
- drivers/net/wireguard/allowedips.h          |   4 +
- drivers/net/wireguard/netlink.c             |  37 ++++---
- drivers/net/wireguard/selftest/allowedips.c |  48 +++++++++
- include/uapi/linux/wireguard.h              |   9 ++
- 5 files changed, 161 insertions(+), 43 deletions(-)
+ tools/testing/selftests/net/Makefile      |   1 +
+ tools/testing/selftests/net/link_netns.py | 142 ++++++++++++++++++++++
+ tools/testing/selftests/net/netns-name.sh |  10 ++
+ 3 files changed, 153 insertions(+)
+ create mode 100755 tools/testing/selftests/net/link_netns.py
 
-diff --git a/drivers/net/wireguard/allowedips.c b/drivers/net/wireguard/allowedips.c
-index 4b8528206cc8..dcf068ba2881 100644
---- a/drivers/net/wireguard/allowedips.c
-+++ b/drivers/net/wireguard/allowedips.c
-@@ -249,6 +249,56 @@ static int add(struct allowedips_node __rcu **trie, u8 bits, const u8 *key,
- 	return 0;
- }
+diff --git a/tools/testing/selftests/net/Makefile b/tools/testing/selftests/net/Makefile
+index f09bd96cc978..cc6665212304 100644
+--- a/tools/testing/selftests/net/Makefile
++++ b/tools/testing/selftests/net/Makefile
+@@ -35,6 +35,7 @@ TEST_PROGS += cmsg_so_mark.sh
+ TEST_PROGS += cmsg_so_priority.sh
+ TEST_PROGS += cmsg_time.sh cmsg_ipv6.sh
+ TEST_PROGS += netns-name.sh
++TEST_PROGS += link_netns.py
+ TEST_PROGS += nl_netdev.py
+ TEST_PROGS += srv6_end_dt46_l3vpn_test.sh
+ TEST_PROGS += srv6_end_dt4_l3vpn_test.sh
+diff --git a/tools/testing/selftests/net/link_netns.py b/tools/testing/selftests/net/link_netns.py
+new file mode 100755
+index 000000000000..c4b2ddf201ff
+--- /dev/null
++++ b/tools/testing/selftests/net/link_netns.py
+@@ -0,0 +1,142 @@
++#!/usr/bin/env python3
++# SPDX-License-Identifier: GPL-2.0
++
++import time
++
++from lib.py import ksft_run, ksft_exit, ksft_true
++from lib.py import ip
++from lib.py import NetNS, NetNSEnter
++from lib.py import RtnlFamily
++
++
++LINK_NETNSID = 100
++
++
++def test_event() -> None:
++    with NetNS() as ns1, NetNS() as ns2:
++        with NetNSEnter(str(ns2)):
++            rtnl = RtnlFamily()
++
++        rtnl.ntf_subscribe("rtnlgrp-link")
++
++        ip(f"netns set {ns2} {LINK_NETNSID}", ns=str(ns1))
++        ip(f"link add netns {ns1} link-netnsid {LINK_NETNSID} dummy1 type dummy")
++        ip(f"link add netns {ns1} dummy2 type dummy", ns=str(ns2))
++
++        ip("link del dummy1", ns=str(ns1))
++        ip("link del dummy2", ns=str(ns1))
++
++        time.sleep(1)
++        rtnl.check_ntf()
++        ksft_true(rtnl.async_msg_queue.empty(),
++                  "Received unexpected link notification")
++
++
++def validate_link_netns(netns, ifname, link_netnsid) -> bool:
++    link_info = ip(f"-d link show dev {ifname}", ns=netns, json=True)
++    if not link_info:
++        return False
++    return link_info[0].get("link_netnsid") == link_netnsid
++
++
++def test_link_net() -> None:
++    configs = [
++        # type, common args, type args, fallback to dev_net
++        ("ipvlan", "link dummy1", "", False),
++        ("macsec", "link dummy1", "", False),
++        ("macvlan", "link dummy1", "", False),
++        ("macvtap", "link dummy1", "", False),
++        ("vlan", "link dummy1", "id 100", False),
++        ("gre", "", "local 192.0.2.1", True),
++        ("vti", "", "local 192.0.2.1", True),
++        ("ipip", "", "local 192.0.2.1", True),
++        ("ip6gre", "", "local 2001:db8::1", True),
++        ("ip6gre", "", "local 2001:db8::1", True),
++        ("ip6tnl", "", "local 2001:db8::1", True),
++        ("vti6", "", "local 2001:db8::1", True),
++        ("sit", "", "local 192.0.2.1", True),
++        ("xfrm", "", "if_id 1", True),
++    ]
++
++    with NetNS() as ns1, NetNS() as ns2, NetNS() as ns3:
++        net1, net2, net3 = str(ns1), str(ns2), str(ns3)
++
++        # prepare link netnsid  and a dummy link needed by certain drivers
++        ip(f"netns set {net3} {LINK_NETNSID}", ns=str(net2))
++        ip("link add dummy1 type dummy", ns=net3)
++
++        cases = [
++            # source, "netns", "link-netns", expected link-netns
++            (net3, None, None, None, None),
++            (net3, net2, None, None, LINK_NETNSID),
++            (net2, None, net3, LINK_NETNSID, LINK_NETNSID),
++            (net1, net2, net3, LINK_NETNSID, LINK_NETNSID),
++        ]
++
++        for src_net, netns, link_netns, exp1, exp2 in cases:
++            tgt_net = netns or src_net
++            for typ, cargs, targs, fb_dev_net in configs:
++                cmd = "link add"
++                if netns:
++                    cmd += f" netns {netns}"
++                if link_netns:
++                    cmd += f" link-netns {link_netns}"
++                cmd += f" {cargs} foo type {typ} {targs}"
++                ip(cmd, ns=src_net)
++                if fb_dev_net:
++                    ksft_true(validate_link_netns(tgt_net, "foo", exp1),
++                              f"{typ} link_netns validation failed")
++                else:
++                    ksft_true(validate_link_netns(tgt_net, "foo", exp2),
++                              f"{typ} link_netns validation failed")
++                ip(f"link del foo", ns=tgt_net)
++
++
++def test_peer_net() -> None:
++    types = [
++        "vxcan",
++        "netkit",
++        "veth",
++    ]
++
++    with NetNS() as ns1, NetNS() as ns2, NetNS() as ns3, NetNS() as ns4:
++        net1, net2, net3, net4 = str(ns1), str(ns2), str(ns3), str(ns4)
++
++        ip(f"netns set {net3} {LINK_NETNSID}", ns=str(net2))
++
++        cases = [
++            # source, "netns", "link-netns", "peer netns", expected
++            (net1, None, None, None, None),
++            (net1, net2, None, None, None),
++            (net2, None, net3, None, LINK_NETNSID),
++            (net1, net2, net3, None, None),
++            (net2, None, None, net3, LINK_NETNSID),
++            (net1, net2, None, net3, LINK_NETNSID),
++            (net2, None, net2, net3, LINK_NETNSID),
++            (net1, net2, net4, net3, LINK_NETNSID),
++        ]
++
++        for src_net, netns, link_netns, peer_netns, exp in cases:
++            tgt_net = netns or src_net
++            for typ in types:
++                cmd = "link add"
++                if netns:
++                    cmd += f" netns {netns}"
++                if link_netns:
++                    cmd += f" link-netns {link_netns}"
++                cmd += f" foo type {typ}"
++                if peer_netns:
++                    cmd += f" peer netns {peer_netns}"
++                ip(cmd, ns=src_net)
++                ksft_true(validate_link_netns(tgt_net, "foo", exp),
++                          f"{typ} peer_netns validation failed")
++                ip(f"link del foo", ns=tgt_net)
++
++
++def main() -> None:
++    ksft_run([test_event, test_link_net, test_peer_net])
++    ksft_exit()
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/tools/testing/selftests/net/netns-name.sh b/tools/testing/selftests/net/netns-name.sh
+index 6974474c26f3..0be1905d1f2f 100755
+--- a/tools/testing/selftests/net/netns-name.sh
++++ b/tools/testing/selftests/net/netns-name.sh
+@@ -78,6 +78,16 @@ ip -netns $NS link show dev $ALT_NAME 2> /dev/null &&
+     fail "Can still find alt-name after move"
+ ip -netns $test_ns link del $DEV || fail
  
-+static void remove_node(struct allowedips_node *node, struct mutex *lock)
-+{
-+	struct allowedips_node *child, **parent_bit, *parent;
-+	bool free_parent;
++#
++# Test no conflict of the same name/ifindex in different netns
++#
++ip -netns $NS link add name $DEV index 100 type dummy || fail
++ip -netns $NS link add netns $test_ns name $DEV index 100 type dummy ||
++    fail "Can create in netns without moving"
++ip -netns $test_ns link show dev $DEV >> /dev/null || fail "Device not found"
++ip -netns $NS link del $DEV || fail
++ip -netns $test_ns link del $DEV || fail
 +
-+	list_del_init(&node->peer_list);
-+	RCU_INIT_POINTER(node->peer, NULL);
-+	if (node->bit[0] && node->bit[1])
-+		return;
-+	child = rcu_dereference_protected(node->bit[!rcu_access_pointer(node->bit[0])],
-+					  lockdep_is_held(lock));
-+	if (child)
-+		child->parent_bit_packed = node->parent_bit_packed;
-+	parent_bit = (struct allowedips_node **)(node->parent_bit_packed & ~3UL);
-+	*parent_bit = child;
-+	parent = (void *)parent_bit -
-+			offsetof(struct allowedips_node, bit[node->parent_bit_packed & 1]);
-+	free_parent = !rcu_access_pointer(node->bit[0]) &&
-+			!rcu_access_pointer(node->bit[1]) &&
-+			(node->parent_bit_packed & 3) <= 1 &&
-+			!rcu_access_pointer(parent->peer);
-+	if (free_parent)
-+		child = rcu_dereference_protected(parent->bit[!(node->parent_bit_packed & 1)],
-+						  lockdep_is_held(lock));
-+	call_rcu(&node->rcu, node_free_rcu);
-+	if (!free_parent)
-+		return;
-+	if (child)
-+		child->parent_bit_packed = parent->parent_bit_packed;
-+	*(struct allowedips_node **)(parent->parent_bit_packed & ~3UL) = child;
-+	call_rcu(&parent->rcu, node_free_rcu);
-+}
-+
-+static int remove(struct allowedips_node __rcu **trie, u8 bits, const u8 *key,
-+		  u8 cidr, struct wg_peer *peer, struct mutex *lock)
-+{
-+	struct allowedips_node *node;
-+
-+	if (unlikely(cidr > bits))
-+		return -EINVAL;
-+	if (!rcu_access_pointer(*trie) ||
-+	    !node_placement(*trie, key, cidr, bits, &node, lock) ||
-+	    peer != rcu_access_pointer(node->peer))
-+		return 0;
-+
-+	remove_node(node, lock);
-+
-+	return 0;
-+}
-+
- void wg_allowedips_init(struct allowedips *table)
- {
- 	table->root4 = table->root6 = NULL;
-@@ -300,44 +350,38 @@ int wg_allowedips_insert_v6(struct allowedips *table, const struct in6_addr *ip,
- 	return add(&table->root6, 128, key, cidr, peer, lock);
- }
- 
-+int wg_allowedips_remove_v4(struct allowedips *table, const struct in_addr *ip,
-+			    u8 cidr, struct wg_peer *peer, struct mutex *lock)
-+{
-+	/* Aligned so it can be passed to fls */
-+	u8 key[4] __aligned(__alignof(u32));
-+
-+	++table->seq;
-+	swap_endian(key, (const u8 *)ip, 32);
-+	return remove(&table->root4, 32, key, cidr, peer, lock);
-+}
-+
-+int wg_allowedips_remove_v6(struct allowedips *table, const struct in6_addr *ip,
-+			    u8 cidr, struct wg_peer *peer, struct mutex *lock)
-+{
-+	/* Aligned so it can be passed to fls64 */
-+	u8 key[16] __aligned(__alignof(u64));
-+
-+	++table->seq;
-+	swap_endian(key, (const u8 *)ip, 128);
-+	return remove(&table->root6, 128, key, cidr, peer, lock);
-+}
-+
- void wg_allowedips_remove_by_peer(struct allowedips *table,
- 				  struct wg_peer *peer, struct mutex *lock)
- {
--	struct allowedips_node *node, *child, **parent_bit, *parent, *tmp;
--	bool free_parent;
-+	struct allowedips_node *node, *tmp;
- 
- 	if (list_empty(&peer->allowedips_list))
- 		return;
- 	++table->seq;
--	list_for_each_entry_safe(node, tmp, &peer->allowedips_list, peer_list) {
--		list_del_init(&node->peer_list);
--		RCU_INIT_POINTER(node->peer, NULL);
--		if (node->bit[0] && node->bit[1])
--			continue;
--		child = rcu_dereference_protected(node->bit[!rcu_access_pointer(node->bit[0])],
--						  lockdep_is_held(lock));
--		if (child)
--			child->parent_bit_packed = node->parent_bit_packed;
--		parent_bit = (struct allowedips_node **)(node->parent_bit_packed & ~3UL);
--		*parent_bit = child;
--		parent = (void *)parent_bit -
--			 offsetof(struct allowedips_node, bit[node->parent_bit_packed & 1]);
--		free_parent = !rcu_access_pointer(node->bit[0]) &&
--			      !rcu_access_pointer(node->bit[1]) &&
--			      (node->parent_bit_packed & 3) <= 1 &&
--			      !rcu_access_pointer(parent->peer);
--		if (free_parent)
--			child = rcu_dereference_protected(
--					parent->bit[!(node->parent_bit_packed & 1)],
--					lockdep_is_held(lock));
--		call_rcu(&node->rcu, node_free_rcu);
--		if (!free_parent)
--			continue;
--		if (child)
--			child->parent_bit_packed = parent->parent_bit_packed;
--		*(struct allowedips_node **)(parent->parent_bit_packed & ~3UL) = child;
--		call_rcu(&parent->rcu, node_free_rcu);
--	}
-+	list_for_each_entry_safe(node, tmp, &peer->allowedips_list, peer_list)
-+		remove_node(node, lock);
- }
- 
- int wg_allowedips_read_node(struct allowedips_node *node, u8 ip[16], u8 *cidr)
-diff --git a/drivers/net/wireguard/allowedips.h b/drivers/net/wireguard/allowedips.h
-index 2346c797eb4d..931958cb6e10 100644
---- a/drivers/net/wireguard/allowedips.h
-+++ b/drivers/net/wireguard/allowedips.h
-@@ -38,6 +38,10 @@ int wg_allowedips_insert_v4(struct allowedips *table, const struct in_addr *ip,
- 			    u8 cidr, struct wg_peer *peer, struct mutex *lock);
- int wg_allowedips_insert_v6(struct allowedips *table, const struct in6_addr *ip,
- 			    u8 cidr, struct wg_peer *peer, struct mutex *lock);
-+int wg_allowedips_remove_v4(struct allowedips *table, const struct in_addr *ip,
-+			    u8 cidr, struct wg_peer *peer, struct mutex *lock);
-+int wg_allowedips_remove_v6(struct allowedips *table, const struct in6_addr *ip,
-+			    u8 cidr, struct wg_peer *peer, struct mutex *lock);
- void wg_allowedips_remove_by_peer(struct allowedips *table,
- 				  struct wg_peer *peer, struct mutex *lock);
- /* The ip input pointer should be __aligned(__alignof(u64))) */
-diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlink.c
-index f7055180ba4a..386f65042072 100644
---- a/drivers/net/wireguard/netlink.c
-+++ b/drivers/net/wireguard/netlink.c
-@@ -46,7 +46,8 @@ static const struct nla_policy peer_policy[WGPEER_A_MAX + 1] = {
- static const struct nla_policy allowedip_policy[WGALLOWEDIP_A_MAX + 1] = {
- 	[WGALLOWEDIP_A_FAMILY]		= { .type = NLA_U16 },
- 	[WGALLOWEDIP_A_IPADDR]		= NLA_POLICY_MIN_LEN(sizeof(struct in_addr)),
--	[WGALLOWEDIP_A_CIDR_MASK]	= { .type = NLA_U8 }
-+	[WGALLOWEDIP_A_CIDR_MASK]	= { .type = NLA_U8 },
-+	[WGALLOWEDIP_A_FLAGS]		= NLA_POLICY_MASK(NLA_U32, __WGALLOWEDIP_F_ALL),
- };
- 
- static struct wg_device *lookup_interface(struct nlattr **attrs,
-@@ -329,6 +330,7 @@ static int set_port(struct wg_device *wg, u16 port)
- static int set_allowedip(struct wg_peer *peer, struct nlattr **attrs)
- {
- 	int ret = -EINVAL;
-+	u32 flags = 0;
- 	u16 family;
- 	u8 cidr;
- 
-@@ -337,19 +339,30 @@ static int set_allowedip(struct wg_peer *peer, struct nlattr **attrs)
- 		return ret;
- 	family = nla_get_u16(attrs[WGALLOWEDIP_A_FAMILY]);
- 	cidr = nla_get_u8(attrs[WGALLOWEDIP_A_CIDR_MASK]);
-+	if (attrs[WGALLOWEDIP_A_FLAGS])
-+		flags = nla_get_u32(attrs[WGALLOWEDIP_A_FLAGS]);
- 
- 	if (family == AF_INET && cidr <= 32 &&
--	    nla_len(attrs[WGALLOWEDIP_A_IPADDR]) == sizeof(struct in_addr))
--		ret = wg_allowedips_insert_v4(
--			&peer->device->peer_allowedips,
--			nla_data(attrs[WGALLOWEDIP_A_IPADDR]), cidr, peer,
--			&peer->device->device_update_lock);
--	else if (family == AF_INET6 && cidr <= 128 &&
--		 nla_len(attrs[WGALLOWEDIP_A_IPADDR]) == sizeof(struct in6_addr))
--		ret = wg_allowedips_insert_v6(
--			&peer->device->peer_allowedips,
--			nla_data(attrs[WGALLOWEDIP_A_IPADDR]), cidr, peer,
--			&peer->device->device_update_lock);
-+	    nla_len(attrs[WGALLOWEDIP_A_IPADDR]) == sizeof(struct in_addr)) {
-+		if (flags & WGALLOWEDIP_F_REMOVE_ME)
-+			ret = wg_allowedips_remove_v4(&peer->device->peer_allowedips,
-+						      nla_data(attrs[WGALLOWEDIP_A_IPADDR]), cidr,
-+						      peer, &peer->device->device_update_lock);
-+		else
-+			ret = wg_allowedips_insert_v4(&peer->device->peer_allowedips,
-+						      nla_data(attrs[WGALLOWEDIP_A_IPADDR]), cidr,
-+						      peer, &peer->device->device_update_lock);
-+	} else if (family == AF_INET6 && cidr <= 128 &&
-+		   nla_len(attrs[WGALLOWEDIP_A_IPADDR]) == sizeof(struct in6_addr)) {
-+		if (flags & WGALLOWEDIP_F_REMOVE_ME)
-+			ret = wg_allowedips_remove_v6(&peer->device->peer_allowedips,
-+						      nla_data(attrs[WGALLOWEDIP_A_IPADDR]), cidr,
-+						      peer, &peer->device->device_update_lock);
-+		else
-+			ret = wg_allowedips_insert_v6(&peer->device->peer_allowedips,
-+						      nla_data(attrs[WGALLOWEDIP_A_IPADDR]), cidr,
-+						      peer, &peer->device->device_update_lock);
-+	}
- 
- 	return ret;
- }
-diff --git a/drivers/net/wireguard/selftest/allowedips.c b/drivers/net/wireguard/selftest/allowedips.c
-index 25de7058701a..41837efa70cb 100644
---- a/drivers/net/wireguard/selftest/allowedips.c
-+++ b/drivers/net/wireguard/selftest/allowedips.c
-@@ -460,6 +460,10 @@ static __init struct wg_peer *init_peer(void)
- 	wg_allowedips_insert_v##version(&t, ip##version(ipa, ipb, ipc, ipd), \
- 					cidr, mem, &mutex)
- 
-+#define remove(version, mem, ipa, ipb, ipc, ipd, cidr)                      \
-+	wg_allowedips_remove_v##version(&t, ip##version(ipa, ipb, ipc, ipd), \
-+					cidr, mem, &mutex)
-+
- #define maybe_fail() do {                                               \
- 		++i;                                                    \
- 		if (!_s) {                                              \
-@@ -585,6 +589,50 @@ bool __init wg_allowedips_selftest(void)
- 	test_negative(4, a, 192, 0, 0, 0);
- 	test_negative(4, a, 255, 0, 0, 0);
- 
-+	insert(4, a, 1, 0, 0, 0, 32);
-+	insert(4, a, 192, 0, 0, 0, 24);
-+	insert(6, a, 0x24446801, 0x40e40800, 0xdeaebeef, 0xdefbeef, 128);
-+	insert(6, a, 0x24446800, 0xf0e40800, 0xeeaebeef, 0, 98);
-+	test(4, a, 1, 0, 0, 0);
-+	test(4, a, 192, 0, 0, 1);
-+	test(6, a, 0x24446801, 0x40e40800, 0xdeaebeef, 0xdefbeef);
-+	test(6, a, 0x24446800, 0xf0e40800, 0xeeaebeef, 0x10101010);
-+	/* Must be an exact match to remove */
-+	remove(4, a, 192, 0, 0, 0, 32);
-+	test(4, a, 192, 0, 0, 1);
-+	/* NULL peer should have no effect and return 0 */
-+	test_boolean(!remove(4, NULL, 192, 0, 0, 0, 24));
-+	test(4, a, 192, 0, 0, 1);
-+	/* different peer should have no effect and return 0 */
-+	test_boolean(!remove(4, b, 192, 0, 0, 0, 24));
-+	test(4, a, 192, 0, 0, 1);
-+	/* invalid CIDR should have no effect and return -EINVAL */
-+	test_boolean(remove(4, b, 192, 0, 0, 0, 33) == -EINVAL);
-+	test(4, a, 192, 0, 0, 1);
-+	remove(4, a, 192, 0, 0, 0, 24);
-+	test_negative(4, a, 192, 0, 0, 1);
-+	remove(4, a, 1, 0, 0, 0, 32);
-+	test_negative(4, a, 1, 0, 0, 0);
-+	/* Must be an exact match to remove */
-+	remove(6, a, 0x24446801, 0x40e40800, 0xdeaebeef, 0xdefbeef, 96);
-+	test(6, a, 0x24446801, 0x40e40800, 0xdeaebeef, 0xdefbeef);
-+	/* NULL peer should have no effect and return 0 */
-+	test_boolean(!remove(6, NULL, 0x24446801, 0x40e40800, 0xdeaebeef, 0xdefbeef, 128));
-+	test(6, a, 0x24446801, 0x40e40800, 0xdeaebeef, 0xdefbeef);
-+	/* different peer should have no effect and return 0 */
-+	test_boolean(!remove(6, b, 0x24446801, 0x40e40800, 0xdeaebeef, 0xdefbeef, 128));
-+	test(6, a, 0x24446801, 0x40e40800, 0xdeaebeef, 0xdefbeef);
-+	/* invalid CIDR should have no effect and return -EINVAL */
-+	test_boolean(remove(6, a, 0x24446801, 0x40e40800, 0xdeaebeef, 0xdefbeef, 129)  == -EINVAL);
-+	test(6, a, 0x24446801, 0x40e40800, 0xdeaebeef, 0xdefbeef);
-+	remove(6, a, 0x24446801, 0x40e40800, 0xdeaebeef, 0xdefbeef, 128);
-+	test_negative(6, a, 0x24446801, 0x40e40800, 0xdeaebeef, 0xdefbeef);
-+	/* Must match the peer to remove */
-+	remove(6, b, 0x24446800, 0xf0e40800, 0xeeaebeef, 0, 98);
-+	test(6, a, 0x24446800, 0xf0e40800, 0xeeaebeef, 0x10101010);
-+	remove(6, a, 0x24446800, 0xf0e40800, 0xeeaebeef, 0, 98);
-+	test_negative(6, a, 0x24446800, 0xf0e40800, 0xeeaebeef, 0x10101010);
-+
- 	wg_allowedips_free(&t, &mutex);
- 	wg_allowedips_init(&t);
- 	insert(4, a, 192, 168, 0, 0, 16);
-diff --git a/include/uapi/linux/wireguard.h b/include/uapi/linux/wireguard.h
-index ae88be14c947..8c26391196d5 100644
---- a/include/uapi/linux/wireguard.h
-+++ b/include/uapi/linux/wireguard.h
-@@ -101,6 +101,10 @@
-  *                    WGALLOWEDIP_A_FAMILY: NLA_U16
-  *                    WGALLOWEDIP_A_IPADDR: struct in_addr or struct in6_addr
-  *                    WGALLOWEDIP_A_CIDR_MASK: NLA_U8
-+ *                    WGALLOWEDIP_A_FLAGS: NLA_U32, WGALLOWEDIP_F_REMOVE_ME if
-+ *                                         the specified IP should be removed;
-+ *                                         otherwise, this IP will be added if
-+ *                                         it is not already present.
-  *                0: NLA_NESTED
-  *                    ...
-  *                0: NLA_NESTED
-@@ -184,11 +188,16 @@ enum wgpeer_attribute {
- };
- #define WGPEER_A_MAX (__WGPEER_A_LAST - 1)
- 
-+enum wgallowedip_flag {
-+	WGALLOWEDIP_F_REMOVE_ME = 1U << 0,
-+	__WGALLOWEDIP_F_ALL = WGALLOWEDIP_F_REMOVE_ME
-+};
- enum wgallowedip_attribute {
- 	WGALLOWEDIP_A_UNSPEC,
- 	WGALLOWEDIP_A_FAMILY,
- 	WGALLOWEDIP_A_IPADDR,
- 	WGALLOWEDIP_A_CIDR_MASK,
-+	WGALLOWEDIP_A_FLAGS,
- 	__WGALLOWEDIP_A_LAST
- };
- #define WGALLOWEDIP_A_MAX (__WGALLOWEDIP_A_LAST - 1)
+ echo -ne "$(basename $0) \t\t\t\t"
+ if [ $RET_CODE -eq 0 ]; then
+     echo "[  OK  ]"
 -- 
-2.48.1.711.g2feabab25a-goog
+2.47.1
 
