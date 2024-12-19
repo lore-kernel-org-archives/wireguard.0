@@ -4,61 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97D71C2D0CD
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 16:29:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27893C54E71
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 17:06:44 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6764069a;
-	Tue, 20 May 2025 19:55:25 +0000 (UTC)
-Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com
- [2607:f8b0:4864:20::b31])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 90e54222
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e37a7bf7;
+	Tue, 20 May 2025 19:36:20 +0000 (UTC)
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com
+ [2a00:1450:4864:20::330])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a9807ddc
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 17 Apr 2025 21:50:44 +0000 (UTC)
-Received: by mail-yb1-xb31.google.com with SMTP id
- 3f1490d57ef6-e6e1cd3f1c5so1069555276.0
- for <wireguard@lists.zx2c4.com>; Thu, 17 Apr 2025 14:50:43 -0700 (PDT)
+ Thu, 19 Dec 2024 05:54:42 +0000 (UTC)
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4361d5dcf5bso4289265e9.3
+ for <wireguard@lists.zx2c4.com>; Wed, 18 Dec 2024 21:54:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744926643; x=1745531443; darn=lists.zx2c4.com;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=5XQ7EIQOjKK/hm+507IricmA8aGEudj8pqoM62YIFX8=;
- b=MzHOpDlgIocvEASU/vQ/dKBFjdXQhCG1XL3aI+PDS5FMS/MCikJTDai+ia/7DW6Qvy
- o9jqN2A0rDiTuPD0NH1P+hPpOAgFA6LfhgCH/XVxjAkMrjY00xOAAA0cWfzSoZkwmCCh
- qoevmQwLqSlO3FDqZqhmFcsynUmbFpdgcNmqUNcTw5G5cQax1z2EOeKEXHBiTZw6Trwn
- sN/vGiSmvvH+PDr0fQgyoa+f4vgxA4/TfF8vF954uhxpE7PP6+M4vvnnTxqXvHBzqT3U
- Rb+mQC59Jm/y0ZQqFRk2qgp+MGH6JiLqOxfI87Rozpv0B1Zz51oPOE4XD3EX+a6hwH3v
- 0Stw==
+ d=gmail.com; s=20230601; t=1734587681; x=1735192481; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZfCpfOoSh8ogvEFAzzK5Sh/fDzaPC/IoHjTWRLgy2Xc=;
+ b=gu8XKh///IE1peAjIj6C/iwUKxddLbPeKiFOtIgoQPQs0slXpdkGryXk3rePVsg5Uy
+ OuAtBKmE33dYaZiXpa1zczptslnVt7mPc9pbsBOW9SwGIuOZdJ+Ry3PeVqyKo40P77wS
+ +ucA6s0x8EfHbBiYv6Shv+I77LBb8Q6z1TqOHxFOq3kwaMPDPjUGIC93zyCXBgVZY7XL
+ oY2JYs6vOKfEfswAwRgcnowt4rfPWlkFR5v2mHlK7jSm2GDJBFxcQDkorzwWts/kcS2T
+ Db4p8VGslkKkkbcRWvFZOJK6OxqxnGa+l0DmfTHFYE7EstzkRb5BpvrdDLzbc324o8rT
+ sk9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744926643; x=1745531443;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=5XQ7EIQOjKK/hm+507IricmA8aGEudj8pqoM62YIFX8=;
- b=XHAXi8PjLLwlHlQHpofOMd9B4tZrsdDMlsDtSGkOM14vMWTDLOcKnhMURlC8zyfwdj
- esqGSu07ZRAANfr/lyR4cqIGyuwmzuTg33j04ZSkQpIGzZaaIAiTyLhye348MIPO1kgd
- 3PVfOeb2PO4I9H+fTr2tqrOcBVlBhCxPYSzltTh9b6imWFaUnAutVRCOPZUbpzUgutkg
- EFiKWLoBMjnyowPC/E1wbjQZXqNAroKIHmZ9syvutEDfwWpI1RCwvFvxT066erZPN5n5
- Pr2KyZcHPtLeuecpNCZ/xh/iUf8Xw4enBzuH3qHx9ZNmVZENeu38Xif6Qf8SgBUDwRtA
- 6NIg==
-X-Gm-Message-State: AOJu0Yx2hUBcNz60THfVIvQe4l9anI4/2oX4kqlPAfIeVf8GXM3D6Jc8
- jj7oAmW0VJAUWFXD2KCDx71wJtUVFZcKLubjMPhEB1WT8XvSx2v80dHE5wa448nzmDqNJYy98b4
- oCracpZ2YROZmcnZ0xvAO/H2ThQ4E8LOFJ15KlQ==
-X-Gm-Gg: ASbGncv2UGCPJwKx/GLZhMpOjNCxVgvgMDVM9daL1h2w/cypaaGwfMeKZ9ySqgxZ7Tc
- gkpJ2oMiz5+eoSlsfhgS9fwFs3JvoP4R7C8MkcDTofzG9gfl/dkiAQpK7Zhz4eAu6Pv/U4aj3BJ
- YyNbhTDnNFdiPU0Lg9/N0bRbFWP2nipenm79Bs
-X-Google-Smtp-Source: AGHT+IGWzvgGtyyN6AAdjLO/uTMj1ZCKRjZ+9bq87MbGEQJS/yXiTFWCuiTKvG/l12EKkKPp8Nffmncsyu0Nf3LLlm4=
-X-Received: by 2002:a05:6902:1028:b0:e6d:ef29:169f with SMTP id
- 3f1490d57ef6-e7297eff074mr697059276.43.1744926642790; Thu, 17 Apr 2025
- 14:50:42 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1734587681; x=1735192481;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ZfCpfOoSh8ogvEFAzzK5Sh/fDzaPC/IoHjTWRLgy2Xc=;
+ b=RSZawuDDmy1OwSlWldqNziO7yYp+x4mTnEdoBMxul5RLeRuniQXVMo/MLVGmkeO4d6
+ hqwfYfySyWlRMhkOF3M52zhVhV3MVsfYXPw5AZ3OZ7ZxjM/LJliqTarQbzUXA0yYQE2p
+ LLrPkAVD3cuebElMmKaITIfDv74imVWRim5CGQsu4ct+EXT+xKMlqTnWy3xu4XddLm5k
+ LntxqYq7dkB0B+gA/jarB+pbH/CA43Tyb6H7Dw29G4Z8yCa5IRi4EwDxY0/CLE6iat2G
+ 2tcRKScC8gjq/wcfwqTULFg5m6uR+BbEx6DW2/FBUIZDHCSVFA3S7ui5S158vFOfL1gV
+ 9rQw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWbb1OG9jp3ZRHfXAnDMa7UndP2OBfOPiYFyP7THWirDtZOE4oLuUSPlchNhdtYwyd0G5/c9d6w5rw=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YyakRDRS/EAy6Zvgf71HeZ1xoW+CLgewU2cAZlk4+Gkg1iuvir2
+ gfQjaiGcvPaeKs2IQA4DsGQ3kz31EilPgGfFsSkdcRRrTP320PbKngGoAmNAF35zoWbDjvntlyB
+ zF1gW5KX1B36+dJaswey4rylSHzE=
+X-Gm-Gg: ASbGncuL7t6UUifuSuOus1PSdbiOllPIVdTNX+d6cdch0ZtIaP4L541AO6gRUqrOBEo
+ 8uU2u/uKM4wG6Y0WO2u7y3CTj4EQ49yW9K6v9
+X-Google-Smtp-Source: AGHT+IFXswhNY3wf74HiVRQ6mWtI+LQ0dYPzH2WDbrTkg0k3vCjw9PHsmFSj9uux2yKPzKWzDIYRJF3gX8R2i5iXHRM=
+X-Received: by 2002:a05:600c:4ed2:b0:434:f7ea:fb44 with SMTP id
+ 5b1f17b1804b1-4365535c6a3mr52447275e9.14.1734587681279; Wed, 18 Dec 2024
+ 21:54:41 -0800 (PST)
 MIME-Version: 1.0
-From: Tristan <trigus42.dev@gmail.com>
-Date: Thu, 17 Apr 2025 23:50:32 +0200
-X-Gm-Features: ATxdqUFoyPpC4mXcFzLvfDHfhiCQCh9pPhiAfvjCph3plhxymRgcprGBzpHlMqo
-Message-ID: <CAOhsA=t9SmdC23R-uU2gkjfNUTCa9Ge31eDfccT+V4ABMU=gRA@mail.gmail.com>
-Subject: [PATCH] wg-quick: check if nftables is functional before using it
-To: wireguard@lists.zx2c4.com
+References: <20241218130909.2173-1-shaw.leon@gmail.com>
+ <20241218130909.2173-12-shaw.leon@gmail.com>
+ <20241218153759.672b7014@kernel.org>
+In-Reply-To: <20241218153759.672b7014@kernel.org>
+From: Xiao Liang <shaw.leon@gmail.com>
+Date: Thu, 19 Dec 2024 13:54:03 +0800
+Message-ID: <CABAhCORszq9ao3OCVW-1EBsxsnLxbQ096eV+cbs12Es2HvCgUA@mail.gmail.com>
+Subject: Re: [PATCH net-next v6 11/11] selftests: net: Add test cases for link
+ and peer netns
+To: Jakub Kicinski <kuba@kernel.org>
+Cc: netdev@vger.kernel.org, linux-kselftest@vger.kernel.org, 
+ Kuniyuki Iwashima <kuniyu@amazon.com>, Donald Hunter <donald.hunter@gmail.com>,
+ Paolo Abeni <pabeni@redhat.com>, "David S. Miller" <davem@davemloft.net>, 
+ David Ahern <dsahern@kernel.org>, Eric Dumazet <edumazet@google.com>, 
+ Ido Schimmel <idosch@nvidia.com>, Andrew Lunn <andrew+netdev@lunn.ch>, 
+ Simon Horman <horms@kernel.org>, Shuah Khan <shuah@kernel.org>,
+ Jiri Pirko <jiri@resnulli.us>, 
+ Hangbin Liu <liuhangbin@gmail.com>, linux-rdma@vger.kernel.org, 
+ linux-can@vger.kernel.org, osmocom-net-gprs@lists.osmocom.org, 
+ bpf@vger.kernel.org, linux-ppp@vger.kernel.org, wireguard@lists.zx2c4.com, 
+ linux-wireless@vger.kernel.org, b.a.t.m.a.n@lists.open-mesh.org, 
+ bridge@lists.linux.dev, linux-wpan@vger.kernel.org, 
+ linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-X-Mailman-Approved-At: Tue, 20 May 2025 19:52:08 +0000
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -73,31 +93,29 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Currently, wg-quick only checks if the nft binary exists before attempting
-to use nftables. This can lead to failures when the binary exists but the
-required kernel modules aren't loaded.
+On Thu, Dec 19, 2024 at 7:38=E2=80=AFAM Jakub Kicinski <kuba@kernel.org> wr=
+ote:
+>
+> On Wed, 18 Dec 2024 21:09:09 +0800 Xiao Liang wrote:
+> >  - Add test for creating link in another netns when a link of the same
+> >    name and ifindex exists in current netns.
+> >  - Add test to verify that link is created in target netns directly -
+> >    no link new/del events should be generated in link netns or current
+> >    netns.
+> >  - Add test cases to verify that link-netns is set as expected for
+> >    various drivers and combination of namespace-related parameters.
+>
+> Nice work!
+>
+> You need to make sure all the drivers the test is using are enabled by
+> the selftest kernel config: tools/testing/selftests/net/config
+>
+> This may be helpful:
+> https://github.com/linux-netdev/nipa/wiki/How-to-run-netdev-selftests-CI-=
+style#how-to-build
 
-This change adds a functionality check using 'nft list ruleset' to verify
-nftables is operational before attempting to use it, falling back to
-iptables if nftables is non-functional.
----
-src/wg-quick/linux.bash | 2 +-
-1 file changed, 1 insertion(+), 1 deletion(-)
+Thanks for pointing it out. And vng is really cool. I will add
+the missing config in the next version.
 
-diff --git a/src/wg-quick/linux.bash b/src/wg-quick/linux.bash
-index 4193ce5..55b1850 100755
---- a/src/wg-quick/linux.bash
-+++ b/src/wg-quick/linux.bash
-@@ -238,7 +238,7 @@ add_default() {
-printf -v nftcmd '%sadd rule %s %s postmangle meta l4proto udp mark %d
-ct mark set mark \n' "$nftcmd" "$pf" "$nftable" $table
-printf -v nftcmd '%sadd rule %s %s premangle meta l4proto udp meta
-mark set ct mark \n' "$nftcmd" "$pf" "$nftable"
-[[ $proto == -4 ]] && cmd sysctl -q net.ipv4.conf.all.src_valid_mark=1
-- if type -p nft >/dev/null; then
-+ if type -p nft >/dev/null && nft list ruleset &>/dev/null; then
-cmd nft -f <(echo -n "$nftcmd")
-else
-echo -n "$restore" | cmd $iptables-restore -n
---
-2.47.0
+> --
+> pw-bot: cr
