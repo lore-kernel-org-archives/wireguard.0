@@ -4,87 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12702C54ED1
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 16:10:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3986C54ED0
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 16:10:19 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1c19fea6;
-	Tue, 20 May 2025 19:41:28 +0000 (UTC)
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com
- [2607:f8b0:4864:20::62d])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 597cfc91
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1c292d33;
+	Tue, 20 May 2025 19:49:53 +0000 (UTC)
+Received: from smtp-relay-internal-1.canonical.com
+ (smtp-relay-internal-1.canonical.com [185.125.188.123])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id dcdf4e78
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 19 Feb 2025 12:51:41 +0000 (UTC)
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-22104c4de96so70830935ad.3
- for <wireguard@lists.zx2c4.com>; Wed, 19 Feb 2025 04:51:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1739969499; x=1740574299; darn=lists.zx2c4.com;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RiGtI+5ToMID9TUSdNCghgiM3EXs9/d4cQAhclrcdwo=;
- b=feC0QjfLgjKKpIbZxdWObskOfa6fqJAQ09bR1fe8nHz77kUPwwKmFZxYs/R81a53p4
- 5+XZlQ7IwXPYY1ElaIZ1Q/UsgscEE+zgBd8rd8Z3KhkAtCzeqy+MUH+VnWO3pob292xV
- t0w2aalxK+V/61usa6XxS75cUuXXr/SnUnMkouesHr/LuGgVFhTMQGY5aaqG/isEIMMi
- HOIyESbORAk/BrL3LKvFvQSGKT181pBToafSBnmraous52Z808Sxv5TVK3Mmr/owAgoP
- +ziHcXGWjZVs57vOFqS1CYbDz/dLj2UIbxQXCco8wP+TPlSXJ+pUJwUgYg/vU0SwmyPo
- NCmA==
+ Mon, 23 Dec 2024 19:46:03 +0000 (UTC)
+Received: from mail-yb1-f199.google.com (mail-yb1-f199.google.com
+ [209.85.219.199])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 0BE713F82B
+ for <wireguard@lists.zx2c4.com>; Mon, 23 Dec 2024 19:46:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20210705; t=1734983162;
+ bh=PMlKiln3iwEpneOOTZL0kPrOdyCOuYGPe8vE8NpYPWI=;
+ h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type;
+ b=Fv1qWeChxOyQp276qN0NYIeUuK8IhwGKlC5xCzJkPRd+KSSe5raSy22JWjdtL9r45
+ 11zC0fRcHGTyQsMB7OG+h5KHBJTk7K9RPlNBe9CJGIOCK7iXblsfVd/Q3UuLsQpcMj
+ wWKz2sopZzy2rx/SlY3sg1yYDoG4d+HsvAVylXjbih7dENHQP6Sr40T/vBfFcc89Aq
+ 50xCUyMpCJZZgqqmz1F8r0W/RBaXlCIiB+iYd3R9knIGbxC2JAO3uKzoKT/0LPfXTj
+ oQ9HKCiFclS0rvLljgFoQJ6Hd5urAfekT5eoKR2Fx7PDp0uddwmECQmBg+ei0ol0/p
+ vglrcPa2/f2VQ==
+Received: by mail-yb1-f199.google.com with SMTP id
+ 3f1490d57ef6-e3886f4cee2so6853998276.0
+ for <wireguard@lists.zx2c4.com>; Mon, 23 Dec 2024 11:46:02 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739969499; x=1740574299;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=RiGtI+5ToMID9TUSdNCghgiM3EXs9/d4cQAhclrcdwo=;
- b=n0J+mcJg64Cd6vDixoIQWO0fnFP8HBxpCj2QPbEz1H3J3dAiD/EdzUeOndR6/mRunw
- J1fs3JkWsLU/IkWVjog5M4v1WSaBGOcnzTgc31pLWvUKXPXlk4KnHHIzlYUBFC8ckNdI
- C1l7XCdlNf48FPyLotsgJmiE3HGpoE7RRpNKJxFt4g993hhRPVIxCc99DVcBEChECEhI
- HaGL4zaVarqieo40jyBlr6JKA0XqZ+PjFlmg+Ny2JHw1O53jRFJQFg1e9yayiJe2VG3o
- DCnxsT+wsAAOyN08pda9vsEK/fQbhhdFGzRqyXVIS51l8l48Cw8Cdsto0PX9HWgMXGfD
- m0Pg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVe6WSIVop1yPGyybEYUYdDASyX3b6IhlGdSe3sTS43avkm0ipYwc+1XBZ45XAPwoi6V04/MosZdUI=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0Yxpz1EchhuJM6c46zFmDb/+1XDq++97wTMv846qj9cvw6m5sZ56
- 8h6B6sQGlB65yBcKx63HmF68//D1L+/bYWT7sS6tbUerwdpUUmpb
-X-Gm-Gg: ASbGnctKhxieaMkFqlu/Z++OTtH/3Kw/gL5rlxxGr40tehenStcpIo1fCnN1En1W+PR
- NYKU1fyjL8UU9feWZCbNez9d6dDk9VL+yheil9b/APzISEx+AV/6ygRpGtkfhn4O0ztUnoAC8/x
- Q3fbfRLe2rWC6F3yI7Nl5ROPiDYUhuk6S090o30VC3GNrpqoLyDeJr0Apg1F0KwD9lyoVFPH3Yh
- HtzpNUn3CIpFykhOYQ8vkBPLi91YM78SpGy+tMhitWTz4gD8gFfaHI0Pj+L8ARQ/Lw4KmHvHKtu
- hQkgVA==
-X-Google-Smtp-Source: AGHT+IFttmTeAFp7rRNlCvGNA6c3f8HloQtXmzYtg/s+sWnJsGTKFqc7jLE1fU4ek1ihZeJfgcA+rA==
-X-Received: by 2002:a17:902:ec83:b0:21f:5933:b3eb with SMTP id
- d9443c01a7336-22104087bc1mr237554135ad.31.1739969499276; 
- Wed, 19 Feb 2025 04:51:39 -0800 (PST)
-Received: from ws.. ([103.167.140.11]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-220d536436fsm103427175ad.64.2025.02.19.04.51.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Feb 2025 04:51:38 -0800 (PST)
-From: Xiao Liang <shaw.leon@gmail.com>
-To: netdev@vger.kernel.org, linux-kselftest@vger.kernel.org,
- Kuniyuki Iwashima <kuniyu@amazon.com>, Jakub Kicinski <kuba@kernel.org>
-Cc: "David S. Miller" <davem@davemloft.net>, David Ahern <dsahern@kernel.org>,
- Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
- Andrew Lunn <andrew+netdev@lunn.ch>, Simon Horman <horms@kernel.org>,
- Shuah Khan <shuah@kernel.org>, Donald Hunter <donald.hunter@gmail.com>,
- Alexander Aring <alex.aring@gmail.com>,
- Stefan Schmidt <stefan@datenfreihafen.org>,
- Miquel Raynal <miquel.raynal@bootlin.com>,
- Steffen Klassert <steffen.klassert@secunet.com>,
- Herbert Xu <herbert@gondor.apana.org.au>, linux-rdma@vger.kernel.org,
- linux-can@vger.kernel.org, osmocom-net-gprs@lists.osmocom.org,
- bpf@vger.kernel.org, linux-ppp@vger.kernel.org, wireguard@lists.zx2c4.com,
- linux-wireless@vger.kernel.org, b.a.t.m.a.n@lists.open-mesh.org,
- bridge@lists.linux.dev, linux-wpan@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v10 05/13] net: ip_tunnel: Don't set tunnel->net in
- ip_tunnel_init()
-Date: Wed, 19 Feb 2025 20:50:31 +0800
-Message-ID: <20250219125039.18024-6-shaw.leon@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250219125039.18024-1-shaw.leon@gmail.com>
-References: <20250219125039.18024-1-shaw.leon@gmail.com>
+ d=1e100.net; s=20230601; t=1734983160; x=1735587960;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=PMlKiln3iwEpneOOTZL0kPrOdyCOuYGPe8vE8NpYPWI=;
+ b=cuXp7Vvi1UyoPTiAFEDheXnHkSzRq0+Aim/kkeFy74FYNa/53ypK/mtiWeP4MNMvSU
+ GciRJ2vPF3cChkOGIvTay0hW8M4bGrCEF8BeHYnw5qF5KKr5/N1hTuwlnmHBtQ90Rs0p
+ EvWXEN4fN+us3Lzx337Vwmy4AbgJG9Jzng8OkEc+r2mvFNbbjs+1MowQqndQ2JSSVgOr
+ p3nzzmZM6g8XxXjtqLhW+c3elpqBkUh+vBwGbZTwoieZrqoXNFXaD4CP12359WKyHeyq
+ dxFkkm/gWfXoxoMMP51hMIOuOKaNzRWAZpwnhulVau22F7siNrhP2BCklL8EdNkNCLTc
+ YRiQ==
+X-Gm-Message-State: AOJu0YzIApNDyP6AaE7HiKx0OAgJkuKBT7s2XrcjaZFKria8FupUjZVb
+ Cchts60bhvLZX55Wr6MTWoSELnK7BQ8Gmna/JANMpTwJAwcYYhrz2FP1AQEZP6ar3aDXUITGb+o
+ 0ysaPKZVop5tkIj506ia2q1xRhUJvQTluLFHrHLba5zMdNnPQmOQpecOnZ3gFjV1151skq08aHc
+ RI5R4Wctkshmd9/1ZIelVTIHHipyYVKMEGlTqoM6z2RuNOFtKzkOwXnwIAl/U=
+X-Gm-Gg: ASbGnctrPYEgGbvsZYfZLAQAfdjLpjKfsykIZRfmhqvkY9GpPehIZBat4z+wWjTcxcu
+ U21nsTKZo/YN1tN9fBwfk8sLUYuVvXYDkBeUH0UE=
+X-Received: by 2002:a05:690c:3687:b0:6f0:301:5fea with SMTP id
+ 00721157ae682-6f3e2ac4f92mr132273517b3.12.1734983160654; 
+ Mon, 23 Dec 2024 11:46:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHRqWJHdMWPALLSHqsnDvlehw+ePhS5NkGOqTeCzt6IhZ8I4UA7gI/8J6DQtEiwE9HgrS4atAHwEemerpI4+GM=
+X-Received: by 2002:a05:690c:3687:b0:6f0:301:5fea with SMTP id
+ 00721157ae682-6f3e2ac4f92mr132273377b3.12.1734983160391; Mon, 23 Dec 2024
+ 11:46:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: Andreas Hasenack <andreas.hasenack@canonical.com>
+Date: Mon, 23 Dec 2024 16:45:12 -0300
+Message-ID: <CANYNYEHOiXF1NC2WQY8-CSoQatMgqszk4SXW4XosjQceKXUh_Q@mail.gmail.com>
+Subject: Trying to route only IRC traffic through wireguard interface
+To: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
+X-Mailman-Approved-At: Tue, 20 May 2025 19:45:56 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -99,27 +81,33 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-ip_tunnel_init() is called from register_netdevice(). In all code paths
-reaching here, tunnel->net should already have been set (either in
-ip_tunnel_newlink() or __ip_tunnel_create()). So don't set it again.
+Hi,
 
-Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
----
- net/ipv4/ip_tunnel.c | 1 -
- 1 file changed, 1 deletion(-)
+I'm traveling, and this ISP that I'm using "on the road" decided to
+block port 6697/tcp. I thought about using my existing wireguard VPN
+to also route this traffic through it.
 
-diff --git a/net/ipv4/ip_tunnel.c b/net/ipv4/ip_tunnel.c
-index 09b73acf037a..dd4b4e5be998 100644
---- a/net/ipv4/ip_tunnel.c
-+++ b/net/ipv4/ip_tunnel.c
-@@ -1326,7 +1326,6 @@ int ip_tunnel_init(struct net_device *dev)
- 	}
- 
- 	tunnel->dev = dev;
--	tunnel->net = dev_net(dev);
- 	strscpy(tunnel->parms.name, dev->name);
- 	iph->version		= 4;
- 	iph->ihl		= 5;
--- 
-2.48.1
+The problem is that there isn't just one ip to pick to add to
+AllowedIPs, it's several, and they change according to what DNS is
+resolving at that particular time.
 
+So I thought to use policy routing. Something like:
+
+iptables -t mangle -A OUTPUT -p tcp --dport 6697 -j MARK --set-mark 1
+echo "100 wireguard" > /etc/iproute2/rt_tables.d/wireguard.conf
+ip rule add fwmark 1 table wireguard
+ip route add default via 10.10.12.1 dev wg0 table wireguard source 10.10.12.11
+
+tcpdump shows this working on the local box, i.e., I see an outbound
+connection to the IRC server on the wireguard interface, but it never
+arrives anywyere. tcpdump on the other side of the wireguard tunnel
+shows zero traffic. I suspect wireguard locally is blocking it,
+because that IP is not in AllowedIPs, but I can't confirm because this
+box has secure boot and I can't enable debugfs to check the wireguard
+messages.
+
+If that's the case, is the only solution to really add all IPs of this
+IRC server to AllowedIPs, dynamically even perhaps? I know I could
+just route everything through wireguard, but now my interest is spiked
+by this particular case, and I wanted to be able to use policy
+routing.
