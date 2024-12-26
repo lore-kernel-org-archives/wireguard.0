@@ -4,75 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3508C54E90
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAB56C54ECC
 	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 20 May 2025 23:11:30 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0c98ede3;
-	Tue, 20 May 2025 19:43:51 +0000 (UTC)
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com
- [2607:f8b0:4864:20::62c])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ad5b18b5
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0caa2113;
+	Tue, 20 May 2025 19:36:36 +0000 (UTC)
+Received: from mail-il1-f200.google.com (mail-il1-f200.google.com
+ [209.85.166.200])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id cfb30d4e
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 8 Apr 2025 08:17:10 +0000 (UTC)
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2295d78b45cso67837215ad.0
- for <wireguard@lists.zx2c4.com>; Tue, 08 Apr 2025 01:17:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744100229; x=1744705029; darn=lists.zx2c4.com;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=9fdElPioRI0btoB9YLHJoXBq7OTonUhGxAaIJ5PdYa8=;
- b=i2oHJ82Z0v10ZAbf8QY13SC/tMmwcjGEc8dwhXesSTHtmHS7UUo47eoqA+vY7KGvlg
- uymu2TrT+w8IENd/uNi9mSgpTUTO9tayE/TjRtgQQWoFlWuZzkKtgOgdq1hCQR1ISWVP
- VOcPr2CK9F1HCREfwFBEHILt8SuIcs4LabEwspTRv0XujJ0ExL6N+uKvKqHwnkxxJZhd
- 3bOQHReVtUM7aihZFXSvtWaJYZ0sfz7Ja1jFHPCcFqo63URVYdz5KgXjQmsy/L565UjT
- EoNz3loWLm0b3cgQjc+AyJD4IlEiBHCRXafreHGHLaLNoHGi0+cUYVMpsfp9ufmjgXQR
- gXAw==
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 26 Dec 2024 09:01:30 +0000 (UTC)
+Received: by mail-il1-f200.google.com with SMTP id
+ e9e14a558f8ab-3a9d57cff85so129620815ab.2
+ for <wireguard@lists.zx2c4.com>; Thu, 26 Dec 2024 01:01:30 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744100229; x=1744705029;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9fdElPioRI0btoB9YLHJoXBq7OTonUhGxAaIJ5PdYa8=;
- b=kjl0zOGCreiyKuTMHSkZWh+ZyW0aFSF58XDja50jBr6pN1ARgfdho3tK10ReEaQ5pE
- Teuw1OpxiU73hC/2Ydc1rhPHU/iwOPl05x/sdEtJ6tE5tc9xwkDpXl8nq+pmnyQmTBnt
- Ior1uEvBMRjf2PHRilKnodOZn2hLHUxD2T4Jau6yrm7I4II1xopy6jJgF7LFXiuO2ny1
- jjxrgc9BXnOL9aF0oL50lyRU8mEtD3Lf9bpbCWQYQVUi4JBxObwPlMdvoICikKplLBK7
- Nj6PxNysJPdHLw0Tj3mWiqmQ3EN0fZNvrJic935Il+jUUfbbqJ6eO+ojFstX3UQT6VHs
- LKow==
+ d=1e100.net; s=20230601; t=1735203689; x=1735808489;
+ h=to:from:subject:message-id:date:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Bp9tKkCAuQ/mUk82Cee4vQoXoncTsTYSSaG8UciEk5U=;
+ b=PL3ZrUTNww6kW2WLHOEaEUdHC+CWrM3gKB/vrCEhS3Vh/+cvTbIyr4o6jkKjtbFHAk
+ en34PAuDX8FXlZpV/nof0KUBUldKF/Lrdwy6ApnjLSbWpKtRwrApYmy7RANVYRM3Y3u5
+ gyeDPEn2rFTn20Xu4Qu9xQVQPZ/a15s9zF8gVz7obP1gNuxdXjg8jDrgmhGbuUPxTkiB
+ 5p7jlB85klrFu1mEy3jwxLjx7QsL0BiX0eSYzqtuizA2XsCR+n+OwrJcvup9qAt0F9ay
+ +lG95kEcdAPtZw3sodm2oO+2JnO/3MnDdc9n2pdmXV6cBK0+uE0vnmmBZ3eRBJlzDmIU
+ OTDA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWatvb6J+hL4xQgW9SsaEFwwqwdc6iOiIIGJkgl+N6N/Ps6MKp3KmWIDOFL8koLiOzAtu0oX5j9mYQ=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YxZHM5P93711anaZJ6rvp2NoQNUdrzNpnWN1gIyLQLP8c10r/a8
- 9YJMpWwC++rpmbkikLHILjKj5jrPZoZM9HIaT3YtI3y6QEzj6aS4
-X-Gm-Gg: ASbGncso33xpFczs3LuONwddF2w92H2jM/HhI8Fd4Eum8DRKSr3IINtnLyWiKGbre2u
- UnhhxdhzxJdr0eqKWaQZbuvzUUTODed97MDLgxLQHoIdzOR98phmBDEhR8V+HLbWQhpflLcdkmT
- gB9LVDeBXSEy81rNRTPWgnP+jCt/s6P2/lm217taUKSUjwRqbqhKiPFclb2tio0Fb+2KY+6h5iY
- SJSASM2f6el6lSymW1OlQFm57Gz9YZ/GE8lC2NsYbdXGWt1Rt0TsK/tUU6ebaRzx9twSDAZeJsb
- w6w2tHeo0Xn876cuyNsduaVylKwJ++m8l6+xSk68ula28zGMO5QPwmDmgTQ4Z6KW1zL1Dg==
-X-Google-Smtp-Source: AGHT+IFe2CIssHzOnft5L6j+qBASQd7ICbxBKBKnPXX2l9y7vhFe+KHnO6lG9nf9EBuFFYKULvvZfQ==
-X-Received: by 2002:a17:903:1b25:b0:220:e1e6:4472 with SMTP id
- d9443c01a7336-22a8a0545f9mr208034285ad.13.1744100228937; 
- Tue, 08 Apr 2025 01:17:08 -0700 (PDT)
-Received: from fedora.dns.podman ([43.228.180.230])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-229785ada20sm94319535ad.46.2025.04.08.01.17.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 08 Apr 2025 01:17:08 -0700 (PDT)
-From: Hangbin Liu <liuhangbin@gmail.com>
-To: netdev@vger.kernel.org
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, Jakub Kicinski <kuba@kernel.org>,
- Shuah Khan <shuah@kernel.org>, "David S. Miller" <davem@davemloft.net>,
- Simon Horman <horms@kernel.org>, Phil Sutter <phil@nwl.cc>,
- Florian Westphal <fw@strlen.de>, Petr Mladek <pmladek@suse.com>,
- Yoann Congal <yoann.congal@smile.fr>, wireguard@lists.zx2c4.com,
- linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org,
- Hangbin Liu <liuhangbin@gmail.com>
-Subject: [PATCHv6 net-next 0/2] wireguard: selftests: use nftables for testing
-Date: Tue,  8 Apr 2025 08:16:50 +0000
-Message-ID: <20250408081652.1330-1-liuhangbin@gmail.com>
-X-Mailer: git-send-email 2.46.0
+ AJvYcCWy6cVGb7sNk/aQ9N30G0vIs1msh//RZvAZdtjfov1OqGTj3LvnROFWFWfz4hkeu77p+jfAfsP6Lds=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0Ywan9MH/3o5plDZRXs20sFpGMRM82SkGLQW3MP22cERY9vGHHzv
+ Sb3MueqIpDjrh8JNOH2E8zvOc+GrpD8TGBcul3LETDglVHPLVadqOTxskGS5mGq8e2myIChYuSJ
+ zOnMEWNu0q///MUtJ4+j1tsPp5ATDw9GxhqjmmHW/s0BMVeY0RPfIcJo=
+X-Google-Smtp-Source: AGHT+IHdTuf04TZ07cOEb7uzjG5uOMY425hqGzSFm/TphbmDrUUYrbdL0ySBLKSKwqxl8hqwMXDOstAHnkwyauM4UD6T8tYlXB8U
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-Received: by 2002:a92:1948:0:b0:3cb:f2e6:5590 with SMTP id
+ e9e14a558f8ab-3cbf2e65718mr26619235ab.0.1735203689309; Thu, 26 Dec 2024
+ 01:01:29 -0800 (PST)
+Date: Thu, 26 Dec 2024 01:01:29 -0800
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <676d1b69.050a0220.226966.007e.GAE@google.com>
+Subject: [syzbot] Monthly wireguard report (Dec 2024)
+From: syzbot <syzbot+listbcd07c53ebf03869ffc2@syzkaller.appspotmail.com>
+To: Jason@zx2c4.com, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
+ syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -87,25 +62,34 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This patch set convert the wireguard selftest to nftables, as iptables is
-deparated and nftables is the default framework of most releases.
+Hello wireguard maintainers/developers,
 
-v6: fix typo in patch 1/2. Update the description (Phil Sutter)
-v5: remove the counter in nft rules and link nft statically (Jason A. Donenfeld)
-v4: no update, just re-send
-v3: drop iptables directly (Jason A. Donenfeld)
-    Also convert to using nft for qemu testing (Jason A. Donenfeld)
-v2: use one nft table for testing (Phil Sutter)
+This is a 31-day syzbot report for the wireguard subsystem.
+All related reports/information can be found at:
+https://syzkaller.appspot.com/upstream/s/wireguard
 
-Hangbin Liu (2):
-  wireguard: selftests: convert iptables to nft
-  wireguard: selftests: update to using nft for qemu test
+During the period, 1 new issues were detected and 0 were fixed.
+In total, 7 issues are still open and 19 have already been fixed.
 
- tools/testing/selftests/wireguard/netns.sh    | 29 +++++++++------
- .../testing/selftests/wireguard/qemu/Makefile | 36 ++++++++++++++-----
- .../selftests/wireguard/qemu/kernel.config    |  7 ++--
- 3 files changed, 49 insertions(+), 23 deletions(-)
+Some of the still happening issues:
 
--- 
-2.46.0
+Ref Crashes Repro Title
+<1> 345     No    INFO: task hung in wg_netns_pre_exit (5)
+                  https://syzkaller.appspot.com/bug?extid=f2fbf7478a35a94c8b7c
+<2> 98      No    INFO: task hung in netdev_run_todo (4)
+                  https://syzkaller.appspot.com/bug?extid=894cca71fa925aabfdb2
+<3> 2       No    general protection fault in wg_packet_receive (2)
+                  https://syzkaller.appspot.com/bug?extid=c0f4a2553a2527b3fc1f
 
+---
+This report is generated by a bot. It may contain errors.
+See https://goo.gl/tpsmEJ for more information about syzbot.
+syzbot engineers can be reached at syzkaller@googlegroups.com.
+
+To disable reminders for individual bugs, reply with the following command:
+#syz set <Ref> no-reminders
+
+To change bug's subsystems, reply with:
+#syz set <Ref> subsystems: new-subsystem
+
+You may send multiple commands in a single email message.
