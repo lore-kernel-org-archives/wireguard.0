@@ -4,54 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F7EEC54E65
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 09:18:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE986C2D0CD
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 09:18:12 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 432b11df;
-	Tue, 20 May 2025 19:42:33 +0000 (UTC)
-Received: from nyc.source.kernel.org (nyc.source.kernel.org
- [2604:1380:45d1:ec00::3])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4a683881
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4354cb80;
+	Tue, 20 May 2025 19:37:23 +0000 (UTC)
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com
+ [2607:f8b0:4864:20::62f])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b1b873c7
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 12 Mar 2025 20:14:57 +0000 (UTC)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id 8ECE5A471BC;
- Wed, 12 Mar 2025 20:09:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21ECFC4CEDD;
- Wed, 12 Mar 2025 20:14:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1741810496;
- bh=g1sFQOH1vPx9lrAH9SnoezGldeEVl4lvcdztzHQTJQM=;
- h=From:To:Cc:Subject:Date:From;
- b=OFn15q3V51I45tB11gIJbA7lTjNOXPMlMTcbf2BddQlXzu75hspiWs8j4ox33V1Hg
- 9tA8oi9VKsliX9W0YM7TsNgOhxnqojnncAhKzjIwHK8gqUDKiowtX7BEgTUOFli7J/
- ej31iIfZ4kA5r0hSr22Q6M7O3fscKcFgdMeNmLztdWqzoj0wC4WT8xxGxPATXQ3pn4
- +hAaBk0JNBTmBKXxrRvawYiDQZaUVeZDacHz9KOgZnIe4u/iUVwkFgzd+Ifw2/0Fss
- pqjybBn3mMtxE6X9x6GduGbIL3zRpBZ1ixqvDQGrLDySVAb/UGQNsvdLC2ZbDb1wW7
- cWMgqnKONaDWw==
-From: Kees Cook <kees@kernel.org>
-To: "Jason A . Donenfeld" <Jason@zx2c4.com>
-Cc: Kees Cook <kees@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>,
- "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, wireguard@lists.zx2c4.com,
- netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-hardening@vger.kernel.org
-Subject: [PATCH v2] wireguard: Add __nonstring annotations for unterminated
- strings
-Date: Wed, 12 Mar 2025 13:14:51 -0700
-Message-Id: <20250312201447.it.157-kees@kernel.org>
-X-Mailer: git-send-email 2.34.1
+ for <wireguard@lists.zx2c4.com>; Sat, 4 Jan 2025 12:58:52 +0000 (UTC)
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2166022c5caso161625205ad.2
+ for <wireguard@lists.zx2c4.com>; Sat, 04 Jan 2025 04:58:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1735995531; x=1736600331; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Ce6VaPIVkPoT/BnqzSEc4rQsuMP37QI18aEevx41SAs=;
+ b=Zbor+2qJN1kcCgsRGqpz8RrabhPSaQZ9DHP1GOXl2ZTT0rNKWSdRSHX3sPsL28K/Qd
+ RjlVIyRnglu+DPaG2dbXnwNLpfSH3ia23dAbjpFqSPCWqlUQXGCmOaAiSvo2Uv5bU4nT
+ Y0/S17LtNFiBuIACykOiHYvzIwn3nnDoeWi8TxQa92+KvGKUJl0ywA6lV0GVkNpVszSH
+ uLQZXu1U0H+XhnY5rKDxi74K/XeTCjqSGqx9uORg5FCqHTdtjud210EdCK/C1eH2TsWv
+ UjV+7z7t/MtnT1cTgHEEcStiK90f87azAEmOr4Zl8M8nE1WxTb0mKogEty1oQCL5UdiK
+ TR8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1735995531; x=1736600331;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Ce6VaPIVkPoT/BnqzSEc4rQsuMP37QI18aEevx41SAs=;
+ b=kH0nUnl75jiK3k2kngHtMz18OPPjQ8IVrDARqAfrhk1vn5oOz10jBjvC9Xfc4tSCBs
+ lh4naCnPqvBFkeB/AbB3V5mgAsnMlVihEcBSsXv4qzKgqS0FJWf5L1E8X72pkSnwRDAF
+ 70nwCWfn0X3F4URzrTaV+FmsLwUy9GfM+IoTdorZJxQsBjRPHWUuqEFy2dH5Dg5lDbLf
+ 3CJxS4E297QXEF5SN9/ImtuFGMTvkrIRLzs8s6JIFmekNGdGnwHJAEsVv3QucnllIM87
+ C3AodtOHiNxu1b95TwzitajdKfWkqlkMOcGYQy1B6u1BJA8rzUsbnpWWRzN/QHUnd4Vh
+ ID7A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXmuGOjpvS7FJY3L7CWg/D9ZSJ4snJqT+TdpI+oYmd8JP/j1pwBh2KUPMA6A2c+Btbe/V5aetDgDd4=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YwLr0c5qzYBc3lRH7NslcRWxhLOi+neTIIF3M+yJ3sp3NWImueH
+ sD5iO6SVylHyKM1H0Crw3hxyQNNqrOZwtRZeZgVTXnx8C0ILOUxo
+X-Gm-Gg: ASbGncs1x2bhwgQ5CC5TPPYSHw3oGoo26Vbj4pNDmebvvLpV/4q+m8h4p4i+f/lUCwh
+ DyG0ndH3jJsOxrKIzgWZ+jmigZAxGslsUWCbUC4HFsB8meV1CpIHuHEG12PZB7PrpgCgZXXxVWj
+ A9DkZdfG6XcGmRark9FsrVwAwk8d0KSdjVzdPinFCeON5c5RVZgKaazidaTOqUmOXdjbCbsgiuG
+ AYIBvodqLUAMGvMNijJjm9Q3XqXQ9vk/PnWViaoJ9Wrpj0=
+X-Google-Smtp-Source: AGHT+IFpOYXqaI1R+HGOEzzxslPytJ/PM+OYSeZsg4xs6ImgmD2P2d6ce4kFlhBJ9qWXqvAf2AhpWw==
+X-Received: by 2002:a05:6a20:1596:b0:1e1:9f57:eab4 with SMTP id
+ adf61e73a8af0-1e5e04609b4mr80108339637.16.1735995531119; 
+ Sat, 04 Jan 2025 04:58:51 -0800 (PST)
+Received: from ws.. ([103.167.140.11]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72aad830349sm27761344b3a.47.2025.01.04.04.58.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 04 Jan 2025 04:58:50 -0800 (PST)
+From: Xiao Liang <shaw.leon@gmail.com>
+To: netdev@vger.kernel.org, linux-kselftest@vger.kernel.org,
+ Kuniyuki Iwashima <kuniyu@amazon.com>, Jakub Kicinski <kuba@kernel.org>,
+ Donald Hunter <donald.hunter@gmail.com>
+Cc: "David S. Miller" <davem@davemloft.net>, David Ahern <dsahern@kernel.org>,
+ Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+ Ido Schimmel <idosch@nvidia.com>, Andrew Lunn <andrew+netdev@lunn.ch>,
+ Simon Horman <horms@kernel.org>, Shuah Khan <shuah@kernel.org>,
+ Jiri Pirko <jiri@resnulli.us>, Hangbin Liu <liuhangbin@gmail.com>,
+ linux-rdma@vger.kernel.org, linux-can@vger.kernel.org,
+ osmocom-net-gprs@lists.osmocom.org, bpf@vger.kernel.org,
+ linux-ppp@vger.kernel.org, wireguard@lists.zx2c4.com,
+ linux-wireless@vger.kernel.org, b.a.t.m.a.n@lists.open-mesh.org,
+ bridge@lists.linux.dev, linux-wpan@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: [PATCH net-next v7 08/11] rtnetlink: Remove "net" from newlink params
+Date: Sat,  4 Jan 2025 20:57:29 +0800
+Message-ID: <20250104125732.17335-9-shaw.leon@gmail.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250104125732.17335-1-shaw.leon@gmail.com>
+References: <20250104125732.17335-1-shaw.leon@gmail.com>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4243; i=kees@kernel.org;
- h=from:subject:message-id; bh=g1sFQOH1vPx9lrAH9SnoezGldeEVl4lvcdztzHQTJQM=;
- b=owGbwMvMwCVmps19z/KJym7G02pJDOkXX1tPD95lfe6z11TDfzl7S1V6uT2N3ORrNnoKc+7fW
- mXgmB7VUcrCIMbFICumyBJk5x7n4vG2Pdx9riLMHFYmkCEMXJwCMBHvaYwM0+Z+anhwaO87nSqx
- BfJhqxcz3pi2w+bhZyGB5uClp206djAyLPv04EfStB6JU3OOcE5hdfwqyFWTtSdk2Q/1y0xrwzJ
- Z+QA=
-X-Developer-Key: i=kees@kernel.org; a=openpgp;
- fpr=A5C3F68F229DD60F723E6E138972F4DFDC6DC026
 Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -67,76 +94,59 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-When a character array without a terminating NUL character has a static
-initializer, GCC 15's -Wunterminated-string-initialization will only
-warn if the array lacks the "nonstring" attribute[1]. Mark the arrays
-with __nonstring to correctly identify the char array as "not a C string"
-and thereby eliminate the warning:
+Now that devices have been converted to use the specific netns instead
+of ambiguous "net", let's remove it from newlink parameters.
 
-../drivers/net/wireguard/cookie.c:29:56: warning: initializer-string for array of 'unsigned char' truncates NUL terminator but destination lacks 'nonstring' attribute (9 chars into 8 available) [-Wunterminated-string-initialization]
-   29 | static const u8 mac1_key_label[COOKIE_KEY_LABEL_LEN] = "mac1----";
-      |                                                        ^~~~~~~~~~
-../drivers/net/wireguard/cookie.c:30:58: warning: initializer-string for array of 'unsigned char' truncates NUL terminator but destination lacks 'nonstring' attribute (9 chars into 8 available) [-Wunterminated-string-initialization]
-   30 | static const u8 cookie_key_label[COOKIE_KEY_LABEL_LEN] = "cookie--";
-      |                                                          ^~~~~~~~~~
-../drivers/net/wireguard/noise.c:28:38: warning: initializer-string for array of 'unsigned char' truncates NUL terminator but destination lacks 'nonstring' attribute (38 chars into 37 available) [-Wunterminated-string-initialization]
-   28 | static const u8 handshake_name[37] = "Noise_IKpsk2_25519_ChaChaPoly_BLAKE2s";
-      |                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-../drivers/net/wireguard/noise.c:29:39: warning: initializer-string for array of 'unsigned char' truncates NUL terminator but destination lacks 'nonstring' attribute (35 chars into 34 available) [-Wunterminated-string-initialization]
-   29 | static const u8 identifier_name[34] = "WireGuard v1 zx2c4 Jason@zx2c4.com";
-      |                                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The arrays are always used with their fixed size, so use __nonstring.
-
-Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=117178 [1]
-Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
 ---
- v2: Improve commit log, add cookie nonstrings too
- v1: https://lore.kernel.org/lkml/20250310222249.work.154-kees@kernel.org/
-Cc: Jason A. Donenfeld <Jason@zx2c4.com>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: wireguard@lists.zx2c4.com
-Cc: netdev@vger.kernel.org
----
- drivers/net/wireguard/cookie.c | 4 ++--
- drivers/net/wireguard/noise.c  | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ include/net/rtnetlink.h | 2 --
+ net/core/rtnetlink.c    | 6 ------
+ 2 files changed, 8 deletions(-)
 
-diff --git a/drivers/net/wireguard/cookie.c b/drivers/net/wireguard/cookie.c
-index f89581b5e8cb..94d0a7206084 100644
---- a/drivers/net/wireguard/cookie.c
-+++ b/drivers/net/wireguard/cookie.c
-@@ -26,8 +26,8 @@ void wg_cookie_checker_init(struct cookie_checker *checker,
- }
- 
- enum { COOKIE_KEY_LABEL_LEN = 8 };
--static const u8 mac1_key_label[COOKIE_KEY_LABEL_LEN] = "mac1----";
--static const u8 cookie_key_label[COOKIE_KEY_LABEL_LEN] = "cookie--";
-+static const u8 mac1_key_label[COOKIE_KEY_LABEL_LEN] __nonstring = "mac1----";
-+static const u8 cookie_key_label[COOKIE_KEY_LABEL_LEN] __nonstring = "cookie--";
- 
- static void precompute_key(u8 key[NOISE_SYMMETRIC_KEY_LEN],
- 			   const u8 pubkey[NOISE_PUBLIC_KEY_LEN],
-diff --git a/drivers/net/wireguard/noise.c b/drivers/net/wireguard/noise.c
-index 202a33af5a72..7eb9a23a3d4d 100644
---- a/drivers/net/wireguard/noise.c
-+++ b/drivers/net/wireguard/noise.c
-@@ -25,8 +25,8 @@
-  * <- e, ee, se, psk, {}
+diff --git a/include/net/rtnetlink.h b/include/net/rtnetlink.h
+index ed970b4568d1..04fc0e91af42 100644
+--- a/include/net/rtnetlink.h
++++ b/include/net/rtnetlink.h
+@@ -72,7 +72,6 @@ static inline int rtnl_msg_family(const struct nlmsghdr *nlh)
+ /**
+  *	struct rtnl_newlink_params - parameters of rtnl_link_ops::newlink()
+  *
+- *	@net: Netns of interest
+  *	@src_net: Source netns of rtnetlink socket
+  *	@link_net: Link netns by IFLA_LINK_NETNSID, NULL if not specified
+  *	@peer_net: Peer netns
+@@ -82,7 +81,6 @@ static inline int rtnl_msg_family(const struct nlmsghdr *nlh)
+  *	@extack: Netlink extended ACK
   */
+ struct rtnl_newlink_params {
+-	struct net *net;
+ 	struct net *src_net;
+ 	struct net *link_net;
+ 	struct net *peer_net;
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index f902b8a5189f..a2246bbaf2bc 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -3758,7 +3758,6 @@ static int rtnl_newlink_create(struct sk_buff *skb, struct ifinfomsg *ifm,
+ 	char ifname[IFNAMSIZ];
+ 	int err;
+ 	struct rtnl_newlink_params params = {
+-		.net = net,
+ 		.src_net = net,
+ 		.link_net = link_net,
+ 		.peer_net = peer_net,
+@@ -3787,11 +3786,6 @@ static int rtnl_newlink_create(struct sk_buff *skb, struct ifinfomsg *ifm,
+ 	dev->ifindex = ifm->ifi_index;
+ 	params.dev = dev;
  
--static const u8 handshake_name[37] = "Noise_IKpsk2_25519_ChaChaPoly_BLAKE2s";
--static const u8 identifier_name[34] = "WireGuard v1 zx2c4 Jason@zx2c4.com";
-+static const u8 handshake_name[37] __nonstring = "Noise_IKpsk2_25519_ChaChaPoly_BLAKE2s";
-+static const u8 identifier_name[34] __nonstring = "WireGuard v1 zx2c4 Jason@zx2c4.com";
- static u8 handshake_init_hash[NOISE_HASH_LEN] __ro_after_init;
- static u8 handshake_init_chaining_key[NOISE_HASH_LEN] __ro_after_init;
- static atomic64_t keypair_counter = ATOMIC64_INIT(0);
+-	if (link_net)
+-		params.net = link_net;
+-	if (peer_net)
+-		params.net = peer_net;
+-
+ 	if (ops->newlink)
+ 		err = ops->newlink(&params);
+ 	else
 -- 
-2.34.1
+2.47.1
 
