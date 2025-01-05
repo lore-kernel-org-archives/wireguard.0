@@ -4,75 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DDB8C3DA6D
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 20 May 2025 21:22:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2547EC54ECC
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 20 May 2025 21:22:09 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e6cd75f1;
-	Tue, 20 May 2025 19:38:22 +0000 (UTC)
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com
- [2a00:1450:4864:20::42e])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8ffb5a93
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4cc50687;
+	Tue, 20 May 2025 19:37:49 +0000 (UTC)
+Received: from mail-il1-f200.google.com (mail-il1-f200.google.com
+ [209.85.166.200])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 59397c0f
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 7 Jan 2025 12:53:57 +0000 (UTC)
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-385eed29d17so7381150f8f.0
- for <wireguard@lists.zx2c4.com>; Tue, 07 Jan 2025 04:53:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736254437; x=1736859237; darn=lists.zx2c4.com;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=F66Eu0GAg36EcgkwSAQsoLttohjhJJSzBhrgfuDrfa8=;
- b=aQBXEeOQnVThuP3cnTebMNhiryywDO9ORQFmu3hFk9izrAiKMVlPkuMbyBtSre9mvd
- Q28tVlVMmwUt6wpf2yFvsF9iouUB7UYS+UG1eTeUAt/fyjNvixcdks6V4E1NDRyaifhS
- FuZaxJe6T/GKCjvqHG0rM4cXbDr8DOEVzvOSuCVOkhCWPnxTvz3RvbJsz4KzvG6G6wpc
- Hk/H4+bH8PV5TkjOTNVMBGyVfQAFdgHQajm5lcY6oOe5f/2XDXCKDGCP2iMSbvjUzpb/
- DHIZPmsvx07IX+8DVLDhdM7giyARiJ8RMD6X5dmKBmhQRlgZyxV1ibPbsJoI04ZUwv7o
- rdCg==
+ for <wireguard@lists.zx2c4.com>; Sun, 5 Jan 2025 15:45:03 +0000 (UTC)
+Received: by mail-il1-f200.google.com with SMTP id
+ e9e14a558f8ab-3a9d303a5ccso277198365ab.3
+ for <wireguard@lists.zx2c4.com>; Sun, 05 Jan 2025 07:45:02 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736254437; x=1736859237;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=F66Eu0GAg36EcgkwSAQsoLttohjhJJSzBhrgfuDrfa8=;
- b=Mcw8DaD7lZ/N1WQBFBokh9D6KD9Du8qDWCMPlUUk/PqIgHtFTrENQwvukbCEp6hmcg
- PLLidrdW05Gfiw0gdZjifz5rbD1eMWe0wJBuW4S87jcLIJtuQ8DxWDFW9LXa62DX8rQP
- 2jnZ7VjtX6TUVFj2nzIAs+IR0oFaLVPbkHVojKr02nUWTMtq7Jsa3rfk+jlrXggZvXcj
- /czrZTuQOiEm0ain5aZGNmBPcN0O6bOOvIay4p6fDAR6Al9WqJjNAo6wp5wmyKtT6eXE
- rzdLroYXIQJXeuWI0sgUt6S4pjHscBiT4PoZQf/7WokntYnY6bHCP2mu1GAoSr+UpqLu
- UcKA==
+ d=1e100.net; s=20230601; t=1736091902; x=1736696702;
+ h=to:from:subject:message-id:in-reply-to:date:mime-version
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=aYO2mT0l8UdFQloxr21510y8jZ+d6H783XFANJKB5e4=;
+ b=m1ClDcBdbi7JpEsISBp9GTOssJce8OI/LJSILYmKE5cziVIsg+FFdAxp7FTZJ9yzeU
+ D0YhKH8hHIFJD1YBF6XOSYbjDZ4B0jSm7ELCB/KOocb2hSobp3uhdA3tgQrDExFBPDiv
+ u5+qhmjxUGdv4QGHAmg4YxyZrcRiIq2jUyIMl3E28BIKA4X1asEIi9Q9MnTylbyGO6Tl
+ U2nvfurA8ATrZshIgtsV4OwQ2Omh1RrlzjZHBvBE8onwQFdvYBD1sgBkzCDNJquWdU0/
+ J3OwFxipkcRhT5OwCSmGSDADwoWpQrPozRoslNUsCG6Aj2JwY2bJAit0nGJzbyA7WIUq
+ 63kw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUNHMnKFksiCChcOk4jvAE+plALy8XalHagFEetiQ9r2LSqJ4Y9Bf1T7hUxfBxgz7txSBCh2Ly1A7g=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YwnwBlXO/i1hI/EDZrnKjf87ecNZktQcblb6Hmoy4I7R19cpUjU
- pogcEaaWcaMmXPKRDUXgW19XsP1NqVKJrVLng2xS3IKnxW/XeNzGjZw4TXv63fbL0p1jc+VYLcf
- W9uMgURO4rM4RYw9z89TeBZjOPGI=
-X-Gm-Gg: ASbGncskueiC0a/1PUh6fXDDV4lv5TOOuDU3SdEdC581D0AYIZwDZQ8rtRUTLR5xLHE
- VU495dDS8U123FC1rgrraTWfE3e1TuhnsIpI8
-X-Google-Smtp-Source: AGHT+IHLmQYT6Nfe/TxqetejkNmjRWULhNkXti9Y+FoSO0oNz6JKWmwppacRVdUE20hj8uvdZwuWTQu822tlGBPGUFc=
-X-Received: by 2002:adf:a15d:0:b0:38a:615c:8222 with SMTP id
- ffacd0b85a97d-38a615c828emr14509037f8f.4.1736254436561; Tue, 07 Jan 2025
- 04:53:56 -0800 (PST)
+ AJvYcCW977kGp0xbY7au4FXZnq3jh5m/MwdCZ4knppa55rRzfM2NdaNGbyQ7Zim4BWyGm8xDdtjPEk1jncI=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YwwVX2vJdPFaAW9oOyXWvz/eDR9t2c1MWb7Q+Zhwc659xBjpW8a
+ HjN5UKbtYKFgIjT2YBzVZNdOAfYV0IgATfVmz0y/WTVn+zaSNqEGRu2rVZA2J1IqdU3mRtvaFtK
+ B715WQSuRrcD4YaqCZ8W1yAYjRtfsLHsaXrPAmRenyppzEllnzJFEgEc=
+X-Google-Smtp-Source: AGHT+IFwCap45szDJbgHItMrNynRyqPDv0rMUC6X/I/GFjB+cEFn4XLaNGO4GeV3q5BlT/r5RZH/dBDV6dduH0YJsOYQBW0UD/dB
 MIME-Version: 1.0
-References: <20250104125732.17335-1-shaw.leon@gmail.com>
- <20250107085646.42302-1-kuniyu@amazon.com>
-In-Reply-To: <20250107085646.42302-1-kuniyu@amazon.com>
-From: Xiao Liang <shaw.leon@gmail.com>
-Date: Tue, 7 Jan 2025 20:53:19 +0800
-Message-ID: <CABAhCOQdBL6h9M2C+kd+bGivRJ9Q72JUxW+-gur0nub_=PmFPA@mail.gmail.com>
-Subject: Re: [PATCH net-next v7 00/11] net: Improve netns handling in rtnetlink
-To: Kuniyuki Iwashima <kuniyu@amazon.com>
-Cc: andrew+netdev@lunn.ch, b.a.t.m.a.n@lists.open-mesh.org, 
- bpf@vger.kernel.org, bridge@lists.linux.dev, davem@davemloft.net, 
- donald.hunter@gmail.com, dsahern@kernel.org, edumazet@google.com, 
- horms@kernel.org, idosch@nvidia.com, jiri@resnulli.us, kuba@kernel.org, 
- linux-can@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-kselftest@vger.kernel.org, linux-ppp@vger.kernel.org, 
- linux-rdma@vger.kernel.org, linux-wireless@vger.kernel.org, 
- linux-wpan@vger.kernel.org, liuhangbin@gmail.com, netdev@vger.kernel.org, 
- osmocom-net-gprs@lists.osmocom.org, pabeni@redhat.com, shuah@kernel.org, 
- wireguard@lists.zx2c4.com
+X-Received: by 2002:a05:6e02:1d94:b0:3a7:e047:733f with SMTP id
+ e9e14a558f8ab-3c2d1e7f8f0mr533683665ab.1.1736091901794; Sun, 05 Jan 2025
+ 07:45:01 -0800 (PST)
+Date: Sun, 05 Jan 2025 07:45:01 -0800
+In-Reply-To: <000000000000bd671b06222de427@google.com>
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <677aa8fd.050a0220.380ff0.0019.GAE@google.com>
+Subject: Re: [syzbot] [net] INFO: task hung in tun_chr_close (5)
+From: syzbot <syzbot+b0ae8f1abf7d891e0426@syzkaller.appspotmail.com>
+To: andrew+netdev@lunn.ch, andrew@lunn.ch, davem@davemloft.net, 
+ edumazet@google.com, jason@zx2c4.com, jasowang@redhat.com, jhs@mojatatu.com, 
+ jiri@resnulli.us, kuba@kernel.org, linux-kernel@vger.kernel.org, 
+ mail@country-targeted-traffic.com, netdev@vger.kernel.org, pabeni@redhat.com, 
+ syzkaller-bugs@googlegroups.com, vinicius.gomes@intel.com, 
+ willemdebruijn.kernel@gmail.com, wireguard@lists.zx2c4.com, 
+ xiyou.wangcong@gmail.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -87,91 +67,24 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Tue, Jan 7, 2025 at 4:57=E2=80=AFPM Kuniyuki Iwashima <kuniyu@amazon.com=
-> wrote:
-[...]
->
-> We can fix this by linking the dev to the socket's netns and
-> clean them up in __net_exit hook as done in bareudp and geneve.
->
-> ---8<---
-> diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
-> index 89a996ad8cd0..77638a815873 100644
-> --- a/drivers/net/gtp.c
-> +++ b/drivers/net/gtp.c
-> @@ -70,6 +70,7 @@ struct pdp_ctx {
->  /* One instance of the GTP device. */
->  struct gtp_dev {
->         struct list_head        list;
-> +       struct list_head        sock_list;
->
->         struct sock             *sk0;
->         struct sock             *sk1u;
-> @@ -102,6 +103,7 @@ static unsigned int gtp_net_id __read_mostly;
->
->  struct gtp_net {
->         struct list_head gtp_dev_list;
-> +       struct list_head gtp_sock_list;
+syzbot has bisected this issue to:
 
-After a closer look at the GTP driver, I'm confused about
-the gtp_dev_list here. GTP device is linked to this list at
-creation time, but netns can be changed afterwards.
-The list is used in gtp_net_exit_batch_rtnl(), but to my
-understanding net devices can already be deleted in
-default_device_exit_batch() by default.
-And I wonder if the use in gtp_genl_dump_pdp() can be
-replaced by something like for_each_netdev_rcu().
+commit 5a781ccbd19e4664babcbe4b4ead7aa2b9283d22
+Author: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Date:   Sat Sep 29 00:59:43 2018 +0000
 
+    tc: Add support for configuring the taprio scheduler
 
->  };
->
->  static u32 gtp_h_initval;
-> @@ -1526,6 +1528,10 @@ static int gtp_newlink(struct net *src_net, struct=
- net_device *dev,
->
->         gn =3D net_generic(dev_net(dev), gtp_net_id);
->         list_add_rcu(&gtp->list, &gn->gtp_dev_list);
-> +
-> +       gn =3D net_generic(src_net, gtp_net_id);
-> +       list_add(&gtp->sock_list, &gn->gtp_sock_list);
-> +
->         dev->priv_destructor =3D gtp_destructor;
->
->         netdev_dbg(dev, "registered new GTP interface\n");
-> @@ -1552,6 +1558,7 @@ static void gtp_dellink(struct net_device *dev, str=
-uct list_head *head)
->                         pdp_context_delete(pctx);
->
->         list_del_rcu(&gtp->list);
-> +       list_del(&gtp->sock_list);
->         unregister_netdevice_queue(dev, head);
->  }
->
-> @@ -2465,6 +2472,8 @@ static int __net_init gtp_net_init(struct net *net)
->         struct gtp_net *gn =3D net_generic(net, gtp_net_id);
->
->         INIT_LIST_HEAD(&gn->gtp_dev_list);
-> +       INIT_LIST_HEAD(&gn->gtp_sock_list);
-> +
->         return 0;
->  }
->
-> @@ -2475,9 +2484,12 @@ static void __net_exit gtp_net_exit_batch_rtnl(str=
-uct list_head *net_list,
->
->         list_for_each_entry(net, net_list, exit_list) {
->                 struct gtp_net *gn =3D net_generic(net, gtp_net_id);
-> -               struct gtp_dev *gtp;
-> +               struct gtp_dev *gtp, *next;
-> +
-> +               list_for_each_entry_safe(gtp, next, &gn->gtp_dev_list, li=
-st)
-> +                       gtp_dellink(gtp->dev, dev_to_kill);
->
-> -               list_for_each_entry(gtp, &gn->gtp_dev_list, list)
-> +               list_for_each_entry_safe(gtp, next, &gn->gtp_sock_list, s=
-ock_list)
->                         gtp_dellink(gtp->dev, dev_to_kill);
->         }
->  }
-> ---8<---
+bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=11535418580000
+start commit:   7ed2d9158877 qed: fix possible uninit pointer read in qed_..
+git tree:       net
+final oops:     https://syzkaller.appspot.com/x/report.txt?x=13535418580000
+console output: https://syzkaller.appspot.com/x/log.txt?x=15535418580000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=fee25f93665c89ac
+dashboard link: https://syzkaller.appspot.com/bug?extid=b0ae8f1abf7d891e0426
+syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=112374f8580000
+
+Reported-by: syzbot+b0ae8f1abf7d891e0426@syzkaller.appspotmail.com
+Fixes: 5a781ccbd19e ("tc: Add support for configuring the taprio scheduler")
+
+For information about bisection process see: https://goo.gl/tpsmEJ#bisection
