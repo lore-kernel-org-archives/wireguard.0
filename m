@@ -4,65 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC1EDC54E65
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 09:18:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C22D2C54E90
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 09:18:07 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 33ca3c3b;
-	Tue, 20 May 2025 19:54:18 +0000 (UTC)
-Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f056f758
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4be19840;
+	Tue, 20 May 2025 19:50:02 +0000 (UTC)
+Received: from smtp-fw-52002.amazon.com (smtp-fw-52002.amazon.com
+ [52.119.213.150])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 243970a1
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 23 Jan 2025 04:50:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
- s=onoh2408; t=1737607783;
- bh=+AGkopHYTgZidv+7oyOdM0KJWm1PxaW2N+T5XJvNq6s=;
- h=From:To:Subject:Date:Message-ID:MIME-Version;
- b=IxjnxTNLce4SbtMwh3+4qafArbLCwQkMItXkaKvMLxdXD2FhqcCZF8vCw472snN/z
- nHn8zY0GeVhx0g4Diox3lnQlH9PHGF61z2PHkYXNSTzhKXChJgHgkX9zFt98ZMdzfh
- LX4SRhzrQRfs0/1rDELC7hNG54bpq8ANk9jTUbA8=
-X-QQ-mid: bizesmtpip4t1737607771txzqs1l
-X-QQ-Originating-IP: vAxGYuBn/XVVB1GPf9+8yeHPQp7yVrrcFMOsPqyvF/8=
-Received: from avenger-OMEN-by-HP-Gaming-Lapto ( [localhost])
- by bizesmtp.qq.com (ESMTP) with 
- id ; Thu, 23 Jan 2025 12:49:29 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 14309089569765569099
-From: WangYuli <wangyuli@uniontech.com>
-To: Jason@zx2c4.com,
-	shuah@kernel.org
-Cc: wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org,
- wangyuli@uniontech.com, tglx@linutronix.de, jstultz@google.com,
- zhanjun@uniontech.com, guanwentao@uniontech.com, chenlinxuan@uniontech.com
-Subject: [PATCH] wireguard: selftests: Cleanup CONFIG_UBSAN_SANITIZE_ALL
-Date: Thu, 23 Jan 2025 12:49:23 +0800
-Message-ID: <F0F29BE7BB89FAAF+20250123044923.161871-1-wangyuli@uniontech.com>
-X-Mailer: git-send-email 2.45.2
+ for <wireguard@lists.zx2c4.com>; Tue, 7 Jan 2025 14:47:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+ t=1736261258; x=1767797258;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=kzqP3KWquCSCvitwLtozsomdOR3PJTWU3++JR+6rcS0=;
+ b=OrUAWnXRrURQQuBOWBguVp9babg+GITHNQJUXvVVUPXVvjbJU/m4czDY
+ 2INa7wSJ9vJkGNI5dsf65S0IUOhYXhFq9nCkVelI8N+g+B/ksiqG6lyMj
+ wdejsU15dUprK+SimleOSLiyz58MxHo+9j/g9XV3EnjQL0JRbltRAl90S c=;
+X-IronPort-AV: E=Sophos;i="6.12,295,1728950400"; d="scan'208";a="687495332"
+Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO
+ smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.43.8.6])
+ by smtp-border-fw-52002.iad7.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jan 2025 14:47:34 +0000
+Received: from EX19MTAUWA002.ant.amazon.com [10.0.21.151:43223]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.51.48:2525]
+ with esmtp (Farcaster)
+ id 9b48386a-8619-40f1-8b35-660ddef4cf53; Tue, 7 Jan 2025 14:47:33 +0000 (UTC)
+X-Farcaster-Flow-ID: 9b48386a-8619-40f1-8b35-660ddef4cf53
+Received: from EX19D004ANA001.ant.amazon.com (10.37.240.138) by
+ EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
+ Tue, 7 Jan 2025 14:47:33 +0000
+Received: from 6c7e67c6786f.amazon.com (10.118.249.113) by
+ EX19D004ANA001.ant.amazon.com (10.37.240.138) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
+ Tue, 7 Jan 2025 14:47:24 +0000
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
+To: <shaw.leon@gmail.com>
+CC: <andrew+netdev@lunn.ch>, <b.a.t.m.a.n@lists.open-mesh.org>,
+ <bpf@vger.kernel.org>, <bridge@lists.linux.dev>, <davem@davemloft.net>,
+ <donald.hunter@gmail.com>, <dsahern@kernel.org>, <edumazet@google.com>,
+ <horms@kernel.org>, <idosch@nvidia.com>, <jiri@resnulli.us>,
+ <kuba@kernel.org>, <kuniyu@amazon.com>, <linux-can@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <linux-kselftest@vger.kernel.org>,
+ <linux-ppp@vger.kernel.org>, <linux-rdma@vger.kernel.org>,
+ <linux-wireless@vger.kernel.org>, <linux-wpan@vger.kernel.org>,
+ <liuhangbin@gmail.com>, <netdev@vger.kernel.org>,
+ <osmocom-net-gprs@lists.osmocom.org>, <pabeni@redhat.com>,
+ <shuah@kernel.org>, <wireguard@lists.zx2c4.com>
+Subject: Re: [PATCH net-next v7 00/11] net: Improve netns handling in rtnetlink
+Date: Tue, 7 Jan 2025 23:47:14 +0900
+Message-ID: <20250107144714.74446-1-kuniyu@amazon.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <CABAhCOQdBL6h9M2C+kd+bGivRJ9Q72JUxW+-gur0nub_=PmFPA@mail.gmail.com>
+References: <CABAhCOQdBL6h9M2C+kd+bGivRJ9Q72JUxW+-gur0nub_=PmFPA@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: bizesmtpip:uniontech.com:qybglogicsvrgz:qybglogicsvrgz8a-1
-X-QQ-XMAILINFO: OSjTqsWSa+11nw528X1QVyRbDuq0BN/aLIyWtoNFvEyI7B3nZ8ER6KAO
- W0L5hbBXPbv4hlRfpU0he7NmhCO3eHKWkK+Bmeq+up/Xs8e/4wvt1C0C0mdKD2F7RjUTG87
- 8vz0Bujr1TwsKxClNjijdtL9opARa6KxpXGNcoZeFl9RYIqL96EDc0AV994gBlzh8Wd7yw5
- OK4MrjEgqZ6kFmTm1xeCYAB/4Wsfl/bvSj1ws9KpPiWQ2YcgggKvHbuhWLLrwLw6/DwVM0K
- M9KpVdsT/LmxFxaYfA8mPGSQhAkPP17CEhYX+CWTMEkh71stKmfmxsmqpPECOGrpQxqZ73/
- vSipW8nnGiZsd45heqYXyyMMg6dmns4H6nObqapwsbHWsj1plqvIZCPrrvio6RGJH//vOM8
- BDyZCRnCkzKAzry5CCm+9gQM3oMjm26FH7f3eyNpwxtQXzfXlG2RDIJmNQn1vjERhKfjrrf
- ggjSrimU+4oOTD3VWpXw3xRtx7QIG/pzZhbmnWm56N5YO841ObemgNVbnyfz5n4e4yMBz1w
- 6GoslWhpjUOl7mxLsU7bOubs3IDENwt6voyRN7LbMuwUhhT0rpzvqhSC5mw6UeJiEz+mY8q
- e1SxYTKhksEo6q5D8/Gh+hx4aZTuCu2V1cYcQrCEtn4CyuvLumNMKScbFG/U2XkUgLKd5kp
- XhM9/Uz4q9hk80+pbJjIn4TQTF2DbaExVVF7In53QdBqimmwLb2eOrZJhkUh/eHexT2+eXC
- bLquowAeWzD4plKaV59BfOqsfCkBkzbThj/QWnhNCPz3uxKMKkBwaeuB8fZqjLiRurYNmZG
- yUrmhiyxUWiTHe3UTCjJQ1RSL4xbcUiNyHxpVsUctK2r0i/H2Loy98MVzgUwiSa/AvZMLxx
- 9G0nZTTVmgMwsAHG+eZ3UYbqOukz7ifLsmkLoQs6GpULQzoQGBZdQrrqK4L8MtybVeRIBbH
- cfBfrvWbovuQ2rVyU0PKzCjztblb8urhSoBcS3oiaWWXswwlqwT1p4idW8aHuMotaxus1J7
- 7laQJXZ8JVaYWe5C6PYWnriaOl7ng/Kul3F5VHzQ==
-X-QQ-XMRINFO: MSVp+SPm3vtS1Vd6Y4Mggwc=
-X-QQ-RECHKSPAM: 0
-X-Mailman-Approved-At: Tue, 20 May 2025 19:52:08 +0000
+X-Originating-IP: [10.118.249.113]
+X-ClientProxiedBy: EX19D045UWC004.ant.amazon.com (10.13.139.203) To
+ EX19D004ANA001.ant.amazon.com (10.37.240.138)
+X-Mailman-Approved-At: Tue, 20 May 2025 19:45:56 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -77,27 +81,158 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Commit 918327e9b7ff ("ubsan: Remove CONFIG_UBSAN_SANITIZE_ALL")
-removed the CONFIG_UBSAN_SANITIZE_ALL configuration option.
-Eliminate invalid configurations to improve code readability.
+From: Xiao Liang <shaw.leon@gmail.com>
+Date: Tue, 7 Jan 2025 20:53:19 +0800
+> On Tue, Jan 7, 2025 at 4:57 PM Kuniyuki Iwashima <kuniyu@amazon.com> wrote:
+> [...]
+> >
+> > We can fix this by linking the dev to the socket's netns and
+> > clean them up in __net_exit hook as done in bareudp and geneve.
+> >
+> > ---8<---
+> > diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
+> > index 89a996ad8cd0..77638a815873 100644
+> > --- a/drivers/net/gtp.c
+> > +++ b/drivers/net/gtp.c
+> > @@ -70,6 +70,7 @@ struct pdp_ctx {
+> >  /* One instance of the GTP device. */
+> >  struct gtp_dev {
+> >         struct list_head        list;
+> > +       struct list_head        sock_list;
+> >
+> >         struct sock             *sk0;
+> >         struct sock             *sk1u;
+> > @@ -102,6 +103,7 @@ static unsigned int gtp_net_id __read_mostly;
+> >
+> >  struct gtp_net {
+> >         struct list_head gtp_dev_list;
+> > +       struct list_head gtp_sock_list;
+> 
+> After a closer look at the GTP driver, I'm confused about
+> the gtp_dev_list here. GTP device is linked to this list at
+> creation time, but netns can be changed afterwards.
+> The list is used in gtp_net_exit_batch_rtnl(), but to my
+> understanding net devices can already be deleted in
+> default_device_exit_batch() by default.
+> And I wonder if the use in gtp_genl_dump_pdp() can be
+> replaced by something like for_each_netdev_rcu().
 
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
----
- tools/testing/selftests/wireguard/qemu/debug.config | 1 -
- 1 file changed, 1 deletion(-)
+Right, it should be, or we need to set netns_local.
+Will include this diff in the fix series.
 
-diff --git a/tools/testing/selftests/wireguard/qemu/debug.config b/tools/testing/selftests/wireguard/qemu/debug.config
-index 139fd9aa8b12..828f14300d0a 100644
---- a/tools/testing/selftests/wireguard/qemu/debug.config
-+++ b/tools/testing/selftests/wireguard/qemu/debug.config
-@@ -22,7 +22,6 @@ CONFIG_HAVE_ARCH_KASAN=y
- CONFIG_KASAN=y
- CONFIG_KASAN_INLINE=y
- CONFIG_UBSAN=y
--CONFIG_UBSAN_SANITIZE_ALL=y
- CONFIG_DEBUG_KMEMLEAK=y
- CONFIG_DEBUG_STACK_USAGE=y
- CONFIG_DEBUG_SHIRQ=y
--- 
-2.45.2
+---8<---
+diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
+index 2460a2c13c32..f9186eda36f0 100644
+--- a/drivers/net/gtp.c
++++ b/drivers/net/gtp.c
+@@ -2278,6 +2278,7 @@ static int gtp_genl_dump_pdp(struct sk_buff *skb,
+ 	struct gtp_dev *last_gtp = (struct gtp_dev *)cb->args[2], *gtp;
+ 	int i, j, bucket = cb->args[0], skip = cb->args[1];
+ 	struct net *net = sock_net(skb->sk);
++	struct net_device *dev;
+ 	struct pdp_ctx *pctx;
+ 	struct gtp_net *gn;
+ 
+@@ -2287,7 +2288,10 @@ static int gtp_genl_dump_pdp(struct sk_buff *skb,
+ 		return 0;
+ 
+ 	rcu_read_lock();
+-	list_for_each_entry_rcu(gtp, &gn->gtp_dev_list, list) {
++	for_each_netdev_rcu(net, dev) {
++		if (dev->rtnl_link_ops != &gtp_link_ops)
++			continue;
++
+ 		if (last_gtp && last_gtp != gtp)
+ 			continue;
+ 		else
+---8<---
 
+Otherwise, we need to move it manually like this, which is
+apparently overkill and unnecessary :p
+
+---8<---
+diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
+index 2460a2c13c32..90b410b73c89 100644
+--- a/drivers/net/gtp.c
++++ b/drivers/net/gtp.c
+@@ -2501,6 +2501,46 @@ static struct pernet_operations gtp_net_ops = {
+ 	.size	= sizeof(struct gtp_net),
+ };
+ 
++static int gtp_device_event(struct notifier_block *nb,
++			    unsigned long event, void *ptr)
++{
++	struct net_device *dev = netdev_notifier_info_to_dev(ptr);
++	struct gtp_dev *gtp;
++	struct gtp_net *gn;
++
++	if (dev->rtnl_link_ops != &gtp_link_ops)
++		goto out;
++
++	gtp = netdev_priv(dev);
++
++	switch (event) {
++	case NETDEV_UNREGISTER:
++		if (dev->reg_state != NETREG_REGISTERED)
++			goto out;
++
++		/* dev_net(dev) is changed, see __dev_change_net_namespace().
++		 * rcu_barrier() after NETDEV_UNREGISTER guarantees that no
++		 * one traversing a list in the old netns jumps to another
++		 * list in the new netns.
++		 */
++		list_del_rcu(&gtp->list);
++		break;
++	case NETDEV_REGISTER:
++		if (gtp->list.prev != LIST_POISON2)
++			goto out;
++
++		/* complete netns change. */
++		gn = net_generic(dev_net(dev), gtp_net_id);
++		list_add_rcu(&gtp->list, &gn->gtp_dev_list);
++	}
++out:
++	return NOTIFY_DONE;
++}
++
++static struct notifier_block gtp_notifier_block = {
++	.notifier_call = gtp_device_event,
++};
++
+ static int __init gtp_init(void)
+ {
+ 	int err;
+@@ -2511,10 +2551,14 @@ static int __init gtp_init(void)
+ 	if (err < 0)
+ 		goto error_out;
+ 
+-	err = rtnl_link_register(&gtp_link_ops);
++	err = register_netdevice_notifier(&gtp_notifier_block);
+ 	if (err < 0)
+ 		goto unreg_pernet_subsys;
+ 
++	err = rtnl_link_register(&gtp_link_ops);
++	if (err < 0)
++		goto unreg_netdev_notifier;
++
+ 	err = genl_register_family(&gtp_genl_family);
+ 	if (err < 0)
+ 		goto unreg_rtnl_link;
+@@ -2525,6 +2569,8 @@ static int __init gtp_init(void)
+ 
+ unreg_rtnl_link:
+ 	rtnl_link_unregister(&gtp_link_ops);
++unreg_netdev_notifier:
++	register_netdevice_notifier(&gtp_notifier_block);
+ unreg_pernet_subsys:
+ 	unregister_pernet_subsys(&gtp_net_ops);
+ error_out:
+@@ -2537,6 +2583,7 @@ static void __exit gtp_fini(void)
+ {
+ 	genl_unregister_family(&gtp_genl_family);
+ 	rtnl_link_unregister(&gtp_link_ops);
++	register_netdevice_notifier(&gtp_notifier_block);
+ 	unregister_pernet_subsys(&gtp_net_ops);
+ 
+ 	pr_info("GTP module unloaded\n");
+---8<---
