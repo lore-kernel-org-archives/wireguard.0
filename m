@@ -4,50 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA516C3ABC9
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 13:06:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2D66C2D0CD
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 13:06:52 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 206b7da3;
-	Tue, 20 May 2025 19:42:16 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 93688cb3
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 20d6f183;
+	Tue, 20 May 2025 19:38:32 +0000 (UTC)
+Received: from nyc.source.kernel.org (nyc.source.kernel.org
+ [2604:1380:45d1:ec00::3])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 512460ef
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 4 Mar 2025 03:38:46 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Wed, 8 Jan 2025 17:31:42 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 324465C4357;
- Tue,  4 Mar 2025 03:36:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3D0BC4CEE4;
- Tue,  4 Mar 2025 03:38:43 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="FEcBMeAJ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1741059521;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Yw3BRhqRHcgvLMM2z9NVQxeCf03io7Nut0QRR3zfBJE=;
- b=FEcBMeAJcjvnDPb1F4rLSx1WyywhovqcVoB0EzrS4k7vVkXk1eiBU7ZZq6JSY7dyyFhSB9
- Kv9yvUjcACd6yn02X/h+PAedr0S2WdOw0UBYfBrop8K2chWNkqaSrd01IKvhNgroHAtuN9
- hTU4wmoJGnLq/bmpuvYfNjC8wNY891c=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a21336a1
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Tue, 4 Mar 2025 03:38:41 +0000 (UTC)
-Date: Tue, 4 Mar 2025 04:38:35 +0100
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Jordan Rife <jrife@google.com>
-Cc: netdev@vger.kernel.org, "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- wireguard@lists.zx2c4.com, Daniel Borkmann <daniel@iogearbox.net>
-Subject: Re: [PATCH v4 net-next] wireguard: allowedips: Add
- WGALLOWEDIP_F_REMOVE_ME flag
-Message-ID: <Z8Z1uxRd_kNO6Ibv@zx2c4.com>
-References: <20250304003900.1416866-1-jrife@google.com>
+ by nyc.source.kernel.org (Postfix) with ESMTP id 9978EA40C9E;
+ Wed,  8 Jan 2025 17:29:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A24C4CED3;
+ Wed,  8 Jan 2025 17:31:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1736357500;
+ bh=nFNghkqYK0OyBrmna6riJjtdRf/DJ2kks0ygjdBlGVE=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=dHciAqjYDmfJ4f1GrLA+k2mHdvH/PcVoEoaHp5l6oKUNCl2H/rGngM0bwH32RiDGA
+ RKqyu4tcA5nz7uUemz8c9pBwQy5/Yl8okpkaljtV2r2hG4AolL+jj/8d3xoqFgJj/k
+ A8Gm9TIsj/lz+b3kQ9boVv/nZhWvr6TKHL4QkMBonYptSr9cZeQpQoKuXcOHybpkHo
+ e98f1a4tvA5J5nyWISRW/K9JoOD2UBjXudUvXF9tlj/7wrEctr/u5Qqq3QhEk/fT8p
+ UuTt5BSsN/f7ZpDAzFwxdIWvEiqXFx0/T5vxvOySo2ialJKoOi0JYP1ThEhqIye8Rl
+ dB8lzKIIuuacA==
+Date: Wed, 8 Jan 2025 09:31:39 -0800
+From: Jakub Kicinski <kuba@kernel.org>
+To: Xiao Liang <shaw.leon@gmail.com>
+Cc: netdev@vger.kernel.org, linux-kselftest@vger.kernel.org, Kuniyuki
+ Iwashima <kuniyu@amazon.com>, Donald Hunter <donald.hunter@gmail.com>,
+ "David S. Miller" <davem@davemloft.net>, David Ahern <dsahern@kernel.org>,
+ Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>, Ido
+ Schimmel <idosch@nvidia.com>, Andrew Lunn <andrew+netdev@lunn.ch>, Simon
+ Horman <horms@kernel.org>, Shuah Khan <shuah@kernel.org>, Jiri Pirko
+ <jiri@resnulli.us>, Hangbin Liu <liuhangbin@gmail.com>,
+ linux-rdma@vger.kernel.org, linux-can@vger.kernel.org,
+ osmocom-net-gprs@lists.osmocom.org, bpf@vger.kernel.org,
+ linux-ppp@vger.kernel.org, wireguard@lists.zx2c4.com,
+ linux-wireless@vger.kernel.org, b.a.t.m.a.n@lists.open-mesh.org,
+ bridge@lists.linux.dev, linux-wpan@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net-next v7 02/11] rtnetlink: Pack newlink() params into
+ struct
+Message-ID: <20250108093139.126716e9@kernel.org>
+In-Reply-To: <CABAhCORV_s9m-EJ8914zUXCXt6O_e1wsaOVdSKUtm0Rbvc4orQ@mail.gmail.com>
+References: <20250104125732.17335-1-shaw.leon@gmail.com>
+ <20250104125732.17335-3-shaw.leon@gmail.com>
+ <20250107123805.748080ab@kernel.org>
+ <CABAhCORV_s9m-EJ8914zUXCXt6O_e1wsaOVdSKUtm0Rbvc4orQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250304003900.1416866-1-jrife@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -62,16 +70,35 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Tue, Mar 04, 2025 at 12:38:55AM +0000, Jordan Rife wrote:
-> NOTE
-> ----
-> I've addressed Jason's feedback from v2, but have been unable to
-> get in touch with him about v3 after several attempts. If there are no
-> objections, can we accept this into net-next?
+On Wed, 8 Jan 2025 16:36:26 +0800 Xiao Liang wrote:
+> On Wed, Jan 8, 2025 at 4:38=E2=80=AFAM Jakub Kicinski <kuba@kernel.org> w=
+rote:
+> >
+> > On Sat,  4 Jan 2025 20:57:23 +0800 Xiao Liang wrote: =20
+> > > -static int amt_newlink(struct net *net, struct net_device *dev,
+> > > -                    struct nlattr *tb[], struct nlattr *data[],
+> > > -                    struct netlink_ext_ack *extack)
+> > > +static int amt_newlink(struct rtnl_newlink_params *params)
+> > >  {
+> > > -     struct amt_dev *amt =3D netdev_priv(dev);
+> > > +     struct netlink_ext_ack *extack =3D params->extack;
+> > > +     struct net_device *dev =3D params->dev;
+> > > +     struct nlattr **data =3D params->data;
+> > > +     struct nlattr **tb =3D params->tb;
+> > > +     struct net *net =3D params->net;
+> > > +     struct amt_dev *amt; =20
+> >
+> > IMHO you packed a little too much into the struct.
+> > Could you take the dev and the extack back out? =20
+>=20
+> Sure. I thought you were suggesting packing them all
+> in review of v3...
 
+Sorry about that, I wasn't very clear :(
 
-No. I'll take this through the wireguard tree like usual. This patch and
-the wg(8) patches ARE going in; I like them a lot. I've been very behind
-as of late but am catching up.
+What I had in mind was similar to how we define ethtool ops,
+(especially the more recent ones which have extack)
+for example:
 
-Jason
+	int	(*set_mm)(struct net_device *dev, struct ethtool_mm_cfg *cfg,
+			  struct netlink_ext_ack *extack);
