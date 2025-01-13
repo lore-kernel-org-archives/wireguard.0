@@ -4,82 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4659CC2D0CD
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 11:43:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1301CC2D0CD
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 12:39:04 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5399809b;
-	Tue, 20 May 2025 19:35:26 +0000 (UTC)
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com
- [2a00:1450:4864:20::333])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ce61318f
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 53b6d70f;
+	Tue, 20 May 2025 19:38:59 +0000 (UTC)
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com
+ [2607:f8b0:4864:20::62a])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1044cb06
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 12 Dec 2024 13:06:40 +0000 (UTC)
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-43622267b2eso6030165e9.0
- for <wireguard@lists.zx2c4.com>; Thu, 12 Dec 2024 05:06:40 -0800 (PST)
+ Mon, 13 Jan 2025 14:38:40 +0000 (UTC)
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-21628b3fe7dso73478885ad.3
+ for <wireguard@lists.zx2c4.com>; Mon, 13 Jan 2025 06:38:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734008800; x=1734613600; darn=lists.zx2c4.com;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1736779119; x=1737383919; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HqYxTqAiECe9wyyAXaPuVyEXlxRKQjZazVAEQa5Qpbg=;
- b=OfWNvyk+GpiOQlQC0xuLgTFfDomP+N8zs1f0u/D24bB3M9TyulMyzIcrGKCrg5RvSq
- jhqViv4ZGYM5PMkxYtIh4gOuOVRjb76a6/QqX8JbcGKjbm6J5LBsshil4SIxR99P252l
- WuxpJBSQBilUrdHS3V6zDPu5XJlcBsPBSyOjPYc2sQ+KyOZn802mMvjOZXJRTGJclVae
- eMuf3ujMgadZd5+qitGzqvi5nS4hxxK+Rqh3pgHR8fdADrG3lW0Jaztd9MvBdDMn35kR
- DFXPGKTOIfll/BVjqmFZozQB5GB54aD2flHIaUX8e/gxbemM0ENBnTyivsAED0w0A/Ig
- 7Tew==
+ bh=n79rk6b+8xqMmWjuAyko0er+FR6QjAQIxOU32J9enis=;
+ b=ZeoLjXQgWRhHLjNtD7fJ0AWafTLo3lwrGnwX69TepcjgHRhV88xcaZgGcow+aDou/R
+ BbmY9RyRVqjSYUqr9b1K7Vkw7HzMHcXEqUG4Fv8BJC9y7unMmS1WvqSlGJyGKbsOWfI1
+ pW9Aos240h4a1tr8CAJ1I8th+sWOpjqq2L7Izl9n3Wy2uPC2MAMkGNy/wHnsM+wr7WIV
+ xOBxuqjgu1SKax/Uw3e0/gghHPgZ4OCnMRRJt+Z3g8sH/vpE6ir9sLe7AnYdv8rfl46s
+ rNFNBi+lLug0sHz0K2KSjjw6Ca6k/lbRCnVWcM2YWSTiCIaiRrdGiTCijFDScIJNUSpj
+ WGhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734008800; x=1734613600;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1736779119; x=1737383919;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HqYxTqAiECe9wyyAXaPuVyEXlxRKQjZazVAEQa5Qpbg=;
- b=gUA2vKCL+pjIK1zXkB96qvO6dBe4WDYyAiqQI7osQx5YR3n3n2lYW11bIQt8Cm4yjF
- rGcYQxxpT9Q21ZLkMBcKVtgF0qAwP60k1HTIg+O0q65ILjRJYaALRmFmPyerO32/3Nep
- HTAV2agvv+SdY7Gunvo0tF/VxXa7HwlYNrVYJYaAyVR4lX8yKROZ5BKfjWNdVuKK6u07
- N2LFky5efk0Gvrr8uvkDUYv0yMakWQXkMMtP2vdM9h0Gc365RzfILwzWIQv8gQGbxzX0
- CqTsyDPdCqTKNWW/ggsgeEN5Ki0zsiOTdTMnON3ONOib47nXoDwbNo7ShgiSSacoXWll
- oN0g==
+ bh=n79rk6b+8xqMmWjuAyko0er+FR6QjAQIxOU32J9enis=;
+ b=YNBmvCtQ5aLivYBK6WtlCeCCw0f5eykWktxrFH2C/3U7JbDx5Y0yht6TK3JfMrjD2J
+ yUNQcANQPs1Nt8DUMhRSwozno9C2nYRrRlDi6uu4gAKS+wrY6s4S2XFVqTHUWoB2K7/x
+ STc9HyfVv3PKki+P07JwGdMGZKrUojivKWUfi0BLIp82CVhTxRX+Uz0/Zw7O0Tah12s8
+ yQyfLFV3f2LEwCNFPfSuSzMwI9B+8sThrO5KgJA2zax5EfGn7T33xRdlF5ybRVdkjjM9
+ 9HbzBNOlx1ZhP9olSp2noHYXvfy25LpUci0+hT80rNE1SoI6HmyvTcTRu2hKXqJ77Hc9
+ Ah0g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVnIwlzUXSf8jH+S/axarLPwhAXcd0jOwekCq5U4gACqfSvVmN1sV6HQXXqH51xPeumDtGG7Cf4RVU=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0Yw1ZaVqWAAMFzYODA9Ro3R7NozYggV101CwP24rZBG4ixiMxGXW
- CYt0XKUlAR52RgkttxuBsurTwWNYo+Jk2h3TTDBjRF4KGCpFPpkjm4JgUT/DznUHy2c0XtKbqQL
- epobq82Ryyg9KD6mkQx3x4+SkzoI=
-X-Gm-Gg: ASbGncu+J8lLSlHSq4uPvot3yiZLzX/rYJfgc3YUxZqiviBCZt2qH2oVIZ5UDP7XG/U
- QmvfJ9ddK9cJETi2if2hXF5pXJUmMvfFCShV2
-X-Google-Smtp-Source: AGHT+IEgToBDxS7Y2rJTQaW+KRxkcbBuEM1S3SQpzBBgB7EfM9NZPQ+SlbrHysoSI6mEreAZ9kYV8K51n0HSyiFVXHg=
-X-Received: by 2002:a05:600c:3acf:b0:434:f8a0:9dd8 with SMTP id
- 5b1f17b1804b1-4361c345006mr53002405e9.1.1734008799513; Thu, 12 Dec 2024
- 05:06:39 -0800 (PST)
-MIME-Version: 1.0
-References: <20241209140151.231257-1-shaw.leon@gmail.com>
- <20241209140151.231257-6-shaw.leon@gmail.com>
- <4a2fe99a-772d-4df1-a8ef-14338682b69e@redhat.com>
-In-Reply-To: <4a2fe99a-772d-4df1-a8ef-14338682b69e@redhat.com>
+ AJvYcCUceahXC7oIXtFR1o7YOT6aebpjlF7HaE27lo6hgUXp9hTHC/8c0b8SMSxmbAU8ghNjBPW4BLiiCCw=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YwpGUBy9iNsZqnuKIDfgNFnOE4dT66momt3ti/6KQLTsqqMW8en
+ g97Qty1AWHF7qVvHoaTOFn2SdMhrxsFlWDdn67LpF1np5saSBMw3
+X-Gm-Gg: ASbGnct5N/hcTZOz/h6Kmpn25VLqd04eqUkjkyfA5QrPEpzUfI3rJppyHf/rbsR4aqO
+ DRZl6hLZnV3Q1lCkwhaaiA7DR70Iz9le5tLrksze4QV449dOuWTT7gXCWhkEU5dNgHKjbSyDkPR
+ 0uvf5YK/73RTaCC8lPBYCU+oNybVH6gIEmvbbDuK32jbJ5Y9FyOrvYLk0o5IHHZ/RBFpYQ9We7/
+ tIizecjdUU88B52R5uRmEvORTkIkoaAvZ1Zol6iCAKtJ9A=
+X-Google-Smtp-Source: AGHT+IGazeu03SiYco1yjo+DeQUEtizAzSGgMZznFsd/ItXTJBGhLqoPfMkABloEPy5ZTJeLHULJqw==
+X-Received: by 2002:a17:902:cecd:b0:215:6995:1ef3 with SMTP id
+ d9443c01a7336-21a83f3469cmr286693405ad.3.1736779118671; 
+ Mon, 13 Jan 2025 06:38:38 -0800 (PST)
+Received: from ws.. ([103.167.140.11]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21a9f155e00sm54328715ad.103.2025.01.13.06.38.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 13 Jan 2025 06:38:38 -0800 (PST)
 From: Xiao Liang <shaw.leon@gmail.com>
-Date: Thu, 12 Dec 2024 21:06:01 +0800
-Message-ID: <CABAhCOQnMGm8y5bVj_fg5veJqim1PEEa02oZHqFt7ZPEQMpFzw@mail.gmail.com>
-Subject: Re: [PATCH net-next v5 5/5] selftests: net: Add two test cases for
- link netns
-To: Paolo Abeni <pabeni@redhat.com>
-Cc: netdev@vger.kernel.org, linux-kselftest@vger.kernel.org, 
- Kuniyuki Iwashima <kuniyu@amazon.com>, Jakub Kicinski <kuba@kernel.org>, 
- Donald Hunter <donald.hunter@gmail.com>,
- "David S. Miller" <davem@davemloft.net>, 
- David Ahern <dsahern@kernel.org>, Eric Dumazet <edumazet@google.com>, 
- Ido Schimmel <idosch@nvidia.com>, Andrew Lunn <andrew+netdev@lunn.ch>, 
- Simon Horman <horms@kernel.org>, Shuah Khan <shuah@kernel.org>,
- Jiri Pirko <jiri@resnulli.us>, 
- Hangbin Liu <liuhangbin@gmail.com>, linux-rdma@vger.kernel.org, 
- linux-can@vger.kernel.org, osmocom-net-gprs@lists.osmocom.org, 
- bpf@vger.kernel.org, linux-ppp@vger.kernel.org, wireguard@lists.zx2c4.com, 
- linux-wireless@vger.kernel.org, b.a.t.m.a.n@lists.open-mesh.org, 
- bridge@lists.linux.dev, linux-wpan@vger.kernel.org, 
+To: netdev@vger.kernel.org, linux-kselftest@vger.kernel.org,
+ Kuniyuki Iwashima <kuniyu@amazon.com>, Jakub Kicinski <kuba@kernel.org>
+Cc: "David S. Miller" <davem@davemloft.net>, David Ahern <dsahern@kernel.org>,
+ Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+ Andrew Lunn <andrew+netdev@lunn.ch>, Simon Horman <horms@kernel.org>,
+ Shuah Khan <shuah@kernel.org>, Donald Hunter <donald.hunter@gmail.com>,
+ Alexander Aring <alex.aring@gmail.com>,
+ Stefan Schmidt <stefan@datenfreihafen.org>,
+ Miquel Raynal <miquel.raynal@bootlin.com>,
+ Steffen Klassert <steffen.klassert@secunet.com>,
+ Herbert Xu <herbert@gondor.apana.org.au>, linux-rdma@vger.kernel.org,
+ linux-can@vger.kernel.org, osmocom-net-gprs@lists.osmocom.org,
+ bpf@vger.kernel.org, linux-ppp@vger.kernel.org, wireguard@lists.zx2c4.com,
+ linux-wireless@vger.kernel.org, b.a.t.m.a.n@lists.open-mesh.org,
+ bridge@lists.linux.dev, linux-wpan@vger.kernel.org,
  linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: [PATCH net-next v8 07/11] net: xfrm: Use link netns in newlink() of
+ rtnl_link_ops
+Date: Mon, 13 Jan 2025 22:37:15 +0800
+Message-ID: <20250113143719.7948-8-shaw.leon@gmail.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250113143719.7948-1-shaw.leon@gmail.com>
+References: <20250113143719.7948-1-shaw.leon@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -94,107 +98,54 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Thu, Dec 12, 2024 at 5:40=E2=80=AFPM Paolo Abeni <pabeni@redhat.com> wro=
-te:
->
-> On 12/9/24 15:01, Xiao Liang wrote:
-> >  - Add test for creating link in another netns when a link of the same
-> >    name and ifindex exists in current netns.
-> >  - Add test for link netns atomicity - create link directly in target
-> >    netns, and no notifications should be generated in current netns.
-> >
-> > Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
-> > ---
-> >  tools/testing/selftests/net/Makefile        |  1 +
-> >  tools/testing/selftests/net/netns-name.sh   | 10 ++++++
-> >  tools/testing/selftests/net/netns_atomic.py | 39 +++++++++++++++++++++
-> >  3 files changed, 50 insertions(+)
-> >  create mode 100755 tools/testing/selftests/net/netns_atomic.py
-> >
-> > diff --git a/tools/testing/selftests/net/Makefile b/tools/testing/selft=
-ests/net/Makefile
-> > index cb2fc601de66..f9f7a765d645 100644
-> > --- a/tools/testing/selftests/net/Makefile
-> > +++ b/tools/testing/selftests/net/Makefile
-> > @@ -34,6 +34,7 @@ TEST_PROGS +=3D gre_gso.sh
-> >  TEST_PROGS +=3D cmsg_so_mark.sh
-> >  TEST_PROGS +=3D cmsg_time.sh cmsg_ipv6.sh
-> >  TEST_PROGS +=3D netns-name.sh
-> > +TEST_PROGS +=3D netns_atomic.py
-> >  TEST_PROGS +=3D nl_netdev.py
-> >  TEST_PROGS +=3D srv6_end_dt46_l3vpn_test.sh
-> >  TEST_PROGS +=3D srv6_end_dt4_l3vpn_test.sh
-> > diff --git a/tools/testing/selftests/net/netns-name.sh b/tools/testing/=
-selftests/net/netns-name.sh
-> > index 6974474c26f3..0be1905d1f2f 100755
-> > --- a/tools/testing/selftests/net/netns-name.sh
-> > +++ b/tools/testing/selftests/net/netns-name.sh
-> > @@ -78,6 +78,16 @@ ip -netns $NS link show dev $ALT_NAME 2> /dev/null &=
-&
-> >      fail "Can still find alt-name after move"
-> >  ip -netns $test_ns link del $DEV || fail
-> >
-> > +#
-> > +# Test no conflict of the same name/ifindex in different netns
-> > +#
-> > +ip -netns $NS link add name $DEV index 100 type dummy || fail
-> > +ip -netns $NS link add netns $test_ns name $DEV index 100 type dummy |=
-|
-> > +    fail "Can create in netns without moving"
-> > +ip -netns $test_ns link show dev $DEV >> /dev/null || fail "Device not=
- found"
-> > +ip -netns $NS link del $DEV || fail
-> > +ip -netns $test_ns link del $DEV || fail
-> > +
-> >  echo -ne "$(basename $0) \t\t\t\t"
-> >  if [ $RET_CODE -eq 0 ]; then
-> >      echo "[  OK  ]"
-> > diff --git a/tools/testing/selftests/net/netns_atomic.py b/tools/testin=
-g/selftests/net/netns_atomic.py
-> > new file mode 100755
-> > index 000000000000..d350a3fc0a91
-> > --- /dev/null
-> > +++ b/tools/testing/selftests/net/netns_atomic.py
-> > @@ -0,0 +1,39 @@
-> > +#!/usr/bin/env python3
-> > +# SPDX-License-Identifier: GPL-2.0
-> > +
-> > +import time
-> > +
-> > +from lib.py import ksft_run, ksft_exit, ksft_true
-> > +from lib.py import ip
-> > +from lib.py import NetNS, NetNSEnter
-> > +from lib.py import RtnlFamily
-> > +
-> > +
-> > +def test_event(ns1, ns2) -> None:
-> > +    with NetNSEnter(str(ns1)):
-> > +        rtnl =3D RtnlFamily()
-> > +
-> > +    rtnl.ntf_subscribe("rtnlgrp-link")
-> > +
-> > +    ip(f"netns set {ns1} 0", ns=3Dstr(ns2))
-> > +
-> > +    ip(f"link add netns {ns2} link-netnsid 0 dummy1 type dummy")
-> > +    ip(f"link add netns {ns2} dummy2 type dummy", ns=3Dstr(ns1))
-> > +
-> > +    ip("link del dummy1", ns=3Dstr(ns2))
-> > +    ip("link del dummy2", ns=3Dstr(ns2))
-> > +
-> > +    time.sleep(1)
-> > +    rtnl.check_ntf()
-> > +    ksft_true(rtnl.async_msg_queue.empty(),
-> > +              "Received unexpected link notification")
->
-> I think we need a much larger coverage here, possibly testing all the
-> update drivers and more 'netns', 'link-netnsid', 'peer netns'
-> permutations for the devices that allow them.
+When link_net is set, use it as link netns instead of dev_net(). This
+prepares for rtnetlink core to create device in target netns directly,
+in which case the two namespaces may be different.
 
-OK, I will add more cases. But I'm afraid I don't know how to build
-valid parameters for all of them, and some seem to require hardware.
+Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
+---
+ net/xfrm/xfrm_interface_core.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
->
-> Thanks,
->
-> Paolo
->
+diff --git a/net/xfrm/xfrm_interface_core.c b/net/xfrm/xfrm_interface_core.c
+index b7ac558025d5..b87a5c950833 100644
+--- a/net/xfrm/xfrm_interface_core.c
++++ b/net/xfrm/xfrm_interface_core.c
+@@ -242,10 +242,9 @@ static void xfrmi_dev_free(struct net_device *dev)
+ 	gro_cells_destroy(&xi->gro_cells);
+ }
+ 
+-static int xfrmi_create(struct net_device *dev)
++static int xfrmi_create(struct net *net, struct net_device *dev)
+ {
+ 	struct xfrm_if *xi = netdev_priv(dev);
+-	struct net *net = dev_net(dev);
+ 	struct xfrmi_net *xfrmn = net_generic(net, xfrmi_net_id);
+ 	int err;
+ 
+@@ -819,11 +818,12 @@ static int xfrmi_newlink(struct net_device *dev,
+ 			 struct netlink_ext_ack *extack)
+ {
+ 	struct nlattr **data = params->data;
+-	struct net *net = dev_net(dev);
+ 	struct xfrm_if_parms p = {};
+ 	struct xfrm_if *xi;
++	struct net *net;
+ 	int err;
+ 
++	net = params->link_net ? : dev_net(dev);
+ 	xfrmi_netlink_parms(data, &p);
+ 	if (p.collect_md) {
+ 		struct xfrmi_net *xfrmn = net_generic(net, xfrmi_net_id);
+@@ -852,7 +852,7 @@ static int xfrmi_newlink(struct net_device *dev,
+ 	xi->net = net;
+ 	xi->dev = dev;
+ 
+-	err = xfrmi_create(dev);
++	err = xfrmi_create(net, dev);
+ 	return err;
+ }
+ 
+-- 
+2.47.1
+
