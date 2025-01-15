@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 042B1C54E71
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 14:22:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1CF6C2D0CD
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 14:22:13 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6bf5de87;
-	Tue, 20 May 2025 19:54:54 +0000 (UTC)
-Received: from smtp-fw-52003.amazon.com (smtp-fw-52003.amazon.com
- [52.119.213.152])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 98768bce
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id baba410a;
+	Tue, 20 May 2025 19:54:15 +0000 (UTC)
+Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de
+ [85.215.255.25])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id da9bff11
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 21 Feb 2025 04:07:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
- t=1740110830; x=1771646830;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=tKX8JdqFzrTi/1BQO/FO5wDgGYCQeQS6PgW1/5We6so=;
- b=KG6WYo3X10aItz4bWXmcrILgUEldv835S2sh3F7vBuXWKOtSxBhyoAFb
- GtNb3XmxJOp1G1mb6oaLDQ1LjSdbss6I3YPPvo/i1SW7EMLseL1KZabsR
- 3EANeZFuzDk1oDHgrVPVSDkbNGkna+tlaMnx++FB8Yg0TXTa0CD1JcYZ7 k=;
-X-IronPort-AV: E=Sophos;i="6.13,303,1732579200"; d="scan'208";a="67970952"
-Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO
- smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.43.8.6])
- by smtp-border-fw-52003.iad7.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Feb 2025 04:06:57 +0000
-Received: from EX19MTAUWA002.ant.amazon.com [10.0.21.151:51376]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.55.141:2525]
- with esmtp (Farcaster)
- id fca782d6-17f8-4d01-a8eb-9a81adbd66b0; Fri, 21 Feb 2025 04:06:56 +0000 (UTC)
-X-Farcaster-Flow-ID: fca782d6-17f8-4d01-a8eb-9a81adbd66b0
-Received: from EX19D004ANA001.ant.amazon.com (10.37.240.138) by
- EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
- Fri, 21 Feb 2025 04:06:55 +0000
-Received: from 6c7e67bfbae3.amazon.com (10.135.209.63) by
- EX19D004ANA001.ant.amazon.com (10.37.240.138) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14;
- Fri, 21 Feb 2025 04:06:50 +0000
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
-To: <shaw.leon@gmail.com>
-CC: <alex.aring@gmail.com>, <andrew+netdev@lunn.ch>,
- <b.a.t.m.a.n@lists.open-mesh.org>, <bpf@vger.kernel.org>,
- <bridge@lists.linux.dev>, <davem@davemloft.net>, <donald.hunter@gmail.com>,
- <dsahern@kernel.org>, <edumazet@google.com>, <herbert@gondor.apana.org.au>,
- <horms@kernel.org>, <kuba@kernel.org>, <kuniyu@amazon.com>,
- <linux-can@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-kselftest@vger.kernel.org>, <linux-ppp@vger.kernel.org>,
- <linux-rdma@vger.kernel.org>, <linux-wireless@vger.kernel.org>,
- <linux-wpan@vger.kernel.org>, <miquel.raynal@bootlin.com>,
- <netdev@vger.kernel.org>, <osmocom-net-gprs@lists.osmocom.org>,
- <pabeni@redhat.com>, <shuah@kernel.org>, <stefan@datenfreihafen.org>,
- <steffen.klassert@secunet.com>, <wireguard@lists.zx2c4.com>
-Subject: Re: [PATCH net-next v10 07/13] net: ipv6: Init tunnel link-netns
- before registering dev
-Date: Thu, 20 Feb 2025 20:06:41 -0800
-Message-ID: <20250221040641.77646-1-kuniyu@amazon.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250219125039.18024-8-shaw.leon@gmail.com>
-References: <20250219125039.18024-8-shaw.leon@gmail.com>
+ Wed, 15 Jan 2025 11:36:42 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; t=1736941002; cv=none;
+ d=strato.com; s=strato-dkim-0002;
+ b=n+Ftn8Rgc4hTq4GmJUzI+geuSUQefVyvVGcpAoT4bJj/32CC0I1A834IlecGx+S8f6
+ Qj2Cb3E9+VCX5JvVwhQSohOUxlyEbfJHKZwtdG6Z9agli/w+8yfs25uJmxWswBACFTAa
+ u7lzHn6i7OrvdxqrUrugKiJd263dsom4/+PL8+7W+D83R7F3r5u8lPIgNTfSfuV1PNuI
+ WVRf/rfZAbxyUwvebBrC9KRser4JCaGIsRv0N9IsoU9xs9UG4B9crVlwbN23MAbY4Pyy
+ EXjX8GmdxDrL8fQHA0t9caLryY16QjQBaCLvyiYzLE6s7ReosXxA1SXIaNscnSnqVFsp
+ kg3w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1736941002;
+ s=strato-dkim-0002; d=strato.com;
+ h=Message-Id:Date:Subject:Cc:To:From:Cc:Date:From:Subject:Sender;
+ bh=7Dh7bmBt/a/foLXSFExpIZRSMzaBf6MHCVcu9LN7QVw=;
+ b=fVC7bEWIsxb9zHNAqNvzJ+XrwjaBOzwc90kYJ6Aj7zJBb05Q7ZFIUQoLm8zB04QRPb
+ XXuSD4MNflpFrNPmM96ps/fqS9N0BEcHQN5NmWilLu8KSGHcW0/pAergzEYd7Mou0x1I
+ CKW7HDSaPHhwtv9IUo+QN2YfvnSmrRgZfPNGPwcll6kAvm1ZkUTsfpmbK/2d0imlymMu
+ 6yeHbuV6TD6WK5AwUuo4DmQWucRXagLpRe6mF4Y1SKTB184OFiqT0pzUnm2r+82zx/J8
+ UXE1YupLk0ubqy5Qwr8f1gPTozs5O9l/Rr3QyIe4c6lfbB2G0v35A0DRmqwHCf314uqJ
+ t5Ww==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo00
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1736941002;
+ s=strato-dkim-0002; d=kosching.me;
+ h=Message-Id:Date:Subject:Cc:To:From:Cc:Date:From:Subject:Sender;
+ bh=7Dh7bmBt/a/foLXSFExpIZRSMzaBf6MHCVcu9LN7QVw=;
+ b=Qz7VF2ldFEcp2RQGCOmvvvjir83lh9bRdiMaIeiQoVHkOitqnO1aqRYVkk9e6QVJi3
+ 0hc0hKFCrAWYi07GL0hgKKdBkBKNwVmylFQmRjusFUlFQqBQ6UPZM86DK8kaculhVQk2
+ db162ojzdaEzUJdBZmwFvcVsjsw7sfo/tl4lNIBJYE1KoCooJlupUYIVa8C6rU55Z08U
+ 1XJ8p4PTaRwL1pSVlfNCGiXWchEOQ8OX5DElE/wyEbVLqpmVJmYIO4yGa+oS+OxBwdnp
+ UL6fR5CeT2f3ARE/OpsVHHj/u265XcTXobspqR/QeYXCeWS9MUYMJgJSiOmI/n7Hq45x
+ cRKA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1736941002;
+ s=strato-dkim-0003; d=kosching.me;
+ h=Message-Id:Date:Subject:Cc:To:From:Cc:Date:From:Subject:Sender;
+ bh=7Dh7bmBt/a/foLXSFExpIZRSMzaBf6MHCVcu9LN7QVw=;
+ b=/+Y4mtGgeKtwRJXT4pxUehtOqmiLM30inLNryBuwPRGIrgmNUaHfNhx44xhu3evA6D
+ h0QHLoQiSsHVx/J2nnDQ==
+X-RZG-AUTH: ":PmMGbE6IcPAr6h5auf2ngqbNL/DGPz9JBrgejtg2Gs3S+vZ7Mn0ob7GTnMbSiJYzwnX2ulY="
+Received: from eiskaffee.sq.local by smtp.strato.de (RZmta 51.2.17 AUTH)
+ with ESMTPSA id f6dd0b10FBaf3dQ
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+ (Client did not present a certificate);
+ Wed, 15 Jan 2025 12:36:41 +0100 (CET)
+From: Robyn Kosching <robyn@kosching.me>
+To: wireguard@lists.zx2c4.com
+Cc: Robyn Kosching <robyn@kosching.me>
+Subject: [PATCH wireguard-tools] wg-quick: escaped # in Pre/PostUp/Down
+ recognised
+Date: Wed, 15 Jan 2025 12:33:50 +0100
+Message-Id: <20250115113349.106339-1-robyn@kosching.me>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.135.209.63]
-X-ClientProxiedBy: EX19D043UWC004.ant.amazon.com (10.13.139.206) To
- EX19D004ANA001.ant.amazon.com (10.37.240.138)
+Content-Type: text/plain; charset="us-ascii"
 X-Mailman-Approved-At: Tue, 20 May 2025 19:52:08 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -84,34 +85,50 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-From: Xiao Liang <shaw.leon@gmail.com>
-Date: Wed, 19 Feb 2025 20:50:33 +0800
-> Currently some IPv6 tunnel drivers set tnl->net to dev_net(dev) in
-> ndo_init(), which is called in register_netdevice(). However, it lacks
-> the context of link-netns when we enable cross-net tunnels at device
-> registration time.
-> 
-> Let's move the init of tunnel link-netns before register_netdevice().
-> 
-> ip6_gre has already initialized netns, so just remove the redundant
-> assignment.
-> 
-> Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
+Hi there, 
 
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+currently commands in pre/PostUp/Down options in wireguard configs are
+stripped of everything starting with the first # - even if the # is
+escaped or in a string. 
 
-left a small comment, but not a blocker.
+This patch leaves command interpretation in Pre/PostUp/Down options to 
+bash as it can already interpret comments and escaped #. 
 
 
-> @@ -1565,6 +1565,7 @@ static int ipip6_newlink(struct net_device *dev,
->  	int err;
->  
->  	nt = netdev_priv(dev);
-> +	nt->net = net;
+Signed-off-by: Robyn Kosching <robyn@kosching.me>
+---
+ src/wg-quick/linux.bash | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-This hunk is not necessary as we'll call ipip6_tunnel_locate(),
-but it's harmless and not worth reposting the whole series given
-we are alredy in v10.  You can just post a follow-up patch after
-the series is applied.
+diff --git a/src/wg-quick/linux.bash b/src/wg-quick/linux.bash
+index 4193ce5..50bb794 100755
+--- a/src/wg-quick/linux.bash
++++ b/src/wg-quick/linux.bash
+@@ -51,6 +51,7 @@ parse_options() {
+ 		stripped="${line%%\#*}"
+ 		key="${stripped%%=*}"; key="${key##*([[:space:]])}"; key="${key%%*([[:space:]])}"
+ 		value="${stripped#*=}"; value="${value##*([[:space:]])}"; value="${value%%*([[:space:]])}"
++		commandvalue="${line#*=}"; commandvalue="${commandvalue##*([[:space:]])}"; commandvalue="${commandvalue%%*([[:space:]])}"
+ 		[[ $key == "["* ]] && interface_section=0
+ 		[[ $key == "[Interface]" ]] && interface_section=1
+ 		if [[ $interface_section -eq 1 ]]; then
+@@ -61,10 +62,10 @@ parse_options() {
+ 				[[ $v =~ (^[0-9.]+$)|(^.*:.*$) ]] && DNS+=( $v ) || DNS_SEARCH+=( $v )
+ 			done; continue ;;
+ 			Table) TABLE="$value"; continue ;;
+-			PreUp) PRE_UP+=( "$value" ); continue ;;
+-			PreDown) PRE_DOWN+=( "$value" ); continue ;;
+-			PostUp) POST_UP+=( "$value" ); continue ;;
+-			PostDown) POST_DOWN+=( "$value" ); continue ;;
++			PreUp) PRE_UP+=( "$commandvalue" ); continue ;;
++			PreDown) PRE_DOWN+=( "$commandvalue" ); continue ;;
++			PostUp) POST_UP+=( "$commandvalue" ); continue ;;
++			PostDown) POST_DOWN+=( "$commandvalue" ); continue ;;
+ 			SaveConfig) read_bool SAVE_CONFIG "$value"; continue ;;
+ 			esac
+ 		fi
 
-Thanks!
+base-commit: 13f4ac4cb74b5a833fa7f825ba785b1e5774e84f
+-- 
+2.34.1
+
