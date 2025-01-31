@@ -4,81 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27893C54E71
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 17:06:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 947FFC2D0CD
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 17:14:08 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e37a7bf7;
-	Tue, 20 May 2025 19:36:20 +0000 (UTC)
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com
- [2a00:1450:4864:20::330])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a9807ddc
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5842e0c6;
+	Tue, 20 May 2025 19:50:14 +0000 (UTC)
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com
+ [2607:f8b0:4864:20::102b])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 68e32e69
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 19 Dec 2024 05:54:42 +0000 (UTC)
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4361d5dcf5bso4289265e9.3
- for <wireguard@lists.zx2c4.com>; Wed, 18 Dec 2024 21:54:42 -0800 (PST)
+ Fri, 31 Jan 2025 17:11:35 +0000 (UTC)
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-2efb17478adso3782599a91.1
+ for <wireguard@lists.zx2c4.com>; Fri, 31 Jan 2025 09:11:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734587681; x=1735192481; darn=lists.zx2c4.com;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZfCpfOoSh8ogvEFAzzK5Sh/fDzaPC/IoHjTWRLgy2Xc=;
- b=gu8XKh///IE1peAjIj6C/iwUKxddLbPeKiFOtIgoQPQs0slXpdkGryXk3rePVsg5Uy
- OuAtBKmE33dYaZiXpa1zczptslnVt7mPc9pbsBOW9SwGIuOZdJ+Ry3PeVqyKo40P77wS
- +ucA6s0x8EfHbBiYv6Shv+I77LBb8Q6z1TqOHxFOq3kwaMPDPjUGIC93zyCXBgVZY7XL
- oY2JYs6vOKfEfswAwRgcnowt4rfPWlkFR5v2mHlK7jSm2GDJBFxcQDkorzwWts/kcS2T
- Db4p8VGslkKkkbcRWvFZOJK6OxqxnGa+l0DmfTHFYE7EstzkRb5BpvrdDLzbc324o8rT
- sk9A==
+ d=riobard.com; s=google; t=1738343494; x=1738948294; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=aze/MvLPTqY8f341cJptixyAb6S4eni7KpTpIROAAqA=;
+ b=nVlkhx4f7bHviTc2mB2+9m5yngzO5nFv+ZyU8zqdPW8c5o9DYdZeMUIItxcbtUX+OQ
+ Gw8TFw5X3nCqgPV6K1hDliV8hNTTYozDJkoDD/wnDAx61+YUxVv100ZE1rEVF2ZsvKHj
+ 8PkXLdEo6837o3mtoZWn+m7Lqq3/L0ltIe3ZA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734587681; x=1735192481;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ZfCpfOoSh8ogvEFAzzK5Sh/fDzaPC/IoHjTWRLgy2Xc=;
- b=RSZawuDDmy1OwSlWldqNziO7yYp+x4mTnEdoBMxul5RLeRuniQXVMo/MLVGmkeO4d6
- hqwfYfySyWlRMhkOF3M52zhVhV3MVsfYXPw5AZ3OZ7ZxjM/LJliqTarQbzUXA0yYQE2p
- LLrPkAVD3cuebElMmKaITIfDv74imVWRim5CGQsu4ct+EXT+xKMlqTnWy3xu4XddLm5k
- LntxqYq7dkB0B+gA/jarB+pbH/CA43Tyb6H7Dw29G4Z8yCa5IRi4EwDxY0/CLE6iat2G
- 2tcRKScC8gjq/wcfwqTULFg5m6uR+BbEx6DW2/FBUIZDHCSVFA3S7ui5S158vFOfL1gV
- 9rQw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWbb1OG9jp3ZRHfXAnDMa7UndP2OBfOPiYFyP7THWirDtZOE4oLuUSPlchNhdtYwyd0G5/c9d6w5rw=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YyakRDRS/EAy6Zvgf71HeZ1xoW+CLgewU2cAZlk4+Gkg1iuvir2
- gfQjaiGcvPaeKs2IQA4DsGQ3kz31EilPgGfFsSkdcRRrTP320PbKngGoAmNAF35zoWbDjvntlyB
- zF1gW5KX1B36+dJaswey4rylSHzE=
-X-Gm-Gg: ASbGncuL7t6UUifuSuOus1PSdbiOllPIVdTNX+d6cdch0ZtIaP4L541AO6gRUqrOBEo
- 8uU2u/uKM4wG6Y0WO2u7y3CTj4EQ49yW9K6v9
-X-Google-Smtp-Source: AGHT+IFXswhNY3wf74HiVRQ6mWtI+LQ0dYPzH2WDbrTkg0k3vCjw9PHsmFSj9uux2yKPzKWzDIYRJF3gX8R2i5iXHRM=
-X-Received: by 2002:a05:600c:4ed2:b0:434:f7ea:fb44 with SMTP id
- 5b1f17b1804b1-4365535c6a3mr52447275e9.14.1734587681279; Wed, 18 Dec 2024
- 21:54:41 -0800 (PST)
+ d=1e100.net; s=20230601; t=1738343494; x=1738948294;
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=aze/MvLPTqY8f341cJptixyAb6S4eni7KpTpIROAAqA=;
+ b=pZfLZ32SbPEZPYgfauKDiljiy+TQjeuzD6qlpMX8CgdAZT8iy3jnznjqVnwhH4wqlc
+ SNvLk0qNUpseUSQZdJr1kiT9x9tYKS4NVeuv2zJaYUlVMZt9R8hCGdT0C9tcihH6f/PR
+ 252LDXcpiq9DPInFmeMKkQrzt0SkvTiC6eBfx1oiWYFThBs8c2EvSayMX6/vjbUw/3Fs
+ W2jJ/9BDahMoGlDs72bV/7pMk4mB4WAxRS8SH7Yr6Ybhep5nj8JjzB5I6YCUoGM7k1a/
+ gkTVWMzIAjKUnsg0yJLPazn0v3GoRyMpm/8XHmpXZhEul+jYUmn7aR6hnyg5Z726M4Zt
+ I22g==
+X-Gm-Message-State: AOJu0YxnHPfYGu8XF3UYFXbj9pWqs2Y2sPn4z+MeLZXqkhGV2kdr7E9w
+ zVQucXE6UbUcn9ArMcJ/631IQymCzrtGZ79SyQdvG1BmT2yT8uCoBlc75doHTdOHlnm1NAzGaUK
+ Ww1tgD3BN3iZsQPhfklKwzYSHyMFVKkj4Xu1PkWiJMx2tbqEgIZA=
+X-Gm-Gg: ASbGncvbcyJHTwQowmKF0YPzXUTtgR5Ivr28B4tBk3V+zFmDM/9EEO2NxKVWHJQXjLI
+ laEybd3dlv/TBmms0umWypHLEO1xIHxWGg88fIBwUm4X1IXy+lxDzO6Y/n+BaoCBugF5IJTTF/G
+ hsk0eRBiT7ZeXO
+X-Google-Smtp-Source: AGHT+IHim3Oo3GlWJJYUa1Xq0/5jwD58/yklbqb3PZtHUrVwuKjG79aYZvJxU9iAbkT33CX9Awm4eRiN7OJ2z2othUs=
+X-Received: by 2002:a17:90b:2707:b0:2ee:d63f:d71 with SMTP id
+ 98e67ed59e1d1-2f83abf3126mr19875711a91.14.1738343493441; Fri, 31 Jan 2025
+ 09:11:33 -0800 (PST)
 MIME-Version: 1.0
-References: <20241218130909.2173-1-shaw.leon@gmail.com>
- <20241218130909.2173-12-shaw.leon@gmail.com>
- <20241218153759.672b7014@kernel.org>
-In-Reply-To: <20241218153759.672b7014@kernel.org>
-From: Xiao Liang <shaw.leon@gmail.com>
-Date: Thu, 19 Dec 2024 13:54:03 +0800
-Message-ID: <CABAhCORszq9ao3OCVW-1EBsxsnLxbQ096eV+cbs12Es2HvCgUA@mail.gmail.com>
-Subject: Re: [PATCH net-next v6 11/11] selftests: net: Add test cases for link
- and peer netns
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: netdev@vger.kernel.org, linux-kselftest@vger.kernel.org, 
- Kuniyuki Iwashima <kuniyu@amazon.com>, Donald Hunter <donald.hunter@gmail.com>,
- Paolo Abeni <pabeni@redhat.com>, "David S. Miller" <davem@davemloft.net>, 
- David Ahern <dsahern@kernel.org>, Eric Dumazet <edumazet@google.com>, 
- Ido Schimmel <idosch@nvidia.com>, Andrew Lunn <andrew+netdev@lunn.ch>, 
- Simon Horman <horms@kernel.org>, Shuah Khan <shuah@kernel.org>,
- Jiri Pirko <jiri@resnulli.us>, 
- Hangbin Liu <liuhangbin@gmail.com>, linux-rdma@vger.kernel.org, 
- linux-can@vger.kernel.org, osmocom-net-gprs@lists.osmocom.org, 
- bpf@vger.kernel.org, linux-ppp@vger.kernel.org, wireguard@lists.zx2c4.com, 
- linux-wireless@vger.kernel.org, b.a.t.m.a.n@lists.open-mesh.org, 
- bridge@lists.linux.dev, linux-wpan@vger.kernel.org, 
- linux-kernel@vger.kernel.org
+From: Rio Z <me@riobard.com>
+Date: Sat, 1 Feb 2025 01:11:22 +0800
+X-Gm-Features: AWEUYZkAy8sxJQi3cWwjmeNCKmG-ptrYVPmvnOnxFLgwB7KoiHvcYJwQcvGV7RE
+Message-ID: <CAJxHB+3ztP1Pqk5K_L2+A61KmQMuMPAOHSK56_NusXc1BDYqNQ@mail.gmail.com>
+Subject: Avoid deprecated IPv6 temporary addresses
+To: wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+X-Mailman-Approved-At: Tue, 20 May 2025 19:45:56 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -93,29 +72,21 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Thu, Dec 19, 2024 at 7:38=E2=80=AFAM Jakub Kicinski <kuba@kernel.org> wr=
-ote:
->
-> On Wed, 18 Dec 2024 21:09:09 +0800 Xiao Liang wrote:
-> >  - Add test for creating link in another netns when a link of the same
-> >    name and ifindex exists in current netns.
-> >  - Add test to verify that link is created in target netns directly -
-> >    no link new/del events should be generated in link netns or current
-> >    netns.
-> >  - Add test cases to verify that link-netns is set as expected for
-> >    various drivers and combination of namespace-related parameters.
->
-> Nice work!
->
-> You need to make sure all the drivers the test is using are enabled by
-> the selftest kernel config: tools/testing/selftests/net/config
->
-> This may be helpful:
-> https://github.com/linux-netdev/nipa/wiki/How-to-run-netdev-selftests-CI-=
-style#how-to-build
+Background: IPv6 Privacy Extensions (RFC 4941)-enabled host creates a
+temporary address that is preferred for a short period of time
+(usually 1 day), after which it becomes deprecated and a new temporary
+address is generated. RFC 4941 =C2=A73.2 states that "deprecated address
+can continue to be used for already established connections, but are
+not used to initiate new connections."
 
-Thanks for pointing it out. And vng is really cool. I will add
-the missing config in the next version.
+RFC 4941 =C2=A76 discusses the problem of tracking deprecated addresses to
+be removed. In particular, TCP connections can be easily tracked. But
+for UDP-based applications like WireGuard, it's not straightforward as
+it is usually connectionless.
 
-> --
-> pw-bot: cr
+Problem: Currently WireGuard keeps using the same temporary address to
+send UDP packets to an existing peer even after the address becomes
+deprecated. It should use the preferred (i.e. non-deprecated)
+temporary address as soon as possible to satisfy the requirement of
+privacy and also to make the deprecated addresses eligible to be
+removed.
