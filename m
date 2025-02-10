@@ -4,76 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68CAAC54E65
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 00:00:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 474E3C54E90
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 00:00:09 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b41ed135;
-	Tue, 20 May 2025 19:37:57 +0000 (UTC)
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com
- [2607:f8b0:4864:20::1030])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5f8bdc8c
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c1689769;
+	Tue, 20 May 2025 19:39:47 +0000 (UTC)
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com
+ [2607:f8b0:4864:20::631])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 42679fea
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 6 Jan 2025 08:11:05 +0000 (UTC)
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-2efd81c7ca4so16412990a91.2
- for <wireguard@lists.zx2c4.com>; Mon, 06 Jan 2025 00:11:05 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 10 Feb 2025 13:30:18 +0000 (UTC)
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-21f62cc4088so40062325ad.3
+ for <wireguard@lists.zx2c4.com>; Mon, 10 Feb 2025 05:30:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736151064; x=1736755864; darn=lists.zx2c4.com;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jnm8/1ru5mWA8QP24vCMz+S2YuEXrjIdcwPRZfDzES0=;
- b=AZaI5BxKkcN5TowRGF1STpi1o00XJdaHjvf4gkKXhop5a/9cTB8MMxLZHtWpHOGh2z
- eu2otvkeIegJWNe6c9HMekd4OZP9gcZt1n0vpCdv/zCPpb3DDc0QdNo58rEfDHyt96u3
- Be0oKeIkwF5mWSiJZE3nRCvFhPBenC7dGpSpNVI8cbIcP3ipTbpZ9BIo2OYSHEdU2ZSp
- LmO6957rUSABERopgAv66hwfaF13PDky9I2vRABda++LZAdvhs2CiDC4rt/kokZDks7Q
- PcHLVsBeAu0XtTZwhtanrOHkA6EzObUyaTUfbJixR490G/BDeJ3458WtNpEb22ZSCYkx
- Vn0A==
+ d=gmail.com; s=20230601; t=1739194217; x=1739799017; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Y0kuY/qnmLWcTpq+Gs4oe5wYG4aWX3Vy2rs59JLm5Zc=;
+ b=WmeLzrfioYr8XcL4BBKW7bwoB/6SpHAwTdVxIfDevsCXONPaewAAlh4unxsOPcVIQb
+ JaI20pEfLv6AvYhxV/U4fOFXmEsvJC3b1/+uaFfy3pzDfLRhjKeOlULh5yxNZOylo0dl
+ 2DVTFjU3eMYs188eYny5d4n0LZEAocNcGRp+TTbrkx6Vabl8oh0i+lPtWWOYgBEmy01v
+ hZPEHqRUKLDGkN6gyzygS7VZBJZzmQc6yPCHqfS4IUfwhQcifGx1fKKd/kBIRQBsJ35a
+ mEpD99paRD1tzIQG/LJm/Cs5RCZyBwT0YEsaIJ1RkvjQG756OcAQ14oKtJPpdA8zV/51
+ H9cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736151064; x=1736755864;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jnm8/1ru5mWA8QP24vCMz+S2YuEXrjIdcwPRZfDzES0=;
- b=EtEhmMKNV2aMJufUITZSamFjmnEFhNWi0u6sSVZ2Kr2JieeUcHZWWFWaw/iKKDy/O3
- pv7YS+pTekSnQGyLxHSI22qyHJlvBKQIg0VqyILh893Bw1SPl8YECbTVlc+4C5zD+Duv
- sBij+kpa/KH+UqpLjZu7/jhunCvZLvy9x2ePXUTB+ca+jCSi47MBzwqTHTw2WX9+3wmN
- AixQNETW23MqSgX0juOEmK+Za8Orq+o+UhEPv3I+yBvlsSgv47y8xJuv7jzcMDLWJpNY
- nOeurpKzgRJYEia8pve1KZ01qIL19F+SalGeoHOAdNkms1UJdu2C2lRud/gpGM49BzmF
- Jjfw==
+ d=1e100.net; s=20230601; t=1739194217; x=1739799017;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Y0kuY/qnmLWcTpq+Gs4oe5wYG4aWX3Vy2rs59JLm5Zc=;
+ b=NvpaArm73hT28gbCNbrfuZY38FSBW8EcVbCd8NBpag1w/NGB5xrV7Qab3m4m53Rv4Y
+ qm7YyKt0TmCm89mBXza4n6KCoRXF4Q0dxWyvQiO5xFTu3n8JRUp9ejLCLeigQWnDrEE5
+ AIMEpeBo3S8vJAet6XjdZbSKGOgULUqdLfj08YeGPDPwV1M9Ep4OvWNr61lCK4eEaV3A
+ XDSwp8cS4Zw9WH+ZDL54MMuvx219Q9y0OBQPKMGiX5dQ9v0PSzHuV9ZO7+Ivnzr0EPZK
+ 8gBJR6gYvPWlBMvTlTgPKmRJOYbKKiyCtNUY2zJdALnYlDtMqZVouSpr5sVazakG39E5
+ qsUw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXm+W6pwV6PI8gb6Pc4JVsHlvFP6XJDM3pUmdKJV8jv9SDmw0qeMNcRt8MP3v2cTuii3r2Wl1UmRsI=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YwYU0Y959qUSUZAKyVPSeEZpVPxUvuxyYNW+DLaHbv91NL3298h
- ocqukgsTyTW3bp0uVFa97jugurN3K7q2NTzIQGS8Xji+lSx/MwW6
-X-Gm-Gg: ASbGnct5xZBfIb6L+xLJ1xzp7SQGAD151zReDG5ew/CGiuZnOO7r1j7joGtmWEziQ2w
- LqR6ArumT3LRCxG/aSPB+Q2f1XPPmZ2XEkJdUfXOuZukUl14+jQbW5EG5hWb3zewjKzVj6KDzYh
- 8BW04WJ7MW2wX7ixDbE5mrVMM3HOh2WWWZh9Bgl6Yjfqp+ehbF18nITjAMfycv+e8wUmJ7KArLw
- fCt6BoPvxLYFzZLm7ygvG4RbUGm3X274dbbJKF4JKwK12cvPSvEAoJn/8yqnI4PCMCSzhci/qpO
-X-Google-Smtp-Source: AGHT+IF9J4WZwXUUDanCj4p2aJeSviCqzCuKbMZU0vMQD/WyTGbYs8vjN7TCz1zOkBjzv4JP8Wr2Kw==
-X-Received: by 2002:a05:6a00:6387:b0:72b:5a7a:e5a6 with SMTP id
- d2e1a72fcca58-72b5a7ae7edmr20980424b3a.26.1736151063865; 
- Mon, 06 Jan 2025 00:11:03 -0800 (PST)
-Received: from fedora.dns.podman ([43.228.180.230])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad835469sm31910429b3a.60.2025.01.06.00.10.58
+ AJvYcCWoGKLbecr8AYpA76oXtcHwmclygo+vj+FJ/BeIh4JpWIc/IO90+rZORFDUpf6ot5P8ct8g1LPkpZ8=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YzeyzNCKxlfUBLUZHADfQ9PAq/ZoHWRNbkKaMXQnrQwqVdJSNrG
+ 3QBiY8BYCdQRVnk/O750A6MffVQbm1/rBGysyVr3We2RczNztG26
+X-Gm-Gg: ASbGncvAS9XaRZL40zg0GeyTXw8NEWJ6O3GaXg9+VY5IMgstkTHi3T9RXfIQewHy6DW
+ TvoFZ8t6g/bgIsbkMv/Up6/TDDOP+IJgN9/D7jiKWg9q6OzjDTIqZJVSGWQE2WZbPqFlWNxjAj0
+ tTglxK10teNvuuGgWGALQ9GnqJeQyGkalnxlMsR7hN9E90KN50qED0U930KqFliH0qu/l546SWI
+ iErTPdtoAnqMvBLgwvMlYhQYkYCOqwbGiJG/9DnOjq3dk1Lu6NJtg7OB/GQO3m9T2czpt869XiK
+ AYJWqA==
+X-Google-Smtp-Source: AGHT+IEH5QCCl4lI0axSO2k1baOf7QV120615EUg7vMmek14klRWGmTSu58W64P2a3hO1mcauSS1MQ==
+X-Received: by 2002:a17:903:2309:b0:215:a04a:89d5 with SMTP id
+ d9443c01a7336-21f4e1cf038mr233204165ad.2.1739194216829; 
+ Mon, 10 Feb 2025 05:30:16 -0800 (PST)
+Received: from ws.. ([103.167.140.11]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21f3653af3bsm78799445ad.57.2025.02.10.05.30.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jan 2025 00:11:03 -0800 (PST)
-From: Hangbin Liu <liuhangbin@gmail.com>
-To: netdev@vger.kernel.org
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, Jakub Kicinski <kuba@kernel.org>,
- Shuah Khan <shuah@kernel.org>, "David S. Miller" <davem@davemloft.net>,
- Simon Horman <horms@kernel.org>, Phil Sutter <phil@nwl.cc>,
- Florian Westphal <fw@strlen.de>, Petr Mladek <pmladek@suse.com>,
- Yoann Congal <yoann.congal@smile.fr>, wireguard@lists.zx2c4.com,
- bpf@vger.kernel.org, linux-kselftest@vger.kernel.org,
- linux-kernel@vger.kernel.org, Hangbin Liu <liuhangbin@gmail.com>
-Subject: [PATCHv4 RESEND net-next 1/2] selftests: wireguards: convert iptables
- to nft
-Date: Mon,  6 Jan 2025 08:10:42 +0000
-Message-ID: <20250106081043.2073169-2-liuhangbin@gmail.com>
-X-Mailer: git-send-email 2.46.0
-In-Reply-To: <20250106081043.2073169-1-liuhangbin@gmail.com>
-References: <20250106081043.2073169-1-liuhangbin@gmail.com>
+ Mon, 10 Feb 2025 05:30:16 -0800 (PST)
+From: Xiao Liang <shaw.leon@gmail.com>
+To: netdev@vger.kernel.org, linux-kselftest@vger.kernel.org,
+ Kuniyuki Iwashima <kuniyu@amazon.com>, Jakub Kicinski <kuba@kernel.org>
+Cc: "David S. Miller" <davem@davemloft.net>, David Ahern <dsahern@kernel.org>,
+ Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+ Andrew Lunn <andrew+netdev@lunn.ch>, Simon Horman <horms@kernel.org>,
+ Shuah Khan <shuah@kernel.org>, Donald Hunter <donald.hunter@gmail.com>,
+ Alexander Aring <alex.aring@gmail.com>,
+ Stefan Schmidt <stefan@datenfreihafen.org>,
+ Miquel Raynal <miquel.raynal@bootlin.com>,
+ Steffen Klassert <steffen.klassert@secunet.com>,
+ Herbert Xu <herbert@gondor.apana.org.au>, linux-rdma@vger.kernel.org,
+ linux-can@vger.kernel.org, osmocom-net-gprs@lists.osmocom.org,
+ bpf@vger.kernel.org, linux-ppp@vger.kernel.org, wireguard@lists.zx2c4.com,
+ linux-wireless@vger.kernel.org, b.a.t.m.a.n@lists.open-mesh.org,
+ bridge@lists.linux.dev, linux-wpan@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: [PATCH net-next v9 00/11] net: Improve netns handling in rtnetlink
+Date: Mon, 10 Feb 2025 21:29:51 +0800
+Message-ID: <20250210133002.883422-1-shaw.leon@gmail.com>
+X-Mailer: git-send-email 2.48.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -90,94 +95,175 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Convert iptabels to nft as it is the replacement for iptables, which is used
-by default in most releases.
+This patch series includes some netns-related improvements and fixes for
+rtnetlink, to make link creation more intuitive:
 
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+ 1) Creating link in another net namespace doesn't conflict with link
+    names in current one.
+ 2) Refector rtnetlink link creation. Create link in target namespace
+    directly.
+
+So that
+
+  # ip link add netns ns1 link-netns ns2 tun0 type gre ...
+
+will create tun0 in ns1, rather than create it in ns2 and move to ns1.
+And don't conflict with another interface named "tun0" in current netns.
+
+Patch 01 avoids link name conflict in different netns.
+
+To achieve 2), there're mainly 3 steps:
+
+ - Patch 02 packs newlink() parameters into a struct, including
+   the original "src_net" along with more netns context. No semantic
+   changes are introduced.
+ - Patch 03 ~ 07 converts device drivers to use the explicit netns
+   extracted from params.
+ - Patch 08 ~ 09 removes the old netns parameter, and converts
+   rtnetlink to create device in target netns directly.
+
+Patch 10 ~ 11 adds some tests for link name and link netns.
+
+
+BTW please note there're some issues found in current code:
+
+- In amt_newlink() drivers/net/amt.c:
+
+    amt->net = net;
+    ...
+    amt->stream_dev = dev_get_by_index(net, ...
+
+  Uses net, but amt_lookup_upper_dev() only searches in dev_net.
+  So the AMT device may not be properly deleted if it's in a different
+  netns from lower dev.
+
+- In lowpan_newlink() in net/ieee802154/6lowpan/core.c:
+
+    wdev = dev_get_by_index(dev_net(ldev), nla_get_u32(tb[IFLA_LINK]));
+
+  Looks for IFLA_LINK in dev_net, but in theory the ifindex is defined
+  in link netns.
+
+And thanks to Kuniyuki for fixing related issues in gtp and pfcp:
+https://lore.kernel.org/netdev/20250110014754.33847-1-kuniyu@amazon.com/
+
 ---
- tools/testing/selftests/wireguard/netns.sh | 29 ++++++++++++++--------
- 1 file changed, 19 insertions(+), 10 deletions(-)
 
-diff --git a/tools/testing/selftests/wireguard/netns.sh b/tools/testing/selftests/wireguard/netns.sh
-index 55500f901fbc..4032384e6747 100755
---- a/tools/testing/selftests/wireguard/netns.sh
-+++ b/tools/testing/selftests/wireguard/netns.sh
-@@ -75,6 +75,11 @@ pp ip netns add $netns1
- pp ip netns add $netns2
- ip0 link set up dev lo
- 
-+# init nft tables
-+n0 nft add table ip wgtest
-+n1 nft add table ip wgtest
-+n2 nft add table ip wgtest
-+
- ip0 link add dev wg0 type wireguard
- ip0 link set wg0 netns $netns1
- ip0 link add dev wg0 type wireguard
-@@ -196,13 +201,14 @@ ip1 link set wg0 mtu 1300
- ip2 link set wg0 mtu 1300
- n1 wg set wg0 peer "$pub2" endpoint 127.0.0.1:2
- n2 wg set wg0 peer "$pub1" endpoint 127.0.0.1:1
--n0 iptables -A INPUT -m length --length 1360 -j DROP
-+n0 nft add chain ip wgtest INPUT { type filter hook input priority filter \; policy accept \; }
-+n0 nft add rule ip wgtest INPUT meta length 1360 counter drop
- n1 ip route add 192.168.241.2/32 dev wg0 mtu 1299
- n2 ip route add 192.168.241.1/32 dev wg0 mtu 1299
- n2 ping -c 1 -W 1 -s 1269 192.168.241.1
- n2 ip route delete 192.168.241.1/32 dev wg0 mtu 1299
- n1 ip route delete 192.168.241.2/32 dev wg0 mtu 1299
--n0 iptables -F INPUT
-+n0 nft flush table ip wgtest
- 
- ip1 link set wg0 mtu $orig_mtu
- ip2 link set wg0 mtu $orig_mtu
-@@ -335,7 +341,8 @@ n0 bash -c 'printf 1 > /proc/sys/net/ipv4/ip_forward'
- [[ -e /proc/sys/net/netfilter/nf_conntrack_udp_timeout ]] || modprobe nf_conntrack
- n0 bash -c 'printf 2 > /proc/sys/net/netfilter/nf_conntrack_udp_timeout'
- n0 bash -c 'printf 2 > /proc/sys/net/netfilter/nf_conntrack_udp_timeout_stream'
--n0 iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -d 10.0.0.0/24 -j SNAT --to 10.0.0.1
-+n0 nft add chain ip wgtest POSTROUTING { type nat hook postrouting priority srcnat\; policy accept \; }
-+n0 nft add rule ip wgtest POSTROUTING ip saddr 192.168.1.0/24 ip daddr 10.0.0.0/24 counter snat to 10.0.0.1
- 
- n1 wg set wg0 peer "$pub2" endpoint 10.0.0.100:2 persistent-keepalive 1
- n1 ping -W 1 -c 1 192.168.241.2
-@@ -349,10 +356,11 @@ n1 wg set wg0 peer "$pub2" persistent-keepalive 0
- # Test that sk_bound_dev_if works
- n1 ping -I wg0 -c 1 -W 1 192.168.241.2
- # What about when the mark changes and the packet must be rerouted?
--n1 iptables -t mangle -I OUTPUT -j MARK --set-xmark 1
-+n1 nft add chain ip wgtest OUTPUT { type route hook output priority mangle\; policy accept \; }
-+n1 nft add rule ip wgtest OUTPUT counter meta mark set 0x1
- n1 ping -c 1 -W 1 192.168.241.2 # First the boring case
- n1 ping -I wg0 -c 1 -W 1 192.168.241.2 # Then the sk_bound_dev_if case
--n1 iptables -t mangle -D OUTPUT -j MARK --set-xmark 1
-+n1 nft flush table ip wgtest
- 
- # Test that onion routing works, even when it loops
- n1 wg set wg0 peer "$pub3" allowed-ips 192.168.242.2/32 endpoint 192.168.241.2:5
-@@ -386,16 +394,17 @@ n1 ping -W 1 -c 100 -f 192.168.99.7
- n1 ping -W 1 -c 100 -f abab::1111
- 
- # Have ns2 NAT into wg0 packets from ns0, but return an icmp error along the right route.
--n2 iptables -t nat -A POSTROUTING -s 10.0.0.0/24 -d 192.168.241.0/24 -j SNAT --to 192.168.241.2
--n0 iptables -t filter -A INPUT \! -s 10.0.0.0/24 -i vethrs -j DROP # Manual rpfilter just to be explicit.
-+n2 nft add chain ip wgtest POSTROUTING { type nat hook postrouting priority srcnat\; policy accept \; }
-+n2 nft add rule ip wgtest POSTROUTING ip saddr 10.0.0.0/24 ip daddr 192.168.241.0/24 counter snat to 192.168.241.2
-+n0 nft add chain ip wgtest INPUT { type filter hook input priority filter \; policy accept \; }
-+n0 nft add rule ip wgtest INPUT iifname "vethrs" ip saddr != 10.0.0.0/24 counter drop
- n2 bash -c 'printf 1 > /proc/sys/net/ipv4/ip_forward'
- ip0 -4 route add 192.168.241.1 via 10.0.0.100
- n2 wg set wg0 peer "$pub1" remove
- [[ $(! n0 ping -W 1 -c 1 192.168.241.1 || false) == *"From 10.0.0.100 icmp_seq=1 Destination Host Unreachable"* ]]
- 
--n0 iptables -t nat -F
--n0 iptables -t filter -F
--n2 iptables -t nat -F
-+n0 nft flush table ip wgtest
-+n2 nft flush table ip wgtest
- ip0 link del vethrc
- ip0 link del vethrs
- ip1 link del wg0
+v9:
+ - Change the prototype of macvlan_common_newlink().
+ - Minor fixes of coding style and local variables.
+
+v8:
+ link: https://lore.kernel.org/all/20250113143719.7948-1-shaw.leon@gmail.com/
+ - Move dev and ext_ack out from param struct.
+ - Validate link_net and dev_net are identical for 6lowpan.
+
+v7:
+ link: https://lore.kernel.org/all/20250104125732.17335-1-shaw.leon@gmail.com/
+ - Add selftest kconfig.
+ - Remove a duplicated test of ip6gre.
+
+v6:
+ link: https://lore.kernel.org/all/20241218130909.2173-1-shaw.leon@gmail.com/
+ - Split prototype, driver and rtnetlink changes.
+ - Add more tests for link netns.
+ - Fix IPv6 tunnel net overwriten in ndo_init().
+ - Reorder variable declarations.
+ - Exclude a ip_tunnel-specific patch.
+
+v5:
+ link: https://lore.kernel.org/all/20241209140151.231257-1-shaw.leon@gmail.com/
+ - Fix function doc in batman-adv.
+ - Include peer_net in rtnl newlink parameters.
+
+v4:
+ link: https://lore.kernel.org/all/20241118143244.1773-1-shaw.leon@gmail.com/
+ - Pack newlink() parameters to a single struct.
+ - Use ynl async_msg_queue.empty() in selftest.
+
+v3:
+ link: https://lore.kernel.org/all/20241113125715.150201-1-shaw.leon@gmail.com/
+ - Drop "netns_atomic" flag and module parameter. Add netns parameter to
+   newlink() instead, and convert drivers accordingly.
+ - Move python NetNSEnter helper to net selftest lib.
+
+v2:
+ link: https://lore.kernel.org/all/20241107133004.7469-1-shaw.leon@gmail.com/
+ - Check NLM_F_EXCL to ensure only link creation is affected.
+ - Add self tests for link name/ifindex conflict and notifications
+   in different netns.
+ - Changes in dummy driver and ynl in order to add the test case.
+
+v1:
+ link: https://lore.kernel.org/all/20241023023146.372653-1-shaw.leon@gmail.com/
+
+
+Xiao Liang (11):
+  rtnetlink: Lookup device in target netns when creating link
+  rtnetlink: Pack newlink() params into struct
+  net: Use link netns in newlink() of rtnl_link_ops
+  ieee802154: 6lowpan: Validate link netns in newlink() of rtnl_link_ops
+  net: ip_tunnel: Use link netns in newlink() of rtnl_link_ops
+  net: ipv6: Use link netns in newlink() of rtnl_link_ops
+  net: xfrm: Use link netns in newlink() of rtnl_link_ops
+  rtnetlink: Remove "net" from newlink params
+  rtnetlink: Create link directly in target net namespace
+  selftests: net: Add python context manager for netns entering
+  selftests: net: Add test cases for link and peer netns
+
+ drivers/infiniband/ulp/ipoib/ipoib_netlink.c  |   9 +-
+ drivers/net/amt.c                             |  11 +-
+ drivers/net/bareudp.c                         |   9 +-
+ drivers/net/bonding/bond_netlink.c            |   6 +-
+ drivers/net/can/dev/netlink.c                 |   4 +-
+ drivers/net/can/vxcan.c                       |   7 +-
+ .../ethernet/qualcomm/rmnet/rmnet_config.c    |   9 +-
+ drivers/net/geneve.c                          |   9 +-
+ drivers/net/gtp.c                             |  10 +-
+ drivers/net/ipvlan/ipvlan.h                   |   3 +-
+ drivers/net/ipvlan/ipvlan_main.c              |   8 +-
+ drivers/net/ipvlan/ipvtap.c                   |   6 +-
+ drivers/net/macsec.c                          |   9 +-
+ drivers/net/macvlan.c                         |  21 +--
+ drivers/net/macvtap.c                         |   6 +-
+ drivers/net/netkit.c                          |  14 +-
+ drivers/net/pfcp.c                            |   9 +-
+ drivers/net/ppp/ppp_generic.c                 |   9 +-
+ drivers/net/team/team_core.c                  |   6 +-
+ drivers/net/veth.c                            |   7 +-
+ drivers/net/vrf.c                             |   5 +-
+ drivers/net/vxlan/vxlan_core.c                |   9 +-
+ drivers/net/wireguard/device.c                |   7 +-
+ drivers/net/wireless/virtual/virt_wifi.c      |   8 +-
+ drivers/net/wwan/wwan_core.c                  |  16 +-
+ include/linux/if_macvlan.h                    |   6 +-
+ include/net/ip_tunnels.h                      |   5 +-
+ include/net/rtnetlink.h                       |  40 ++++-
+ net/8021q/vlan_netlink.c                      |   9 +-
+ net/batman-adv/soft-interface.c               |   9 +-
+ net/bridge/br_netlink.c                       |   6 +-
+ net/caif/chnl_net.c                           |   5 +-
+ net/core/rtnetlink.c                          |  34 +++--
+ net/hsr/hsr_netlink.c                         |  12 +-
+ net/ieee802154/6lowpan/core.c                 |   7 +-
+ net/ipv4/ip_gre.c                             |  22 ++-
+ net/ipv4/ip_tunnel.c                          |  10 +-
+ net/ipv4/ip_vti.c                             |   9 +-
+ net/ipv4/ipip.c                               |   9 +-
+ net/ipv6/ip6_gre.c                            |  30 ++--
+ net/ipv6/ip6_tunnel.c                         |  19 ++-
+ net/ipv6/ip6_vti.c                            |  15 +-
+ net/ipv6/sit.c                                |  17 ++-
+ net/xfrm/xfrm_interface_core.c                |  15 +-
+ tools/testing/selftests/net/Makefile          |   1 +
+ tools/testing/selftests/net/config            |   5 +
+ .../testing/selftests/net/lib/py/__init__.py  |   2 +-
+ tools/testing/selftests/net/lib/py/netns.py   |  18 +++
+ tools/testing/selftests/net/link_netns.py     | 141 ++++++++++++++++++
+ tools/testing/selftests/net/netns-name.sh     |  10 ++
+ 50 files changed, 494 insertions(+), 179 deletions(-)
+ create mode 100755 tools/testing/selftests/net/link_netns.py
+
 -- 
-2.46.0
+2.48.1
 
