@@ -4,72 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C61F9C54E92
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 09:18:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A359CC54E90
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 09:18:32 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7eed7f2a;
-	Tue, 20 May 2025 19:54:49 +0000 (UTC)
-Received: from smtp-fw-9106.amazon.com (smtp-fw-9106.amazon.com
- [207.171.188.206])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 78d798a1
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 54d92279;
+	Tue, 20 May 2025 19:40:24 +0000 (UTC)
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com
+ [2607:f8b0:4864:20::636])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9ba71b3e
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 21 Feb 2025 03:26:52 +0000 (UTC)
+ Mon, 10 Feb 2025 13:31:22 +0000 (UTC)
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-21f49bd087cso54571875ad.0
+ for <wireguard@lists.zx2c4.com>; Mon, 10 Feb 2025 05:31:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
- t=1740108413; x=1771644413;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=8mNjS6ciQxTju2qMj3xcfBbIY4//EJ+QLkySghPDl14=;
- b=NBBAUobzJpvgNC6H+GB38degD5n/b4HJpoLaNZ7g3LtagtxJv3Lsr8n/
- PRnV7nfOtduxTx0nGM+zN9hzYru6SdSX5eNzIM3B9iYi/eypuYt8vHo32
- fCWW51lPE7ffq7CzRXOUk+otjmUkL8J93Q7kdUUdzm7w2uMaMIOtNqXFl w=;
-X-IronPort-AV: E=Sophos;i="6.13,303,1732579200"; d="scan'208";a="800651343"
-Received: from pdx4-co-svc-p1-lb2-vlan2.amazon.com (HELO
- smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.25.36.210])
- by smtp-border-fw-9106.sea19.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Feb 2025 03:26:45 +0000
-Received: from EX19MTAUWB002.ant.amazon.com [10.0.7.35:51797]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.18.70:2525]
- with esmtp (Farcaster)
- id 0699b55d-301b-4263-9bf9-a0cbd11131d6; Fri, 21 Feb 2025 03:26:43 +0000 (UTC)
-X-Farcaster-Flow-ID: 0699b55d-301b-4263-9bf9-a0cbd11131d6
-Received: from EX19D004ANA001.ant.amazon.com (10.37.240.138) by
- EX19MTAUWB002.ant.amazon.com (10.250.64.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
- Fri, 21 Feb 2025 03:26:43 +0000
-Received: from 6c7e67bfbae3.amazon.com (10.135.209.63) by
- EX19D004ANA001.ant.amazon.com (10.37.240.138) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14;
- Fri, 21 Feb 2025 03:26:38 +0000
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
-To: <shaw.leon@gmail.com>
-CC: <alex.aring@gmail.com>, <andrew+netdev@lunn.ch>,
- <b.a.t.m.a.n@lists.open-mesh.org>, <bpf@vger.kernel.org>,
- <bridge@lists.linux.dev>, <davem@davemloft.net>, <donald.hunter@gmail.com>,
- <dsahern@kernel.org>, <edumazet@google.com>, <herbert@gondor.apana.org.au>,
- <horms@kernel.org>, <kuba@kernel.org>, <kuniyu@amazon.com>,
- <linux-can@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-kselftest@vger.kernel.org>, <linux-ppp@vger.kernel.org>,
- <linux-rdma@vger.kernel.org>, <linux-wireless@vger.kernel.org>,
- <linux-wpan@vger.kernel.org>, <miquel.raynal@bootlin.com>,
- <netdev@vger.kernel.org>, <osmocom-net-gprs@lists.osmocom.org>,
- <pabeni@redhat.com>, <shuah@kernel.org>, <stefan@datenfreihafen.org>,
- <steffen.klassert@secunet.com>, <wireguard@lists.zx2c4.com>
-Subject: Re: [PATCH net-next v10 05/13] net: ip_tunnel: Don't set tunnel->net
- in ip_tunnel_init()
-Date: Thu, 20 Feb 2025 19:26:29 -0800
-Message-ID: <20250221032629.73823-1-kuniyu@amazon.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250219125039.18024-6-shaw.leon@gmail.com>
-References: <20250219125039.18024-6-shaw.leon@gmail.com>
+ d=gmail.com; s=20230601; t=1739194281; x=1739799081; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PyZ7Oa5HQm/CyDGlUAOCpKikT+Z0UZAcxIZ482ECX9g=;
+ b=YieFjLynD4ewOEh4fWa/u0g108B44XZd2YFmJgZ2TRCZcluluVSRivpqHjj2P7iqEY
+ 67Iev/WxQHe6rcB1We3KIjjXlHJ9qjkA33D1CcB+1nrx2hDyH6j5BTHUeNmThKLZFWtA
+ W7sNNBYgGQZr5m1xI8bhK596ohgUlm8oYzzjmKV2MBCuVpdY0ncm2b6Ll/fksa6Wy4Sj
+ YcpGlw40YhTtx6UKuQath5y+kAkn5ZeY+D6H9KvhQL26wEx1l5zZ/fz6NNB47DW4Ub/F
+ zKDsvwAO6KCr0DjxLxr/nbjuKgF+PK7gRx9juxi4cH8pyrUOGx5NKC0gF7oq6z0uRm0t
+ ryxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739194281; x=1739799081;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=PyZ7Oa5HQm/CyDGlUAOCpKikT+Z0UZAcxIZ482ECX9g=;
+ b=WPSrsQp9qon0wAoJPpl5IuSlXobgmRxuYoxK/aSMZ7WBA7+/8Yb4SBDCeCl/2YF4Y2
+ fwVvqs4AprBabEK1MtyPFxAnfnno1UhFiqDePu+S6rRoQSJwriBUlEIF1AvfT9pnurP7
+ XpQDHWOOjvVpIHQUy60UtxbKOpAeMXItcIV/OcSsukNlGg/Z4aQiu5pZ3bu7Blr1fVXe
+ vmom1U5771OhHKTg03EiXkJIJnJ4NUV4ebrjajAm+kqIjYdGDlTEhOohilfrP1b3KagG
+ 4GW6XqD6tbVrsPWuZ6wk3Au8cpM7kcsvgoTp1ETwnz5zl9x+2RGaMPtQ1G3rjiuynST/
+ 7PWQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVuwneVn+cbdHYJ7IDMjFKQRF8FqqsPlDuEaoPxOFVN5Do/NC+OR8OJxCs+MtGgSKu4cUPJsGxeI7M=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YyYrP1jh1jV63lbSJ9m6JTGdKStAwvGofr7SLmNYIx+KBfHCoG0
+ UxihX34lNCmzXVEY6/lOLQJin654V12os3V7kIWtk+s7dlPSNspw
+X-Gm-Gg: ASbGncuz+Lr36RrHVPnDi3AniP+zwAsBAEQNDXd1mC8zxjvOPPNe+AtwPFYVe8RbkVE
+ cpEfqbTU7G0zgTESeTvtLCTVn++dRQ0bk3YBXgajCKPguEs64Yw9Jv6AMp6n5lAaIbUCkXxZ9OQ
+ B0+Zibzkqg80Gi3JFYTjuXojHubTNXSNIKTGOSDSZLVP6Gcik653EJmtXhJjsAIekL1D9/4S8j8
+ 0eBL7CN7GyJVJhQbBSfpgRujgdZ4frMt3YucFvAyuGv7I3abeYdeR5L85Y0eMt+nh4cXjtgb7Sx
+ Xn+GpA==
+X-Google-Smtp-Source: AGHT+IHeusvrHP8M+FV2U5mrdVgA+KXf+BNwroimzhQyBeA1391Nd6kFx/ISaagEKEOW3Rex1VbPJw==
+X-Received: by 2002:a17:902:c94a:b0:21f:8099:72e4 with SMTP id
+ d9443c01a7336-21f809974bdmr103657145ad.28.1739194280801; 
+ Mon, 10 Feb 2025 05:31:20 -0800 (PST)
+Received: from ws.. ([103.167.140.11]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21f3653af3bsm78799445ad.57.2025.02.10.05.31.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 10 Feb 2025 05:31:20 -0800 (PST)
+From: Xiao Liang <shaw.leon@gmail.com>
+To: netdev@vger.kernel.org, linux-kselftest@vger.kernel.org,
+ Kuniyuki Iwashima <kuniyu@amazon.com>, Jakub Kicinski <kuba@kernel.org>
+Cc: "David S. Miller" <davem@davemloft.net>, David Ahern <dsahern@kernel.org>,
+ Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+ Andrew Lunn <andrew+netdev@lunn.ch>, Simon Horman <horms@kernel.org>,
+ Shuah Khan <shuah@kernel.org>, Donald Hunter <donald.hunter@gmail.com>,
+ Alexander Aring <alex.aring@gmail.com>,
+ Stefan Schmidt <stefan@datenfreihafen.org>,
+ Miquel Raynal <miquel.raynal@bootlin.com>,
+ Steffen Klassert <steffen.klassert@secunet.com>,
+ Herbert Xu <herbert@gondor.apana.org.au>, linux-rdma@vger.kernel.org,
+ linux-can@vger.kernel.org, osmocom-net-gprs@lists.osmocom.org,
+ bpf@vger.kernel.org, linux-ppp@vger.kernel.org, wireguard@lists.zx2c4.com,
+ linux-wireless@vger.kernel.org, b.a.t.m.a.n@lists.open-mesh.org,
+ bridge@lists.linux.dev, linux-wpan@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: [PATCH net-next v9 07/11] net: xfrm: Use link netns in newlink() of
+ rtnl_link_ops
+Date: Mon, 10 Feb 2025 21:29:58 +0800
+Message-ID: <20250210133002.883422-8-shaw.leon@gmail.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250210133002.883422-1-shaw.leon@gmail.com>
+References: <20250210133002.883422-1-shaw.leon@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.135.209.63]
-X-ClientProxiedBy: EX19D038UWB002.ant.amazon.com (10.13.139.185) To
- EX19D004ANA001.ant.amazon.com (10.37.240.138)
-X-Mailman-Approved-At: Tue, 20 May 2025 19:52:08 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -84,12 +99,54 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-From: Xiao Liang <shaw.leon@gmail.com>
-Date: Wed, 19 Feb 2025 20:50:31 +0800
-> ip_tunnel_init() is called from register_netdevice(). In all code paths
-> reaching here, tunnel->net should already have been set (either in
-> ip_tunnel_newlink() or __ip_tunnel_create()). So don't set it again.
-> 
-> Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
+When link_net is set, use it as link netns instead of dev_net(). This
+prepares for rtnetlink core to create device in target netns directly,
+in which case the two namespaces may be different.
 
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
+---
+ net/xfrm/xfrm_interface_core.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/net/xfrm/xfrm_interface_core.c b/net/xfrm/xfrm_interface_core.c
+index 5659a6cadd51..622445f041d3 100644
+--- a/net/xfrm/xfrm_interface_core.c
++++ b/net/xfrm/xfrm_interface_core.c
+@@ -242,10 +242,9 @@ static void xfrmi_dev_free(struct net_device *dev)
+ 	gro_cells_destroy(&xi->gro_cells);
+ }
+ 
+-static int xfrmi_create(struct net_device *dev)
++static int xfrmi_create(struct net *net, struct net_device *dev)
+ {
+ 	struct xfrm_if *xi = netdev_priv(dev);
+-	struct net *net = dev_net(dev);
+ 	struct xfrmi_net *xfrmn = net_generic(net, xfrmi_net_id);
+ 	int err;
+ 
+@@ -819,11 +818,12 @@ static int xfrmi_newlink(struct net_device *dev,
+ 			 struct netlink_ext_ack *extack)
+ {
+ 	struct nlattr **data = params->data;
+-	struct net *net = dev_net(dev);
+ 	struct xfrm_if_parms p = {};
+ 	struct xfrm_if *xi;
++	struct net *net;
+ 	int err;
+ 
++	net = params->link_net ? : dev_net(dev);
+ 	xfrmi_netlink_parms(data, &p);
+ 	if (p.collect_md) {
+ 		struct xfrmi_net *xfrmn = net_generic(net, xfrmi_net_id);
+@@ -852,7 +852,7 @@ static int xfrmi_newlink(struct net_device *dev,
+ 	xi->net = net;
+ 	xi->dev = dev;
+ 
+-	err = xfrmi_create(dev);
++	err = xfrmi_create(net, dev);
+ 	return err;
+ }
+ 
+-- 
+2.48.1
+
