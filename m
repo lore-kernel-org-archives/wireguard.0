@@ -4,87 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AF92C2D0CD
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 09:18:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB6DAC54E65
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 09:18:30 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0ed86354;
-	Tue, 20 May 2025 19:40:06 +0000 (UTC)
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com
- [2607:f8b0:4864:20::62f])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d24ca3c2
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0e2862c4;
+	Tue, 20 May 2025 19:40:57 +0000 (UTC)
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com
+ [2a00:1450:4864:20::336])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id aff4fa22
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 10 Feb 2025 13:31:04 +0000 (UTC)
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-21f4500a5c3so82742455ad.3
- for <wireguard@lists.zx2c4.com>; Mon, 10 Feb 2025 05:31:04 -0800 (PST)
+ Thu, 13 Feb 2025 09:56:10 +0000 (UTC)
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4395b367329so3972685e9.3
+ for <wireguard@lists.zx2c4.com>; Thu, 13 Feb 2025 01:56:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1739194263; x=1739799063; darn=lists.zx2c4.com;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1739440570; x=1740045370; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pJKz1g6voDImT0UUTo/s+cF5fKbKW++euQC6BW/L/6A=;
- b=m2bTuAGhGcc73p0Y1hz93uFGAADp67+92J2peG7jC3rQ6WCxAcMUzclb3q4cXcO+Kf
- SxsBk/hoRSVEEjMxdllWq/uKVUWTTaxS1FVt7geLSy/hLgnm4AF4oE6LRwuz6V7oIs6s
- HJr8kSch02Z3SXZPy+XQygno8ONHa9D4aOq8QiDNDTUy+0HWDqRaQSreWOq/dykwo0KH
- Wx5II/OnCrXpDt/5HVfyk8Hjk7MsE/hP10zZTYY49G3UV4Oc07AY5j/SjBKqUyvFGHLB
- qV79dM+YVVrKq2DgAau7+UozB5tU1JyDWNjTvcrq/m4UhRlq1CwnTtXplunMFf226O81
- PbOw==
+ bh=6VgtMhO6+jJX1RjKLdoncmTjEAD+6FhglRm1uezg6DA=;
+ b=dgSp2l40Wl/s2jRqQdi/Ro3QOQqN7YJOGdpGLTX9MaBxMIuL9J61Hx+lKf6z2iPbLc
+ 9GCI++dwMykSs2fLAV1NJVRxBDfeoM7xtsgt2wgk18PfUKcAuOJfKRqj4cd2JZH59+Gt
+ CICRReJNGrcE4YadFwakVtTLlztJZ5re4R6qhqJlFDLlNII+n+CS+7iA3nok0YWgLIAF
+ jEdXfe6ya0GtJvrmn8eUwUJMQk24b7eY67jm8jnWNlQMZ1Y0M+JCmEhnpzaTZ0rtCrni
+ RuZ8pslkEJXPEFPxnMMJLgCVio7ehIZAUbTcN95j2O8LTXXm+hmiKOt7BfhTkKO2te6R
+ MGTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739194263; x=1739799063;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1739440570; x=1740045370;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pJKz1g6voDImT0UUTo/s+cF5fKbKW++euQC6BW/L/6A=;
- b=N9ya4yHUUr+wJ2Ew/EZFKjjh24G/h3UnNsP7LPn6BoQc3E3EYPh9sTOxJFoYYB1Hhq
- W8EM7gxMDnL0UicOBpuHMZcMjRiC56y7ujS5Zc6O8u5y1cXTVZjiCRm4Q6ZrMBbC1Wyo
- I2fxWfdQRXjHknFLz0yl6+HiKAwikWBPPvpdtsNr5Pw2AGn1fK8jp2jXCkPeom5Qz7HZ
- 0QajlL9LPZTWR8UYF9DlMoRpNyfCOOOsZSWaIgbkgDiuvDVCv6Utho3XhjN7cOw01WV2
- Dnbj4kL+TULJsquTY1rwyZtrMJ1y1YbQkj3nUiaTZbUaJS5n5p36S+QRLvjJLYu3p9It
- cafQ==
+ bh=6VgtMhO6+jJX1RjKLdoncmTjEAD+6FhglRm1uezg6DA=;
+ b=e4liGIRUgpmKpkaxGZBrlb47rFClMEEoVePkO+Bb3zYZyssazkJ73LHrPCiYwX8Mv6
+ SOb7NQK4iJ6WWNmL56P1RvQkh9b7OAvRG9ZdbDH5336zHy4qkzwyfM8nveJjm7dwiRqA
+ yumqWODEzFl7IzW3d/Lmw+LYQ0uqGu/cixFj21lBH+AIluHjJ4NdeNzyL6j/w7GYoYt4
+ mvsMwglnwc7keZPWZ+OViijzRUtgJDahlZTlOb9dIaXoCuBBJP7uy9b/2/SXLb2owsnA
+ YM0lxgTHJWOJdCYmeZY5hUDKn2ZoDz2ej7mBFhPXg+ArsTkqkhtmcqbGi1QvLxItQA66
+ MBtw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXOf8u92RPHbhZWz82DCS8Gtsp1OHpSePor0rOEx9MniJp4SRXNRfN3I/5J5KwQrOnstjco23V3c1o=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0Yx4lV7VBx3eW4E6DkUK2EmRxkubr4MXYP/TuPy+50X4t8ZYo8pO
- ZnV+py0yvroGyEIJRxyGVhr8YX+YywofN4R1nrNeIaw+SrIgnV2y
-X-Gm-Gg: ASbGncsu6KaR0BohorVhoVBjYE5tz+QxMt136UljeDciEbWuk7klMcoNd+vSGOCeWdK
- ZCXkDQdUM49eO+0eHru+Zn48VDwt9cl3Bq2Nl9jqmqGaG1sv58q5KoaYm2sox4xPwLgFcRjAZaG
- M2dsVG3iEGWXq8I9gq1JNScselBMHx1+VvidrZg59G6uSOhbzv+I1mpt3+Yhbz0uU47I7XvApYu
- 8V9vELS09FcGuusrftj/By+YQ6HHyFeOunRvZx65xx62JwYVseSiCuAOcWTOFlMji50ym8lycBh
- 9KmkFw==
-X-Google-Smtp-Source: AGHT+IGNFjsW8yGSZG6C2tbCv5/JZ09OmB3LKkjVhY7agbUhlCe28tcl+Qcya8rlcfYhnDrE2/S9OQ==
-X-Received: by 2002:a17:902:e946:b0:216:7cde:51a with SMTP id
- d9443c01a7336-21f4e72631dmr249984615ad.28.1739194263028; 
- Mon, 10 Feb 2025 05:31:03 -0800 (PST)
-Received: from ws.. ([103.167.140.11]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21f3653af3bsm78799445ad.57.2025.02.10.05.30.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Feb 2025 05:31:02 -0800 (PST)
-From: Xiao Liang <shaw.leon@gmail.com>
-To: netdev@vger.kernel.org, linux-kselftest@vger.kernel.org,
- Kuniyuki Iwashima <kuniyu@amazon.com>, Jakub Kicinski <kuba@kernel.org>
-Cc: "David S. Miller" <davem@davemloft.net>, David Ahern <dsahern@kernel.org>,
- Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
- Andrew Lunn <andrew+netdev@lunn.ch>, Simon Horman <horms@kernel.org>,
- Shuah Khan <shuah@kernel.org>, Donald Hunter <donald.hunter@gmail.com>,
- Alexander Aring <alex.aring@gmail.com>,
- Stefan Schmidt <stefan@datenfreihafen.org>,
- Miquel Raynal <miquel.raynal@bootlin.com>,
- Steffen Klassert <steffen.klassert@secunet.com>,
- Herbert Xu <herbert@gondor.apana.org.au>, linux-rdma@vger.kernel.org,
- linux-can@vger.kernel.org, osmocom-net-gprs@lists.osmocom.org,
- bpf@vger.kernel.org, linux-ppp@vger.kernel.org, wireguard@lists.zx2c4.com,
- linux-wireless@vger.kernel.org, b.a.t.m.a.n@lists.open-mesh.org,
- bridge@lists.linux.dev, linux-wpan@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v9 05/11] net: ip_tunnel: Use link netns in newlink()
- of rtnl_link_ops
-Date: Mon, 10 Feb 2025 21:29:56 +0800
-Message-ID: <20250210133002.883422-6-shaw.leon@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250210133002.883422-1-shaw.leon@gmail.com>
-References: <20250210133002.883422-1-shaw.leon@gmail.com>
+ AJvYcCUkfKrp840v+flnwV1J2u/viB+n4DUeTkQIJADDDWK5TeNDn6TEtnhAe4Q03kZXxp19KikjaINFuIM=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YxbOcQqOvTVKjOAhPAvq3fkRcnm2W2lVPiI0CNLSPxe8nCqqphd
+ mdQva1rXIf+KzFJLopvBhwHCfWfkqBolL2WRFD7tLFNOGoJZ8anrDIOFq67iOMkl+2fkr729Lez
+ C4AMSp1eqF9aftGVz2ZEQYMz/09U=
+X-Gm-Gg: ASbGncvf+rlIDj14X7K36Xfjv7ZYDmRIFSEdQH1zrGZuX/Rp5LvWKfPKk7txEyawNkf
+ Cs5Ft08BNN3xlPwYtDHM8c/06MzaX8K78PMq12MOXPSma4DSGCVjZSWxHyNuwhdvtsosWdPg=
+X-Google-Smtp-Source: AGHT+IF4vz9ZMNWiLlURtMBrw7f64+VQaaApf4FQsQ85yq8rGSoIhlhaKmw+1l1LVh0uOeuQn3pwG9KU0hl60Rc/heo=
+X-Received: by 2002:a5d:5889:0:b0:38f:24f9:8bac with SMTP id
+ ffacd0b85a97d-38f24f9912fmr1885857f8f.23.1739440569419; Thu, 13 Feb 2025
+ 01:56:09 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250210133002.883422-7-shaw.leon@gmail.com>
+ <20250213070533.9926-1-kuniyu@amazon.com>
+ <CABAhCOT8sCV4RgBWwfYjCw2xoZbdiYG8yuWReigx-u5DibTaiA@mail.gmail.com>
+In-Reply-To: <CABAhCOT8sCV4RgBWwfYjCw2xoZbdiYG8yuWReigx-u5DibTaiA@mail.gmail.com>
+From: Xiao Liang <shaw.leon@gmail.com>
+Date: Thu, 13 Feb 2025 17:55:32 +0800
+X-Gm-Features: AWEUYZkW9l6r7KSPGBGbQx_PCRCw6eQRHHUgG_KYRCauok2SpPFULcU0b728Vqw
+Message-ID: <CABAhCORgi7Jqu=Aigs6Fc8ewG5OshFvcunye03R43C+Z0ojZyw@mail.gmail.com>
+Subject: Re: [PATCH net-next v9 06/11] net: ipv6: Use link netns in newlink()
+ of rtnl_link_ops
+To: Kuniyuki Iwashima <kuniyu@amazon.com>
+Cc: alex.aring@gmail.com, andrew+netdev@lunn.ch, 
+ b.a.t.m.a.n@lists.open-mesh.org, bpf@vger.kernel.org, bridge@lists.linux.dev, 
+ davem@davemloft.net, donald.hunter@gmail.com, dsahern@kernel.org, 
+ edumazet@google.com, herbert@gondor.apana.org.au, horms@kernel.org, 
+ kuba@kernel.org, linux-can@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-kselftest@vger.kernel.org, linux-ppp@vger.kernel.org, 
+ linux-rdma@vger.kernel.org, linux-wireless@vger.kernel.org, 
+ linux-wpan@vger.kernel.org, miquel.raynal@bootlin.com, netdev@vger.kernel.org, 
+ osmocom-net-gprs@lists.osmocom.org, pabeni@redhat.com, shuah@kernel.org, 
+ stefan@datenfreihafen.org, steffen.klassert@secunet.com, 
+ wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -99,129 +92,46 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-When link_net is set, use it as link netns instead of dev_net(). This
-prepares for rtnetlink core to create device in target netns directly,
-in which case the two namespaces may be different.
+On Thu, Feb 13, 2025 at 4:37=E2=80=AFPM Xiao Liang <shaw.leon@gmail.com> wr=
+ote:
+>
+> On Thu, Feb 13, 2025 at 3:05=E2=80=AFPM Kuniyuki Iwashima <kuniyu@amazon.=
+com> wrote:
+> >
+> [...]
+> > > diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
+> > > index 863852abe8ea..108600dc716f 100644
+> > > --- a/net/ipv6/ip6_gre.c
+> > > +++ b/net/ipv6/ip6_gre.c
+> > > @@ -1498,7 +1498,8 @@ static int ip6gre_tunnel_init_common(struct net=
+_device *dev)
+> > >       tunnel =3D netdev_priv(dev);
+> > >
+> > >       tunnel->dev =3D dev;
+> > > -     tunnel->net =3D dev_net(dev);
+> > > +     if (!tunnel->net)
+> > > +             tunnel->net =3D dev_net(dev);
+> >
+> > Same question as patch 5 for here and other parts.
+> > Do we need this check and assignment ?
+> >
+> > ip6gre_newlink_common
+> > -> nt->net =3D dev_net(dev)
+> > -> register_netdevice
+> >   -> ndo_init / ip6gre_tunnel_init()
+> >     -> ip6gre_tunnel_init_common
+> >       -> tunnel->net =3D dev_net(dev)
+>
+> Will remove this line.
 
-Convert common ip_tunnel_newlink() to accept an extra link netns
-argument. Don't overwrite ip_tunnel.net in ip_tunnel_init().
+However, fb tunnel of ip6_tunnel, ip6_vti and sit can have
+tunnel->net =3D=3D NULL here. Take ip6_tunnel for example:
 
-Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
----
- include/net/ip_tunnels.h |  5 +++--
- net/ipv4/ip_gre.c        |  8 +++++---
- net/ipv4/ip_tunnel.c     | 10 ++++++----
- net/ipv4/ip_vti.c        |  3 ++-
- net/ipv4/ipip.c          |  3 ++-
- 5 files changed, 18 insertions(+), 11 deletions(-)
+ip6_tnl_init_net()
+    -> ip6_fb_tnl_dev_init()
+    -> register_netdev()
+        -> register_netdevice()
+            -> ip6_tnl_dev_init()
 
-diff --git a/include/net/ip_tunnels.h b/include/net/ip_tunnels.h
-index 1aa31bdb2b31..ae1f2dda4533 100644
---- a/include/net/ip_tunnels.h
-+++ b/include/net/ip_tunnels.h
-@@ -406,8 +406,9 @@ int ip_tunnel_rcv(struct ip_tunnel *tunnel, struct sk_buff *skb,
- 		  bool log_ecn_error);
- int ip_tunnel_changelink(struct net_device *dev, struct nlattr *tb[],
- 			 struct ip_tunnel_parm_kern *p, __u32 fwmark);
--int ip_tunnel_newlink(struct net_device *dev, struct nlattr *tb[],
--		      struct ip_tunnel_parm_kern *p, __u32 fwmark);
-+int ip_tunnel_newlink(struct net *net, struct net_device *dev,
-+		      struct nlattr *tb[], struct ip_tunnel_parm_kern *p,
-+		      __u32 fwmark);
- void ip_tunnel_setup(struct net_device *dev, unsigned int net_id);
- 
- bool ip_tunnel_netlink_encap_parms(struct nlattr *data[],
-diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
-index 1fe9b13d351c..26d15f907551 100644
---- a/net/ipv4/ip_gre.c
-+++ b/net/ipv4/ip_gre.c
-@@ -1413,7 +1413,8 @@ static int ipgre_newlink(struct net_device *dev,
- 	err = ipgre_netlink_parms(dev, data, tb, &p, &fwmark);
- 	if (err < 0)
- 		return err;
--	return ip_tunnel_newlink(dev, tb, &p, fwmark);
-+	return ip_tunnel_newlink(params->link_net ? : dev_net(dev), dev, tb, &p,
-+				 fwmark);
- }
- 
- static int erspan_newlink(struct net_device *dev,
-@@ -1433,7 +1434,8 @@ static int erspan_newlink(struct net_device *dev,
- 	err = erspan_netlink_parms(dev, data, tb, &p, &fwmark);
- 	if (err)
- 		return err;
--	return ip_tunnel_newlink(dev, tb, &p, fwmark);
-+	return ip_tunnel_newlink(params->link_net ? : dev_net(dev), dev, tb, &p,
-+				 fwmark);
- }
- 
- static int ipgre_changelink(struct net_device *dev, struct nlattr *tb[],
-@@ -1701,7 +1703,7 @@ static struct rtnl_link_ops erspan_link_ops __read_mostly = {
- struct net_device *gretap_fb_dev_create(struct net *net, const char *name,
- 					u8 name_assign_type)
- {
--	struct rtnl_newlink_params params = { .net = net };
-+	struct rtnl_newlink_params params = { .src_net = net };
- 	struct nlattr *tb[IFLA_MAX + 1];
- 	struct net_device *dev;
- 	LIST_HEAD(list_kill);
-diff --git a/net/ipv4/ip_tunnel.c b/net/ipv4/ip_tunnel.c
-index 09b73acf037a..618a50d5c0c2 100644
---- a/net/ipv4/ip_tunnel.c
-+++ b/net/ipv4/ip_tunnel.c
-@@ -1213,11 +1213,11 @@ void ip_tunnel_delete_nets(struct list_head *net_list, unsigned int id,
- }
- EXPORT_SYMBOL_GPL(ip_tunnel_delete_nets);
- 
--int ip_tunnel_newlink(struct net_device *dev, struct nlattr *tb[],
--		      struct ip_tunnel_parm_kern *p, __u32 fwmark)
-+int ip_tunnel_newlink(struct net *net, struct net_device *dev,
-+		      struct nlattr *tb[], struct ip_tunnel_parm_kern *p,
-+		      __u32 fwmark)
- {
- 	struct ip_tunnel *nt;
--	struct net *net = dev_net(dev);
- 	struct ip_tunnel_net *itn;
- 	int mtu;
- 	int err;
-@@ -1326,7 +1326,9 @@ int ip_tunnel_init(struct net_device *dev)
- 	}
- 
- 	tunnel->dev = dev;
--	tunnel->net = dev_net(dev);
-+	if (!tunnel->net)
-+		tunnel->net = dev_net(dev);
-+
- 	strscpy(tunnel->parms.name, dev->name);
- 	iph->version		= 4;
- 	iph->ihl		= 5;
-diff --git a/net/ipv4/ip_vti.c b/net/ipv4/ip_vti.c
-index b901bee03e6d..159b4473290e 100644
---- a/net/ipv4/ip_vti.c
-+++ b/net/ipv4/ip_vti.c
-@@ -585,7 +585,8 @@ static int vti_newlink(struct net_device *dev,
- 	__u32 fwmark = 0;
- 
- 	vti_netlink_parms(data, &parms, &fwmark);
--	return ip_tunnel_newlink(dev, tb, &parms, fwmark);
-+	return ip_tunnel_newlink(params->link_net ? : dev_net(dev), dev, tb,
-+				 &parms, fwmark);
- }
- 
- static int vti_changelink(struct net_device *dev, struct nlattr *tb[],
-diff --git a/net/ipv4/ipip.c b/net/ipv4/ipip.c
-index a8b844bcfc64..bab0bf90c908 100644
---- a/net/ipv4/ipip.c
-+++ b/net/ipv4/ipip.c
-@@ -455,7 +455,8 @@ static int ipip_newlink(struct net_device *dev,
- 	}
- 
- 	ipip_netlink_parms(data, &p, &t->collect_md, &fwmark);
--	return ip_tunnel_newlink(dev, tb, &p, fwmark);
-+	return ip_tunnel_newlink(params->link_net ? : dev_net(dev), dev, tb, &p,
-+				 fwmark);
- }
- 
- static int ipip_changelink(struct net_device *dev, struct nlattr *tb[],
--- 
-2.48.1
-
+This code path (including ip6_fb_tnl_dev_init()) doesn't set
+tunnel->net. But for ip6_gre, ip6gre_fb_tunnel_init() does.
