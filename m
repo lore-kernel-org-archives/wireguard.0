@@ -4,63 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51F6FC54ED0
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 20 May 2025 23:11:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0548C54ED1
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 20 May 2025 23:11:31 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 30af7aff;
-	Tue, 20 May 2025 19:54:21 +0000 (UTC)
-Received: from smtpbgjp3.qq.com (smtpbgjp3.qq.com [54.92.39.34])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id bca5ab9e
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 13d2af78;
+	Tue, 20 May 2025 19:54:36 +0000 (UTC)
+Received: from smtp-fw-6001.amazon.com (smtp-fw-6001.amazon.com [52.95.48.154])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 52266b1f
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 7 Feb 2025 03:33:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
- s=onoh2408; t=1738899139;
- bh=HoKWwYr5Flu2cgUgqaZ/TV+1hwihy+b3dUE89jI9Cq4=;
- h=From:To:Subject:Date:Message-ID:MIME-Version;
- b=nbTteDYY9qmYG0b0NMvxjTWJmVzoH7Ex0l8POQw30Sh2G1itySvXrUKk1u9+4HlmB
- eiTNbn5oYtk8TvMm2Aa7tLTIzIFLVcD8oJksb65pYTdMNg3kLtabqZBgNdL1jV6bCL
- n6ygEm1BiT3nMv+qhV/hmr0jQr/UP//a1t58V3pY=
-X-QQ-mid: bizesmtpip2t1738899097t6pcqco
-X-QQ-Originating-IP: 9+v8GzvjcRVxj3/wxhEcn8FXY0lqalswqnLtMpkfjW0=
-Received: from localhost.localdomain ( [localhost])
- by bizesmtp.qq.com (ESMTP) with 
- id ; Fri, 07 Feb 2025 11:31:35 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 10689580007085991278
-From: WangYuli <wangyuli@uniontech.com>
-To: Jason@zx2c4.com,
-	shuah@kernel.org
-Cc: wangyuli@uniontech.com, horms@kernel.org, tglx@linutronix.de,
- jstultz@google.com, wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org,
- zhanjun@uniontech.com, guanwentao@uniontech.com, chenlinxuan@uniontech.com
-Subject: [PATCH v2] wireguard: selftests: Cleanup CONFIG_UBSAN_SANITIZE_ALL
-Date: Fri,  7 Feb 2025 11:31:31 +0800
-Message-ID: <2CCC5056FBF7DD72+20250207033131.20046-1-wangyuli@uniontech.com>
-X-Mailer: git-send-email 2.47.2
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 13 Feb 2025 07:05:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+ t=1739430356; x=1770966356;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=HIz1Atlqpi5tnoN7n4BPu3eHETPxx2TUlMkVpEwhuEo=;
+ b=Wwmobb+OeJaUnwvzC8qyWguE4ENhgecbc1e8iz9L0n9C76h5kFvEpdDH
+ SYd0Ywi2qVj5dKxFaku3Mx0qCjUjYYsBJ81ObmFxRbl54rX7HByfjZsAB
+ ePZmQ/KkI3OLtwLPTLi4elv/4AKdfU6d79ymo3OIODW7C3mIcqeXnDD0D k=;
+X-IronPort-AV: E=Sophos;i="6.13,282,1732579200"; d="scan'208";a="462133403"
+Received: from iad12-co-svc-p1-lb1-vlan2.amazon.com (HELO
+ smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.43.8.2])
+ by smtp-border-fw-6001.iad6.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Feb 2025 07:05:51 +0000
+Received: from EX19MTAUWC001.ant.amazon.com [10.0.7.35:18133]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.32.208:2525]
+ with esmtp (Farcaster)
+ id 044845a0-eb50-4d20-a33f-ef53eec55ed0; Thu, 13 Feb 2025 07:05:50 +0000 (UTC)
+X-Farcaster-Flow-ID: 044845a0-eb50-4d20-a33f-ef53eec55ed0
+Received: from EX19D004ANA001.ant.amazon.com (10.37.240.138) by
+ EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
+ Thu, 13 Feb 2025 07:05:50 +0000
+Received: from 6c7e67bfbae3.amazon.com (10.37.244.7) by
+ EX19D004ANA001.ant.amazon.com (10.37.240.138) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14;
+ Thu, 13 Feb 2025 07:05:42 +0000
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
+To: <shaw.leon@gmail.com>
+CC: <alex.aring@gmail.com>, <andrew+netdev@lunn.ch>,
+ <b.a.t.m.a.n@lists.open-mesh.org>, <bpf@vger.kernel.org>,
+ <bridge@lists.linux.dev>, <davem@davemloft.net>, <donald.hunter@gmail.com>,
+ <dsahern@kernel.org>, <edumazet@google.com>, <herbert@gondor.apana.org.au>,
+ <horms@kernel.org>, <kuba@kernel.org>, <kuniyu@amazon.com>,
+ <linux-can@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <linux-kselftest@vger.kernel.org>, <linux-ppp@vger.kernel.org>,
+ <linux-rdma@vger.kernel.org>, <linux-wireless@vger.kernel.org>,
+ <linux-wpan@vger.kernel.org>, <miquel.raynal@bootlin.com>,
+ <netdev@vger.kernel.org>, <osmocom-net-gprs@lists.osmocom.org>,
+ <pabeni@redhat.com>, <shuah@kernel.org>, <stefan@datenfreihafen.org>,
+ <steffen.klassert@secunet.com>, <wireguard@lists.zx2c4.com>
+Subject: Re: [PATCH net-next v9 06/11] net: ipv6: Use link netns in newlink()
+ of rtnl_link_ops
+Date: Thu, 13 Feb 2025 16:05:33 +0900
+Message-ID: <20250213070533.9926-1-kuniyu@amazon.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <20250210133002.883422-7-shaw.leon@gmail.com>
+References: <20250210133002.883422-7-shaw.leon@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: bizesmtpip:uniontech.com:qybglogicsvrgz:qybglogicsvrgz8a-1
-X-QQ-XMAILINFO: Odky5wNUcHo/uj5SfSwfuY2WuIGafpNqbRh05g7wplfkTkaAT/yGmohs
- /XY1Jj+mYC9K1Wgw5fk5syZLQcuo77ZZjspX7vvwy2TdjEfMdqdGG4yzMhpwNs0yZ7n9ZK+
- ZYZKpiG0EnvRLFYVD7hm7f52YxxxzNsV9IdxKLAkUb/xvSpLz1C9yim7KoHwhjYMqmfgf8H
- i19xlii2zXuSB2ZWm/XjBsmfei5C8Oltr813qAF9hKtT2Mj47uMjseLtyx0wXbqX57XgwPx
- fjxESRxaF9JYqC2e7AoWdbvRgvgc6jlW5JRjwQFayKV0cKBpAGAukJaTYYrJ4ezVsxBRJg2
- js/XMTN8qQ9lcHCPDYc2jALYO4vUMwrxez11jiOEPOpPBbql43pAhnFk/hO9bUuOHqdcycU
- Ng1BWtUoOjT3hfRmr/eSs41RIro52i08abikW0c29970bAmYyu6d0krLybGVRiDQ3zxMlZD
- xkEbWF3lsrvCml016Gw60f7Z7rtpu0L2VO2qai3C6hh+YIAFFcWbtSg+EUSC+O6Oinjn7Ml
- zE8lQDUDy07y8BObPT7A7cSf5LgL/Bml1K7mefEm7MzAOnV2fHsM3zhaI8ojIBfV0VigVt/
- Hml/Nm//Xm/kM2IckMB+K2yixFjpBTivdH0elxazxxl5AtzndCheTueADbvBzb6No6qaqAl
- 8gW4lSYgvyUkvwnh4OL6/Hq9FY/qaZ9G8fasZryDI+QZMTJgCPNaVgZjjtElAZ1QjBBUc9K
- 0zfTE7glEA6eBFX4PkIzAUJcdcC/az71rpOVojZBZLw9R92oSccVAibZwmazNMWs9dENzx9
- 7PihbzWjjcE+nuS0EKMbOv1xkp1ROvDh0H0ymcbzNvSoRxYmq4l7y+MBZ/g1DFBVdIRT40m
- Oi0rb9hMD6sAtajbqYfyX5WIp4Q4+aGjuQzMSPEji2ALiGevmDLWXH1613gzACqRbcJbyfy
- qgakdLo2+9py87dKTgDKomhPiP0SN469He0SEU55wu4LliYRQkVNECJE84uYcxvTDKRv0Xc
- ByilfdpRiF+u1Y1DHx
-X-QQ-XMRINFO: OWPUhxQsoeAVDbp3OJHYyFg=
-X-QQ-RECHKSPAM: 0
+Content-Type: text/plain
+X-Originating-IP: [10.37.244.7]
+X-ClientProxiedBy: EX19D035UWA002.ant.amazon.com (10.13.139.60) To
+ EX19D004ANA001.ant.amazon.com (10.37.240.138)
 X-Mailman-Approved-At: Tue, 20 May 2025 19:52:08 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -76,31 +83,41 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Commit 918327e9b7ff ("ubsan: Remove CONFIG_UBSAN_SANITIZE_ALL")
-removed the CONFIG_UBSAN_SANITIZE_ALL configuration option.
-Eliminate invalid configurations to improve code readability.
+From: Xiao Liang <shaw.leon@gmail.com>
+Date: Mon, 10 Feb 2025 21:29:57 +0800
+> When link_net is set, use it as link netns instead of dev_net(). This
+> prepares for rtnetlink core to create device in target netns directly,
+> in which case the two namespaces may be different.
+> 
+> Set correct netns in priv before registering device, and avoid
+> overwriting it in ndo_init() path.
+> 
+> Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
+> ---
+>  net/ipv6/ip6_gre.c    | 20 ++++++++++----------
+>  net/ipv6/ip6_tunnel.c | 13 ++++++++-----
+>  net/ipv6/ip6_vti.c    | 10 ++++++----
+>  net/ipv6/sit.c        | 11 +++++++----
+>  4 files changed, 31 insertions(+), 23 deletions(-)
+> 
+> diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
+> index 863852abe8ea..108600dc716f 100644
+> --- a/net/ipv6/ip6_gre.c
+> +++ b/net/ipv6/ip6_gre.c
+> @@ -1498,7 +1498,8 @@ static int ip6gre_tunnel_init_common(struct net_device *dev)
+>  	tunnel = netdev_priv(dev);
+>  
+>  	tunnel->dev = dev;
+> -	tunnel->net = dev_net(dev);
+> +	if (!tunnel->net)
+> +		tunnel->net = dev_net(dev);
 
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
----
-Changelog:
- *v1->v2: Add Simon Horman's "Reviewed-by" tag.
----
- tools/testing/selftests/wireguard/qemu/debug.config | 1 -
- 1 file changed, 1 deletion(-)
+Same question as patch 5 for here and other parts.
+Do we need this check and assignment ?
 
-diff --git a/tools/testing/selftests/wireguard/qemu/debug.config b/tools/testing/selftests/wireguard/qemu/debug.config
-index 139fd9aa8b12..828f14300d0a 100644
---- a/tools/testing/selftests/wireguard/qemu/debug.config
-+++ b/tools/testing/selftests/wireguard/qemu/debug.config
-@@ -22,7 +22,6 @@ CONFIG_HAVE_ARCH_KASAN=y
- CONFIG_KASAN=y
- CONFIG_KASAN_INLINE=y
- CONFIG_UBSAN=y
--CONFIG_UBSAN_SANITIZE_ALL=y
- CONFIG_DEBUG_KMEMLEAK=y
- CONFIG_DEBUG_STACK_USAGE=y
- CONFIG_DEBUG_SHIRQ=y
--- 
-2.47.2
-
+ip6gre_newlink_common
+-> nt->net = dev_net(dev)
+-> register_netdevice
+  -> ndo_init / ip6gre_tunnel_init()
+    -> ip6gre_tunnel_init_common
+      -> tunnel->net = dev_net(dev)
