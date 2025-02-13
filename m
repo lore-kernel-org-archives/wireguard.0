@@ -4,72 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1A6AC54E92
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 09:18:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D403C2D0CD
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 09:18:09 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 994e8f5b;
-	Tue, 20 May 2025 19:54:26 +0000 (UTC)
-Received: from smtp-fw-80008.amazon.com (smtp-fw-80008.amazon.com
- [99.78.197.219])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id babc5162
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 416dfd06;
+	Tue, 20 May 2025 19:40:47 +0000 (UTC)
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com
+ [2a00:1450:4864:20::331])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4a40d080
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 13 Feb 2025 06:20:52 +0000 (UTC)
+ Thu, 13 Feb 2025 08:36:41 +0000 (UTC)
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4395dddb07dso6278815e9.2
+ for <wireguard@lists.zx2c4.com>; Thu, 13 Feb 2025 00:36:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
- t=1739427652; x=1770963652;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=y0qqspgyXFQAiVZhV1is4ipJluGgHz+aCeCybrjLYs8=;
- b=hgy3QJplzrbRkfGAbiL4qIhxugyJsSMQoAcGoaRyMzHQxgF/FVBebzjS
- oSQuyS7kfguBO00zlg5T7TBQ3CyWEcZ2ZdV6WpNhDxunzHySWUqkg0tdv
- sIKasF859HJ7LmEqJpl2hUDYMGDoLVihvRWicEDMUJfi51ri7U1fQ2Dcf A=;
-X-IronPort-AV: E=Sophos;i="6.13,282,1732579200"; d="scan'208";a="169268254"
-Received: from pdx4-co-svc-p1-lb2-vlan3.amazon.com (HELO
- smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.25.36.214])
- by smtp-border-fw-80008.pdx80.corp.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Feb 2025 06:20:49 +0000
-Received: from EX19MTAUWA001.ant.amazon.com [10.0.21.151:11164]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.32.208:2525]
- with esmtp (Farcaster)
- id 6c86040e-10d2-4a2e-98fc-c45ba71a877d; Thu, 13 Feb 2025 06:20:48 +0000 (UTC)
-X-Farcaster-Flow-ID: 6c86040e-10d2-4a2e-98fc-c45ba71a877d
-Received: from EX19D004ANA001.ant.amazon.com (10.37.240.138) by
- EX19MTAUWA001.ant.amazon.com (10.250.64.204) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
- Thu, 13 Feb 2025 06:20:48 +0000
-Received: from 6c7e67bfbae3.amazon.com (10.37.244.7) by
- EX19D004ANA001.ant.amazon.com (10.37.240.138) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14;
- Thu, 13 Feb 2025 06:20:40 +0000
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
-To: <shaw.leon@gmail.com>
-CC: <alex.aring@gmail.com>, <andrew+netdev@lunn.ch>,
- <b.a.t.m.a.n@lists.open-mesh.org>, <bpf@vger.kernel.org>,
- <bridge@lists.linux.dev>, <davem@davemloft.net>, <donald.hunter@gmail.com>,
- <dsahern@kernel.org>, <edumazet@google.com>, <herbert@gondor.apana.org.au>,
- <horms@kernel.org>, <kuba@kernel.org>, <kuniyu@amazon.com>,
- <linux-can@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-kselftest@vger.kernel.org>, <linux-ppp@vger.kernel.org>,
- <linux-rdma@vger.kernel.org>, <linux-wireless@vger.kernel.org>,
- <linux-wpan@vger.kernel.org>, <miquel.raynal@bootlin.com>,
- <netdev@vger.kernel.org>, <osmocom-net-gprs@lists.osmocom.org>,
- <pabeni@redhat.com>, <shuah@kernel.org>, <stefan@datenfreihafen.org>,
- <steffen.klassert@secunet.com>, <wireguard@lists.zx2c4.com>
-Subject: Re: [PATCH net-next v9 05/11] net: ip_tunnel: Use link netns in
- newlink() of rtnl_link_ops
-Date: Thu, 13 Feb 2025 15:20:31 +0900
-Message-ID: <20250213062031.4547-1-kuniyu@amazon.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250210133002.883422-6-shaw.leon@gmail.com>
-References: <20250210133002.883422-6-shaw.leon@gmail.com>
+ d=gmail.com; s=20230601; t=1739435800; x=1740040600; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lEMTU9K2wwIY9JpwBI5RzgY3pZNF2c520syU90CJZKI=;
+ b=ZrvBXdD9DWlK3RHelpoyv/mcxp3hDqzbEJe3Cj9jPSuIutKtQdwpgG8DoH2uPwLs8R
+ t/7X5FY6w7+Hpej6zTTz9CzBKWwVFToSHgln/isZIL6AqXp/TBIGmes2MUyM0E+f0QGJ
+ 47vfyjvfiumPsUi88wccGqCoCeAev1s/xdhy8YR1geYsgpoKpBFk5Y058Haq1+1ej9wB
+ RTRbdSILFp0EDX9UYAblT+15/1IhFvHjnpM81haEtcSjPhLtP3UNsJ+e8BY4Hsqtj+yj
+ Irr5sVECakZisRDiWPnWH9dDQFkgTmxh7F2uVysaysbqz20r7DPsQi/50e3GhFT+8ymi
+ Vbqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1739435800; x=1740040600;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=lEMTU9K2wwIY9JpwBI5RzgY3pZNF2c520syU90CJZKI=;
+ b=nNmIuFi6fsMXp12xhVumPAqwl0c/Jy/4TGbb6wTXBEpRWxiEAy43n12bGLN3IZ8Twr
+ e5/RPFSJ65Zeg8SnH3fScstAPKjslaFbVljo3QqbPrda3vlEPcMOcvGxEAe1daNvcD1E
+ 1fYTu3CcHp8vPsuR5B79g9mD3ysHbileMwoVY4fLS/3ffjSDLY48y2M1rzkRWrgEr2Ec
+ aQymFfFCiUB8Nbz0seJTPnJdOpBajYwW2f/O2R8Ng6fjEjh0sBpnWn2fZTLsyUAJQJmv
+ xYDFpR8sldjRIQi23GuURbG9XVo5lTg2Ft4KAmPWnXvpP0O4UyZLCK2E9oTxQ/w3SOhZ
+ 7zfg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUdC9j8gttuNQvzEHxZmY5mYZWifWmZlrsLc+zEbeTZIcpa0WjFjIeaTjk6LE5ksK5BfOHVp1W4QOA=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YyWbmkm5kXxTEGpK3BIHIIH81mQ4YvKkdYXPRvxXtNuqc/UF1os
+ q7N5NOn1gQS2EwaHq66uedge1J9Cl4FjcTUbcE41V1nZcYl3l205+KFNJWDIH6ZgwcjSW77xVGG
+ ORfQgEBO+cXxQ3h1qJk0thav/5E4=
+X-Gm-Gg: ASbGnct5Qe8LbA+ZBvT36V8LwlQm3aPmb8NLI9S+V/zUvasgMFBmftxjqGpvLfy9lW+
+ i7pQ2mmiiBx1w7cgTK5KuqAPY7UWOp6DeXO0sgNcvuADY6JC+g84OVTXp87Ml68fRwSBv17k=
+X-Google-Smtp-Source: AGHT+IEezeJ/RlI8/fvqsCpwdXF55uEWmtOYc3P4zBx3ojP1z2I7SGCdQ1/EUaOR3dd1EY2OITuGZF4nnmEaOHg8QZ0=
+X-Received: by 2002:a05:600c:19c8:b0:439:55fc:81a9 with SMTP id
+ 5b1f17b1804b1-4395816f13dmr68016965e9.7.1739435800139; Thu, 13 Feb 2025
+ 00:36:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.37.244.7]
-X-ClientProxiedBy: EX19D040UWB002.ant.amazon.com (10.13.138.89) To
- EX19D004ANA001.ant.amazon.com (10.37.240.138)
-X-Mailman-Approved-At: Tue, 20 May 2025 19:52:08 +0000
+References: <20250210133002.883422-3-shaw.leon@gmail.com>
+ <20250213065348.8507-1-kuniyu@amazon.com>
+In-Reply-To: <20250213065348.8507-1-kuniyu@amazon.com>
+From: Xiao Liang <shaw.leon@gmail.com>
+Date: Thu, 13 Feb 2025 16:36:02 +0800
+X-Gm-Features: AWEUYZncbGUNO7oNcYsuGlVcwlKbEKWZpPvVt5uCQTeloMATtiMLOZ95K2VoEX4
+Message-ID: <CABAhCOTw+CpiwwRGNtDS3gntTQe7XESNzzi6RXd9ju1xO_a5Hw@mail.gmail.com>
+Subject: Re: [PATCH net-next v9 02/11] rtnetlink: Pack newlink() params into
+ struct
+To: Kuniyuki Iwashima <kuniyu@amazon.com>
+Cc: alex.aring@gmail.com, andrew+netdev@lunn.ch, 
+ b.a.t.m.a.n@lists.open-mesh.org, bpf@vger.kernel.org, bridge@lists.linux.dev, 
+ davem@davemloft.net, donald.hunter@gmail.com, dsahern@kernel.org, 
+ edumazet@google.com, herbert@gondor.apana.org.au, horms@kernel.org, 
+ kuba@kernel.org, linux-can@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-kselftest@vger.kernel.org, linux-ppp@vger.kernel.org, 
+ linux-rdma@vger.kernel.org, linux-wireless@vger.kernel.org, 
+ linux-wpan@vger.kernel.org, miquel.raynal@bootlin.com, netdev@vger.kernel.org, 
+ osmocom-net-gprs@lists.osmocom.org, pabeni@redhat.com, shuah@kernel.org, 
+ stefan@datenfreihafen.org, steffen.klassert@secunet.com, 
+ wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -84,72 +91,98 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-From: Xiao Liang <shaw.leon@gmail.com>
-Date: Mon, 10 Feb 2025 21:29:56 +0800
-> When link_net is set, use it as link netns instead of dev_net(). This
-> prepares for rtnetlink core to create device in target netns directly,
-> in which case the two namespaces may be different.
-> 
-> Convert common ip_tunnel_newlink() to accept an extra link netns
-> argument. Don't overwrite ip_tunnel.net in ip_tunnel_init().
-
-Why... ?  see a comment below.
-
-
+On Thu, Feb 13, 2025 at 2:54=E2=80=AFPM Kuniyuki Iwashima <kuniyu@amazon.co=
+m> wrote:
+>
 [...]
-> diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
-> index 1fe9b13d351c..26d15f907551 100644
-> --- a/net/ipv4/ip_gre.c
-> +++ b/net/ipv4/ip_gre.c
-> @@ -1413,7 +1413,8 @@ static int ipgre_newlink(struct net_device *dev,
->  	err = ipgre_netlink_parms(dev, data, tb, &p, &fwmark);
->  	if (err < 0)
->  		return err;
-> -	return ip_tunnel_newlink(dev, tb, &p, fwmark);
-> +	return ip_tunnel_newlink(params->link_net ? : dev_net(dev), dev, tb, &p,
+> > diff --git a/include/linux/if_macvlan.h b/include/linux/if_macvlan.h
+> > index 523025106a64..0f7281e3e448 100644
+> > --- a/include/linux/if_macvlan.h
+> > +++ b/include/linux/if_macvlan.h
+> > @@ -59,8 +59,10 @@ static inline void macvlan_count_rx(const struct mac=
+vlan_dev *vlan,
+> >
+> >  extern void macvlan_common_setup(struct net_device *dev);
+> >
+> > -extern int macvlan_common_newlink(struct net *src_net, struct net_devi=
+ce *dev,
+> > -                               struct nlattr *tb[], struct nlattr *dat=
+a[],
+> > +struct rtnl_newlink_params;
+>
+> You can just include <net/rtnetlink.h> and remove it from .c
+> files, then this forward declaration will be unnecessary.
 
-This is duplicate at all call sites, let's move it into
-ip_tunnel_newlink() by passing params.
+OK. Was not sure if it's desirable to include include/net files from
+include/linux.
 
+>
+>
+> > +
+> > +extern int macvlan_common_newlink(struct net_device *dev,
+> > +                               struct rtnl_newlink_params *params,
+> >                                 struct netlink_ext_ack *extack);
+> >
+> >  extern void macvlan_dellink(struct net_device *dev, struct list_head *=
+head);
+>
+>
+> [...]
+> > diff --git a/include/net/rtnetlink.h b/include/net/rtnetlink.h
+> > index bc0069a8b6ea..00c086ca0c11 100644
+> > --- a/include/net/rtnetlink.h
+> > +++ b/include/net/rtnetlink.h
+> > @@ -69,6 +69,42 @@ static inline int rtnl_msg_family(const struct nlmsg=
+hdr *nlh)
+> >               return AF_UNSPEC;
+> >  }
+> >
+> > +/**
+> > + *   struct rtnl_newlink_params - parameters of rtnl_link_ops::newlink=
+()
+>
+> The '\t' after '*' should be single '\s'.
+>
+> Same for lines below.
+>
 
-> +				 fwmark);
->  }
->  
->  static int erspan_newlink(struct net_device *dev,
-> 
-> 
-> diff --git a/net/ipv4/ip_tunnel.c b/net/ipv4/ip_tunnel.c
-> index 09b73acf037a..618a50d5c0c2 100644
-> --- a/net/ipv4/ip_tunnel.c
-> +++ b/net/ipv4/ip_tunnel.c
-> @@ -1213,11 +1213,11 @@ void ip_tunnel_delete_nets(struct list_head *net_list, unsigned int id,
->  }
->  EXPORT_SYMBOL_GPL(ip_tunnel_delete_nets);
->  
-> -int ip_tunnel_newlink(struct net_device *dev, struct nlattr *tb[],
-> -		      struct ip_tunnel_parm_kern *p, __u32 fwmark)
-> +int ip_tunnel_newlink(struct net *net, struct net_device *dev,
-> +		      struct nlattr *tb[], struct ip_tunnel_parm_kern *p,
-> +		      __u32 fwmark)
->  {
->  	struct ip_tunnel *nt;
-> -	struct net *net = dev_net(dev);
->  	struct ip_tunnel_net *itn;
->  	int mtu;
->  	int err;
-> @@ -1326,7 +1326,9 @@ int ip_tunnel_init(struct net_device *dev)
->  	}
->  
->  	tunnel->dev = dev;
-> -	tunnel->net = dev_net(dev);
-> +	if (!tunnel->net)
-> +		tunnel->net = dev_net(dev);
+This is copied from other structs in the same file. Should I change it?
 
-Isn't tunnel->net always non-NULL ?
+>
+> > + *
+> > + *   @net: Netns of interest
+> > + *   @src_net: Source netns of rtnetlink socket
+> > + *   @link_net: Link netns by IFLA_LINK_NETNSID, NULL if not specified
+> > + *   @peer_net: Peer netns
+> > + *   @tb: IFLA_* attributes
+> > + *   @data: IFLA_INFO_DATA attributes
+> > + */
+> > +struct rtnl_newlink_params {
+>
+> [...]
+> > +/* Get effective link netns from newlink params. Generally, this is li=
+nk_net
+> > + * and falls back to src_net. But for compatibility, a driver may * ch=
+oose to
+> > + * use dev_net(dev) instead.
+> > + */
+> > +static inline struct net *rtnl_newlink_link_net(struct rtnl_newlink_pa=
+rams *p)
+> > +{
+> > +     return p->link_net ? : p->src_net;
+> > +}
+> > +
+> > +/* Get peer netns from newlink params. Fallback to link netns if peer =
+netns is
+> > + * not specified explicitly.
+> > + */
+> > +static inline struct net *rtnl_newlink_peer_net(struct rtnl_newlink_pa=
+rams *p)
+> > +{
+> > +     return p->peer_net ? : rtnl_newlink_link_net(p);
+> > +}
+>
+> These helpers should belong to patch 2 ?
 
-ip_tunnel_newlink
--> netdev_priv(dev)->net = net
--> register_netdevice(dev)
-  -> dev->netdev_ops->ndo_init(dev)
-    -> ip_tunnel_init(dev)
-      -> netdev_priv(dev)->net = dev_net(dev)
+I was trying to split API and driver changes. Can move this to
+next patch if it's better.
