@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22107C54ED0
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 09:18:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08D84C54E92
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 09:18:18 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c897a373;
-	Tue, 20 May 2025 19:37:52 +0000 (UTC)
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com
- [2607:f8b0:4864:20::62d])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1e3b8c0d
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fc6b1dc6;
+	Tue, 20 May 2025 19:54:44 +0000 (UTC)
+Received: from fhigh-b6-smtp.messagingengine.com
+ (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d30fc49a
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 6 Jan 2025 08:10:59 +0000 (UTC)
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2163b0c09afso198352975ad.0
- for <wireguard@lists.zx2c4.com>; Mon, 06 Jan 2025 00:10:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1736151058; x=1736755858; darn=lists.zx2c4.com;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=UNj5EB3CBzzHNe2564u4Vg3r3GIGTo09F7r1zlnGu1M=;
- b=VAgD4Hk08lvcF9S+UW/3yBPZMlEK7D1yBFyw7VczeMsVlPyGy/+d/D0B67tfAOXOjh
- UZSGMKaWUH5DOSXBqDyJpZhHQa7EuXtS+Yc8jBQHeumxaxfObbC5vVVF5YKgy+mL9Z7G
- ruioX7kWfA/BtvbwvVUNhoVrz1uLTxWVbtN1qpM2LH59O9YR5GwvkfPIs5nJvzXWuzr+
- /m/EcGPObnl7YSxrAnDMUQOAUDY1+Hm+olZE3FgdGxCvrhsGlOclBO1QEoB73yElVNFp
- IxOiCiwXtas7d7YzTG8K+FghFv7sInEexjU09etxf24cDCRorLjv7hJKwMsK9lRePU/6
- 7sbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1736151058; x=1736755858;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=UNj5EB3CBzzHNe2564u4Vg3r3GIGTo09F7r1zlnGu1M=;
- b=kuQ//7EWAYheUC42jtWTeJ32hc7L8e7Db3d3nEShN5rsVOiuy3OCpSQnBVGwQDpEpw
- SeHppPWGAee0diO/elEIYKl7hGhtXR5QSAr2zzLS3Z14HRagmZHESlfWSpIl+3/4YZON
- 4bnMGcB4K+FfqZAKGoJ+fH6mreYlx6D/aIBsCaru8VwHcDxuOwRnYSla4RgcUJCkgmRH
- LMvU/lc5/lJqx+vewKPvjqcvXbuKXk84vNUrWps5+gOYP0GHRs4m13FzEgApdR2P/q4e
- 9uQrwdgEEhcG4LMyr+E1wfpyUtmoutzLTi8OHNJS87u6Tbgq/xbfOWqMIByZVS01HkbO
- bKdQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW3nQwHjeAuWvhexrZtGBUO2elwbGeMpYpOrH32ZkUpNT5xzKFY1AGiIhUyRTzmrsQynQpRBZ0EJfg=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YzTYS0DaBJsAlmBzoOaJFnenj1nL931iw+oW16m04BH05V2dsKs
- gmHGUzEiIs4CKQ4LVOIj09SO1qcxw+6AdkbfFMBHwP4H473YHhcl
-X-Gm-Gg: ASbGncsKmJWrR8vyAhWonnaNS2tYCpxdlOMH6abj7uE/BGEjvh58K5SNc5424dtSGpQ
- QXsZjlBA/ZcKHiVPC2n+QaiPfTmM63TgX1X4DTtW1FrtmuKR51GZuR7YlhrMwhTUnC4gkUMRB2l
- nsqq+sLCOuD2j7yNuU7J0jV72NLWx1egx/6WHb4xqILu1rYELNnBt6es190nfjeHA8rVH2pJn0R
- zF57ij+hJI7rlimta0CNyFpJEza5vC/hpo5h9dR+kQN/q3E8EeUuDCb7Zd4OyTJiPADpM3H/Cos
-X-Google-Smtp-Source: AGHT+IHjMYJ+kYgL9lIpddes5A+CsRLnuYBEZZhoqovTAHBKAqmupPfBM7y9cycXTJ4TnPKyShex5Q==
-X-Received: by 2002:a05:6a21:3189:b0:1e1:ab8b:dda1 with SMTP id
- adf61e73a8af0-1e5e080c4a3mr6061674637.35.1736151057881; 
- Mon, 06 Jan 2025 00:10:57 -0800 (PST)
-Received: from fedora.dns.podman ([43.228.180.230])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad835469sm31910429b3a.60.2025.01.06.00.10.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 06 Jan 2025 00:10:57 -0800 (PST)
-From: Hangbin Liu <liuhangbin@gmail.com>
-To: netdev@vger.kernel.org
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, Jakub Kicinski <kuba@kernel.org>,
- Shuah Khan <shuah@kernel.org>, "David S. Miller" <davem@davemloft.net>,
- Simon Horman <horms@kernel.org>, Phil Sutter <phil@nwl.cc>,
- Florian Westphal <fw@strlen.de>, Petr Mladek <pmladek@suse.com>,
- Yoann Congal <yoann.congal@smile.fr>, wireguard@lists.zx2c4.com,
- bpf@vger.kernel.org, linux-kselftest@vger.kernel.org,
- linux-kernel@vger.kernel.org, Hangbin Liu <liuhangbin@gmail.com>
-Subject: [PATCHv4 RESEND net-next 0/2] selftests: wireguards: use nftables for
- testing
-Date: Mon,  6 Jan 2025 08:10:41 +0000
-Message-ID: <20250106081043.2073169-1-liuhangbin@gmail.com>
-X-Mailer: git-send-email 2.46.0
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 16 Feb 2025 22:51:09 +0000 (UTC)
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal
+ [10.202.2.42])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 810862540172
+ for <wireguard@lists.zx2c4.com>; Sun, 16 Feb 2025 17:51:07 -0500 (EST)
+Received: from phl-imap-13 ([10.202.2.103])
+ by phl-compute-02.internal (MEProxy); Sun, 16 Feb 2025 17:51:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=eizinger.io; h=
+ cc:content-transfer-encoding:content-type:content-type:date:date
+ :from:from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to; s=fm3; t=1739746267; x=1739832667; bh=2WMizP00uf
+ lSMmkU7mF27Kvs4UxwxG0DyqJ0P8VSQu0=; b=qVB28UygiSGoiHhS7peNZM1Njh
+ SMW0VHHeUMonj38FLhzKMUEouZtGofcYPeYk+LSc2gZdJn13HVOCI6lQRTwjBLG5
+ 5zhjfzng90hUUpyQDYP3V/PaXKhW/jgMrWx7JICBKTp7P8HHk0JEmngPloJtLe4e
+ OUqJHU9rFjq8+jaJqCteqp1epbUvmv1F+inSYCTUzq5pF9Xj9aAq5/DdDBdNNseC
+ RsHCkPJSyQJ4LdavSzVRtf/JijJCwFd3rpwe+Q1B4XzpVZ9leDRP4SMkezuF171G
+ xn3y1KcASIuDZZq1ceP50Hapr/aBE/44uv1I8Vv7NcADO1IvWVJpBnOmAA9Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-transfer-encoding:content-type
+ :content-type:date:date:feedback-id:feedback-id:from:from
+ :in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+ 1739746267; x=1739832667; bh=2WMizP00uflSMmkU7mF27Kvs4UxwxG0DyqJ
+ 0P8VSQu0=; b=ZkpiSdYf0Qk+G1fbZhH1S0hRtaB/rpg2SggQL4LTXmRPKi+t4Fb
+ ui4ZqiXErg0T64oE5gTSeH6XiCJNk5Yk0nlQnwgwhmcohsGKQpU1wzBrdyMeDttx
+ /iLuRu7f7yk0iJ8z/w2XvwogGHxkojYGoAubU+nfyirQ70Ijq1/BCsHvQNOgcfp1
+ 15R3XBR5TodCSkn0W5PQU0D4mWC9hSasAwnaBwiZvSXJM4KE+vlMeo/QPlsl8pby
+ 0m1Kcg8brThkjVOtr2sT5J8nDa0t8x+vZO4KoMlTb22rGtD4h83BvxWt7FxlIvuy
+ 7FNKwDR287IiCPcwaKU5YoO+x6jXpjZ0ogQ==
+X-ME-Sender: <xms:2muyZ_RPxyoPRl8jv89fRWbJrHqLwuFK3KOG05CsbBXH7SrLfgivlg>
+ <xme:2muyZwxfmN2Qy_GnGJZaiEqqTE3nwf2-7-MRU_ruHBRG55HjT4cBoti1ckVg2YvVi
+ 91yUvgMy2U1NQ33Mh4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdehieejfecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+ uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepofggff
+ fhvffkufgtgfesthejredtredttdenucfhrhhomhepfdfvhhhomhgrshcugfhiiihinhhg
+ vghrfdcuoehthhhomhgrshesvghiiihinhhgvghrrdhioheqnecuggftrfgrthhtvghrnh
+ eptefghedvhefgfedvvdegfeeiheduheejjeethefgkefhvdetieevkefgueekgfeunecu
+ ffhomhgrihhnpeiigidvtgegrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+ hrrghmpehmrghilhhfrhhomhepthhhohhmrghssegvihiiihhnghgvrhdrihhopdhnsggp
+ rhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeifihhrvghguh
+ grrhgusehlihhsthhsrdiigidvtgegrdgtohhm
+X-ME-Proxy: <xmx:2muyZ02YtT1jbCjp8K6ZWwF1l53p8pw3Okg3SGH1HxS1kzs1Z5nV6Q>
+ <xmx:2muyZ_ByBt8mK3atABozxvrTwRiqQdKPvPp6PbJgfbiZIEqYGFpf1g>
+ <xmx:2muyZ4hUhhIF8qa3DSLEkBefrnxjrUCubkC1ZMmeXymFuXhv8B8XWg>
+ <xmx:2muyZzrKavEgEaRalvGF9Z4vGDdyLV5TIKhEvFPXzINTYFyiu4FPyA>
+ <xmx:22uyZwKSbrw8Oy9xK93XmgtJX1tedtKwiJwBFTItaJMsl2VCzWSfIw_1>
+Feedback-ID: i89514918:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+ id C8CD51F00072; Sun, 16 Feb 2025 17:51:06 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Date: Mon, 17 Feb 2025 09:50:33 +1100
+From: "Thomas Eizinger" <thomas@eizinger.io>
+To: wireguard@lists.zx2c4.com
+Message-Id: <3026a6c9-ee83-43b4-97a1-0904d85b8ad7@app.fastmail.com>
+Subject: Race-condition when removing instance of WinTUN adapter?
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-Mailman-Approved-At: Tue, 20 May 2025 19:52:08 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -87,22 +88,29 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This patch set convert iptables to nftables for wireguard testing, as
-iptables is deparated and nftables is the default framework of most releases.
+Hello!
 
-v3: drop iptables directly (Jason A. Donenfeld)
-    Also convert to using nft for qemu testing (Jason A. Donenfeld)
-v2: use one nft table for testing (Phil Sutter)
+We are receiving variations of the following errors on multiple Windows machines from customers. The UUID is what we are setting as the tunnel adapter ID.
 
-Hangbin Liu (2):
-  selftests: wireguards: convert iptables to nft
-  selftests: wireguard: update to using nft for qemu test
+```
+Spawning native process to remove instance
+Error executing worker process: "SWD\WINTUN\{E9245BC1-B8C1-44CA-AB1D-C6AAD4F13B9C}": The system cannot find the path specified. (Code 0x00000003)
+```
 
- tools/testing/selftests/wireguard/netns.sh    | 29 +++++++++-----
- .../testing/selftests/wireguard/qemu/Makefile | 40 ++++++++++++++-----
- .../selftests/wireguard/qemu/kernel.config    |  7 ++--
- 3 files changed, 53 insertions(+), 23 deletions(-)
+and
 
--- 
-2.46.0
+```
+Spawning native process to remove instance
+Failed to create process: rundll32 "C:\Windows\Temp\ab11b60bba2fb3bcc9a355e9e3a89003522ede647bc6c00704e734a8447c1ce5\setupapihost.dll",RemoveInstance "SWD\WINTUN\{E9245BC1-B8C1-44CA-AB1D-C6AAD4F13B9C}": Het systeem kan het opgegeven pad niet vinden. (Code 0x00000003)
+```
 
+(Error message here is Dutch because that particular customer is in the Netherlands. It means "The system cannot find the path specified")
+
+From reading the source code at [0], I suspect that this is "only" a race condition where the adapter is simply no longer present at the time we want to remove it? I am not very well versed at C code which is why I figured I'd ask here before attempting to patch the code. Would it make sense to add a check for this particular error code and not fail as a result, making the function idempotent?
+
+Any insight is much appreciated.
+
+Kind regards,
+Thomas Eizinger
+
+[0]: https://git.zx2c4.com/wintun/tree/api/rundll32.c#n160
