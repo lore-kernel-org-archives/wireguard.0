@@ -4,61 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E125C54E65
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 09:18:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0192BC54E92
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 09:18:05 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 39c3cfbf;
-	Tue, 20 May 2025 23:00:23 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org
- [2604:1380:4641:c500::1])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ff63752f
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ea056ad0;
+	Tue, 20 May 2025 19:54:57 +0000 (UTC)
+Received: from smtp-fw-9102.amazon.com (smtp-fw-9102.amazon.com
+ [207.171.184.29])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 79cf9f6a
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 20 May 2025 22:59:46 +0000 (UTC)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id B65595C5675
- for <wireguard@lists.zx2c4.com>; Tue, 20 May 2025 22:57:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8E5C4CEEF
- for <wireguard@lists.zx2c4.com>; Tue, 20 May 2025 22:59:44 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="h3Hs/8/q"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1747781982;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=gWpDt/rwNM/nig7k6lt+szP4lNhhSqQ0Y3OUIZSEPzM=;
- b=h3Hs/8/qexJXzoocs5pdVf2FUOdTnYcL4sw/+oB5VSPg2pwS3RyBL7INqQeBOIv4FGG5Cy
- 01Y2XAao2cXqegAPZVmUYrZOLMFDR/FPBhH0WniqCr6Bdr8hdHlFpgr8CfugV32RfbnQqW
- AsvMuPoD2pUGv0kiUjwiePXJUBBcBBU=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 30e431c3
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 20 May 2025 22:59:42 +0000 (UTC)
-Received: by mail-oi1-f169.google.com with SMTP id
- 5614622812f47-40337dd3847so4287826b6e.0
- for <wireguard@lists.zx2c4.com>; Tue, 20 May 2025 15:59:42 -0700 (PDT)
-X-Gm-Message-State: AOJu0YyHfsXnseHxumMqYYDncpilqlEoaup1lpBwIeiuylcLmTf8+spj
- pXDUf2ys+p6Zny5JUpsgv/r/ZxsTN2QY/pZiS9NRr+QwWYPEGSkY9gOHcS8Dhny4cAms4LcPgyr
- reJsuGjD2O+wzhB/RQza8aWzWuXlYUDQ=
-X-Google-Smtp-Source: AGHT+IHNjjRmUw8IqnOOXMKDB+fdR31hvX7EyCcrH/ReMoIR8rY7PYF9de/2fj/yEoK59YnMRUutLhySUOCxrONXAUQ=
-X-Received: by 2002:a05:6808:83ae:b0:3f8:1df6:40f with SMTP id
- 5614622812f47-404da72460fmr8470673b6e.15.1747781981726; Tue, 20 May 2025
- 15:59:41 -0700 (PDT)
+ Fri, 21 Feb 2025 04:09:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+ t=1740110964; x=1771646964;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=M3R4jgVzCNPLBzNuXpXuKMyO2gDw390ime/+zg7mysY=;
+ b=nvNbm91e0k4fDhzlvob9sAvB5i1Uhw6YGhOdQ0IZy8seQ5EMolOXJlfI
+ ed2zxWNxQhEkms82hCKsl7lRUcwFTx4ljAqNf+AIJjrCOaKzQYU9QXIhK
+ CYgpkV4vCtuaovKnP5jUB3dkaQXG+Pgwv//O68PfMRARn009RTrzynN/G E=;
+X-IronPort-AV: E=Sophos;i="6.13,303,1732579200"; d="scan'208";a="495807538"
+Received: from pdx4-co-svc-p1-lb2-vlan3.amazon.com (HELO
+ smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.25.36.214])
+ by smtp-border-fw-9102.sea19.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Feb 2025 04:09:13 +0000
+Received: from EX19MTAUWB002.ant.amazon.com [10.0.7.35:23369]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.18.32:2525]
+ with esmtp (Farcaster)
+ id c0ba83e4-397a-4153-a293-f9b3f392ec9f; Fri, 21 Feb 2025 04:09:12 +0000 (UTC)
+X-Farcaster-Flow-ID: c0ba83e4-397a-4153-a293-f9b3f392ec9f
+Received: from EX19D004ANA001.ant.amazon.com (10.37.240.138) by
+ EX19MTAUWB002.ant.amazon.com (10.250.64.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
+ Fri, 21 Feb 2025 04:09:12 +0000
+Received: from 6c7e67bfbae3.amazon.com (10.135.209.63) by
+ EX19D004ANA001.ant.amazon.com (10.37.240.138) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14;
+ Fri, 21 Feb 2025 04:09:06 +0000
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
+To: <shaw.leon@gmail.com>
+CC: <alex.aring@gmail.com>, <andrew+netdev@lunn.ch>,
+ <b.a.t.m.a.n@lists.open-mesh.org>, <bpf@vger.kernel.org>,
+ <bridge@lists.linux.dev>, <davem@davemloft.net>, <donald.hunter@gmail.com>,
+ <dsahern@kernel.org>, <edumazet@google.com>, <herbert@gondor.apana.org.au>,
+ <horms@kernel.org>, <kuba@kernel.org>, <kuniyu@amazon.com>,
+ <linux-can@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <linux-kselftest@vger.kernel.org>, <linux-ppp@vger.kernel.org>,
+ <linux-rdma@vger.kernel.org>, <linux-wireless@vger.kernel.org>,
+ <linux-wpan@vger.kernel.org>, <miquel.raynal@bootlin.com>,
+ <netdev@vger.kernel.org>, <osmocom-net-gprs@lists.osmocom.org>,
+ <pabeni@redhat.com>, <shuah@kernel.org>, <stefan@datenfreihafen.org>,
+ <steffen.klassert@secunet.com>, <wireguard@lists.zx2c4.com>
+Subject: Re: [PATCH net-next v10 08/13] net: ipv6: Use link netns in newlink()
+ of rtnl_link_ops
+Date: Thu, 20 Feb 2025 20:08:58 -0800
+Message-ID: <20250221040858.78214-1-kuniyu@amazon.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <20250219125039.18024-9-shaw.leon@gmail.com>
+References: <20250219125039.18024-9-shaw.leon@gmail.com>
 MIME-Version: 1.0
-References: <20240709090728.872-1-chipitsine@gmail.com>
- <20240709090728.872-2-chipitsine@gmail.com>
-In-Reply-To: <20240709090728.872-2-chipitsine@gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 21 May 2025 00:59:30 +0200
-X-Gmail-Original-Message-ID: <CAHmME9oFTzvodu0N3-wsOafnTUUF+P1C-cXWEmSjjXP9pHx+ug@mail.gmail.com>
-X-Gm-Features: AX0GCFu-airl6LmmFq6UF-m_U9OIfz2Oz5DzJ5ImGo6TDq57zOD4VX0FjelhXB8
-Message-ID: <CAHmME9oFTzvodu0N3-wsOafnTUUF+P1C-cXWEmSjjXP9pHx+ug@mail.gmail.com>
-Subject: Re: [PATCH 1/1] src/config.c: handle strdup failure
-To: Ilia Shipitsin <chipitsine@gmail.com>
-Cc: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.135.209.63]
+X-ClientProxiedBy: EX19D042UWA004.ant.amazon.com (10.13.139.16) To
+ EX19D004ANA001.ant.amazon.com (10.37.240.138)
+X-Mailman-Approved-At: Tue, 20 May 2025 19:52:08 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -73,4 +84,12 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Applied, thanks for the patch.
+From: Xiao Liang <shaw.leon@gmail.com>
+Date: Wed, 19 Feb 2025 20:50:34 +0800
+> When link_net is set, use it as link netns instead of dev_net(). This
+> prepares for rtnetlink core to create device in target netns directly,
+> in which case the two namespaces may be different.
+> 
+> Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
+
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
