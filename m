@@ -4,73 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1CF6C2D0CD
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 14:22:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC7D1C54E71
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 16:10:11 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id baba410a;
-	Tue, 20 May 2025 19:54:15 +0000 (UTC)
-Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de
- [85.215.255.25])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id da9bff11
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bcf46057;
+	Tue, 20 May 2025 19:42:30 +0000 (UTC)
+Received: from nyc.source.kernel.org (nyc.source.kernel.org [147.75.193.91])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2c4cb470
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 15 Jan 2025 11:36:42 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; t=1736941002; cv=none;
- d=strato.com; s=strato-dkim-0002;
- b=n+Ftn8Rgc4hTq4GmJUzI+geuSUQefVyvVGcpAoT4bJj/32CC0I1A834IlecGx+S8f6
- Qj2Cb3E9+VCX5JvVwhQSohOUxlyEbfJHKZwtdG6Z9agli/w+8yfs25uJmxWswBACFTAa
- u7lzHn6i7OrvdxqrUrugKiJd263dsom4/+PL8+7W+D83R7F3r5u8lPIgNTfSfuV1PNuI
- WVRf/rfZAbxyUwvebBrC9KRser4JCaGIsRv0N9IsoU9xs9UG4B9crVlwbN23MAbY4Pyy
- EXjX8GmdxDrL8fQHA0t9caLryY16QjQBaCLvyiYzLE6s7ReosXxA1SXIaNscnSnqVFsp
- kg3w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1736941002;
- s=strato-dkim-0002; d=strato.com;
- h=Message-Id:Date:Subject:Cc:To:From:Cc:Date:From:Subject:Sender;
- bh=7Dh7bmBt/a/foLXSFExpIZRSMzaBf6MHCVcu9LN7QVw=;
- b=fVC7bEWIsxb9zHNAqNvzJ+XrwjaBOzwc90kYJ6Aj7zJBb05Q7ZFIUQoLm8zB04QRPb
- XXuSD4MNflpFrNPmM96ps/fqS9N0BEcHQN5NmWilLu8KSGHcW0/pAergzEYd7Mou0x1I
- CKW7HDSaPHhwtv9IUo+QN2YfvnSmrRgZfPNGPwcll6kAvm1ZkUTsfpmbK/2d0imlymMu
- 6yeHbuV6TD6WK5AwUuo4DmQWucRXagLpRe6mF4Y1SKTB184OFiqT0pzUnm2r+82zx/J8
- UXE1YupLk0ubqy5Qwr8f1gPTozs5O9l/Rr3QyIe4c6lfbB2G0v35A0DRmqwHCf314uqJ
- t5Ww==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo00
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1736941002;
- s=strato-dkim-0002; d=kosching.me;
- h=Message-Id:Date:Subject:Cc:To:From:Cc:Date:From:Subject:Sender;
- bh=7Dh7bmBt/a/foLXSFExpIZRSMzaBf6MHCVcu9LN7QVw=;
- b=Qz7VF2ldFEcp2RQGCOmvvvjir83lh9bRdiMaIeiQoVHkOitqnO1aqRYVkk9e6QVJi3
- 0hc0hKFCrAWYi07GL0hgKKdBkBKNwVmylFQmRjusFUlFQqBQ6UPZM86DK8kaculhVQk2
- db162ojzdaEzUJdBZmwFvcVsjsw7sfo/tl4lNIBJYE1KoCooJlupUYIVa8C6rU55Z08U
- 1XJ8p4PTaRwL1pSVlfNCGiXWchEOQ8OX5DElE/wyEbVLqpmVJmYIO4yGa+oS+OxBwdnp
- UL6fR5CeT2f3ARE/OpsVHHj/u265XcTXobspqR/QeYXCeWS9MUYMJgJSiOmI/n7Hq45x
- cRKA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1736941002;
- s=strato-dkim-0003; d=kosching.me;
- h=Message-Id:Date:Subject:Cc:To:From:Cc:Date:From:Subject:Sender;
- bh=7Dh7bmBt/a/foLXSFExpIZRSMzaBf6MHCVcu9LN7QVw=;
- b=/+Y4mtGgeKtwRJXT4pxUehtOqmiLM30inLNryBuwPRGIrgmNUaHfNhx44xhu3evA6D
- h0QHLoQiSsHVx/J2nnDQ==
-X-RZG-AUTH: ":PmMGbE6IcPAr6h5auf2ngqbNL/DGPz9JBrgejtg2Gs3S+vZ7Mn0ob7GTnMbSiJYzwnX2ulY="
-Received: from eiskaffee.sq.local by smtp.strato.de (RZmta 51.2.17 AUTH)
- with ESMTPSA id f6dd0b10FBaf3dQ
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
- (Client did not present a certificate);
- Wed, 15 Jan 2025 12:36:41 +0100 (CET)
-From: Robyn Kosching <robyn@kosching.me>
-To: wireguard@lists.zx2c4.com
-Cc: Robyn Kosching <robyn@kosching.me>
-Subject: [PATCH wireguard-tools] wg-quick: escaped # in Pre/PostUp/Down
- recognised
-Date: Wed, 15 Jan 2025 12:33:50 +0100
-Message-Id: <20250115113349.106339-1-robyn@kosching.me>
-X-Mailer: git-send-email 2.34.1
+ Tue, 11 Mar 2025 22:38:56 +0000 (UTC)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by nyc.source.kernel.org (Postfix) with ESMTP id 7005BA46A82;
+ Tue, 11 Mar 2025 22:24:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 184DEC4CEE9;
+ Tue, 11 Mar 2025 22:30:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1741732211;
+ bh=D/ejxuliKp47/6IzAc6WRsye4a+L+qynFv35lbKIaLc=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=BiHPJ+nwPHlDdP4oXGhcORfHsgcM4ttc+mb2rBRh9CEOhFHvfUmTjedK8SwgymQYZ
+ VXr1mo/6dJmpfC/SS0yu8oGrfspuKU2JoWJtf7EyjQlIJO0/rx6ZfoZNpDtVRoIfB+
+ oa0dmgJsTxfJppmd3CrGnagsijeotxf2wVZkocApISLbvIrdmWPf9O7PogNI8EXBlc
+ CSFaokKeoGkJTff4kus1apfzx+ay5JfinNkLd/VtICfuf64gg+Nyx69btjpKMHWniM
+ u8JDqy50+SPaO7hv6QqeI6gRzALAuH5PJTdjtTJd+Hj/13RNAaxCCJO72eZ+BeJ/0r
+ jluTKlrfvKbtQ==
+Date: Tue, 11 Mar 2025 15:30:07 -0700
+From: Kees Cook <kees@kernel.org>
+To: Jakub Kicinski <kuba@kernel.org>
+Cc: "Jason A . Donenfeld" <Jason@zx2c4.com>,
+ Andrew Lunn <andrew+netdev@lunn.ch>,
+ "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+ wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
+ James Bottomley <James.Bottomley@hansenpartnership.com>,
+ Jack Wang <jinpu.wang@cloud.ionos.com>,
+ "Martin K. Petersen" <martin.petersen@oracle.com>,
+ linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-hardening@vger.kernel.org
+Subject: Re: [PATCH] wireguard: noise: Add __nonstring annotations for
+ unterminated strings
+Message-ID: <202503111520.CF7527A@keescook>
+References: <20250310222249.work.154-kees@kernel.org>
+ <20250311111927.06120773@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset="us-ascii"
-X-Mailman-Approved-At: Tue, 20 May 2025 19:52:08 +0000
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250311111927.06120773@kernel.org>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -85,50 +65,48 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi there, 
+On Tue, Mar 11, 2025 at 11:19:27AM +0100, Jakub Kicinski wrote:
+> On Mon, 10 Mar 2025 15:22:50 -0700 Kees Cook wrote:
+> > When a character array without a terminating NUL character has a static
+> > initializer, GCC 15's -Wunterminated-string-initialization will only
+> > warn if the array lacks the "nonstring" attribute[1]. Mark the arrays
+> > with __nonstring to and correctly identify the char array as "not a C
+> > string" and thereby eliminate the warning.
+> 
+> Hi! Would marking all of u8 as non-string not be an option? How many 
+> of such warnings do we have in the tree? Feel free to point me to a
+> previous conversation.
 
-currently commands in pre/PostUp/Down options in wireguard configs are
-stripped of everything starting with the first # - even if the # is
-escaped or in a string. 
+*thread merge*
 
-This patch leaves command interpretation in Pre/PostUp/Down options to 
-bash as it can already interpret comments and escaped #. 
+On Mon, Mar 10, 2025 at 06:38:01PM -0400, James Bottomley wrote[1]:
+> This looks a bit suboptimal ... is there anywhere in the kernel u8[] is
+> actually used for real strings?  In which case it would seem the better
+> place to put the annotation is in the typedef for u8 arrays.
 
+So both of you asked basically same question, and I think the simple answer
+is "no we can't mark u8 as nonstring". The use of u8 has become
+synonymous with "char" for a long while now, and it's gotten even more
+common after we made char unsigned by default.
 
-Signed-off-by: Robyn Kosching <robyn@kosching.me>
----
- src/wg-quick/linux.bash | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+The number of warning sources is pretty small. I think I have identified
+and proposed fixes most of them already[2]. ACPICA needs an upstream
+change, which I've submitted[3]. And ACPI needed multidimensional
+nonstring annotation support, which had the last needed bit added to GCC
+today[4], and I've proposed support for it in the kernel[5]. With 4 and 5
+ready, I can send the final patch, which is basically just this (and
+actually accounts for the vast majority of warnings emitted):
 
-diff --git a/src/wg-quick/linux.bash b/src/wg-quick/linux.bash
-index 4193ce5..50bb794 100755
---- a/src/wg-quick/linux.bash
-+++ b/src/wg-quick/linux.bash
-@@ -51,6 +51,7 @@ parse_options() {
- 		stripped="${line%%\#*}"
- 		key="${stripped%%=*}"; key="${key##*([[:space:]])}"; key="${key%%*([[:space:]])}"
- 		value="${stripped#*=}"; value="${value##*([[:space:]])}"; value="${value%%*([[:space:]])}"
-+		commandvalue="${line#*=}"; commandvalue="${commandvalue##*([[:space:]])}"; commandvalue="${commandvalue%%*([[:space:]])}"
- 		[[ $key == "["* ]] && interface_section=0
- 		[[ $key == "[Interface]" ]] && interface_section=1
- 		if [[ $interface_section -eq 1 ]]; then
-@@ -61,10 +62,10 @@ parse_options() {
- 				[[ $v =~ (^[0-9.]+$)|(^.*:.*$) ]] && DNS+=( $v ) || DNS_SEARCH+=( $v )
- 			done; continue ;;
- 			Table) TABLE="$value"; continue ;;
--			PreUp) PRE_UP+=( "$value" ); continue ;;
--			PreDown) PRE_DOWN+=( "$value" ); continue ;;
--			PostUp) POST_UP+=( "$value" ); continue ;;
--			PostDown) POST_DOWN+=( "$value" ); continue ;;
-+			PreUp) PRE_UP+=( "$commandvalue" ); continue ;;
-+			PreDown) PRE_DOWN+=( "$commandvalue" ); continue ;;
-+			PostUp) POST_UP+=( "$commandvalue" ); continue ;;
-+			PostDown) POST_DOWN+=( "$commandvalue" ); continue ;;
- 			SaveConfig) read_bool SAVE_CONFIG "$value"; continue ;;
- 			esac
- 		fi
+-static const char table_sigs[][ACPI_NAMESEG_SIZE] __initconst = {
++static const char table_sigs[][ACPI_NAMESEG_SIZE] __nonstring_array __initconst = {
 
-base-commit: 13f4ac4cb74b5a833fa7f825ba785b1e5774e84f
+-Kees
+
+[1] https://lore.kernel.org/lkml/98ca3727d65a418e403b03f6b17341dbcb192764.camel@HansenPartnership.com/
+[2] https://lore.kernel.org/lkml/?q=f%3AKees+%22-Wunterminated-string-initialization%22
+[3] https://github.com/acpica/acpica/pull/1006
+[4] https://github.com/gcc-mirror/gcc/commit/afb46540d3921e96c4cd7ba8fa2c8b0901759455
+[5] https://lore.kernel.org/lkml/20250310214244.work.194-kees@kernel.org/
+
 -- 
-2.34.1
-
+Kees Cook
