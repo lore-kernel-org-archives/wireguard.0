@@ -4,72 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41F56C54E90
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F7EEC54E65
 	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 09:18:11 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 430b88f7;
-	Tue, 20 May 2025 19:54:30 +0000 (UTC)
-Received: from smtp-fw-80006.amazon.com (smtp-fw-80006.amazon.com
- [99.78.197.217])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id dfdc016d
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 432b11df;
+	Tue, 20 May 2025 19:42:33 +0000 (UTC)
+Received: from nyc.source.kernel.org (nyc.source.kernel.org
+ [2604:1380:45d1:ec00::3])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4a683881
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 13 Feb 2025 06:54:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
- t=1739429660; x=1770965660;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=vJk+OOP08wb+BW+/huJFBkOKxAdi/eEFURshZRzHTxA=;
- b=qZfHiZkOB6sNiBbQQ4tjAe+oM3QHCqCQhVEeC2jDIJaiS6b7/rPk/XCT
- UvtJq/2XAdbLsJgq0FW4LtysYNWmFuWj9fhqv772R8g9jn7DOYcybSs7S
- AhYIpQ33+lUq52ysGUs7lH74r42WvlEiYofSTJIU+u6EyrOX4hG/Z3cE+ A=;
-X-IronPort-AV: E=Sophos;i="6.13,282,1732579200"; d="scan'208";a="22171230"
-Received: from pdx4-co-svc-p1-lb2-vlan3.amazon.com (HELO
- smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.25.36.214])
- by smtp-border-fw-80006.pdx80.corp.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Feb 2025 06:54:17 +0000
-Received: from EX19MTAUWA002.ant.amazon.com [10.0.38.20:56641]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.32.208:2525]
- with esmtp (Farcaster)
- id d7a2dd72-4afe-411d-a503-05d091406983; Thu, 13 Feb 2025 06:54:17 +0000 (UTC)
-X-Farcaster-Flow-ID: d7a2dd72-4afe-411d-a503-05d091406983
-Received: from EX19D004ANA001.ant.amazon.com (10.37.240.138) by
- EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
- Thu, 13 Feb 2025 06:54:10 +0000
-Received: from 6c7e67bfbae3.amazon.com (10.37.244.7) by
- EX19D004ANA001.ant.amazon.com (10.37.240.138) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14;
- Thu, 13 Feb 2025 06:54:01 +0000
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
-To: <shaw.leon@gmail.com>
-CC: <alex.aring@gmail.com>, <andrew+netdev@lunn.ch>,
- <b.a.t.m.a.n@lists.open-mesh.org>, <bpf@vger.kernel.org>,
- <bridge@lists.linux.dev>, <davem@davemloft.net>, <donald.hunter@gmail.com>,
- <dsahern@kernel.org>, <edumazet@google.com>, <herbert@gondor.apana.org.au>,
- <horms@kernel.org>, <kuba@kernel.org>, <kuniyu@amazon.com>,
- <linux-can@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-kselftest@vger.kernel.org>, <linux-ppp@vger.kernel.org>,
- <linux-rdma@vger.kernel.org>, <linux-wireless@vger.kernel.org>,
- <linux-wpan@vger.kernel.org>, <miquel.raynal@bootlin.com>,
- <netdev@vger.kernel.org>, <osmocom-net-gprs@lists.osmocom.org>,
- <pabeni@redhat.com>, <shuah@kernel.org>, <stefan@datenfreihafen.org>,
- <steffen.klassert@secunet.com>, <wireguard@lists.zx2c4.com>
-Subject: Re: [PATCH net-next v9 02/11] rtnetlink: Pack newlink() params into
- struct
-Date: Thu, 13 Feb 2025 15:53:48 +0900
-Message-ID: <20250213065348.8507-1-kuniyu@amazon.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250210133002.883422-3-shaw.leon@gmail.com>
-References: <20250210133002.883422-3-shaw.leon@gmail.com>
+ Wed, 12 Mar 2025 20:14:57 +0000 (UTC)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by nyc.source.kernel.org (Postfix) with ESMTP id 8ECE5A471BC;
+ Wed, 12 Mar 2025 20:09:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21ECFC4CEDD;
+ Wed, 12 Mar 2025 20:14:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1741810496;
+ bh=g1sFQOH1vPx9lrAH9SnoezGldeEVl4lvcdztzHQTJQM=;
+ h=From:To:Cc:Subject:Date:From;
+ b=OFn15q3V51I45tB11gIJbA7lTjNOXPMlMTcbf2BddQlXzu75hspiWs8j4ox33V1Hg
+ 9tA8oi9VKsliX9W0YM7TsNgOhxnqojnncAhKzjIwHK8gqUDKiowtX7BEgTUOFli7J/
+ ej31iIfZ4kA5r0hSr22Q6M7O3fscKcFgdMeNmLztdWqzoj0wC4WT8xxGxPATXQ3pn4
+ +hAaBk0JNBTmBKXxrRvawYiDQZaUVeZDacHz9KOgZnIe4u/iUVwkFgzd+Ifw2/0Fss
+ pqjybBn3mMtxE6X9x6GduGbIL3zRpBZ1ixqvDQGrLDySVAb/UGQNsvdLC2ZbDb1wW7
+ cWMgqnKONaDWw==
+From: Kees Cook <kees@kernel.org>
+To: "Jason A . Donenfeld" <Jason@zx2c4.com>
+Cc: Kees Cook <kees@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>,
+ "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>, wireguard@lists.zx2c4.com,
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-hardening@vger.kernel.org
+Subject: [PATCH v2] wireguard: Add __nonstring annotations for unterminated
+ strings
+Date: Wed, 12 Mar 2025 13:14:51 -0700
+Message-Id: <20250312201447.it.157-kees@kernel.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4243; i=kees@kernel.org;
+ h=from:subject:message-id; bh=g1sFQOH1vPx9lrAH9SnoezGldeEVl4lvcdztzHQTJQM=;
+ b=owGbwMvMwCVmps19z/KJym7G02pJDOkXX1tPD95lfe6z11TDfzl7S1V6uT2N3ORrNnoKc+7fW
+ mXgmB7VUcrCIMbFICumyBJk5x7n4vG2Pdx9riLMHFYmkCEMXJwCMBHvaYwM0+Z+anhwaO87nSqx
+ BfJhqxcz3pi2w+bhZyGB5uClp206djAyLPv04EfStB6JU3OOcE5hdfwqyFWTtSdk2Q/1y0xrwzJ
+ Z+QA=
+X-Developer-Key: i=kees@kernel.org; a=openpgp;
+ fpr=A5C3F68F229DD60F723E6E138972F4DFDC6DC026
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.37.244.7]
-X-ClientProxiedBy: EX19D031UWC003.ant.amazon.com (10.13.139.252) To
- EX19D004ANA001.ant.amazon.com (10.37.240.138)
-X-Mailman-Approved-At: Tue, 20 May 2025 19:52:08 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -84,137 +67,76 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-From: Xiao Liang <shaw.leon@gmail.com>
-Date: Mon, 10 Feb 2025 21:29:53 +0800
-> There are 4 net namespaces involved when creating links:
-> 
->  - source netns - where the netlink socket resides,
->  - target netns - where to put the device being created,
->  - link netns - netns associated with the device (backend),
->  - peer netns - netns of peer device.
-> 
-> Currently, two nets are passed to newlink() callback - "src_net"
-> parameter and "dev_net" (implicitly in net_device). They are set as
-> follows, depending on netlink attributes in the request.
-> 
->  +------------+-------------------+---------+---------+
->  | peer netns | IFLA_LINK_NETNSID | src_net | dev_net |
->  +------------+-------------------+---------+---------+
->  |            | absent            | source  | target  |
->  | absent     +-------------------+---------+---------+
->  |            | present           | link    | link    |
->  +------------+-------------------+---------+---------+
->  |            | absent            | peer    | target  |
->  | present    +-------------------+---------+---------+
->  |            | present           | peer    | link    |
->  +------------+-------------------+---------+---------+
-> 
-> When IFLA_LINK_NETNSID is present, the device is created in link netns
-> first and then moved to target netns. This has some side effects,
-> including extra ifindex allocation, ifname validation and link events.
-> These could be avoided if we create it in target netns from
-> the beginning.
-> 
-> On the other hand, the meaning of src_net parameter is ambiguous. It
-> varies depending on how parameters are passed. It is the effective
-> link (or peer netns) by design, but some drivers ignore it and use
-> dev_net instead.
-> 
-> This patch packs existing newlink() parameters, along with the source
-> netns, link netns and peer netns, into a struct. The old "src_net"
-> is renamed to "net" to avoid confusion with real source netns, and
-> will be deprecated later. The use of src_net are converted to
-> params->net trivially.
-> 
-> To make the semantics more clear, two helper functions -
-> rtnl_newlink_link_net() and rtnl_newlink_peer_net() - are provided
-> for netns fallback logic. Peer netns falls back to link netns, and
-> link netns falls back to source netns.
-> 
-> In following patches, to prepare for creating link in target netns
-> directly:
-> 
->   - For device drivers that are aware of the old "src_net", the use of
->     it are replace with one of the two helper functions.
->   - And for those that takes dev_net() as link netns, we try
->     params->link_net and then dev_net(), in order to maintain
->     compatibility with the old behavior.
-> 
-> Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
+When a character array without a terminating NUL character has a static
+initializer, GCC 15's -Wunterminated-string-initialization will only
+warn if the array lacks the "nonstring" attribute[1]. Mark the arrays
+with __nonstring to correctly identify the char array as "not a C string"
+and thereby eliminate the warning:
 
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+../drivers/net/wireguard/cookie.c:29:56: warning: initializer-string for array of 'unsigned char' truncates NUL terminator but destination lacks 'nonstring' attribute (9 chars into 8 available) [-Wunterminated-string-initialization]
+   29 | static const u8 mac1_key_label[COOKIE_KEY_LABEL_LEN] = "mac1----";
+      |                                                        ^~~~~~~~~~
+../drivers/net/wireguard/cookie.c:30:58: warning: initializer-string for array of 'unsigned char' truncates NUL terminator but destination lacks 'nonstring' attribute (9 chars into 8 available) [-Wunterminated-string-initialization]
+   30 | static const u8 cookie_key_label[COOKIE_KEY_LABEL_LEN] = "cookie--";
+      |                                                          ^~~~~~~~~~
+../drivers/net/wireguard/noise.c:28:38: warning: initializer-string for array of 'unsigned char' truncates NUL terminator but destination lacks 'nonstring' attribute (38 chars into 37 available) [-Wunterminated-string-initialization]
+   28 | static const u8 handshake_name[37] = "Noise_IKpsk2_25519_ChaChaPoly_BLAKE2s";
+      |                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../drivers/net/wireguard/noise.c:29:39: warning: initializer-string for array of 'unsigned char' truncates NUL terminator but destination lacks 'nonstring' attribute (35 chars into 34 available) [-Wunterminated-string-initialization]
+   29 | static const u8 identifier_name[34] = "WireGuard v1 zx2c4 Jason@zx2c4.com";
+      |                                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-I left small comments below.
+The arrays are always used with their fixed size, so use __nonstring.
 
+Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=117178 [1]
+Signed-off-by: Kees Cook <kees@kernel.org>
+---
+ v2: Improve commit log, add cookie nonstrings too
+ v1: https://lore.kernel.org/lkml/20250310222249.work.154-kees@kernel.org/
+Cc: Jason A. Donenfeld <Jason@zx2c4.com>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: wireguard@lists.zx2c4.com
+Cc: netdev@vger.kernel.org
+---
+ drivers/net/wireguard/cookie.c | 4 ++--
+ drivers/net/wireguard/noise.c  | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-[...]
-> diff --git a/include/linux/if_macvlan.h b/include/linux/if_macvlan.h
-> index 523025106a64..0f7281e3e448 100644
-> --- a/include/linux/if_macvlan.h
-> +++ b/include/linux/if_macvlan.h
-> @@ -59,8 +59,10 @@ static inline void macvlan_count_rx(const struct macvlan_dev *vlan,
->  
->  extern void macvlan_common_setup(struct net_device *dev);
->  
-> -extern int macvlan_common_newlink(struct net *src_net, struct net_device *dev,
-> -				  struct nlattr *tb[], struct nlattr *data[],
-> +struct rtnl_newlink_params;
+diff --git a/drivers/net/wireguard/cookie.c b/drivers/net/wireguard/cookie.c
+index f89581b5e8cb..94d0a7206084 100644
+--- a/drivers/net/wireguard/cookie.c
++++ b/drivers/net/wireguard/cookie.c
+@@ -26,8 +26,8 @@ void wg_cookie_checker_init(struct cookie_checker *checker,
+ }
+ 
+ enum { COOKIE_KEY_LABEL_LEN = 8 };
+-static const u8 mac1_key_label[COOKIE_KEY_LABEL_LEN] = "mac1----";
+-static const u8 cookie_key_label[COOKIE_KEY_LABEL_LEN] = "cookie--";
++static const u8 mac1_key_label[COOKIE_KEY_LABEL_LEN] __nonstring = "mac1----";
++static const u8 cookie_key_label[COOKIE_KEY_LABEL_LEN] __nonstring = "cookie--";
+ 
+ static void precompute_key(u8 key[NOISE_SYMMETRIC_KEY_LEN],
+ 			   const u8 pubkey[NOISE_PUBLIC_KEY_LEN],
+diff --git a/drivers/net/wireguard/noise.c b/drivers/net/wireguard/noise.c
+index 202a33af5a72..7eb9a23a3d4d 100644
+--- a/drivers/net/wireguard/noise.c
++++ b/drivers/net/wireguard/noise.c
+@@ -25,8 +25,8 @@
+  * <- e, ee, se, psk, {}
+  */
+ 
+-static const u8 handshake_name[37] = "Noise_IKpsk2_25519_ChaChaPoly_BLAKE2s";
+-static const u8 identifier_name[34] = "WireGuard v1 zx2c4 Jason@zx2c4.com";
++static const u8 handshake_name[37] __nonstring = "Noise_IKpsk2_25519_ChaChaPoly_BLAKE2s";
++static const u8 identifier_name[34] __nonstring = "WireGuard v1 zx2c4 Jason@zx2c4.com";
+ static u8 handshake_init_hash[NOISE_HASH_LEN] __ro_after_init;
+ static u8 handshake_init_chaining_key[NOISE_HASH_LEN] __ro_after_init;
+ static atomic64_t keypair_counter = ATOMIC64_INIT(0);
+-- 
+2.34.1
 
-You can just include <net/rtnetlink.h> and remove it from .c
-files, then this forward declaration will be unnecessary.
-
-
-> +
-> +extern int macvlan_common_newlink(struct net_device *dev,
-> +				  struct rtnl_newlink_params *params,
->  				  struct netlink_ext_ack *extack);
->  
->  extern void macvlan_dellink(struct net_device *dev, struct list_head *head);
-
-
-[...]
-> diff --git a/include/net/rtnetlink.h b/include/net/rtnetlink.h
-> index bc0069a8b6ea..00c086ca0c11 100644
-> --- a/include/net/rtnetlink.h
-> +++ b/include/net/rtnetlink.h
-> @@ -69,6 +69,42 @@ static inline int rtnl_msg_family(const struct nlmsghdr *nlh)
->  		return AF_UNSPEC;
->  }
->  
-> +/**
-> + *	struct rtnl_newlink_params - parameters of rtnl_link_ops::newlink()
-
-The '\t' after '*' should be single '\s'.
-
-Same for lines below.
-
-
-> + *
-> + *	@net: Netns of interest
-> + *	@src_net: Source netns of rtnetlink socket
-> + *	@link_net: Link netns by IFLA_LINK_NETNSID, NULL if not specified
-> + *	@peer_net: Peer netns
-> + *	@tb: IFLA_* attributes
-> + *	@data: IFLA_INFO_DATA attributes
-> + */
-> +struct rtnl_newlink_params {
-
-[...]
-> +/* Get effective link netns from newlink params. Generally, this is link_net
-> + * and falls back to src_net. But for compatibility, a driver may * choose to
-> + * use dev_net(dev) instead.
-> + */
-> +static inline struct net *rtnl_newlink_link_net(struct rtnl_newlink_params *p)
-> +{
-> +	return p->link_net ? : p->src_net;
-> +}
-> +
-> +/* Get peer netns from newlink params. Fallback to link netns if peer netns is
-> + * not specified explicitly.
-> + */
-> +static inline struct net *rtnl_newlink_peer_net(struct rtnl_newlink_params *p)
-> +{
-> +	return p->peer_net ? : rtnl_newlink_link_net(p);
-> +}
-
-These helpers should belong to patch 2 ?
