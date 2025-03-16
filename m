@@ -4,69 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3986C54ED0
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 16:10:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C27FCC54E71
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 16:10:20 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1c292d33;
-	Tue, 20 May 2025 19:49:53 +0000 (UTC)
-Received: from smtp-relay-internal-1.canonical.com
- (smtp-relay-internal-1.canonical.com [185.125.188.123])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id dcdf4e78
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7062e6dc;
+	Tue, 20 May 2025 19:42:36 +0000 (UTC)
+Received: from mail.servers.dxld.at (janet.ns.dxld.at [2001:678:4d8::1a57])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 92f9d707
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 23 Dec 2024 19:46:03 +0000 (UTC)
-Received: from mail-yb1-f199.google.com (mail-yb1-f199.google.com
- [209.85.219.199])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 0BE713F82B
- for <wireguard@lists.zx2c4.com>; Mon, 23 Dec 2024 19:46:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20210705; t=1734983162;
- bh=PMlKiln3iwEpneOOTZL0kPrOdyCOuYGPe8vE8NpYPWI=;
- h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type;
- b=Fv1qWeChxOyQp276qN0NYIeUuK8IhwGKlC5xCzJkPRd+KSSe5raSy22JWjdtL9r45
- 11zC0fRcHGTyQsMB7OG+h5KHBJTk7K9RPlNBe9CJGIOCK7iXblsfVd/Q3UuLsQpcMj
- wWKz2sopZzy2rx/SlY3sg1yYDoG4d+HsvAVylXjbih7dENHQP6Sr40T/vBfFcc89Aq
- 50xCUyMpCJZZgqqmz1F8r0W/RBaXlCIiB+iYd3R9knIGbxC2JAO3uKzoKT/0LPfXTj
- oQ9HKCiFclS0rvLljgFoQJ6Hd5urAfekT5eoKR2Fx7PDp0uddwmECQmBg+ei0ol0/p
- vglrcPa2/f2VQ==
-Received: by mail-yb1-f199.google.com with SMTP id
- 3f1490d57ef6-e3886f4cee2so6853998276.0
- for <wireguard@lists.zx2c4.com>; Mon, 23 Dec 2024 11:46:02 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734983160; x=1735587960;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=PMlKiln3iwEpneOOTZL0kPrOdyCOuYGPe8vE8NpYPWI=;
- b=cuXp7Vvi1UyoPTiAFEDheXnHkSzRq0+Aim/kkeFy74FYNa/53ypK/mtiWeP4MNMvSU
- GciRJ2vPF3cChkOGIvTay0hW8M4bGrCEF8BeHYnw5qF5KKr5/N1hTuwlnmHBtQ90Rs0p
- EvWXEN4fN+us3Lzx337Vwmy4AbgJG9Jzng8OkEc+r2mvFNbbjs+1MowQqndQ2JSSVgOr
- p3nzzmZM6g8XxXjtqLhW+c3elpqBkUh+vBwGbZTwoieZrqoXNFXaD4CP12359WKyHeyq
- dxFkkm/gWfXoxoMMP51hMIOuOKaNzRWAZpwnhulVau22F7siNrhP2BCklL8EdNkNCLTc
- YRiQ==
-X-Gm-Message-State: AOJu0YzIApNDyP6AaE7HiKx0OAgJkuKBT7s2XrcjaZFKria8FupUjZVb
- Cchts60bhvLZX55Wr6MTWoSELnK7BQ8Gmna/JANMpTwJAwcYYhrz2FP1AQEZP6ar3aDXUITGb+o
- 0ysaPKZVop5tkIj506ia2q1xRhUJvQTluLFHrHLba5zMdNnPQmOQpecOnZ3gFjV1151skq08aHc
- RI5R4Wctkshmd9/1ZIelVTIHHipyYVKMEGlTqoM6z2RuNOFtKzkOwXnwIAl/U=
-X-Gm-Gg: ASbGnctrPYEgGbvsZYfZLAQAfdjLpjKfsykIZRfmhqvkY9GpPehIZBat4z+wWjTcxcu
- U21nsTKZo/YN1tN9fBwfk8sLUYuVvXYDkBeUH0UE=
-X-Received: by 2002:a05:690c:3687:b0:6f0:301:5fea with SMTP id
- 00721157ae682-6f3e2ac4f92mr132273517b3.12.1734983160654; 
- Mon, 23 Dec 2024 11:46:00 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHRqWJHdMWPALLSHqsnDvlehw+ePhS5NkGOqTeCzt6IhZ8I4UA7gI/8J6DQtEiwE9HgrS4atAHwEemerpI4+GM=
-X-Received: by 2002:a05:690c:3687:b0:6f0:301:5fea with SMTP id
- 00721157ae682-6f3e2ac4f92mr132273377b3.12.1734983160391; Mon, 23 Dec 2024
- 11:46:00 -0800 (PST)
+ Sun, 16 Mar 2025 11:15:37 +0000 (UTC)
+Received: mail.servers.dxld.at;
+	Sun, 16 Mar 2025 12:15:20 +0100
+Date: Sun, 16 Mar 2025 12:15:16 +0100
+From: Daniel =?utf-8?Q?Gr=C3=B6ber?= <dxld@darkboxed.org>
+To: greearb@candelatech.com
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ dsahern@kernel.org, wireguard@lists.zx2c4.com,
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] net: wireguard: Allow binding to specific ifindex
+Message-ID: <20250316111516.4vxnot4osduc7oeh@House.clients.dxld.at>
+References: <20241203193939.1953303-1-greearb@candelatech.com>
 MIME-Version: 1.0
-From: Andreas Hasenack <andreas.hasenack@canonical.com>
-Date: Mon, 23 Dec 2024 16:45:12 -0300
-Message-ID: <CANYNYEHOiXF1NC2WQY8-CSoQatMgqszk4SXW4XosjQceKXUh_Q@mail.gmail.com>
-Subject: Trying to route only IRC traffic through wireguard interface
-To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
-X-Mailman-Approved-At: Tue, 20 May 2025 19:45:56 +0000
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241203193939.1953303-1-greearb@candelatech.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -81,33 +46,183 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+Hi Ben,
 
-I'm traveling, and this ISP that I'm using "on the road" decided to
-block port 6697/tcp. I thought about using my existing wireguard VPN
-to also route this traffic through it.
+I sent a more general patch adding essentially same feature quite a while
+ago (Nov 2023) "wireguard: Add netlink attrs for binding to address and
+netdev"
+https://lore.kernel.org/netdev/20240219114334.3057169-1-dxld@darkboxed.org/T/
 
-The problem is that there isn't just one ip to pick to add to
-AllowedIPs, it's several, and they change according to what DNS is
-resolving at that particular time.
+Which also came with ready-to-go wireguard-tools userspace support.
 
-So I thought to use policy routing. Something like:
+Unfortunately I never got any real feedback on it.
 
-iptables -t mangle -A OUTPUT -p tcp --dport 6697 -j MARK --set-mark 1
-echo "100 wireguard" > /etc/iproute2/rt_tables.d/wireguard.conf
-ip rule add fwmark 1 table wireguard
-ip route add default via 10.10.12.1 dev wg0 table wireguard source 10.10.12.11
+I managed to catch Jason at FOSDEM this year at least and he seems to not
+be convinced either address or inteface binding are useful or necessary
+features for wg.
 
-tcpdump shows this working on the local box, i.e., I see an outbound
-connection to the IRC server on the wireguard interface, but it never
-arrives anywyere. tcpdump on the other side of the wireguard tunnel
-shows zero traffic. I suspect wireguard locally is blocking it,
-because that IP is not in AllowedIPs, but I can't confirm because this
-box has secure boot and I can't enable debugfs to check the wireguard
-messages.
+The 1) "scaling" argument in the v3 patch was shot down due to Linux not
+being scalable in the number of interfaces due to linked lists anyway,
+which is fair if true. I added that argument in v3 to make the patch more
+apealing, previously I had some handwaving about multihoming
+https://lists.zx2c4.com/pipermail/wireguard/2023-November/008256.html :-)
 
-If that's the case, is the only solution to really add all IPs of this
-IRC server to AllowedIPs, dynamically even perhaps? I know I could
-just route everything through wireguard, but now my interest is spiked
-by this particular case, and I wanted to be able to use policy
-routing.
+I still think there's plenty of operational reasons to want to do this
+outside of that consideration and I just seem to be failing to communicate
+them in a way that appeals to Jason's design beauty aesthetic.
+
+Perhaps you could explain your use-case in more depth to make the technical
+argument stronger than what I can muster? :-)
+
+Quickly comparing your code with mine I see you set fl.flowi*_oif in
+addition to bind_ifindex, did you find that necessary for packets to be
+emited on the right device?
+
+Thanks,
+--Daniel
+
+PS: I'm aware the v3 patch proably still has a subtle uninitialized memory
+problem, just haven't had the motivation to work on it due to lack of
+feedback.
+
+PPS: Sorry for the late response I don't read netdev regularly and
+apparently Jason's wireguard list has been more broken than I've been aware
+of.  I've got some sieve hacks to get wireguard mail from netdev now.
+
+On Tue, Dec 03, 2024 at 11:39:39AM -0800, greearb@candelatech.com wrote:
+> From: Ben Greear <greearb@candelatech.com>
+> 
+> Which allows us to bind to VRF.
+> 
+> Signed-off-by: Ben Greear <greearb@candelatech.com>
+> ---
+> 
+> v2:  Fix bad use of comma, semicolon now used instead.
+> 
+>  drivers/net/wireguard/device.h  |  1 +
+>  drivers/net/wireguard/netlink.c | 12 +++++++++++-
+>  drivers/net/wireguard/socket.c  |  8 +++++++-
+>  include/uapi/linux/wireguard.h  |  3 +++
+>  4 files changed, 22 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/net/wireguard/device.h b/drivers/net/wireguard/device.h
+> index 43c7cebbf50b..9698d9203915 100644
+> --- a/drivers/net/wireguard/device.h
+> +++ b/drivers/net/wireguard/device.h
+> @@ -53,6 +53,7 @@ struct wg_device {
+>  	atomic_t handshake_queue_len;
+>  	unsigned int num_peers, device_update_gen;
+>  	u32 fwmark;
+> +	int lowerdev; /* ifindex of lower level device to bind UDP transport */
+>  	u16 incoming_port;
+>  };
+>  
+> diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlink.c
+> index f7055180ba4a..5de3d59a17b0 100644
+> --- a/drivers/net/wireguard/netlink.c
+> +++ b/drivers/net/wireguard/netlink.c
+> @@ -27,7 +27,8 @@ static const struct nla_policy device_policy[WGDEVICE_A_MAX + 1] = {
+>  	[WGDEVICE_A_FLAGS]		= { .type = NLA_U32 },
+>  	[WGDEVICE_A_LISTEN_PORT]	= { .type = NLA_U16 },
+>  	[WGDEVICE_A_FWMARK]		= { .type = NLA_U32 },
+> -	[WGDEVICE_A_PEERS]		= { .type = NLA_NESTED }
+> +	[WGDEVICE_A_PEERS]		= { .type = NLA_NESTED },
+> +	[WGDEVICE_A_LOWERDEV]		= { .type = NLA_U32 },
+>  };
+>  
+>  static const struct nla_policy peer_policy[WGPEER_A_MAX + 1] = {
+> @@ -232,6 +233,7 @@ static int wg_get_device_dump(struct sk_buff *skb, struct netlink_callback *cb)
+>  		if (nla_put_u16(skb, WGDEVICE_A_LISTEN_PORT,
+>  				wg->incoming_port) ||
+>  		    nla_put_u32(skb, WGDEVICE_A_FWMARK, wg->fwmark) ||
+> +		    nla_put_u32(skb, WGDEVICE_A_LOWERDEV, wg->lowerdev) ||
+>  		    nla_put_u32(skb, WGDEVICE_A_IFINDEX, wg->dev->ifindex) ||
+>  		    nla_put_string(skb, WGDEVICE_A_IFNAME, wg->dev->name))
+>  			goto out;
+> @@ -530,6 +532,14 @@ static int wg_set_device(struct sk_buff *skb, struct genl_info *info)
+>  			wg_socket_clear_peer_endpoint_src(peer);
+>  	}
+>  
+> +	if (info->attrs[WGDEVICE_A_LOWERDEV]) {
+> +		struct wg_peer *peer;
+> +
+> +		wg->lowerdev = nla_get_u32(info->attrs[WGDEVICE_A_LOWERDEV]);
+> +		list_for_each_entry(peer, &wg->peer_list, peer_list)
+> +			wg_socket_clear_peer_endpoint_src(peer);
+> +	}
+> +
+>  	if (info->attrs[WGDEVICE_A_LISTEN_PORT]) {
+>  		ret = set_port(wg,
+>  			nla_get_u16(info->attrs[WGDEVICE_A_LISTEN_PORT]));
+> diff --git a/drivers/net/wireguard/socket.c b/drivers/net/wireguard/socket.c
+> index 0414d7a6ce74..7cef4b27f6ba 100644
+> --- a/drivers/net/wireguard/socket.c
+> +++ b/drivers/net/wireguard/socket.c
+> @@ -25,7 +25,8 @@ static int send4(struct wg_device *wg, struct sk_buff *skb,
+>  		.daddr = endpoint->addr4.sin_addr.s_addr,
+>  		.fl4_dport = endpoint->addr4.sin_port,
+>  		.flowi4_mark = wg->fwmark,
+> -		.flowi4_proto = IPPROTO_UDP
+> +		.flowi4_proto = IPPROTO_UDP,
+> +		.flowi4_oif = wg->lowerdev,
+>  	};
+>  	struct rtable *rt = NULL;
+>  	struct sock *sock;
+> @@ -111,6 +112,9 @@ static int send6(struct wg_device *wg, struct sk_buff *skb,
+>  	struct sock *sock;
+>  	int ret = 0;
+>  
+> +	if (wg->lowerdev)
+> +		fl.flowi6_oif = wg->lowerdev;
+> +
+>  	skb_mark_not_on_list(skb);
+>  	skb->dev = wg->dev;
+>  	skb->mark = wg->fwmark;
+> @@ -360,6 +364,7 @@ int wg_socket_init(struct wg_device *wg, u16 port)
+>  		.family = AF_INET,
+>  		.local_ip.s_addr = htonl(INADDR_ANY),
+>  		.local_udp_port = htons(port),
+> +		.bind_ifindex = wg->lowerdev,
+>  		.use_udp_checksums = true
+>  	};
+>  #if IS_ENABLED(CONFIG_IPV6)
+> @@ -369,6 +374,7 @@ int wg_socket_init(struct wg_device *wg, u16 port)
+>  		.local_ip6 = IN6ADDR_ANY_INIT,
+>  		.use_udp6_tx_checksums = true,
+>  		.use_udp6_rx_checksums = true,
+> +		.bind_ifindex = wg->lowerdev,
+>  		.ipv6_v6only = true
+>  	};
+>  #endif
+> diff --git a/include/uapi/linux/wireguard.h b/include/uapi/linux/wireguard.h
+> index ae88be14c947..f3784885389a 100644
+> --- a/include/uapi/linux/wireguard.h
+> +++ b/include/uapi/linux/wireguard.h
+> @@ -29,6 +29,7 @@
+>   *    WGDEVICE_A_PUBLIC_KEY: NLA_EXACT_LEN, len WG_KEY_LEN
+>   *    WGDEVICE_A_LISTEN_PORT: NLA_U16
+>   *    WGDEVICE_A_FWMARK: NLA_U32
+> + *    WGDEVICE_A_LOWERDEV: NLA_U32
+>   *    WGDEVICE_A_PEERS: NLA_NESTED
+>   *        0: NLA_NESTED
+>   *            WGPEER_A_PUBLIC_KEY: NLA_EXACT_LEN, len WG_KEY_LEN
+> @@ -83,6 +84,7 @@
+>   *    WGDEVICE_A_PRIVATE_KEY: len WG_KEY_LEN, all zeros to remove
+>   *    WGDEVICE_A_LISTEN_PORT: NLA_U16, 0 to choose randomly
+>   *    WGDEVICE_A_FWMARK: NLA_U32, 0 to disable
+> + *    WGDEVICE_A_LOWERDEV: NLA_U32, ifindex to bind lower transport, 0 to disable
+>   *    WGDEVICE_A_PEERS: NLA_NESTED
+>   *        0: NLA_NESTED
+>   *            WGPEER_A_PUBLIC_KEY: len WG_KEY_LEN
+> @@ -157,6 +159,7 @@ enum wgdevice_attribute {
+>  	WGDEVICE_A_LISTEN_PORT,
+>  	WGDEVICE_A_FWMARK,
+>  	WGDEVICE_A_PEERS,
+> +	WGDEVICE_A_LOWERDEV,
+>  	__WGDEVICE_A_LAST
+>  };
+>  #define WGDEVICE_A_MAX (__WGDEVICE_A_LAST - 1)
+> -- 
+> 2.42.0
+> 
+> 
