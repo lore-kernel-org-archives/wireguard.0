@@ -4,48 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40DB9C54E90
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70B59C54ED1
 	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 09:59:59 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id aaa96de8;
-	Tue, 20 May 2025 19:42:58 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 099e3908
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5edb83ef;
+	Tue, 20 May 2025 19:42:39 +0000 (UTC)
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com
+ [2607:f8b0:4864:20::632])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e8a95d0f
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 19 Mar 2025 16:59:25 +0000 (UTC)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 310345C5944;
- Wed, 19 Mar 2025 16:57:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A4FAC4CEE4;
- Wed, 19 Mar 2025 16:59:22 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="Tq66VM76"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1742403561;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=uf/p7VlVNzQ814HdQ3t8Ub9K7Z0QRnEkUpNVCIzegLU=;
- b=Tq66VM76yopfaCOE3UPF1qlAPt1DsX2zUYDHrSNummG1xYmOUI7d8Ewg8pRwES15HaorQh
- bAv7+5B4aGoERuQIVOXGVzyCehOPPd1G3/XdxZzpA0ux+Kqg6s8VIUj2UF3RS5Dwklc4og
- pWkNWnxxVysrGgrmfc8P7GhTYzMigRg=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7a205e8a
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Wed, 19 Mar 2025 16:59:20 +0000 (UTC)
-Date: Wed, 19 Mar 2025 17:59:16 +0100
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Dmitrii Ermakov <demonihin@gmail.com>
-Cc: wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
+ Tue, 18 Mar 2025 10:25:07 +0000 (UTC)
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-225e3002dffso55760695ad.1
+ for <wireguard@lists.zx2c4.com>; Tue, 18 Mar 2025 03:25:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1742293505; x=1742898305; darn=lists.zx2c4.com;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=vHJpZP+ouwvFF8IfLMmV8qW0ir9r9wU3clAjxfEY604=;
+ b=QKIOUrAnA2sTQJlFzuGmcWGZHhbpCyLpHHFpsARhfoJ7GycKtVYeUvXv5VI+F9cwh5
+ GKwKQRruGK4dw3EnwS8WleJcUR7G5Ck5DT/U+olf3k2OVd0q2MOD9JthWQVA8UczecSl
+ XvHQYZVdEIeuVEO2hF/txyxxvdG5eD+K3uESa7AecCDhVYs4IH4Alct9MpCTMt9Gg3Xa
+ 32cQjxgKrnQ6o46FFB1XXHQMgbhccs7vq4EYb+T6WKYexx6kmKwHD4knYtlsuWnS0L7j
+ PbyZaYakTkJLHJrpRcnptsb3a225EUOzOcqPA0hA7J6imrBhSS+DKgzkbyf2PsibGDBs
+ WLPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1742293505; x=1742898305;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vHJpZP+ouwvFF8IfLMmV8qW0ir9r9wU3clAjxfEY604=;
+ b=YZcyweFTNfa3tLc11ql3Vb1a0HHeRLBWhqyirZXjM8s7xdboNf7MqIAGTouMluoKMn
+ J6cRXKMo4c6J+XlCNfAcQDc4X0SQolJhqAEHghuFH57Jas4vWx08QVR1CwxSna+g4qkG
+ QGl2GeX/EaduNnLDwc8/11iYTlplPHzOoDPPYDvQ+tCoMua286U/hZ67XLkjlR7BhYDV
+ FGMN/fdWFOVCdkvgaWJLgvLiMdn1Ut8K6V0zhAR8VT6yNZmNgdTElIZB+OTfuW9xMHX4
+ VBd2g0dCYWDSSJdX6I5ARUClx8dBuCEgLidJNjwvP6rIBgTPSNppBrN8CwbCfu6Xax+b
+ tWOQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVqL3A9O9Sk+YzmFGm7DcGCQd0a7c2/gDaiDPyADe3eH78s8Q4wF8xX5vHnWtszKqNyxszHDaw0g9k=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YwuoNh7h2NdtN5E2+cLI1qN6FZEbA73ZUcKIuqIUCFOa1TMGmh3
+ 8vqjKRoWrdGfwa3Sz2EsxJoH2tAzBiyV4ldNox9fAPN1sfnWDl3p
+X-Gm-Gg: ASbGncvu1n7u0mzpwrpleaaB+dT55yaxQkf9qnz94G6GovUPIECD0y0PPgZQPUdZI3b
+ Lf5Z+J8pswxDPKkWnUhjXxCHCD1s6uaKSQJBtsTL3CBuCeihWB5Dur1PkXB07gWACzMg6FAfi6X
+ rbAu7/WqgkBW/UOt33JrugJqFhKdf6NbP37iiAJlNRD9wLG+aml4H4g31VoOb1IZNx8MtLLc2SK
+ g+JZgfYX51tKfnRJKkMmyWjB2buPkDKDjDw0XGk06BkKOvf/NAv8UKWmEXWtT/Zr8OkwxSa+vNb
+ FMLnkrHPO2RYBr/nNaJ7agA0SFasOd1z2aEKQopcXCASI+QTgA==
+X-Google-Smtp-Source: AGHT+IE6gdO1UuE0ixmpB6cazW3Pjzhx+tIz6PbNhLSt1J2XBNAgq1vv++MsWYhJd831LrG0jM1yLg==
+X-Received: by 2002:a17:902:d2ce:b0:210:fce4:11ec with SMTP id
+ d9443c01a7336-2262c51bc7dmr45795425ad.1.1742293505083; 
+ Tue, 18 Mar 2025 03:25:05 -0700 (PDT)
+Received: from fedora ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-225c6ba6a38sm90449665ad.108.2025.03.18.03.24.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 18 Mar 2025 03:25:03 -0700 (PDT)
+Date: Tue, 18 Mar 2025 10:24:40 +0000
+From: Hangbin Liu <liuhangbin@gmail.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, netdev@vger.kernel.org
+Cc: Jakub Kicinski <kuba@kernel.org>, Shuah Khan <shuah@kernel.org>,
+ "David S. Miller" <davem@davemloft.net>,
+ Simon Horman <horms@kernel.org>, Phil Sutter <phil@nwl.cc>,
+ Florian Westphal <fw@strlen.de>, Petr Mladek <pmladek@suse.com>,
+ Yoann Congal <yoann.congal@smile.fr>, wireguard@lists.zx2c4.com,
+ bpf@vger.kernel.org, linux-kselftest@vger.kernel.org,
  linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next] wireguard: use rhashtables instead of hashtables
-Message-ID: <Z9r35H2rfLV8m5iW@zx2c4.com>
-References: <20250105110036.70720-2-demonihin@gmail.com>
+Subject: Re: [PATCHv4 RESEND net-next 0/2] selftests: wireguards: use
+ nftables for testing
+Message-ID: <Z9lJ6PXHeL7tfhUf@fedora>
+References: <20250106081043.2073169-1-liuhangbin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250105110036.70720-2-demonihin@gmail.com>
+In-Reply-To: <20250106081043.2073169-1-liuhangbin@gmail.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -60,73 +90,32 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Sun, Jan 05, 2025 at 12:00:17PM +0100, Dmitrii Ermakov wrote:
-> @@ -74,7 +75,6 @@ struct noise_handshake {
->  	u8 remote_static[NOISE_PUBLIC_KEY_LEN];
->  	u8 remote_ephemeral[NOISE_PUBLIC_KEY_LEN];
->  	u8 precomputed_static_static[NOISE_PUBLIC_KEY_LEN];
-> -
->  	u8 preshared_key[NOISE_SYMMETRIC_KEY_LEN];
->  
->  	u8 hash[NOISE_HASH_LEN];
-> @@ -83,6 +83,8 @@ struct noise_handshake {
->  	u8 latest_timestamp[NOISE_TIMESTAMP_LEN];
->  	__le32 remote_index;
->  
-> +	siphash_key_t hash_seed;
+Hi Jason,
 
-Why?
+I saw the patch status[1] is still "Awaiting Upstream".
+Is there anything I need to do?
 
-> +#include "linux/printk.h"
-> +#include "linux/rcupdate.h"
-> +#include "linux/rhashtable-types.h"
-> +#include "linux/rhashtable.h"
-> +#include "linux/siphash.h"
+https://patchwork.kernel.org/project/netdevbpf/patch/20250106081043.2073169-2-liuhangbin@gmail.com/
 
-Seems wrong.
-
-> +#include "messages.h"
->  #include "peer.h"
->  #include "noise.h"
-> +#include "linux/memory.h"
-
-Ditto.
-
->  
-> -static struct hlist_head *pubkey_bucket(struct pubkey_hashtable *table,
-> -					const u8 pubkey[NOISE_PUBLIC_KEY_LEN])
-> +static inline u32 index_hashfn(const void *data, u32 len, u32 seed)
->  {
-> -	/* siphash gives us a secure 64bit number based on a random key. Since
-> -	 * the bits are uniformly distributed, we can then mask off to get the
-> -	 * bits we need.
-> -	 */
-> -	const u64 hash = siphash(pubkey, NOISE_PUBLIC_KEY_LEN, &table->key);
-> +	const u32 *index = data;
-> +	return *index;
-> +}
-
-But shouldn't this actually use siphash? What's happening here?
-
-> +struct peer_hash_pubkey {
-> +	siphash_key_t key;
-> +	u8 pubkey[NOISE_PUBLIC_KEY_LEN];
-> +};
-> +
-> +static inline u32 wg_peer_obj_hashfn(const void *data, u32 len, u32 seed)
-> +{
-> +	const struct wg_peer *peer = data;
-> +	struct peer_hash_pubkey key;
-> +	u64 hash;
-> +
-> +	memcpy(&key.key, &peer->handshake.hash_seed, sizeof(key.key));
-> +	memcpy(&key.pubkey, &peer->handshake.remote_static, NOISE_PUBLIC_KEY_LEN);
-> +
-> +	hash = siphash(&key.pubkey, NOISE_PUBLIC_KEY_LEN, &key.key);
-
-Why this weird construction with this other struct?
-
-I'll stop reading here. There's a lot of strangeness with this patch.
-Maybe it's workable with enough care, but I think to review this into
-shape, in its current state, would be about the same as just rewriting
-it.
+Thanks
+Hangbin
+On Mon, Jan 06, 2025 at 08:10:41AM +0000, Hangbin Liu wrote:
+> This patch set convert iptables to nftables for wireguard testing, as
+> iptables is deparated and nftables is the default framework of most releases.
+> 
+> v3: drop iptables directly (Jason A. Donenfeld)
+>     Also convert to using nft for qemu testing (Jason A. Donenfeld)
+> v2: use one nft table for testing (Phil Sutter)
+> 
+> Hangbin Liu (2):
+>   selftests: wireguards: convert iptables to nft
+>   selftests: wireguard: update to using nft for qemu test
+> 
+>  tools/testing/selftests/wireguard/netns.sh    | 29 +++++++++-----
+>  .../testing/selftests/wireguard/qemu/Makefile | 40 ++++++++++++++-----
+>  .../selftests/wireguard/qemu/kernel.config    |  7 ++--
+>  3 files changed, 53 insertions(+), 23 deletions(-)
+> 
+> -- 
+> 2.46.0
+> 
