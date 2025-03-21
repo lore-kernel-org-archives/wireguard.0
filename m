@@ -4,46 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B8B3C54ED1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AF2EC54EDA
 	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 14:22:11 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2c532c1a;
-	Tue, 20 May 2025 19:49:44 +0000 (UTC)
-Received: from dispatch1-us1.ppe-hosted.com (dispatch1-us1.ppe-hosted.com
- [67.231.154.184])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c5ee3658
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6bcd22de;
+	Tue, 20 May 2025 19:43:14 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org
+ [2604:1380:4641:c500::1])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 111e1632
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 3 Dec 2024 19:39:54 +0000 (UTC)
-X-Virus-Scanned: Proofpoint Essentials engine
-Received: from mail3.candelatech.com (mail.candelatech.com [208.74.158.173])
- by mx1-us1.ppe-hosted.com (PPE Hosted ESMTP Server) with ESMTP id D4E5D900071; 
- Tue,  3 Dec 2024 19:39:50 +0000 (UTC)
-Received: from ben-dt5.candelatech.com (unknown [50.251.239.81])
- by mail3.candelatech.com (Postfix) with ESMTP id F188713C2B6;
- Tue,  3 Dec 2024 11:39:48 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail3.candelatech.com F188713C2B6
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=candelatech.com;
- s=default; t=1733254789;
- bh=jst4k0lpwWz/JgrqCgkdYIhbXw0yvHwbQqc+zlYC3PQ=;
- h=From:To:Cc:Subject:Date:From;
- b=c6re080E8gutaQBxvtsLi0qivBQsDaZrDcjH/oxx4rOUYjikZmHYvwD9AbYtCF1wC
- /MnV5tqvil2NfUfbU4FfrjRHuM8m/GbogtIeXImHnjVWc45mQjW+KR0+RMfDRShpoh
- aHMRUp7zLZ6Z975uUs40a0UIlNpX+xwd1SNBYDPc=
-From: greearb@candelatech.com
-To: netdev@vger.kernel.org
-Cc: Jason@zx2c4.com, wireguard@lists.zx2c4.com, dsahern@kernel.org,
- Ben Greear <greearb@candelatech.com>
-Subject: [PATCH v2] net: wireguard: Allow binding to specific ifindex
-Date: Tue,  3 Dec 2024 11:39:39 -0800
-Message-ID: <20241203193939.1953303-1-greearb@candelatech.com>
-X-Mailer: git-send-email 2.42.0
+ for <wireguard@lists.zx2c4.com>;
+ Fri, 21 Mar 2025 12:51:11 +0000 (UTC)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id BD4D55C6E22;
+ Fri, 21 Mar 2025 12:48:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25DDAC4CEE3;
+ Fri, 21 Mar 2025 12:51:08 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="SfQ4S5k0"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1742561466;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=1dUf+NuD25WdVcY/g4ihIatL9n9p+d1MPap8zY1l6+Y=;
+ b=SfQ4S5k0pTvKrxFXVspBerla/SbUp0Opfi1U//bwYh9m4JHnvyn19VfONZNdUhstjg+pCk
+ zg1c+e0ozExXfzaWwUGKFmjtnLhvIiLoFhAPuffwWmgYwiRkQbcVkRsehvpqwa9xn16W7I
+ ZSnCZbZpUksmk6EnYC1HPvZ+Gfcqo5Y=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 4f1bf067
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Fri, 21 Mar 2025 12:51:05 +0000 (UTC)
+Date: Fri, 21 Mar 2025 13:51:02 +0100
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Hangbin Liu <liuhangbin@gmail.com>
+Cc: Phil Sutter <phil@nwl.cc>, netdev@vger.kernel.org,
+ Jakub Kicinski <kuba@kernel.org>, Shuah Khan <shuah@kernel.org>,
+ "David S. Miller" <davem@davemloft.net>,
+ Simon Horman <horms@kernel.org>, Florian Westphal <fw@strlen.de>,
+ Petr Mladek <pmladek@suse.com>,
+ Yoann Congal <yoann.congal@smile.fr>, wireguard@lists.zx2c4.com,
+ bpf@vger.kernel.org, linux-kselftest@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCHv4 RESEND net-next 2/2] selftests: wireguard: update to
+ using nft for qemu test
+Message-ID: <Z91gtk_5nA76iYGw@zx2c4.com>
+References: <20250106081043.2073169-1-liuhangbin@gmail.com>
+ <20250106081043.2073169-3-liuhangbin@gmail.com>
+ <Z9rtrVk-15Ts_BNp@zx2c4.com> <Z91CGRP9QLdZONiZ@fedora>
+ <Z91QshzKRlmPdpv7@orbyte.nwl.cc> <Z91fXURX3BQFDaq9@fedora>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-MDID: 1733254792-XQiFu4kcUtCa
-X-MDID-O: us5; at1; 1733254792; XQiFu4kcUtCa; <greearb@candelatech.com>;
- 2cb6a4bd943e67fe8a6fabf2d7a930d0
-X-PPE-TRUSTED: V=1;DIR=OUT;
-X-Mailman-Approved-At: Tue, 20 May 2025 19:45:56 +0000
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Z91fXURX3BQFDaq9@fedora>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -58,138 +71,39 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-From: Ben Greear <greearb@candelatech.com>
+On Fri, Mar 21, 2025 at 12:45:17PM +0000, Hangbin Liu wrote:
+> On Fri, Mar 21, 2025 at 12:42:42PM +0100, Phil Sutter wrote:
+> > Hi Hangbin,
+> > 
+> > On Fri, Mar 21, 2025 at 10:40:25AM +0000, Hangbin Liu wrote:
+> > > Hi Jason, Phil,
+> > > On Wed, Mar 19, 2025 at 05:15:41PM +0100, Jason A. Donenfeld wrote:
+> > > > On Mon, Jan 06, 2025 at 08:10:43AM +0000, Hangbin Liu wrote:
+> > > > > +	echo "file /bin/nft $(NFTABLES_PATH)/src/nft 755 0 0" >> $@
+> > > > > +	echo "file /lib/libmnl.so.0 $(TOOLCHAIN_PATH)/lib/libmnl.so.0 755 0 0" >> $@
+> > > > > +	echo "file /lib/libnftnl.so.11 $(TOOLCHAIN_PATH)/lib/libnftnl.so.11 755 0 0" >> $@
+> > > > 
+> > > > Can't these be statically linked into the nft binary?
+> > > 
+> > > If I omit these, I will got error like
+> > > 
+> > > mnl_attr_put: symbol not found
+> > > 
+> > > Even though I set `--enable-static` in nft build.
+> > > 
+> > > Do you know what's the reason?
+> > 
+> > I was able to have nft linked statically against built libmnl and
+> > libnftnl by passing '--disable-shared --enable-static' to configure
+> > calls of all three build systems. With --enable-shared in library
+> > configure calls, nftables build preferred to link against the DSOs and I
+> > did not find a way to change this.
+> 
+> The patch is using
+> "./configure --prefix=/ $(CROSS_COMPILE_FLAG) --enable-static \
+> --disable-shared --disable-debug --disable-man-doc --with-mini-gmp --without-cli"
+> to build nft.
+> 
+> I don't know why it's not linked static.
 
-Which allows us to bind to VRF.
-
-Signed-off-by: Ben Greear <greearb@candelatech.com>
----
-
-v2:  Fix bad use of comma, semicolon now used instead.
-
- drivers/net/wireguard/device.h  |  1 +
- drivers/net/wireguard/netlink.c | 12 +++++++++++-
- drivers/net/wireguard/socket.c  |  8 +++++++-
- include/uapi/linux/wireguard.h  |  3 +++
- 4 files changed, 22 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/net/wireguard/device.h b/drivers/net/wireguard/device.h
-index 43c7cebbf50b..9698d9203915 100644
---- a/drivers/net/wireguard/device.h
-+++ b/drivers/net/wireguard/device.h
-@@ -53,6 +53,7 @@ struct wg_device {
- 	atomic_t handshake_queue_len;
- 	unsigned int num_peers, device_update_gen;
- 	u32 fwmark;
-+	int lowerdev; /* ifindex of lower level device to bind UDP transport */
- 	u16 incoming_port;
- };
- 
-diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlink.c
-index f7055180ba4a..5de3d59a17b0 100644
---- a/drivers/net/wireguard/netlink.c
-+++ b/drivers/net/wireguard/netlink.c
-@@ -27,7 +27,8 @@ static const struct nla_policy device_policy[WGDEVICE_A_MAX + 1] = {
- 	[WGDEVICE_A_FLAGS]		= { .type = NLA_U32 },
- 	[WGDEVICE_A_LISTEN_PORT]	= { .type = NLA_U16 },
- 	[WGDEVICE_A_FWMARK]		= { .type = NLA_U32 },
--	[WGDEVICE_A_PEERS]		= { .type = NLA_NESTED }
-+	[WGDEVICE_A_PEERS]		= { .type = NLA_NESTED },
-+	[WGDEVICE_A_LOWERDEV]		= { .type = NLA_U32 },
- };
- 
- static const struct nla_policy peer_policy[WGPEER_A_MAX + 1] = {
-@@ -232,6 +233,7 @@ static int wg_get_device_dump(struct sk_buff *skb, struct netlink_callback *cb)
- 		if (nla_put_u16(skb, WGDEVICE_A_LISTEN_PORT,
- 				wg->incoming_port) ||
- 		    nla_put_u32(skb, WGDEVICE_A_FWMARK, wg->fwmark) ||
-+		    nla_put_u32(skb, WGDEVICE_A_LOWERDEV, wg->lowerdev) ||
- 		    nla_put_u32(skb, WGDEVICE_A_IFINDEX, wg->dev->ifindex) ||
- 		    nla_put_string(skb, WGDEVICE_A_IFNAME, wg->dev->name))
- 			goto out;
-@@ -530,6 +532,14 @@ static int wg_set_device(struct sk_buff *skb, struct genl_info *info)
- 			wg_socket_clear_peer_endpoint_src(peer);
- 	}
- 
-+	if (info->attrs[WGDEVICE_A_LOWERDEV]) {
-+		struct wg_peer *peer;
-+
-+		wg->lowerdev = nla_get_u32(info->attrs[WGDEVICE_A_LOWERDEV]);
-+		list_for_each_entry(peer, &wg->peer_list, peer_list)
-+			wg_socket_clear_peer_endpoint_src(peer);
-+	}
-+
- 	if (info->attrs[WGDEVICE_A_LISTEN_PORT]) {
- 		ret = set_port(wg,
- 			nla_get_u16(info->attrs[WGDEVICE_A_LISTEN_PORT]));
-diff --git a/drivers/net/wireguard/socket.c b/drivers/net/wireguard/socket.c
-index 0414d7a6ce74..7cef4b27f6ba 100644
---- a/drivers/net/wireguard/socket.c
-+++ b/drivers/net/wireguard/socket.c
-@@ -25,7 +25,8 @@ static int send4(struct wg_device *wg, struct sk_buff *skb,
- 		.daddr = endpoint->addr4.sin_addr.s_addr,
- 		.fl4_dport = endpoint->addr4.sin_port,
- 		.flowi4_mark = wg->fwmark,
--		.flowi4_proto = IPPROTO_UDP
-+		.flowi4_proto = IPPROTO_UDP,
-+		.flowi4_oif = wg->lowerdev,
- 	};
- 	struct rtable *rt = NULL;
- 	struct sock *sock;
-@@ -111,6 +112,9 @@ static int send6(struct wg_device *wg, struct sk_buff *skb,
- 	struct sock *sock;
- 	int ret = 0;
- 
-+	if (wg->lowerdev)
-+		fl.flowi6_oif = wg->lowerdev;
-+
- 	skb_mark_not_on_list(skb);
- 	skb->dev = wg->dev;
- 	skb->mark = wg->fwmark;
-@@ -360,6 +364,7 @@ int wg_socket_init(struct wg_device *wg, u16 port)
- 		.family = AF_INET,
- 		.local_ip.s_addr = htonl(INADDR_ANY),
- 		.local_udp_port = htons(port),
-+		.bind_ifindex = wg->lowerdev,
- 		.use_udp_checksums = true
- 	};
- #if IS_ENABLED(CONFIG_IPV6)
-@@ -369,6 +374,7 @@ int wg_socket_init(struct wg_device *wg, u16 port)
- 		.local_ip6 = IN6ADDR_ANY_INIT,
- 		.use_udp6_tx_checksums = true,
- 		.use_udp6_rx_checksums = true,
-+		.bind_ifindex = wg->lowerdev,
- 		.ipv6_v6only = true
- 	};
- #endif
-diff --git a/include/uapi/linux/wireguard.h b/include/uapi/linux/wireguard.h
-index ae88be14c947..f3784885389a 100644
---- a/include/uapi/linux/wireguard.h
-+++ b/include/uapi/linux/wireguard.h
-@@ -29,6 +29,7 @@
-  *    WGDEVICE_A_PUBLIC_KEY: NLA_EXACT_LEN, len WG_KEY_LEN
-  *    WGDEVICE_A_LISTEN_PORT: NLA_U16
-  *    WGDEVICE_A_FWMARK: NLA_U32
-+ *    WGDEVICE_A_LOWERDEV: NLA_U32
-  *    WGDEVICE_A_PEERS: NLA_NESTED
-  *        0: NLA_NESTED
-  *            WGPEER_A_PUBLIC_KEY: NLA_EXACT_LEN, len WG_KEY_LEN
-@@ -83,6 +84,7 @@
-  *    WGDEVICE_A_PRIVATE_KEY: len WG_KEY_LEN, all zeros to remove
-  *    WGDEVICE_A_LISTEN_PORT: NLA_U16, 0 to choose randomly
-  *    WGDEVICE_A_FWMARK: NLA_U32, 0 to disable
-+ *    WGDEVICE_A_LOWERDEV: NLA_U32, ifindex to bind lower transport, 0 to disable
-  *    WGDEVICE_A_PEERS: NLA_NESTED
-  *        0: NLA_NESTED
-  *            WGPEER_A_PUBLIC_KEY: len WG_KEY_LEN
-@@ -157,6 +159,7 @@ enum wgdevice_attribute {
- 	WGDEVICE_A_LISTEN_PORT,
- 	WGDEVICE_A_FWMARK,
- 	WGDEVICE_A_PEERS,
-+	WGDEVICE_A_LOWERDEV,
- 	__WGDEVICE_A_LAST
- };
- #define WGDEVICE_A_MAX (__WGDEVICE_A_LAST - 1)
--- 
-2.42.0
-
+All three DSOs...
