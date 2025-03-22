@@ -4,85 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7837C3DA6D
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 20 May 2025 22:04:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AC16C54E90
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 20 May 2025 22:04:22 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1d654377;
-	Tue, 20 May 2025 19:41:48 +0000 (UTC)
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com
- [2607:f8b0:4864:20::634])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5a251e95
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1d2978d6;
+	Tue, 20 May 2025 19:43:25 +0000 (UTC)
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com
+ [2607:f8b0:4864:20::102d])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c8a58336
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 19 Feb 2025 12:52:34 +0000 (UTC)
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-221057b6ac4so72013875ad.2
- for <wireguard@lists.zx2c4.com>; Wed, 19 Feb 2025 04:52:34 -0800 (PST)
+ Sat, 22 Mar 2025 09:30:30 +0000 (UTC)
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-3012a0c8496so3613232a91.2
+ for <wireguard@lists.zx2c4.com>; Sat, 22 Mar 2025 02:30:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1739969553; x=1740574353; darn=lists.zx2c4.com;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=14Wr2OB3TipJqOg2i3ltQmzAxlBlaCt+7msGZ+i4teQ=;
- b=dYMq0ooDTtHwQFt/vbzNphi0mLCHiYyPouYLirFs9WZ/oL+tey/255CY9/NlLcwjsf
- g8IeTJxW4GnuSz2x+w0+k5bD6ksEZ00ecMP2R1yFDsb623LGhvst545JaoKrbPuB7Pji
- QnsW0xir4ajN73wG/pP9BXcaylpBQWVnomPoKqELDej4DeADgiwu1GSEbF0Sf3mO7kAT
- ftFnW8oW/FryPTYQek0GlObSA4f9Qj+KT7/0DENo6HOC6I4EU1fHWbcXFvr1REOfadT/
- 6CW1JY66k3czjHVFZPcykcb4rvlD1Tnruwtr1IEBRFBIoi6tJpRlO1nQc08UV7Ivbsei
- Y+fA==
+ d=gmail.com; s=20230601; t=1742635829; x=1743240629; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Irp+upazmFs5DB76PQDgJBxKxxQDsLsag1Qj5zhxeRM=;
+ b=krzWS/HpF4jIIXjBSa8wk5ZzGBeoFzUBhllfqPUAo7b1UuWqrMC5QY3RZ3z+4NpL+R
+ V/FAfUoADeA7LRkx3YKP12AT3LZctOebj0XY8Nv0mish31HEUol0UuplzPIqsfJUYGk4
+ YIt0lyBUGSOH/xcx2iQLqICREKiZ9gRmYueXKWXmoa30mDwAN8Kw4DqWzbA+zTg9t3LA
+ D1oVhVxI09+rgTcHgEOJPxfEeCJguXckxg7ICwQ4jMaACigQ8+OygFay3xTDhAAG8a6+
+ bC8VjXXTyUrmg/MiG9oDn3bOZQIqIOqTU4PM0TXKjsCKVFhfZG4rBQnJYhVPLZSR6/0B
+ IIlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739969553; x=1740574353;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=14Wr2OB3TipJqOg2i3ltQmzAxlBlaCt+7msGZ+i4teQ=;
- b=CSz1fQ6mmFSqMuLS99GcrfSAjzEmGIQwRNt5W3ROpR9uWlaAQb258+tiMQs4QOHgRl
- DixG99VdDAN9Ny/Dh/9rwYOIW8bCiaIVLd42hZpPNAZh78PNXTWh1NS3Eunqd3tGeHZK
- MngnQeYXHhTtMteY6J3gHg4r0pmGDnGWDiEet5iXTpfKCmPx/EpBElM+yAsQmBmqyHjQ
- 3CsbhSI6SJKmXJePtD/9WMITgKX1KYOfzWRn4o8kgPmR/XGqs/U3Tzjj+/1zKhH2f/vy
- sd6zoAhx9D0D1uPndXYThntjfEQLV/32I4gd45u18N/PdlqZFGS+Z25AZ1T5PRrWCpL/
- 5TsQ==
+ d=1e100.net; s=20230601; t=1742635829; x=1743240629;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Irp+upazmFs5DB76PQDgJBxKxxQDsLsag1Qj5zhxeRM=;
+ b=hGq8aL8xm4qqNFDLww6usCs6k4elF1844SBDLd9g4ZaijXlYOChxrMq4m4EfR4ccJ4
+ ZCgBxFyzJCDk0LeDlD/zDHsYfHl5HeelhuH7GClxX0BDUkN+i5zA0KHp5W7aHcyHvrXZ
+ HpmHZejXuEQ/kas3gUK1qHbEHsRj2ybPv+qCXUX3syLWFjwCF3w0xmrLHugBXkP79L99
+ zcULmiHl5HtHqWMbpjtT+vHXQDssc2X5liowpaYOt+u2Wxsi+XuQ1Cm/HrywXlkmc16F
+ 2usO5wCBY2+rSMK8aYSTcPn+e1iTc+wgzWuzRLlssO9CQT2EGe6uuFTtdzl0Gvp9QqwW
+ Ri8Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVHWrKRp6Arp2fTC5wKjkRy5N2DNXI+ZaX5ydxm9MWvzLcDPMjSF465sX9nQMsVcLP4ETBK3F2nDIk=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0Yz2rA0KCc+TFoWHZ2Id1lyuF78cp+ZvonwJ0vJqU9tfpKWY47nN
- sV5rP+iteS92mlNOMwen2/dTiMQwcZNTLN9onBZY9eqjikxJl7wM
-X-Gm-Gg: ASbGncsngD9D4oE6VjAMqEDNi+p8qBaudjvWoao1DhQ/DInqjTXS51G6An33IoCG6S3
- nQXADZWF+wxAzX/TG8mjBNJuvgpgccpItyrw37Xblb9NOiiW5J5M0FKuLPaKXYtqAs5NPqefAsr
- 2dljyM1QMpUy26tHa1o6ysc4bW1Fdm4v52SIj3C3/ptI1A/CfZRPjU1SXPE+LFh5hUdzK+Zg3WV
- A82bPIv04gZ26ngz30o47sEvNgsPETxIeCfz8gefa2JhWISygD0/RTkMfMPd8efbuFjAOerC/Zz
- oYoFbg==
-X-Google-Smtp-Source: AGHT+IE1TMZXqzhrHhhVSaIMtrPumBVmrpPdtKnId51KbxVQ9NXXxJP9rSJ1kBfk/uhAUxck4sNSxA==
-X-Received: by 2002:a17:903:1a2d:b0:220:c813:dfd1 with SMTP id
- d9443c01a7336-221040bd77bmr298031085ad.36.1739969552787; 
- Wed, 19 Feb 2025 04:52:32 -0800 (PST)
-Received: from ws.. ([103.167.140.11]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-220d536436fsm103427175ad.64.2025.02.19.04.52.24
+ AJvYcCWNLy15QqTdz4QjCqy1duBYGQIR+9aOYAOr4Z1prKS+S3/i0RITFfRo7hDji9EIrB1C6esx/6UXsYw=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0Yxgyq174UlvQ9EydcHgquhJJfmWjQYIqwlYYZ0qgzuPTA3Jnzq1
+ iewQgfgdzbFQj7DeYJDypkAKGO1AneNZFCq7hzCFAh9g5H6/XYnI
+X-Gm-Gg: ASbGncuW3PHjdvCpGm8xDquSY76IJZUmoRF7mbpCFTWpieKF/T8CBIs4rBLVS5sHeLX
+ 1zZlYk+AStFBNJGsqhyfkxidz2i+70BB0wPAEi9MRjAuZJmLE+9vATl2kYj6ZKFcArDHKIPTtZ0
+ Up2FIXxRUtOOM2dcatug2IE2agKmgVQbzS7ww8pxjuQ5K6MSY5/I2mO0uqMB3L2nDZnypgdaA1w
+ RlOyHBBmeVC3BzTFGlp3fM3JOuWHcCst3Ev/yXdr+MgIkZh81j7sWlImEtN+F0SpBLmuPJUE8+5
+ QBR223IfM8X47M9yTsiu0Opq1JCYQFJN6KeO9PyiA/yhrydzQKuU81hYbf1P5ael
+X-Google-Smtp-Source: AGHT+IGuQCRnSupF0XghzaFP+eOBI/S/qSer6RZlfeXZQYP1LbR6lU52d4TKY7O00O//CA1zLcCnKw==
+X-Received: by 2002:a17:90b:17d2:b0:2ee:af31:a7bd with SMTP id
+ 98e67ed59e1d1-3030fe569d3mr8666490a91.5.1742635828887; 
+ Sat, 22 Mar 2025 02:30:28 -0700 (PDT)
+Received: from fedora.dns.podman ([43.228.180.230])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-301bf58c24esm8452440a91.20.2025.03.22.02.30.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Feb 2025 04:52:32 -0800 (PST)
-From: Xiao Liang <shaw.leon@gmail.com>
-To: netdev@vger.kernel.org, linux-kselftest@vger.kernel.org,
- Kuniyuki Iwashima <kuniyu@amazon.com>, Jakub Kicinski <kuba@kernel.org>
-Cc: "David S. Miller" <davem@davemloft.net>, David Ahern <dsahern@kernel.org>,
- Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
- Andrew Lunn <andrew+netdev@lunn.ch>, Simon Horman <horms@kernel.org>,
- Shuah Khan <shuah@kernel.org>, Donald Hunter <donald.hunter@gmail.com>,
- Alexander Aring <alex.aring@gmail.com>,
- Stefan Schmidt <stefan@datenfreihafen.org>,
- Miquel Raynal <miquel.raynal@bootlin.com>,
- Steffen Klassert <steffen.klassert@secunet.com>,
- Herbert Xu <herbert@gondor.apana.org.au>, linux-rdma@vger.kernel.org,
- linux-can@vger.kernel.org, osmocom-net-gprs@lists.osmocom.org,
- bpf@vger.kernel.org, linux-ppp@vger.kernel.org, wireguard@lists.zx2c4.com,
- linux-wireless@vger.kernel.org, b.a.t.m.a.n@lists.open-mesh.org,
- bridge@lists.linux.dev, linux-wpan@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v10 11/13] rtnetlink: Create link directly in target
- net namespace
-Date: Wed, 19 Feb 2025 20:50:37 +0800
-Message-ID: <20250219125039.18024-12-shaw.leon@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250219125039.18024-1-shaw.leon@gmail.com>
-References: <20250219125039.18024-1-shaw.leon@gmail.com>
+ Sat, 22 Mar 2025 02:30:28 -0700 (PDT)
+From: Hangbin Liu <liuhangbin@gmail.com>
+To: netdev@vger.kernel.org
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, Jakub Kicinski <kuba@kernel.org>,
+ Shuah Khan <shuah@kernel.org>, "David S. Miller" <davem@davemloft.net>,
+ Simon Horman <horms@kernel.org>, Phil Sutter <phil@nwl.cc>,
+ Florian Westphal <fw@strlen.de>, Petr Mladek <pmladek@suse.com>,
+ Yoann Congal <yoann.congal@smile.fr>, wireguard@lists.zx2c4.com,
+ linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Hangbin Liu <liuhangbin@gmail.com>
+Subject: [PATCHv5 net-next 0/2] wireguard: selftests: use nftables for testing
+Date: Sat, 22 Mar 2025 09:30:14 +0000
+Message-ID: <20250322093016.16631-1-liuhangbin@gmail.com>
+X-Mailer: git-send-email 2.46.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -99,45 +88,24 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Make rtnl_newlink_create() create device in target namespace directly.
-Avoid extra netns change when link netns is provided.
+This patch set convert iptables to nftables for wireguard testing, as
+iptables is deparated and nftables is the default framework of most releases.
 
-Device drivers has been converted to be aware of link netns, that is not
-assuming device netns is and link netns is the same when ops->newlink()
-is called.
+v5: remove the counter in nft rules and link nft statically (Jason A. Donenfeld)
+v4: no update, just re-send
+v3: drop iptables directly (Jason A. Donenfeld)
+    Also convert to using nft for qemu testing (Jason A. Donenfeld)
+v2: use one nft table for testing (Phil Sutter)
 
-Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
----
- net/core/rtnetlink.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+Hangbin Liu (2):
+  wireguard: selftests: convert iptables to nft
+  wireguard: selftests: update to using nft for qemu test
 
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index e980481bdd28..b52e610e157e 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -3789,8 +3789,8 @@ static int rtnl_newlink_create(struct sk_buff *skb, struct ifinfomsg *ifm,
- 		name_assign_type = NET_NAME_ENUM;
- 	}
- 
--	dev = rtnl_create_link(link_net ? : tgt_net, ifname,
--			       name_assign_type, ops, tb, extack);
-+	dev = rtnl_create_link(tgt_net, ifname, name_assign_type, ops, tb,
-+			       extack);
- 	if (IS_ERR(dev)) {
- 		err = PTR_ERR(dev);
- 		goto out;
-@@ -3810,11 +3810,6 @@ static int rtnl_newlink_create(struct sk_buff *skb, struct ifinfomsg *ifm,
- 	err = rtnl_configure_link(dev, ifm, portid, nlh);
- 	if (err < 0)
- 		goto out_unregister;
--	if (link_net) {
--		err = dev_change_net_namespace(dev, tgt_net, ifname);
--		if (err < 0)
--			goto out_unregister;
--	}
- 	if (tb[IFLA_MASTER]) {
- 		err = do_set_master(dev, nla_get_u32(tb[IFLA_MASTER]), extack);
- 		if (err)
+ tools/testing/selftests/wireguard/netns.sh    | 29 +++++++++------
+ .../testing/selftests/wireguard/qemu/Makefile | 36 ++++++++++++++-----
+ .../selftests/wireguard/qemu/kernel.config    |  7 ++--
+ 3 files changed, 49 insertions(+), 23 deletions(-)
+
 -- 
-2.48.1
+2.46.0
 
