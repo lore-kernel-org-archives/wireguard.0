@@ -4,86 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8E24C54E90
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 20 May 2025 21:22:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8428C54E92
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 20 May 2025 21:22:06 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 35ae2b81;
-	Tue, 20 May 2025 19:40:31 +0000 (UTC)
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com
- [2607:f8b0:4864:20::62a])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e36ef21a
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0f3818cf;
+	Tue, 20 May 2025 19:43:35 +0000 (UTC)
+Received: from orbyte.nwl.cc (orbyte.nwl.cc [2001:41d0:e:133a::1])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d9658825
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 10 Feb 2025 13:31:31 +0000 (UTC)
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-21f6022c2c3so35479515ad.0
- for <wireguard@lists.zx2c4.com>; Mon, 10 Feb 2025 05:31:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1739194290; x=1739799090; darn=lists.zx2c4.com;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JIWpuyrhnho0qabV5ShFTJH6UcUC2BreOZhovgVT2xw=;
- b=NO2rY+MEfb9FSUlupG/JtLtfngvSw5EdhznHBeYKsp1j3nAI3woJoHw2o1o7hAqw4q
- jllAx4KYOP/b4p3VxclVSbBOsg7Q2rJdL3STgAqIvDA0AAk0TgADDlIlC+kwkECWW42R
- E0KIGPqFWZHPUOhjJDY1S4aFwDCy8UakoX0ib4f5vyC2z38oPGf5fgeDGXRUnDVf3UAK
- 5TNGKKTx13JzQdt7BPVx9XYIzaFGYRyb3Y59K2Hy6p1akOMv8kyljfmVpoOn8H4bnOHd
- oTQxlJU0/xGJwSao+D+WlDLwrL11cZEqyyxAqeI0kGULtWSaw/OO01/kdsJR1Ks/MgLD
- 4Q0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1739194290; x=1739799090;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JIWpuyrhnho0qabV5ShFTJH6UcUC2BreOZhovgVT2xw=;
- b=AKXuu2Vpsjn7I/Wk0mFkxy6IIZu1kqJ3pEtu7wnoypqTU3cezZ/Rw9ChNZZRbYts1O
- sofCWF2CYkf1ERoSNAXtaybCoroXrzSgF7sPTplQ35hCe/OOxLbZVpJSmW4YPZ5geJyb
- l/hPAPFniCZL9TkfXlEzCP6CJdFB0pSPCnmZER4CzKgbeWi/s1cs5Ehf5h+zggTtNkHs
- Fxn2+OO7QWgyXUmKyJmL3iPHdbOqUWWvdFcu+EeY+7RLxgg3j+Fi50ugA2Z3VXnm9VeH
- c1lW/6tdDrVWX9HPCmRbnL08+wYNOCpKvrmdEszc5zrYmOXcPIToD1QlNuPE8c3Vs/I0
- I4/w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUXJQvFlVmqUW2p43B2tqcMGLg5aRZtS/n1Qg4mlPuoyJJPDM8KyW/C3rP80BDMYf8aLwtusROpQww=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YyEZuj8G6fMyZ+9QBk1Wcq81tKBI9jai0CQmEWTuu/5SX41XOqn
- 8M+ZXsNGAKRWlOcxRFxsy7+L57dK50F+ii7T+fH12TvX+iesi3O1
-X-Gm-Gg: ASbGncvMDHXG6LD16n4kNmTyysCKikDzFvIeKb5dkCY5nh7XblMMD67BHjDHzhBIifS
- RAJXf0hJC/xjAwTDNJCe9cCWf7FywzXzLYpQCJ9jmme7qAUWVnA1EwbdrPNmwRXNe16ftenEapy
- xQ35yXqxup1/KNu6j3h1zn90i7mEckxDTmSyTtzpXzp/Fv7/vWohY4PG+NNmF4JsYvQeBob2RPT
- QbiAzbMwghCXy16PsDgJ9GVlcecWw4d7VDKZ+VUbMunbb5RLo3JnV2ML2l01V5uk0q3w7xCqgXa
- jCtIyA==
-X-Google-Smtp-Source: AGHT+IELdC20KTjI7AEzrj7SsYJqrzU0cpR4bU0xmzWBFbAdZdANoU6evRtqtyIIyxHfa7kTbn7qJg==
-X-Received: by 2002:a17:902:f60f:b0:215:6c5f:d142 with SMTP id
- d9443c01a7336-21f4f7a257fmr230770855ad.20.1739194290046; 
- Mon, 10 Feb 2025 05:31:30 -0800 (PST)
-Received: from ws.. ([103.167.140.11]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21f3653af3bsm78799445ad.57.2025.02.10.05.31.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Feb 2025 05:31:29 -0800 (PST)
-From: Xiao Liang <shaw.leon@gmail.com>
-To: netdev@vger.kernel.org, linux-kselftest@vger.kernel.org,
- Kuniyuki Iwashima <kuniyu@amazon.com>, Jakub Kicinski <kuba@kernel.org>
-Cc: "David S. Miller" <davem@davemloft.net>, David Ahern <dsahern@kernel.org>,
- Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
- Andrew Lunn <andrew+netdev@lunn.ch>, Simon Horman <horms@kernel.org>,
- Shuah Khan <shuah@kernel.org>, Donald Hunter <donald.hunter@gmail.com>,
- Alexander Aring <alex.aring@gmail.com>,
- Stefan Schmidt <stefan@datenfreihafen.org>,
- Miquel Raynal <miquel.raynal@bootlin.com>,
- Steffen Klassert <steffen.klassert@secunet.com>,
- Herbert Xu <herbert@gondor.apana.org.au>, linux-rdma@vger.kernel.org,
- linux-can@vger.kernel.org, osmocom-net-gprs@lists.osmocom.org,
- bpf@vger.kernel.org, linux-ppp@vger.kernel.org, wireguard@lists.zx2c4.com,
- linux-wireless@vger.kernel.org, b.a.t.m.a.n@lists.open-mesh.org,
- bridge@lists.linux.dev, linux-wpan@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v9 08/11] rtnetlink: Remove "net" from newlink params
-Date: Mon, 10 Feb 2025 21:29:59 +0800
-Message-ID: <20250210133002.883422-9-shaw.leon@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250210133002.883422-1-shaw.leon@gmail.com>
-References: <20250210133002.883422-1-shaw.leon@gmail.com>
+ Sun, 23 Mar 2025 21:10:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=nwl.cc;
+ s=mail2022; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
+ Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive;
+ bh=/T/hpX5aJNmpqnR9NK2A+cGQ1FWYHUdQ6owTEm+NkC8=; b=WB43qXFFdYFHyR5t/uK9qx1+4L
+ rMbG4BjFktbrOKNCnj0rC/+DPOXYzmEtUIZP9RNv1gl1enBQ2ZOY+sha3VxzkWbBDrLLAcv2iq40a
+ vt+geQae7IZrwG8UDt+vcCJWt3K6tqcJdHbpkKItmmTmqgsJcQuZQifLJoL/oTrm0slRlCh45oaBr
+ +mAretfpZExXb6pVCtyj9qaizsC2Vm4j1r8SguPSOs27ub2XVGg3az/oaW7z/e4dm5OkqOArKpntV
+ Utr18Ccaf6xXXBs2PVB/WoCrnwI9rfF2tWX+VsgDnQ7m4jDDuKcYTeUaBX+JdMW51Zf3FwpRkUVO6
+ sCwsJpnA==;
+Received: from n0-1 by orbyte.nwl.cc with local (Exim 4.97.1)
+ (envelope-from <phil@nwl.cc>) id 1twSaX-000000006Pj-16rX;
+ Sun, 23 Mar 2025 22:10:33 +0100
+Date: Sun, 23 Mar 2025 22:10:33 +0100
+From: Phil Sutter <phil@nwl.cc>
+To: Hangbin Liu <liuhangbin@gmail.com>
+Cc: netdev@vger.kernel.org, "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ Jakub Kicinski <kuba@kernel.org>, Shuah Khan <shuah@kernel.org>,
+ "David S. Miller" <davem@davemloft.net>,
+ Simon Horman <horms@kernel.org>, Florian Westphal <fw@strlen.de>,
+ Petr Mladek <pmladek@suse.com>,
+ Yoann Congal <yoann.congal@smile.fr>, wireguard@lists.zx2c4.com,
+ linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCHv5 net-next 1/2] wireguard: selftests: convert iptables to
+ nft
+Message-ID: <Z-B4yfBvm2aXW_Ar@orbyte.nwl.cc>
+Mail-Followup-To: Phil Sutter <phil@nwl.cc>,
+ Hangbin Liu <liuhangbin@gmail.com>, netdev@vger.kernel.org,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ Jakub Kicinski <kuba@kernel.org>, Shuah Khan <shuah@kernel.org>,
+ "David S. Miller" <davem@davemloft.net>,
+ Simon Horman <horms@kernel.org>, Florian Westphal <fw@strlen.de>,
+ Petr Mladek <pmladek@suse.com>,
+ Yoann Congal <yoann.congal@smile.fr>, wireguard@lists.zx2c4.com,
+ linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250322093016.16631-1-liuhangbin@gmail.com>
+ <20250322093016.16631-2-liuhangbin@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250322093016.16631-2-liuhangbin@gmail.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -98,52 +71,45 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Now that devices have been converted to use the specific netns instead
-of ambiguous "net", let's remove it from newlink parameters.
+On Sat, Mar 22, 2025 at 09:30:15AM +0000, Hangbin Liu wrote:
+> Convert iptabels to nft as it is the replacement for iptables, which is used
+          ~~~~~~~~
 
-Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
----
- include/net/rtnetlink.h | 2 --
- net/core/rtnetlink.c    | 6 ------
- 2 files changed, 8 deletions(-)
+Typo, but I would write "Convert the selftest to nft ..." instead since
+that is what you're converting, iptables is just replaced. :)
 
-diff --git a/include/net/rtnetlink.h b/include/net/rtnetlink.h
-index 00c086ca0c11..dd51240431b8 100644
---- a/include/net/rtnetlink.h
-+++ b/include/net/rtnetlink.h
-@@ -72,7 +72,6 @@ static inline int rtnl_msg_family(const struct nlmsghdr *nlh)
- /**
-  *	struct rtnl_newlink_params - parameters of rtnl_link_ops::newlink()
-  *
-- *	@net: Netns of interest
-  *	@src_net: Source netns of rtnetlink socket
-  *	@link_net: Link netns by IFLA_LINK_NETNSID, NULL if not specified
-  *	@peer_net: Peer netns
-@@ -80,7 +79,6 @@ static inline int rtnl_msg_family(const struct nlmsghdr *nlh)
-  *	@data: IFLA_INFO_DATA attributes
-  */
- struct rtnl_newlink_params {
--	struct net *net;
- 	struct net *src_net;
- 	struct net *link_net;
- 	struct net *peer_net;
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index 7e98f3cd102b..e9af0775fa6b 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -3797,12 +3797,6 @@ static int rtnl_newlink_create(struct sk_buff *skb, struct ifinfomsg *ifm,
- 
- 	dev->ifindex = ifm->ifi_index;
- 
--	params.net = params.src_net;
--	if (link_net)
--		params.net = link_net;
--	if (peer_net)
--		params.net = peer_net;
--
- 	if (ops->newlink)
- 		err = ops->newlink(dev, &params, extack);
- 	else
--- 
-2.48.1
+> by default in most releases.
+> 
+> Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+> ---
+>  tools/testing/selftests/wireguard/netns.sh | 29 ++++++++++++++--------
+>  1 file changed, 19 insertions(+), 10 deletions(-)
+> 
+> diff --git a/tools/testing/selftests/wireguard/netns.sh b/tools/testing/selftests/wireguard/netns.sh
+> index 55500f901fbc..8b840fef90af 100755
+> --- a/tools/testing/selftests/wireguard/netns.sh
+> +++ b/tools/testing/selftests/wireguard/netns.sh
+> @@ -75,6 +75,11 @@ pp ip netns add $netns1
+>  pp ip netns add $netns2
+>  ip0 link set up dev lo
+>  
+> +# init nft tables
+> +n0 nft add table ip wgtest
+> +n1 nft add table ip wgtest
+> +n2 nft add table ip wgtest
+> +
+>  ip0 link add dev wg0 type wireguard
+>  ip0 link set wg0 netns $netns1
+>  ip0 link add dev wg0 type wireguard
+> @@ -196,13 +201,14 @@ ip1 link set wg0 mtu 1300
+>  ip2 link set wg0 mtu 1300
+>  n1 wg set wg0 peer "$pub2" endpoint 127.0.0.1:2
+>  n2 wg set wg0 peer "$pub1" endpoint 127.0.0.1:1
+> -n0 iptables -A INPUT -m length --length 1360 -j DROP
+> +n0 nft add chain ip wgtest INPUT { type filter hook input priority filter \; policy accept \; }
 
+You may skip the 'policy accept \;' part in all 'add chain' commands as
+this is the default for all chains. Unless you prefer to explicitly
+state the chain policy, of course.
+
+Cheers, Phil
