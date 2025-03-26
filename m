@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91ADEC54ED0
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 09:18:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CCEAC54E92
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 09:18:22 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4ff61d50;
-	Tue, 20 May 2025 19:34:56 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f8771ece;
+	Tue, 20 May 2025 19:43:40 +0000 (UTC)
 Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com
  [2607:f8b0:4864:20::634])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7c304e69
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 762bb33f
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 9 Dec 2024 14:02:39 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 26 Mar 2025 06:25:24 +0000 (UTC)
 Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-215810fff52so47769585ad.1
- for <wireguard@lists.zx2c4.com>; Mon, 09 Dec 2024 06:02:38 -0800 (PST)
+ d9443c01a7336-2260c915749so87380875ad.3
+ for <wireguard@lists.zx2c4.com>; Tue, 25 Mar 2025 23:25:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733752957; x=1734357757; darn=lists.zx2c4.com;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=93uG6ogDA0suRI92nCq7Qt11rTzcUQ+bpSh6BVGj6ZI=;
- b=OwldjE5cKxjUKMmoOadnWmglP+wpyeXpxtZjNYyix8Rut8Bm5wZNDZOcMtEH4olLBO
- h0UM7qjNDdwYaWcXvoZu+WRkm4dN6g7YckJbkvIwmTm9bp9yZqGehDt3dvZV/frF4WBe
- tw8G4NHDKr+GaE5nXvrypCifl2X+1/RXr4E9tCEATGHWsgEZpdeQ2T1RWmXEtSCzUL5w
- lhJ3WwLvFZHU6rd34aT9FZd0YiTyASID2yVVhRJ3jpbV2b1zBpGDmmr+yZZ1OnJ6q8/s
- KQMlbACLNwYIDWkyYEQO0QxF+PEObms4HUdg4exBu+Bm2NZlImCVj3T0W8YThOnbdqia
- JuyQ==
+ d=gmail.com; s=20230601; t=1742970323; x=1743575123; darn=lists.zx2c4.com;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=F6XnYyjWBkgMuV0QYpprdE1lSJS48p3YW3OVQycrQ3A=;
+ b=RKINo0Y4gJmA1P3vTjk2zefyt9LLNqQjrNtkM3IpQUThbKxa8qaE07JK66EWxubQJ5
+ E5HEzlEy55CClJ3BtZEsj3etQry0ok9Mb/ZsmUING+WAAK5nyHYTleEiYQtgJjTs/ZrZ
+ /6ISkBW/DYtTG9i/jlMiOCQiOE31tdP+c63POEB2hZKLrJ0YfHe0gRPKYAtl+IaCoYJu
+ 2fOKHCFKywZS0kvZvCOLaKPdwECWOOtEiYst3+O/pfhhSV2cwQbt+o1Vg5DtqAPYfm3N
+ +Ua91rTR+C2scWaKlNuRRKjr+ehJeKAIWyCMM/IA5kv4JlSFrIp20z2nsZchJIFrpS5P
+ CGSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733752957; x=1734357757;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=93uG6ogDA0suRI92nCq7Qt11rTzcUQ+bpSh6BVGj6ZI=;
- b=fegf1XKTfDLT7E0y8pC2+VHOFzKTPGzjZuQaO09qCEskniZM6o6OkWskMfmjUhQ5YL
- RO0UOnKfkjlb/P5lQF5OexGYuKLV+sr4Bgm2+LeVaaxzAQhCErZgNId9q5a0FiALCL0L
- mrOv4Q60tt8vJg7iwd2MZ134ahqmcYC91j8hslhnRG3qL4tE5RFMtfH88EHpu5WmqCUg
- JOASA7+DU89vSehEgqc5xEwqyBbU3Hes6Zje6UfM24A3VN7cFdquRdiytVhDyFRCYPcb
- 9JAcCVDThCAsAGPUH1qgsVUYVQrBXcjJ6hfYxNDAPVt+K/9Bx7ywO6nrbGa17LxoE3e8
- U6QA==
+ d=1e100.net; s=20230601; t=1742970323; x=1743575123;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=F6XnYyjWBkgMuV0QYpprdE1lSJS48p3YW3OVQycrQ3A=;
+ b=RQh2s2xRSvY4iJvu8Lhrq5JSGAJW0d/kHL+Ts7jkjZofqrXPDcDYmBHoSNMrbijYND
+ 7WidbIuC9zoJw+sM2UlrYqKDWHgaf0EjMMz/6xNjkCZaCF03JyJn4n53me6LGLFOBrSF
+ kpm6Xr6dX9S56/DCzjnBTJb6v2dWDuEOPKMo+IorRg5w5/HZoeTceNff+9bVgeWUTlbS
+ 6+zYK/p8xKmleXhCWD8H2KR9Y5PY/4I3mC5ObF3Ms1TRP/GfKH6CLGTC8+Gucjl/842V
+ BBkvu1OrZISb8etY9r0+ObEPlzDSq+K5Ps69BhBxErbxqYDxLTaO+BxvoMmaMLWU/o58
+ EKvA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWj8cHPf21u0tEbfm7QKK3j0Q13/44QXg4/AWlYn7PeFQ/PAyyiMdXdR1gQXYG04wIoFeSZ4RYc5ss=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YwcpvjSYB5aPo/J3HjjH6FTI7cVYmF4c9kfCsiGPz4bObq5IQUZ
- IIUrW7R5R7a/xtMTMDWOH9yg8+6Q+0+aHoRBFmfms7U9E46ItsJO
-X-Gm-Gg: ASbGncvdP5qUT1B9AUeIpZcZY7Im2+YBe9cvTybU27vj5GEAQM305X7qmaID9k7sqMO
- BVgsyLAikw5D1ExSTnpNsCqHjv635AMcO0mX86emOoE/6+0x3GZSrRQUTe+sK6vEFAdU9eXdGQH
- tA1ZyW2VERSNZNtHReofGdWkRpsgn9U3ZRtowhTQ4vgnBKhXMKeu6OPNY7Y9zf+mv9bd1THKuOL
- +YQpAIVH0c009+TBLukfohsmb2pRlipGFzQ5ZXCtCuJegM=
-X-Google-Smtp-Source: AGHT+IEJ2QVBGY2MGcE4mBFIU/c+dzWKa28cbDvoqfUFybFT/JmX0nfLyJJqRhwpUbbXsTp1UoSovg==
-X-Received: by 2002:a17:902:cf08:b0:205:6a9b:7e3e with SMTP id
- d9443c01a7336-2166a0b59acmr8694095ad.56.1733752957447; 
- Mon, 09 Dec 2024 06:02:37 -0800 (PST)
-Received: from nova-ws.. ([103.167.140.11]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-216221db645sm49605645ad.46.2024.12.09.06.02.28
+ AJvYcCWutcgaerLzAV+sfIr1eiuCDzFVLbp54nHoVxlbul2OTnEBK14Lk2lXG518cNRDW65a9bcisi0HsSw=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YyT6WvL7jj8nQmb3sNhLB0iR3v3uzBslriCw7zfp/ozj/4ta4iH
+ s5GtMatOwbDnAyW5YLasd84hPbhDl3kQa/FF8cChlAoO1ygHNnDu
+X-Gm-Gg: ASbGncsYk3f+K0okyX1b0aFhLslrkXVJjvvIlUzsS1o8fyRMe+PWUVD7u+Lfbo/SJPm
+ GSuGMYOO9gMG7gCSC4TV4nDX18bOdXncAeupPCVFo68lBzktmKtlZ9VsOvtp+nlw0talcb6t7mH
+ SiPdLbdbHmHHEPqgga3Y3Q55nuSCMD/roLD24h1EJ4QQ5rJXa0uRT/zYeKS0sC9x81DuDAROVuT
+ /rFVPiMF2PYKLebgQRIVgCYoC7OGrsOI6ofN5w7hB30ygIqMlSJhwThHKhhO2rPdBPB/gQuG0us
+ Hr94XutIex+SIcADptR12t1lzhJig7K4YyxsgqjdH0XwvzvRh/2Gp9wWyYhy
+X-Google-Smtp-Source: AGHT+IGbQzaER9p8NCvfFy6KxwukYMbDG7UbjOpY3wRp0sjpX6Rtq+5qFqml7esczeTeUbTF9chCJw==
+X-Received: by 2002:a17:902:ef12:b0:224:249f:9734 with SMTP id
+ d9443c01a7336-22780c54cfemr331643715ad.4.1742970322675; 
+ Tue, 25 Mar 2025 23:25:22 -0700 (PDT)
+Received: from fedora ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-227811f44aesm101809365ad.217.2025.03.25.23.25.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Dec 2024 06:02:36 -0800 (PST)
-From: Xiao Liang <shaw.leon@gmail.com>
-To: netdev@vger.kernel.org, linux-kselftest@vger.kernel.org,
- Kuniyuki Iwashima <kuniyu@amazon.com>, Jakub Kicinski <kuba@kernel.org>,
- Donald Hunter <donald.hunter@gmail.com>
-Cc: "David S. Miller" <davem@davemloft.net>, David Ahern <dsahern@kernel.org>,
- Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
- Ido Schimmel <idosch@nvidia.com>, Andrew Lunn <andrew+netdev@lunn.ch>,
- Simon Horman <horms@kernel.org>, Shuah Khan <shuah@kernel.org>,
- Jiri Pirko <jiri@resnulli.us>, Hangbin Liu <liuhangbin@gmail.com>,
- linux-rdma@vger.kernel.org, linux-can@vger.kernel.org,
- osmocom-net-gprs@lists.osmocom.org, bpf@vger.kernel.org,
- linux-ppp@vger.kernel.org, wireguard@lists.zx2c4.com,
- linux-wireless@vger.kernel.org, b.a.t.m.a.n@lists.open-mesh.org,
- bridge@lists.linux.dev, linux-wpan@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v5 1/5] net: ip_tunnel: Build flow in underlay net
- namespace
-Date: Mon,  9 Dec 2024 22:01:47 +0800
-Message-ID: <20241209140151.231257-2-shaw.leon@gmail.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241209140151.231257-1-shaw.leon@gmail.com>
-References: <20241209140151.231257-1-shaw.leon@gmail.com>
+ Tue, 25 Mar 2025 23:25:21 -0700 (PDT)
+Date: Wed, 26 Mar 2025 06:25:13 +0000
+From: Hangbin Liu <liuhangbin@gmail.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: Phil Sutter <phil@nwl.cc>, netdev@vger.kernel.org,
+ Jakub Kicinski <kuba@kernel.org>, Shuah Khan <shuah@kernel.org>,
+ "David S. Miller" <davem@davemloft.net>,
+ Simon Horman <horms@kernel.org>, Florian Westphal <fw@strlen.de>,
+ Petr Mladek <pmladek@suse.com>,
+ Yoann Congal <yoann.congal@smile.fr>, wireguard@lists.zx2c4.com,
+ linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCHv5 net-next 1/2] wireguard: selftests: convert iptables to
+ nft
+Message-ID: <Z-Odyf51XgIuldV7@fedora>
+References: <20250322093016.16631-1-liuhangbin@gmail.com>
+ <20250322093016.16631-2-liuhangbin@gmail.com>
+ <Z-B4yfBvm2aXW_Ar@orbyte.nwl.cc>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z-B4yfBvm2aXW_Ar@orbyte.nwl.cc>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -95,45 +92,53 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Build IPv4 flow in underlay net namespace, where encapsulated packets
-are routed.
+On Sun, Mar 23, 2025 at 10:10:33PM +0100, Phil Sutter wrote:
+> On Sat, Mar 22, 2025 at 09:30:15AM +0000, Hangbin Liu wrote:
+> > Convert iptabels to nft as it is the replacement for iptables, which is used
+>           ~~~~~~~~
+> 
+> Typo, but I would write "Convert the selftest to nft ..." instead since
+> that is what you're converting, iptables is just replaced. :)
 
-Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
----
- net/ipv4/ip_tunnel.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Hi Jason, I saw net-next is closed. Should I wait for net-next re-open to post
+the new version and fix the typo? I'm not sure about the wg branch policy.
 
-diff --git a/net/ipv4/ip_tunnel.c b/net/ipv4/ip_tunnel.c
-index 25505f9b724c..09b73acf037a 100644
---- a/net/ipv4/ip_tunnel.c
-+++ b/net/ipv4/ip_tunnel.c
-@@ -294,7 +294,7 @@ static int ip_tunnel_bind_dev(struct net_device *dev)
- 
- 		ip_tunnel_init_flow(&fl4, iph->protocol, iph->daddr,
- 				    iph->saddr, tunnel->parms.o_key,
--				    iph->tos & INET_DSCP_MASK, dev_net(dev),
-+				    iph->tos & INET_DSCP_MASK, tunnel->net,
- 				    tunnel->parms.link, tunnel->fwmark, 0, 0);
- 		rt = ip_route_output_key(tunnel->net, &fl4);
- 
-@@ -611,7 +611,7 @@ void ip_md_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
- 	}
- 	ip_tunnel_init_flow(&fl4, proto, key->u.ipv4.dst, key->u.ipv4.src,
- 			    tunnel_id_to_key32(key->tun_id),
--			    tos & INET_DSCP_MASK, dev_net(dev), 0, skb->mark,
-+			    tos & INET_DSCP_MASK, tunnel->net, 0, skb->mark,
- 			    skb_get_hash(skb), key->flow_flags);
- 
- 	if (!tunnel_hlen)
-@@ -774,7 +774,7 @@ void ip_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
- 
- 	ip_tunnel_init_flow(&fl4, protocol, dst, tnl_params->saddr,
- 			    tunnel->parms.o_key, tos & INET_DSCP_MASK,
--			    dev_net(dev), READ_ONCE(tunnel->parms.link),
-+			    tunnel->net, READ_ONCE(tunnel->parms.link),
- 			    tunnel->fwmark, skb_get_hash(skb), 0);
- 
- 	if (ip_tunnel_encap(skb, &tunnel->encap, &protocol, &fl4) < 0)
--- 
-2.47.1
+Thanks
+Hangbin
 
+> 
+> > by default in most releases.
+> > 
+> > Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+> > ---
+> >  tools/testing/selftests/wireguard/netns.sh | 29 ++++++++++++++--------
+> >  1 file changed, 19 insertions(+), 10 deletions(-)
+> > 
+> > diff --git a/tools/testing/selftests/wireguard/netns.sh b/tools/testing/selftests/wireguard/netns.sh
+> > index 55500f901fbc..8b840fef90af 100755
+> > --- a/tools/testing/selftests/wireguard/netns.sh
+> > +++ b/tools/testing/selftests/wireguard/netns.sh
+> > @@ -75,6 +75,11 @@ pp ip netns add $netns1
+> >  pp ip netns add $netns2
+> >  ip0 link set up dev lo
+> >  
+> > +# init nft tables
+> > +n0 nft add table ip wgtest
+> > +n1 nft add table ip wgtest
+> > +n2 nft add table ip wgtest
+> > +
+> >  ip0 link add dev wg0 type wireguard
+> >  ip0 link set wg0 netns $netns1
+> >  ip0 link add dev wg0 type wireguard
+> > @@ -196,13 +201,14 @@ ip1 link set wg0 mtu 1300
+> >  ip2 link set wg0 mtu 1300
+> >  n1 wg set wg0 peer "$pub2" endpoint 127.0.0.1:2
+> >  n2 wg set wg0 peer "$pub1" endpoint 127.0.0.1:1
+> > -n0 iptables -A INPUT -m length --length 1360 -j DROP
+> > +n0 nft add chain ip wgtest INPUT { type filter hook input priority filter \; policy accept \; }
+> 
+> You may skip the 'policy accept \;' part in all 'add chain' commands as
+> this is the default for all chains. Unless you prefer to explicitly
+> state the chain policy, of course.
+> 
+> Cheers, Phil
