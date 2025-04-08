@@ -4,71 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 821B3C54ED0
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 16:10:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CC69C54ED1
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 16:10:16 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6fe6638f;
-	Tue, 20 May 2025 19:50:09 +0000 (UTC)
-Received: from smtp-fw-2101.amazon.com (smtp-fw-2101.amazon.com [72.21.196.25])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 28026b1e
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 14 Jan 2025 01:39:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
- t=1736818773; x=1768354773;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=0cedPuJPQkStIGe+OXyB1F52+EDOiClOdRu6CBFc8ew=;
- b=ulYOiJrGfwLLIQlaC5df0p8qTUHookFX4E1EVMGeB2zzuJEaXCcr3ywE
- pYgIAgWxZ7gAWt33PfS6ikic9TiKNRKx6wyF+zm+AVwOTILNPavNIM1Jr
- M8k8dFUxwxE0txLTiPla8I/1/5NfNhICw449qbzjF7h/dePAirdXDZhAo g=;
-X-IronPort-AV: E=Sophos;i="6.12,312,1728950400"; d="scan'208";a="458589578"
-Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO
- smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.43.8.6])
- by smtp-border-fw-2101.iad2.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jan 2025 01:39:28 +0000
-Received: from EX19MTAUWA001.ant.amazon.com [10.0.7.35:58030]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.14.236:2525]
- with esmtp (Farcaster)
- id 86aea7c8-dd91-44b2-aaf7-7a7eff52786e; Tue, 14 Jan 2025 01:39:28 +0000 (UTC)
-X-Farcaster-Flow-ID: 86aea7c8-dd91-44b2-aaf7-7a7eff52786e
-Received: from EX19D004ANA001.ant.amazon.com (10.37.240.138) by
- EX19MTAUWA001.ant.amazon.com (10.250.64.217) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
- Tue, 14 Jan 2025 01:39:27 +0000
-Received: from 6c7e67c6786f.amazon.com (10.119.11.99) by
- EX19D004ANA001.ant.amazon.com (10.37.240.138) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
- Tue, 14 Jan 2025 01:39:19 +0000
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
-To: <shaw.leon@gmail.com>
-CC: <alex.aring@gmail.com>, <andrew+netdev@lunn.ch>,
- <b.a.t.m.a.n@lists.open-mesh.org>, <bpf@vger.kernel.org>,
- <bridge@lists.linux.dev>, <davem@davemloft.net>, <donald.hunter@gmail.com>,
- <dsahern@kernel.org>, <edumazet@google.com>, <herbert@gondor.apana.org.au>,
- <horms@kernel.org>, <kuba@kernel.org>, <kuniyu@amazon.com>,
- <linux-can@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-kselftest@vger.kernel.org>, <linux-ppp@vger.kernel.org>,
- <linux-rdma@vger.kernel.org>, <linux-wireless@vger.kernel.org>,
- <linux-wpan@vger.kernel.org>, <miquel.raynal@bootlin.com>,
- <netdev@vger.kernel.org>, <osmocom-net-gprs@lists.osmocom.org>,
- <pabeni@redhat.com>, <shuah@kernel.org>, <stefan@datenfreihafen.org>,
- <steffen.klassert@secunet.com>, <wireguard@lists.zx2c4.com>
-Subject: Re: [PATCH net-next v8 01/11] rtnetlink: Lookup device in target
- netns when creating link
-Date: Tue, 14 Jan 2025 10:39:09 +0900
-Message-ID: <20250114013909.7102-1-kuniyu@amazon.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250113143719.7948-2-shaw.leon@gmail.com>
-References: <20250113143719.7948-2-shaw.leon@gmail.com>
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6f43c1fc;
+	Tue, 20 May 2025 19:44:01 +0000 (UTC)
+Received: from orbyte.nwl.cc (orbyte.nwl.cc [2001:41d0:e:133a::1])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a066d2b5
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Tue, 8 Apr 2025 09:38:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=nwl.cc;
+ s=mail2022; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
+ Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive;
+ bh=rwcIEfW9pJzdJoVCY6Sgo1trCmLuEW39Q/YDwIuECgI=; b=kibcLGqS4fCDjtX3aCt1TKqQaf
+ 3XAbVshHzHEUwJhHCVoqRkeoF5CH4PXIe+SY/sEe0TWH4sItMiMeOOwY8WMtXW4GxT4eNo+rIfYVn
+ NUPniy4Jx8oAFGDDJIf6/pavA5lkrMPLuNPOp24yYWVeat0nC17Ev1L6kOUih12S6eO/uSVTl16P9
+ yjDPmpBW4to8fKaUOqRLhPbPm8uEF4azPTbOevG7+ebKX/SsTqGWIDgo6xMkKOYujrDS5osOivw1i
+ XOmkpI4TU2lNq/o5/m8IRxC/Hoheb6aN9SeiHAtyDMuoD5XGWnhW4xq3GR9awG7ng5lepYPmyV0bZ
+ rt5m/0eg==;
+Received: from n0-1 by orbyte.nwl.cc with local (Exim 4.97.1)
+ (envelope-from <phil@nwl.cc>) id 1u25Pb-000000003jC-3mSr;
+ Tue, 08 Apr 2025 11:38:31 +0200
+Date: Tue, 8 Apr 2025 11:38:31 +0200
+From: Phil Sutter <phil@nwl.cc>
+To: Hangbin Liu <liuhangbin@gmail.com>
+Cc: netdev@vger.kernel.org, "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ Jakub Kicinski <kuba@kernel.org>, Shuah Khan <shuah@kernel.org>,
+ "David S. Miller" <davem@davemloft.net>,
+ Simon Horman <horms@kernel.org>, Florian Westphal <fw@strlen.de>,
+ Petr Mladek <pmladek@suse.com>,
+ Yoann Congal <yoann.congal@smile.fr>, wireguard@lists.zx2c4.com,
+ linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCHv6 net-next 1/2] wireguard: selftests: convert iptables to
+ nft
+Message-ID: <Z_Tul3J4zLoNAkaF@orbyte.nwl.cc>
+Mail-Followup-To: Phil Sutter <phil@nwl.cc>,
+ Hangbin Liu <liuhangbin@gmail.com>, netdev@vger.kernel.org,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ Jakub Kicinski <kuba@kernel.org>, Shuah Khan <shuah@kernel.org>,
+ "David S. Miller" <davem@davemloft.net>,
+ Simon Horman <horms@kernel.org>, Florian Westphal <fw@strlen.de>,
+ Petr Mladek <pmladek@suse.com>,
+ Yoann Congal <yoann.congal@smile.fr>, wireguard@lists.zx2c4.com,
+ linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250408081652.1330-1-liuhangbin@gmail.com>
+ <20250408081652.1330-2-liuhangbin@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.119.11.99]
-X-ClientProxiedBy: EX19D045UWA004.ant.amazon.com (10.13.139.91) To
- EX19D004ANA001.ant.amazon.com (10.37.240.138)
-X-Mailman-Approved-At: Tue, 20 May 2025 19:45:56 +0000
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250408081652.1330-2-liuhangbin@gmail.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -83,17 +70,14 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-From: Xiao Liang <shaw.leon@gmail.com>
-Date: Mon, 13 Jan 2025 22:37:09 +0800
-> When creating link, lookup for existing device in target net namespace
-> instead of current one.
-> For example, two links created by:
-> 
->   # ip link add dummy1 type dummy
->   # ip link add netns ns1 dummy1 type dummy
-> 
-> should have no conflict since they are in different namespaces.
-> 
-> Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
+Hi,
 
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+On Tue, Apr 08, 2025 at 08:16:51AM +0000, Hangbin Liu wrote:
+> Convert the selftest to nft as it is the replacement for iptables, which
+> is used by default in most releases.
+> 
+> Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+
+What are the changes since v5, please?
+
+Thanks, Phil
