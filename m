@@ -4,55 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 569EFC54ED0
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 09:18:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E125C54E65
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 09:18:04 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d8a10715;
-	Tue, 20 May 2025 19:43:44 +0000 (UTC)
-Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
- [209.85.166.70])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b72d651c
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 39c3cfbf;
+	Tue, 20 May 2025 23:00:23 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org
+ [2604:1380:4641:c500::1])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ff63752f
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 28 Mar 2025 23:20:05 +0000 (UTC)
-Received: by mail-io1-f70.google.com with SMTP id
- ca18e2360f4ac-85dd46b20bfso258666039f.2
- for <wireguard@lists.zx2c4.com>; Fri, 28 Mar 2025 16:20:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743204004; x=1743808804;
- h=to:from:subject:message-id:in-reply-to:date:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yCVG857K8spOJ4YsQYg/bfS5ks2fAnUWHrw003r3ztI=;
- b=dkjKCUq9Rn+tOBfvwYGHr2GQIPo5IwshIRsugbJ02jLGGqnAz80WGEPtvGLvoFLKFb
- 76QZUtiQotg7oZeSAoUO5+xgwR3vlfq8oQ7dQNKrwX8X1eKB7Ld42dwu4p3vK/IxeQD7
- wBCcoK5rPGs+NvSGkGN/eBhyyIeh34JxzIQpTva7Pux+3GOohUzyL3baLmpVbXlt5U1J
- xpkTfqzl5mPegXW3wUUH4uZEQ8djojLqDf8t7SOo3a4V1AWzZWfeFPar9IaN3nTXwpZh
- EntETYf8aoFXDfqm4ix16DEi1lW2iRe+NujCbTTzO45ZGVl7evxHcnHlMOfXIQ6PizPV
- r4KA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVXl8gCdTF9tr4LZHY11RaGNSG5903aFBNrLZwy+FCbOi4yW706fjA/CHk0jm/PrWKmHHv5WG9Trkk=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YysKWx9q/uoa9LO+dly4XSJxZMDyUY2hPSZFYIPCjwnhXD8u+mO
- SBeu2Cy2WZ3c+e/tui32Lh4zuHrw1YYLlwDuGaJz7Oe2RB5s8RFulwtX8886kwbMVvhVI5fOK7l
- xNvzt4CDX8M7chimskMtWb8l66N4UwTEi5i25nIk3iQgSSv8zp77Pp6o=
-X-Google-Smtp-Source: AGHT+IGBjmKtWhEv7cg6OyvtdjVUV7yXiaEddspakjNLmB55uy4vp7Q5fbPmsWneys0zmDsOBerGwJgwNvWr52PoFKTGX4KCoLBw
+ Tue, 20 May 2025 22:59:46 +0000 (UTC)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id B65595C5675
+ for <wireguard@lists.zx2c4.com>; Tue, 20 May 2025 22:57:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8E5C4CEEF
+ for <wireguard@lists.zx2c4.com>; Tue, 20 May 2025 22:59:44 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="h3Hs/8/q"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1747781982;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gWpDt/rwNM/nig7k6lt+szP4lNhhSqQ0Y3OUIZSEPzM=;
+ b=h3Hs/8/qexJXzoocs5pdVf2FUOdTnYcL4sw/+oB5VSPg2pwS3RyBL7INqQeBOIv4FGG5Cy
+ 01Y2XAao2cXqegAPZVmUYrZOLMFDR/FPBhH0WniqCr6Bdr8hdHlFpgr8CfugV32RfbnQqW
+ AsvMuPoD2pUGv0kiUjwiePXJUBBcBBU=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 30e431c3
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 20 May 2025 22:59:42 +0000 (UTC)
+Received: by mail-oi1-f169.google.com with SMTP id
+ 5614622812f47-40337dd3847so4287826b6e.0
+ for <wireguard@lists.zx2c4.com>; Tue, 20 May 2025 15:59:42 -0700 (PDT)
+X-Gm-Message-State: AOJu0YyHfsXnseHxumMqYYDncpilqlEoaup1lpBwIeiuylcLmTf8+spj
+ pXDUf2ys+p6Zny5JUpsgv/r/ZxsTN2QY/pZiS9NRr+QwWYPEGSkY9gOHcS8Dhny4cAms4LcPgyr
+ reJsuGjD2O+wzhB/RQza8aWzWuXlYUDQ=
+X-Google-Smtp-Source: AGHT+IHNjjRmUw8IqnOOXMKDB+fdR31hvX7EyCcrH/ReMoIR8rY7PYF9de/2fj/yEoK59YnMRUutLhySUOCxrONXAUQ=
+X-Received: by 2002:a05:6808:83ae:b0:3f8:1df6:40f with SMTP id
+ 5614622812f47-404da72460fmr8470673b6e.15.1747781981726; Tue, 20 May 2025
+ 15:59:41 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 2002:a05:6e02:2144:b0:3d4:6ff4:260a with SMTP id
- e9e14a558f8ab-3d5e08e9ecdmr15302375ab.2.1743204003938; Fri, 28 Mar 2025
- 16:20:03 -0700 (PDT)
-Date: Fri, 28 Mar 2025 16:20:03 -0700
-In-Reply-To: <66fa2708.050a0220.aab67.0025.GAE@google.com>
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <67e72ea3.050a0220.1547ec.0000.GAE@google.com>
-Subject: Re: [syzbot] [wireguard?] INFO: task hung in wg_destruct (2)
-From: syzbot <syzbot+7da6c19dc528c2ebc612@syzkaller.appspotmail.com>
-To: Jason@zx2c4.com, bsegall@google.com, davem@davemloft.net, 
- dietmar.eggemann@arm.com, dsahern@kernel.org, edumazet@google.com, 
- jason@zx2c4.com, juri.lelli@redhat.com, kuba@kernel.org, 
- linux-kernel@vger.kernel.org, mgorman@suse.de, mingo@redhat.com, 
- netdev@vger.kernel.org, pabeni@redhat.com, peterz@infradead.org, 
- rostedt@goodmis.org, syzkaller-bugs@googlegroups.com, 
- vincent.guittot@linaro.org, vschneid@redhat.com, wireguard@lists.zx2c4.com
+References: <20240709090728.872-1-chipitsine@gmail.com>
+ <20240709090728.872-2-chipitsine@gmail.com>
+In-Reply-To: <20240709090728.872-2-chipitsine@gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 21 May 2025 00:59:30 +0200
+X-Gmail-Original-Message-ID: <CAHmME9oFTzvodu0N3-wsOafnTUUF+P1C-cXWEmSjjXP9pHx+ug@mail.gmail.com>
+X-Gm-Features: AX0GCFu-airl6LmmFq6UF-m_U9OIfz2Oz5DzJ5ImGo6TDq57zOD4VX0FjelhXB8
+Message-ID: <CAHmME9oFTzvodu0N3-wsOafnTUUF+P1C-cXWEmSjjXP9pHx+ug@mail.gmail.com>
+Subject: Re: [PATCH 1/1] src/config.c: handle strdup failure
+To: Ilia Shipitsin <chipitsine@gmail.com>
+Cc: wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -68,23 +73,4 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-syzbot suspects this issue was fixed by commit:
-
-commit 66951e4860d3c688bfa550ea4a19635b57e00eca
-Author: Peter Zijlstra <peterz@infradead.org>
-Date:   Mon Jan 13 12:50:11 2025 +0000
-
-    sched/fair: Fix update_cfs_group() vs DELAY_DEQUEUE
-
-bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=16f07804580000
-start commit:   e32cde8d2bd7 Merge tag 'sched_ext-for-6.12-rc1-fixes-1' of..
-git tree:       upstream
-kernel config:  https://syzkaller.appspot.com/x/.config?x=286b31f2cf1c36b5
-dashboard link: https://syzkaller.appspot.com/bug?extid=7da6c19dc528c2ebc612
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=146ae580580000
-
-If the result looks correct, please mark the issue as fixed by replying with:
-
-#syz fix: sched/fair: Fix update_cfs_group() vs DELAY_DEQUEUE
-
-For information about bisection process see: https://goo.gl/tpsmEJ#bisection
+Applied, thanks for the patch.
