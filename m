@@ -4,68 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BDD7C2D0CD
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 14:22:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 741E6C54E71
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 14:22:09 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 072da8f6;
-	Tue, 20 May 2025 19:55:11 +0000 (UTC)
-Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2cd3f2d8
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 07e4b596;
+	Tue, 20 May 2025 23:25:14 +0000 (UTC)
+Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 125a7fa2
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 24 Feb 2025 04:14:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
- s=onoh2408; t=1740370417;
- bh=QUnxINV4h0+72Ou0M9jqMPGNZyrytkwHTR/8PMwxqYM=;
- h=From:To:Subject:Date:Message-ID:MIME-Version;
- b=c8kZ0IbrnJln1gGF2ss+9B9o962Jy1/Fts1QmfBmJvqOc52a5LmNXVK5NcvFreDO9
- 1Vsf5Ivqc6Paj2fo86XtC6HEDKyySPgHCI60lLKoaxiJ+eKHZVUV89s8/9733RXC0Z
- Wqt4/eNAhX1QezmoGXIGrj6KXm+o1PT7SJxg5+Vs=
-X-QQ-mid: bizesmtpip4t1740370367th0m8ul
-X-QQ-Originating-IP: YACropfZKbFnsY+WYSwIdCcFXQBCfwM3OPJ2699B36A=
-Received: from localhost.localdomain ( [localhost])
- by bizesmtp.qq.com (ESMTP) with 
- id ; Mon, 24 Feb 2025 12:12:45 +0800 (CST)
-X-QQ-SSF: 0002000000000000000000000000000
-X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 210867971091029739
-From: WangYuli <wangyuli@uniontech.com>
-To: Jason@zx2c4.com,
-	shuah@kernel.org
-Cc: wangyuli@uniontech.com, horms@kernel.org, tglx@linutronix.de,
- jstultz@google.com, wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org,
- zhanjun@uniontech.com, niecheng1@uniontech.com, guanwentao@uniontech.com,
- chenlinxuan@uniontech.com
-Subject: [RESEND PATCH v2] wireguard: selftests: Cleanup
- CONFIG_UBSAN_SANITIZE_ALL
-Date: Mon, 24 Feb 2025 12:12:38 +0800
-Message-ID: <6945896DD80A71BD+20250224041238.45039-1-wangyuli@uniontech.com>
-X-Mailer: git-send-email 2.47.2
+ Tue, 20 May 2025 23:25:10 +0000 (UTC)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id C8E4A4A1EC;
+ Tue, 20 May 2025 23:25:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21AEAC4CEE9;
+ Tue, 20 May 2025 23:25:08 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="RV9O4OWG"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1747783506;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=xuu/7fl+tvtLIiwh+f++ddFznWSzjojrQ3mv7QSHujE=;
+ b=RV9O4OWGpOsDv0b941CB9fcNkOMiPf2bglBs7GjAWJjhMu3xLREPvgsRWIfC8jHxzhcLwf
+ lMN57OCXhxhEScopjHlW1W6Y4SuP0Q75dGz2MILftnatZp+nLWHXYRaEFFFV4YRJlP1XYQ
+ 5fnenIq989iGrT9Z+ial96fMTvOvtfw=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 67eaa621
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Tue, 20 May 2025 23:25:06 +0000 (UTC)
+Date: Wed, 21 May 2025 01:25:04 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Jordan Rife <jordan@jrife.io>
+Cc: wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
+ Jakub Kicinski <kuba@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>
+Subject: Re: [RESEND PATCH v3 net-next] wireguard: allowedips: Add
+ WGALLOWEDIP_F_REMOVE_ME flag
+Message-ID: <aC0PUO0V_osG_ZrN@zx2c4.com>
+References: <20250517192955.594735-1-jordan@jrife.io>
+ <20250517192955.594735-2-jordan@jrife.io>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: bizesmtpip:uniontech.com:qybglogicsvrgz:qybglogicsvrgz8a-1
-X-QQ-XMAILINFO: MPAlP4yRn0xgUjN0gIBL01n/MBhEZCsEcAKtVOEh6kVYgpA/OKfZoppR
- Gy6EExKtL9VBD3aHP+/Q82Y9EGvQGXbmdW9Dr5czGaJ9imlQUVxv4dKorSyUO2inX3k2Mfl
- fFnOhKhkLoPx+oP/McSyZ+l3VGyZKW1xPzZRxzQSlgA+kJOQ97bRtTfdJjWwKlL0JXNIHIX
- lJuCO/KDy2DDseG20VpucLPWAxrA+0RlGZNa7i0xVJdNx/oTKC0bCxna4bY4wx6sjpG+g1v
- UdmOZJOD4aU4rNteih3M1YsLbdO+BTHId2NDmotndPq0ycWZHyqYLFUfevkkmaRMfY4ABZ1
- 1shpjAvb/otOTk3+WRxGeZPSNWm5O+9g2NvAiu7YednSYioZV+7tBLkxbc2ClJ2+3oSsyBg
- WM9hCFuo9wgrHFx18fP6L6U3qIjOTZlXO4bhFqJX4vSLIDeVMGLXxOKVbM9JpLjEtp89sP+
- ISNQU29BpvyLC55XzFeBcWtlzZ6VC0hwhrOw8RV7GOiY5yWo79kcpYGtQPXbE9cOddyaiLf
- L1gXJf4eo1WsCynmtGsdvz8pzxaPcw5kXjJmd9VkS6ndRDD2WjpQpluOvJFxWdaWw55r9aT
- Zk04ixLKjQC0JdM7q/a/OAGsaTWwcYMxy3jVdWCXb1iADItmua6w0ZxRis0OC1IYsIoBnOU
- PLdn8fqOMde0XYJtnI/dpztOfBPH7v8FRGiuH7m3bcgQYmjjhXLOXYLyGkNG3eBfiyXH9vG
- 6pETQth2Blt0TqE85r12KEatLXQ+bzsNUAUCGY+3nVArClmJTsIuFba8UuakeYqnLr2x20y
- 310j6D1CE1saKKrSccQ1+xlTJ3pkRbBPROOM1SioXYH3pR3m2Bfz7zZm647YK+3crx4XEGx
- d+s7riJflmY3lUteAhitHc0suL1r7yRx8P6iWLClOJaKMN1FR/BgOfXXoPBEUGPXHRPJ+TV
- nJBqRcER7zOpLkDzQ3u8JxgrJlwWOami8Y9JsAquIrW8b02uNToVFxC5advjrl6jVBjUVp1
- PoWxtjAtwjvg3wNEVIClI/Lq1376VgH/wl7e7XXPrlclnjj/SKDJErt/5Iof7uUEqTptrTf
- w==
-X-QQ-XMRINFO: NyFYKkN4Ny6FSmKK/uo/jdU=
-X-QQ-RECHKSPAM: 0
-X-Mailman-Approved-At: Tue, 20 May 2025 19:52:08 +0000
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250517192955.594735-2-jordan@jrife.io>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -80,33 +62,21 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Commit 918327e9b7ff ("ubsan: Remove CONFIG_UBSAN_SANITIZE_ALL")
-removed the CONFIG_UBSAN_SANITIZE_ALL configuration option.
-Eliminate invalid configurations to improve code readability.
+On Sat, May 17, 2025 at 12:29:52PM -0700, Jordan Rife wrote:
+> Introduce a new flag called WGALLOWEDIP_F_REMOVE_ME which in the same
+> way that WGPEER_F_REMOVE_ME allows a user to remove a single peer from
+> a WireGuard device's configuration allows a user to remove an ip from a
+> peer's set of allowed ips. This enables incremental updates to a
+> device's configuration without any connectivity blips or messy
+> workarounds.
+ 
+Applied as:
+  https://git.zx2c4.com/wireguard-linux/commit/?h=devel&id=8f697b71a615c5dfff98fe93554036a2643d1976
 
-Link: https://lore.kernel.org/all/20250123105743.GO395043@kernel.org/
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
----
-Changelog:
- *v1->v2: Add Simon Horman's "Reviewed-by" tag.
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
----
- tools/testing/selftests/wireguard/qemu/debug.config | 1 -
- 1 file changed, 1 deletion(-)
+And the userspace changes have been released already:
+  https://lists.zx2c4.com/pipermail/wireguard/2025-May/008789.html
 
-diff --git a/tools/testing/selftests/wireguard/qemu/debug.config b/tools/testing/selftests/wireguard/qemu/debug.config
-index 139fd9aa8b12..828f14300d0a 100644
---- a/tools/testing/selftests/wireguard/qemu/debug.config
-+++ b/tools/testing/selftests/wireguard/qemu/debug.config
-@@ -22,7 +22,6 @@ CONFIG_HAVE_ARCH_KASAN=y
- CONFIG_KASAN=y
- CONFIG_KASAN_INLINE=y
- CONFIG_UBSAN=y
--CONFIG_UBSAN_SANITIZE_ALL=y
- CONFIG_DEBUG_KMEMLEAK=y
- CONFIG_DEBUG_STACK_USAGE=y
- CONFIG_DEBUG_SHIRQ=y
--- 
-2.47.2
+Thanks for this! And sorry it took so long to get it applied. I'll send
+this up via net-next in a few days after a bunch of testing.
 
+Jason
