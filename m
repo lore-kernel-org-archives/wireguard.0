@@ -4,50 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 741E6C54E71
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 14:22:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CC1EC54ED0
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 14:22:10 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 07e4b596;
-	Tue, 20 May 2025 23:25:14 +0000 (UTC)
-Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 125a7fa2
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2c10ea49;
+	Tue, 20 May 2025 23:22:05 +0000 (UTC)
+Received: from tor.source.kernel.org (tor.source.kernel.org
+ [2600:3c04:e001:324:0:1991:8:25])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 474ecebf
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 20 May 2025 23:25:10 +0000 (UTC)
+ Tue, 20 May 2025 23:22:01 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id C8E4A4A1EC;
- Tue, 20 May 2025 23:25:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21AEAC4CEE9;
- Tue, 20 May 2025 23:25:08 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 06035614B8
+ for <wireguard@lists.zx2c4.com>; Tue, 20 May 2025 23:22:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C485C4CEE9
+ for <wireguard@lists.zx2c4.com>; Tue, 20 May 2025 23:21:59 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
  dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="RV9O4OWG"
+ header.b="dkCkqUg5"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1747783506;
+ t=1747783317;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xuu/7fl+tvtLIiwh+f++ddFznWSzjojrQ3mv7QSHujE=;
- b=RV9O4OWGpOsDv0b941CB9fcNkOMiPf2bglBs7GjAWJjhMu3xLREPvgsRWIfC8jHxzhcLwf
- lMN57OCXhxhEScopjHlW1W6Y4SuP0Q75dGz2MILftnatZp+nLWHXYRaEFFFV4YRJlP1XYQ
- 5fnenIq989iGrT9Z+ial96fMTvOvtfw=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 67eaa621
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Tue, 20 May 2025 23:25:06 +0000 (UTC)
-Date: Wed, 21 May 2025 01:25:04 +0200
+ to:to:cc:mime-version:mime-version:content-type:content-type;
+ bh=jJTt0J77G8xE4lODgmNYOAQO4ubazvBrm3lXy2NT1X8=;
+ b=dkCkqUg52YXZ0vBKu+wC1zoPee12M2jvl380Z6O0rUNFaD2Njdb9CKNmSKdPz4S/ZaUzje
+ Q8e+9Rn69ZPAfDs2QnubpaTORsJwD5i2NE18ETUvnsfBIweodZOxpPCvFiqMgT42c+llCA
+ vC0ciD0zmtL80yZROGaOGqDYn3+bgtM=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 622cd0d3
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 20 May 2025 23:21:57 +0000 (UTC)
+Date: Wed, 21 May 2025 01:21:55 +0200
+Message-ID: <5343c669ed36696c5dde065a1675a298@thinkpad.zx2c4.com>
+To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Jordan Rife <jordan@jrife.io>
-Cc: wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- Jakub Kicinski <kuba@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>
-Subject: Re: [RESEND PATCH v3 net-next] wireguard: allowedips: Add
- WGALLOWEDIP_F_REMOVE_ME flag
-Message-ID: <aC0PUO0V_osG_ZrN@zx2c4.com>
-References: <20250517192955.594735-1-jordan@jrife.io>
- <20250517192955.594735-2-jordan@jrife.io>
+Subject: [ANNOUNCE] wireguard-tools v1.0.20250521 released 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250517192955.594735-2-jordan@jrife.io>
+Content-Type: text/plain; charset=UTF-8
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -62,21 +56,88 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Sat, May 17, 2025 at 12:29:52PM -0700, Jordan Rife wrote:
-> Introduce a new flag called WGALLOWEDIP_F_REMOVE_ME which in the same
-> way that WGPEER_F_REMOVE_ME allows a user to remove a single peer from
-> a WireGuard device's configuration allows a user to remove an ip from a
-> peer's set of allowed ips. This enables incremental updates to a
-> device's configuration without any connectivity blips or messy
-> workarounds.
- 
-Applied as:
-  https://git.zx2c4.com/wireguard-linux/commit/?h=devel&id=8f697b71a615c5dfff98fe93554036a2643d1976
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-And the userspace changes have been released already:
-  https://lists.zx2c4.com/pipermail/wireguard/2025-May/008789.html
+Hello,
 
-Thanks for this! And sorry it took so long to get it applied. I'll send
-this up via net-next in a few days after a bunch of testing.
+A new version, v1.0.20250521, of wireguard-tools has been tagged in the git
+repository, containing various required userspace utilities, such as the
+wg(8) and wg-quick(8) commands and documentation.
 
-Jason
+== Changes ==
+
+  * ipc: use more clever PnP enumerator
+  * embeddable-wg-library: add named wg_endpoint union
+  * reresolve-dns: use $EPOCHSECONDS instead of $(date +%s)
+  * wg-quick: android: use right regex for host-vs-IP
+  * global: dual license core files as MIT for FreeBSD
+  * wg-quick: linux: prevent traffic from momentarily leaking into tunnel
+  * ipc: freebsd: move if_wg path to reflect new in-tree location
+  * show: apply const to right part of pointer
+  * ipc: freebsd: avoid leaking memory in kernel_get_device()
+  * ipc: freebsd: NULL out some freed memory in kernel_set_device()
+  * show: fix show all endpoints output
+  * man: set private key in PreUp rather than PostUp
+  * ipc: linux: enforce IFNAMSIZ limit
+  * ipc: freebsd: use AF_LOCAL for the control socket
+  * wg-quick: linux: add 'dev' to 'ip link add' to avoid keyword conflicts
+  * config: handle strdup failure
+  
+  * wg-quick: run PreUp hook after creating interface
+  
+  This makes PreUp actually useful.
+  
+  * ipc: linux: support incremental allowed ips updates
+  * ipc: add stub for allowedips flags on other platforms
+  
+  These two are neat and worth mentioning. Soon it will be possible to run:
+  
+    # wg set wg0 peer ... allowed-ips +1.2.3.4/32,-2.4.6.8/32
+  
+  in order to add and remove allowedips without first clearing all of them.
+  
+
+This release contains commits from: Jason A. Donenfeld, Kyle Evans, 
+TriangleSnake, Tom Yan, Mikael Magnusson, Jordan Rife, Ilia Shipitsin, Dmitry 
+Selivanov, and Daniel Gröber.
+
+As always, the source is available at https://git.zx2c4.com/wireguard-tools/ and
+information about the project is available at https://www.wireguard.com/ .
+
+This release is available in compressed tarball form here:
+  https://git.zx2c4.com/wireguard-tools/snapshot/wireguard-tools-1.0.20250521.tar.xz
+  SHA2-256: b6f2628b85b1b23cc06517ec9c74f82d52c4cdbd020f3dd2f00c972a1782950e
+
+A PGP signature of that file decompressed is available here:
+  https://git.zx2c4.com/wireguard-tools/snapshot/wireguard-tools-1.0.20250521.tar.asc
+  Signing key: AB9942E6D4A4CFC3412620A749FC7012A5DE03AE
+  Remember to unxz the tarball before verifying the signature.
+
+If you're a package maintainer, please bump your package version. If you're a
+user, the WireGuard team welcomes any and all feedback on this latest version.
+
+Finally, WireGuard development thrives on donations. By popular demand, we
+have a webpage for this: https://www.wireguard.com/donations/
+
+Thank you,
+Jason Donenfeld
+
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAmgtDoIQHGphc29uQHp4
+MmM0LmNvbQAKCRBJ/HASpd4DrqIuEACLc6L9YTFeIdMux9b4z2D7EiiX2+7+skp5
+S0fEh07EelPTbPFPbLswvogyJrOK7SWXfLdeHgPSSxBFH95OZUhdnorM8XfOC5ST
+VmMktVy9UZwxmrCVDd401rXRdZpkv4Dfob9iDU7McOcLoV+QnugEofljRuQbQExy
+LB7e99hj06TP8eFBsQydfxv8OGSHu9H61ypVHCESZFFheFCfcJWjo8OzQu+CuhFl
+fIklPiiAQL3ZQQA+v7r6wm93QuYwyQKfwNUC4F0quwwDMtWpgKs2hXRxMa93fZ3W
+f2GlemJVWO5bj7VQKf6qZpILkCOLeIXPvAi8PIZX5QOvX2Yon88KiCw2caZqrm67
+XWoqD75c1xZX78wHR0xniyAi5w12Hzpcnci7mBm7RBNBDN15ZQY01V5t4H6VulM2
+uOUGspm/rcK1tCYDFV9DWAFon6881JJllXOe30n/dBsE0mNL2r4k5R5qCNxbWMmB
+vp1qP6Thu3XO1vLo42A5EmJEbu04blCSVi3BKfby/21VTzCbrgufvv3JKAauTFEz
+mmNwP1OW927/4C0aypkxUSkAv8aOwfrC+VWX5UAiFm9Zirc1nBgGFGjxZDQ+biV5
+FT4zoEfqQQJ2pwZQq2leNKiFQE7pIcbvmY1O7LB1WXA92Ba4pGk7m1fP0Q8jLl7L
+YBEORDlgig==
+=de0O
+-----END PGP SIGNATURE-----
