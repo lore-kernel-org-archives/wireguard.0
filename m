@@ -4,76 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B9FDC54E90
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 23:16:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C99C7C54E90
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 May 2025 23:51:59 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2b9ec4ad;
-	Wed, 21 May 2025 23:13:29 +0000 (UTC)
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com
- [2607:f8b0:4864:20::633])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 268ef25a
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 24c31874;
+	Wed, 21 May 2025 23:51:58 +0000 (UTC)
+Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7bcd2cab
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 21 May 2025 23:13:27 +0000 (UTC)
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-231ba912ba1so7431705ad.2
- for <wireguard@lists.zx2c4.com>; Wed, 21 May 2025 16:13:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=jrife-io.20230601.gappssmtp.com; s=20230601; t=1747869206; x=1748474006;
- darn=lists.zx2c4.com; 
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=wKMJ2fz3N6fpkcvc501kYEjftfIcABz7h6kFhTzhFWo=;
- b=jTMJFNB0Kl0NXFY4OzWMz5v3NOzW8Lyoa9ydX8xa75cxXpLgNWZjdUte8p2m/MczOy
- gRmfojSDtTOSTH4Tu7iDWJj1PldZ3xLn1ZidPRnSascb8Bb3RB8X4Bk51j9oc5uzeXrx
- jhJACO5ioBvbdnYkme+XFHCZpzyAaoozY9hL6rWxauqOarYJ/ADSgRpbM338zF3lgjTA
- Uyv0ZSCeQREzY3Gsg5uwWYKWTtxJBDvXzLLRDmi67Mjk4pIxV5NLx0COgEO5/0heOxZg
- XsXiQhrEJFHdKK9S5ptPD5IlxVaBbCu6R+EKcjiDFFOcL0a7p0fl/vEqfBDg1qBZQGpa
- a0Tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747869206; x=1748474006;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wKMJ2fz3N6fpkcvc501kYEjftfIcABz7h6kFhTzhFWo=;
- b=vxvNBoWuxcQl0QdRakFqyg+CDlodu5ll82QCW2bRASFhSEjD7U56mb04IBejiyYRcv
- EBzMULKS0mZ96e8sO9kXLZbsmrDs7VAKTpODO2f1ehavsA0/o1zbIPp9UTF1LVoYQiyC
- p9H6NGtjkPNuQ6X8hwT4tO6cfpkLON8PYJEyNW4vFQ3NXIOBBzF2fglSrKudG5VFziPu
- EuTvtlJfmZ/F87gquj6d1Wx4Md+Oho+4pv+dqxfLLoYPwt59q/KsRPCtxFIrJHTFsIO4
- aceDp/PGI/tqwITLCDlr6hU9pUxw0ix6u9H86RqU3QUvJN9bnCN7iDueRXLicYpJOMVz
- 5jZg==
-X-Gm-Message-State: AOJu0YwzgO1OmLGn+GIonyy4UAPJZAPbT2ShawQdgcD3ZBxLELf9cPwr
- 60j9PSeICpXk8ZzmH+nJYce7QRxchtO8Q7i0Hzyu/CqmSyBOS6atvKGfWD8s+gerF4kPctaTi6A
- Dq0b0x1I=
-X-Gm-Gg: ASbGncs1DnGwCtzR6XhAeIxKe2tiijWvFrBeZFN9c5maAEkkAYkuSa5SGLHLsSRKM8z
- zhCCOH6cwumMcSyVAAigxoJkOrprl2qsnKUTYsORLUoQcJMCiPtjLJo+GtlLUxNKOcqIRf+q3IA
- jpxRU6a3skJyu/YND+S+vbO9MhRyJtuziTcqZddWeQbnn9y/W06kq4P24n00h2U1FQKy3jnE1n/
- Ua1SZNtBTdd7rZMeKYh7r3YBSc6vHY7wQELjQi3ljxagTxWSEFzGqU5u7uLh8WEPpAuiigOaeke
- eGw8xBin89mKJEql8qr1kSTOkApE4LKOpY5ukw==
-X-Google-Smtp-Source: AGHT+IHJqsJtAdXfzDjopZWWI8xEjT0BiyBGtq9CFsmyZluNMt3NT7LTnT7qs3VJkkcckq91qpX16A==
-X-Received: by 2002:a17:903:41d0:b0:22f:d4e7:e7ca with SMTP id
- d9443c01a7336-231d43b2377mr120368645ad.6.1747869205985; 
- Wed, 21 May 2025 16:13:25 -0700 (PDT)
-Received: from t14 ([2607:fb91:1be5:f4d8:99e5:a661:f426:884c])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-231d4ed2568sm97882475ad.214.2025.05.21.16.13.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 May 2025 16:13:25 -0700 (PDT)
-Date: Wed, 21 May 2025 16:13:19 -0700
-From: Jordan Rife <jordan@jrife.io>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+ Wed, 21 May 2025 23:51:57 +0000 (UTC)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id 2C46E43743
+ for <wireguard@lists.zx2c4.com>; Wed, 21 May 2025 23:51:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3DBCC4CEEA
+ for <wireguard@lists.zx2c4.com>; Wed, 21 May 2025 23:51:54 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="jhwk5RpD"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1747871511;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=shHXBB3coCQypIwl6wJ0Ke65sD39lWEF8uZBG2+9XW8=;
+ b=jhwk5RpDifeoaHOeg7vq27IMcKo7cYf7XbCVjPd8qD173LFgshIgLoSMGCyd0KUu6VjbLq
+ WbMhcbLInSxQRue+xjPRQX6bKF7gB8UcHQB/ZRfXumiMiuhYyHqGzQzLoDpSr7rkGHPYZM
+ 1CWzB2NH+pSSHajc5ogJw0BLTuqQyDA=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 9916bb35
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 21 May 2025 23:51:51 +0000 (UTC)
+Received: by mail-oi1-f171.google.com with SMTP id
+ 5614622812f47-40356cb3352so5179530b6e.1
+ for <wireguard@lists.zx2c4.com>; Wed, 21 May 2025 16:51:51 -0700 (PDT)
+X-Gm-Message-State: AOJu0YxtKEArmSGAB9iHfe8y7UwI8lDUCHgD6FGxm78TM7lqcztb9Nwq
+ r7HUOHAzfzabWmgH6YGBN8XncKgbGeTEYsUGU64viXJCEhWr88lP67zyZ7aiJ8kD6tmwZ29Q/1K
+ 0cAYR3eKsZv6SczqKNuxIN1dyL4rZ+Mo=
+X-Google-Smtp-Source: AGHT+IEIwHNcIpd5V7g/BVe78OFddhwilZu8M9OB/QCWuixELJ53rxcsxekdN+C+d28lwhuGnID+84vasEalnWbuMXI=
+X-Received: by 2002:a05:6808:3090:b0:3f9:176a:3958 with SMTP id
+ 5614622812f47-404cd6a9338mr15020638b6e.11.1747871510514; Wed, 21 May 2025
+ 16:51:50 -0700 (PDT)
+MIME-Version: 1.0
+References: <20250517192955.594735-1-jordan@jrife.io>
+ <aCzirk7xt3K-5_ql@zx2c4.com> <aCzvxmD5eHRTIoAF@zx2c4.com>
+ <vq4hbaffjqdgdvzszf5j56mikssy2v2qtqn2s5vxap3q5gi4kz@ydrbhsdfeocr>
+In-Reply-To: <vq4hbaffjqdgdvzszf5j56mikssy2v2qtqn2s5vxap3q5gi4kz@ydrbhsdfeocr>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 22 May 2025 01:51:39 +0200
+X-Gmail-Original-Message-ID: <CAHmME9rbRpNZ1pP-y_=EzPxRMqBbPobjpBazec+swr+2wwDCWg@mail.gmail.com>
+X-Gm-Features: AX0GCFuMANmqfDSG4JH6SXWxpZ4_QbTk3_0NFmDMO-JkLf12gfBrPBxF6YfJbtY
+Message-ID: <CAHmME9rbRpNZ1pP-y_=EzPxRMqBbPobjpBazec+swr+2wwDCWg@mail.gmail.com>
+Subject: Re: [RESEND PATCH v1 wireguard-tools] ipc: linux: Support incremental
+ allowed ips updates
+To: Jordan Rife <jordan@jrife.io>
 Cc: wireguard@lists.zx2c4.com, netdev@vger.kernel.org, 
  Jakub Kicinski <kuba@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>
-Subject: Re: [RESEND PATCH v3 net-next] wireguard: allowedips: Add
- WGALLOWEDIP_F_REMOVE_ME flag
-Message-ID: <p6wsy4m7obq3apegcxpgpp4wmjgahy2d7dzkjb6af46k4eptvt@dpxpfj7sst76>
-References: <20250517192955.594735-1-jordan@jrife.io>
- <20250517192955.594735-2-jordan@jrife.io>
- <aC0PUO0V_osG_ZrN@zx2c4.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aC0PUO0V_osG_ZrN@zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -88,26 +77,25 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, May 21, 2025 at 01:25:04AM +0200, Jason A. Donenfeld wrote:
-> On Sat, May 17, 2025 at 12:29:52PM -0700, Jordan Rife wrote:
-> > Introduce a new flag called WGALLOWEDIP_F_REMOVE_ME which in the same
-> > way that WGPEER_F_REMOVE_ME allows a user to remove a single peer from
-> > a WireGuard device's configuration allows a user to remove an ip from a
-> > peer's set of allowed ips. This enables incremental updates to a
-> > device's configuration without any connectivity blips or messy
-> > workarounds.
->  
-> Applied as:
->   https://git.zx2c4.com/wireguard-linux/commit/?h=devel&id=8f697b71a615c5dfff98fe93554036a2643d1976
-> 
-> And the userspace changes have been released already:
->   https://lists.zx2c4.com/pipermail/wireguard/2025-May/008789.html
-> 
-> Thanks for this! And sorry it took so long to get it applied. I'll send
-> this up via net-next in a few days after a bunch of testing.
-> 
-> Jason
+On Thu, May 22, 2025 at 1:02=E2=80=AFAM Jordan Rife <jordan@jrife.io> wrote=
+:
+> > > Merged here:
+> > > https://git.zx2c4.com/wireguard-tools/commit/?id=3D0788f90810efde88cf=
+a07ed96e7eca77c7f2eedd
+> > >
+> > > With a followup here:
+> > > https://git.zx2c4.com/wireguard-tools/commit/?id=3Ddce8ac6e2fa30f8b07=
+e84859f244f81b3c6b2353
+> >
+> > Also,
+> > https://git.zx2c4.com/wireguard-go/commit/?id=3D256bcbd70d5b4eaae2a9f21=
+a9889498c0f89041c
+>
+> Nice, cool to see this extended to wireguard-go as well. As a follow up,
+> I was planning to also create a patch for golang.zx2c4.com/wireguard/wgct=
+rl
+> so the feature can be used from there too.
 
-No problem, we all get busy :). Thanks for applying.
+Wonderful, please do! Looking forward to merging that.
 
-Jordan
+There's already an open PR in FreeBSD too.
