@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28649C54756
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 22 May 2025 04:34:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7E8FC54ED0
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 23 May 2025 17:11:01 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2fc5a10c;
-	Thu, 22 May 2025 04:34:56 +0000 (UTC)
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com
- [2607:f8b0:4864:20::430])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b660cfdc
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8069bf33;
+	Fri, 23 May 2025 17:10:59 +0000 (UTC)
+Received: from dormouse.ash.relay.mailchannels.net
+ (dormouse.ash.relay.mailchannels.net [23.83.222.50])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1c62ef30
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 22 May 2025 04:34:54 +0000 (UTC)
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-742c035f2afso3189625b3a.2
- for <wireguard@lists.zx2c4.com>; Wed, 21 May 2025 21:34:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747888493; x=1748493293; darn=lists.zx2c4.com;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=Dky3FIQgBX8aNP78AifCGTL6ccyTVByog03wzzXO4zc=;
- b=iJND7X/6ctqt6oBcvgzwOx2prXZERTBjM01W8W6a+Euy1Br2Vl+FaQpQQn3RplMJbq
- Lii4s4rWG2VjYk14e2wXElFkqG5g+thE9aPunv+YlzxhhNrZUJrRy2Xs8cZkeR9GTNs4
- QhpajCTTT0b3G3r7oNLYraMzFpGEAvneZQ2sP23KL8+JTUDqhtQrd4DPIIUd5p0Y5JQl
- LnKoh8THjshU0Pfax8fN12fNPZ4ocRxjw1O5z20i62zCg9b/+olcq7jACi6j7oyiLYMx
- Ut5QRYaY+EjTsAlLeUdtpsHN2K/b2y9lIzfl7IF9ZkO/DR8U83Kql2gGLfuZNGSIpGfy
- uEfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747888493; x=1748493293;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Dky3FIQgBX8aNP78AifCGTL6ccyTVByog03wzzXO4zc=;
- b=bwRvXHV1/Kgkf3EdMyr8m8a6TkCM51WhbjKcIrwKnLzyR+cOFIOEpCtDf+ZAh4iZYj
- ty/Tpl+w5+bOTM2HNIbX2o6rZNaM2zD+N4EGUil75duF4EpGNW7mxkcZaiGfbiJBKQN8
- fbbVMfcOgFQI0cHZ1GagZX6+/izlVOh2Q/DERW6jwkHnnKwaWX0VmmQkg5fBe6qDZ60A
- S9KN4QaYD4qyHWqc4VHDD/qIsAmOfCknLkrL/UmpPN0qKTIVRSTssrR/jKNic/a8MNZM
- 6bEUf/nnGG1gCDkZwYSHFbD3Cm8CRq2jnoGHXrwVv3WQAwLOyvMazP8cQdRfq2X3MSLA
- mUEQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVf8l2Cn5hrwW0slSG8ag2AytSxePYjITsbNircrxTjPwWRw4ipt4udSoV0giS1FwtMbiT4C1uUg0w=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YyXJ6PL4+Zhl/8IuelHerRR7sT//+h7lNr3vSfEaF5OBXAFTKw5
- wEDbubNE5EFLkifghP0inYN5l8aAYAIBfuWOt5cQLAvvJAm7goRe35A+
-X-Gm-Gg: ASbGncuRohw/F66c6oSEu7IozbpRhW5W7CKO6cztTrRz9ESp8WinPdiYGnpqAchYoJN
- QagLHIapX2R195QLT90+iKvXhPeIu20R2ytKQHSH93kh1pFCHhJ6V1aBzrKvJYZ0rb2igwr2cyM
- QopPcsKtIeBHTO4HI+qNmlXPGcIkBWpeXrSKUM8vPaHAZYqlalVqaT4hlLXlT1/dElpMc1C8P8r
- J0oAk5VqQA0EBYYz5n2Nn6Xhlb5dFOeEYmxlvgH6Ab10bRvmfvwmli3KHYigmbhhitX6gfLMor5
- WuGXAzUmb9NeM/C/OxQp6ag23ffjY30V5d3QF/vYOEDjPw4GZYSAQPCi
-X-Google-Smtp-Source: AGHT+IGh3Q2clU7Qyx5JWq+TxnZeFNMMnKfZXa7ry6Qxs7rCrVIzwW2jPAJC0kCMqhcqM6mA3QmumQ==
-X-Received: by 2002:a05:6a21:3993:b0:1f5:56fe:b437 with SMTP id
- adf61e73a8af0-216219b13demr42046834637.32.1747888492887; 
- Wed, 21 May 2025 21:34:52 -0700 (PDT)
-Received: from fedora ([209.132.188.88]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b26eb0a9893sm10518551a12.72.2025.05.21.21.34.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 May 2025 21:34:51 -0700 (PDT)
-Date: Thu, 22 May 2025 04:34:44 +0000
-From: Hangbin Liu <liuhangbin@gmail.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: netdev@vger.kernel.org, Jakub Kicinski <kuba@kernel.org>,
- Shuah Khan <shuah@kernel.org>, "David S. Miller" <davem@davemloft.net>,
- Simon Horman <horms@kernel.org>, Phil Sutter <phil@nwl.cc>,
- Florian Westphal <fw@strlen.de>, Petr Mladek <pmladek@suse.com>,
- Yoann Congal <yoann.congal@smile.fr>, wireguard@lists.zx2c4.com,
- linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCHv6 net-next 0/2] wireguard: selftests: use nftables for
- testing
-Message-ID: <aC6pZJJn3BiGFVwr@fedora>
-References: <20250408081652.1330-1-liuhangbin@gmail.com>
+ Thu, 22 May 2025 22:36:51 +0000 (UTC)
+X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+ by relay.mailchannels.net (Postfix) with ESMTP id 64602164FE7;
+ Thu, 22 May 2025 22:36:49 +0000 (UTC)
+Received: from cpanel-007-fra.hostingww.com
+ (100-122-100-82.trex-nlb.outbound.svc.cluster.local [100.122.100.82])
+ (Authenticated sender: instrampxe0y3a)
+ by relay.mailchannels.net (Postfix) with ESMTPA id C87E1164D60
+ for <wireguard@lists.zx2c4.com>; Thu, 22 May 2025 22:36:48 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1747953409; a=rsa-sha256;
+ cv=none;
+ b=y8QhZcAzAJje8tvDlNRL7rdEUZCTgZDLdjEAJjqLlc47QjCxatGLOFH68mpOkU37OkU6cD
+ kERMfofH8jUA/BoA3SjkMEEEGgEmplxYV4GYs/uWiyD5ga2YWWsAvIoDLwPy9WtmPtk5o/
+ 7OG3eQ8iR2FkPhsg9xPm/ZzPvxP2/ymMTWbgI4z8GuLaatLB+5wpMKHa5Ii5ht+7rBPQJY
+ YM8LoRL+yG8ecXl9JdgqhmUTAI1y1hWjC1nnhzeltFh97A1DPBirh+Vk6WNwgID1PK3ikQ
+ OI/VXb3/kvXYAE/CrI1z2FQZxaq7VBz86Dv0IbAVkJm1qCngvN9bAlwmmWZsWA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net; s=arc-2022; t=1747953409;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=sA5RxBOo6WSoMGZMnIwFHcRpW6wJqCAEgGrJhouh2nA=;
+ b=Mimgw+Y11IFp45lFFy0mg7joTCXOBtw0/7fMEmcZvUNy4q7x5Mqe3B8WLRbAi+g9snI/FP
+ 2BQgGYkOIMA89lDt4LO6LnvVUf+mPBpZjxW0B6zNs5oXtdHKinC9pgbGbOXxUmvHJFKykg
+ hrmyZVoWJsDPnyssPn5lDx73l0VkzbJOaddUsvZui9iDxPCkPapdI2AILwuWhrd+ISgweR
+ +Jrv9RCFmODrLOvfH6BLDtqbPy9CEcKVYkLUaGKNxypDW48S8qQq1BrDec6Dr4OL3cr2Su
+ 98fFAfgbZLzfCZFXNNzRB/YR+pS58IOo5u3fGkmge0v1/tzfYoyoABlMMeBjwA==
+ARC-Authentication-Results: i=1; rspamd-766f9cfddb-fnbd4;
+ auth=pass smtp.auth=instrampxe0y3a smtp.mailfrom=calestyo@scientia.org
+X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
+X-MC-Relay: Neutral
+X-MC-Copy: stored-urls
+X-MailChannels-SenderId: instrampxe0y3a|x-authuser|calestyo@scientia.org
+X-MailChannels-Auth-Id: instrampxe0y3a
+X-Broad-Wipe: 1867ab0628723d40_1747953409299_986338253
+X-MC-Loop-Signature: 1747953409299:1683624562
+X-MC-Ingress-Time: 1747953409299
+Received: from cpanel-007-fra.hostingww.com (cpanel-007-fra.hostingww.com
+ [3.69.87.180]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+ by 100.122.100.82 (trex/7.0.3); Thu, 22 May 2025 22:36:49 +0000
+Received: from p5b071812.dip0.t-ipconnect.de ([91.7.24.18]:63838
+ helo=heisenberg.fritz.box)
+ by cpanel-007-fra.hostingww.com with esmtpsa (TLS1.3) tls
+ TLS_AES_256_GCM_SHA384 (Exim 4.98.1)
+ (envelope-from <calestyo@scientia.org>) id 1uIEWu-0000000BubF-2avD
+ for wireguard@lists.zx2c4.com; Thu, 22 May 2025 22:36:47 +0000
+Message-ID: <1a897464d3fb56184b83cb6ac7b4a2407047b10e.camel@scientia.org>
+Subject: are WG clients expected to automatically handle it when the
+ endpoint is within the AllowedIPs
+From: Christoph Anton Mitterer <calestyo@scientia.org>
+To: wireguard@lists.zx2c4.com
+Date: Fri, 23 May 2025 00:36:46 +0200
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.1-1 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250408081652.1330-1-liuhangbin@gmail.com>
+X-AuthUser: calestyo@scientia.org
+X-Mailman-Approved-At: Fri, 23 May 2025 17:10:58 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -89,37 +87,94 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Jason,
+(re-posting, now that the list seems to work again)
 
-I just saw this patch set is not applied to wireguard tree. Did I missed
-any change request? Should I repost the patch?
 
-BTW, what prefix should I use when the target is wireguard next?
-[PATCH wireguard-next] ?
+Hey folks.
 
-Thanks
-Hangbin
+In science/education, many organisations (I could find the total list
+only in the Android app, but there it seems to be several 1000) use
+eduVPN to provide VPN access to their users.
+It comes with a client which, AFAIU, either sets up some OpenVPN or WG
+VPN.
 
-On Tue, Apr 08, 2025 at 08:16:50AM +0000, Hangbin Liu wrote:
-> This patch set convert the wireguard selftest to nftables, as iptables is
-> deparated and nftables is the default framework of most releases.
-> 
-> v6: fix typo in patch 1/2. Update the description (Phil Sutter)
-> v5: remove the counter in nft rules and link nft statically (Jason A. Donenfeld)
-> v4: no update, just re-send
-> v3: drop iptables directly (Jason A. Donenfeld)
->     Also convert to using nft for qemu testing (Jason A. Donenfeld)
-> v2: use one nft table for testing (Phil Sutter)
-> 
-> Hangbin Liu (2):
->   wireguard: selftests: convert iptables to nft
->   wireguard: selftests: update to using nft for qemu test
-> 
->  tools/testing/selftests/wireguard/netns.sh    | 29 +++++++++------
->  .../testing/selftests/wireguard/qemu/Makefile | 36 ++++++++++++++-----
->  .../selftests/wireguard/qemu/kernel.config    |  7 ++--
->  3 files changed, 49 insertions(+), 23 deletions(-)
-> 
-> -- 
-> 2.46.0
-> 
+I've previously used the OpenVPN profile files successfully with
+NetworkManager but now wanted to switch to WG, and again I don't wanna
+use the eduVPN client, because I think this should be done with the
+native tools that integrate nicely into the system (e.g. NM for desktop
+environments, ifupdown/systemd-networkd/etc. for servers).
+
+I guess quite a few sites offer two kinds of profiles, "full" (where
+the VPN is set up so that all traffic goes via it) and "split" (where
+only the subnets of the respective organisations go via the VPN.
+
+For WG and split a provided config looks like:
+[Interface]
+MTU =3D 1392
+PrivateKey =3D blafasl
+Address =3D 10.153.154.19/24,2001:4ca0:4fff:2:4::13/96
+DNS =3D
+10.156.33.53,129.187.5.1,2001:4ca0::53:1,2001:4ca0::53:2,lmu.de,uni-
+muenchen.de,mwn.de
+
+[Peer]
+PublicKey =3D 7Bp04UdAbZDqChLFgm0sJa6YUaIsye0mZ2c0AxKe5RE=3D
+AllowedIPs =3D
+10.0.0.0/8,85.208.24.0/22,129.27.124.136/32,129.187.0.0/16,131.159.0.0/
+
+
+16,138.244.0.0/15,138.246.0.0/16,141.39.128.0/18,141.39.240.0/20,141.40
+
+
+.0.0/16,141.84.0.0/16,172.16.0.0/12,192.54.42.0/24,192.55.197.0/24,192.
+
+
+68.211.0/24,192.68.212.0/24,192.168.0.0/16,193.174.96.0/23,194.94.155.2
+
+
+24/28,2001:4ca0::/29,2a09:80c0::/29
+Endpoint =3D eduvpn-n14.srv.lrz.de:51820
+
+for full it's effectively the same, except for:
+AllowedIPs =3D 0.0.0.0/0,::/0
+
+
+Using that config with NM fails, for which I've opened [0] which is
+mostly about the "split" setup and for which there's [1] which is
+mostly about the full setup.
+
+The reason being, that the endpoint has IPs that are also within the
+AllowedIPs subnet and no special care is taken (well for full, it seems
+they=E2=80=99re about to handle it [2]), that packets to the endpoint don't=
+ go
+via the tunnel.
+
+
+With wg-quick, full works, but split fails, too, I guess because
+add_default is only called in the AllowedIPs =3D 0.0.0.0/0,::/0 case.
+https://github.com/WireGuard/wireguard-tools/blob/17c78d31c27a3c311a2ff42a8=
+81057753c6ef2a4/src/wg-quick/linux.bash#L169-L170
+
+
+
+So the question is now, should clients be expected to automatically
+handle the split case (they apparently are for the full case)...
+... or are (split) profiles expected to "simply" (well it could be ugly
+in practise) provide their AllowedIPs so that it doesn't contain any
+endpoints.
+
+The practical problem with the latter would of course be that the
+endpoints will typically be within subnets that shall also be
+tunnelled.
+
+
+Thanks,
+Chris.
+
+
+[0] https://gitlab.freedesktop.org/NetworkManager/NetworkManager/-/issues/1=
+737
+[1] https://gitlab.freedesktop.org/NetworkManager/NetworkManager/-/issues/1=
+521
+[2] https://gitlab.freedesktop.org/NetworkManager/NetworkManager/-/merge_re=
+quests/2158
