@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2504AC54ED0
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 23 May 2025 18:46:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5F2EC54ED1
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 23 May 2025 19:03:48 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d3ecb80d;
-	Fri, 23 May 2025 18:46:56 +0000 (UTC)
-Received: from nyc.source.kernel.org (nyc.source.kernel.org [147.75.193.91])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 964e16c1
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e45864cf;
+	Fri, 23 May 2025 19:02:56 +0000 (UTC)
+Received: from nyc.source.kernel.org (nyc.source.kernel.org
+ [2604:1380:45d1:ec00::3])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 67f2adf6
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 23 May 2025 18:46:54 +0000 (UTC)
+ Fri, 23 May 2025 19:02:55 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id 1428EA4F8A1
- for <wireguard@lists.zx2c4.com>; Fri, 23 May 2025 18:46:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B2BBC4CEEF
- for <wireguard@lists.zx2c4.com>; Fri, 23 May 2025 18:46:52 +0000 (UTC)
+ by nyc.source.kernel.org (Postfix) with ESMTP id 0B891A4AAFD
+ for <wireguard@lists.zx2c4.com>; Fri, 23 May 2025 19:02:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E733C4CEEB
+ for <wireguard@lists.zx2c4.com>; Fri, 23 May 2025 19:02:53 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
  dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="P3mOZtgf"
+ header.b="lhy4mq83"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1748026010;
+ t=1748026971;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=8Qq3TsbzT2vKDvhdAercIY2tU24F9Mm5qeOvKEvPcbE=;
- b=P3mOZtgfqQcoDXD1gWTqUPgthRtL33nRbNm6LxUrjY8C5y1Ec1s8oB0G1Suu5JD1mRSf7D
- cqWSjchNHJ9w7KT2nyCFhFWYZ7lyw/QVcLi2GBDSuv0ma1N9hP3u/gFolxswrnJyiQbjk/
- xOixb7jDLkquc2JPZFu28h2XVU6G0kI=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 4a872d77
+ bh=Ob0iRjiM5htZfScEgjZz83aNkaWcRARD1qKHgMMr8rE=;
+ b=lhy4mq838AHgJUiRRB5H3C5tU+FJWHYAca9NkqOQBZiGiCFub3urf1g16P18xJvVoaDSwa
+ f4V/0P/GGCHDS9ygOzf6ca3Mhpdug3Lvn2XhHXvD0NjLmvsI4/08MH2Oo1oLo3Lib70oBb
+ itGoG3Aa4s0dREHZoRFseMDKzzPKlhI=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7832cdb9
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 23 May 2025 18:46:49 +0000 (UTC)
-Received: by mail-oa1-f49.google.com with SMTP id
- 586e51a60fabf-2cc89c59cc0so759553fac.0
- for <wireguard@lists.zx2c4.com>; Fri, 23 May 2025 11:46:49 -0700 (PDT)
-X-Gm-Message-State: AOJu0YyQn/ik9k4iLJMJKDa1ANWncGVtal+0i7d122ECIeN8hQKi7BEW
- yeO6HBANJLn5nNo1iP998oBo30C2LslgZzFAz3dudIYaA/FnLGtp1N6zNPQ8Axey/ltH7Ma4ZTX
- Pm38GLfrgKnVJ5T9PNEaAu5ydKJxBtHM=
-X-Google-Smtp-Source: AGHT+IGDzVGT1uGbfLIl/XCagnQy2dPRDwSNBntgu/rxZ7RP+IGDLnHP+RYU0Ddl37kxznhwSWopAvpVD9BFYm/c2Mg=
-X-Received: by 2002:a05:6870:a508:b0:2d4:e8ce:7bcc with SMTP id
- 586e51a60fabf-2e83e2a1e82mr3032852fac.8.1748026008500; Fri, 23 May 2025
- 11:46:48 -0700 (PDT)
+ Fri, 23 May 2025 19:02:51 +0000 (UTC)
+Received: by mail-oi1-f169.google.com with SMTP id
+ 5614622812f47-3feb3f54339so259844b6e.1
+ for <wireguard@lists.zx2c4.com>; Fri, 23 May 2025 12:02:51 -0700 (PDT)
+X-Gm-Message-State: AOJu0Yx8QEDFPNWknLpjMeVrW95JKrbwtCLRAAm/dyRTNW/t7QLZLsBu
+ PvneBHy5/6BlPIaBCPcA1FZsG4jK/B+Ikf2peeKuSjiVY1k34o9vmkuQaVhNq45U/U0Ycwn4lPT
+ KSM9sEzJ9K7KWctsUhvCUE23AzubIb8Q=
+X-Google-Smtp-Source: AGHT+IGAA6dYUseKs+C00qNucporGuZ39pEhPLA5OLBnr0PMYDtMP4INPtTEA5YKzYJY9+ehuWkGgFlgKMhJ9UjbMJQ=
+X-Received: by 2002:a05:6808:229e:b0:403:5150:c348 with SMTP id
+ 5614622812f47-406467b15a4mr194600b6e.4.1748026970402; Fri, 23 May 2025
+ 12:02:50 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250115113349.106339-1-robyn@kosching.me>
-In-Reply-To: <20250115113349.106339-1-robyn@kosching.me>
+References: <f09b788b-d09d-4840-860c-a5bb8b5342c9@gmail.com>
+In-Reply-To: <f09b788b-d09d-4840-860c-a5bb8b5342c9@gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 23 May 2025 20:46:36 +0200
-X-Gmail-Original-Message-ID: <CAHmME9rKag+fQkRcnasENaJnYrZ3BfFYa35JiS6nSvnQxaZWnw@mail.gmail.com>
-X-Gm-Features: AX0GCFu41g2jqyIxK7WEFy17JtbdBBYVzCTXrKRF0Djse7mwQcRam5sUni36gNM
-Message-ID: <CAHmME9rKag+fQkRcnasENaJnYrZ3BfFYa35JiS6nSvnQxaZWnw@mail.gmail.com>
-Subject: Re: [PATCH wireguard-tools] wg-quick: escaped # in Pre/PostUp/Down
- recognised
-To: robyn@kosching.me
+Date: Fri, 23 May 2025 21:02:39 +0200
+X-Gmail-Original-Message-ID: <CAHmME9pMH_2nifjVXukLXucDqbatBy8rG1WA8DWs6k80KV0=8A@mail.gmail.com>
+X-Gm-Features: AX0GCFuW2ijFIeb2qDqaF7mOv4gha1wphLlXzCIIWjn_4ROBOrh3LN6wvZh34bk
+Message-ID: <CAHmME9pMH_2nifjVXukLXucDqbatBy8rG1WA8DWs6k80KV0=8A@mail.gmail.com>
+Subject: Re: wg-quick fails with systemd resolvconf compatibility shim
+To: Andrei Borzenkov <arvidjaar@gmail.com>
 Cc: wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -72,5 +72,5 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Thanks. Applied with some minor changes here:
-https://git.zx2c4.com/wireguard-tools/commit/?id=90deacd33da06534ee98d41c6e76e108b35cf077
+Thanks for the report. Fixed here:
+https://git.zx2c4.com/wireguard-tools/commit/?id=d3b40aff964789a2a0533cb7a070592a75a996e3
