@@ -4,44 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FFF5C5AD49
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 May 2025 22:51:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C390C54F30
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 May 2025 23:58:58 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a4064b56;
-	Sun, 25 May 2025 22:51:05 +0000 (UTC)
-Received: from eldiron.immae.eu (eldiron.immae.eu [176.9.151.89])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 30c02bbf
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1315f42d;
+	Sun, 25 May 2025 23:58:56 +0000 (UTC)
+Received: from sharkgirl.ing (sharkgirl.ing [2a01:4f8:c012:afee::])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 22b4b177
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 25 May 2025 22:51:03 +0000 (UTC)
-Received: from dilion (unknown [IPv6:2a01:4f8:141:53e7::])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
- (No client certificate requested)
- by eldiron.immae.eu (Postfix) with ESMTPSA id 0633DAB2186;
- Sun, 25 May 2025 22:51:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=bouya.org; s=eldiron2;
- t=1748213463; bh=/0JvrvjYX0MILdichsekDglJU26EKAE4ZeRsf6zudoM=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To;
- b=aVjyc2kwAVwRG7TYW4mx99UwGLBKNbBj8MDgYr6iYrxKRizMr27iTAGIn50LlJ1vk
- xhjPfBJ6lMqAhRfrfeOD+ZD09poj4hBFGgHHD3SG2X/RukOm5fu5UFe/H3zC6MCXD2
- 7m4wVOyxBlMK09xh0hwmxCjTY38GQQfTYHjmYD0kfbp1Qe+HrPPvlbTTms6TrqpHw5
- aHdXi8uhmr5TazY1/YC/wTLA3Tyx97g/BPwK7k7CkyyVi3rNEppp1UPihhqNo9Ispn
- vsNP0k9W9iwU/7bDLv0EA/clkw7Q6uei9pzpnhLJAJnB89NWDZs9pZ6cGPeWo1SXXr
- LvDE8nmKaU+/w==
-Date: Mon, 26 May 2025 00:51:02 +0200
-From: Ismael Bouya <ismael@bouya.org>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: wireguard@lists.zx2c4.com
-Subject: Re: Incorrect computation of the MTU in wg-quick
-Message-ID: <xph2i3p5ar5h2w26pse7pmiwiyoqph6zmq5ecbnj32l7w4paan@wh4zxu3vygs7>
-References: <cvlwdlcato6fv5ih7qcib2tyzjltvfnq3l4flfcfrqqltl32j7@2mae3zkuvmuw>
- <aC5A29Qmn-5uoCC0@zx2c4.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="zdju6pjsszhuflui"
-Content-Disposition: inline
-In-Reply-To: <aC5A29Qmn-5uoCC0@zx2c4.com>
+ Sun, 25 May 2025 22:45:17 +0000 (UTC)
+Received: from sharkgirl.ing by sharkgirl.ing ([49.12.9.109]) via tcp with
+ ESMTPSA id PKrZTTnv5rc08p5LU8KPtQ (TLS1.3 TLS_AES_128_GCM_SHA256)
+ 25 May 2025 22:45:16 +0000
+DKIM-Signature: v=1; d=sharkgirl.ing; s=2025a; i=claire@sharkgirl.ing;
+ a=ed25519-sha256; t=1748213116; x=1748472316; h=From:To:Cc:Bcc:Reply-To:
+ References:In-Reply-To:Subject:Date:Message-Id:Content-Type:From:To:Cc:
+ References:In-Reply-To:Subject:Date:Message-Id:Content-Type;
+ bh=e6tsE7L4BVk92Lx9P9azGXVN0a8vr/RUvr6T9rsju6s=; b=D4cIslR0oLyBKj4bLIkk8t8s
+ PBJr6ungBYQYUy6Q/Xp0lW8uTl6KzxXHvpGrJMEjCkDFd4B1rwtpQ1EoEKDxBA==
+DKIM-Signature: v=1; d=sharkgirl.ing; s=2025b; i=claire@sharkgirl.ing;
+ a=rsa-sha256; t=1748213116; x=1748472316; h=From:To:Cc:Bcc:Reply-To:
+ References:In-Reply-To:Subject:Date:Message-Id:Content-Type:From:To:Cc:
+ References:In-Reply-To:Subject:Date:Message-Id:Content-Type;
+ bh=e6tsE7L4BVk92Lx9P9azGXVN0a8vr/RUvr6T9rsju6s=; b=uW9HSO20QOlgCjHfCeeOS8fw
+ aoCAwIFvpmkx1gW+gH9Q/V7FgiysL3kAC09n3mRAlbOR+LFG9sb6k0hzsax1hJX2ppA5KGRLn5s
+ bA+DNL6VsZ2FPRlwDzKfnjJbcZZ+7IyRnGtDjMsHH+aLVe1qG7pjF4lTVGteeT2zJm8/XwG9GDM
+ mEHBGCfkEttVuYxo6HZFBiJ4a9I06Ye16KVL37eHY9tRycwunYRoYAAXIFyOcSOB5IARXSKO1VD
+ kXmi+oIZU+LCmrM3+RSXnucbuAc2k6pQTs58gpel74QfEgvNA8vblRE2+dW1LHq5WTNkgj+NY7h
+ kIlEPSVolMnTOupvmQ==
+Authentication-Results: sharkgirl.ing;
+ auth=pass smtp.mailfrom=claire@sharkgirl.ing
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8; format=Flowed
+Date: Mon, 26 May 2025 08:45:12 +1000
+Message-Id: <DA5LTSNK3G6X.3KKK3AAQ328MJ@sharkgirl.ing>
+From: "Claire" <claire@sharkgirl.ing>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, "Claire Elaina"
+ <git@claire.sharkgirl.ing>
+Cc: <wireguard@lists.zx2c4.com>, <adam.irr@outlook.com>
+Subject: Re: [PATCH wireguard-tools] wg-quick: android: add support for
+ {Pre, Post}{Up, Down} hooks
+X-Mailer: aerc 0.20.1-0-g2ecb8770224a
+References: <20250525080457.998659-1-git@claire.sharkgirl.ing>
+ <aDMQ6eE_aIUTV4dB@zx2c4.com>
+In-Reply-To: <aDMQ6eE_aIUTV4dB@zx2c4.com>
+X-Mailman-Approved-At: Sun, 25 May 2025 23:58:55 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -56,65 +65,34 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+> Wondering, what commands do you want to run?
 
---zdju6pjsszhuflui
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: Incorrect computation of the MTU in wg-quick
-MIME-Version: 1.0
+PostUp =3D wg set CelesteWAN fwmark 0
 
-Hi Jason,
-It seems to work correctly now, thanks for the fix!
-Kind regards,
+X problem:
+I have a Raspberry Pi at home, and I want to have an encrypted link=20
+between it and client devices. When I'm at home (i.e. connected to=20
+the Pi's LAN), I want the clients to connect directly to the Pi with=20
+its LAN IP address. When I'm away from home, I want them to connect=20
+through a remote server that has access to the Pi.
 
-(Wed, May 21, 2025 at 11:08:43PM +0200) Jason A. Donenfeld :
-> > I would like to report a behavior that seems to be incorrect in the way
-> > wg-quick computes the MTU to assign to a wireguard interface:
-> > https://git.zx2c4.com/wireguard-tools/tree/src/wg-quick/linux.bash#n125
-> > In this block, wg-quick goes through every endpoint it knows about,
-> > gets the mtu of the route to reach the endpoint, and takes the highest
-> > value among all the computed values.
-> > However it appears to me that the chosen value should instead be the
-> > lowest among all endpoints rather than the highest.
-> >=20
-> > As an example, if I declare myself (localhost) as an endpoint (it may or
-> > may not be supported, but that=E2=80=99s how I found about this issue),=
- then the
-> > mtu will be set to 65456 (65536-80) which is higher than what the other
-> > endpoints are able to manage, and I=E2=80=99ll only be able to contact =
-myself
-> > properly.
->=20
-> Thanks for the report. Fixed:
-> https://git.zx2c4.com/wireguard-tools/commit/?id=3D5150cd647073be1f1c1268=
-8aef291bdf17970154
->=20
-> Let me know if that looks okay to you.
->=20
-> Jason
+Y problem:
+I cannot do port forwarding on my home internet connection because of=20
+CGNAT (hence, I cannot have the clients use the Pi's public IP=20
+address). My cursed idea is to nest Wireguard over Wireguard when not=20
+on LAN, so the connection would be "Phone -> Server -> Pi". This works=20
+fine on my laptop, but unfortunately not on my phone (pings to the Pi=20
+result in no response).
 
---=20
-Ismael
+However, when I manually run `wg set CelesteWAN fwmark 0` after the=20
+tunnel is already set up, the connection works. I have made a patch to=20
+allow setting FwMark in the config, but it doesn't work when testing.=20
+Perhaps the `iptables -m mark ...` rules are interfering. I want to=20
+try only setting the `fwmark` for the interface, but I feel like it's=20
+too niche to upstream, so I wanted to add generic command execution.
 
---zdju6pjsszhuflui
-Content-Type: application/pgp-signature; name="signature.asc"
+If there's a less cursed way to make Wireguard over Wireguard work, or=20
+even not having to do WoW, I'd appreciate it.
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEHbA6XjnBfeR3vtz7/R1O9X+pWQIFAmgzntAACgkQ/R1O9X+p
-WQJjlw//Sy1KX3yWfOuobJA7zRLFunvU2eSRRtDP8LYcvz5/IXh9XaLgv+8vwL4i
-lIeE6xhcXH9o+viqpcKdYQsTVOqQ9hYgG+TLIPsWJPBPUruW5tDmCAl2Of00nXsI
-zkRD+gNXKQ8A5Jqbbs1Fcc6T1DFgQU5QqAToFn/LgoC/gZLE0V7yH9iyqBwAXpcW
-5/M/xvN/q8yPg4UZazx1Urzg0xQSvBTeEW2uIr4nNdBGeagtlnHI8D5DmL+useyg
-FzsKvbw8MAheJTJU5fkG19C+0QQXEqd64taVvnkktDCAw+MQoYBZQzmsLaJLw7uJ
-nJKV16sOvtz9i4zFITatGnE9wMFh+cqA8qIVve2ZZH96oEjxJK5KcjwR0fdq50cQ
-JeEy8/QZVDz7WbMesSItJHrDcoCG+hHbAJtTogGNMC8lRPD1MWnLHjZDw9pXiSRb
-ie/kYKRlBRiWfdRluEzBaeYqWtSVPJ84WFdDnV2a1OP+Xh6/douBDhYBpK8yaZzW
-T/hWCD16I2cAee9j4XRFNhI/QWpGxvTelSjwdlKPLuNrXaZg/IJSTxw+Xn87wnLh
-ScRyCbA1tRl1dwo+q+bk0651gHGQ/6XN+9A5ynzABeaHiDndtWipw+P5HEvqwM28
-H1MtCRRmPLaJyS3F0nUx8bPlrlKz5ibmMAbMqPbnSK3RCBHfXDg=
-=OKeQ
------END PGP SIGNATURE-----
-
---zdju6pjsszhuflui--
+Sincerely,
+Claire Elaina
