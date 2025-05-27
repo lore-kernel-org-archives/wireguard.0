@@ -4,80 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F3FFC5AE59
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 27 May 2025 03:27:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22E1DC54F30
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 27 May 2025 12:12:22 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3e59daaf;
-	Tue, 27 May 2025 03:27:01 +0000 (UTC)
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com
- [2607:f8b0:4864:20::431])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 59e8846e
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e2f34a00;
+	Tue, 27 May 2025 12:12:21 +0000 (UTC)
+Received: from EUR05-VI1-obe.outbound.protection.outlook.com
+ (mail-vi1eur05on2130.outbound.protection.outlook.com [40.107.21.130])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c7735b99
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 27 May 2025 03:26:59 +0000 (UTC)
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-742c3d06de3so2863185b3a.0
- for <wireguard@lists.zx2c4.com>; Mon, 26 May 2025 20:26:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748316418; x=1748921218; darn=lists.zx2c4.com;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0d3Ceii2JHd7DdtO/Jyc5PB50s2tl91HKnoWaWMWAkc=;
- b=EAKmLy9xxNJzi5DXwP7dn0kF8Ip9t43elFRR08nTPsGLI2557GWp1hgK9LykGm91LU
- 0iQmkeHTigIR4G3Gq1n4yPioAgtxQMRrYYDH7bCsrVR5pr2tBEBiob0mwoRSbVd3zP9e
- H+achvDxrcf1l/slxazgFLhf1RE2VxCAD3n/b3zdeddH03z/7ubWG0CxESc+uNJD4gMV
- HRuwahsOsfxkSX9n+vJ19SZIC5l2zWnLsCmtlOI1L3i0BPv+Z7UPeP5wOq6Mjodw7ebo
- lsg3EUOGsNxSUgrbNuV4culbs7AZQvNn/+kiwDaalkT82dvTsfD5jffoH4mXPPgeiH1C
- PuiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748316418; x=1748921218;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0d3Ceii2JHd7DdtO/Jyc5PB50s2tl91HKnoWaWMWAkc=;
- b=Gv1Zbx64+ZO2zXC5dEYwKA6q/zljb2nuhK35MSuwirNk1gpRokisVygKY4kaM0fTOM
- JndRiQ1f5j6GUjtUfX/CHPu++u4LijkPQvEJRwF+O3I7L96YX5bVxO1AjILoCxpHMdvc
- qietJzbFB9A/j4l/Dog6R1yp7LUdNrai5Env5O2OxeMc1SDWJqmr8b7SdM5nTb4jemy2
- fNkJnheWy18SLdVcs8lanEM7Gv1YTV2y7XoryfV4ww/M0H7u7WCS1BeCjnznoZaIr5v+
- x/xGDPe0uxzeZzq+qZJGxRHlFtfdFudyDixGQc1JSt9hFRRe4PnE1gyIswq1I8fSgTiC
- 62vA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWg8x6+npB4XIeA7Hk9yyL8WHHofwRon5d7qlYq1Vico657Cjll2B//bdYJ/betZ2DfLuJJVvDTPcE=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0Yx5dK7uWOw46Dzn0ApQdpbZoRocUY7XBojjUr8UOS/4VZhFuPqV
- rvfktM6XuWd+d4b/U3wsxDczYkQ1lebkqm54Amh0Mr9G5UKfvGRTRCl2
-X-Gm-Gg: ASbGncvTctMTOWTUByD+aeZoWu1F8Vw3JxW+o7UG5rpoJhvQ+1XQmPSK/4jM/NnQv3Q
- aBgnsOHSop5G4hr4XL0dN2THxU0Z9f6Gxp/saDbSAkv/RiJQtVy+pNGsx1Qd+ep3Li3kYa3r/9a
- PxcwDBKU55q6r6IL0QLj5bL5B7OPvj2UtX+VtzSOO0fy7KU9MlucadOpa/a1lyjN1ebIkeUv0Fm
- dJQxFj9RBFBTmwNR2x2WCqeji0eX64qAn74cGKjYGOsCUSNLTXyHeHGffWgCyKg5p231BF2xBSb
- ftYRuxhQTAatTuhuuOnChx63gmTAp5CpW7xm1Ce2ArWbefH+DFQSGcz7Diw3ACfymtNkvxA=
-X-Google-Smtp-Source: AGHT+IGb+7qaXKyhT4wWXjgKeo/vySCxcdkeuTOl8hvnSfuDcHsEUB0t6+UFO7+PhMdJKjqH/VNvJQ==
-X-Received: by 2002:a05:6a21:3399:b0:1f5:709d:e0c6 with SMTP id
- adf61e73a8af0-2188c3b4987mr17871610637.42.1748316417674; 
- Mon, 26 May 2025 20:26:57 -0700 (PDT)
-Received: from fedora.dns.podman ([209.132.188.88])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74622b3b481sm865926b3a.131.2025.05.26.20.26.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 May 2025 20:26:57 -0700 (PDT)
-From: Hangbin Liu <liuhangbin@gmail.com>
-To: netdev@vger.kernel.org
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, Jakub Kicinski <kuba@kernel.org>,
- Shuah Khan <shuah@kernel.org>, "David S. Miller" <davem@davemloft.net>,
- Simon Horman <horms@kernel.org>, Phil Sutter <phil@nwl.cc>,
- Florian Westphal <fw@strlen.de>, Petr Mladek <pmladek@suse.com>,
- Yoann Congal <yoann.congal@smile.fr>, wireguard@lists.zx2c4.com,
- linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org,
- Hangbin Liu <liuhangbin@gmail.com>
-Subject: [PATCHv7 RESEND wireguard 2/2] wireguard: selftests: update to using
- nft for qemu test
-Date: Tue, 27 May 2025 03:26:35 +0000
-Message-ID: <20250527032635.10361-3-liuhangbin@gmail.com>
-X-Mailer: git-send-email 2.46.0
-In-Reply-To: <20250527032635.10361-1-liuhangbin@gmail.com>
-References: <20250527032635.10361-1-liuhangbin@gmail.com>
+ Tue, 27 May 2025 09:08:32 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=NDwvlGgBFvyywkuY+v5RxacHat4a0TJgMLQVFiqBY8CTD4FJDU6xhD/el2Axrxde9jL9JbgA8CuwAyWHj3p9siEAOZ2H04JqESR6IQX2d/HLZIsdPw38BfBxZndJFHPptevSmbJsKwoxfzYQUANYvIyU1iJSaRSlDhBmmf99rqQ0Ijh3gPFlhmYAkk7/lBCzIdczbynLIfvFckux0lrndAFr96X9X9g6crzWfK0XccHo3UNSOmOWptnHRDf1g4TMnyFkL9dJZFM0IzszqGckwy/8wMPTJH7r9GH6X6mp5cSBAYSBJ4FucTFWclFD7SR/P9+SlnbaIq58kZEAo6DkDA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=vJhoBLdQ+9rCdF+okD7qLi1RWqUebL5Mfu12isGyY34=;
+ b=N+Aw8+osbc/nEYgK1XxOrQTBv/ur+/vnvjKVkCb07H4ndBfqrlodiemKiXo1ZxSjBWFUxzWlNyTtp0OAZL2n4MtkrVxNOC+Bfk7CH2xAshwEQdYZs+3ZDomm0Ur3+KV5095bas54p+xc8BlgkKFhVYceHnsp4Ke2Wep9k9vrYlgoGARxP+H8t4b0H4gqwn8kViBo0eSNQkJsL0VXtdsFoLGxMScxN8coACYwoL/+hsX0iv7tWEDUsITb6EV3NYOSK9EPgdsEEDv4BVJVnCuk2NzUHkzQHpl5Kdp0MswmzqdLtjsEthMtsfbPg5X7rmN0eDnvJy8LzNjVJflKLep7KQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=polito.it; dmarc=pass action=none header.from=polito.it;
+ dkim=pass header.d=polito.it; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=polito.it; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=vJhoBLdQ+9rCdF+okD7qLi1RWqUebL5Mfu12isGyY34=;
+ b=T9oLoOzXL+rUg3lj00mibpuqb0ms3KUfP1oXWtgHiiYibs5/1dZw2aqnHXu6+TugqyaQ3WmR3MuQzWzrZbTBma8cBebM9oMUj6Ag4HjtLNL7uUfEV/3GQRi0JjE5P1NcCKzsYIDdwIS/lq8L96YdQeufDAYFSXZfsnIKAkWhWk8=
+Received: from PA4PR05MB8995.eurprd05.prod.outlook.com (2603:10a6:102:2a6::12)
+ by PAWPR05MB10840.eurprd05.prod.outlook.com (2603:10a6:102:369::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.24; Tue, 27 May
+ 2025 09:08:30 +0000
+Received: from PA4PR05MB8995.eurprd05.prod.outlook.com
+ ([fe80::9d7d:b4bb:1d50:70ce]) by PA4PR05MB8995.eurprd05.prod.outlook.com
+ ([fe80::9d7d:b4bb:1d50:70ce%5]) with mapi id 15.20.8769.025; Tue, 27 May 2025
+ 09:08:30 +0000
+From: "Mirco  Barone" <mirco.barone@polito.it>
+To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Subject: [PATCH] Enabling Threaded NAPI by Default
+Thread-Topic: [PATCH] Enabling Threaded NAPI by Default
+Thread-Index: AQHbzubCWqzF5L/Ns0et8HxS4wFhZA==
+Date: Tue, 27 May 2025 09:08:30 +0000
+Message-ID: <PA4PR05MB8995153AC212DDED36166CC48964A@PA4PR05MB8995.eurprd05.prod.outlook.com>
+Accept-Language: it-IT, en-US
+Content-Language: it-IT
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=polito.it;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PA4PR05MB8995:EE_|PAWPR05MB10840:EE_
+x-ms-office365-filtering-correlation-id: 89b6fde3-0d05-410d-df8b-08dd9cfe0c79
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|376014|1800799024|366016|38070700018;
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?dLse47VaZiTh9GhRNqBunV4mYHTIZyw2OPNQsUWP2LueHYqT6vmCs1U95Z?=
+ =?iso-8859-1?Q?HTgfNs16nQrmswUO57ZgATmjF2nAFDnT4y2Q0mDXwBCFqhElenKMmPi96E?=
+ =?iso-8859-1?Q?xQHg16PiWZ5IZg5/uoDEezH4KhCPMHppGzcW+rXjyD2gtUZcg4wCWTshAU?=
+ =?iso-8859-1?Q?7xJ6HfkgOd8fSQt0ubUiGTCM5eVLybJuXOxBPTKJEDYEjZT90N6a+9pCCx?=
+ =?iso-8859-1?Q?uquihG+DnnpeGTDSTufA8Zs6IjP3TCETRIV4dO2FD3M7ioXh8ys8VXGkH1?=
+ =?iso-8859-1?Q?5aQagdzzsRPuyuS0jucW2FeT9YaLs9nRDXNTRhEIlsDi2jiCc5uT1AcP9q?=
+ =?iso-8859-1?Q?usG0GwGzLI5jZzcoS+2stghiDFwj4uZy8Yb447quR57//NOtl6pSWT5hMy?=
+ =?iso-8859-1?Q?/g/dK25lvUWUKwtAABvaQyywR/lIY8klMY1+UApM5UacgoL/ByWHkow14x?=
+ =?iso-8859-1?Q?svHDdcbBYR3c+W65AX+wdsgiQnCy1qfU1Ozm6eLPI2bZ1K376UJvuCr3kT?=
+ =?iso-8859-1?Q?XuwgZA//tvriVqzLf8XbLda0qzl+0dWpbNRmn6BsJQpNTkjqeb1hcVQnEN?=
+ =?iso-8859-1?Q?BnO31k1qAHPtTjPqmabe+DYjER/6Um0sms9S95BGe52FXZ+DZUMJRmDoDI?=
+ =?iso-8859-1?Q?ucYc1bTZHuTNNenK6l4qzMapeHi1bSOUL58PxtiBy55HNkvTyUivCMxwRY?=
+ =?iso-8859-1?Q?5i/UTXSN8mcWRLLHjKHeCaZEx4/LxdL1vJMapxdk7Xl918OnqfRwtOFVv8?=
+ =?iso-8859-1?Q?9Dkt3GBGw7OeXWpoehnDInz0lbhRXpXglRx4YLbQTOMmYskqV/6QAPMIrd?=
+ =?iso-8859-1?Q?GkacSoj5FDuCg3lIhWpcfZRQzRPUAXHTKTMpr+8NTLN4Xh5xIToUEwV3SO?=
+ =?iso-8859-1?Q?sBhpATGZ6IsuigeJyLlmYNx5dBrXuwVA7Dfz7R2Px41ZrbjxmahGKXqLPm?=
+ =?iso-8859-1?Q?dw5h9JY8jnQpwWJCa1iSe0H+mNlli6i70nhwDmL34CPlrDbQYsOXv9hH7I?=
+ =?iso-8859-1?Q?j/F2HJXR947o7O9j7To9Y4je5/D9zJj6vzGehs/1/ZIa31gG/72KDrcKXy?=
+ =?iso-8859-1?Q?XsPD95c9SqZ/jNJIgXwu7pu5QrFNe+LYYB835LPC486sTZL8ZWZfVrUgTC?=
+ =?iso-8859-1?Q?Yn8w100p702IQSZyEJUzju8CFonzO1TS39x7rafm84D69ddMADyxZnrj6o?=
+ =?iso-8859-1?Q?wzbKc0bb14hAKvVsYl3DsZicT5rPAgWNKjRIywJUfef1AoY9tn8a/4gxNA?=
+ =?iso-8859-1?Q?Jq5NhpbjDpHnqfMJVdj0mUENv6Kk2YDpFDSceAoeC+L3KqfG1fyNkfe48z?=
+ =?iso-8859-1?Q?aEB1040tq9GwKtHde1CqaVyYLNM1LxsMFIhw4YPFiSgsWxrfeOXzB3En8s?=
+ =?iso-8859-1?Q?7VUaK3dPEPtYW0Z+QS2xYzDWaAbp1g8iniGgLhPHwdYPWdI+IeJ9eA5k62?=
+ =?iso-8859-1?Q?J2gMfTS206VUGc8RMnB39v0Q/JGOWus+Zys31HuBPuT5S59Hhgynoqoq1Y?=
+ =?iso-8859-1?Q?g=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PA4PR05MB8995.eurprd05.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(38070700018); DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?zYl+8J+2Jcgg4F8wJgA//2mhDbYwg14tTqytAkmseH5fVNFxCZLRYgMQEK?=
+ =?iso-8859-1?Q?rqMuQZRhdHUUBD9sgUxcNck1eYZDImygG9rzbwOb8iDdzsDijB2+Zq8q0+?=
+ =?iso-8859-1?Q?4z+6IjUoNpqmt0LqFCXbR4FTCCTbqgJ1Ax6cjMSfx5NEfVdybutr052+AT?=
+ =?iso-8859-1?Q?t0eTFhxTm5Sl+ZIGOJsHWBie9fWRswUQkk3r+02gy8TTy/NQywlkLT/pzu?=
+ =?iso-8859-1?Q?CA1/LRzzxccGSwfXFpG0CYk8W2Blg5dJksF903QM8+ozen+JrL2Hv3Z22r?=
+ =?iso-8859-1?Q?3srijS+91uGYlIYnBr97A/eVL1M+mISPZdydoUshE06Q71e8GTCx1mIQTr?=
+ =?iso-8859-1?Q?GamXojUPTNXepjtVn+gR8gfQz4bRvi+/PeG16HcnM/khOQOkeT623pBRZ1?=
+ =?iso-8859-1?Q?PpIOxCEsqj5tN7hMv7Mu3TGfiKvqiCB9ZMOY43s5HjLV5S6P/hSJxUXlMO?=
+ =?iso-8859-1?Q?SMh/a+U3bo51gtFDyuZJGyk1qpy1kfVZiamABgUsLAze9updC+WfdFQMGn?=
+ =?iso-8859-1?Q?YCNiqO2FzUflkmNqepF7IGNVu0v98e0Ivys9oCS5i/cHDfI+0JZq5YRqrS?=
+ =?iso-8859-1?Q?splgjSmWPFoktm+ZiVmM+AvVRH9aSZcPC5pLv/EPUmOj89PCXwEZvEaSjD?=
+ =?iso-8859-1?Q?XfRp0kvTrveYiGFZZSnTnrVs17oJ/BvbcUUuCP3fDUN85ZsGgZ40UbZUYx?=
+ =?iso-8859-1?Q?xIew2G3/BqGM+zc92GiQrEAut7y0v1ovcJJztdxdD6yKXXOCDRDjtVeTkw?=
+ =?iso-8859-1?Q?tJbhJjdKIcu1NQVnx8VHaKA/zuZpAwBb5EiVcoE71cMDlHUy5FtRbufP2j?=
+ =?iso-8859-1?Q?Avhmu9RUXXF8fis2klbFbQHaah2TL07NXUWD0J73uKJdK7X1F94DKU9F43?=
+ =?iso-8859-1?Q?8ESkO0xHXRbhW1NOkAinb2WS5nfLUNkQhOr+Ra9y2vD0jDIVaOaiyFPSYD?=
+ =?iso-8859-1?Q?4F0y5RutBER9T58o36RaOvmHvZGY2Uw0t2XZFPg/bav3O87BBBB53PiKAL?=
+ =?iso-8859-1?Q?c68KM5FkrpXW9Mw61ePQYcxV2AAIBvxj6spn0+SLtb0m4HqSKFa3pZnACC?=
+ =?iso-8859-1?Q?e5OGljPQCDSFJeRbajRPNS1HUvsAgGdaBBBzn5WFF1a3A16bZPEP+VaOSC?=
+ =?iso-8859-1?Q?cusNzRYZhipOeIvEwnjliCrJNj3P6kuOPLWeXVRd4lSm4Nw2gI3GBtIeNh?=
+ =?iso-8859-1?Q?yYx7leJ7Nf5SQamMnO0R4WtqJKJCl8eXMgY4vGqEC9t9Zw4s96HDKh9m6y?=
+ =?iso-8859-1?Q?Xg0CB9aD4ngdMLz2xPVX3c91ABLIePzHqjy0Q2Y5QCE5b/4+Tj6Xt16HpE?=
+ =?iso-8859-1?Q?cHWgOBCYhFeAue6u8FzoJUCxCTlqby2xo8kf6XJTfCS21B6PJd5G4Cwogm?=
+ =?iso-8859-1?Q?xVgNvDZX2mHkw9dANefTQshb3pvF897sewdQwEGbBb+lBjJnvMFNcISuIH?=
+ =?iso-8859-1?Q?M1flH+aUI4vqYM65vLZd/qo6zJDjfbMTUI9R4miF3OHrzSc8Ie8mqx4psJ?=
+ =?iso-8859-1?Q?uKkV+wdVt7+Zb0+yWLoKKJiG4vahhH/LZnhjEzZiWSgdXE0rL6BZdmaoL0?=
+ =?iso-8859-1?Q?uKLN3a8k94Buf7dIrbGrw1d82PMeQWaY46MXjcheoVMsG04i0Fl8hisMCg?=
+ =?iso-8859-1?Q?oxgmADl6h2hG749vy56yUKCHng2hShKlCt?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: polito.it
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PA4PR05MB8995.eurprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 89b6fde3-0d05-410d-df8b-08dd9cfe0c79
+X-MS-Exchange-CrossTenant-originalarrivaltime: 27 May 2025 09:08:30.0793 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 2a05ac92-2049-4a26-9b34-897763efc8e2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 8ZRuFJEp0DFNwD4xTtZ5U87NLvb2jLO9m0c3GW2kVWVnzLtbmCcCUhPuec9dNc98ZnG3KSjItr8UFATyUAlMQQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAWPR05MB10840
+X-Mailman-Approved-At: Tue, 27 May 2025 12:12:20 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -92,107 +144,48 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Since we will replace iptables with nft for wireguard netns testing,
-let's also convert the qemu test to use nft at the same time.
-
-Co-developed-by: Phil Sutter <phil@nwl.cc>
-Signed-off-by: Phil Sutter <phil@nwl.cc>
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
----
- .../testing/selftests/wireguard/qemu/Makefile | 36 ++++++++++++++-----
- .../selftests/wireguard/qemu/kernel.config    |  7 ++--
- 2 files changed, 30 insertions(+), 13 deletions(-)
-
-diff --git a/tools/testing/selftests/wireguard/qemu/Makefile b/tools/testing/selftests/wireguard/qemu/Makefile
-index 35856b11c143..2442ae99f007 100644
---- a/tools/testing/selftests/wireguard/qemu/Makefile
-+++ b/tools/testing/selftests/wireguard/qemu/Makefile
-@@ -40,7 +40,9 @@ endef
- $(eval $(call tar_download,IPERF,iperf,3.11,.tar.gz,https://downloads.es.net/pub/iperf/,de8cb409fad61a0574f4cb07eb19ce1159707403ac2dc01b5d175e91240b7e5f))
- $(eval $(call tar_download,BASH,bash,5.1.16,.tar.gz,https://ftp.gnu.org/gnu/bash/,5bac17218d3911834520dad13cd1f85ab944e1c09ae1aba55906be1f8192f558))
- $(eval $(call tar_download,IPROUTE2,iproute2,5.17.0,.tar.gz,https://www.kernel.org/pub/linux/utils/net/iproute2/,bda331d5c4606138892f23a565d78fca18919b4d508a0b7ca8391c2da2db68b9))
--$(eval $(call tar_download,IPTABLES,iptables,1.8.7,.tar.bz2,https://www.netfilter.org/projects/iptables/files/,c109c96bb04998cd44156622d36f8e04b140701ec60531a10668cfdff5e8d8f0))
-+$(eval $(call tar_download,LIBMNL,libmnl,1.0.5,.tar.bz2,https://www.netfilter.org/projects/libmnl/files/,274b9b919ef3152bfb3da3a13c950dd60d6e2bcd54230ffeca298d03b40d0525))
-+$(eval $(call tar_download,LIBNFTNL,libnftnl,1.2.8,.tar.xz,https://www.netfilter.org/projects/libnftnl/files/,37fea5d6b5c9b08de7920d298de3cdc942e7ae64b1a3e8b880b2d390ae67ad95))
-+$(eval $(call tar_download,NFTABLES,nftables,1.1.1,.tar.xz,https://www.netfilter.org/projects/nftables/files/,6358830f3a64f31e39b0ad421d7dadcd240b72343ded48d8ef13b8faf204865a))
- $(eval $(call tar_download,NMAP,nmap,7.92,.tgz,https://nmap.org/dist/,064183ea642dc4c12b1ab3b5358ce1cef7d2e7e11ffa2849f16d339f5b717117))
- $(eval $(call tar_download,IPUTILS,iputils,s20190709,.tar.gz,https://github.com/iputils/iputils/archive/s20190709.tar.gz/#,a15720dd741d7538dd2645f9f516d193636ae4300ff7dbc8bfca757bf166490a))
- $(eval $(call tar_download,WIREGUARD_TOOLS,wireguard-tools,1.0.20210914,.tar.xz,https://git.zx2c4.com/wireguard-tools/snapshot/,97ff31489217bb265b7ae850d3d0f335ab07d2652ba1feec88b734bc96bd05ac))
-@@ -322,8 +324,7 @@ $(BUILD_PATH)/init-cpio-spec.txt: $(TOOLCHAIN_PATH)/.installed $(BUILD_PATH)/ini
- 	echo "file /bin/ss $(IPROUTE2_PATH)/misc/ss 755 0 0" >> $@
- 	echo "file /bin/ping $(IPUTILS_PATH)/ping 755 0 0" >> $@
- 	echo "file /bin/ncat $(NMAP_PATH)/ncat/ncat 755 0 0" >> $@
--	echo "file /bin/xtables-legacy-multi $(IPTABLES_PATH)/iptables/xtables-legacy-multi 755 0 0" >> $@
--	echo "slink /bin/iptables xtables-legacy-multi 777 0 0" >> $@
-+	echo "file /bin/nft $(NFTABLES_PATH)/src/nft 755 0 0" >> $@
- 	echo "slink /bin/ping6 ping 777 0 0" >> $@
- 	echo "dir /lib 755 0 0" >> $@
- 	echo "file /lib/libc.so $(TOOLCHAIN_PATH)/$(CHOST)/lib/libc.so 755 0 0" >> $@
-@@ -338,7 +339,7 @@ $(KERNEL_BUILD_PATH)/.config: $(TOOLCHAIN_PATH)/.installed kernel.config arch/$(
- 	cd $(KERNEL_BUILD_PATH) && ARCH=$(KERNEL_ARCH) $(KERNEL_PATH)/scripts/kconfig/merge_config.sh -n $(KERNEL_BUILD_PATH)/.config $(KERNEL_BUILD_PATH)/minimal.config
- 	$(if $(findstring yes,$(DEBUG_KERNEL)),cp debug.config $(KERNEL_BUILD_PATH) && cd $(KERNEL_BUILD_PATH) && ARCH=$(KERNEL_ARCH) $(KERNEL_PATH)/scripts/kconfig/merge_config.sh -n $(KERNEL_BUILD_PATH)/.config debug.config,)
- 
--$(KERNEL_BZIMAGE): $(TOOLCHAIN_PATH)/.installed $(KERNEL_BUILD_PATH)/.config $(BUILD_PATH)/init-cpio-spec.txt $(IPERF_PATH)/src/iperf3 $(IPUTILS_PATH)/ping $(BASH_PATH)/bash $(IPROUTE2_PATH)/misc/ss $(IPROUTE2_PATH)/ip/ip $(IPTABLES_PATH)/iptables/xtables-legacy-multi $(NMAP_PATH)/ncat/ncat $(WIREGUARD_TOOLS_PATH)/src/wg $(BUILD_PATH)/init
-+$(KERNEL_BZIMAGE): $(TOOLCHAIN_PATH)/.installed $(KERNEL_BUILD_PATH)/.config $(BUILD_PATH)/init-cpio-spec.txt $(IPERF_PATH)/src/iperf3 $(IPUTILS_PATH)/ping $(BASH_PATH)/bash $(IPROUTE2_PATH)/misc/ss $(IPROUTE2_PATH)/ip/ip $(LIBMNL_PATH)/libmnl $(LIBNFTNL_PATH)/libnftnl $(NFTABLES_PATH)/src/nft $(NMAP_PATH)/ncat/ncat $(WIREGUARD_TOOLS_PATH)/src/wg $(BUILD_PATH)/init
- 	$(MAKE) -C $(KERNEL_PATH) O=$(KERNEL_BUILD_PATH) ARCH=$(KERNEL_ARCH) CROSS_COMPILE=$(CROSS_COMPILE)
- .PHONY: $(KERNEL_BZIMAGE)
- 
-@@ -421,15 +422,32 @@ $(IPROUTE2_PATH)/misc/ss: | $(IPROUTE2_PATH)/.installed $(USERSPACE_DEPS)
- 	$(MAKE) -C $(IPROUTE2_PATH) PREFIX=/ misc/ss
- 	$(STRIP) -s $@
- 
--$(IPTABLES_PATH)/.installed: $(IPTABLES_TAR)
-+$(LIBMNL_PATH)/.installed: $(LIBMNL_TAR)
- 	mkdir -p $(BUILD_PATH)
- 	flock -s $<.lock tar -C $(BUILD_PATH) -xf $<
--	sed -i -e "/nfnetlink=[01]/s:=[01]:=0:" -e "/nfconntrack=[01]/s:=[01]:=0:" $(IPTABLES_PATH)/configure
- 	touch $@
- 
--$(IPTABLES_PATH)/iptables/xtables-legacy-multi: | $(IPTABLES_PATH)/.installed $(USERSPACE_DEPS)
--	cd $(IPTABLES_PATH) && ./configure --prefix=/ $(CROSS_COMPILE_FLAG) --enable-static --disable-shared --disable-nftables --disable-bpf-compiler --disable-nfsynproxy --disable-libipq --disable-connlabel --with-kernel=$(BUILD_PATH)/include
--	$(MAKE) -C $(IPTABLES_PATH)
-+$(LIBMNL_PATH)/libmnl: | $(LIBMNL_PATH)/.installed $(USERSPACE_DEPS)
-+	cd $(LIBMNL_PATH) && ./configure --prefix=$(TOOLCHAIN_PATH) $(CROSS_COMPILE_FLAG) --enable-static --disable-shared
-+	$(MAKE) -C $(LIBMNL_PATH) install
-+
-+$(LIBNFTNL_PATH)/.installed: $(LIBNFTNL_TAR)
-+	mkdir -p $(BUILD_PATH)
-+	flock -s $<.lock tar -C $(BUILD_PATH) -xf $<
-+	touch $@
-+
-+$(LIBNFTNL_PATH)/libnftnl: | $(LIBNFTNL_PATH)/.installed $(USERSPACE_DEPS)
-+	cd $(LIBNFTNL_PATH) && PKG_CONFIG_PATH="$(TOOLCHAIN_PATH)/lib/pkgconfig" ./configure --prefix=$(TOOLCHAIN_PATH) $(CROSS_COMPILE_FLAG) --enable-static --disable-shared
-+	$(MAKE) -C $(LIBNFTNL_PATH) install
-+
-+$(NFTABLES_PATH)/.installed: $(NFTABLES_TAR)
-+	mkdir -p $(BUILD_PATH)
-+	flock -s $<.lock tar -C $(BUILD_PATH) -xf $<
-+	touch $@
-+
-+$(NFTABLES_PATH)/src/nft: | $(NFTABLES_PATH)/.installed $(USERSPACE_DEPS)
-+	cd $(NFTABLES_PATH) && PKG_CONFIG_PATH="$(TOOLCHAIN_PATH)/lib/pkgconfig" ./configure --prefix=/ $(CROSS_COMPILE_FLAG) --enable-static --disable-shared --disable-debug --disable-man-doc --with-mini-gmp --without-cli
-+	$(MAKE) -C $(NFTABLES_PATH) PREFIX=/
- 	$(STRIP) -s $@
- 
- $(NMAP_PATH)/.installed: $(NMAP_TAR)
-diff --git a/tools/testing/selftests/wireguard/qemu/kernel.config b/tools/testing/selftests/wireguard/qemu/kernel.config
-index f314d3789f17..9930116ecd81 100644
---- a/tools/testing/selftests/wireguard/qemu/kernel.config
-+++ b/tools/testing/selftests/wireguard/qemu/kernel.config
-@@ -19,10 +19,9 @@ CONFIG_NETFILTER_XTABLES=y
- CONFIG_NETFILTER_XT_NAT=y
- CONFIG_NETFILTER_XT_MATCH_LENGTH=y
- CONFIG_NETFILTER_XT_MARK=y
--CONFIG_IP_NF_IPTABLES=y
--CONFIG_IP_NF_FILTER=y
--CONFIG_IP_NF_MANGLE=y
--CONFIG_IP_NF_NAT=y
-+CONFIG_NF_TABLES=m
-+CONFIG_NF_TABLES_INET=y
-+CONFIG_NFT_NAT=y
- CONFIG_IP_ADVANCED_ROUTER=y
- CONFIG_IP_MULTIPLE_TABLES=y
- CONFIG_IPV6_MULTIPLE_TABLES=y
--- 
-2.46.0
-
+Hi everyone,=0A=
+=0A=
+=0A=
+While testing WireGuard with a large number of tunnels, we expected through=
+put to scale linearly with the number of active tunnels. Instead, we observ=
+ed very poor performance due to a bottleneck caused by multiple NAPI functi=
+ons stacking on the same CPU core, preventing the system from scaling effec=
+tively. =0A=
+More details are provided in this paper on page 3:=0A=
+https://netdevconf.info/0x18/docs/netdev-0x18-paper23-talk-paper.pdf=0A=
+=0A=
+=0A=
+Since each peer has its own NAPI struct, the problem can potentially occur =
+when many peers are created on the same machine. The simple solution we fou=
+nd is to enable threaded NAPI, which improves=0A=
+considerably the throughput in our testing conditions while, at the same ti=
+me, showing no drawbacks in case of traditional deployment scenarios (i.e.,=
+ single tunnel). Hence, we feel we could slightly modify the code and move =
+to threaded NAPI as the new default.=0A=
+=0A=
+=0A=
+Any comment?=0A=
+=0A=
+The option to revert to NAPI handled by a softirq is still preserved, by si=
+mply changing the `/sys/class/net/<iface>/threaded` flag.=0A=
+=0A=
+-----------------------------------------------------------------------=0A=
+CHANGES=0A=
+-----------------------------------------------------------------------=0A=
+ drivers/net/wireguard/device.c | 1 +=0A=
+ 1 file changed, 1 insertion(+)=0A=
+diff --git a/drivers/net/wireguard/device.c b/drivers/net/wireguard/device.=
+c=0A=
+index 45e9b908dbfb..bb77f54d7526 100644=0A=
+--- a/drivers/net/wireguard/device.c=0A=
++++ b/drivers/net/wireguard/device.c=0A=
+@@ -363,6 +363,7 @@ static int wg_newlink(struct net *src_net, struct net_d=
+evice *dev,=0A=
+        ret =3D wg_ratelimiter_init();=0A=
+        if (ret < 0)=0A=
+                goto err_free_handshake_queue;=0A=
++       dev_set_threaded(dev,true);=0A=
+=0A=
+        ret =3D register_netdevice(dev);=0A=
+        if (ret < 0)=0A=
