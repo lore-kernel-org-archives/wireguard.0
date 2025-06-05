@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74EF8C5B549
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  4 Jun 2025 23:37:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC56FC61DB8
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  5 Jun 2025 04:23:35 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e4f503a0;
-	Wed, 4 Jun 2025 23:37:02 +0000 (UTC)
-Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com
- [2607:f8b0:4864:20::112e])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id cf19096b
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 608f2cfe;
+	Thu, 5 Jun 2025 04:23:33 +0000 (UTC)
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com
+ [2607:f8b0:4864:20::b2b])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 199779d2
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 4 Jun 2025 23:36:59 +0000 (UTC)
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-70e102eada9so4729927b3.2
- for <wireguard@lists.zx2c4.com>; Wed, 04 Jun 2025 16:36:59 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Thu, 5 Jun 2025 04:23:32 +0000 (UTC)
+Received: by mail-yb1-xb2b.google.com with SMTP id
+ 3f1490d57ef6-e75668006b9so579055276.3
+ for <wireguard@lists.zx2c4.com>; Wed, 04 Jun 2025 21:23:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749080218; x=1749685018; darn=lists.zx2c4.com;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=gBRqa9U/2heZAUJZPXCb7LrXPxk4R2Wa7FOgeDBgosM=;
- b=CyfbnnJkVCVZW4D98MvmGDDu5Ta8tbczXJ5QJqrugi3LCxhjgxs9A+auB55bHDlSAd
- NwRfgC2vPM0pUlx3MEUIzHnhmAH5/2MrVTtr3Uc5K0l8CUWMXtSKty3VHRCnI7bfQZ50
- mpJq03OlC/6wAbIaIssI/J/PACE25LNGwzkIQyy6XGgHCFHcw1jHjR6GEVX9FKyIFp47
- KDrPtR/wL3SLYP6YLn7K39k/lYvgWQJxsbXH6rZOBWFyjjvdpNJcIdPIf0uGkFRQPogZ
- bNP7NvqGe1o0lq6s9ntAJdmhlHRm+BVt3It/7mXmrEHJsxvHutOXITBDMNeo90kVYFDx
- 0m9w==
+ d=gmail.com; s=20230601; t=1749097411; x=1749702211; darn=lists.zx2c4.com;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=PcOrzpWjq/BkBEzwdw8mv0dCDmFt7adswzP9QPspSUg=;
+ b=hpQkAJHQQaMgOusSODvUoYB2BRLwe1sFL2RaayvcsoimWp4VxL9SnynVbW/PFU02tZ
+ eN8ehIOg5lIriqAJDWOqztTag5r2bsyh9zSi5b4QVPEbxRe/S8pJSJlzHa3qW809DLhL
+ bCMVL9ZsiXcW+nDwQ4pXNkX8x2wkhebQ4dcAo/gxKH/lLC7IVlqAwkSWSfwiIJZWF7Nw
+ 7zduLCNd9DDGTMZpMRPAjcSzIU/RKNOLOx11VDasZ+JEH4PJR/mUg2b1HIlOr2WkiUON
+ WZdGw8p0Hzh4pYlkY0WN1jy4wefvG5BzFI2/P9iBqainuygetspRJDOKEVEMbRZbaYsn
+ pxUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749080218; x=1749685018;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gBRqa9U/2heZAUJZPXCb7LrXPxk4R2Wa7FOgeDBgosM=;
- b=T7Zfcn2SDhOpLYKSYT+hqN5c8BbnOy2ndu95S2EqjqEs7O7WD21n5NjgidftMb6jPP
- 0r1nWdIRbJfZrkjwdUrGCzMD5GfUltM8WV5RT/CQF7LRQqExTHEtqazXiwRiMIuYS/6J
- 8RF83HJdIQRbX0GmcjLfdVDP5nMi4nshoaOVx0nK7xiQJ6vJZ61ecoAcJWh5mBANpWyc
- QgOjdhNtG4wDmmbtCgYmz0PE3Ljuv3Edr15euJx4CxxPD9P4yNF9K5T4EBSW96fIvUYD
- EJE9zxJU0c7U7GpeDaLr0DmCqAWtDPFelDgsle8IxJs1emnnZUzf/ENdkz6LxV58/h8u
- BtOQ==
+ d=1e100.net; s=20230601; t=1749097411; x=1749702211;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PcOrzpWjq/BkBEzwdw8mv0dCDmFt7adswzP9QPspSUg=;
+ b=NIqRGHPfWbpTIrK/ytV60N9IeEAVsa7UYbh9r7iYjxnV+B6w9/CHx5H4jxkOHO89Iz
+ IVnt6RrnH/J58IqMJddILe3TriXM0xkx86OFrB/32VaMXNi6fNhdQKxow1n3uQsnWGRX
+ kljIlTy/ueqKnnnuekD0xYiRxymR3vDKX7Gt/8z/sel6X1j+ezVXDe1h/H0ubaKOORys
+ 8qCCcUVx3j8BS15AXXP5Ikp3J+d+TMErt1lewn6iEKLk6O07rbO2SnPGRZ0bn7YqC6GD
+ Y4UiSbNRY8CwPLSP5KKY6OlLNgG+gSUToRh7hliS8QL3cciaBkpiGdiM/MDZdCj8q5Uk
+ emEA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU2omI0hveCWkrR4FbzSvWEefOJBLCUyXI5vOZ7OUB2VhggC93eZVDNJ42ic4wlXsuBdWpsD1RJr5E=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YymN6bWl19KNiPv3cheCrUUKcHxo66B3g3HGahEJc5RJB2O0r68
- E3874S3fyWdFqa7qU7b1l/e3X0DSZ3kGjXr2+jlGm0T58oGJZ749gh9K
-X-Gm-Gg: ASbGnctkwSlfxV56e5AW6syhOL7RLyzeGEMDrN9OQ9p5ZflnnBz6vsOBclFkHbLiW9U
- q4LKoyuCHXw2YRiel56RRMtlci/UThR/k+dwJKtV22/ju/0TCth8ONQV1D0CHuiVjJP0PtRLqVy
- fNYWPtBixTv4jyFmPlUqz0p4yhzEv5jW5XZyhk+3Xwatv4aCTI+BbropXHXy0M+Ph+XobpGA+sp
- L1/bFgqDIxVRAFisAX21lZqtUsTJolY3N5auyFlLM42G+MxoePNukA4JDjB38a+ZvTBRCy9VKVT
- /+/8g1UILKO3IpH1qYtTF4duluZaEgwUd5zM6oyWM3fYqFvHQpvd1kPc56wh0IZccOJ2fOxDDWJ
- JCENN8osHrDA=
-X-Google-Smtp-Source: AGHT+IG84WFtztMkrKBWhzmHd8MsAsgBDrOouQY73izuVIVBEUYmm2gffzeGDeXrH0VDTDPQsmMGvg==
-X-Received: by 2002:a05:690c:7092:b0:6fb:b37f:2072 with SMTP id
- 00721157ae682-710d9f3120cmr68548817b3.22.1749080218488; 
- Wed, 04 Jun 2025 16:36:58 -0700 (PDT)
+ AJvYcCUyFeCJjqv8YUNaA/gqD8O9aAYMD9LTK87KM8N52OR2reoQeGU1XUqqVFEF5PTfQEiFHRcF93JBNHI=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YzK+XZrXg2m6Feg21mozK+TDwEOtTxizwMGcLIjgajxtKA8NARK
+ TOtrRiXl/pZMZ4abaYDxCcGkCTQ0YWJDUqcxKKTKsJLM6KQyRXRX/zvN
+X-Gm-Gg: ASbGncuKBh98Nrkh/venXm7q+jjHf6zklVylQpc29WWkYTfk/2Aislhuvb7Z6JmilYn
+ KxxKM/0KKBUphiV/ILa/a0OMUdiAc2G4p84VtKxiexlrX1EstymlM+YB539cW7ea6VSMvX/+/fX
+ wsCEjS8sCJ/+W3i+yvWI4QWf6WAop4YH/Jf4u49n2YkM7J0RUcCCmf1xKcxP0Q158KXUeHe7tQR
+ ZgNFku1NGO5xi217axaRwSbYRWVXUd2zl9wEJw8318V/qRge3W4GefhFGJ1dPuAu8t/T2TC7bOw
+ Zw5zLIX4ljbs+dWTa3u9Peqt64PlltDs1K4jgJ1QZIpPiSOpc2tY1EBDOJ11ZD9ikZOzxhBDxGc
+ N6XdSFJ01M/A=
+X-Google-Smtp-Source: AGHT+IGwjW7MDmAwX88wzy2K6C4SsiEVtRq6YqAm1ZsuSD7WYUpOBa/WcBffoD7Zr8Xr/9saSv6bAA==
+X-Received: by 2002:a05:6902:2e05:b0:e81:8760:15c8 with SMTP id
+ 3f1490d57ef6-e8187601fc2mr3665429276.28.1749097410596; 
+ Wed, 04 Jun 2025 21:23:30 -0700 (PDT)
 Received: from localhost (c-73-224-175-84.hsd1.fl.comcast.net. [73.224.175.84])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-70f8abed2basm32224477b3.36.2025.06.04.16.36.57
+ 3f1490d57ef6-e7f733ee856sm3483847276.30.2025.06.04.21.23.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Jun 2025 16:36:57 -0700 (PDT)
+ Wed, 04 Jun 2025 21:23:29 -0700 (PDT)
+Date: Thu, 5 Jun 2025 00:23:29 -0400
 From: Yury Norov <yury.norov@gmail.com>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  Andrew Lunn <andrew+netdev@lunn.ch>,
  "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, wireguard@lists.zx2c4.com,
- netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: Yury Norov <yury.norov@gmail.com>
-Subject: [PATCH] wireguard/queueing: simplify wg_cpumask_next_online()
-Date: Wed,  4 Jun 2025 19:36:55 -0400
-Message-ID: <20250604233656.41896-1-yury.norov@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] wireguard/queueing: simplify wg_cpumask_next_online()
+Message-ID: <aEEbwQzSoVQAPqLq@yury>
+References: <20250604233656.41896-1-yury.norov@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250604233656.41896-1-yury.norov@gmail.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -87,41 +89,47 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-wg_cpumask_choose_online() opencodes cpumask_nth(). Use it and make the
-function significantly simpler. While there, fix opencoded cpu_online()
-too. 
+On Wed, Jun 04, 2025 at 07:36:55PM -0400, Yury Norov wrote:
+> wg_cpumask_choose_online() opencodes cpumask_nth(). Use it and make the
+> function significantly simpler. While there, fix opencoded cpu_online()
+> too. 
+> 
+> Signed-off-by: Yury Norov <yury.norov@gmail.com>
+> ---
+>  drivers/net/wireguard/queueing.h | 14 ++++----------
+>  1 file changed, 4 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/net/wireguard/queueing.h b/drivers/net/wireguard/queueing.h
+> index 7eb76724b3ed..3bfe16f71af0 100644
+> --- a/drivers/net/wireguard/queueing.h
+> +++ b/drivers/net/wireguard/queueing.h
+> @@ -104,17 +104,11 @@ static inline void wg_reset_packet(struct sk_buff *skb, bool encapsulating)
+>  
+>  static inline int wg_cpumask_choose_online(int *stored_cpu, unsigned int id)
+>  {
+> -	unsigned int cpu = *stored_cpu, cpu_index, i;
+> +	if (likely(*stored_cpu < nr_cpu_ids && cpu_online(*stored_cpu)))
+> +		return cpu;
 
-Signed-off-by: Yury Norov <yury.norov@gmail.com>
----
- drivers/net/wireguard/queueing.h | 14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
+Oops... This should be 
+                return *stored_cpu;
 
-diff --git a/drivers/net/wireguard/queueing.h b/drivers/net/wireguard/queueing.h
-index 7eb76724b3ed..3bfe16f71af0 100644
---- a/drivers/net/wireguard/queueing.h
-+++ b/drivers/net/wireguard/queueing.h
-@@ -104,17 +104,11 @@ static inline void wg_reset_packet(struct sk_buff *skb, bool encapsulating)
- 
- static inline int wg_cpumask_choose_online(int *stored_cpu, unsigned int id)
- {
--	unsigned int cpu = *stored_cpu, cpu_index, i;
-+	if (likely(*stored_cpu < nr_cpu_ids && cpu_online(*stored_cpu)))
-+		return cpu;
- 
--	if (unlikely(cpu >= nr_cpu_ids ||
--		     !cpumask_test_cpu(cpu, cpu_online_mask))) {
--		cpu_index = id % cpumask_weight(cpu_online_mask);
--		cpu = cpumask_first(cpu_online_mask);
--		for (i = 0; i < cpu_index; ++i)
--			cpu = cpumask_next(cpu, cpu_online_mask);
--		*stored_cpu = cpu;
--	}
--	return cpu;
-+	*stored_cpu = cpumask_nth(id % num_online_cpus(), cpu_online_mask);
-+	return *stored_cpu;
- }
- 
- /* This function is racy, in the sense that it's called while last_cpu is
--- 
-2.43.0
+I'll resend, sorry for noise.
 
+>  
+> -	if (unlikely(cpu >= nr_cpu_ids ||
+> -		     !cpumask_test_cpu(cpu, cpu_online_mask))) {
+> -		cpu_index = id % cpumask_weight(cpu_online_mask);
+> -		cpu = cpumask_first(cpu_online_mask);
+> -		for (i = 0; i < cpu_index; ++i)
+> -			cpu = cpumask_next(cpu, cpu_online_mask);
+> -		*stored_cpu = cpu;
+> -	}
+> -	return cpu;
+> +	*stored_cpu = cpumask_nth(id % num_online_cpus(), cpu_online_mask);
+> +	return *stored_cpu;
+>  }
+>  
+>  /* This function is racy, in the sense that it's called while last_cpu is
+> -- 
+> 2.43.0
