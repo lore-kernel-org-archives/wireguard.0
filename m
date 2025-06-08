@@ -4,53 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D911C5AE59
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  5 Jun 2025 15:47:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C98E1C5B552
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Jun 2025 21:11:13 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8443c5f0;
-	Thu, 5 Jun 2025 15:47:56 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e81a4bf1
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0c281679;
+	Sun, 8 Jun 2025 21:11:11 +0000 (UTC)
+Received: from cornsilk.maple.relay.mailchannels.net
+ (cornsilk.maple.relay.mailchannels.net [23.83.214.40])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e84b4295
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 5 Jun 2025 15:47:55 +0000 (UTC)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 8497D5C67B6;
- Thu,  5 Jun 2025 15:45:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C89A4C4CEE7;
- Thu,  5 Jun 2025 15:47:51 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="nGo2Wb/L"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1749138468;
+ for <wireguard@lists.zx2c4.com>; Sun, 8 Jun 2025 21:11:09 +0000 (UTC)
+X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+ by relay.mailchannels.net (Postfix) with ESMTP id B926116217B;
+ Sun,  8 Jun 2025 21:11:06 +0000 (UTC)
+Received: from cpanel-007-fra.hostingww.com
+ (trex-green-4.trex.outbound.svc.cluster.local [100.96.195.129])
+ (Authenticated sender: instrampxe0y3a)
+ by relay.mailchannels.net (Postfix) with ESMTPA id E1E72162161;
+ Sun,  8 Jun 2025 21:11:05 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1749417066; a=rsa-sha256;
+ cv=none;
+ b=eEWssct4zZOJKwmX+7YyxF4XgypxhcEoCXzOeMNDnhLrzFmLUnA3ZfWpmo9IC7HXClS/oa
+ SyMFMxvGfOoFlst3b0AKSBUEBoB+yP/x8r/tyxlBFW5tHfi4rqg7hV4LS8Jk+wKXwClOfP
+ 5hm7eAjH4Ybv0UKIpvUFCiHSB3CCU3MZw/r4hCYRh01fgok2qwuhWpM/X7xtdBFh7rVVMW
+ yFrwhN8f3bWVSJtcTpsDms2qFzsm7Uu3twA3hGmQRvw1TVHQnk8od3Zd3NIgcZY/ETMEMy
+ nhrkcBXy78+8D19aVILQgSe8oygndhlAQsoXd1AIcy4BUJelKKxNB8u9tueMCQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net; s=arc-2022; t=1749417066;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LxhUZsqXZoy5NKRlMpwIJu7HzCURr8MlBIxhhj3NsB4=;
- b=nGo2Wb/LNCX0csPOfpiiCtEOelokibGXSymih+uehTAbr91pvL3ifS5U6WZ1yfmo76foyy
- SM4ce4zlZiL89gQGn6y8i3CqFxJb5sqJu2KFSxBWli8T+kkrp1tTi2kJixC8ATR9TzxDDh
- 873tBTy5/ad/tqPhVyXJ9V8e015pZRE=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f4913faa
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Thu, 5 Jun 2025 15:47:46 +0000 (UTC)
-Date: Thu, 5 Jun 2025 17:47:32 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Yury Norov <yury.norov@gmail.com>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
- "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] wireguard/queueing: simplify wg_cpumask_next_online()
-Message-ID: <aEG8FMsdNLKWtLf9@zx2c4.com>
-References: <20250604233656.41896-1-yury.norov@gmail.com>
- <aEEbwQzSoVQAPqLq@yury> <aEGAfy80UcB_UMYs@zx2c4.com>
- <aEGooNws-KihCuWh@yury>
+ bh=q10eUAChNCNDvYkROwRjo4FwL3SbAlSCudbqPJxFPEY=;
+ b=QMGT0OykIS05KPvyqO6CBivhbdSbz5kR3/M6sTnQvUkEO8UO6l2N6C8e0pLnyomP2QCcJH
+ JYh336BFWOWFh+njBQixncr9xJWSU3aH+YjXn1sSpQJynuxcf6A8ZLbW+XA/NU6Qju6OvH
+ 5ZZFbe5lbBataLX5Y7Vsy/tjojY3lTeDT6eFkaYUZ/anZGzZIn5ZAOfUDzxS5OmPCs3z+i
+ Bw8vWoD9yZP8E/pfDiGUm0I83pmnZQ73N46V9tSWo+Mi+49YSndXS2LirsKyYGpQi5ym+B
+ aeAI/WDNwbLq/E4NxUINdrni1hdyKyGfCLlpfpwDcY4xWmMtcTsXZHEk83qvFw==
+ARC-Authentication-Results: i=1; rspamd-95f6fbf49-l5b57;
+ auth=pass smtp.auth=instrampxe0y3a smtp.mailfrom=calestyo@scientia.org
+X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
+X-MC-Relay: Neutral
+X-MC-Copy: stored-urls
+X-MailChannels-SenderId: instrampxe0y3a|x-authuser|calestyo@scientia.org
+X-MailChannels-Auth-Id: instrampxe0y3a
+X-Quick-Ruddy: 407386925eef3db9_1749417066568_218664484
+X-MC-Loop-Signature: 1749417066568:1507003728
+X-MC-Ingress-Time: 1749417066567
+Received: from cpanel-007-fra.hostingww.com (cpanel-007-fra.hostingww.com
+ [3.69.87.180]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+ by 100.96.195.129 (trex/7.0.3); Sun, 08 Jun 2025 21:11:06 +0000
+Received: from ipbcc0feaa.dynamic.kabel-deutschland.de
+ ([188.192.254.170]:63738 helo=heisenberg.fritz.box)
+ by cpanel-007-fra.hostingww.com with esmtpsa (TLS1.3) tls
+ TLS_AES_256_GCM_SHA384 (Exim 4.98.1)
+ (envelope-from <calestyo@scientia.org>) id 1uONIF-00000006WQM-39jH;
+ Sun, 08 Jun 2025 21:11:04 +0000
+Message-ID: <27eacd15c147889708652227cedadf5f01d79d8e.camel@scientia.org>
+Subject: Re: are WG clients expected to automatically handle it when the
+ endpoint is within the AllowedIPs
+From: Christoph Anton Mitterer <calestyo@scientia.org>
+To: Kajetan Staszkiewicz <vegeta@tuxpowered.net>, wireguard@lists.zx2c4.com
+Date: Sun, 08 Jun 2025 23:11:01 +0200
+In-Reply-To: <8e9f8b10-f438-40d5-a03a-85ef64632b11@tuxpowered.net>
+References: <1a897464d3fb56184b83cb6ac7b4a2407047b10e.camel@scientia.org>
+ <8e9f8b10-f438-40d5-a03a-85ef64632b11@tuxpowered.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.1-1 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aEGooNws-KihCuWh@yury>
+X-AuthUser: calestyo@scientia.org
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -65,43 +89,46 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Thu, Jun 05, 2025 at 10:24:32AM -0400, Yury Norov wrote:
-> On Thu, Jun 05, 2025 at 01:33:19PM +0200, Jason A. Donenfeld wrote:
-> > On Thu, Jun 05, 2025 at 12:23:29AM -0400, Yury Norov wrote:
-> > > On Wed, Jun 04, 2025 at 07:36:55PM -0400, Yury Norov wrote:
-> > > > wg_cpumask_choose_online() opencodes cpumask_nth(). Use it and make the
-> > > > function significantly simpler. While there, fix opencoded cpu_online()
-> > > > too. 
-> > > > 
-> > > > Signed-off-by: Yury Norov <yury.norov@gmail.com>
-> > > > ---
-> > > >  drivers/net/wireguard/queueing.h | 14 ++++----------
-> > > >  1 file changed, 4 insertions(+), 10 deletions(-)
-> > > > 
-> > > > diff --git a/drivers/net/wireguard/queueing.h b/drivers/net/wireguard/queueing.h
-> > > > index 7eb76724b3ed..3bfe16f71af0 100644
-> > > > --- a/drivers/net/wireguard/queueing.h
-> > > > +++ b/drivers/net/wireguard/queueing.h
-> > > > @@ -104,17 +104,11 @@ static inline void wg_reset_packet(struct sk_buff *skb, bool encapsulating)
-> > > >  
-> > > >  static inline int wg_cpumask_choose_online(int *stored_cpu, unsigned int id)
-> > > >  {
-> > > > -	unsigned int cpu = *stored_cpu, cpu_index, i;
-> > > > +	if (likely(*stored_cpu < nr_cpu_ids && cpu_online(*stored_cpu)))
-> > > > +		return cpu;
-> > > 
-> > > Oops... This should be 
-> > >                 return *stored_cpu;
-> > 
-> > Maybe it's best to structure the function something like:
-> > 
-> > unsigned int cpu = *stored_cpu;
-> > if (unlikely(cpu >= nr_cpu_ids || !cpu_online(cpu))) {
-> > 	cpu = *stored_cpu = cpumask_nth(id % num_online_cpus(),	cpu_online_mask);
-> > return cpu;
-> 
-> If you prefer. I'll send v2 shortly
+Hey.
 
-While you're at it, fix the commit subject to match the format used by
-every single other wireguard commit. `$ git log --oneline drivers/net/wireguard`
-to see what I mean.
+
+On Thu, 2025-06-05 at 12:27 +0200, Kajetan Staszkiewicz wrote:
+> NetworkManager's Wireguard implemmentation already has a way of
+> supporting it by using fwmarks. It's just that the fwmark operation
+> is
+> not automatically turned unless the tunnel is configured with
+> AllowedIPs=3D::/0
+
+AFAIU, even the AllowedIPs=3D::/0 case was only fixed[0] (in the sense
+of: making it work out-of-the-box) recently, right?
+
+But nevertheless, my main point was,... is it expected to be handled
+*automatically* by WG clients?
+
+It's clear that one can always make it somehow manually working, like
+with the way from your comment or like how I did with adding a specific
+route for the endpoint in [1] (though your approach is probably
+cleaner).
+
+And at least as of now, neither NM nor wg-quick seem to work out-of-
+the-box with a split profile as described before.
+
+
+> See my comment and a workaround which always forces the fwmark
+> operation
+> on
+> https://gitlab.freedesktop.org/NetworkManager/NetworkManager/-/issues/115=
+7#note_2426757
+
+I would rather not have that imposed on "end-users"... not ruled out
+they get it wrong and perhaps even compromise security.
+
+
+Cheers,
+Chris.
+
+
+[0] https://gitlab.freedesktop.org/NetworkManager/NetworkManager/-/merge_re=
+quests/2158
+[1] https://gitlab.freedesktop.org/NetworkManager/NetworkManager/-/issues/1=
+737
