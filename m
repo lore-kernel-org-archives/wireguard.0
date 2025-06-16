@@ -4,35 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0EF5EF06EB
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Feb 2026 18:13:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD9BEEF06E3
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Feb 2026 18:50:53 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8bd1e262;
-	Sun, 8 Feb 2026 17:13:09 +0000 (UTC)
-Received: from secundus.vsp.im (secundus.vsp.im [2a03:4000:6:508b::42])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0ed13e2f
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 8 Feb 2026 17:05:49 +0000 (UTC)
-Received: from sky.vs-b.lan (unknown
- [IPv6:fd04:f774:a13e:5801:fbeb:e9a5:1c28:3a49])
- by secundus.vsp.im (Postfix) with ESMTP id C76B5FFA25;
- Sun,  8 Feb 2026 18:05:47 +0100 (CET)
-From: Valentin Spreckels <valentin@spreckels.dev>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
- "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, wireguard@lists.zx2c4.com,
- netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
- Valentin Spreckels <valentin@spreckels.dev>
-Subject: [PATCH wireguard] wireguard: prevent ipv6 addrconf via
- IFF_NO_ADDRCONF flag
-Date: Sun,  8 Feb 2026 18:05:45 +0100
-Message-ID: <20260208170545.31942-1-valentin@spreckels.dev>
-X-Mailer: git-send-email 2.52.0
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 779fa1db;
+	Sun, 8 Feb 2026 17:17:15 +0000 (UTC)
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com
+ [205.220.168.131])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0db119d1
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 16 Jun 2025 20:15:22 +0000 (UTC)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55GKBAFW014442;
+ Mon, 16 Jun 2025 20:15:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=fULxdXRDsw7CQ6/kfd1H1x
+ zgimrAJzQNxMbQWIYLgB0=; b=Yg3sXYnb+0HDmlnQvcDWv0ImBxZ1qJCouSHApu
+ fChoQP2w5Gv8FMCy2MxVOm6lasrOWv6XAyAr6N5TKjtSgWGg1imGotVCyuLM747x
+ dKUYPDg4hmEls3B0YqFABGLxfaQARExE9VMrkFQ9kj+zFMsnhF4B0izwENlbCgCb
+ 7v0OEYSatiFv0gJuJbWVx2sHydOfXMbxZzdQdVmxupG+aB9/Y90xTJC7R4dSYUNe
+ WuyoUYimE+M+1eKhwxZz+je7Q4zcOmeDTZZDCyxrONUXTXZk9mFxqxUapqz5ZCtb
+ c0t7UqaE5F8SPXzDsK6E7Y33T+DY1cTWf/jRZXgOLzNDEuxA==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com
+ [129.46.96.20])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47akuw97cq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 16 Jun 2025 20:15:20 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com
+ [10.47.97.35])
+ by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 55GKF1Zu029092
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 16 Jun 2025 20:15:01 GMT
+Received: from [10.216.18.85] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 16 Jun
+ 2025 13:15:00 -0700
+Message-ID: <2c5257a7-e330-4983-8447-3e217b616b2e@quicinc.com>
+Date: Tue, 17 Jun 2025 01:44:56 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Mailman-Approved-At: Sun, 08 Feb 2026 17:12:58 +0000
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: "Jason A. Donenfeld\"" <Jason@zx2c4.com>, <wireguard@lists.zx2c4.com>,
+ <netdev@vger.kernel.org>
+From: Sharath Chandra Vurukala <quic_sharathv@quicinc.com>
+Subject: Issue with rtnl_lock in wg_pm_notification
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
+ signatures=585085
+X-Proofpoint-ORIG-GUID: 6xKmBaaPUQSDyZ3lQAHv2veAx1zn_8kL
+X-Authority-Analysis: v=2.4 cv=He0UTjE8 c=1 sm=1 tr=0 ts=68507b58 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8
+ a=AJ7OG-yrU3hLHepi_tcA:9 a=QEXdDO2ut3YA:10 a=Kfep4x4mMYYA:10
+X-Proofpoint-GUID: 6xKmBaaPUQSDyZ3lQAHv2veAx1zn_8kL
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE2MDE0MCBTYWx0ZWRfX8PaHLADbOBMu
+ HMgrgle/2F0H+rcEntviKDEi+zBoktE5vJ5cQtEz/ds4crf5lJWt8KIKTIQZyJwm2HmzHM4vybj
+ uV7svF6EMYtiZ+FsT2a2HGDmMFPtuHkP+vLYBtFDxy2lh1py9NNZr3Ql06jnSf9UT2PAYNAZIG7
+ rMrjZSKo9lAqqS/xzcDl43UkZegv7Ji/YtPeoTwsvp7VZ997eFXhEytrxVRlxHz/v+Vf+hGVhMf
+ mEZV0hjKoMBMvPEqm5VzBBj/NlzAlVmL8L8f3vRe/c+xoX29JgOoC4SPY6eSKj4eTuuUuStQjvP
+ FFnMcHV+KwVHS/I9IbWLZ96XG3jdxvtTCGHoFD0kF9G52FEeyPJ0u72M/OoxLXy8w678YvYHo8B
+ tuierlKos06OkB3SRLhDP6rjFilNdVFCEByjvpu17fjDaZLlhkDWFvQw+V7merprQxBgJ2lD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-16_10,2025-06-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 clxscore=1011 malwarescore=0 priorityscore=1501 suspectscore=0
+ impostorscore=0 bulkscore=0 mlxlogscore=809 lowpriorityscore=0 phishscore=0
+ adultscore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506160140
+X-Mailman-Approved-At: Sun, 08 Feb 2026 17:17:13 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -47,45 +95,57 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Use the flag introduced in commit 8a321cf7becc6 ("net: add
-IFF_NO_ADDRCONF and use it in bonding to prevent ipv6 addrconf")
-instead of mangling the addr_gen_mode to prevent ipv6 addrconf.
+Hi All,
+I work on rmnet driver(more details at https://docs.kernel.org/networking/device_drivers/cellular/qualcomm/rmnet.html), This driver registers onto any physical network device in IP mode.
+This driver registers/deregisters for PM notifications based on the NETDEV_REGISTER/NETDEV_UNREGISTER notifications received for the physical netdevice.
 
-Signed-off-by: Valentin Spreckels <valentin@spreckels.dev>
----
- drivers/net/wireguard/device.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+In one of the tests, involving a frequent system suspend/resume and physical netdevice registration/de-registration, a deadlock has been observed involving the rtnl_lock and the pm_chain_head->rwsem.
+The sequence involves
+Thread1: unregister_netdev(holds rtnl_lock)-> notification sent to rmnet driver( netdev_chain) -> rmnet driver attempts to unregister for pm_notification( involves acquiring pm_chain_head->rwsem).
+Thread2: pm_suspend -> pm_notofier_call_chain(holds pm_chain_head->rwsem)-> wg_pm_notifcation(trying to acquire rtnl_lock)
 
-diff --git a/drivers/net/wireguard/device.c b/drivers/net/wireguard/device.c
-index 46a71ec36af87..4b29f2fa51d1d 100644
---- a/drivers/net/wireguard/device.c
-+++ b/drivers/net/wireguard/device.c
-@@ -31,7 +31,6 @@ static LIST_HEAD(device_list);
- static int wg_open(struct net_device *dev)
- {
- 	struct in_device *dev_v4 = __in_dev_get_rtnl(dev);
--	struct inet6_dev *dev_v6 = __in6_dev_get(dev);
- 	struct wg_device *wg = netdev_priv(dev);
- 	struct wg_peer *peer;
- 	int ret;
-@@ -44,8 +43,6 @@ static int wg_open(struct net_device *dev)
- 		IN_DEV_CONF_SET(dev_v4, SEND_REDIRECTS, false);
- 		IPV4_DEVCONF_ALL(dev_net(dev), SEND_REDIRECTS) = false;
- 	}
--	if (dev_v6)
--		dev_v6->cnf.addr_gen_mode = IN6_ADDR_GEN_MODE_NONE;
- 
- 	mutex_lock(&wg->device_update_lock);
- 	ret = wg_socket_init(wg, wg->incoming_port);
-@@ -288,7 +285,7 @@ static void wg_setup(struct net_device *dev)
- 	dev->needed_tailroom = noise_encrypted_len(MESSAGE_PADDING_MULTIPLE);
- 	dev->type = ARPHRD_NONE;
- 	dev->flags = IFF_POINTOPOINT | IFF_NOARP;
--	dev->priv_flags |= IFF_NO_QUEUE;
-+	dev->priv_flags |= IFF_NO_QUEUE | IFF_NO_ADDRCONF;
- 	dev->lltx = true;
- 	dev->features |= WG_NETDEV_FEATURES;
- 	dev->hw_features |= WG_NETDEV_FEATURES;
--- 
-2.52.0
+I do not understand fully what wireguard functionality is, but considering that rtnl_lock is a global one, it does not seem to be a good design to have notification callback acquire this lock.
+Can we check if rthl_lock be avoided here OR 
+Use rtnl_trylock instead of using rtnl_lock and consider deferring the work to a context where it is safe to acquire the lock( may be a workqueue), something like below to avoid the deadlock?
+
+static int wg_pm_notification(struct notifier_block *nb, unsigned long action, void *data)
+{
+          struct wg_device *wg;
+          struct wg_peer *peer;
+
+          /* If the machine is constantly suspending and resuming, as part of
+           * its normal operation rather than as a somewhat rare event, then we
+           * don't actually want to clear keys.
+           */
+          if (IS_ENABLED(CONFIG_PM_AUTOSLEEP) ||
+              IS_ENABLED(CONFIG_PM_USERSPACE_AUTOSLEEP))
+                          return 0;
+
+          if (action != PM_HIBERNATION_PREPARE && action != PM_SUSPEND_PREPARE)
+                          return 0;
+
+          if (rtnl_trylock()) {
+              list_for_each_entry(wg, &device_list, device_list) {
+                              mutex_lock(&wg->device_update_lock);
+                              list_for_each_entry(peer, &wg->peer_list, peer_list) {
+                                              del_timer(&peer->timer_zero_key_material);
+                                              wg_noise_handshake_clear(&peer->handshake);
+                                              wg_noise_keypairs_clear(&peer->keypairs);
+                              }
+                              mutex_unlock(&wg->device_update_lock);
+              }
+
+          } else {
+
+                /* schedule a workqueue to delete timers clear up the keypairs of the peers?  */
+
+          }
+
+          rtnl_unlock();
+          rcu_barrier();
+}
+
+Thanks,
+Sharath
+
 
