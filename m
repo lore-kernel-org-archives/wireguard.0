@@ -4,73 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E832C7115B
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 19 Jun 2025 14:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BD43C77B7F
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 26 Jun 2025 03:38:06 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e7aae205;
-	Thu, 19 Jun 2025 14:55:08 +0000 (UTC)
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com
- [2607:f8b0:4864:20::1034])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ad84ff78
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 721fb047;
+	Thu, 26 Jun 2025 03:38:05 +0000 (UTC)
+Received: from mx2.freebsd.org (mx2.freebsd.org [2610:1c1:1:606c::19:2])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2ed7d1be
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 19 Jun 2025 14:55:07 +0000 (UTC)
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-3141b84bf65so776631a91.1
- for <wireguard@lists.zx2c4.com>; Thu, 19 Jun 2025 07:55:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1750344905; x=1750949705; darn=lists.zx2c4.com;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=fCc8wvcGt1Bzj1+8h/7it2Sg3YOCUwTqtEA7c0OIsck=;
- b=ZBgUkZq0PokfDE/JhgeH8Wftu3rKilQtiM+rOh+6xOP8AsONc8PVi2A5JyiBNuSoRb
- yMAY9df+ZuCLKof1wYiIt+XzE+1vPZkwTMR9ozxeJg8X+6VVaFGdN5bhLvmOIq6p0mJX
- kbaakCO4U+lhedudhyN6S2S40ZpYk4VsoDc9RpuALRYxlajbFfnMsDLxd1o3qLCd8dDa
- PIR+MucmBiosGLiwM0/qiTvcGqJcx73Wp1o1YPS17MPuuDyLKccsZNC1buni5ZnZwixQ
- YNAbPiLGgjfTOnOOwfI9HHJwc2rdxyk8iCx5CViRt7B+f4WxloUJZG6V11e/D6Zp+4xM
- SWEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750344905; x=1750949705;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=fCc8wvcGt1Bzj1+8h/7it2Sg3YOCUwTqtEA7c0OIsck=;
- b=rjZdUnwoDKDxuifDAVQcxpGPitgTgtig6Z8ft/PiXGuL1zelRWfxwgPgXUmyLXrlAg
- 0EL+LFKtOJCKz31Rwz2VtfQ5+j6cgf3T1Y3KpuXBGotTrARYW9qYuxOKVqZkvmu3XyZI
- IJV4RuYe1GXR/Fda7LfFcdBtJSup1PTw0YSKkUo8bZWT/VRXRWI87lafl0oRszVKngHP
- yWtEFKUqyjeKLdujj8eAz4+y2Chy7OJ2mu5VRjRKApfp6OvOlPkmjFNneu0ugWPy7jiI
- XJJTtJ8Gi5Ng81G6YM3u8ZCYS054uXuOReeElWHXyOpRyHvIHh8NJ+ibSsKcVzukyBd7
- /igQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUjHAnVWUiN0giZC4/8NHzY4OnlukGtc/hXBNulBCLgIs4bLdR4R3tf7mGIfXWVzpW8QJfcsR3SjgM=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YyvTLTaIKOOaxzPIYtxMgIkwI+PLyI5XAqfEdelLI277j2kJggT
- vWgQD+jht4+fW1xcIPp3STxW0LGzFDJ6aEA3vsoDIYzXRT7867RSSwM9
-X-Gm-Gg: ASbGncv9NyPsuNZY3R6HGomcZ/1k2dsFbR3NiK7yfr/NucxlRpQ2V9GUUk+GLsjCzwo
- FcLJri9hM31Pw5oB2QNWcsqPPotOSN5BIAYDOGGqIvWT8X2u+cyra46c94LILQl7xGVPuTGVb9g
- FA54b3gXBh+q+0FCtshL0W4BPwHSmcutXrVqlNjCx3GdJxSxj4jfGZ6R340iAy2PqGRCMpbhN8m
- pmKnBHQe7jodiDiRrz9tBUn7dbX6dzl+t5GPwJiBGJ7+F398fgQuZDH6cDJBQ0ACto/i34+ehPO
- Iasf5UJHV8pbEQzwl7oNrk64yAxhPJ2oLxT6mpYOEF8oXBSL2y/WBGff8aOGrJICPVdytNpe
-X-Google-Smtp-Source: AGHT+IHFRai+eXLqEsx2ey+Wqt2gXo8kOT6meJ0aM2dbnVCHxPE9uC9Md/iQOR7yx7gT07xj188dPw==
-X-Received: by 2002:a17:90b:2dcc:b0:311:9c1f:8516 with SMTP id
- 98e67ed59e1d1-313f1c3fb20mr36050743a91.15.1750344905433; 
- Thu, 19 Jun 2025 07:55:05 -0700 (PDT)
-Received: from localhost ([216.228.127.128]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3158a24cac2sm2506610a91.27.2025.06.19.07.55.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Jun 2025 07:55:04 -0700 (PDT)
-From: Yury Norov <yury.norov@gmail.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- Andrew Lunn <andrew+netdev@lunn.ch>,
- "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, wireguard@lists.zx2c4.com,
- netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: "Yury Norov [NVIDIA]" <yury.norov@gmail.com>
-Subject: [PATCH v2] wireguard: queueing: simplify wg_cpumask_next_online()
-Date: Thu, 19 Jun 2025 10:54:59 -0400
-Message-ID: <20250619145501.351951-1-yury.norov@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ Thu, 26 Jun 2025 03:38:02 +0000 (UTC)
+Received: from mx1.freebsd.org (mx1.freebsd.org [96.47.72.80])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits)
+ client-signature RSA-PSS (4096 bits))
+ (Client CN "mx1.freebsd.org", Issuer "R10" (verified OK))
+ by mx2.freebsd.org (Postfix) with ESMTPS id 4bSPXR16W9z3TFM;
+ Thu, 26 Jun 2025 03:37:59 +0000 (UTC)
+ (envelope-from kevans@FreeBSD.org)
+Received: from smtp.freebsd.org (smtp.freebsd.org
+ [IPv6:2610:1c1:1:606c::24b:4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
+ client-signature RSA-PSS (4096 bits) client-digest SHA256)
+ (Client CN "smtp.freebsd.org", Issuer "R11" (verified OK))
+ by mx1.freebsd.org (Postfix) with ESMTPS id 4bSPXQ0t8Dz3ls1;
+ Thu, 26 Jun 2025 03:37:58 +0000 (UTC)
+ (envelope-from kevans@FreeBSD.org)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=freebsd.org; s=dkim;
+ t=1750909078;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=A1tKoSwrJQsbcYq+qY9jWj6OI+RYMT06LdinvFds3WU=;
+ b=JyUFICjq9YUgpNaDXmZvlypC2S9PQta5kN/lC5idotuefEpjxoNwJBzJcqz+ajBUfe58pZ
+ +HijlwwKWuC4sqNPK7cG88S+cnF0rYTsSVuQeThYxujssK8Ev9v73SnJN+EHOsOzeI8c7F
+ CzR+Ix/1SUffe/fzc3vQ3RJ+eXS5O87dmiGdIkvw+IADrBO8QZsRLNZirIGXNPQsU/zuK2
+ ijtSgCOv1gU252yBwxSxlm/3VCqKogRPgQ25wV8YEwKvLG1HaOfX4U5QMcdf7qC7pqEOPW
+ 44aOWKz9/qFFP2ohywaIQ6cQjFA6JwaeCQ1KRHuCpQZolr1vmAvjn71pRhIPCA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=freebsd.org;
+ s=dkim; t=1750909078;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=A1tKoSwrJQsbcYq+qY9jWj6OI+RYMT06LdinvFds3WU=;
+ b=vxm0w4ASr8djym2evkXidfdpOMAyXDzaQih5K109swUSaWYfLZMJLukahRGaOBU86q8rMy
+ jSkW9bJZe76ZzgSXggSR/Khv0S6FTmyhBXtau1U/1FN0nlhEWkra7ESVaIxKws96L4OdEK
+ O45eRB0ZI3ZB3rhjZybgSGc+KJElgc+tZ6CwVtK3TXjnexqHYLzJeoP75rsjxfvqqBHyUA
+ ijIDj+NHH/FqBHGNRPvWW5vRrYWN89ZoWfzoaVs13YmjzqXzPvP7i2AAy5bVwD1ldW3t/u
+ df77sU7m0XNVafN4rEIGEd2mdzyXytzu8o/5YeXRH3jO9Ep+zVhjC802XeljKw==
+ARC-Authentication-Results: i=1;
+	mx1.freebsd.org;
+	none
+ARC-Seal: i=1; s=dkim; d=freebsd.org; t=1750909078; a=rsa-sha256; cv=none;
+ b=Imgy1gWmIix4nziuxiVOvDcZdxRBxBGIfTb0BEDscIA4uwG54yuok0h8GxPblgbDoA97vX
+ pwDj+I8bALVoYaEv/gfnCceX7ukiu8Q7TdyFXoD+/FiJUReUWolei2Qheg5xFt1UEprUAa
+ MNRCb5DV/ehW7AgJtBLGl1wcz0qZXT+mnqeuJb4/9oy4111FXrdITRCgrdU9sBJxf5lgTk
+ YQAcov7txBwOjuTcqETpEBOv+Zyp62HkNxoryS8FCCc+wJbgG53cvMX3JiBxN12jtJXSKx
+ w/i9wUe3yEVshNjBrdn49P2TTuT2c004GBxV4pErk6z1MjbMnrBkYJEG/kwjlQ==
+Received: from [10.9.4.95] (unknown [209.182.120.176])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ (Authenticated sender: kevans/mail)
+ by smtp.freebsd.org (Postfix) with ESMTPSA id 4bSPXP0sXSzJJj;
+ Thu, 26 Jun 2025 03:37:57 +0000 (UTC)
+ (envelope-from kevans@FreeBSD.org)
+Message-ID: <d309fd3a-daf1-4fd5-98aa-2920f50146fd@FreeBSD.org>
+Date: Wed, 25 Jun 2025 22:37:55 -0500
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RESEND PATCH v1 wireguard-tools] ipc: linux: Support incremental
+ allowed ips updates
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Jordan Rife <jordan@jrife.io>
+Cc: wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
+ Jakub Kicinski <kuba@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>
+References: <20250517192955.594735-1-jordan@jrife.io>
+ <aCzirk7xt3K-5_ql@zx2c4.com> <aCzvxmD5eHRTIoAF@zx2c4.com>
+ <vq4hbaffjqdgdvzszf5j56mikssy2v2qtqn2s5vxap3q5gi4kz@ydrbhsdfeocr>
+ <CAHmME9rbRpNZ1pP-y_=EzPxRMqBbPobjpBazec+swr+2wwDCWg@mail.gmail.com>
+Content-Language: en-US
+From: Kyle Evans <kevans@FreeBSD.org>
+In-Reply-To: <CAHmME9rbRpNZ1pP-y_=EzPxRMqBbPobjpBazec+swr+2wwDCWg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -86,48 +104,35 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-From: Yury Norov [NVIDIA] <yury.norov@gmail.com>
+On 5/21/25 18:51, Jason A. Donenfeld wrote:
+> On Thu, May 22, 2025 at 1:02 AM Jordan Rife <jordan@jrife.io> wrote:
+>>>> Merged here:
+>>>> https://git.zx2c4.com/wireguard-tools/commit/?id=0788f90810efde88cfa07ed96e7eca77c7f2eedd
+>>>>
+>>>> With a followup here:
+>>>> https://git.zx2c4.com/wireguard-tools/commit/?id=dce8ac6e2fa30f8b07e84859f244f81b3c6b2353
+>>>
+>>> Also,
+>>> https://git.zx2c4.com/wireguard-go/commit/?id=256bcbd70d5b4eaae2a9f21a9889498c0f89041c
+>>
+>> Nice, cool to see this extended to wireguard-go as well. As a follow up,
+>> I was planning to also create a patch for golang.zx2c4.com/wireguard/wgctrl
+>> so the feature can be used from there too.
+> 
+> Wonderful, please do! Looking forward to merging that.
+> 
+> There's already an open PR in FreeBSD too.
 
-wg_cpumask_choose_online() opencodes cpumask_nth(). Use it and make the
-function significantly simpler. While there, fix opencoded cpu_online()
-too.
+FreeBSD support landed as of:
 
-Signed-off-by: Yury Norov [NVIDIA] <yury.norov@gmail.com>
----
-v1: https://lore.kernel.org/all/20250604233656.41896-1-yury.norov@gmail.com/
-v2:
- - fix 'cpu' undeclared;
- - change subject (Jason);
- - keep the original function structure (Jason);
+https://cgit.freebsd.org/src/commit/?id=f6d9e22982a
 
- drivers/net/wireguard/queueing.h | 13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+It will be available in FreeBSD 15.0 and probably 14.4 (to be released 
+next year) as well.  I have pushed a branch, ke/fbsd_aip, to the 
+wireguard-tools repository for your consideration.
 
-diff --git a/drivers/net/wireguard/queueing.h b/drivers/net/wireguard/queueing.h
-index 7eb76724b3ed..56314f98b6ba 100644
---- a/drivers/net/wireguard/queueing.h
-+++ b/drivers/net/wireguard/queueing.h
-@@ -104,16 +104,11 @@ static inline void wg_reset_packet(struct sk_buff *skb, bool encapsulating)
- 
- static inline int wg_cpumask_choose_online(int *stored_cpu, unsigned int id)
- {
--	unsigned int cpu = *stored_cpu, cpu_index, i;
-+	unsigned int cpu = *stored_cpu;
-+
-+	if (unlikely(cpu >= nr_cpu_ids || !cpu_online(cpu)))
-+		cpu = *stored_cpu = cpumask_nth(id % num_online_cpus(), cpu_online_mask);
- 
--	if (unlikely(cpu >= nr_cpu_ids ||
--		     !cpumask_test_cpu(cpu, cpu_online_mask))) {
--		cpu_index = id % cpumask_weight(cpu_online_mask);
--		cpu = cpumask_first(cpu_online_mask);
--		for (i = 0; i < cpu_index; ++i)
--			cpu = cpumask_next(cpu, cpu_online_mask);
--		*stored_cpu = cpu;
--	}
- 	return cpu;
- }
- 
--- 
-2.43.0
+Aside: this is a really neat feature.
 
+Thanks!
+
+Kyle Evans
