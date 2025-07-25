@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BC43C83F1A
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 23 Jul 2025 15:46:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD9F6C87FCA
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 25 Jul 2025 23:25:55 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 74f480fc;
-	Wed, 23 Jul 2025 15:46:56 +0000 (UTC)
-Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 62879944
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6e43e941;
+	Fri, 25 Jul 2025 23:25:53 +0000 (UTC)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org
+ [2604:1380:4641:c500::1])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 13543541
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 23 Jul 2025 15:46:54 +0000 (UTC)
+ Fri, 25 Jul 2025 23:25:51 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 48A4A4560D;
- Wed, 23 Jul 2025 15:46:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46C75C4CEE7;
- Wed, 23 Jul 2025 15:46:49 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id 379F65C6BDA;
+ Fri, 25 Jul 2025 23:25:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 025E6C4CEE7;
+ Fri, 25 Jul 2025 23:25:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1753285612;
- bh=ZjkFYW2U13Mn/AmyiaZUOzdKnfqib/AK/IkijJ/maJM=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=aNQlQ22hhTYDAPi/lRwAWj2qwUsXFOufz2OH9a9kWha+0ZAdtGQ93nBfhCsm8j9Rz
- cMzRiQamF7jCzbfh3hsopUlr63HJM+GBVtVcNbxvMv+xT+v3qL5lSrRMNL5zy975DG
- 3ICxz03o8VjYbcwc9w8gDyQvogFZ2i3j3sJlnPf5v4juKizkbQrXmjJxhxE55pRIqa
- 1pbA6bL7MGDCcJvsJ5C3v2fwaVkWys2akT3KdRpMt5jqUJEJK+50AOlgavBqkPSrjM
- US71vAw/WrEL/FmlQymCQmmQLKtUVLMJu02zmdsO0UCD4aVK4EAgfvNb+HU9C9wj/q
- wKxS3sFVQzoaA==
-Date: Wed, 23 Jul 2025 16:46:47 +0100
-From: Simon Horman <horms@kernel.org>
-To: Kees Cook <kees@kernel.org>
-Cc: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
- Jakub Kicinski <kuba@kernel.org>, "Jason A. Donenfeld" <Jason@zx2c4.com>,
- Andrew Lunn <andrew+netdev@lunn.ch>,
- "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
- Xin Long <lucien.xin@gmail.com>, linux-kernel@vger.kernel.org,
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- linux-sctp@vger.kernel.org, linux-hardening@vger.kernel.org,
- Kuniyuki Iwashima <kuniyu@amazon.com>,
- Willem de Bruijn <willemb@google.com>
+ s=k20201202; t=1753485950;
+ bh=k+gS4GQuoGUziec6fqwcYVbZRGH00+uvJgsa8lL3+8w=;
+ h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+ b=vCT6Nob53ktddXRTiLA22iurf8QTUFtVDRLwYuc6tyc4ZtFba8TWPyirgGONVqnEn
+ qWJs3HcdFvOyjhO2y5ekUJEwu6HZlHQQuJteftEtJ+XLMUjEhc1rfJERKUN8FLq3Lj
+ Qq18dCgTiE56LRrsa8OgZi3oHsggkp/cnyl8DXKmc9zHr13JqY5QQyL0Te3vDOZGfn
+ 3I8DA1ebMR8M/dQZ3eC+j7iWq7o8NvRjA+U8C9uFOGW1TJZJlm4aftY1NEOuQGnQkG
+ 6lQBcLmz5hr1Lt8HNHOl1/tgJa5ddBRhFhOgkptX909zq/16Vn4H71Fol+pvAOchvB
+ Q6oWs7LNvJw1A==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+ by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id
+ ADD3F383BF4E; Fri, 25 Jul 2025 23:26:08 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Subject: Re: [PATCH net-next 0/3] net: Add sockaddr_inet unified address
  structure
-Message-ID: <20250723154647.GI1036606@horms.kernel.org>
+From: patchwork-bot+netdevbpf@kernel.org
+Message-Id: <175348596749.3366157.11889906791238903563.git-patchwork-notify@kernel.org>
+Date: Fri, 25 Jul 2025 23:26:07 +0000
 References: <20250722171528.work.209-kees@kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 In-Reply-To: <20250722171528.work.209-kees@kernel.org>
+To: Kees Cook <kees@kernel.org>
+Cc: marcelo.leitner@gmail.com, kuba@kernel.org, Jason@zx2c4.com,
+ andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com,
+ pabeni@redhat.com, lucien.xin@gmail.com, horms@kernel.org,
+ linux-kernel@vger.kernel.org, wireguard@lists.zx2c4.com,
+ netdev@vger.kernel.org, linux-sctp@vger.kernel.org,
+ linux-hardening@vger.kernel.org
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -64,11 +64,12 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-+ Iwashima-san and Willem
+Hello:
 
-  This series looks like something you should review
+This series was applied to netdev/net-next.git (main)
+by Jakub Kicinski <kuba@kernel.org>:
 
-On Tue, Jul 22, 2025 at 10:18:30AM -0700, Kees Cook wrote:
+On Tue, 22 Jul 2025 10:18:30 -0700 you wrote:
 > Hi!
 > 
 > Repeating patch 1, as it has the rationale:
@@ -89,32 +90,19 @@ On Tue, Jul 22, 2025 at 10:18:30AM -0700, Kees Cook wrote:
 >     to cover both IPv4 and IPv6, to avoid unseemly churn in the affected code
 >     bases.
 > 
->     Introduce sockaddr_inet as a unified structure for holding both IPv4 and
->     IPv6 addresses (i.e. large enough to accommodate sockaddr_in6).
-> 
->     The structure is defined in linux/in6.h since its max size is sized
->     based on sockaddr_in6 and provides a more specific alternative to the
->     generic sockaddr_storage for IPv4 with IPv6 address family handling.
-> 
->     The "sa_family" member doesn't use the sa_family_t type to avoid needing
->     layer violating header inclusions.
-> 
-> Also includes the replacements for wireguard and sctp.
-> 
-> Thanks,
-> 
-> -Kees
-> 
-> Kees Cook (3):
->   ipv6: Add sockaddr_inet unified address structure
->   wireguard: peer: Replace sockaddr with sockaddr_inet
->   sctp: Replace sockaddr with sockaddr_inet in sctp_addr union
-> 
->  drivers/net/wireguard/peer.h | 2 +-
->  include/linux/in6.h          | 7 +++++++
->  include/net/sctp/structs.h   | 2 +-
->  3 files changed, 9 insertions(+), 2 deletions(-)
-> 
-> -- 
-> 2.34.1
-> 
+> [...]
+
+Here is the summary with links:
+  - [net-next,1/3] ipv6: Add sockaddr_inet unified address structure
+    https://git.kernel.org/netdev/net-next/c/463deed51796
+  - [net-next,2/3] wireguard: peer: Replace sockaddr with sockaddr_inet
+    https://git.kernel.org/netdev/net-next/c/9203e0a82c0b
+  - [net-next,3/3] sctp: Replace sockaddr with sockaddr_inet in sctp_addr union
+    https://git.kernel.org/netdev/net-next/c/511d10b4c2f9
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
