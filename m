@@ -4,86 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2294EF06EB
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Feb 2026 18:13:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78F2FEF06EC
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Feb 2026 18:13:15 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c5aea87f;
-	Sun, 8 Feb 2026 17:10:49 +0000 (UTC)
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com
- [2a00:1450:4864:20::235])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id fc5693bd
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b961511d;
+	Sun, 8 Feb 2026 17:13:02 +0000 (UTC)
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com
+ [2607:f8b0:4864:20::1031])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 38440365
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 4 Feb 2026 18:19:30 +0000 (UTC)
-Received: by mail-lj1-x235.google.com with SMTP id
- 38308e7fff4ca-386914b8e81so9849471fa.0
- for <wireguard@lists.zx2c4.com>; Wed, 04 Feb 2026 10:19:30 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770229169; cv=none;
- d=google.com; s=arc-20240605;
- b=OQsPfJIwopgvhjRkEs3bxlFgiFaP93dkXmZW8FohqHtZvgRdYOgaxeEexOtGNVx2G8
- 63McGr+rNlO0DsDSICD169pCYMRj6Ck+gV39Ob5BQjtCP4ZliiIxg8u1Jz9kQ64Z98HZ
- qyPeQBlo6D+By6WFze2ftC0Kbm3kwivKbnJOfkKsEm+YjbBNOB7k5weWCCwTecTRILx5
- m4tlUTExGAEe6wGv9HroU1d21uKer5VaDt+D0lVcmMKUIUNkui9gmQq56g33ZSrS+QRl
- UBb2mrbXr9uS9Yt8CVXPVL6is4KTJw+wzooTm2Eliq8F04gW7ByfcZ4aVm2gOfCfrj/A
- Lmig==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :dkim-signature;
- bh=fqpZ9V5r304bR3CR8ScJ0p5QI7mw4tHQJcWrHdtqv2E=;
- fh=1CsOgAxkj0tSFTO0bRovl0wQS24+EZdEApJbdc/Xo54=;
- b=hBEmAssN/nziJkIcgYEGoLOiK4OxHP5vQ/lXHzOt6pKMMPtI3Cr3AJdfTWRW/ZzT3R
- L0pTP6N1CcC6mBQD0Kzegyc8mg86SRU3tNA0VCxD2MkWDCdEy1GV2vhAR7pEhPVRY85Z
- M7HUsWShBuXkEal9q7DLvyYeinizQf/SvDbWDjxy9uxlaVWM7dbCuo8uxcGbvlGUgE9h
- 8IUMPBRgylslbYXfVeYzs+3M5ylxpHckHLKf6du6rOMNQMNGy/ucl+4h3bAQCgqtHXNm
- UrXyFz9eec5zMXqrbZ6uhanFn5XuXJinSG7pbh+F+dsNw5NSQs/nM1GiAcpOyOF0fkYk
- fIcQ==; darn=lists.zx2c4.com
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 30 Jul 2025 10:13:45 +0000 (UTC)
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-313a001d781so5662383a91.3
+ for <wireguard@lists.zx2c4.com>; Wed, 30 Jul 2025 03:13:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1770229169; x=1770833969; darn=lists.zx2c4.com;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :from:to:cc:subject:date:message-id:reply-to;
- bh=fqpZ9V5r304bR3CR8ScJ0p5QI7mw4tHQJcWrHdtqv2E=;
- b=Kdmydj/7CYDV+fIdU/TbDrLNQ3QzeKuEB4VWP3QD7x0MnspbWqOX4WuAr5DmT1pEkD
- xC3DHV9W4O4THqXT3PYsZdq6DpxR2FUgF2nKxCB7o6M5Lil7m1kDTXrmidmEOAoEHSmk
- ppIdoFlb+r5jmFraHs/rm/dbLLYBJbabHI8qlpwUuf/de6JEHgHjgtjL0SSqz40oUa8I
- jmeAHmR7bu7BdlGTltOihK15eaUK32BgPqofCVksL4M3AQeC5GLrvxsd0ycIaF4pj3Nd
- /Zp7+ekX2LSbPTnTkGqou3rU3vfm6PFnDTwKQs0cCFmsBK2tYoq32AUhlFN8NBmwUZok
- O3IQ==
+ d=dufour.aero; s=google; t=1753870423; x=1754475223; darn=lists.zx2c4.com;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=148kQjrHFdJXqs0PHmdWBZ//yB0QRGh8cZiex/O09yo=;
+ b=ab3vuB/MKlwHngojJAFtDyzv2nIzxp4Wo1Tg396E2G94gLUuU2P0OFGD++KLKh07t8
+ 2rTEbTsQAdiYj8YWQXkgUr3nKFIIoRScefr2b4opjJoDUvC4qdt4nPGvaXbiV3zucgek
+ asKp13xda4QAjlFF5UeRWnfEDgoxtgHldeUe7MqwDm3fcQ1Dk3Cyzcngc/o84qg06Jg4
+ fDzoG4HEzsOm4CgFcVR5KhmjfCaekrF4EMesTqLMW3kw2DFl7rUZPS1OVdtW56g4FNsf
+ SPCGGo5wHSlp7TZDz1o5nC1spvqcoL0UDscihdnzUjVlAO+NaITDqI4keqCvVNkeddXV
+ WFdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1770229169; x=1770833969;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=fqpZ9V5r304bR3CR8ScJ0p5QI7mw4tHQJcWrHdtqv2E=;
- b=UcSfSJWtIsP2XUe7vaZEs3J9oo/Cx9IyGtZPf0Yw7D4Dphx3XS/XYWDyAFWg4GB4Za
- qJtk1CRRXFPuOjwQJj/XBTQGGNuYT+0296lkOPjoEfm07afSgbYpNP4dB4thSpHIya/A
- DRj3dN81faX1EmgYOtUlBzoPPq0VgKlrQup1gUJQMpjSY+hq4W216fsYUhuYfZqvd9zS
- UgDcds6O/nsJT/9WHmKe9q+MN/yHBkVfnIKc7BL37vyWpHXqCCWVLEo9VCYtiT6kKqKw
- eYeBZ0S0rvdObyWdVw6PPOE8n+ij7gWMrgdm0qD35JZc9A9vLTzYj13Krxr80p8m6iAO
- JmAw==
-X-Gm-Message-State: AOJu0Yy/uXoLy/9fJCtc2+WnlzfZJBjH6ZKVE/x6ZR9lA6gLejzKKRCu
- 4mkQ2ie+WIW7Wyuni3n3bL5PX63YRSRv0i49dqHzp+dR7ixNw+MymZseFVWairScUpiE+yWT4zt
- 8F8d8qiXCSnDXf+Iml+GhIszex9uQxorqJA==
-X-Gm-Gg: AZuq6aIHnQDXyDor+OibVL9YSthaL4GaHOwkHITx7qNJG3j1cDlFMsxwZuIgwQUNY9J
- R0DcUzd45XVAyxMyajiGmfgn7ucUQZXIkUhNeLhevzLWG+5wKfX7vb4WF5JbMP80VJ7uw9PLnb9
- 8ScS+E1czWfn52vGEb0Ml/cMpOJkWwP4TD+AKV6bVsfGLUTvGWE7B26Z3vu/EY1gh/qp2Hr6NNj
- fV2KumIORMYBxyaD848sRR2yDa5octJew3w1RG1labE00M1i2qbS/uLI+J8spWLwrj9zsIoSj5d
- E9fYqS9B/QrKRd4kB+W0m/tZ
-X-Received: by 2002:a05:651c:30ca:b0:36b:9ecc:cb5a with SMTP id
- 38308e7fff4ca-386a1057265mr395151fa.22.1770229169215; Wed, 04 Feb 2026
- 10:19:29 -0800 (PST)
+ d=1e100.net; s=20230601; t=1753870423; x=1754475223;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=148kQjrHFdJXqs0PHmdWBZ//yB0QRGh8cZiex/O09yo=;
+ b=fPua5M+mloADOms7S+wLE4YRVYwXQN17nlin10h4aSExh85k2o2AvZq61ClVgJ+95a
+ z3pDR46BNM/Nn9lydCdu0M6eRemtULq+yRoV8ltobStCXGnqMxENqz7czxkyh4ccp/Pn
+ Md3ZhsxsJj5myNBC79m0GTbuhW7g1PibEeBeehnlQCvkcBgbyFFMp2FnRgEKU0s2LW7T
+ Ob4LycNl4r0kGq4ViPyLtBNrx9kPrNaioYxPNo14iNfns3w1GCzNcFKRss66JMlE1ct4
+ PlZuEbKZLcXuhSKlcJczI/vA7Jsg85jKGh0S7nLiemx9Id0yHenlGHr8QXTtUHoaPZh9
+ DOyg==
+X-Gm-Message-State: AOJu0YzlBeKjRbtxiU9XdKxbjkknzHYktlYgV91VK8sLQOvkDYnG2OWf
+ 5GfUutzLpEKU0csplZynTGPTH4niXpAElRTKxOtzawp87Wr6mbeglEzLiiclbtDfgkHKxKu7Bcu
+ 6bifezRX13S3c1L1zxpAezZKEiHTVInBOGQMgVoRT7Lfk8RpXF337OYo=
+X-Gm-Gg: ASbGncufEpfPAEY+lX0BHAbyPMcCWd36jyyh4ZFekAWNC3BcrXb9ueTNwW9vV06+UNp
+ 4OwEq/mRZAOEXZhWANb/nHb1hsqIEbbuHiDKYsvPRANiGrbe29ac8RkX5cHKtRT1YxfWuTGv7Xc
+ +SO0K7BFmuL6g1mbxTjwT3X0EJqI0wuXK6Os/eHLl0ULCiMd03DQ5H2BhmSXzcjVpmSRmp8W6/q
+ DJQTz8=
+X-Google-Smtp-Source: AGHT+IFf4+ba80DmlwP1W7tqQaOJCCPd/X23XT39r4/A0gv0ifk/8FRxfADxYWqGJzrALvYGcu32MO31qXQoYYOmkKQ=
+X-Received: by 2002:a17:90b:2f84:b0:31c:3651:2d18 with SMTP id
+ 98e67ed59e1d1-31f5e380a3amr4185250a91.16.1753870423161; Wed, 30 Jul 2025
+ 03:13:43 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAApnxP0OicCUvxYo41sK8AnK=bxqR+qE2BTxFmE5cJbSyOJrBQ@mail.gmail.com>
-In-Reply-To: <CAApnxP0OicCUvxYo41sK8AnK=bxqR+qE2BTxFmE5cJbSyOJrBQ@mail.gmail.com>
-From: Oded Katz <katz.oded@gmail.com>
-Date: Wed, 4 Feb 2026 10:19:17 -0800
-X-Gm-Features: AZwV_Qh0v6RZbEFOtBrv6rTR7XTqkIIIysQ_oL0B6WJMCB4niZPOA1NJflq-2js
-Message-ID: <CAApnxP1yjyM0ZjtHXHf8WHrsc0XtwbuwMfeSYPnZm_q19R26mA@mail.gmail.com>
-Subject: Fwd: I want to report an issue I found with your example (send ring
- buffer get corrupted)
+From: Tobias Bossert <tobias@dufour.aero>
+Date: Wed, 30 Jul 2025 12:13:32 +0200
+X-Gm-Features: Ac12FXx-3f82it-1O2oeZcCfovGgcaVCVBnfCpv7Qrz-u_ePxXUKD_V6McB9HFY
+Message-ID: <CAKijrerLkbUMDyVJjwQjAYC0wNtQS+itMHJkStV5sJaZ+=f4Mg@mail.gmail.com>
+Subject: Inconsistent Route Handling Across Different Client Implementations
 To: wireguard@lists.zx2c4.com
-Content-Type: multipart/mixed; boundary="000000000000cd71b0064a03983a"
-X-Mailman-Approved-At: Sun, 08 Feb 2026 17:10:11 +0000
+Content-Type: text/plain; charset="UTF-8"
+X-Mailman-Approved-At: Sun, 08 Feb 2026 17:12:58 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -98,126 +74,50 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---000000000000cd71b0064a03983a
-Content-Type: text/plain; charset="UTF-8"
+Dear list,
 
-Hi,
+We arguably have a bit of an "exotic" setup, namely, we have one
+interface with two addresses assigned (on the "client" side) and two
+peers with the AllowedIPs in the respective subnets. Below is a
+minimal ("client") configuration example for context (keys are
+intentionally omitted):
 
-I'm reposting this one as I didn't get any response.
+[Interface]
+Address = 172.16.100.2/24,172.16.101.2/28
 
-We were trying to integrate `wintun` into our product and while
-testing we found an issue with upload of high UDP throughput on
-multiple sockets. initially we thought it may be related to our
-integration. but we managed to find the same issue in your example
-code.we tried to do some debugging on the example, but it seems like
-the corruption is on the driver side.
-the way to reproduce this issue- run the example
-- run the `send_udp.py` (the attached python script) on 2 different
-command terminals
-   - `send_udp.py 10.6.7.8 5201 1450`
-   - `send_udp.py 10.6.7.8 5201 1400`after some time the
-`WintunReceivePacket` returns NULL and `GetLastError()` return 13
-(`ERROR_INVALID_DATA`)
-many thanks,
-and I hope you can help us.
-btw: in the meantime, I'll try to see if I can contribute myself with a fix
-Oded
+[Peer]
+AllowedIPs = 172.16.100.0/24
+Endpoint = first.tld:51820
 
---000000000000cd71b0064a03983a
-Content-Type: text/x-python; charset="US-ASCII"; name="send_udp.py"
-Content-Disposition: attachment; filename="send_udp.py"
-Content-Transfer-Encoding: base64
-Content-ID: <f_mkra4mcw0>
-X-Attachment-Id: f_mkra4mcw0
+[Peer]
+AllowedIPs = 172.16.101.0/24
+Endpoint = second.tld:51820
 
-IyEvdXNyL2Jpbi9lbnYgcHl0aG9uMw0KDQoiIiINCkEgUHl0aG9uIHNjcmlwdCB0byBzZW5kIGEg
-Y29udGludW91cyBzdHJlYW0gb2YgVURQIHBhY2tldHMgdG8gYSBzcGVjaWZpZWQNCmhvc3QgYW5k
-IHBvcnQuDQoNCkl0IHByaW50cyB0aGUgbnVtYmVyIG9mIHBhY2tldHMgc2VudCBldmVyeSBzZWNv
-bmQuDQoNClRoZSBmaXJzdCA0IGJ5dGVzIG9mIHRoZSBwYXlsb2FkIGNvbnRhaW4gYSBwYWNrZXQg
-Y291bnRlciAobGl0dGxlLWVuZGlhbikuDQpUaGUgcmVtYWluaW5nIDYwIGJ5dGVzIGFyZSBmaWxs
-ZWQgd2l0aCB0aGUgY2hhcmFjdGVyICdhJy4NCg0KVXNhZ2U6DQogICAgcHl0aG9uIHNlbmRfdWRw
-X2Zsb29kLnB5IDxhZGRyZXNzPiA8cG9ydD4NCg0KRXhhbXBsZToNCiAgICBweXRob24gc2VuZF91
-ZHBfZmxvb2QucHkgMTI3LjAuMC4xIDgwODANCiIiIg0KDQppbXBvcnQgc29ja2V0DQppbXBvcnQg
-YXJncGFyc2UNCmltcG9ydCBzeXMNCmltcG9ydCB0aW1lDQoNCmRlZiBtYWluKCk6DQogICAgIyAt
-LS0gMS4gU2V0IHVwIHRoZSBjb21tYW5kLWxpbmUgYXJndW1lbnQgcGFyc2VyIC0tLQ0KICAgIHBh
-cnNlciA9IGFyZ3BhcnNlLkFyZ3VtZW50UGFyc2VyKA0KICAgICAgICBkZXNjcmlwdGlvbj0iU2Vu
-ZCBhIGNvbnRpbnVvdXMgVURQIHBhY2tldCBzdHJlYW0uIiwNCiAgICAgICAgZm9ybWF0dGVyX2Ns
-YXNzPWFyZ3BhcnNlLlJhd0Rlc2NyaXB0aW9uSGVscEZvcm1hdHRlciwNCiAgICAgICAgZXBpbG9n
-PSJFeGFtcGxlOlxuICBweXRob24gc2VuZF91ZHBfZmxvb2QucHkgMTI3LjAuMC4xIDgwODAiDQog
-ICAgKQ0KICAgIA0KICAgIHBhcnNlci5hZGRfYXJndW1lbnQoImFkZHJlc3MiLCANCiAgICAgICAg
-ICAgICAgICAgICAgICAgIGhlbHA9IlRoZSBkZXN0aW5hdGlvbiBJUCBhZGRyZXNzIG9yIGhvc3Ru
-YW1lIChlLmcuLCAxMjcuMC4wLjEpIikNCiAgICANCiAgICBwYXJzZXIuYWRkX2FyZ3VtZW50KCJw
-b3J0IiwgDQogICAgICAgICAgICAgICAgICAgICAgICB0eXBlPWludCwgDQogICAgICAgICAgICAg
-ICAgICAgICAgICBoZWxwPSJUaGUgZGVzdGluYXRpb24gcG9ydCAoZS5nLiwgODA4MCkiKQ0KDQog
-ICAgcGFyc2VyLmFkZF9hcmd1bWVudCgibGVuIiwgDQogICAgICAgICAgICAgICAgICAgICAgICB0
-eXBlPWludCwgDQogICAgICAgICAgICAgICAgICAgICAgICBoZWxwPSJUaGUgcGFkZGluZyBsZW4g
-KGUuZy4sIDYwLTEzNTApIikNCiAgICANCiAgICBhcmdzID0gcGFyc2VyLnBhcnNlX2FyZ3MoKQ0K
-DQogICAgIyAtLS0gMi4gQ3JlYXRlIHRoZSBwYWNrZXQgZGF0YSAocGFkZGluZykgLS0tDQogICAg
-IyBXZSBjcmVhdGUgdGhlIDYwLWJ5dGUgcGFkZGluZyBvbmNlLCBhcyBpdCBuZXZlciBjaGFuZ2Vz
-Lg0KICAgIHBheWxvYWRfcGFkZGluZyA9IChiJ2EnICogYXJncy5sZW4pDQogICAgZGVzdGluYXRp
-b24gPSAoYXJncy5hZGRyZXNzLCBhcmdzLnBvcnQpDQogICAgDQogICAgcHJpbnQoZiJUYXJnZXQ6
-ICAgICB7YXJncy5hZGRyZXNzfTp7YXJncy5wb3J0fSIpDQogICAgcHJpbnQoZiJQYXlsb2FkOiAg
-ICB7YXJncy5sZW4gKyA0fSBieXRlcyAoNC1ieXRlIGNvdW50ZXIgKyB7YXJncy5sZW59ICdhJ3Mp
-IikNCiAgICBwcmludCgiLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tIikNCiAgICAN
-CiAgICAjIA0KICAgIHByaW50KGYiU3RhcnRpbmcgY29udGludW91cyBzZW5kLiBQcmVzcyBDdHJs
-K0MgdG8gc3RvcC4iKQ0KDQogICAgIyBTdGF0aXN0aWNzIGNvdW50ZXJzDQogICAgcGFja2V0c19p
-bl9pbnRlcnZhbCA9IDANCiAgICB0b3RhbF9wYWNrZXRzX3NlbnQgPSAwICMgVGhpcyB3aWxsIGJl
-IG91ciBwYWNrZXQgY291bnRlcg0KICAgIA0KICAgICMgVXNlIHRpbWUubW9ub3RvbmljKCkgZm9y
-IHN0YWJsZSB0aW1lIGludGVydmFsIG1lYXN1cmVtZW50cw0KICAgIHN0YXJ0X3RpbWUgPSB0aW1l
-Lm1vbm90b25pYygpDQogICAgbGFzdF9wcmludF90aW1lID0gc3RhcnRfdGltZQ0KDQogICAgdHJ5
-Og0KICAgICAgICAjIENyZWF0ZSBhIFVEUCBzb2NrZXQNCiAgICAgICAgd2l0aCBzb2NrZXQuc29j
-a2V0KHNvY2tldC5BRl9JTkVULCBzb2NrZXQuU09DS19ER1JBTSkgYXMgczoNCiAgICAgICAgICAg
-IA0KICAgICAgICAgICAgIyAtLS0gMy4gTWFpbiBTZW5kIExvb3AgLS0tDQogICAgICAgICAgICB3
-aGlsZSBUcnVlOg0KICAgICAgICAgICAgICAgIA0KICAgICAgICAgICAgICAgICMgLS0tIENyZWF0
-ZSB0aGUgcGF5bG9hZCBmb3IgKnRoaXMqIHBhY2tldCAtLS0NCiAgICAgICAgICAgICAgICAjIENv
-bnZlcnQgdGhlIGNvdW50ZXIgdG8gNCBieXRlcywgbGl0dGxlLWVuZGlhbg0KICAgICAgICAgICAg
-ICAgIGNvdW50ZXJfYnl0ZXMgPSB0b3RhbF9wYWNrZXRzX3NlbnQudG9fYnl0ZXMoNCwgJ2xpdHRs
-ZScpDQogICAgICAgICAgICAgICAgDQogICAgICAgICAgICAgICAgIyBDb21iaW5lIHRoZSBjb3Vu
-dGVyIGFuZCB0aGUgcGFkZGluZw0KICAgICAgICAgICAgICAgIHBheWxvYWRfYnl0ZXMgPSBwYXls
-b2FkX3BhZGRpbmcgKyBjb3VudGVyX2J5dGVzDQogICAgICAgICAgICAgICAgDQogICAgICAgICAg
-ICAgICAgIyBTZW5kIHRoZSBwYWNrZXQNCiAgICAgICAgICAgICAgICBzLnNlbmR0byhwYXlsb2Fk
-X2J5dGVzLCBkZXN0aW5hdGlvbikNCiAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAj
-IEluY3JlbWVudCBjb3VudGVycw0KICAgICAgICAgICAgICAgIHBhY2tldHNfaW5faW50ZXJ2YWwg
-Kz0gMQ0KICAgICAgICAgICAgICAgIHRvdGFsX3BhY2tldHNfc2VudCArPSAxDQoNCiAgICAgICAg
-ICAgICAgICAjIC0tLSA0LiBTdGF0aXN0aWNzIExvb3AgLS0tDQogICAgICAgICAgICAgICAgY3Vy
-cmVudF90aW1lID0gdGltZS5tb25vdG9uaWMoKQ0KICAgICAgICAgICAgICAgIGVsYXBzZWRfc2lu
-Y2VfbGFzdCA9IGN1cnJlbnRfdGltZSAtIGxhc3RfcHJpbnRfdGltZQ0KDQogICAgICAgICAgICAg
-ICAgIyBDaGVjayBpZiAxLjAgc2Vjb25kIGhhcyBwYXNzZWQNCiAgICAgICAgICAgICAgICBpZiBl
-bGFwc2VkX3NpbmNlX2xhc3QgPj0gMS4wOg0KICAgICAgICAgICAgICAgICAgICAjIENhbGN1bGF0
-ZSB0aGUgcmF0ZSBmb3IgdGhpcyBpbnRlcnZhbA0KICAgICAgICAgICAgICAgICAgICByYXRlID0g
-cGFja2V0c19pbl9pbnRlcnZhbCAvIGVsYXBzZWRfc2luY2VfbGFzdA0KICAgICAgICAgICAgICAg
-ICAgICANCiAgICAgICAgICAgICAgICAgICAgIyBQcmludCBzdGF0cyAocHBzID0gcGFja2V0cyBw
-ZXIgc2Vjb25kKQ0KICAgICAgICAgICAgICAgICAgICAjIFdlIHVzZSBmLXN0cmluZ3Mgd2l0aCA6
-PjEwLCB0byByaWdodC1hbGlnbiB0aGUgcGFja2V0IGNvdW50DQogICAgICAgICAgICAgICAgICAg
-ICMgYW5kIDosLjBmIHRvIGZvcm1hdCB0aGUgcmF0ZSB3aXRoIGNvbW1hcyBhbmQgbm8gZGVjaW1h
-bHMuDQogICAgICAgICAgICAgICAgICAgIHByaW50KGYiU2VudCB7cGFja2V0c19pbl9pbnRlcnZh
-bDo+MTAsfSBwYWNrZXRzLiAoUmF0ZToge3JhdGU6LC4wZn0gcHBzLCB7KHBhY2tldHNfaW5faW50
-ZXJ2YWwgKiAoYXJncy5sZW4gKyA0ICsgMjgpICogOCAvIDEwMDAgLyAxMDAwKTosLjNmfSBNYml0
-L3NlYykiKQ0KICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgIyBSZXNl
-dCBmb3IgdGhlIG5leHQgaW50ZXJ2YWwNCiAgICAgICAgICAgICAgICAgICAgcGFja2V0c19pbl9p
-bnRlcnZhbCA9IDANCiAgICAgICAgICAgICAgICAgICAgbGFzdF9wcmludF90aW1lID0gY3VycmVu
-dF90aW1lDQogICAgDQogICAgZXhjZXB0IEtleWJvYXJkSW50ZXJydXB0Og0KICAgICAgICAjIC0t
-LSA1LiBIYW5kbGUgQ3RybCtDIC0tLQ0KICAgICAgICBwcmludCgiXG4tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0iKQ0KICAgICAgICBwcmludCgiU3RvcHBpbmcuLi4iKQ0KICAgICAg
-ICANCiAgICAgICAgIyBQcmludCBmaW5hbCBzdW1tYXJ5IHN0YXRpc3RpY3MNCiAgICAgICAgZW5k
-X3RpbWUgPSB0aW1lLm1vbm90b25pYygpDQogICAgICAgIHRvdGFsX3RpbWUgPSBlbmRfdGltZSAt
-IHN0YXJ0X3RpbWUNCiAgICAgICAgDQogICAgICAgIGlmIHRvdGFsX3RpbWUgPiAwOg0KICAgICAg
-ICAgICAgYXZnX3JhdGUgPSB0b3RhbF9wYWNrZXRzX3NlbnQgLyB0b3RhbF90aW1lDQogICAgICAg
-ICAgICBwcmludChmIlNlbnQgYSB0b3RhbCBvZiB7dG90YWxfcGFja2V0c19zZW50Om59IHBhY2tl
-dHMgaW4ge3RvdGFsX3RpbWU6LjJmfSBzZWNvbmRzLiIpDQogICAgICAgICAgICBwcmludChmIkF2
-ZXJhZ2UgcmF0ZToge2F2Z19yYXRlOiwuMGZ9IHBwcywgeyhhdmdfcmF0ZSAqIChhcmdzLmxlbiAr
-IDQgKyAyOCkgKiA4IC8gMTAwMCAvIDEwMDApOiwuM2Z9IE1iaXQvc2VjIikNCiAgICAgICAgICAg
-ICAgICAgICAgDQogICAgICAgIGVsc2U6DQogICAgICAgICAgICBwcmludCgiU2VudCAwIHBhY2tl
-dHMuIikNCiAgICAgICAgc3lzLmV4aXQoMCkNCiAgICAgICAgDQogICAgZXhjZXB0IHNvY2tldC5n
-YWllcnJvciBhcyBlOg0KICAgICAgICBwcmludChmIlxuRXJyb3I6IEhvc3RuYW1lICd7YXJncy5h
-ZGRyZXNzfScgY291bGQgbm90IGJlIHJlc29sdmVkLiIsIGZpbGU9c3lzLnN0ZGVycikNCiAgICAg
-ICAgcHJpbnQoZiJEZXRhaWxzOiB7ZX0iLCBmaWxlPXN5cy5zdGRlcnIpDQogICAgICAgIHN5cy5l
-eGl0KDEpDQogICAgZXhjZXB0IChzb2NrZXQuZXJyb3IsIE9TRXJyb3IpIGFzIGU6DQogICAgICAg
-IHByaW50KGYiXG5FcnJvcjogQ291bGQgbm90IHNlbmQgcGFja2V0LiIsIGZpbGU9c3lzLnN0ZGVy
-cikNCiAgICAgICAgcHJpbnQoZiJEZXRhaWxzOiB7ZX0iLCBmaWxlPXN5cy5zdGRlcnIpDQogICAg
-ICAgIHN5cy5leGl0KDEpDQogICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOg0KICAgICAgICBwcmlu
-dChmIlxuQW4gdW5leHBlY3RlZCBlcnJvciBvY2N1cnJlZDoiLCBmaWxlPXN5cy5zdGRlcnIpDQog
-ICAgICAgIHByaW50KGYiRGV0YWlsczoge2V9IiwgZmlsZT1zeXMuc3RkZXJyKQ0KICAgICAgICBz
-eXMuZXhpdCgxKQ0KDQoNCmlmIF9fbmFtZV9fID09ICJfX21haW5fXyI6DQogICAgbWFpbigpDQog
-ICAgDQo=
---000000000000cd71b0064a03983a--
+The behavior after importing this connection configuration on various
+clients leads to different results:
+
+- Linux (wg-quick): Routing does work, kernel routes are used with the
+correct "src" attribute set
+- Linux (nmcli): Routing does not work out of the box because nmcli
+generates a second set of routes with the same metric as the kernel
+ones but without the "src" attribute being set. This can be fixed by
+setting "Table = off" in the WG config. Moreover, I believe this is a
+bug or at least an unfortunate coincidence that the same metric value
+is used. An issue has been opened on NetworkManager's GitLab [0].
+- Windows: Routing works; the "Table" attribute is not considered an
+"Unknown attribute.", but has seemingly no effect.
+- Android: Routing only works for the first subnet. Although the
+entries in the main routing table are correct (again, kernel routes,
+"src" attribute set), additional entries are created in secondary
+tables ("local_network" and "tun0"), which take precedence due to a
+bunch of policy-based routing rules.
+- macOS: Same symptoms as on Android,  "Table = off" considered invalid
+
+Are we trying to do something fundamentally against the design ideas
+of WireGuard? Even if so, I would expect importing the same WireGuard
+profile on different platforms to yield the same routing behavior.
+Also, before you ask, the option of having multiple interface active
+at the same time is not a option as this is not foreseen on all the
+official (graphical)-clients.
+
+[0] https://gitlab.freedesktop.org/NetworkManager/NetworkManager/-/issues/1790
