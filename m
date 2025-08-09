@@ -4,37 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BD90C87FCF
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  9 Aug 2025 12:08:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CB95C87FCF
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  9 Aug 2025 13:24:19 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b8a6e26f;
-	Sat, 9 Aug 2025 12:08:25 +0000 (UTC)
-Received: from mail-24429.protonmail.ch (mail-24429.protonmail.ch
- [109.224.244.29])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5d308fa6
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 92dfe55f;
+	Sat, 9 Aug 2025 13:24:17 +0000 (UTC)
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com
+ [2607:f8b0:4864:20::1036])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id fa2cee2f
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sat, 9 Aug 2025 12:08:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
- s=protonmail; t=1754741302; x=1755000502;
- bh=yKAmII95noHMFjEu4/L+dLZBoSYAJoyZm6yOf54eAzI=;
- h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
- Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
- b=jKthocJUiYp7VESdv4yWDjJovspchQgYLRLg6OjdzGc7WuAhAWznPIQ5B5gCzW1NA
- Yt5cMnJLPFn0U5RFzEVHpWsP/A6RJNjUKljnvvDf3bDYd8oAu7A6ykRnYiBFAUpzsk
- IrdwQX4zu5KUy3fAKBSlo87MyU3VzRzFAPxyvLroeSQKUSR7IGrljzsPg0x9qruWPW
- ppkQrw8Jyiv1u0kwbZ6wORZCo3lx0p2SNmBzUC4+AduqmiSuJRItsyColmy3ko4adO
- U1vNq7JzWbD1qL52kvvq8cdMpbMu3sRCIwuSTMgcryJJ/zjtOzyBwq7aKsixbsTv26
- xn2guSeryKCtQ==
-Date: Sat, 09 Aug 2025 12:08:17 +0000
-To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-From: Douglas Silva <doug.hs@proton.me>
-Subject: Android app: export configuration as a password-protected zip file
-Message-ID: <3uPzijiGmCFwzmGThO2Z2EhiLTEw1w-Jqx3eC5wTpEjGUfbAivno4-eIG9UV4Xqc9tUFSdKkobsWPYRBke-QuqkqGwylaPy4-ALihwtoe7Y=@proton.me>
-Feedback-ID: 47597204:user:proton
-X-Pm-Message-ID: 8d8bcf68c0a91c5413cd8de33b44d49fd93722cf
+ for <wireguard@lists.zx2c4.com>; Sat, 9 Aug 2025 13:24:15 +0000 (UTC)
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-31ed9a17f1fso2499525a91.1
+ for <wireguard@lists.zx2c4.com>; Sat, 09 Aug 2025 06:24:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1754745854; x=1755350654; darn=lists.zx2c4.com;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=Gg5qA8e+0UYHLSOIBa7q2BXIt9K71iMCY0q3plis3nE=;
+ b=iNKk+Gm1UAc7l+O3RE97wMVXs5+jSMdtqxbQjh/w3Fr04jpNdF8sjc9BFSz8knji4u
+ rPHdjmWPuMvhSKLzQuLdlQmoaWPyPHSI0S8BZopPtxNCzGaOx40l75AceFMug7uvWO8Q
+ uMux8lWrECi3CEL2jb9+AoUJMxE7kodxbsYXT4VW9IaIjum328JMh4r7rD2Ek2KHFgy3
+ GBsGXTz4Lj256H4YelZYtYQ4TxsjzMLXACDBP5l/dbUB0ktDVjstQOzmi6XCmahBHpw9
+ n/dQdAVXjiK9rDW9wLOzTS9g4NZQivUdmcQ+CTPNN7CpGcIRVukbOZtYyqDOktgBAPrA
+ G5Vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754745854; x=1755350654;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Gg5qA8e+0UYHLSOIBa7q2BXIt9K71iMCY0q3plis3nE=;
+ b=LgG/A6UQngmieuYO4YgzJu/U431c8uqn1IcMYsGpJBqd8rwkkVVAkaR45ekMZRVj9/
+ CpsCRR370s/m77bF1KhAybqYNl7QZcbfyccsnHuHy935N+fwnTO5NXc9dpU4dFe8RmQv
+ VGV7o4WHi9nLBNXlOU7Bbu5be1NPcscarSc7+ecJfX/i0piEhgmjRrRCO5HVgzWV5Bm6
+ nI7dqc65GH95C1VRBKj+5oC6LQ5ICKXbegKHOP9taXsdoD1R3WxmAIo5iivabM0mGpEc
+ Te76rXpyB30pILFjTMhYOKyMQ77oNJt/rbEzwaZiXdlHDZTeqVjg/XQq3o6kY8J2oqAN
+ 75MA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXBM4Qz6lFCS2/eQh6/SnHCoVn/+hUN4zr1iRxm/2QkvoadA2gXf+jqUFJ6gL5+/nRjUjnr7bORtg8=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YyVR3BaVu0d5tNk4nXaUu5cS8eAb7D+JaGswGkqQ24+9ONNpOrH
+ Vf0UBC/CwsE3+AElI92Z6RD1HaT01dpi1+WV9UQl6B4LsFHxyAZekTQk
+X-Gm-Gg: ASbGncu8dbo/xnhoCwtWTs4TXPvzxVKg0tcFuWNf4gqZFs4+b4ahTtnJu7bpuC9QI/z
+ gvkw8wHplkVxhvfApXz7faEC71SyLBarp0ZMB8oJIlrVlkSmumqy/r0KzjdjWP/5XPiGVOJuAIj
+ CdRD7yGcCDe1/zKT7JeWr49unlG/vlHZdMEJjDMgUATG2a/bCiCHxORLL+WkDebbfPFv5gYZ239
+ bmgrRjLwVTiIy7fW1gdjM/rMzROfmpo0cBqKvdtrGjA8mSF8JLDr8qLKeaga4uFHy8L5WSgv7Tf
+ vYqpIFTv+Mccy0dAV1nFl08FSoxzDgkoJN6IoT7lCUvAUfaXLZAQAfeElz5Wxqd+qY3fNupqMNN
+ jJoNLzVAvS5F/KYa+qI0VaA==
+X-Google-Smtp-Source: AGHT+IG6XUjvU1ujGKElusFwiJuytuORtuq2Rt2NrzrdYHFF84WEYLfReDSdYsL1FrWIQ0Z4Hb3WYw==
+X-Received: by 2002:a17:90b:2ecc:b0:321:87fa:e1e8 with SMTP id
+ 98e67ed59e1d1-32187fae3a9mr7874585a91.2.1754745854056; 
+ Sat, 09 Aug 2025 06:24:14 -0700 (PDT)
+Received: from localhost ([216.228.127.129]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3218c3c2d58sm3034935a91.16.2025.08.09.06.24.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 09 Aug 2025 06:24:13 -0700 (PDT)
+Date: Sat, 9 Aug 2025 09:24:11 -0400
+From: Yury Norov <yury.norov@gmail.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ Andrew Lunn <andrew+netdev@lunn.ch>,
+ "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Simon Horman <horms@kernel.org>, wireguard@lists.zx2c4.com,
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 0/2] rework wg_cpumask_next_online()
+Message-ID: <aJdL-5t9va5Ln0xv@yury>
+References: <20250719224444.411074-1-yury.norov@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="b1=_Z5L8KQAFMdw4CJD8SsdltaLiORfUrcSUGCXCpjpqL0"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250719224444.411074-1-yury.norov@gmail.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -49,60 +88,22 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---b1=_Z5L8KQAFMdw4CJD8SsdltaLiORfUrcSUGCXCpjpqL0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Ping?
 
-Greetings.
-
-This is a feature request for the Android app. I'd like to suggest two alte=
-rnatives to address the issue of exporting an unencrypted zip-file containi=
-ng all your private keys into the Downloads folder.
-
-1. Export a password-protected zip-file instead, allowing us to choose a pa=
-ssword in the app settings. This is what Syncthing does nowadays.
-
-2. Optionally let Android Backup pick up our config (disabled by default). =
-Google Drive isn't the only back-end available. Ever heard of Seedvault? It=
-'s the default on systems like LineageOS or CalyxOS. Seedvault does encrypt=
-ed backups to any location; even offline, to a flash stick. Aegis Authentic=
-ator uses it, as long as the backup is advertised as encrypted. See [1], [2=
-] and [3] and [4].
-
-[1] https://developer.android.com/identity/data/autobackup#EnablingAutoBack=
-up
-[2] https://developer.android.com/identity/data/autobackup#define-device-co=
-nditions
-[3] https://github.com/seedvault-app/seedvault/wiki/FAQ#why-do-some-apps-no=
-t-allow-to-get-backed-up
-[4] https://github.com/beemdevelopment/Aegis/blob/master/app/src/main/Andro=
-idManifest.xml#L22
-
-
-For option 1 (password-protected zip), I'd also like to suggest the additio=
-n of (optional) automatic exports to a chosen folder, to facilitate automat=
-ic backups with an external tool such as Syncthing. The messaging app Signa=
-l does something like this to export your messages (encrypted) and keep the=
- last five versions of it.
-
-Thank you.
---b1=_Z5L8KQAFMdw4CJD8SsdltaLiORfUrcSUGCXCpjpqL0
-Content-Type: application/pgp-keys; name="publickey - doug.hs@proton.me - 0xB577E0C1.asc"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="publickey - doug.hs@proton.me - 0xB577E0C1.asc"
-
-LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp4ak1FWW5aNHV4WUpLd1lCQkFI
-YVJ3OEJBUWRBZzR4UHM5YnFXcGNXY3ZHNm5PTktHQTNOS1JWN3c4YlcKQ3BqQmlOalkvVkxOSldS
-dmRXY3VhSE5BY0hKdmRHOXVMbTFsSUR4a2IzVm5MbWh6UUhCeWIzUnZiaTV0ClpUN0Nqd1FRRmdv
-QUlBVUNZblo0dXdZTENRY0lBd0lFRlFnS0FnUVdBZ0VBQWhrQkFoc0RBaDRCQUNFSgpFSzNVMlBG
-Q0svMjRGaUVFdFhmZ3dUTURpWHc4MGlDTXJkVFk4VUlyL2JoanpRRUFzM1VkL0NRU1pIL3cKdVVZ
-OGc3NVVxMTM0U1ZpZ3Z0cEY2cmttYnNWYW5QMEJBSW9McG9HSGJ4REtMcmxQZHJMd3RoWitqakhK
-Cm1JaE9WZjZxeGJGTjdKSUF6amdFWW5aNHV4SUtLd1lCQkFHWFZRRUZBUUVIUUU4VmhYRkxPRWFN
-YUUzWApIYVU1TGt1T2lWWUIxeGZOUmNHRFQ1elJzbmRVQXdFSUI4SjRCQmdXQ0FBSkJRSmlkbmk3
-QWhzTUFDRUoKRUszVTJQRkNLLzI0RmlFRXRYZmd3VE1EaVh3ODBpQ01yZFRZOFVJci9iajZWd0VB
-MTZIQ3JQblJzUGxECllMNFVtTmNFWFF5K0hiUDlvY0huNGFjUG9jeVVwY0lBL2ljVzBaZGNKUmt2
-b3BLWnM2MVdMWFZtWE1Tdgo4dFk1azZkemtwZkwxOUlFCj1IcDEzCi0tLS0tRU5EIFBHUCBQVUJM
-SUMgS0VZIEJMT0NLLS0tLS0K
-
---b1=_Z5L8KQAFMdw4CJD8SsdltaLiORfUrcSUGCXCpjpqL0--
-
+On Sat, Jul 19, 2025 at 06:44:41PM -0400, Yury Norov wrote:
+> From: Yury Norov (NVIDIA) <yury.norov@gmail.com>
+> 
+> Simplify the function and fix possible out-of-boundary condition.
+> 
+> v2:
+>  - fix possible >= nr_cpu_ids return (Jason).
+> 
+> Yury Norov (NVIDIA) (2):
+>   wireguard: queueing: simplify wg_cpumask_next_online()
+>   wireguard: queueing: always return valid online CPU in wg_cpumask_choose_online()
+> 
+>  drivers/net/wireguard/queueing.h | 13 ++++---------
+>  1 file changed, 4 insertions(+), 9 deletions(-)
+> 
+> -- 
+> 2.43.0
