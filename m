@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C2DACA0EFF
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Aug 2025 21:33:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 400D1CA0FE4
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Aug 2025 21:33:41 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e09392d2;
-	Thu, 21 Aug 2025 20:08:02 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 556d9a57;
+	Thu, 21 Aug 2025 20:08:03 +0000 (UTC)
 Received: from us-smtp-delivery-124.mimecast.com
  (us-smtp-delivery-124.mimecast.com [170.10.133.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 368a1830
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d40bfa95
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Aug 2025 20:07:56 +0000 (UTC)
+ Thu, 21 Aug 2025 20:07:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755806875;
+ s=mimecast20190719; t=1755806872;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QCvnB/7xI7T/4p4mwWx/D4+W6s//h9G2+oSyfbDOFZs=;
- b=G+CZgNUEzSQLJQwIThKqzOElNl60IpSHI0G8WEH1Kb07Xpe7Qthvh4flAOa7Lk/pCP40GN
- oz6Ib2b1vdKYzzWOQvSUymmnlsQDaunkPY01qS6f6PgTmAJZyLv49ifoOCxUzPp3v6/WQd
- DpmsAWewxFzq6Wfg1vHOCkCFLY2rpgM=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=MzMWVCGQW0mP4+/ULAfe7CdOmgWkAKLnoxAB4Fy092E=;
+ b=U3k26lLojuRdCNgBwR1ZihkwkQjaEy8RQeTcjK1Z/GA3kx55Nm4vezg5ze72xWvFL2/0rS
+ /3Lthet/wOUxegobDiOpW9bNNfn6tYj/R/dbQhLBvzN2p+BuvdEPDz+1b7dLs5SI6gUXg1
+ G9ZEvz7H8hS51IH1Xw+Og7FGegbk1oA=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-354-2f8jH8O9PfKJPzq3LgQyTA-1; Thu, 21 Aug 2025 16:07:53 -0400
-X-MC-Unique: 2f8jH8O9PfKJPzq3LgQyTA-1
-X-Mimecast-MFC-AGG-ID: 2f8jH8O9PfKJPzq3LgQyTA_1755806872
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-45a1b0cb0aaso10738865e9.3
- for <wireguard@lists.zx2c4.com>; Thu, 21 Aug 2025 13:07:53 -0700 (PDT)
+ us-mta-612-i25kPY9vOHedUdvllUmL7w-1; Thu, 21 Aug 2025 16:07:50 -0400
+X-MC-Unique: i25kPY9vOHedUdvllUmL7w-1
+X-Mimecast-MFC-AGG-ID: i25kPY9vOHedUdvllUmL7w_1755806869
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3b9e743736dso787393f8f.3
+ for <wireguard@lists.zx2c4.com>; Thu, 21 Aug 2025 13:07:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755806872; x=1756411672;
+ d=1e100.net; s=20230601; t=1755806869; x=1756411669;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QCvnB/7xI7T/4p4mwWx/D4+W6s//h9G2+oSyfbDOFZs=;
- b=KNBjXLBM2b27xuf/su9U/3M/lkPFRrrphth+jw2aUgWzLUX0DMdKnnamqlupHfg57L
- Dgetw35azAzUhsQ5Lt35yGowmxelbavnB2XglMfHHZ7C0inxCdjBENEkDxX4JxStv9ZX
- /Wwk6xaO/hpC7rTvG/NNfB8mPcXw4oWQGP+1gkqoZSaSlDr2S0Nxc/xsEapQk+jn64om
- vdr18jUe3Z7M1mgZkTbe0/jOiKTnCfBXF67MmjjC/niQxHuo2lIZf4/8nlF/fktlSHLy
- Omv+OLP85tTljfxGAdD1mdi581kRlBBS4tzLgVFKcZy45DtsMZWeRq+cWrNom2Z16AsQ
- UA8w==
+ bh=MzMWVCGQW0mP4+/ULAfe7CdOmgWkAKLnoxAB4Fy092E=;
+ b=Rl6SheqfL2tYo+1d+WxbyN+6KvMyAURipWq69NCvLX2SfoFOvScgykha4G7OIyOJld
+ evRjlspKG59dR9K6gnu92aBaa7m+pcN4e/H4e92fAiglGKa9vRzuID9xU4iCbl2BmFfi
+ wIzcVz2SQhS4IA5rIlo4Tpgi8H//iOwcyPaaCxpH4z4sPL2pagozeMvDrk+b1EAz1cE0
+ 423ysF3j7xsUd+ut0CiEDHRg3gglWQFjicsUp1tWEYBydOJFWPtgSwScAhISki1BFZ29
+ kDaUzmwVvcxhDbJPFcUKm4kxK7AeXpLSpmrNFWJbYYUItv1wogMs0De1KeVzucq1CaU0
+ o1+Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV8TV4RSEW9yHoLUr/IU0lqQRlm+gH69oGfT0a0/B/e3ibNgUm9xKPmlyDu6n3JHYZ8XwrRHDsRjqI=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YzKOfOTKvAbqU3tbcaNJGD0s6NSnB0soESD/jiBpzwkuagQ8kH6
- xtlW69gI8B5gCLjHMtWucn+dbg7uN9MM90woy1EWE19L9KNTJpD6936IXAjhP7rmAFAFrSDQuiy
- zkYp8kLMwIcq5x2XEh5+xBuMpddxlkIBV0mTsvOtQdRGdU2zzbDuhbApz+J7AWg==
-X-Gm-Gg: ASbGnctrM5RMNoBb/ttUGE3IAmXYrOQ9brV7L224c31DBVIai4Z133X7rNyXV/wVovZ
- mknQeiEF4EcTNqMWWsQiH6T0vjlojaLQCIX7DchTIymKmm0F9f+FItyxgJ2lOVB7OqCibf1Kklo
- kfiDidddhZ+ZENxugxQJlsJWTfrD/4Yq2Ibi+5+GLzyF0cAPW/0Y6wJJ1do4sEZPmbnsh4KKphi
- WD2957ma0IjDfJgd+WAI838cxeoL0oE9TetUe1fInTC5QwljUi5oJkbdOe6Ttej9xzC0YSB1rCg
- VW1nunYyJhAFtHJ9ZOmKpNILkpkU0gcbPZTCxyo7hoZzepf9ZrNlPJtxGYlTxikwxbRt33hQo6M
- LeKBQDzS22fQCTLIPVAvaBQ==
-X-Received: by 2002:a05:600c:1d07:b0:459:e025:8c40 with SMTP id
- 5b1f17b1804b1-45b5179e897mr2279005e9.10.1755806871597; 
- Thu, 21 Aug 2025 13:07:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGQe1GSIQC6LfutgynQLrqB1o4Jo0GTrBjlhxRWjM7nqTD8l8oEo1HOcPxtIuVQVn3tsHm8QA==
-X-Received: by 2002:a05:600c:1d07:b0:459:e025:8c40 with SMTP id
- 5b1f17b1804b1-45b5179e897mr2278575e9.10.1755806871147; 
- Thu, 21 Aug 2025 13:07:51 -0700 (PDT)
+ AJvYcCUMmjreXurA5HjV7LJTHI1Q0eUiq+W0NxTq47QXKnCdzJ1Hl/0H9X7vkI3tk9GILowYAxU0P1qoHko=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YxcY89op0qPllnAGNVN8KJnIYzljo6YaW8VNR+E0SWX0tib5Nhz
+ yzEL3eFSMlcAqkxLmZmYWKn7KgmbUqs6zI4psVOmsHrTBNEn8Az3IEO7T0Q1EdU9XPYnWc4j83I
+ Gt5QZf+zIR9tH+SMA9dcnXzqzNfFxKJtfWQm/+hdnPEdbnW+JxvE7pkxVf23/Ig==
+X-Gm-Gg: ASbGncvcXOzFPIoUCnDRUdnbJAbPH24c/lSPum6ce/r+f10HZTUlFycKd7N2aetmg/a
+ AaVbzCoYms1+bmtNGNBTRwfcbbDOKuMhPf2E0ouUpRfJcJfKamlJKwvmvOQc2wy9R8TLpTysGYY
+ MoohC3nKhkG6RVomW2bA/tesZ0TxSbkbI/zomyUL+LrZD+oAjXrblfPooymF0wbW1LDYFbKZco7
+ j5SZ+Cg5qlvcrkn4m4r9nujT3HxGvlsab8764OuRPBkmtTXBYwEpvow3xSSL1HFVw4voUxqgPeN
+ NS1GSZWoJLArazNrUxxrb1O+0zS5M0oodzjouBnCNEAZYupDGRt63kZrMMRP13VZb++8nF254JR
+ +JXHFuWMjGOWgjtp+fDk4rg==
+X-Received: by 2002:a05:6000:2901:b0:3b7:c703:ce4 with SMTP id
+ ffacd0b85a97d-3c5dcff5f3amr167802f8f.59.1755806868897; 
+ Thu, 21 Aug 2025 13:07:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHCm64ALptQrKyrLlaLt4xJ2vziBy3gZm4Q1WMVX6wnWhr2W2tRcHnZJHBwxpAOnTfL4mKx+A==
+X-Received: by 2002:a05:6000:2901:b0:3b7:c703:ce4 with SMTP id
+ ffacd0b85a97d-3c5dcff5f3amr167760f8f.59.1755806868453; 
+ Thu, 21 Aug 2025 13:07:48 -0700 (PDT)
 Received: from localhost
  (p200300d82f26ba0008036ec5991806fd.dip0.t-ipconnect.de.
  [2003:d8:2f26:ba00:803:6ec5:9918:6fd])
  by smtp.gmail.com with UTF8SMTPSA id
- 5b1f17b1804b1-45b4e1d77e0sm22159155e9.0.2025.08.21.13.07.49
+ ffacd0b85a97d-3c5826751d5sm1323274f8f.14.2025.08.21.13.07.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 Aug 2025 13:07:50 -0700 (PDT)
+ Thu, 21 Aug 2025 13:07:47 -0700 (PDT)
 From: David Hildenbrand <david@redhat.com>
 To: linux-kernel@vger.kernel.org
 Cc: David Hildenbrand <david@redhat.com>,
@@ -99,16 +99,16 @@ Cc: David Hildenbrand <david@redhat.com>,
  Suren Baghdasaryan <surenb@google.com>, Tejun Heo <tj@kernel.org>,
  virtualization@lists.linux.dev, Vlastimil Babka <vbabka@suse.cz>,
  wireguard@lists.zx2c4.com, x86@kernel.org, Zi Yan <ziy@nvidia.com>
-Subject: [PATCH RFC 16/35] mm/pagewalk: drop nth_page() usage within folio in
- folio_walk_start()
-Date: Thu, 21 Aug 2025 22:06:42 +0200
-Message-ID: <20250821200701.1329277-17-david@redhat.com>
+Subject: [PATCH RFC 15/35] fs: hugetlbfs: remove nth_page() usage within folio
+ in adjust_range_hwpoison()
+Date: Thu, 21 Aug 2025 22:06:41 +0200
+Message-ID: <20250821200701.1329277-16-david@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250821200701.1329277-1-david@redhat.com>
 References: <20250821200701.1329277-1-david@redhat.com>
 MIME-Version: 1.0
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: fsP9hpw25CguObhxK2-ee5RyLbJ56ntmshvoyWAOKXU_1755806872
+X-Mimecast-MFC-PROC-ID: mFjt49fw3lhDNcpb9lxdoDBLf6dXXRMDurOD1LQ0l3g_1755806869
 X-Mimecast-Originator: redhat.com
 Content-Transfer-Encoding: 8bit
 content-type: text/plain; charset="US-ASCII"; x-default=true
@@ -126,27 +126,58 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-It's no longer required to use nth_page() within a folio, so let's just
-drop the nth_page() in folio_walk_start().
+The nth_page() is not really required anymore, so let's remove it.
+While at it, cleanup and simplify the code a bit.
 
 Signed-off-by: David Hildenbrand <david@redhat.com>
 ---
- mm/pagewalk.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/hugetlbfs/inode.c | 25 ++++++++-----------------
+ 1 file changed, 8 insertions(+), 17 deletions(-)
 
-diff --git a/mm/pagewalk.c b/mm/pagewalk.c
-index c6753d370ff4e..9e4225e5fcf5c 100644
---- a/mm/pagewalk.c
-+++ b/mm/pagewalk.c
-@@ -1004,7 +1004,7 @@ struct folio *folio_walk_start(struct folio_walk *fw,
- found:
- 	if (expose_page)
- 		/* Note: Offset from the mapped page, not the folio start. */
--		fw->page = nth_page(page, (addr & (entry_size - 1)) >> PAGE_SHIFT);
-+		fw->page = page + ((addr & (entry_size - 1)) >> PAGE_SHIFT);
- 	else
- 		fw->page = NULL;
- 	fw->ptl = ptl;
+diff --git a/fs/hugetlbfs/inode.c b/fs/hugetlbfs/inode.c
+index 34d496a2b7de6..dc981509a7717 100644
+--- a/fs/hugetlbfs/inode.c
++++ b/fs/hugetlbfs/inode.c
+@@ -198,31 +198,22 @@ hugetlb_get_unmapped_area(struct file *file, unsigned long addr,
+ static size_t adjust_range_hwpoison(struct folio *folio, size_t offset,
+ 		size_t bytes)
+ {
+-	struct page *page;
+-	size_t n = 0;
+-	size_t res = 0;
++	struct page *page = folio_page(folio, offset / PAGE_SIZE);
++	size_t n, safe_bytes;
+ 
+-	/* First page to start the loop. */
+-	page = folio_page(folio, offset / PAGE_SIZE);
+ 	offset %= PAGE_SIZE;
+-	while (1) {
++	for (safe_bytes = 0; safe_bytes < bytes; safe_bytes += n) {
++
+ 		if (is_raw_hwpoison_page_in_hugepage(page))
+ 			break;
+ 
+ 		/* Safe to read n bytes without touching HWPOISON subpage. */
+-		n = min(bytes, (size_t)PAGE_SIZE - offset);
+-		res += n;
+-		bytes -= n;
+-		if (!bytes || !n)
+-			break;
+-		offset += n;
+-		if (offset == PAGE_SIZE) {
+-			page = nth_page(page, 1);
+-			offset = 0;
+-		}
++		n = min(bytes - safe_bytes, (size_t)PAGE_SIZE - offset);
++		offset = 0;
++		page++;
+ 	}
+ 
+-	return res;
++	return safe_bytes;
+ }
+ 
+ /*
 -- 
 2.50.1
 
