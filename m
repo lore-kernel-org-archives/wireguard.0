@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC32DCA0EFA
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Aug 2025 21:33:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B41B6CA0EFA
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Aug 2025 23:17:01 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0475cbe8;
-	Thu, 21 Aug 2025 20:08:51 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7e94f9bd;
+	Thu, 21 Aug 2025 20:08:54 +0000 (UTC)
 Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [170.10.133.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1ff9a193
+ (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 27a2150d
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Aug 2025 20:08:46 +0000 (UTC)
+ Thu, 21 Aug 2025 20:08:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755806925;
+ s=mimecast20190719; t=1755806928;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Z7iPpUiW3LrFM0W3XrB+Z82uodwKTsefoCzXwhLbLUo=;
- b=UonbbPABs/WAVZJ+kINp2q/lhGgM2bobix8GHDf7b+5l8wT6zS1EEwQKVIipjhp7kANz1G
- 6qN0HXc1f3tA5YdI62e4WfebyfFYLgR0INJwDIY+GOce3ZnZNdU9OpuLKm5ORDZ9vPb7NW
- kx5CHPOcDKoq6F21zkgReSDFBMZc1Mw=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=8aQmj/0+AYT4mPx/DatgQPPbmq0Lkvm9KCqKkKCdC9Q=;
+ b=E+EKZVNoIN341jMTTRkCIXdmOqy0S50EZmPngqAufEwPbx8Oovknj/Of1Vh+DK6sLftdgY
+ L++eBcRmIkt7n+h5FO9EfzS43bnLz3RahmZyzXuxYejpK2VM4NKGP871WLsIEKMqLyzFZW
+ j9CGwzD4GF76CZDfMH8D9xnFLWmSOgg=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-644-RUL2EOZpNsmbScyjoSuUBg-1; Thu, 21 Aug 2025 16:08:44 -0400
-X-MC-Unique: RUL2EOZpNsmbScyjoSuUBg-1
-X-Mimecast-MFC-AGG-ID: RUL2EOZpNsmbScyjoSuUBg_1755806923
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3b9edf80ddcso517659f8f.3
- for <wireguard@lists.zx2c4.com>; Thu, 21 Aug 2025 13:08:44 -0700 (PDT)
+ us-mta-347-N6WRKwEvNGa8TVOYcm5akQ-1; Thu, 21 Aug 2025 16:08:46 -0400
+X-MC-Unique: N6WRKwEvNGa8TVOYcm5akQ-1
+X-Mimecast-MFC-AGG-ID: N6WRKwEvNGa8TVOYcm5akQ_1755806926
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-45a1b0d221aso6550515e9.3
+ for <wireguard@lists.zx2c4.com>; Thu, 21 Aug 2025 13:08:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755806923; x=1756411723;
+ d=1e100.net; s=20230601; t=1755806925; x=1756411725;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Z7iPpUiW3LrFM0W3XrB+Z82uodwKTsefoCzXwhLbLUo=;
- b=oc41Z16mZZ6LMEl2VnzlWJxtX9Nyud5xW2bh0mh339J18lATA53PPLFnagWbMbijik
- eau2deCA5T7iJAOnQPz2+x9AA0g6Gt+5BKKWnHtoG4jfiWxmxVg4FANohQmuHb3pJRn7
- 5Oy0LpFWJo5TtFpUiBK11r4J/q3kFwuI4LfrnD7Fs1YmyzOj2kNLlESCxOPOKMMAsIdZ
- GO2w4CvJ1rIRV0nzuji/z+jHdN+Xi0oSBNSOkpqsMz4B6tv5Jli5FXgNrjafaOT3qi5r
- 3aBrLwiuRW4j8YaahxEI3TNxXV1iRyYW4iczb+mDbCx9PWFHcL84ye/enib2cyWJpIj2
- kPUQ==
+ bh=8aQmj/0+AYT4mPx/DatgQPPbmq0Lkvm9KCqKkKCdC9Q=;
+ b=GUwvTo0Uet0UqdavlPvZK/lA8QqvEI/dy1TP0XGsre/IwB8wz7h4k4l79BbOJ8ewgL
+ yIBb/xtk7njd33fsFAU20Mt7glbNmnfPx5jvbfkRbcn3l+1Snyxb7HT3unXNvmKIs0+d
+ o4CwUKI6lPJPgAGzU2T09E6e12TqlPwlTdUq0PNVuSnYJw97nRpJUmF2yGCUnqnjc04o
+ w55pD8pVSUniWhImUea4J5cgKFmF9Dz6kdM6QMyzFveALB+EP7rKaNcnQo5SN6LwroEr
+ iXyjn+tFR21KdG5KXYHMkGo/RHgt8n8mlvfmMfwGTMR3y4E4BIvyaLm0TyuODAiydVlG
+ qBAw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVg7cY15S0oahHgpVhuvAKM6NYh3sQyXQoDnoIrdN28brMmY2E6CW9Rx8WJ3O0dBa8CKGCV0Iqj9Oo=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YwkvYQy5LkQ000KA98K5qwBzhPQz49od+5XDAs0Mng30jcRaBk6
- /S9XaG6IiF56Yeq2oHGiQGZLK84/hHxksAMXD8rEFyYDoGvpWUeBcazcOcBQU0hy8na2BqS4YA6
- 0q2WkWzzpgHcNerkud4fZo3KMdlcb2S+n8s9PN09ISlsa2CCxcJU4by0qgFEAFw==
-X-Gm-Gg: ASbGncv54u+eF7aaCstzeJdV+tmj6hg9UkvOk5ldZsReuN7IYkBh8NBf1+QgrA3D7WR
- DgQqomyPAfBUC8MzDLaU7XmXzFH41Yx8q5wMXOMy1uxQd34yC9bQaNnrhI9pqAXsQLYioGfOIXQ
- b0ComkASdBPt1S224ySTONRotILZnb27Y5PDVxofo9JZpFNg/zVSKeo4FCQoyVEkBIA4ONknZvh
- FyJotzdVud/WhOsbABhWVdZOxzs/2oPekL5dWeRgionzMmIv6/7eafL4xKtYqpAikL+GwDAQ8Wo
- 8QY6hzOz9bSfBRUbVvkZfBkBWs/0rOxVDyU8gOqWffVpgwQ33cbivl+1CNplcrMm3qGVSgbPkez
- gGgU8RKGpjIYXkIgOUw1n4Q==
-X-Received: by 2002:a5d:64ed:0:b0:3b5:dafc:1525 with SMTP id
- ffacd0b85a97d-3c5dc7313famr204669f8f.33.1755806922945; 
- Thu, 21 Aug 2025 13:08:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHnHzRKC08dohUKQD/XdldMc6IWYVddiLtTh8Yidep5vx+5++gzVG23SiimMwYZ+HldR36Zkg==
-X-Received: by 2002:a5d:64ed:0:b0:3b5:dafc:1525 with SMTP id
- ffacd0b85a97d-3c5dc7313famr204645f8f.33.1755806922505; 
- Thu, 21 Aug 2025 13:08:42 -0700 (PDT)
+ AJvYcCWv/56p6fdfidzDr/y+EzS9AQRRO2VhECOuxDj9FPrH5CbdMfqF4OKAPqyuEl12jr3ZoznSFCycPUY=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YwUP+6icAaEc58B3fCmXJzHfSjQkt5Gr10bue5klecN4Hs6ryeV
+ 98uJ2Exc2h3T0wlQxubVwA4QTPctLK+uDzRZg7SR5NmeS8y1IGNHD0ORDcuPOyuri3G+XrJLRsW
+ qRGEWU2Xl0YnhhQ9BFJGJTAy2Mwq2H2AcnESquC0FwZINA2I6mUYU0n0tXhk0CQ==
+X-Gm-Gg: ASbGncusbt+Dz5HRAEg42VjfnYHVfP6MxgymFY7IK0KAg6iLiV3kVCkvMlFzyub0vG4
+ ZR5AXSLKrGl3XXJXD24su5V97iSSbz4HXje7CBnIB/aEft1irtVfCsT3q9wOdIhRJ403c74ldcJ
+ mxmIH+4pTJA5T84XUqfOIi+gIXVT6gc44w4Vi1CLBTjYJzYzIiKH1VmckiA0xI/mlEtobQweIfu
+ /GiAjIIzZnfxISPEnFrhMSZygevPy5dXaRaIB/3dt2hY/NeCIlqE7B8Lqr5lxPJwoFi24tqPTkc
+ XkYIV1VAnffe+O405iOoFkAHegoMyrv+rugxkt5gGqf3U0pjqlk+ctnpFCYYpWmvwHkt5oDn7di
+ rX/g3jK1HrIYfzGSOibAHDQ==
+X-Received: by 2002:a05:600c:3b25:b0:459:da89:b06 with SMTP id
+ 5b1f17b1804b1-45b517b008dmr3774435e9.16.1755806925537; 
+ Thu, 21 Aug 2025 13:08:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHDDv+I9AWZPVyKVFD2prHDmQqsK3mzEWwP5yNf0oRJXtHjmqgi3hMC3hwAmszm5rTAtK85Rg==
+X-Received: by 2002:a05:600c:3b25:b0:459:da89:b06 with SMTP id
+ 5b1f17b1804b1-45b517b008dmr3774035e9.16.1755806925116; 
+ Thu, 21 Aug 2025 13:08:45 -0700 (PDT)
 Received: from localhost
  (p200300d82f26ba0008036ec5991806fd.dip0.t-ipconnect.de.
  [2003:d8:2f26:ba00:803:6ec5:9918:6fd])
  by smtp.gmail.com with UTF8SMTPSA id
- 5b1f17b1804b1-45b50e3a587sm10028205e9.18.2025.08.21.13.08.40
+ 5b1f17b1804b1-45b50e0a479sm8895255e9.21.2025.08.21.13.08.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 Aug 2025 13:08:42 -0700 (PDT)
+ Thu, 21 Aug 2025 13:08:44 -0700 (PDT)
 From: David Hildenbrand <david@redhat.com>
 To: linux-kernel@vger.kernel.org
 Cc: David Hildenbrand <david@redhat.com>,
@@ -99,16 +99,15 @@ Cc: David Hildenbrand <david@redhat.com>,
  Suren Baghdasaryan <surenb@google.com>, Tejun Heo <tj@kernel.org>,
  virtualization@lists.linux.dev, Vlastimil Babka <vbabka@suse.cz>,
  wireguard@lists.zx2c4.com, x86@kernel.org, Zi Yan <ziy@nvidia.com>
-Subject: [PATCH RFC 34/35] block: update comment of "struct bio_vec" regarding
- nth_page()
-Date: Thu, 21 Aug 2025 22:07:00 +0200
-Message-ID: <20250821200701.1329277-35-david@redhat.com>
+Subject: [PATCH RFC 35/35] mm: remove nth_page()
+Date: Thu, 21 Aug 2025 22:07:01 +0200
+Message-ID: <20250821200701.1329277-36-david@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250821200701.1329277-1-david@redhat.com>
 References: <20250821200701.1329277-1-david@redhat.com>
 MIME-Version: 1.0
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: 5NlrsU9SN25HdxxDOECLhAbGRQw25uo4iQH1Nk5PeBs_1755806923
+X-Mimecast-MFC-PROC-ID: VjeMog03pjrC5QJdzDXwKuKmL0O5VKxsKFh57-6Tpdk_1755806926
 X-Mimecast-Originator: redhat.com
 Content-Transfer-Encoding: 8bit
 content-type: text/plain; charset="US-ASCII"; x-default=true
@@ -126,34 +125,40 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Ever since commit 858c708d9efb ("block: move the bi_size update out of
-__bio_try_merge_page"), page_is_mergeable() no longer exists, and the
-logic in bvec_try_merge_page() is now a simple page pointer
-comparison.
+Now that all users are gone, let's remove it.
 
 Signed-off-by: David Hildenbrand <david@redhat.com>
 ---
- include/linux/bvec.h | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ include/linux/mm.h                   | 2 --
+ tools/testing/scatterlist/linux/mm.h | 1 -
+ 2 files changed, 3 deletions(-)
 
-diff --git a/include/linux/bvec.h b/include/linux/bvec.h
-index 0a80e1f9aa201..3fc0efa0825b1 100644
---- a/include/linux/bvec.h
-+++ b/include/linux/bvec.h
-@@ -22,11 +22,8 @@ struct page;
-  * @bv_len:    Number of bytes in the address range.
-  * @bv_offset: Start of the address range relative to the start of @bv_page.
-  *
-- * The following holds for a bvec if n * PAGE_SIZE < bv_offset + bv_len:
-- *
-- *   nth_page(@bv_page, n) == @bv_page + n
-- *
-- * This holds because page_is_mergeable() checks the above property.
-+ * All pages within a bio_vec starting from @bv_page are contiguous and
-+ * can simply be iterated (see bvec_advance()).
-  */
- struct bio_vec {
- 	struct page	*bv_page;
+diff --git a/include/linux/mm.h b/include/linux/mm.h
+index f59ad1f9fc792..3ded0db8322f7 100644
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -210,9 +210,7 @@ extern unsigned long sysctl_admin_reserve_kbytes;
+ 
+ #if defined(CONFIG_SPARSEMEM) && !defined(CONFIG_SPARSEMEM_VMEMMAP)
+ bool page_range_contiguous(const struct page *page, unsigned long nr_pages);
+-#define nth_page(page,n) pfn_to_page(page_to_pfn((page)) + (n))
+ #else
+-#define nth_page(page,n) ((page) + (n))
+ static inline bool page_range_contiguous(const struct page *page,
+ 		unsigned long nr_pages)
+ {
+diff --git a/tools/testing/scatterlist/linux/mm.h b/tools/testing/scatterlist/linux/mm.h
+index 5bd9e6e806254..121ae78d6e885 100644
+--- a/tools/testing/scatterlist/linux/mm.h
++++ b/tools/testing/scatterlist/linux/mm.h
+@@ -51,7 +51,6 @@ static inline unsigned long page_to_phys(struct page *page)
+ 
+ #define page_to_pfn(page) ((unsigned long)(page) / PAGE_SIZE)
+ #define pfn_to_page(pfn) (void *)((pfn) * PAGE_SIZE)
+-#define nth_page(page,n) pfn_to_page(page_to_pfn((page)) + (n))
+ 
+ #define __min(t1, t2, min1, min2, x, y) ({              \
+ 	t1 min1 = (x);                                  \
 -- 
 2.50.1
 
