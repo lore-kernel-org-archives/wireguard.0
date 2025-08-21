@@ -4,76 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CB95C87FCF
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  9 Aug 2025 13:24:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1669CA0FE2
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Aug 2025 20:07:33 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 92dfe55f;
-	Sat, 9 Aug 2025 13:24:17 +0000 (UTC)
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com
- [2607:f8b0:4864:20::1036])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id fa2cee2f
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2205bd75;
+	Thu, 21 Aug 2025 20:07:31 +0000 (UTC)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 374b5127
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sat, 9 Aug 2025 13:24:15 +0000 (UTC)
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-31ed9a17f1fso2499525a91.1
- for <wireguard@lists.zx2c4.com>; Sat, 09 Aug 2025 06:24:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1754745854; x=1755350654; darn=lists.zx2c4.com;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=Gg5qA8e+0UYHLSOIBa7q2BXIt9K71iMCY0q3plis3nE=;
- b=iNKk+Gm1UAc7l+O3RE97wMVXs5+jSMdtqxbQjh/w3Fr04jpNdF8sjc9BFSz8knji4u
- rPHdjmWPuMvhSKLzQuLdlQmoaWPyPHSI0S8BZopPtxNCzGaOx40l75AceFMug7uvWO8Q
- uMux8lWrECi3CEL2jb9+AoUJMxE7kodxbsYXT4VW9IaIjum328JMh4r7rD2Ek2KHFgy3
- GBsGXTz4Lj256H4YelZYtYQ4TxsjzMLXACDBP5l/dbUB0ktDVjstQOzmi6XCmahBHpw9
- n/dQdAVXjiK9rDW9wLOzTS9g4NZQivUdmcQ+CTPNN7CpGcIRVukbOZtYyqDOktgBAPrA
- G5Vw==
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 21 Aug 2025 20:07:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755806847;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=saIpwl0G6zoDDZA6kqzaAKGDHCkLp/ivw/dNNi90asQ=;
+ b=dBdGbLGcVbRa9Ikps2KwOnaoL4YsVb8wdAXF6ARS144K7GPVFJrdibgBt7thHpBMe1Vgzy
+ 68z0YKbhgXTw55s7BNSlH/0FOyk4bm7wyBFmjdho+lGObZK2cz0zVmk81MszaIIKKpdo7B
+ Tot+dhPdVLSrkCrClPDcdtWNEXv5Qhc=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-668-cf8tXlMVNHqfz8xzdIhrug-1; Thu, 21 Aug 2025 16:07:25 -0400
+X-MC-Unique: cf8tXlMVNHqfz8xzdIhrug-1
+X-Mimecast-MFC-AGG-ID: cf8tXlMVNHqfz8xzdIhrug_1755806845
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-45a1b05d251so7739855e9.1
+ for <wireguard@lists.zx2c4.com>; Thu, 21 Aug 2025 13:07:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754745854; x=1755350654;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Gg5qA8e+0UYHLSOIBa7q2BXIt9K71iMCY0q3plis3nE=;
- b=LgG/A6UQngmieuYO4YgzJu/U431c8uqn1IcMYsGpJBqd8rwkkVVAkaR45ekMZRVj9/
- CpsCRR370s/m77bF1KhAybqYNl7QZcbfyccsnHuHy935N+fwnTO5NXc9dpU4dFe8RmQv
- VGV7o4WHi9nLBNXlOU7Bbu5be1NPcscarSc7+ecJfX/i0piEhgmjRrRCO5HVgzWV5Bm6
- nI7dqc65GH95C1VRBKj+5oC6LQ5ICKXbegKHOP9taXsdoD1R3WxmAIo5iivabM0mGpEc
- Te76rXpyB30pILFjTMhYOKyMQ77oNJt/rbEzwaZiXdlHDZTeqVjg/XQq3o6kY8J2oqAN
- 75MA==
+ d=1e100.net; s=20230601; t=1755806844; x=1756411644;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=saIpwl0G6zoDDZA6kqzaAKGDHCkLp/ivw/dNNi90asQ=;
+ b=lXFtmh5HV4Nn2Z5Ic329/11+eeVrIgjzYrY3nDgYnK9sRTs0Gjab2bLS+n3rfMDYsh
+ FGj3iIj9AqfAQRxYEiYodg55SvAa9MI1wUTM+ACKjSREhypxyo5Uo8L7r15FSHhkllPh
+ Kg9RVaPl8Pi7pxeTFNq5zU5o7hpVd5vqBdY9alx65kEEWcaHJAFcfPVXtl9iN+rzxdur
+ oY3pazdn0kUf0pdtR2TdwNiildhzkhQ48Wd4YRsXhbIu4Xgjdk1cZTOTPw2v7TOj7/aY
+ /FG8joTw1uGCA4VQaxNhl9Fp3XPXIbqjlGEbBtNpW2j8TWtQlSbXGr9dc4nx3NluwLNv
+ FN5A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXBM4Qz6lFCS2/eQh6/SnHCoVn/+hUN4zr1iRxm/2QkvoadA2gXf+jqUFJ6gL5+/nRjUjnr7bORtg8=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YyVR3BaVu0d5tNk4nXaUu5cS8eAb7D+JaGswGkqQ24+9ONNpOrH
- Vf0UBC/CwsE3+AElI92Z6RD1HaT01dpi1+WV9UQl6B4LsFHxyAZekTQk
-X-Gm-Gg: ASbGncu8dbo/xnhoCwtWTs4TXPvzxVKg0tcFuWNf4gqZFs4+b4ahTtnJu7bpuC9QI/z
- gvkw8wHplkVxhvfApXz7faEC71SyLBarp0ZMB8oJIlrVlkSmumqy/r0KzjdjWP/5XPiGVOJuAIj
- CdRD7yGcCDe1/zKT7JeWr49unlG/vlHZdMEJjDMgUATG2a/bCiCHxORLL+WkDebbfPFv5gYZ239
- bmgrRjLwVTiIy7fW1gdjM/rMzROfmpo0cBqKvdtrGjA8mSF8JLDr8qLKeaga4uFHy8L5WSgv7Tf
- vYqpIFTv+Mccy0dAV1nFl08FSoxzDgkoJN6IoT7lCUvAUfaXLZAQAfeElz5Wxqd+qY3fNupqMNN
- jJoNLzVAvS5F/KYa+qI0VaA==
-X-Google-Smtp-Source: AGHT+IG6XUjvU1ujGKElusFwiJuytuORtuq2Rt2NrzrdYHFF84WEYLfReDSdYsL1FrWIQ0Z4Hb3WYw==
-X-Received: by 2002:a17:90b:2ecc:b0:321:87fa:e1e8 with SMTP id
- 98e67ed59e1d1-32187fae3a9mr7874585a91.2.1754745854056; 
- Sat, 09 Aug 2025 06:24:14 -0700 (PDT)
-Received: from localhost ([216.228.127.129]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3218c3c2d58sm3034935a91.16.2025.08.09.06.24.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 09 Aug 2025 06:24:13 -0700 (PDT)
-Date: Sat, 9 Aug 2025 09:24:11 -0400
-From: Yury Norov <yury.norov@gmail.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- Andrew Lunn <andrew+netdev@lunn.ch>,
- "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Simon Horman <horms@kernel.org>, wireguard@lists.zx2c4.com,
- netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 0/2] rework wg_cpumask_next_online()
-Message-ID: <aJdL-5t9va5Ln0xv@yury>
-References: <20250719224444.411074-1-yury.norov@gmail.com>
+ AJvYcCV05jNfTEqC7mQdkwksTSOqZt5lutg+Z1Bxkv9J3QW4WYDuFi/d7s1l3Jb8aq63sgn/SVAzSLQ0IEo=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0Yzyb18Ig6brcgLMABUM32+0YdL/MyygxGmk8rxqbvW4LVrQD2lH
+ ofJbOBgY9ixNzT04DS8AZ8jPwu2KJ5S5CZLS/6WumBq8bSOfGThKy9v0fKDTUULRWkxHSWFvPg4
+ BMDwOOV3CbamS3fXHkmlVGRL68RknFhMWAcYgcaujDtgVhfnHRiUwbMtH5ypPbw==
+X-Gm-Gg: ASbGncu619sMYeh/k8GBZIyeMvoY2Blq+JCdgeYIPjv/uzeFntu5Cy8FzkjmrC2Wd/0
+ IVZfxtKkf1OfiaGhcurWx83FNTxkSxK5my273t1x1haRFXb3FN0xp5N6jHcNCc91nFTc/hZ+q1W
+ Y8mp/sjY+yfb8Gbw7BumFqXOFWNOch+4VK43EiZbeBfti3Q8bQGFUuPa5jmIStbSvp2FcPkIGYK
+ wF114kNvRLyOnCssNF3DrMzIpsxdxvRq3f9Q/ZPkTR10xM8jkFdD4GfFVYtTufY9NF/kJYH36Lv
+ qBmMER5TGVKDkAozBnZ9zZ76xKbrnd5Kc4f0xO0Pjnll87rXmHzN0agqEdk2xfIbJWx0c3LrcgD
+ Rph3hv3+YQPuqHidLiDWkrA==
+X-Received: by 2002:a05:600c:35c3:b0:456:285b:db3c with SMTP id
+ 5b1f17b1804b1-45b5178e768mr3050185e9.3.1755806844552; 
+ Thu, 21 Aug 2025 13:07:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFwjTyvRglWWHHllkR7aRLdEFYS2lmKXV2DYH9bn4L7+YG6UNdB0HbBuiJbZZ1vy18QyYWFNg==
+X-Received: by 2002:a05:600c:35c3:b0:456:285b:db3c with SMTP id
+ 5b1f17b1804b1-45b5178e768mr3049835e9.3.1755806844048; 
+ Thu, 21 Aug 2025 13:07:24 -0700 (PDT)
+Received: from localhost
+ (p200300d82f26ba0008036ec5991806fd.dip0.t-ipconnect.de.
+ [2003:d8:2f26:ba00:803:6ec5:9918:6fd])
+ by smtp.gmail.com with UTF8SMTPSA id
+ ffacd0b85a97d-3c074e38d65sm12980909f8f.27.2025.08.21.13.07.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 21 Aug 2025 13:07:23 -0700 (PDT)
+From: David Hildenbrand <david@redhat.com>
+To: linux-kernel@vger.kernel.org
+Cc: David Hildenbrand <david@redhat.com>,
+ Alexander Potapenko <glider@google.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Brendan Jackman <jackmanb@google.com>, Christoph Lameter <cl@gentwo.org>,
+ Dennis Zhou <dennis@kernel.org>, Dmitry Vyukov <dvyukov@google.com>,
+ dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+ iommu@lists.linux.dev, io-uring@vger.kernel.org,
+ Jason Gunthorpe <jgg@nvidia.com>, Jens Axboe <axboe@kernel.dk>,
+ Johannes Weiner <hannes@cmpxchg.org>, John Hubbard <jhubbard@nvidia.com>,
+ kasan-dev@googlegroups.com, kvm@vger.kernel.org,
+ "Liam R. Howlett" <Liam.Howlett@oracle.com>,
+ Linus Torvalds <torvalds@linux-foundation.org>, linux-arm-kernel@axis.com,
+ linux-arm-kernel@lists.infradead.org, linux-crypto@vger.kernel.org,
+ linux-ide@vger.kernel.org, linux-kselftest@vger.kernel.org,
+ linux-mips@vger.kernel.org, linux-mmc@vger.kernel.org, linux-mm@kvack.org,
+ linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
+ linux-scsi@vger.kernel.org, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+ Marco Elver <elver@google.com>,
+ Marek Szyprowski <m.szyprowski@samsung.com>,
+ Michal Hocko <mhocko@suse.com>, Mike Rapoport <rppt@kernel.org>,
+ Muchun Song <muchun.song@linux.dev>, netdev@vger.kernel.org,
+ Oscar Salvador <osalvador@suse.de>, Peter Xu <peterx@redhat.com>,
+ Robin Murphy <robin.murphy@arm.com>,
+ Suren Baghdasaryan <surenb@google.com>, Tejun Heo <tj@kernel.org>,
+ virtualization@lists.linux.dev, Vlastimil Babka <vbabka@suse.cz>,
+ wireguard@lists.zx2c4.com, x86@kernel.org, Zi Yan <ziy@nvidia.com>
+Subject: [PATCH RFC 06/35] mm/page_alloc: reject unreasonable folio/compound
+ page sizes in alloc_contig_range_noprof()
+Date: Thu, 21 Aug 2025 22:06:32 +0200
+Message-ID: <20250821200701.1329277-7-david@redhat.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20250821200701.1329277-1-david@redhat.com>
+References: <20250821200701.1329277-1-david@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250719224444.411074-1-yury.norov@gmail.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: xQWNl4B32wDnnsxtb_fqvq2DkZwShJJIDxdh5FnB6BY_1755806845
+X-Mimecast-Originator: redhat.com
+Content-Transfer-Encoding: 8bit
+content-type: text/plain; charset="US-ASCII"; x-default=true
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -88,22 +126,68 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Ping?
+Let's reject them early, which in turn makes folio_alloc_gigantic() reject
+them properly.
 
-On Sat, Jul 19, 2025 at 06:44:41PM -0400, Yury Norov wrote:
-> From: Yury Norov (NVIDIA) <yury.norov@gmail.com>
-> 
-> Simplify the function and fix possible out-of-boundary condition.
-> 
-> v2:
->  - fix possible >= nr_cpu_ids return (Jason).
-> 
-> Yury Norov (NVIDIA) (2):
->   wireguard: queueing: simplify wg_cpumask_next_online()
->   wireguard: queueing: always return valid online CPU in wg_cpumask_choose_online()
-> 
->  drivers/net/wireguard/queueing.h | 13 ++++---------
->  1 file changed, 4 insertions(+), 9 deletions(-)
-> 
-> -- 
-> 2.43.0
+To avoid converting from order to nr_pages, let's just add MAX_FOLIO_ORDER
+and calculate MAX_FOLIO_NR_PAGES based on that.
+
+Signed-off-by: David Hildenbrand <david@redhat.com>
+---
+ include/linux/mm.h | 6 ++++--
+ mm/page_alloc.c    | 5 ++++-
+ 2 files changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/include/linux/mm.h b/include/linux/mm.h
+index 00c8a54127d37..77737cbf2216a 100644
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -2055,11 +2055,13 @@ static inline long folio_nr_pages(const struct folio *folio)
+ 
+ /* Only hugetlbfs can allocate folios larger than MAX_ORDER */
+ #ifdef CONFIG_ARCH_HAS_GIGANTIC_PAGE
+-#define MAX_FOLIO_NR_PAGES	(1UL << PUD_ORDER)
++#define MAX_FOLIO_ORDER		PUD_ORDER
+ #else
+-#define MAX_FOLIO_NR_PAGES	MAX_ORDER_NR_PAGES
++#define MAX_FOLIO_ORDER		MAX_PAGE_ORDER
+ #endif
+ 
++#define MAX_FOLIO_NR_PAGES	(1UL << MAX_FOLIO_ORDER)
++
+ /*
+  * compound_nr() returns the number of pages in this potentially compound
+  * page.  compound_nr() can be called on a tail page, and is defined to
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index ca9e6b9633f79..1e6ae4c395b30 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -6833,6 +6833,7 @@ static int __alloc_contig_verify_gfp_mask(gfp_t gfp_mask, gfp_t *gfp_cc_mask)
+ int alloc_contig_range_noprof(unsigned long start, unsigned long end,
+ 			      acr_flags_t alloc_flags, gfp_t gfp_mask)
+ {
++	const unsigned int order = ilog2(end - start);
+ 	unsigned long outer_start, outer_end;
+ 	int ret = 0;
+ 
+@@ -6850,6 +6851,9 @@ int alloc_contig_range_noprof(unsigned long start, unsigned long end,
+ 					    PB_ISOLATE_MODE_CMA_ALLOC :
+ 					    PB_ISOLATE_MODE_OTHER;
+ 
++	if (WARN_ON_ONCE((gfp_mask & __GFP_COMP) && order > MAX_FOLIO_ORDER))
++		return -EINVAL;
++
+ 	gfp_mask = current_gfp_context(gfp_mask);
+ 	if (__alloc_contig_verify_gfp_mask(gfp_mask, (gfp_t *)&cc.gfp_mask))
+ 		return -EINVAL;
+@@ -6947,7 +6951,6 @@ int alloc_contig_range_noprof(unsigned long start, unsigned long end,
+ 			free_contig_range(end, outer_end - end);
+ 	} else if (start == outer_start && end == outer_end && is_power_of_2(end - start)) {
+ 		struct page *head = pfn_to_page(start);
+-		int order = ilog2(end - start);
+ 
+ 		check_new_pages(head, order);
+ 		prep_new_page(head, order, gfp_mask, 0);
+-- 
+2.50.1
+
