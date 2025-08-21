@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81C45CA0EFA
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Aug 2025 21:33:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7745FCA0FE2
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Aug 2025 21:33:39 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b0504485;
-	Thu, 21 Aug 2025 20:07:52 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e4c6baba;
+	Thu, 21 Aug 2025 20:08:01 +0000 (UTC)
 Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [170.10.129.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 93b3435e
+ (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0b972554
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Aug 2025 20:07:47 +0000 (UTC)
+ Thu, 21 Aug 2025 20:07:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755806866;
+ s=mimecast20190719; t=1755806870;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PkrXh5PHMEq3NY5i+0892fbAshOERsmwyMLhbVIa0Cc=;
- b=SyYTfZbuLDjRLeVEASoNNlrJO8iu+FMJsS61MAfef62rsTA54jfinhZ2Ej15mkcMUKY3of
- 8OQce9iU41kpATn1T0j8qRkpMTH4parQNIs65gYoYcrgj2R7RBYbWmsw+WSdGtZkvT9hhe
- lvoZhhvzh3D5UPfAOd+aDROv/cVlIFY=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=TaqjYk7qiFpFT4dP16wKMuC8fiQfbkUwRRgQVKGzHC8=;
+ b=IGYTHvbrGnJ0zw0LSSPMNrXXS6JxBVfWyvnQaGL+pN8gABiukma9Ut5NPFiGVIh0r4L7yZ
+ CUEz1dDtWGE4qBd2INWedt2G5aU78hUPN5QMDn5QeSuNOZVifFLiJSK3bntAD3cqcboDpQ
+ KbgT0klZ5I+GxZFaJcaG9WwRgCr6Cnw=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-543-Bpj-Q20INECiFot_Ewvcdg-1; Thu, 21 Aug 2025 16:07:44 -0400
-X-MC-Unique: Bpj-Q20INECiFot_Ewvcdg-1
-X-Mimecast-MFC-AGG-ID: Bpj-Q20INECiFot_Ewvcdg_1755806864
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-45a1b05d251so7742315e9.1
- for <wireguard@lists.zx2c4.com>; Thu, 21 Aug 2025 13:07:44 -0700 (PDT)
+ us-mta-620-uuQ9V7uKOdC5Kh-IQwIYoA-1; Thu, 21 Aug 2025 16:07:48 -0400
+X-MC-Unique: uuQ9V7uKOdC5Kh-IQwIYoA-1
+X-Mimecast-MFC-AGG-ID: uuQ9V7uKOdC5Kh-IQwIYoA_1755806866
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-45a1b05d31cso7260895e9.1
+ for <wireguard@lists.zx2c4.com>; Thu, 21 Aug 2025 13:07:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755806863; x=1756411663;
+ d=1e100.net; s=20230601; t=1755806866; x=1756411666;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PkrXh5PHMEq3NY5i+0892fbAshOERsmwyMLhbVIa0Cc=;
- b=rk+hFrVaTRsywGlPE0qDYFVkkXVPE9T34DHJFI1qe0qm6caRMqeRG32p6k6Uk+Nye4
- LbrbwNkAOC9FcumJjximkimuPY5/xOqk6KHKO04IUGtNsrS+3iNPQBRcq+25Uy2uu9l5
- gF/YDLmfYG+1woQ4aJfX9FjaSHEOumCQQD+J8vFblQDtXw/lp9VTm8jX6rMSDKANDFNp
- UO7psAIHjknpR8njYVlmcp9ZDzVtBjSEMMUBR37cT6lxi7ROS2WJLY4lEiRalI81dEso
- XP6SjnfR4NI4Xx4Rmj4zHtZZ3mbKAmUiyQqnZy2ruxGCzuZz4p6uzGMAkV93vlcBf0TJ
- lKbA==
+ bh=TaqjYk7qiFpFT4dP16wKMuC8fiQfbkUwRRgQVKGzHC8=;
+ b=qWQg5uobaa/OPNoV0qxSldwvSaGZWy5l0N3TqcRuKZ6Ym99w3bZWYah54c2yryNrkv
+ KgbxEaa4q3HfFP6C267WF66MVWklcyUcdEa64AeiXeF51tgQ4vxKtL/tsnXEEnW54tCn
+ m/zomjxqiahvAn9iMaXlEozs2cJVbsAoIYhmH9rs1a+me81hBDvgIwc2lzROeQe0S1sJ
+ A0VJjZLoH4dW1G/FY1OCppYhXbdx+H6AitWb1ZC57WTJEXXlT4MAa/M3nVIuJLoISKDi
+ xswwrc54mxHlwuQ2S+eJMBMaXCQt+sAZR1Hevs6bEzFMMPOkXg82PMEyR0PB3/yba2r7
+ RGXA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVHGEHoBy4X2LfSzdp/0x7H7QCExX1GAxo8YoQzVLixvuptxYJ5f67HjEP+tDr8gvBdteGo1w3ktDE=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YxYkrUJoCGOv3w50vnoWEXmr1R4GWAhYTbb6DqRRBhuJZYjABeq
- R4K0iqlOZ4nvd2/Gva8o84bxLvNx1C7V/mBjpkLMS1R9SOiAiOYWdtPqjZ+3rySbcR5MiO56Jl6
- BNUb44v1gIaNZykCatBHC9olVMgdhoi3Ur3/I9Q8N4hWQtIda/0/xh5RkzaLRHg==
-X-Gm-Gg: ASbGnctBFPwTBBBrT92l/R4HG3johm35nMOt70G1C+3KRnCso9A0THx2d2pclqdsyYh
- UhxBLPrUxZ/1dDZMCQvJpEUg2bprQVsXuL2bBufmDa+eko2cdFydDISzJGeP/uiotNl7TC9L00E
- EaLHLy+VgH7c09jsmGLZCokZ7nDqQCmbvtaJ+X8V+iO0dzT7cLssHMihk//OnB2U/b/X4JwkYFS
- fKvDZuJItNWOtH5L/8ApdCzzkbYcwCokZUBfR+iJMmaRk8FJFcIfs01UgwWdyMb3mcCQndXdDMs
- GvEdHBfcSg8wuuoX+vzEeSpPHywTo2wsitVystajw2rfEzMI0sYUu2MOrx/kRiAVgRRnUoMG/O0
- xJezeA/6BBeekfNpWGXrpiw==
-X-Received: by 2002:a5d:5d0a:0:b0:3b9:14f2:7eea with SMTP id
- ffacd0b85a97d-3c5daefc2a3mr192559f8f.18.1755806863493; 
- Thu, 21 Aug 2025 13:07:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFB28V/U3gI+p1afMr2c1HujEN1g59N1A45YIj+RBO5vrtdOMlsNhrN6BtrkE7YShkW7nBB8Q==
-X-Received: by 2002:a5d:5d0a:0:b0:3b9:14f2:7eea with SMTP id
- ffacd0b85a97d-3c5daefc2a3mr192518f8f.18.1755806862961; 
- Thu, 21 Aug 2025 13:07:42 -0700 (PDT)
+ AJvYcCVFppj1cQ/qHI47GUneKfFWQYkJloKk+GMz1si2+iM4ryJQRkoP/FbeWeATj5uJD1yAIB6F6G7NGBo=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YxY1GDnAlSxqsX4RSAzDIytvjsI3vgdrbmBpWQ+0P1Gzv+KOOxI
+ QDVt71ftqPBBmKx/UAsybUcWwXKyrYdFBgVOtb7PUId+jSc9XE8zgyHdu1RdmZyV166wAbI1a1d
+ +OBCFwN3fdMXYE0g+Il5VBhVrDw8eDndEY8F/3LcqdC5bqWi3h05oXhG9YVTeFA==
+X-Gm-Gg: ASbGnctWwBAn6+yPX2/x7iM7nH0gvqKdVTN9YDeoKWDLpUEDznKLbtK/kUx+SZ3fZkr
+ +86zM8a8l/vbg/8JcjTXsOVLjmKNjEMg+GPL3isZ3Wmsc10j0W4R+4JJJeATgSqYvU7aqkUSzdi
+ 7AIoSnwcMr0p41YBZFn/t0Q1XmQXsdNgFJ2u1faBuQGOApVCjV0887tpqeD3YzVh8z5qB1VBEX5
+ 8FwN6RkF1h7vwef0fblAe+iUzgnkFpZfDN6QEvZV91HUu++JcY8+91Bj4vINaDJEtCVlfBvPCOI
+ rWQ8Akai5AZnp/j9Amq768KLKXtCK71cTI3EagGUDjtQfKEuREJ8Ta08Cocr7zaUoc6Wgv0RqX6
+ jW+KagSKJ8lfNN0w2/ArnYg==
+X-Received: by 2002:a05:600c:1392:b0:453:5a04:b60e with SMTP id
+ 5b1f17b1804b1-45b517d4e23mr2819435e9.26.1755806866190; 
+ Thu, 21 Aug 2025 13:07:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHUtzGc4rPv18tjnV22wd1xjfGI25AJiVbHUBF3o7jj7YvZLrrv8XzLc39l/Z4dCqHj4yY2QA==
+X-Received: by 2002:a05:600c:1392:b0:453:5a04:b60e with SMTP id
+ 5b1f17b1804b1-45b517d4e23mr2819075e9.26.1755806865726; 
+ Thu, 21 Aug 2025 13:07:45 -0700 (PDT)
 Received: from localhost
  (p200300d82f26ba0008036ec5991806fd.dip0.t-ipconnect.de.
  [2003:d8:2f26:ba00:803:6ec5:9918:6fd])
  by smtp.gmail.com with UTF8SMTPSA id
- 5b1f17b1804b1-45b51b61256sm1742995e9.3.2025.08.21.13.07.40
+ 5b1f17b1804b1-45b50dd0380sm8632985e9.10.2025.08.21.13.07.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 Aug 2025 13:07:42 -0700 (PDT)
+ Thu, 21 Aug 2025 13:07:45 -0700 (PDT)
 From: David Hildenbrand <david@redhat.com>
 To: linux-kernel@vger.kernel.org
 Cc: David Hildenbrand <david@redhat.com>,
@@ -99,15 +99,16 @@ Cc: David Hildenbrand <david@redhat.com>,
  Suren Baghdasaryan <surenb@google.com>, Tejun Heo <tj@kernel.org>,
  virtualization@lists.linux.dev, Vlastimil Babka <vbabka@suse.cz>,
  wireguard@lists.zx2c4.com, x86@kernel.org, Zi Yan <ziy@nvidia.com>
-Subject: [PATCH RFC 13/35] mm: simplify folio_page() and folio_page_idx()
-Date: Thu, 21 Aug 2025 22:06:39 +0200
-Message-ID: <20250821200701.1329277-14-david@redhat.com>
+Subject: [PATCH RFC 14/35] mm/mm/percpu-km: drop nth_page() usage within
+ single allocation
+Date: Thu, 21 Aug 2025 22:06:40 +0200
+Message-ID: <20250821200701.1329277-15-david@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250821200701.1329277-1-david@redhat.com>
 References: <20250821200701.1329277-1-david@redhat.com>
 MIME-Version: 1.0
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: Qyo4Tdou9mJSWYrADoM_nq5dmQLKAKq6TsZi7_ak3ME_1755806864
+X-Mimecast-MFC-PROC-ID: 132DyQgvqiSgu-Dbj1nqyiE-yIIRx2Igh70nPw_7ink_1755806866
 X-Mimecast-Originator: redhat.com
 Content-Transfer-Encoding: 8bit
 content-type: text/plain; charset="US-ASCII"; x-default=true
@@ -125,70 +126,28 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Now that a single folio/compound page can no longer span memory sections
-in problematic kernel configurations, we can stop using nth_page().
-
-While at it, turn both macros into static inline functions and add
-kernel doc for folio_page_idx().
+We're allocating a higher-order page from the buddy. For these pages
+(that are guaranteed to not exceed a single memory section) there is no
+need to use nth_page().
 
 Signed-off-by: David Hildenbrand <david@redhat.com>
 ---
- include/linux/mm.h         | 16 ++++++++++++++--
- include/linux/page-flags.h |  5 ++++-
- 2 files changed, 18 insertions(+), 3 deletions(-)
+ mm/percpu-km.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/mm.h b/include/linux/mm.h
-index 48a985e17ef4e..ef360b72cb05c 100644
---- a/include/linux/mm.h
-+++ b/include/linux/mm.h
-@@ -210,10 +210,8 @@ extern unsigned long sysctl_admin_reserve_kbytes;
+diff --git a/mm/percpu-km.c b/mm/percpu-km.c
+index fe31aa19db81a..4efa74a495cb6 100644
+--- a/mm/percpu-km.c
++++ b/mm/percpu-km.c
+@@ -69,7 +69,7 @@ static struct pcpu_chunk *pcpu_create_chunk(gfp_t gfp)
+ 	}
  
- #if defined(CONFIG_SPARSEMEM) && !defined(CONFIG_SPARSEMEM_VMEMMAP)
- #define nth_page(page,n) pfn_to_page(page_to_pfn((page)) + (n))
--#define folio_page_idx(folio, p)	(page_to_pfn(p) - folio_pfn(folio))
- #else
- #define nth_page(page,n) ((page) + (n))
--#define folio_page_idx(folio, p)	((p) - &(folio)->page)
- #endif
+ 	for (i = 0; i < nr_pages; i++)
+-		pcpu_set_page_chunk(nth_page(pages, i), chunk);
++		pcpu_set_page_chunk(pages + i, chunk);
  
- /* to align the pointer to the (next) page boundary */
-@@ -225,6 +223,20 @@ extern unsigned long sysctl_admin_reserve_kbytes;
- /* test whether an address (unsigned long or pointer) is aligned to PAGE_SIZE */
- #define PAGE_ALIGNED(addr)	IS_ALIGNED((unsigned long)(addr), PAGE_SIZE)
- 
-+/**
-+ * folio_page_idx - Return the number of a page in a folio.
-+ * @folio: The folio.
-+ * @page: The folio page.
-+ *
-+ * This function expects that the page is actually part of the folio.
-+ * The returned number is relative to the start of the folio.
-+ */
-+static inline unsigned long folio_page_idx(const struct folio *folio,
-+		const struct page *page)
-+{
-+	return page - &folio->page;
-+}
-+
- static inline struct folio *lru_to_folio(struct list_head *head)
- {
- 	return list_entry((head)->prev, struct folio, lru);
-diff --git a/include/linux/page-flags.h b/include/linux/page-flags.h
-index d53a86e68c89b..080ad10c0defc 100644
---- a/include/linux/page-flags.h
-+++ b/include/linux/page-flags.h
-@@ -316,7 +316,10 @@ static __always_inline unsigned long _compound_head(const struct page *page)
-  * check that the page number lies within @folio; the caller is presumed
-  * to have a reference to the page.
-  */
--#define folio_page(folio, n)	nth_page(&(folio)->page, n)
-+static inline struct page *folio_page(struct folio *folio, unsigned long nr)
-+{
-+	return &folio->page + nr;
-+}
- 
- static __always_inline int PageTail(const struct page *page)
- {
+ 	chunk->data = pages;
+ 	chunk->base_addr = page_address(pages);
 -- 
 2.50.1
 
