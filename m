@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BED85CA0EEB
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Aug 2025 23:17:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2498CA0FE4
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Aug 2025 23:17:09 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cff17b2a;
-	Thu, 21 Aug 2025 21:00:59 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a6cb69db;
+	Thu, 21 Aug 2025 21:45:33 +0000 (UTC)
 Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [170.10.133.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id de3d548b
+ (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ec98c520
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Aug 2025 21:00:54 +0000 (UTC)
+ Thu, 21 Aug 2025 21:45:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755810051;
+ s=mimecast20190719; t=1755812726;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Cp1mFCWwcTWQzzsUUmh88+YFkDBcq7Y5lQlba0VlHo0=;
- b=Xxp6fpvAf0OiKm79mCIQsWiLDzAp7u/tp+a7Mh3pfg2E6OPmbv2D81WCYv0Ok6zy1v7RSA
- m7mwqd3nK2vCAQrZiXVyka1DmT90IIBzROgn5y5IQ630ZaIcGy6dVw0h7ZuMDXnyTnHqpc
- HFK0I/NQkpC3b2iyNSeEQ8PNso5Zst0=
+ bh=xgU+Z5k4KPqEraeKDWCOzJcpc8HGVmW4oZxLQRmx6Ws=;
+ b=DIlR16bxGJfN5nSLXlliejd62VDQBzZhUVoge40kookE3FZTApi/N9MKn1PBNg+m2apa5I
+ 5SW73TpcFvvBJYuBOlEmUhx2Se8Uo8fgFJTBaeD2qaxj+UozuC1sJSGVdpblz4uyvOBaaG
+ CEaKDCiYjzyouWe+ckHWMbpmmeK8QyA=
 Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
  [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-326-co5oMwa1Ncq_2AxoStl2Qg-1; Thu, 21 Aug 2025 17:00:42 -0400
-X-MC-Unique: co5oMwa1Ncq_2AxoStl2Qg-1
-X-Mimecast-MFC-AGG-ID: co5oMwa1Ncq_2AxoStl2Qg_1755810041
+ us-mta-55-Ryh59uLHOq-ldNGPtViLfA-1; Thu, 21 Aug 2025 17:45:23 -0400
+X-MC-Unique: Ryh59uLHOq-ldNGPtViLfA-1
+X-Mimecast-MFC-AGG-ID: Ryh59uLHOq-ldNGPtViLfA_1755812722
 Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3b9dc5c2ba0so686697f8f.1
- for <wireguard@lists.zx2c4.com>; Thu, 21 Aug 2025 14:00:42 -0700 (PDT)
+ ffacd0b85a97d-3b9e743736dso814625f8f.3
+ for <wireguard@lists.zx2c4.com>; Thu, 21 Aug 2025 14:45:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755810041; x=1756414841;
+ d=1e100.net; s=20230601; t=1755812722; x=1756417522;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ :references:cc:to:from:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Cp1mFCWwcTWQzzsUUmh88+YFkDBcq7Y5lQlba0VlHo0=;
- b=NPbJ6Hw4lQv8yOsDce3p48v7ch0bnpkPsgehuJngshnQX0s77xMAG5UstU/XeIokF1
- RTZSMwcxqn7LFe7u6AS7/jdYd53Jt8WaTXsnEzubkhW4bk6cWGiVmFU0j4jdplHWxMjL
- 7mOIHSf8iT3fpesCPbPc8UgPhLH37wI7xuyqmHQTdYe/S3SmMICqg13I92VFTvFtidp2
- bzNcUr/0bgSYkqScXjMLRQqdNtVF5mv3InVx+PPHwj6M++g7+Gjc7Rg+UzyqvsG7NCS4
- pXB/sqHxMc5FYwq20+tZzbdIYFjuoWa5O3RlS7zyIadbn2G0jFu8JPxDkC/0woCHZ0Xy
- neSA==
+ bh=xgU+Z5k4KPqEraeKDWCOzJcpc8HGVmW4oZxLQRmx6Ws=;
+ b=l5RovXtmnpoo7HokTx/qBbxKixJTY8kUHlbkO53jUeCAK1OfO/5nwA300UkHUpV9TJ
+ 3jMIdhJfj1AHx14JMN8B2CylyvA79/kCFq5i/f8+SGzTMhq+m0VhXcWA7U+DMFHSiqb4
+ 3wJoeY0fI4Z+qKzYx2UgEZIolwgpyl9U4M9SWeaH4oL2aGH6KbzoGhXoqV6v+VXq0e5d
+ N/ZV/kZTswTE8lIzl/1VZR5We2LjHLFUbT/CHk2HqgQ2RwHXSEydYpzMoqc+QfSlSt3V
+ dGaAY4Nb84KG6QfBQUO0xifEzPrYTIZlCTYfma+2CNEJLb6qv03jiPqBw4pd6Xox5dis
+ KfMA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWqX7DtWltjUy4gsd4B68MAj+pK4faA0gZ8FDnO+/2kiY0K9SI2uBykU30tJuvZNz5XRUetQQDTrAA=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YyOZg2hmIX+25Irbl7NR/cApmKzn8S5XOm15eBz1XCec937iOwu
- bAdtklqHGDXQgQPHHuQXHtlybhqDNZ7O92/QxNVOelINJoyRzMKSofLZHht7FzmxmBVwWwi5daf
- ZWcX66z7OTaYDwjyb+ov+bIorAoKX23vYsK0BUb5KmkHxRUkicn8atmh5r/RBnQ==
-X-Gm-Gg: ASbGncvEdVSoRcrYC+Jc7UI1+oXTrYQZkVKJ/TLJfJK3/ouPaVKR23UXJvH5vyA3TSM
- ZQ8PU2gSI2C3AAj8IQfhtxl4RR0mZRDNc/JKG1fgCiQYJYsrhTgRo8t4j3mEsHJFDVtGsXhJnI2
- 5FgimyftnuIJjA1mKlyUz1Wpg2FFIphx6RZ2XOgbDXc7xZuKB/JsGS0wzhduRCvh6ZlC/IjKgNI
- t/p7RmEqceRWd8+5Qe4brC2Igkn9oNLF/Vh3RCgrFKra8M6M0TpHBlDgvIAdKS3I+GuhJD4g4ja
- Mc2H07ACINGSr/fOColrj3/rkbB5btsNqt2I7FNmwaNM0xjXRgzLVXqXTU5lSxXKyaOfEDF3j4e
- Ae+jMskEPCtdUYyGFCPF5U0MEhBZUo1MPd8v2ItD+EV+fNHsuCNfST3tYcoc5ZQ==
-X-Received: by 2002:a05:6000:200d:b0:3a5:2465:c0c8 with SMTP id
- ffacd0b85a97d-3c5daa27e6amr265196f8f.7.1755810041298; 
- Thu, 21 Aug 2025 14:00:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF7vpqV63aDfbj4LuprqMLqq42InG6u1nR+Dt/+ZPeyx1uRJcEanVY8H02OCG3yOg5OQPh6rw==
-X-Received: by 2002:a05:6000:200d:b0:3a5:2465:c0c8 with SMTP id
- ffacd0b85a97d-3c5daa27e6amr265173f8f.7.1755810040805; 
- Thu, 21 Aug 2025 14:00:40 -0700 (PDT)
+ AJvYcCWDb5RddLPBitZQzqRmLSY/SPtzrktx1JkKik4fWlvaMxIJ17QuaB46WzO7W9SKgzRcGco23C4hJlc=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YzBS6aBMtcH01evCYcBHsrht6xlnh89ry+oZyWGoAnz+NMT1iGO
+ JgaEMfsuZGLrMWqcVlNKA+uznYMS0ajh9IedPVZEuH+1jshSRwcHp2SZ5bL3LxumRMPdhhRS+CX
+ IHKBOPBcv5KW7BATBN02aLikIi/lHJQ9D0MqzQqY7o6GzvkQa2jZ7sJvsLZec9Q==
+X-Gm-Gg: ASbGncs+8lT/8HyD8RJ9R8hL47/APEdDlGWC5fGPqHMYHMsd1a4HKkgUqYDLWJDNvlI
+ oVJojLuocFcf32DkyWoisUPNLwwZMeFROjiF4zkasaLj0ZBoBI+rprC+PShkdnP2mXDX9lk1BSL
+ LAN63PLuWLwR8rOV8jE6LaonRmhePAx1yN8Ym+dYjQTm3ij5KZ7DoYP0bIXBc98S2qwIMybyVES
+ uGHQKZlYEWyynslD/fCAxySEMjQZzxxEcDwgXyaWymgYGFs4i0i3qVY2OHveGOiGSya5xa5Pi8W
+ K+0HHQ2xVEguAapH5ppLZlS79zffLyLty/3YLbd9q7+druq+/e+pH93bYDstQ3V7xHvdwMWbyz7
+ S5or6h1ZDNscQhuepjFg2AU1QvQdrRWVoiXGB/AEWEQYIRNDN5viq7mweC7sOLg==
+X-Received: by 2002:a05:6000:2902:b0:3b8:f925:8d4 with SMTP id
+ ffacd0b85a97d-3c5db2da00amr300071f8f.26.1755812721889; 
+ Thu, 21 Aug 2025 14:45:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEfnhl0R8ZwVLuxUZYmGD7nMrbthuKRx51tD/iqNpCQL5sxy24UygUdE3xc6j7fC/B+t7+yTQ==
+X-Received: by 2002:a05:6000:2902:b0:3b8:f925:8d4 with SMTP id
+ ffacd0b85a97d-3c5db2da00amr300045f8f.26.1755812721421; 
+ Thu, 21 Aug 2025 14:45:21 -0700 (PDT)
 Received: from ?IPV6:2003:d8:2f26:ba00:803:6ec5:9918:6fd?
  (p200300d82f26ba0008036ec5991806fd.dip0.t-ipconnect.de.
  [2003:d8:2f26:ba00:803:6ec5:9918:6fd])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3c4ccbf04fasm3476159f8f.7.2025.08.21.14.00.38
+ 5b1f17b1804b1-45b4e25da97sm22067085e9.1.2025.08.21.14.45.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 Aug 2025 14:00:40 -0700 (PDT)
-Message-ID: <23c6e511-19b2-4662-acfc-18692c899a6c@redhat.com>
-Date: Thu, 21 Aug 2025 23:00:37 +0200
+ Thu, 21 Aug 2025 14:45:20 -0700 (PDT)
+Message-ID: <b09b7ef4-5b06-4bb8-9be3-1194e3904c92@redhat.com>
+Date: Thu, 21 Aug 2025 23:45:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 13/35] mm: simplify folio_page() and folio_page_idx()
-To: Zi Yan <ziy@nvidia.com>
-Cc: linux-kernel@vger.kernel.org, Alexander Potapenko <glider@google.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- Brendan Jackman <jackmanb@google.com>, Christoph Lameter <cl@gentwo.org>,
- Dennis Zhou <dennis@kernel.org>, Dmitry Vyukov <dvyukov@google.com>,
+Subject: Re: [PATCH RFC 33/35] kfence: drop nth_page() usage
+From: David Hildenbrand <david@redhat.com>
+To: linux-kernel@vger.kernel.org
+Cc: Alexander Potapenko <glider@google.com>, Marco Elver <elver@google.com>,
+ Dmitry Vyukov <dvyukov@google.com>, Andrew Morton
+ <akpm@linux-foundation.org>, Brendan Jackman <jackmanb@google.com>,
+ Christoph Lameter <cl@gentwo.org>, Dennis Zhou <dennis@kernel.org>,
  dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
  iommu@lists.linux.dev, io-uring@vger.kernel.org,
  Jason Gunthorpe <jgg@nvidia.com>, Jens Axboe <axboe@kernel.dk>,
@@ -94,17 +95,16 @@ Cc: linux-kernel@vger.kernel.org, Alexander Potapenko <glider@google.com>,
  linux-mips@vger.kernel.org, linux-mmc@vger.kernel.org, linux-mm@kvack.org,
  linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
  linux-scsi@vger.kernel.org, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
- Marco Elver <elver@google.com>, Marek Szyprowski <m.szyprowski@samsung.com>,
- Michal Hocko <mhocko@suse.com>, Mike Rapoport <rppt@kernel.org>,
- Muchun Song <muchun.song@linux.dev>, netdev@vger.kernel.org,
- Oscar Salvador <osalvador@suse.de>, Peter Xu <peterx@redhat.com>,
- Robin Murphy <robin.murphy@arm.com>, Suren Baghdasaryan <surenb@google.com>,
- Tejun Heo <tj@kernel.org>, virtualization@lists.linux.dev,
- Vlastimil Babka <vbabka@suse.cz>, wireguard@lists.zx2c4.com, x86@kernel.org
+ Marek Szyprowski <m.szyprowski@samsung.com>, Michal Hocko <mhocko@suse.com>,
+ Mike Rapoport <rppt@kernel.org>, Muchun Song <muchun.song@linux.dev>,
+ netdev@vger.kernel.org, Oscar Salvador <osalvador@suse.de>,
+ Peter Xu <peterx@redhat.com>, Robin Murphy <robin.murphy@arm.com>,
+ Suren Baghdasaryan <surenb@google.com>, Tejun Heo <tj@kernel.org>,
+ virtualization@lists.linux.dev, Vlastimil Babka <vbabka@suse.cz>,
+ wireguard@lists.zx2c4.com, x86@kernel.org, Zi Yan <ziy@nvidia.com>
 References: <20250821200701.1329277-1-david@redhat.com>
- <20250821200701.1329277-14-david@redhat.com>
- <E1AA1AC8-06E4-4896-B62B-F3EA0AE3E09C@nvidia.com>
-From: David Hildenbrand <david@redhat.com>
+ <20250821200701.1329277-34-david@redhat.com>
+ <1a13a5cb-4312-4c01-827b-fa8a029df0f1@redhat.com>
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
  dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
@@ -149,9 +149,9 @@ Autocrypt: addr=david@redhat.com; keydata=
  3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
  CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
  qIws/H2t
-In-Reply-To: <E1AA1AC8-06E4-4896-B62B-F3EA0AE3E09C@nvidia.com>
+In-Reply-To: <1a13a5cb-4312-4c01-827b-fa8a029df0f1@redhat.com>
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: 0OjV_505aEyLbm8HYi9sNFHgahZUsRnqp2bCtprkK94_1755810041
+X-Mimecast-MFC-PROC-ID: ZMfKBF9TYg-d-OCNPKgjYq1yaVqXqt7zpyZSEMbEMdU_1755812722
 X-Mimecast-Originator: redhat.com
 Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8; format=flowed
@@ -170,82 +170,29 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 21.08.25 22:55, Zi Yan wrote:
-> On 21 Aug 2025, at 16:06, David Hildenbrand wrote:
+On 21.08.25 22:32, David Hildenbrand wrote:
+> On 21.08.25 22:06, David Hildenbrand wrote:
+>> We want to get rid of nth_page(), and kfence init code is the last user.
+>>
+>> Unfortunately, we might actually walk a PFN range where the pages are
+>> not contiguous, because we might be allocating an area from memblock
+>> that could span memory sections in problematic kernel configs (SPARSEMEM
+>> without SPARSEMEM_VMEMMAP).
+>>
+>> We could check whether the page range is contiguous
+>> using page_range_contiguous() and failing kfence init, or making kfence
+>> incompatible these problemtic kernel configs.
+>>
+>> Let's keep it simple and simply use pfn_to_page() by iterating PFNs.
+>>
 > 
->> Now that a single folio/compound page can no longer span memory sections
->> in problematic kernel configurations, we can stop using nth_page().
->>
->> While at it, turn both macros into static inline functions and add
->> kernel doc for folio_page_idx().
->>
->> Signed-off-by: David Hildenbrand <david@redhat.com>
->> ---
->>   include/linux/mm.h         | 16 ++++++++++++++--
->>   include/linux/page-flags.h |  5 ++++-
->>   2 files changed, 18 insertions(+), 3 deletions(-)
->>
->> diff --git a/include/linux/mm.h b/include/linux/mm.h
->> index 48a985e17ef4e..ef360b72cb05c 100644
->> --- a/include/linux/mm.h
->> +++ b/include/linux/mm.h
->> @@ -210,10 +210,8 @@ extern unsigned long sysctl_admin_reserve_kbytes;
->>
->>   #if defined(CONFIG_SPARSEMEM) && !defined(CONFIG_SPARSEMEM_VMEMMAP)
->>   #define nth_page(page,n) pfn_to_page(page_to_pfn((page)) + (n))
->> -#define folio_page_idx(folio, p)	(page_to_pfn(p) - folio_pfn(folio))
->>   #else
->>   #define nth_page(page,n) ((page) + (n))
->> -#define folio_page_idx(folio, p)	((p) - &(folio)->page)
->>   #endif
->>
->>   /* to align the pointer to the (next) page boundary */
->> @@ -225,6 +223,20 @@ extern unsigned long sysctl_admin_reserve_kbytes;
->>   /* test whether an address (unsigned long or pointer) is aligned to PAGE_SIZE */
->>   #define PAGE_ALIGNED(addr)	IS_ALIGNED((unsigned long)(addr), PAGE_SIZE)
->>
->> +/**
->> + * folio_page_idx - Return the number of a page in a folio.
->> + * @folio: The folio.
->> + * @page: The folio page.
->> + *
->> + * This function expects that the page is actually part of the folio.
->> + * The returned number is relative to the start of the folio.
->> + */
->> +static inline unsigned long folio_page_idx(const struct folio *folio,
->> +		const struct page *page)
->> +{
->> +	return page - &folio->page;
->> +}
->> +
->>   static inline struct folio *lru_to_folio(struct list_head *head)
->>   {
->>   	return list_entry((head)->prev, struct folio, lru);
->> diff --git a/include/linux/page-flags.h b/include/linux/page-flags.h
->> index d53a86e68c89b..080ad10c0defc 100644
->> --- a/include/linux/page-flags.h
->> +++ b/include/linux/page-flags.h
->> @@ -316,7 +316,10 @@ static __always_inline unsigned long _compound_head(const struct page *page)
->>    * check that the page number lies within @folio; the caller is presumed
->>    * to have a reference to the page.
->>    */
->> -#define folio_page(folio, n)	nth_page(&(folio)->page, n)
->> +static inline struct page *folio_page(struct folio *folio, unsigned long nr)
->> +{
->> +	return &folio->page + nr;
->> +}
+> Fortunately this series is RFC due to lack of detailed testing :P
 > 
-> Maybe s/nr/n/ or s/nr/nth/, since it returns the nth page within a folio.
-
-Yeah, it's even called "n" in the kernel docs ...
-
+> Something gives me a NULL-pointer pointer here (maybe the virt_to_phys()).
 > 
-> Since you have added kernel doc for folio_page_idx(), it does not hurt
-> to have something similar for folio_page(). :)
+> Will look into that tomorrow.
 
-... which we already have! (see above the macro) :)
-
-Thanks!
+Okay, easy: relying on i but not updating it /me facepalm
 
 -- 
 Cheers
