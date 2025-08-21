@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 665ADCA0FE2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4D48CA0FE4
 	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Aug 2025 21:33:44 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 813e197a;
-	Thu, 21 Aug 2025 20:08:10 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 29bbfd22;
+	Thu, 21 Aug 2025 20:08:14 +0000 (UTC)
 Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [170.10.133.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b1ada7bc
+ (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a1ade2ab
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Aug 2025 20:08:06 +0000 (UTC)
+ Thu, 21 Aug 2025 20:08:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755806885;
+ s=mimecast20190719; t=1755806890;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jaRFM4K4Pg6WYlxhcM2k1BGbQ/DW6XfjnDsCttbmjXY=;
- b=FD3FMq3pyETLhnnaGPuY3Bkhgw5faBJuu8bXQHSHyqI5bbIAUDDp1AbtHxxrnaZbn6DV8E
- 1cZmyorXc6J9FxGofGgqoFib2vTlWpdhQOVWV5oTFhksuZMnvCz+eURSeyR114jhwc8wS1
- VN5HGVQHpyFIAR6QRnb7bb/CARSUsM4=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=OlD9YGSFbsAaeSHrs+lmfmp3eNVZAqkWDWaUN3GbxpI=;
+ b=HBrC3hSR2gE2SaxT9BzveLz6d5lyfmWdAVnbpDefisCJ9nwKWPDigsK7ZgLOEvmHPGeM8I
+ Md2AHOIP86K5+ZoeGT/ZfIHcBr0fjxf6nruilvOGXrJ/RcTaz/eQQNhxZqxfLCvGW5fMsF
+ bONHYcGs58GldQmztt492dc/GqoWI7A=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-68-RF51JOWlOXaA2MrXOlbFEg-1; Thu, 21 Aug 2025 16:08:04 -0400
-X-MC-Unique: RF51JOWlOXaA2MrXOlbFEg-1
-X-Mimecast-MFC-AGG-ID: RF51JOWlOXaA2MrXOlbFEg_1755806883
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3b9dc566cb4so996484f8f.1
- for <wireguard@lists.zx2c4.com>; Thu, 21 Aug 2025 13:08:03 -0700 (PDT)
+ us-mta-339-L4wcqnauP5i0ttvEltQLkw-1; Thu, 21 Aug 2025 16:08:07 -0400
+X-MC-Unique: L4wcqnauP5i0ttvEltQLkw-1
+X-Mimecast-MFC-AGG-ID: L4wcqnauP5i0ttvEltQLkw_1755806886
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3b9dc5c2ba0so675621f8f.1
+ for <wireguard@lists.zx2c4.com>; Thu, 21 Aug 2025 13:08:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755806883; x=1756411683;
+ d=1e100.net; s=20230601; t=1755806886; x=1756411686;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jaRFM4K4Pg6WYlxhcM2k1BGbQ/DW6XfjnDsCttbmjXY=;
- b=ljnzp4/BZQvnH2x8UEnWt7rOEW5RohkgOCs5KTWvnhfGRum5oc8I5Id3u7LNy/PfzZ
- 3jYQTuW0X7Db9f126zAQPiOGJKmyjA9zHsBe0hKMhXXbZqVaVZH0H57MohdDAjWg4Szq
- ZrsOWGAssE1L7cLEnc7s62PK8XXMEEwTmfyuriB5XsVG/7EAXBcs3KklLd3i+GNjdXJf
- dela6WyTBvxoPvJbJZvJ4kt1YSVzmqBvMLAanZUNQRYDtYf3rYD1UMsnvh4GCmNUzqfW
- +eEPLjy4yOAzTrbere+wXoLu4nrIPw/Q+veB3paGnZXe/tn6EuHL6KTL6MdB2RO0JVLh
- zbXw==
+ bh=OlD9YGSFbsAaeSHrs+lmfmp3eNVZAqkWDWaUN3GbxpI=;
+ b=lz1Owtmio+E308B8Okjlz/bODSBJ7AmRCg7iVOi+02T1SogV4HayaPWyneKrbLKOay
+ NNwFCiKshNHJy2AGQU0kf4FCbDZ+7lV26Z1pINDvxEA49eothmUkhCELGT8vQIHHLDvs
+ QgChnkKbve38fRRRr9iXgPV5SKTn27zj42VoXqWYGIIju6DQf9cs1cDVf657jiCEaQda
+ 4r3tbejq94xf7V0/YjBQKOd1j06KKyhXt7Vg9GmjtzgOvttIlbnJ9ARgrVCys66kqNzn
+ SHo43M+L7Tzeh0WPw7Giw/2D1w6YBPqMO1NwZdO8Qyn9b6LgIlDMloeYY9D+cPg2kiBg
+ XrIA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX7WmxuIL4IwPGbaVWR8rVwiZdT4w9tfQsWqvMlcmE/aQ4M5ijkRBoJaaPFyIGTGqrXX1ue/z0QwnE=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YwtX1tA5QhYWRgOiwAY0zrvB5hA6Wc081NqbevY3vyZvEEl4b21
- EJC7/kb0jP8BTozytGzOUIuQCbZFWssBZyuRKIu0Qm+EM29A947DZODdfQqJ6Ul8EWfUUA7ZMlu
- tX2Ud6kp+eZjUjMHdq9/dmKBGqDB2/Y4PIdSve8oLM7qiCo6w0Etaok1WxgQMJQ==
-X-Gm-Gg: ASbGncvIN0n6q9m/Sc+9qwfJIR+U0LNwsTz9Y5H6KkA4iRO4CpUAhWXvrDhN2Nn5Fm0
- wRBiAPjhbyaWVW0caPg9dkV8pp/NrO2WrCBrii33FpjRAVs887KL674Jw6hYyoGdSUyLJbONMnu
- DvchXD4aL6YCINZ4pUNAoI4DgwWImNdzSpITCStNJrIn/CaZlZj2G36VBgg6wDI00rOl02w9Fr0
- QlnwrLBMaiJ72jINh6B6X+Sjh8rLfcilBZYeAUbNfXoXK5jBXerrl5FreeR1UeB5hoHfNDbPAID
- GFCL+PUWncQ4v8K1+qBsXVu1lG3KubgRUPPPYXsMm2GafZPXJXlIEmHJFD4P04O/XoSGYEFJNE0
- dzpI+0fwjgReSz5ueHzv2GA==
-X-Received: by 2002:a05:6000:2012:b0:3b7:dd87:d741 with SMTP id
- ffacd0b85a97d-3c5dcc095c3mr196172f8f.42.1755806882785; 
- Thu, 21 Aug 2025 13:08:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFiRO9AsztHDXjXXwtKcCswXKV/HQQvQjujQOlltIgK9F5s1Ca8ikdDYrX2bvCVEtKZoFK6NA==
-X-Received: by 2002:a05:6000:2012:b0:3b7:dd87:d741 with SMTP id
- ffacd0b85a97d-3c5dcc095c3mr196155f8f.42.1755806882316; 
- Thu, 21 Aug 2025 13:08:02 -0700 (PDT)
+ AJvYcCUqUSrnZ1aV0zArThSG1U5bQXA40pXRP8/7u82pqrYF2U0tUJlrTk5JZxW/+a6RmwXCMre1B74++0o=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YzJhGds2UWCrRqPhWUhi7Vrk8wZYjHd5uS3AapmsH8jAf7PL/qD
+ 0qabwdnfinntWTwaVxuvj2hxQHeQR8H8nTNafERwInFix0aW6l0Buy5yisvzuNeHj5iCv3wMC4E
+ kKLBSuR093jtQz5+3L55tM4k4SpiSkQbgecPZagKMPI3OzaRJ+VTbMP86+JPAIA==
+X-Gm-Gg: ASbGncuPfVMkEwcx5HdUUcjVISJ1ankWPxQBhHecV5wRlOQOgs+qPQr6NZOBTQAjnb2
+ OHhe5y9yJVn7DD/4BZF2quYD0NxmP0lpjiz24NQcP9Lt1zkBGFSn6hTLgRoe74tjiOrDi8isr1k
+ GQ3nJkVbvmBH4gLZicsmeq5oXqGPHEG6QInVIGRbblqX7ci4DgcIGjtMZnKLBSYGaemZdPjx6j3
+ t2rdPmiHtdAxWylm7u/dUZkmqudz1ewah+vM7ZM5WTyc/w7igQKPLhUcCpgre+A03TNmKjFEh5A
+ iZWRtF+xBvEwTGp4bNFYLqUm7BbhEWleSDcXZHonbH2O047npIboyLJO+e2xHMWJaVBOiepNxc1
+ hGntqzpKGK5P151z2kFTPeA==
+X-Received: by 2002:a5d:5849:0:b0:3b7:94c6:7c9 with SMTP id
+ ffacd0b85a97d-3c5db4ca226mr187849f8f.27.1755806886235; 
+ Thu, 21 Aug 2025 13:08:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEN2zPHDTqkDZIT/HT3QVvSDWvKglll+HTpAUltvzBh+S3AYz2M0rKfptvzXjL7aLPeFpS91Q==
+X-Received: by 2002:a5d:5849:0:b0:3b7:94c6:7c9 with SMTP id
+ ffacd0b85a97d-3c5db4ca226mr187788f8f.27.1755806885705; 
+ Thu, 21 Aug 2025 13:08:05 -0700 (PDT)
 Received: from localhost
  (p200300d82f26ba0008036ec5991806fd.dip0.t-ipconnect.de.
  [2003:d8:2f26:ba00:803:6ec5:9918:6fd])
  by smtp.gmail.com with UTF8SMTPSA id
- 5b1f17b1804b1-45b50e0b299sm8957945e9.22.2025.08.21.13.08.00
+ ffacd0b85a97d-3c077789d1dsm12697993f8f.49.2025.08.21.13.08.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 Aug 2025 13:08:01 -0700 (PDT)
+ Thu, 21 Aug 2025 13:08:05 -0700 (PDT)
 From: David Hildenbrand <david@redhat.com>
 To: linux-kernel@vger.kernel.org
 Cc: David Hildenbrand <david@redhat.com>,
- Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
  Alexander Potapenko <glider@google.com>,
  Andrew Morton <akpm@linux-foundation.org>,
  Brendan Jackman <jackmanb@google.com>, Christoph Lameter <cl@gentwo.org>,
@@ -100,16 +99,16 @@ Cc: David Hildenbrand <david@redhat.com>,
  Suren Baghdasaryan <surenb@google.com>, Tejun Heo <tj@kernel.org>,
  virtualization@lists.linux.dev, Vlastimil Babka <vbabka@suse.cz>,
  wireguard@lists.zx2c4.com, x86@kernel.org, Zi Yan <ziy@nvidia.com>
-Subject: [PATCH RFC 20/35] mips: mm: convert __flush_dcache_pages() to
- __flush_dcache_folio_pages()
-Date: Thu, 21 Aug 2025 22:06:46 +0200
-Message-ID: <20250821200701.1329277-21-david@redhat.com>
+Subject: [PATCH RFC 21/35] mm/cma: refuse handing out non-contiguous page
+ ranges
+Date: Thu, 21 Aug 2025 22:06:47 +0200
+Message-ID: <20250821200701.1329277-22-david@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250821200701.1329277-1-david@redhat.com>
 References: <20250821200701.1329277-1-david@redhat.com>
 MIME-Version: 1.0
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: f8m45smyrCMe-EBuAjfQuXPMWQtemwH7ei5d36Ds9B0_1755806883
+X-Mimecast-MFC-PROC-ID: V_sHMrz5IuPSeoAg2neTdey_RUvLgAswVdNP7V_cMls_1755806886
 X-Mimecast-Originator: redhat.com
 Content-Transfer-Encoding: 8bit
 content-type: text/plain; charset="US-ASCII"; x-default=true
@@ -127,86 +126,179 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Let's make it clearer that we are operating within a single folio by
-providing both the folio and the page.
+Let's disallow handing out PFN ranges with non-contiguous pages, so we
+can remove the nth-page usage in __cma_alloc(), and so any callers don't
+have to worry about that either when wanting to blindly iterate pages.
 
-This implies that for flush_dcache_folio() we'll now avoid one more
-page->folio lookup, and that we can safely drop the "nth_page" usage.
+This is really only a problem in configs with SPARSEMEM but without
+SPARSEMEM_VMEMMAP, and only when we would cross memory sections in some
+cases.
 
-Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Will this cause harm? Probably not, because it's mostly 32bit that does
+not support SPARSEMEM_VMEMMAP. If this ever becomes a problem we could
+look into allocating the memmap for the memory sections spanned by a
+single CMA region in one go from memblock.
+
 Signed-off-by: David Hildenbrand <david@redhat.com>
 ---
- arch/mips/include/asm/cacheflush.h | 11 +++++++----
- arch/mips/mm/cache.c               |  8 ++++----
- 2 files changed, 11 insertions(+), 8 deletions(-)
+ include/linux/mm.h |  6 ++++++
+ mm/cma.c           | 36 +++++++++++++++++++++++-------------
+ mm/util.c          | 33 +++++++++++++++++++++++++++++++++
+ 3 files changed, 62 insertions(+), 13 deletions(-)
 
-diff --git a/arch/mips/include/asm/cacheflush.h b/arch/mips/include/asm/cacheflush.h
-index 1f14132b3fc98..8a2de28936e07 100644
---- a/arch/mips/include/asm/cacheflush.h
-+++ b/arch/mips/include/asm/cacheflush.h
-@@ -50,13 +50,14 @@ extern void (*flush_cache_mm)(struct mm_struct *mm);
- extern void (*flush_cache_range)(struct vm_area_struct *vma,
- 	unsigned long start, unsigned long end);
- extern void (*flush_cache_page)(struct vm_area_struct *vma, unsigned long page, unsigned long pfn);
--extern void __flush_dcache_pages(struct page *page, unsigned int nr);
-+extern void __flush_dcache_folio_pages(struct folio *folio, struct page *page, unsigned int nr);
+diff --git a/include/linux/mm.h b/include/linux/mm.h
+index ef360b72cb05c..f59ad1f9fc792 100644
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -209,9 +209,15 @@ extern unsigned long sysctl_user_reserve_kbytes;
+ extern unsigned long sysctl_admin_reserve_kbytes;
  
- #define ARCH_IMPLEMENTS_FLUSH_DCACHE_PAGE 1
- static inline void flush_dcache_folio(struct folio *folio)
- {
- 	if (cpu_has_dc_aliases)
--		__flush_dcache_pages(&folio->page, folio_nr_pages(folio));
-+		__flush_dcache_folio_pages(folio, folio_page(folio, 0),
-+					   folio_nr_pages(folio));
- 	else if (!cpu_has_ic_fills_f_dc)
- 		folio_set_dcache_dirty(folio);
- }
-@@ -64,10 +65,12 @@ static inline void flush_dcache_folio(struct folio *folio)
+ #if defined(CONFIG_SPARSEMEM) && !defined(CONFIG_SPARSEMEM_VMEMMAP)
++bool page_range_contiguous(const struct page *page, unsigned long nr_pages);
+ #define nth_page(page,n) pfn_to_page(page_to_pfn((page)) + (n))
+ #else
+ #define nth_page(page,n) ((page) + (n))
++static inline bool page_range_contiguous(const struct page *page,
++		unsigned long nr_pages)
++{
++	return true;
++}
+ #endif
  
- static inline void flush_dcache_page(struct page *page)
+ /* to align the pointer to the (next) page boundary */
+diff --git a/mm/cma.c b/mm/cma.c
+index 2ffa4befb99ab..1119fa2830008 100644
+--- a/mm/cma.c
++++ b/mm/cma.c
+@@ -780,10 +780,8 @@ static int cma_range_alloc(struct cma *cma, struct cma_memrange *cmr,
+ 				unsigned long count, unsigned int align,
+ 				struct page **pagep, gfp_t gfp)
  {
-+	struct folio *folio = page_folio(page);
+-	unsigned long mask, offset;
+-	unsigned long pfn = -1;
+-	unsigned long start = 0;
+ 	unsigned long bitmap_maxno, bitmap_no, bitmap_count;
++	unsigned long start, pfn, mask, offset;
+ 	int ret = -EBUSY;
+ 	struct page *page = NULL;
+ 
+@@ -795,7 +793,7 @@ static int cma_range_alloc(struct cma *cma, struct cma_memrange *cmr,
+ 	if (bitmap_count > bitmap_maxno)
+ 		goto out;
+ 
+-	for (;;) {
++	for (start = 0; ; start = bitmap_no + mask + 1) {
+ 		spin_lock_irq(&cma->lock);
+ 		/*
+ 		 * If the request is larger than the available number
+@@ -812,6 +810,22 @@ static int cma_range_alloc(struct cma *cma, struct cma_memrange *cmr,
+ 			spin_unlock_irq(&cma->lock);
+ 			break;
+ 		}
 +
- 	if (cpu_has_dc_aliases)
--		__flush_dcache_pages(page, 1);
-+		__flush_dcache_folio_pages(folio, page, folio_nr_pages(folio));
- 	else if (!cpu_has_ic_fills_f_dc)
--		folio_set_dcache_dirty(page_folio(page));
-+		folio_set_dcache_dirty(folio);
- }
++		pfn = cmr->base_pfn + (bitmap_no << cma->order_per_bit);
++		page = pfn_to_page(pfn);
++
++		/*
++		 * Do not hand out page ranges that are not contiguous, so
++		 * callers can just iterate the pages without having to worry
++		 * about these corner cases.
++		 */
++		if (!page_range_contiguous(page, count)) {
++			spin_unlock_irq(&cma->lock);
++			pr_warn_ratelimited("%s: %s: skipping incompatible area [0x%lx-0x%lx]",
++					    __func__, cma->name, pfn, pfn + count - 1);
++			continue;
++		}
++
+ 		bitmap_set(cmr->bitmap, bitmap_no, bitmap_count);
+ 		cma->available_count -= count;
+ 		/*
+@@ -821,29 +835,25 @@ static int cma_range_alloc(struct cma *cma, struct cma_memrange *cmr,
+ 		 */
+ 		spin_unlock_irq(&cma->lock);
  
- #define flush_dcache_mmap_lock(mapping)		do { } while (0)
-diff --git a/arch/mips/mm/cache.c b/arch/mips/mm/cache.c
-index bf9a37c60e9f0..e3b4224c9a406 100644
---- a/arch/mips/mm/cache.c
-+++ b/arch/mips/mm/cache.c
-@@ -99,9 +99,9 @@ SYSCALL_DEFINE3(cacheflush, unsigned long, addr, unsigned long, bytes,
- 	return 0;
- }
+-		pfn = cmr->base_pfn + (bitmap_no << cma->order_per_bit);
+ 		mutex_lock(&cma->alloc_mutex);
+ 		ret = alloc_contig_range(pfn, pfn + count, ACR_FLAGS_CMA, gfp);
+ 		mutex_unlock(&cma->alloc_mutex);
+-		if (ret == 0) {
+-			page = pfn_to_page(pfn);
++		if (!ret)
+ 			break;
+-		}
  
--void __flush_dcache_pages(struct page *page, unsigned int nr)
-+void __flush_dcache_folio_pages(struct folio *folio, struct page *page,
-+		unsigned int nr)
- {
--	struct folio *folio = page_folio(page);
- 	struct address_space *mapping = folio_flush_mapping(folio);
- 	unsigned long addr;
- 	unsigned int i;
-@@ -117,12 +117,12 @@ void __flush_dcache_pages(struct page *page, unsigned int nr)
- 	 * get faulted into the tlb (and thus flushed) anyways.
- 	 */
- 	for (i = 0; i < nr; i++) {
--		addr = (unsigned long)kmap_local_page(nth_page(page, i));
-+		addr = (unsigned long)kmap_local_page(page + i);
- 		flush_data_cache_page(addr);
- 		kunmap_local((void *)addr);
+ 		cma_clear_bitmap(cma, cmr, pfn, count);
+ 		if (ret != -EBUSY)
+ 			break;
+ 
+ 		pr_debug("%s(): memory range at pfn 0x%lx %p is busy, retrying\n",
+-			 __func__, pfn, pfn_to_page(pfn));
++			 __func__, pfn, page);
+ 
+ 		trace_cma_alloc_busy_retry(cma->name, pfn, pfn_to_page(pfn),
+ 					   count, align);
+-		/* try again with a bit different memory target */
+-		start = bitmap_no + mask + 1;
  	}
+ out:
+-	*pagep = page;
++	if (!ret)
++		*pagep = page;
+ 	return ret;
  }
--EXPORT_SYMBOL(__flush_dcache_pages);
-+EXPORT_SYMBOL(__flush_dcache_folio_pages);
  
- void __flush_anon_page(struct page *page, unsigned long vmaddr)
+@@ -882,7 +892,7 @@ static struct page *__cma_alloc(struct cma *cma, unsigned long count,
+ 	 */
+ 	if (page) {
+ 		for (i = 0; i < count; i++)
+-			page_kasan_tag_reset(nth_page(page, i));
++			page_kasan_tag_reset(page + i);
+ 	}
+ 
+ 	if (ret && !(gfp & __GFP_NOWARN)) {
+diff --git a/mm/util.c b/mm/util.c
+index d235b74f7aff7..0bf349b19b652 100644
+--- a/mm/util.c
++++ b/mm/util.c
+@@ -1280,4 +1280,37 @@ unsigned int folio_pte_batch(struct folio *folio, pte_t *ptep, pte_t pte,
  {
+ 	return folio_pte_batch_flags(folio, NULL, ptep, &pte, max_nr, 0);
+ }
++
++#if defined(CONFIG_SPARSEMEM) && !defined(CONFIG_SPARSEMEM_VMEMMAP)
++/**
++ * page_range_contiguous - test whether the page range is contiguous
++ * @page: the start of the page range.
++ * @nr_pages: the number of pages in the range.
++ *
++ * Test whether the page range is contiguous, such that they can be iterated
++ * naively, corresponding to iterating a contiguous PFN range.
++ *
++ * This function should primarily only be used for debug checks, or when
++ * working with page ranges that are not naturally contiguous (e.g., pages
++ * within a folio are).
++ *
++ * Returns true if contiguous, otherwise false.
++ */
++bool page_range_contiguous(const struct page *page, unsigned long nr_pages)
++{
++	const unsigned long start_pfn = page_to_pfn(page);
++	const unsigned long end_pfn = start_pfn + nr_pages;
++	unsigned long pfn;
++
++	/*
++	 * The memmap is allocated per memory section. We need to check
++	 * each involved memory section once.
++	 */
++	for (pfn = ALIGN(start_pfn, PAGES_PER_SECTION);
++	     pfn < end_pfn; pfn += PAGES_PER_SECTION)
++		if (unlikely(page + (pfn - start_pfn) != pfn_to_page(pfn)))
++			return false;
++	return true;
++}
++#endif
+ #endif /* CONFIG_MMU */
 -- 
 2.50.1
 
