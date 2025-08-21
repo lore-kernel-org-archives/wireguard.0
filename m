@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB79BCA0FE2
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Aug 2025 23:17:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BED85CA0EEB
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Aug 2025 23:17:08 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3b17657e;
-	Thu, 21 Aug 2025 20:49:18 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cff17b2a;
+	Thu, 21 Aug 2025 21:00:59 +0000 (UTC)
 Received: from us-smtp-delivery-124.mimecast.com
  (us-smtp-delivery-124.mimecast.com [170.10.133.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 73be51bc
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id de3d548b
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Aug 2025 20:49:15 +0000 (UTC)
+ Thu, 21 Aug 2025 21:00:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755809354;
+ s=mimecast20190719; t=1755810051;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=OQbfbvrWDouK+ZcKIphQE1nervr1PSIMFSTWfTxDfjA=;
- b=hWEvV7MD47f0ckOqJ+Bg2hychSLIMcXncfFRqKpgBxhCmdhyNUzOUTh9uoqrjrivMpO+UV
- R/ZSwbmY+iS4vfMmw6SFUxGsqNvY0JQJOppSXW4BpIQLdhz5Jp9sz+pZ6fCRx9eRfwN9y0
- A8MUm5vNaNxszqhG4MlbOhJogCbEXzo=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Cp1mFCWwcTWQzzsUUmh88+YFkDBcq7Y5lQlba0VlHo0=;
+ b=Xxp6fpvAf0OiKm79mCIQsWiLDzAp7u/tp+a7Mh3pfg2E6OPmbv2D81WCYv0Ok6zy1v7RSA
+ m7mwqd3nK2vCAQrZiXVyka1DmT90IIBzROgn5y5IQ630ZaIcGy6dVw0h7ZuMDXnyTnHqpc
+ HFK0I/NQkpC3b2iyNSeEQ8PNso5Zst0=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-568-Sc-mnmRJN8SgNKsbkIYYIQ-1; Thu, 21 Aug 2025 16:49:12 -0400
-X-MC-Unique: Sc-mnmRJN8SgNKsbkIYYIQ-1
-X-Mimecast-MFC-AGG-ID: Sc-mnmRJN8SgNKsbkIYYIQ_1755809351
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-45a1b0098c0so8586495e9.0
- for <wireguard@lists.zx2c4.com>; Thu, 21 Aug 2025 13:49:12 -0700 (PDT)
+ us-mta-326-co5oMwa1Ncq_2AxoStl2Qg-1; Thu, 21 Aug 2025 17:00:42 -0400
+X-MC-Unique: co5oMwa1Ncq_2AxoStl2Qg-1
+X-Mimecast-MFC-AGG-ID: co5oMwa1Ncq_2AxoStl2Qg_1755810041
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3b9dc5c2ba0so686697f8f.1
+ for <wireguard@lists.zx2c4.com>; Thu, 21 Aug 2025 14:00:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755809351; x=1756414151;
+ d=1e100.net; s=20230601; t=1755810041; x=1756414841;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=OQbfbvrWDouK+ZcKIphQE1nervr1PSIMFSTWfTxDfjA=;
- b=cGX4dnupmplV7VmFC5WZlWjhgCdgDJXR7tfmfpcsMjci5oHpHFdC1lNg4MIA3wsNmq
- 1TLtJoQsFHuqYLVhG0sGwkjcC2KXRK10unT7yN9qPr20yUXc1DmAOpir/0+GQtslTzkP
- vghNx6LlnsSEilidJOFZuADczY3MBBwOMuaWpbVwNhaNJ+UiLa4nzzBZSf9Zi4RUgs0n
- FuKyiU0qrxaKFNpC+lnpnx6fvJ8tVPs3V1tbY/Mh4lpmxffo2WPsrVvkk+VkS+Efhmqb
- /n7SU6POmXOA4WE02M1Q4h8k+XXJXXkInApIfEJqZywJh//8ZV6hsBxXY0r87JigUS76
- bRSA==
+ bh=Cp1mFCWwcTWQzzsUUmh88+YFkDBcq7Y5lQlba0VlHo0=;
+ b=NPbJ6Hw4lQv8yOsDce3p48v7ch0bnpkPsgehuJngshnQX0s77xMAG5UstU/XeIokF1
+ RTZSMwcxqn7LFe7u6AS7/jdYd53Jt8WaTXsnEzubkhW4bk6cWGiVmFU0j4jdplHWxMjL
+ 7mOIHSf8iT3fpesCPbPc8UgPhLH37wI7xuyqmHQTdYe/S3SmMICqg13I92VFTvFtidp2
+ bzNcUr/0bgSYkqScXjMLRQqdNtVF5mv3InVx+PPHwj6M++g7+Gjc7Rg+UzyqvsG7NCS4
+ pXB/sqHxMc5FYwq20+tZzbdIYFjuoWa5O3RlS7zyIadbn2G0jFu8JPxDkC/0woCHZ0Xy
+ neSA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXikea48zozIgrrUZbs1S5tAAelc8u/9cGSmbFZ2TAKinH/E1sHAbjyefGJjxtuDkYAaMbQqYZxHV4=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YwV49G1yeLY3l9IZfPCSMo6HdGbb7xFvIhTzj/zlxCuiFPgc9Hs
- UQAUjgWGZNbdPhDaPwlZciedyAoHpTx01FdBYObHMGDZEGFscC7Q+xBt46mkjM0ClkdWLt8i7mi
- hl58IHqK2Ye2sOqddbUoElaJKAllqFwD00zj6CNtRs4LEZoFv14l5gsb95TbM7A==
-X-Gm-Gg: ASbGncvH252ks8crLfuAWKf9PyZGAsXlq6QHuvxGFrZFZevofbq8xEEJLoQjeSnWNxn
- hGr9Y+W4yIDLxcSszxP2OvBXhV+CYOncX6qQZMejSKb+hnlJ+NE8GsV3mGPTp0//MCwtTm/iD4+
- 1RZPHAQIjChuNuU+E2FQojmfYxGwcuHRfCxm3tbJH9u3yq8dvGc76WZ+jD1Efqv1SPmpsDAiN/E
- EDlzyNL0gMnm1/iV+nJ6pXTk5GSV2ya4BSn5efA84wwiFOjXOBTeos8nGdrs+E5QVtyXRG+nGNM
- zlfTKHWOpu46TU9+H9VMdPXwydXSwI6O99w5qEEKg/1NpSk1SVSKuJfoltApLTh1h6zGqOk4p++
- l7UZUImAZuaFs5lXvw3xr6ZIb2QrGLbty7kemtrdRdMggurWZJkF5PUqS1wBC5w==
-X-Received: by 2002:a05:600c:3584:b0:459:a1c7:99ad with SMTP id
- 5b1f17b1804b1-45b517c5dc0mr2897845e9.22.1755809351401; 
- Thu, 21 Aug 2025 13:49:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFQxIz6cJmjwdOB6bO2j0uv4baEhvDU693i3u6jJ5B08S4e/6/ILSJ1Cj5B/IwK2GJTi24SIA==
-X-Received: by 2002:a05:600c:3584:b0:459:a1c7:99ad with SMTP id
- 5b1f17b1804b1-45b517c5dc0mr2897695e9.22.1755809350879; 
- Thu, 21 Aug 2025 13:49:10 -0700 (PDT)
+ AJvYcCWqX7DtWltjUy4gsd4B68MAj+pK4faA0gZ8FDnO+/2kiY0K9SI2uBykU30tJuvZNz5XRUetQQDTrAA=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YyOZg2hmIX+25Irbl7NR/cApmKzn8S5XOm15eBz1XCec937iOwu
+ bAdtklqHGDXQgQPHHuQXHtlybhqDNZ7O92/QxNVOelINJoyRzMKSofLZHht7FzmxmBVwWwi5daf
+ ZWcX66z7OTaYDwjyb+ov+bIorAoKX23vYsK0BUb5KmkHxRUkicn8atmh5r/RBnQ==
+X-Gm-Gg: ASbGncvEdVSoRcrYC+Jc7UI1+oXTrYQZkVKJ/TLJfJK3/ouPaVKR23UXJvH5vyA3TSM
+ ZQ8PU2gSI2C3AAj8IQfhtxl4RR0mZRDNc/JKG1fgCiQYJYsrhTgRo8t4j3mEsHJFDVtGsXhJnI2
+ 5FgimyftnuIJjA1mKlyUz1Wpg2FFIphx6RZ2XOgbDXc7xZuKB/JsGS0wzhduRCvh6ZlC/IjKgNI
+ t/p7RmEqceRWd8+5Qe4brC2Igkn9oNLF/Vh3RCgrFKra8M6M0TpHBlDgvIAdKS3I+GuhJD4g4ja
+ Mc2H07ACINGSr/fOColrj3/rkbB5btsNqt2I7FNmwaNM0xjXRgzLVXqXTU5lSxXKyaOfEDF3j4e
+ Ae+jMskEPCtdUYyGFCPF5U0MEhBZUo1MPd8v2ItD+EV+fNHsuCNfST3tYcoc5ZQ==
+X-Received: by 2002:a05:6000:200d:b0:3a5:2465:c0c8 with SMTP id
+ ffacd0b85a97d-3c5daa27e6amr265196f8f.7.1755810041298; 
+ Thu, 21 Aug 2025 14:00:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF7vpqV63aDfbj4LuprqMLqq42InG6u1nR+Dt/+ZPeyx1uRJcEanVY8H02OCG3yOg5OQPh6rw==
+X-Received: by 2002:a05:6000:200d:b0:3a5:2465:c0c8 with SMTP id
+ ffacd0b85a97d-3c5daa27e6amr265173f8f.7.1755810040805; 
+ Thu, 21 Aug 2025 14:00:40 -0700 (PDT)
 Received: from ?IPV6:2003:d8:2f26:ba00:803:6ec5:9918:6fd?
  (p200300d82f26ba0008036ec5991806fd.dip0.t-ipconnect.de.
  [2003:d8:2f26:ba00:803:6ec5:9918:6fd])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3c4c218c599sm3550158f8f.67.2025.08.21.13.49.07
+ ffacd0b85a97d-3c4ccbf04fasm3476159f8f.7.2025.08.21.14.00.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 Aug 2025 13:49:10 -0700 (PDT)
-Message-ID: <835b776a-4e15-4821-a601-1470807373a1@redhat.com>
-Date: Thu, 21 Aug 2025 22:49:07 +0200
+ Thu, 21 Aug 2025 14:00:40 -0700 (PDT)
+Message-ID: <23c6e511-19b2-4662-acfc-18692c899a6c@redhat.com>
+Date: Thu, 21 Aug 2025 23:00:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 12/35] mm: limit folio/compound page sizes in
- problematic kernel configs
+Subject: Re: [PATCH RFC 13/35] mm: simplify folio_page() and folio_page_idx()
 To: Zi Yan <ziy@nvidia.com>
 Cc: linux-kernel@vger.kernel.org, Alexander Potapenko <glider@google.com>,
  Andrew Morton <akpm@linux-foundation.org>,
@@ -103,8 +102,8 @@ Cc: linux-kernel@vger.kernel.org, Alexander Potapenko <glider@google.com>,
  Tejun Heo <tj@kernel.org>, virtualization@lists.linux.dev,
  Vlastimil Babka <vbabka@suse.cz>, wireguard@lists.zx2c4.com, x86@kernel.org
 References: <20250821200701.1329277-1-david@redhat.com>
- <20250821200701.1329277-13-david@redhat.com>
- <FFF22E91-6CA5-4C8F-92DE-89C22DB3EAD7@nvidia.com>
+ <20250821200701.1329277-14-david@redhat.com>
+ <E1AA1AC8-06E4-4896-B62B-F3EA0AE3E09C@nvidia.com>
 From: David Hildenbrand <david@redhat.com>
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
@@ -150,13 +149,13 @@ Autocrypt: addr=david@redhat.com; keydata=
  3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
  CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
  qIws/H2t
-In-Reply-To: <FFF22E91-6CA5-4C8F-92DE-89C22DB3EAD7@nvidia.com>
+In-Reply-To: <E1AA1AC8-06E4-4896-B62B-F3EA0AE3E09C@nvidia.com>
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: x06Cq-9fP43kEe79oPVhSxRhhDOcJ3d-FSd6uA4ftE8_1755809351
+X-Mimecast-MFC-PROC-ID: 0OjV_505aEyLbm8HYi9sNFHgahZUsRnqp2bCtprkK94_1755810041
 X-Mimecast-Originator: redhat.com
 Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -171,68 +170,82 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 21.08.25 22:46, Zi Yan wrote:
+On 21.08.25 22:55, Zi Yan wrote:
 > On 21 Aug 2025, at 16:06, David Hildenbrand wrote:
 > 
->> Let's limit the maximum folio size in problematic kernel config where
->> the memmap is allocated per memory section (SPARSEMEM without
->> SPARSEMEM_VMEMMAP) to a single memory section.
+>> Now that a single folio/compound page can no longer span memory sections
+>> in problematic kernel configurations, we can stop using nth_page().
 >>
->> Currently, only a single architectures supports ARCH_HAS_GIGANTIC_PAGE
->> but not SPARSEMEM_VMEMMAP: sh.
->>
->> Fortunately, the biggest hugetlb size sh supports is 64 MiB
->> (HUGETLB_PAGE_SIZE_64MB) and the section size is at least 64 MiB
->> (SECTION_SIZE_BITS == 26), so their use case is not degraded.
->>
->> As folios and memory sections are naturally aligned to their order-2 size
->> in memory, consequently a single folio can no longer span multiple memory
->> sections on these problematic kernel configs.
->>
->> nth_page() is no longer required when operating within a single compound
->> page / folio.
+>> While at it, turn both macros into static inline functions and add
+>> kernel doc for folio_page_idx().
 >>
 >> Signed-off-by: David Hildenbrand <david@redhat.com>
 >> ---
->>   include/linux/mm.h | 22 ++++++++++++++++++----
->>   1 file changed, 18 insertions(+), 4 deletions(-)
+>>   include/linux/mm.h         | 16 ++++++++++++++--
+>>   include/linux/page-flags.h |  5 ++++-
+>>   2 files changed, 18 insertions(+), 3 deletions(-)
 >>
 >> diff --git a/include/linux/mm.h b/include/linux/mm.h
->> index 77737cbf2216a..48a985e17ef4e 100644
+>> index 48a985e17ef4e..ef360b72cb05c 100644
 >> --- a/include/linux/mm.h
 >> +++ b/include/linux/mm.h
->> @@ -2053,11 +2053,25 @@ static inline long folio_nr_pages(const struct folio *folio)
->>   	return folio_large_nr_pages(folio);
->>   }
+>> @@ -210,10 +210,8 @@ extern unsigned long sysctl_admin_reserve_kbytes;
 >>
->> -/* Only hugetlbfs can allocate folios larger than MAX_ORDER */
->> -#ifdef CONFIG_ARCH_HAS_GIGANTIC_PAGE
->> -#define MAX_FOLIO_ORDER		PUD_ORDER
->> -#else
->> +#if !defined(CONFIG_ARCH_HAS_GIGANTIC_PAGE)
->> +/*
->> + * We don't expect any folios that exceed buddy sizes (and consequently
->> + * memory sections).
+>>   #if defined(CONFIG_SPARSEMEM) && !defined(CONFIG_SPARSEMEM_VMEMMAP)
+>>   #define nth_page(page,n) pfn_to_page(page_to_pfn((page)) + (n))
+>> -#define folio_page_idx(folio, p)	(page_to_pfn(p) - folio_pfn(folio))
+>>   #else
+>>   #define nth_page(page,n) ((page) + (n))
+>> -#define folio_page_idx(folio, p)	((p) - &(folio)->page)
+>>   #endif
+>>
+>>   /* to align the pointer to the (next) page boundary */
+>> @@ -225,6 +223,20 @@ extern unsigned long sysctl_admin_reserve_kbytes;
+>>   /* test whether an address (unsigned long or pointer) is aligned to PAGE_SIZE */
+>>   #define PAGE_ALIGNED(addr)	IS_ALIGNED((unsigned long)(addr), PAGE_SIZE)
+>>
+>> +/**
+>> + * folio_page_idx - Return the number of a page in a folio.
+>> + * @folio: The folio.
+>> + * @page: The folio page.
+>> + *
+>> + * This function expects that the page is actually part of the folio.
+>> + * The returned number is relative to the start of the folio.
 >> + */
->>   #define MAX_FOLIO_ORDER		MAX_PAGE_ORDER
->> +#elif defined(CONFIG_SPARSEMEM) && !defined(CONFIG_SPARSEMEM_VMEMMAP)
->> +/*
->> + * Only pages within a single memory section are guaranteed to be
->> + * contiguous. By limiting folios to a single memory section, all folio
->> + * pages are guaranteed to be contiguous.
->> + */
->> +#define MAX_FOLIO_ORDER		PFN_SECTION_SHIFT
->> +#else
->> +/*
->> + * There is no real limit on the folio size. We limit them to the maximum we
->> + * currently expect.
+>> +static inline unsigned long folio_page_idx(const struct folio *folio,
+>> +		const struct page *page)
+>> +{
+>> +	return page - &folio->page;
+>> +}
+>> +
+>>   static inline struct folio *lru_to_folio(struct list_head *head)
+>>   {
+>>   	return list_entry((head)->prev, struct folio, lru);
+>> diff --git a/include/linux/page-flags.h b/include/linux/page-flags.h
+>> index d53a86e68c89b..080ad10c0defc 100644
+>> --- a/include/linux/page-flags.h
+>> +++ b/include/linux/page-flags.h
+>> @@ -316,7 +316,10 @@ static __always_inline unsigned long _compound_head(const struct page *page)
+>>    * check that the page number lies within @folio; the caller is presumed
+>>    * to have a reference to the page.
+>>    */
+>> -#define folio_page(folio, n)	nth_page(&(folio)->page, n)
+>> +static inline struct page *folio_page(struct folio *folio, unsigned long nr)
+>> +{
+>> +	return &folio->page + nr;
+>> +}
 > 
-> The comment about hugetlbfs is helpful here, since the other folios are still
-> limited by buddy allocator’s MAX_ORDER.
+> Maybe s/nr/n/ or s/nr/nth/, since it returns the nth page within a folio.
 
-Yeah, but the old comment was wrong (there is DAX).
+Yeah, it's even called "n" in the kernel docs ...
 
-I can add here "currently expect (e.g., hugetlfs, dax)."
+> 
+> Since you have added kernel doc for folio_page_idx(), it does not hurt
+> to have something similar for folio_page(). :)
+
+... which we already have! (see above the macro) :)
+
+Thanks!
 
 -- 
 Cheers
