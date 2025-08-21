@@ -4,76 +4,29 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B41B6CA0EFA
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Aug 2025 23:17:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95F96CA0EEB
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Aug 2025 23:17:02 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7e94f9bd;
-	Thu, 21 Aug 2025 20:08:54 +0000 (UTC)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [170.10.129.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 27a2150d
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 81c3786e;
+	Thu, 21 Aug 2025 20:30:05 +0000 (UTC)
+Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0493baab
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Aug 2025 20:08:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755806928;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8aQmj/0+AYT4mPx/DatgQPPbmq0Lkvm9KCqKkKCdC9Q=;
- b=E+EKZVNoIN341jMTTRkCIXdmOqy0S50EZmPngqAufEwPbx8Oovknj/Of1Vh+DK6sLftdgY
- L++eBcRmIkt7n+h5FO9EfzS43bnLz3RahmZyzXuxYejpK2VM4NKGP871WLsIEKMqLyzFZW
- j9CGwzD4GF76CZDfMH8D9xnFLWmSOgg=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-347-N6WRKwEvNGa8TVOYcm5akQ-1; Thu, 21 Aug 2025 16:08:46 -0400
-X-MC-Unique: N6WRKwEvNGa8TVOYcm5akQ-1
-X-Mimecast-MFC-AGG-ID: N6WRKwEvNGa8TVOYcm5akQ_1755806926
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-45a1b0d221aso6550515e9.3
- for <wireguard@lists.zx2c4.com>; Thu, 21 Aug 2025 13:08:46 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755806925; x=1756411725;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=8aQmj/0+AYT4mPx/DatgQPPbmq0Lkvm9KCqKkKCdC9Q=;
- b=GUwvTo0Uet0UqdavlPvZK/lA8QqvEI/dy1TP0XGsre/IwB8wz7h4k4l79BbOJ8ewgL
- yIBb/xtk7njd33fsFAU20Mt7glbNmnfPx5jvbfkRbcn3l+1Snyxb7HT3unXNvmKIs0+d
- o4CwUKI6lPJPgAGzU2T09E6e12TqlPwlTdUq0PNVuSnYJw97nRpJUmF2yGCUnqnjc04o
- w55pD8pVSUniWhImUea4J5cgKFmF9Dz6kdM6QMyzFveALB+EP7rKaNcnQo5SN6LwroEr
- iXyjn+tFR21KdG5KXYHMkGo/RHgt8n8mlvfmMfwGTMR3y4E4BIvyaLm0TyuODAiydVlG
- qBAw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWv/56p6fdfidzDr/y+EzS9AQRRO2VhECOuxDj9FPrH5CbdMfqF4OKAPqyuEl12jr3ZoznSFCycPUY=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YwUP+6icAaEc58B3fCmXJzHfSjQkt5Gr10bue5klecN4Hs6ryeV
- 98uJ2Exc2h3T0wlQxubVwA4QTPctLK+uDzRZg7SR5NmeS8y1IGNHD0ORDcuPOyuri3G+XrJLRsW
- qRGEWU2Xl0YnhhQ9BFJGJTAy2Mwq2H2AcnESquC0FwZINA2I6mUYU0n0tXhk0CQ==
-X-Gm-Gg: ASbGncusbt+Dz5HRAEg42VjfnYHVfP6MxgymFY7IK0KAg6iLiV3kVCkvMlFzyub0vG4
- ZR5AXSLKrGl3XXJXD24su5V97iSSbz4HXje7CBnIB/aEft1irtVfCsT3q9wOdIhRJ403c74ldcJ
- mxmIH+4pTJA5T84XUqfOIi+gIXVT6gc44w4Vi1CLBTjYJzYzIiKH1VmckiA0xI/mlEtobQweIfu
- /GiAjIIzZnfxISPEnFrhMSZygevPy5dXaRaIB/3dt2hY/NeCIlqE7B8Lqr5lxPJwoFi24tqPTkc
- XkYIV1VAnffe+O405iOoFkAHegoMyrv+rugxkt5gGqf3U0pjqlk+ctnpFCYYpWmvwHkt5oDn7di
- rX/g3jK1HrIYfzGSOibAHDQ==
-X-Received: by 2002:a05:600c:3b25:b0:459:da89:b06 with SMTP id
- 5b1f17b1804b1-45b517b008dmr3774435e9.16.1755806925537; 
- Thu, 21 Aug 2025 13:08:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHDDv+I9AWZPVyKVFD2prHDmQqsK3mzEWwP5yNf0oRJXtHjmqgi3hMC3hwAmszm5rTAtK85Rg==
-X-Received: by 2002:a05:600c:3b25:b0:459:da89:b06 with SMTP id
- 5b1f17b1804b1-45b517b008dmr3774035e9.16.1755806925116; 
- Thu, 21 Aug 2025 13:08:45 -0700 (PDT)
-Received: from localhost
- (p200300d82f26ba0008036ec5991806fd.dip0.t-ipconnect.de.
- [2003:d8:2f26:ba00:803:6ec5:9918:6fd])
- by smtp.gmail.com with UTF8SMTPSA id
- 5b1f17b1804b1-45b50e0a479sm8895255e9.21.2025.08.21.13.08.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 Aug 2025 13:08:44 -0700 (PDT)
-From: David Hildenbrand <david@redhat.com>
-To: linux-kernel@vger.kernel.org
-Cc: David Hildenbrand <david@redhat.com>,
+ Thu, 21 Aug 2025 20:29:57 +0000 (UTC)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id 8F9F5449B7;
+ Thu, 21 Aug 2025 20:29:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AC82C4CEF4;
+ Thu, 21 Aug 2025 20:29:43 +0000 (UTC)
+Message-ID: <2926d7d9-b44e-40c0-b05d-8c42e99c511d@redhat.com>
+Date: Thu, 21 Aug 2025 22:29:41 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 31/35] crypto: remove nth_page() usage within SG entry
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: linux-kernel@vger.kernel.org, Herbert Xu <herbert@gondor.apana.org.au>,
+ "David S. Miller" <davem@davemloft.net>,
  Alexander Potapenko <glider@google.com>,
  Andrew Morton <akpm@linux-foundation.org>,
  Brendan Jackman <jackmanb@google.com>, Christoph Lameter <cl@gentwo.org>,
@@ -83,34 +36,72 @@ Cc: David Hildenbrand <david@redhat.com>,
  Jason Gunthorpe <jgg@nvidia.com>, Jens Axboe <axboe@kernel.dk>,
  Johannes Weiner <hannes@cmpxchg.org>, John Hubbard <jhubbard@nvidia.com>,
  kasan-dev@googlegroups.com, kvm@vger.kernel.org,
- "Liam R. Howlett" <Liam.Howlett@oracle.com>,
- Linus Torvalds <torvalds@linux-foundation.org>, linux-arm-kernel@axis.com,
+ "Liam R. Howlett" <Liam.Howlett@oracle.com>, linux-arm-kernel@axis.com,
  linux-arm-kernel@lists.infradead.org, linux-crypto@vger.kernel.org,
  linux-ide@vger.kernel.org, linux-kselftest@vger.kernel.org,
  linux-mips@vger.kernel.org, linux-mmc@vger.kernel.org, linux-mm@kvack.org,
  linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
  linux-scsi@vger.kernel.org, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
- Marco Elver <elver@google.com>,
- Marek Szyprowski <m.szyprowski@samsung.com>,
+ Marco Elver <elver@google.com>, Marek Szyprowski <m.szyprowski@samsung.com>,
  Michal Hocko <mhocko@suse.com>, Mike Rapoport <rppt@kernel.org>,
  Muchun Song <muchun.song@linux.dev>, netdev@vger.kernel.org,
  Oscar Salvador <osalvador@suse.de>, Peter Xu <peterx@redhat.com>,
- Robin Murphy <robin.murphy@arm.com>,
- Suren Baghdasaryan <surenb@google.com>, Tejun Heo <tj@kernel.org>,
- virtualization@lists.linux.dev, Vlastimil Babka <vbabka@suse.cz>,
- wireguard@lists.zx2c4.com, x86@kernel.org, Zi Yan <ziy@nvidia.com>
-Subject: [PATCH RFC 35/35] mm: remove nth_page()
-Date: Thu, 21 Aug 2025 22:07:01 +0200
-Message-ID: <20250821200701.1329277-36-david@redhat.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250821200701.1329277-1-david@redhat.com>
+ Robin Murphy <robin.murphy@arm.com>, Suren Baghdasaryan <surenb@google.com>,
+ Tejun Heo <tj@kernel.org>, virtualization@lists.linux.dev,
+ Vlastimil Babka <vbabka@suse.cz>, wireguard@lists.zx2c4.com, x86@kernel.org,
+ Zi Yan <ziy@nvidia.com>
 References: <20250821200701.1329277-1-david@redhat.com>
-MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: VjeMog03pjrC5QJdzDXwKuKmL0O5VKxsKFh57-6Tpdk_1755806926
-X-Mimecast-Originator: redhat.com
-Content-Transfer-Encoding: 8bit
-content-type: text/plain; charset="US-ASCII"; x-default=true
+ <20250821200701.1329277-32-david@redhat.com>
+ <CAHk-=wjGzyGPgqKDNXM6_2Puf7OJ+DQAXMg5NgtSASN8De1roQ@mail.gmail.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ qIws/H2t
+In-Reply-To: <CAHk-=wjGzyGPgqKDNXM6_2Puf7OJ+DQAXMg5NgtSASN8De1roQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -125,40 +116,45 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Now that all users are gone, let's remove it.
+On 21.08.25 22:24, Linus Torvalds wrote:
+> On Thu, 21 Aug 2025 at 16:08, David Hildenbrand <david@redhat.com> wrote:
+>>
+>> -       page = nth_page(page, offset >> PAGE_SHIFT);
+>> +       page += offset / PAGE_SIZE;
+> 
+> Please keep the " >> PAGE_SHIFT" form.
 
-Signed-off-by: David Hildenbrand <david@redhat.com>
----
- include/linux/mm.h                   | 2 --
- tools/testing/scatterlist/linux/mm.h | 1 -
- 2 files changed, 3 deletions(-)
+No strong opinion.
 
-diff --git a/include/linux/mm.h b/include/linux/mm.h
-index f59ad1f9fc792..3ded0db8322f7 100644
---- a/include/linux/mm.h
-+++ b/include/linux/mm.h
-@@ -210,9 +210,7 @@ extern unsigned long sysctl_admin_reserve_kbytes;
- 
- #if defined(CONFIG_SPARSEMEM) && !defined(CONFIG_SPARSEMEM_VMEMMAP)
- bool page_range_contiguous(const struct page *page, unsigned long nr_pages);
--#define nth_page(page,n) pfn_to_page(page_to_pfn((page)) + (n))
- #else
--#define nth_page(page,n) ((page) + (n))
- static inline bool page_range_contiguous(const struct page *page,
- 		unsigned long nr_pages)
- {
-diff --git a/tools/testing/scatterlist/linux/mm.h b/tools/testing/scatterlist/linux/mm.h
-index 5bd9e6e806254..121ae78d6e885 100644
---- a/tools/testing/scatterlist/linux/mm.h
-+++ b/tools/testing/scatterlist/linux/mm.h
-@@ -51,7 +51,6 @@ static inline unsigned long page_to_phys(struct page *page)
- 
- #define page_to_pfn(page) ((unsigned long)(page) / PAGE_SIZE)
- #define pfn_to_page(pfn) (void *)((pfn) * PAGE_SIZE)
--#define nth_page(page,n) pfn_to_page(page_to_pfn((page)) + (n))
- 
- #define __min(t1, t2, min1, min2, x, y) ({              \
- 	t1 min1 = (x);                                  \
+I was primarily doing it to get rid of (in other cases) the parentheses.
+
+Like in patch #29
+
+-	/* Assumption: contiguous pages can be accessed as "page + i" */
+-	page = nth_page(sg_page(sg), (*offset >> PAGE_SHIFT));
++	page = sg_page(sg) + *offset / PAGE_SIZE;
+
+> 
+> Is "offset" unsigned? Yes it is, But I had to look at the source code
+> to make sure, because it wasn't locally obvious from the patch. And
+> I'd rather we keep a pattern that is "safe", in that it doesn't
+> generate strange code if the value might be a 's64' (eg loff_t) on
+> 32-bit architectures.
+> 
+> Because doing a 64-bit shift on x86-32 is like three cycles. Doing a
+> 64-bit signed division by a simple constant is something like ten
+> strange instructions even if the end result is only 32-bit.
+
+I would have thought that the compiler is smart enough to optimize that? 
+PAGE_SIZE is a constant.
+
+> 
+> And again - not the case *here*, but just a general "let's keep to one
+> pattern", and the shift pattern is simply the better choice.
+
+It's a wild mixture, but I can keep doing what we already do in these cases.
+
 -- 
-2.50.1
+Cheers
 
+David / dhildenb
