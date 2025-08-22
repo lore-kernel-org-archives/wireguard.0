@@ -4,84 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6812BCF2560
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 23:00:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D2D5CF2562
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 23:34:53 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9fda1c4a;
-	Tue, 18 Nov 2025 17:26:50 +0000 (UTC)
-Received: from mail-il1-f200.google.com (mail-il1-f200.google.com
- [209.85.166.200])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 718e0700
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 130744e9;
+	Tue, 18 Nov 2025 17:26:52 +0000 (UTC)
+Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com
+ [210.118.77.11])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d994bff0
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Aug 2025 21:37:15 +0000 (UTC)
-Received: by mail-il1-f200.google.com with SMTP id
- e9e14a558f8ab-3e665183fa3so39360305ab.0
- for <wireguard@lists.zx2c4.com>; Thu, 21 Aug 2025 14:37:14 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755812234; x=1756417034;
- h=cc:to:from:subject:message-id:in-reply-to:date:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Q4cr6QMqKu3ZXE5LbmZFl5rCj+PzGQQulyaw1Vp4aNc=;
- b=O53B6rScMA3JivU+yZ+Zs8ibWcHsyEdJKbjwoOiWtWM8xozmAbEpQqe3r/3sMLWZsk
- dEsi8AOj2GpCvzipgLPwErR2aaTs6N9dh9hMSdyGGfeiXDgqEw8cs+ycBSFWXwS0XRSb
- pkc2J/yOkD4hUZPPNrEYL+YUMdGT+ikiDqRA46CvKmxNd0PTLbFia6ghyKUV7JOam4NQ
- prPRjgjqZqqy1Fw+JCXkg/1lvyxMi4+HMUvBNNlLjAIEwkbqzDxPs73CRs5aoDEgc1dc
- Nd324RryvKw6ePvsWOVOpr57jNnLJc6rw2Wd2Jrjsh2VuL1P22rXA+DJMlt6HhFgppao
- h7Wg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXudXYXrg6x03hQhS2uIZ+dh7774d0IzSt41xt6Mj7MKTOxakA4zIK2ISyDQi31OKzxW5XGb9/KRfk=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YwkzrsNddV8d6qhJwV6XaVaE4Ij0paF7NPvG2yDtGQTdGMv6vjU
- DdRLQ9pUyJqbV2K5DsZn8EWr7eT4rvx7AN6b+AzhRio5LLQeoomIOkTRWr7SkASjH06UxvOwdgC
- az0tDeI5SKSXlALf4hhzFPXALsnOVCInDsC/jM+bsDUwPmAl2qWDppuDnCf4=
-X-Google-Smtp-Source: AGHT+IF7KMX4PQ9MbhjzaZS9KH1hsBks7Ag/V1kb+FvUzHNpAJ+XwFEszukCkWQQAtI/yieVASDRCVnTSkaGoVJY87X1Pd3k81yl
+ Fri, 22 Aug 2025 08:15:08 +0000 (UTC)
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+ by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id
+ 20250822081507euoutp011eb6e04748c75467354f864a5b13dcb2~eCLvKXWHt0802008020euoutp01T;
+ Fri, 22 Aug 2025 08:15:07 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com
+ 20250822081507euoutp011eb6e04748c75467354f864a5b13dcb2~eCLvKXWHt0802008020euoutp01T
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1755850507;
+ bh=8D7LpAOoviBYk7WIQ6GdtJERZ5Q8as878mTjAUnE/1s=;
+ h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
+ b=XKfzn3o3WVKTQX9bE3/cpVfy9yW+H778T92W7lBVbU6kRm4mXQcKAfiloG9SVAIl1
+ DBMfdB7LnCnsIfysL99KcFBB0FogAV6kQBHI3K43plBR35f6vTvEXBvPziUq5zs0kR
+ Az18+L1Qjna/KGD88qj7IvZXFIdKHX7QWAyUJp50=
+Received: from eusmtip2.samsung.com (unknown [203.254.199.222]) by
+ eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+ 20250822081507eucas1p2f6977174baf330e1c895de7ac7b91cc1~eCLu2KEdp1444414444eucas1p2a;
+ Fri, 22 Aug 2025 08:15:07 +0000 (GMT)
+Received: from [106.210.134.192] (unknown [106.210.134.192]) by
+ eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
+ 20250822081502eusmtip2e6ed6d47d5194e587353269471a8bda2~eCLqth-G50411104111eusmtip2L;
+ Fri, 22 Aug 2025 08:15:02 +0000 (GMT)
+Message-ID: <debc61e1-683c-4fcc-9040-d55324f096f7@samsung.com>
+Date: Fri, 22 Aug 2025 10:15:01 +0200
 MIME-Version: 1.0
-X-Received: by 2002:a05:6e02:19c6:b0:3e6:6c55:643 with SMTP id
- e9e14a558f8ab-3e9201f3d92mr16380665ab.7.1755812233632; Thu, 21 Aug 2025
- 14:37:13 -0700 (PDT)
-Date: Thu, 21 Aug 2025 14:37:13 -0700
-In-Reply-To: <20250821200701.1329277-1-david@redhat.com>
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <68a79189.050a0220.cb3d1.0004.GAE@google.com>
-Subject: [syzbot ci] Re: mm: remove nth_page()
-From: syzbot ci <syzbot+ci0b43493baa45553d@syzkaller.appspotmail.com>
-To: agordeev@linux.ibm.com, airlied@gmail.com, akpm@linux-foundation.org, 
- alex.williamson@redhat.com, alex@ghiti.fr, andreas@gaisler.com, 
- aou@eecs.berkeley.edu, axboe@kernel.dk, borntraeger@linux.ibm.com, 
- bp@alien8.de, brett.creeley@amd.com, cassel@kernel.org, 
- catalin.marinas@arm.com, chenhuacai@kernel.org, christophe.leroy@csgroup.eu, 
- cl@gentwo.org, dave.hansen@linux.intel.com, davem@davemloft.net, 
- david@redhat.com, dennis@kernel.org, dgilbert@interlog.com, 
- dlemoal@kernel.org, dri-devel@lists.freedesktop.org, dvyukov@google.com, 
- elver@google.com, glider@google.com, gor@linux.ibm.com, hannes@cmpxchg.org, 
- hca@linux.ibm.com, herbert@gondor.apana.org.au, 
- intel-gfx@lists.freedesktop.org, io-uring@vger.kernel.org, 
- iommu@lists.linux.dev, jackmanb@google.com, 
- james.bottomley@hansenpartnership.com, jani.nikula@linux.intel.com, 
- jason@zx2c4.com, jesper.nilsson@axis.com, jgg@nvidia.com, jgg@ziepe.ca, 
- jhubbard@nvidia.com, joonas.lahtinen@linux.intel.com, 
- kasan-dev@googlegroups.com, kernel@xen0n.name, kevin.tian@intel.com, 
- kvm@vger.kernel.org, lars.persson@axis.com, liam.howlett@oracle.com, 
- linux-arm-kernel@axis.com, linux-arm-kernel@lists.infradead.org, 
- linux-crypto@vger.kernel.org, linux-ide@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-kselftest@vger.kernel.org, 
- linux-mips@vger.kernel.org, linux-mm@kvack.org, linux-mmc@vger.kernel.org, 
- linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org, 
- linux-scsi@vger.kernel.org, lorenzo.stoakes@oracle.com, 
- m.szyprowski@samsung.com, maddy@linux.ibm.com, martin.petersen@oracle.com, 
- maximlevitsky@gmail.com, mhocko@suse.com, mingo@redhat.com, 
- mpe@ellerman.id.au, muchun.song@linux.dev, netdev@vger.kernel.org, 
- npiggin@gmail.com, oakad@yahoo.com, osalvador@suse.de, palmer@dabbelt.com, 
- paul.walmsley@sifive.com, peterx@redhat.com, robin.murphy@arm.com, 
- rodrigo.vivi@intel.com, rppt@kernel.org, shameerali.kolothum.thodi@huawei.com, 
- shuah@kernel.org, simona@ffwll.ch, surenb@google.com, svens@linux.ibm.com, 
- tglx@linutronix.de, tj@kernel.org, torvalds@linux-foundation.org, 
- tsbogend@alpha.franken.de, tursulin@ursulin.net, ulf.hansson@linaro.org, 
- vbabka@suse.cz, virtualization@lists.linux.dev, will@kernel.org, 
- wireguard@lists.zx2c4.com, x86@kernel.org, ziy@nvidia.com
-Cc: syzbot@lists.linux.dev, syzkaller-bugs@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH RFC 22/35] dma-remap: drop nth_page() in
+ dma_common_contiguous_remap()
+To: David Hildenbrand <david@redhat.com>, linux-kernel@vger.kernel.org
+Cc: Robin Murphy <robin.murphy@arm.com>, Alexander Potapenko
+ <glider@google.com>, Andrew Morton <akpm@linux-foundation.org>, Brendan
+ Jackman <jackmanb@google.com>, Christoph Lameter <cl@gentwo.org>, Dennis
+ Zhou <dennis@kernel.org>, Dmitry Vyukov <dvyukov@google.com>,
+ dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+ iommu@lists.linux.dev, io-uring@vger.kernel.org, Jason Gunthorpe
+ <jgg@nvidia.com>, Jens Axboe <axboe@kernel.dk>, Johannes Weiner
+ <hannes@cmpxchg.org>, John Hubbard <jhubbard@nvidia.com>,
+ kasan-dev@googlegroups.com, kvm@vger.kernel.org, "Liam R. Howlett"
+ <Liam.Howlett@oracle.com>, Linus Torvalds <torvalds@linux-foundation.org>,
+ linux-arm-kernel@axis.com, linux-arm-kernel@lists.infradead.org,
+ linux-crypto@vger.kernel.org, linux-ide@vger.kernel.org,
+ linux-kselftest@vger.kernel.org, linux-mips@vger.kernel.org,
+ linux-mmc@vger.kernel.org, linux-mm@kvack.org,
+ linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
+ linux-scsi@vger.kernel.org, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+ Marco Elver <elver@google.com>, Michal Hocko <mhocko@suse.com>, Mike
+ Rapoport <rppt@kernel.org>, Muchun Song <muchun.song@linux.dev>,
+ netdev@vger.kernel.org, Oscar Salvador <osalvador@suse.de>, Peter Xu
+ <peterx@redhat.com>, Suren Baghdasaryan <surenb@google.com>, Tejun Heo
+ <tj@kernel.org>, virtualization@lists.linux.dev, Vlastimil Babka
+ <vbabka@suse.cz>, wireguard@lists.zx2c4.com, x86@kernel.org, Zi Yan
+ <ziy@nvidia.com>
+Content-Language: en-US
+From: Marek Szyprowski <m.szyprowski@samsung.com>
+In-Reply-To: <20250821200701.1329277-23-david@redhat.com>
+Content-Transfer-Encoding: 7bit
+X-CMS-MailID: 20250822081507eucas1p2f6977174baf330e1c895de7ac7b91cc1
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20250821200816eucas1p1924e60579da49c1dfed300c945894d83
+X-EPHeader: CA
+X-CMS-RootMailID: 20250821200816eucas1p1924e60579da49c1dfed300c945894d83
+References: <20250821200701.1329277-1-david@redhat.com>
+ <CGME20250821200816eucas1p1924e60579da49c1dfed300c945894d83@eucas1p1.samsung.com>
+ <20250821200701.1329277-23-david@redhat.com>
 X-Mailman-Approved-At: Tue, 18 Nov 2025 17:23:15 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -97,112 +94,38 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-syzbot ci has tested the following series
+On 21.08.2025 22:06, David Hildenbrand wrote:
+> dma_common_contiguous_remap() is used to remap an "allocated contiguous
+> region". Within a single allocation, there is no need to use nth_page()
+> anymore.
+>
+> Neither the buddy, nor hugetlb, nor CMA will hand out problematic page
+> ranges.
+>
+> Cc: Marek Szyprowski <m.szyprowski@samsung.com>
+> Cc: Robin Murphy <robin.murphy@arm.com>
+> Signed-off-by: David Hildenbrand <david@redhat.com>
+Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
+> ---
+>   kernel/dma/remap.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/kernel/dma/remap.c b/kernel/dma/remap.c
+> index 9e2afad1c6152..b7c1c0c92d0c8 100644
+> --- a/kernel/dma/remap.c
+> +++ b/kernel/dma/remap.c
+> @@ -49,7 +49,7 @@ void *dma_common_contiguous_remap(struct page *page, size_t size,
+>   	if (!pages)
+>   		return NULL;
+>   	for (i = 0; i < count; i++)
+> -		pages[i] = nth_page(page, i);
+> +		pages[i] = page++;
+>   	vaddr = vmap(pages, count, VM_DMA_COHERENT, prot);
+>   	kvfree(pages);
+>   
 
-[v1] mm: remove nth_page()
-https://lore.kernel.org/all/20250821200701.1329277-1-david@redhat.com
-* [PATCH RFC 01/35] mm: stop making SPARSEMEM_VMEMMAP user-selectable
-* [PATCH RFC 02/35] arm64: Kconfig: drop superfluous "select SPARSEMEM_VMEMMAP"
-* [PATCH RFC 03/35] s390/Kconfig: drop superfluous "select SPARSEMEM_VMEMMAP"
-* [PATCH RFC 04/35] x86/Kconfig: drop superfluous "select SPARSEMEM_VMEMMAP"
-* [PATCH RFC 05/35] wireguard: selftests: remove CONFIG_SPARSEMEM_VMEMMAP=y from qemu kernel config
-* [PATCH RFC 06/35] mm/page_alloc: reject unreasonable folio/compound page sizes in alloc_contig_range_noprof()
-* [PATCH RFC 07/35] mm/memremap: reject unreasonable folio/compound page sizes in memremap_pages()
-* [PATCH RFC 08/35] mm/hugetlb: check for unreasonable folio sizes when registering hstate
-* [PATCH RFC 09/35] mm/mm_init: make memmap_init_compound() look more like prep_compound_page()
-* [PATCH RFC 10/35] mm/hugetlb: cleanup hugetlb_folio_init_tail_vmemmap()
-* [PATCH RFC 11/35] mm: sanity-check maximum folio size in folio_set_order()
-* [PATCH RFC 12/35] mm: limit folio/compound page sizes in problematic kernel configs
-* [PATCH RFC 13/35] mm: simplify folio_page() and folio_page_idx()
-* [PATCH RFC 14/35] mm/mm/percpu-km: drop nth_page() usage within single allocation
-* [PATCH RFC 15/35] fs: hugetlbfs: remove nth_page() usage within folio in adjust_range_hwpoison()
-* [PATCH RFC 16/35] mm/pagewalk: drop nth_page() usage within folio in folio_walk_start()
-* [PATCH RFC 17/35] mm/gup: drop nth_page() usage within folio when recording subpages
-* [PATCH RFC 18/35] io_uring/zcrx: remove "struct io_copy_cache" and one nth_page() usage
-* [PATCH RFC 19/35] io_uring/zcrx: remove nth_page() usage within folio
-* [PATCH RFC 20/35] mips: mm: convert __flush_dcache_pages() to __flush_dcache_folio_pages()
-* [PATCH RFC 21/35] mm/cma: refuse handing out non-contiguous page ranges
-* [PATCH RFC 22/35] dma-remap: drop nth_page() in dma_common_contiguous_remap()
-* [PATCH RFC 23/35] scatterlist: disallow non-contigous page ranges in a single SG entry
-* [PATCH RFC 24/35] ata: libata-eh: drop nth_page() usage within SG entry
-* [PATCH RFC 25/35] drm/i915/gem: drop nth_page() usage within SG entry
-* [PATCH RFC 26/35] mspro_block: drop nth_page() usage within SG entry
-* [PATCH RFC 27/35] memstick: drop nth_page() usage within SG entry
-* [PATCH RFC 28/35] mmc: drop nth_page() usage within SG entry
-* [PATCH RFC 29/35] scsi: core: drop nth_page() usage within SG entry
-* [PATCH RFC 30/35] vfio/pci: drop nth_page() usage within SG entry
-* [PATCH RFC 31/35] crypto: remove nth_page() usage within SG entry
-* [PATCH RFC 32/35] mm/gup: drop nth_page() usage in unpin_user_page_range_dirty_lock()
-* [PATCH RFC 33/35] kfence: drop nth_page() usage
-* [PATCH RFC 34/35] block: update comment of "struct bio_vec" regarding nth_page()
-* [PATCH RFC 35/35] mm: remove nth_page()
+Best regards
+-- 
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
 
-and found the following issue:
-general protection fault in kfence_guarded_alloc
-
-Full report is available here:
-https://ci.syzbot.org/series/f6f0aea1-9616-4675-8c80-f9b59ba3211c
-
-***
-
-general protection fault in kfence_guarded_alloc
-
-tree:      net-next
-URL:       https://kernel.googlesource.com/pub/scm/linux/kernel/git/netdev/net-next.git
-base:      da114122b83149d1f1db0586b1d67947b651aa20
-arch:      amd64
-compiler:  Debian clang version 20.1.7 (++20250616065708+6146a88f6049-1~exp1~20250616065826.132), Debian LLD 20.1.7
-config:    https://ci.syzbot.org/builds/705b7862-eb10-40bd-a4cf-4820b4912466/config
-
-smpboot: CPU0: Intel(R) Xeon(R) CPU @ 2.80GHz (family: 0x6, model: 0x55, stepping: 0x7)
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted syzkaller #0 PREEMPT(full) 
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
-RIP: 0010:kfence_guarded_alloc+0x643/0xc70
-Code: 41 c1 e5 18 bf 00 00 00 f5 44 89 ee e8 a6 67 9c ff 45 31 f6 41 81 fd 00 00 00 f5 4c 0f 44 f3 49 8d 7e 08 48 89 f8 48 c1 e8 03 <42> 80 3c 20 00 74 05 e8 f1 cb ff ff 4c 8b 6c 24 18 4d 89 6e 08 49
-RSP: 0000:ffffc90000047740 EFLAGS: 00010202
-RAX: 0000000000000001 RBX: ffffea0004d90080 RCX: 0000000000000000
-RDX: ffff88801c2e8000 RSI: 00000000ff000000 RDI: 0000000000000008
-RBP: ffffc90000047850 R08: ffffffff99b2201b R09: 1ffffffff3364403
-R10: dffffc0000000000 R11: fffffbfff3364404 R12: dffffc0000000000
-R13: 00000000ff000000 R14: 0000000000000000 R15: ffff88813fec7068
-FS:  0000000000000000(0000) GS:ffff8880b861c000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: ffff88813ffff000 CR3: 000000000df36000 CR4: 0000000000350ef0
-Call Trace:
- <TASK>
- __kfence_alloc+0x385/0x3b0
- __kmalloc_noprof+0x440/0x4f0
- __alloc_workqueue+0x103/0x1b70
- alloc_workqueue_noprof+0xd4/0x210
- init_mm_internals+0x17/0x140
- kernel_init_freeable+0x307/0x4b0
- kernel_init+0x1d/0x1d0
- ret_from_fork+0x3f9/0x770
- ret_from_fork_asm+0x1a/0x30
- </TASK>
-Modules linked in:
----[ end trace 0000000000000000 ]---
-RIP: 0010:kfence_guarded_alloc+0x643/0xc70
-Code: 41 c1 e5 18 bf 00 00 00 f5 44 89 ee e8 a6 67 9c ff 45 31 f6 41 81 fd 00 00 00 f5 4c 0f 44 f3 49 8d 7e 08 48 89 f8 48 c1 e8 03 <42> 80 3c 20 00 74 05 e8 f1 cb ff ff 4c 8b 6c 24 18 4d 89 6e 08 49
-RSP: 0000:ffffc90000047740 EFLAGS: 00010202
-RAX: 0000000000000001 RBX: ffffea0004d90080 RCX: 0000000000000000
-RDX: ffff88801c2e8000 RSI: 00000000ff000000 RDI: 0000000000000008
-RBP: ffffc90000047850 R08: ffffffff99b2201b R09: 1ffffffff3364403
-R10: dffffc0000000000 R11: fffffbfff3364404 R12: dffffc0000000000
-R13: 00000000ff000000 R14: 0000000000000000 R15: ffff88813fec7068
-FS:  0000000000000000(0000) GS:ffff8880b861c000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: ffff88813ffff000 CR3: 000000000df36000 CR4: 0000000000350ef0
-
-
-***
-
-If these findings have caused you to resend the series or submit a
-separate fix, please add the following tag to your commit message:
-  Tested-by: syzbot@syzkaller.appspotmail.com
-
----
-This report is generated by a bot. It may contain errors.
-syzbot ci engineers can be reached at syzkaller@googlegroups.com.
