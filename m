@@ -4,89 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06EFDCA0EED
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 22 Aug 2025 06:40:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7D9DCA0EED
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 22 Aug 2025 14:00:15 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2f0f70e1;
-	Fri, 22 Aug 2025 06:24:43 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3435bce1;
+	Fri, 22 Aug 2025 14:00:13 +0000 (UTC)
 Received: from us-smtp-delivery-124.mimecast.com
  (us-smtp-delivery-124.mimecast.com [170.10.133.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 114b0001
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1058e727
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 22 Aug 2025 06:24:41 +0000 (UTC)
+ Fri, 22 Aug 2025 14:00:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755843880;
+ s=mimecast20190719; t=1755871208;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=WiI+ZnCzEnb/n6DQfRPkU+9oejYIM/R2hKOTH1yevco=;
- b=BJ66FpZCbLXGPo3dDkI3yvYolmpaM3g4FXgHAUbuIMuedm7kOnF5+igijVAU371PHfjy9k
- X3w1fdsz79jq8k8ot5MD4SAStop13Sur2BZcnDRXbjvfLNv4lMgGjZe3Fhyhi9KU2Z1Sgb
- SJJ7v6PkKszwaNTBID3tVtpXfjsRIP4=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=K6aDoQ2nZkjhSfUgeR22UAGAXQBWHHuCN2RUasZyd3Q=;
+ b=UcXxTvqdvhg3bu2m9ZujNAUrGvfVyxQEIj8ESUTpDmlq4iw0JPD+2rhqvZvpIou2/YfzTp
+ KtAMTjL9d8FA0BjPOAvZUg6aThkPC6nXXSii8xByg9qwjboljceEXVdTbVRqZeToisyN1z
+ bNkaAcm52LGXjFoViTZwZqgutcPsNC8=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-314-SYREo-sTOi-z3tKR2X8DoQ-1; Fri, 22 Aug 2025 02:24:36 -0400
-X-MC-Unique: SYREo-sTOi-z3tKR2X8DoQ-1
-X-Mimecast-MFC-AGG-ID: SYREo-sTOi-z3tKR2X8DoQ_1755843875
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3b9e4f039ecso943521f8f.2
- for <wireguard@lists.zx2c4.com>; Thu, 21 Aug 2025 23:24:36 -0700 (PDT)
+ us-mta-222-bfv2oxl4NnGgmZbuT4HYqg-1; Fri, 22 Aug 2025 10:00:07 -0400
+X-MC-Unique: bfv2oxl4NnGgmZbuT4HYqg-1
+X-Mimecast-MFC-AGG-ID: bfv2oxl4NnGgmZbuT4HYqg_1755871201
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-45a256a20fcso12451515e9.2
+ for <wireguard@lists.zx2c4.com>; Fri, 22 Aug 2025 07:00:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755843875; x=1756448675;
+ d=1e100.net; s=20230601; t=1755871201; x=1756476001;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=WiI+ZnCzEnb/n6DQfRPkU+9oejYIM/R2hKOTH1yevco=;
- b=MrVjDHxrpW+pXvGnp24ioTQ+4AG5XLwxol3WMU++GevoxAad1hKqRUo3c/ZiAIjnUT
- Vqyqwua7Z+1Dp2YG+DP7zL5MN87/9yBnTrVoApZ8cQksZZHjDFG8LmuEUlTTaBhG5hyf
- PN2MiCQ73gVF5VytWMsTL4bNmafDg8sBjpQ91RDekDkKviHyt9EL0QXh1j1iOO8H7o0R
- CQXOsGkt44RwXFSamnlfAWIUvIm78LYHgYvdbjt34B0hI9oeVQBAUoFqiGS3xxbzYRu/
- Oj9g9yZzHpZZruZKzJgWrfGz6tahKSIVBfavbo2TKCVk/OBzcZvu88bKOfIiPAZvYCz0
- KdqA==
+ bh=K6aDoQ2nZkjhSfUgeR22UAGAXQBWHHuCN2RUasZyd3Q=;
+ b=M/30+ay94aeQnggj2Wp0AsAVi3WJrWxbmGdugGPUQmypBP6Dop/PJxt15cfcAcHKK7
+ WgtVq8QsmqyAAPwkvrMwxuyfXiKsHOXEYxFM2CDfSsalUYGk1XPUexcBjv2SwT//m409
+ qJkHqs6MkqXfWm3aqUw2LmA99NUGCk4PUhDVZGdgFp17I30esm4LwsIsLdrBgn211xv/
+ GkyTtaH4SRf3u0EJxAKy932zGY7HCrNtZrtfnpRObL0+MeLJAL3oqdG7XvB2ernSihD/
+ YUI9wGZOc8mUwDXOxTgp7LMUSW0S2gyyJkInYLCKY1MNLqCU8ihbAxDzcjKMw8bMkAzs
+ sQOw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW9nr76qECWS/Cys7dIgNQuD9cBZRmFiVxFoaSqpJNKHWVr8rlzvc7vhEgZizvV6ReDr3TIEqEiflk=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0Yxj5m18GJAuHK0Uh4UO1trXLgrjroBQ97ZM8lLpMVKhHkPo5D2K
- K90ygv2T/8WJWRodnrdvioZaYXTqboQMd70bUspClDZFYZT0kJYgWeQY2kXLTlOiZvxquJZlPeL
- cxkF6UtWz1XtgawH15rjG9QiCvchq5OegEaOC5zRN5khtndbc3OaTTMGwOr09LQ==
-X-Gm-Gg: ASbGncsQ1CrQNekz328aKksCfNNfultFse1IuN4m9YGm8AHRm+l7/8Gosv6sgzaw1aj
- h0DlY2AOfC67sDLnfM9pz8j/cMs3/1t3OY72cMkFCj1UBWv4mQvcX4jT1YaUUsMayJrlUXJLSqt
- N0flcIlmNjqeMxTWphdBgSAIlowEMkIX1p+QnRkK7HphwLj2cIHi/UY8V2ClG1oNqSAbiyGb7Vk
- Sv+HU087cN4+WUJvndGTUpzRrVSSbVH4zHg3Nizc7GIqc7c0lOUPfk+W2YEkmDRh5XKJk4DaCag
- kHLf+6koF1zcvygSZzVfn/nmL8nht5jRyELA1lRZvXqBuO5WIVBKwTs2y+pEodZhYrBt9Q==
-X-Received: by 2002:a05:6000:26c1:b0:3a3:7ba5:93a5 with SMTP id
- ffacd0b85a97d-3c5daefc4a3mr930382f8f.26.1755843874983; 
- Thu, 21 Aug 2025 23:24:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGkMOIqwJnbz0zMoKzv9XjVteH9mRf82hflWECX8mqHGwhCkTy10DA8QnyI2PcknGc6Szk7/A==
-X-Received: by 2002:a05:6000:26c1:b0:3a3:7ba5:93a5 with SMTP id
- ffacd0b85a97d-3c5daefc4a3mr930326f8f.26.1755843874452; 
- Thu, 21 Aug 2025 23:24:34 -0700 (PDT)
-Received: from [192.168.3.141] (p4ff1f25c.dip0.t-ipconnect.de. [79.241.242.92])
+ AJvYcCVVnqQ6sceeDLQzsK9FQ/SbI79vNRRNNhQ8rq1Hvye+5+AjJe5EdDHeaDuHhiFmApnFb3lhaHbKP4g=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YwChscxf9SpZEUQo/Tq3QbprvtL21iNBL0Cenk4dGPqWxqKC1QH
+ ITcobW0y+nKPWIep50Z5vnQ+PCNH+svIhasn1okP/PbF/nCVAkwgHq3MEOzc/ci088h9rS21QUr
+ Sok0x1qUkbBX/elKd7EL7ktnkvFQmitlna1XmftD3yKzgzYXsQ5sZije+oVR7Pw==
+X-Gm-Gg: ASbGncu8/PzDCuV//oedYHsqBFKczbUkEuqd45EawmxYs+9m9/KdMXQGu9u4vvyZui3
+ pFooTni3A9EoxWobV3Kll4owVtCoTQ4uqLxj1c2d8IR9x9qbnaMyO7wfdrNG8vz9FklWSVaigrF
+ 6MVWyeSBVgVq5/nFuzv6/HSKrVxW1x+Ge9kIqSEaoLX8m/JgXTm34YeXlpyhYs3+9Gx3ZCRm8Y8
+ 3w5ApWI/L424VQ18qyHG7gd/d4zapiYjuV3Iw+sWGNV0asgGbPGR4y3P+rMlM7lhauu0dE43pdx
+ JiJmvzgxpydwJrPBwdxQBBIaJpLfwd3JQfFh4KZnjQOKw+dyio3YWemiFDy9vpXOPJwzm6ZUBsK
+ B1UkdnPjp8KkD5k0p7w7mRgpnqtBpF5VMNEKd5JNAIyk5S31opYCEn4jdjREUNFkKLHo=
+X-Received: by 2002:a05:600c:1554:b0:459:e06b:afb4 with SMTP id
+ 5b1f17b1804b1-45b5179b4fcmr28181815e9.4.1755871200673; 
+ Fri, 22 Aug 2025 07:00:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGwWP+gcyHz5PASikvY9eCVK8ixT+7ngDF6OHjbY0O7J0DLjuT/QVU1ki3KQXQcrTer6FnpTg==
+X-Received: by 2002:a05:600c:1554:b0:459:e06b:afb4 with SMTP id
+ 5b1f17b1804b1-45b5179b4fcmr28181195e9.4.1755871200176; 
+ Fri, 22 Aug 2025 07:00:00 -0700 (PDT)
+Received: from ?IPV6:2003:d8:2f2e:6100:d9da:ae87:764c:a77e?
+ (p200300d82f2e6100d9daae87764ca77e.dip0.t-ipconnect.de.
+ [2003:d8:2f2e:6100:d9da:ae87:764c:a77e])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3c6070264fbsm1198544f8f.67.2025.08.21.23.24.32
+ 5b1f17b1804b1-45b57498d9csm82525e9.22.2025.08.22.06.59.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 Aug 2025 23:24:33 -0700 (PDT)
-Message-ID: <7077e09f-6ce9-43ba-8f87-47a290680141@redhat.com>
-Date: Fri, 22 Aug 2025 08:24:31 +0200
+ Fri, 22 Aug 2025 06:59:59 -0700 (PDT)
+Message-ID: <473f3576-ddf3-4388-aeec-d486f639950a@redhat.com>
+Date: Fri, 22 Aug 2025 15:59:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 10/35] mm/hugetlb: cleanup
- hugetlb_folio_init_tail_vmemmap()
-To: =?UTF-8?Q?Mika_Penttil=C3=A4?= <mpenttil@redhat.com>,
- linux-kernel@vger.kernel.org
-Cc: Alexander Potapenko <glider@google.com>,
+Subject: Re: [PATCH RFC 18/35] io_uring/zcrx: remove "struct io_copy_cache"
+ and one nth_page() usage
+To: Pavel Begunkov <asml.silence@gmail.com>, linux-kernel@vger.kernel.org
+Cc: Jens Axboe <axboe@kernel.dk>, Alexander Potapenko <glider@google.com>,
  Andrew Morton <akpm@linux-foundation.org>,
  Brendan Jackman <jackmanb@google.com>, Christoph Lameter <cl@gentwo.org>,
  Dennis Zhou <dennis@kernel.org>, Dmitry Vyukov <dvyukov@google.com>,
  dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
  iommu@lists.linux.dev, io-uring@vger.kernel.org,
- Jason Gunthorpe <jgg@nvidia.com>, Jens Axboe <axboe@kernel.dk>,
- Johannes Weiner <hannes@cmpxchg.org>, John Hubbard <jhubbard@nvidia.com>,
- kasan-dev@googlegroups.com, kvm@vger.kernel.org,
- "Liam R. Howlett" <Liam.Howlett@oracle.com>,
+ Jason Gunthorpe <jgg@nvidia.com>, Johannes Weiner <hannes@cmpxchg.org>,
+ John Hubbard <jhubbard@nvidia.com>, kasan-dev@googlegroups.com,
+ kvm@vger.kernel.org, "Liam R. Howlett" <Liam.Howlett@oracle.com>,
  Linus Torvalds <torvalds@linux-foundation.org>, linux-arm-kernel@axis.com,
  linux-arm-kernel@lists.infradead.org, linux-crypto@vger.kernel.org,
  linux-ide@vger.kernel.org, linux-kselftest@vger.kernel.org,
@@ -102,8 +103,8 @@ Cc: Alexander Potapenko <glider@google.com>,
  Vlastimil Babka <vbabka@suse.cz>, wireguard@lists.zx2c4.com, x86@kernel.org,
  Zi Yan <ziy@nvidia.com>
 References: <20250821200701.1329277-1-david@redhat.com>
- <20250821200701.1329277-11-david@redhat.com>
- <9156d191-9ec4-4422-bae9-2e8ce66f9d5e@redhat.com>
+ <20250821200701.1329277-19-david@redhat.com>
+ <b5b08ad3-d8cd-45ff-9767-7cf1b22b5e03@gmail.com>
 From: David Hildenbrand <david@redhat.com>
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
@@ -149,13 +150,13 @@ Autocrypt: addr=david@redhat.com; keydata=
  3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
  CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
  qIws/H2t
-In-Reply-To: <9156d191-9ec4-4422-bae9-2e8ce66f9d5e@redhat.com>
+In-Reply-To: <b5b08ad3-d8cd-45ff-9767-7cf1b22b5e03@gmail.com>
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: cSW8INXsUfgxCEnbAe-_4bzkweJoleHxSP3DSp4jDMA_1755843875
+X-Mimecast-MFC-PROC-ID: sUFW1Uz346IjH1nU3lEBMoWDzH0BmuWs5ue4AwzOmgc_1755871201
 X-Mimecast-Originator: redhat.com
 Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -170,28 +171,41 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 22.08.25 06:09, Mika Penttilä wrote:
+On 22.08.25 13:32, Pavel Begunkov wrote:
+> On 8/21/25 21:06, David Hildenbrand wrote:
+>> We always provide a single dst page, it's unclear why the io_copy_cache
+>> complexity is required.
 > 
-> On 8/21/25 23:06, David Hildenbrand wrote:
+> Because it'll need to be pulled outside the loop to reuse the page for
+> multiple copies, i.e. packing multiple fragments of the same skb into
+> it. Not finished, and currently it's wasting memory.
+
+Okay, so what you're saying is that there will be follow-up work that 
+will actually make this structure useful.
+
 > 
->> All pages were already initialized and set to PageReserved() with a
->> refcount of 1 by MM init code.
+> Why not do as below? Pages there never cross boundaries of their folios. > Do you want it to be taken into the io_uring tree?
+
+This should better all go through the MM tree where we actually 
+guarantee contiguous pages within a folio. (see the cover letter)
+
 > 
-> Just to be sure, how is this working with MEMBLOCK_RSRV_NOINIT, where MM is supposed not to
-> initialize struct pages?
+> diff --git a/io_uring/zcrx.c b/io_uring/zcrx.c
+> index e5ff49f3425e..18c12f4b56b6 100644
+> --- a/io_uring/zcrx.c
+> +++ b/io_uring/zcrx.c
+> @@ -975,9 +975,9 @@ static ssize_t io_copy_page(struct io_copy_cache *cc, struct page *src_page,
+>    
+>    		if (folio_test_partial_kmap(page_folio(dst_page)) ||
+>    		    folio_test_partial_kmap(page_folio(src_page))) {
+> -			dst_page = nth_page(dst_page, dst_offset / PAGE_SIZE);
+> +			dst_page += dst_offset / PAGE_SIZE;
+>    			dst_offset = offset_in_page(dst_offset);
+> -			src_page = nth_page(src_page, src_offset / PAGE_SIZE);
+> +			src_page += src_offset / PAGE_SIZE;
 
-Excellent point, I did not know about that one.
-
-Spotting that we don't do the same for the head page made me assume that 
-it's just a misuse of __init_single_page().
-
-But the nasty thing is that we use memblock_reserved_mark_noinit() to 
-only mark the tail pages ...
-
-Let me revert back to __init_single_page() and add a big fat comment why 
-this is required.
-
-Thanks!
+Yeah, I can do that in the next version given that you have plans on 
+extending that code soon.
 
 -- 
 Cheers
