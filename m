@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8339CA0EED
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 22 Aug 2025 17:07:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76D6FCA0EEB
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 22 Aug 2025 17:10:45 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ada02d3c;
-	Fri, 22 Aug 2025 17:07:52 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 75132251;
+	Fri, 22 Aug 2025 17:09:57 +0000 (UTC)
 Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b921c960
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 96d10178
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 22 Aug 2025 17:07:50 +0000 (UTC)
+ Fri, 22 Aug 2025 17:09:54 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 2DE1360203;
- Fri, 22 Aug 2025 17:07:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD1D1C4CEF4;
- Fri, 22 Aug 2025 17:07:48 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id BE2F160203;
+ Fri, 22 Aug 2025 17:09:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 506C3C4CEED;
+ Fri, 22 Aug 2025 17:09:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1755882468;
- bh=vZLAjgh0rHfPoMdjN4T/8EdoC5/y95Yj/31fEqm5lgA=;
+ s=k20201202; t=1755882593;
+ bh=NEyazjWgDDK3Y8sTMLiPKtOTS94IEzEQJlr1MXdW648=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=fSplAPAbcqCwXrc73KaBOQNzaayHHHryXHEfz/QvCIP5+OLUcuUqhayGQU30an1Hx
- YGDC2ch0190J8ZS7lR1jUdP6OQwlEiLMILXs/CkC/SlPI/9/wAF5EXwIZ0nb0Uecnj
- UA9Ha7hLdu3BvCtDoUnTti40P6RP3bVkvwZuA5UDhaj8Dob3g32dp2vkLL6LUz2Uga
- JrNca6OOm6CtiYGSnyjbJHFyuYTMa9sirnIIEndUMU2kE26IZfHRAqBcN1+HEuWJKI
- iH1nd0618aV38WN9VJmQt9ibmxV/jw/X7xirOs3F2GwN8kBuIL5KMKravrNObUYubi
- MyQ+vWsMpUjxQ==
+ b=DmWBU4VzSCcAnl6Zdrhjx6ksjldQdRyRt8SGGJHoy1Xwe7M0wFFiAnOgc7AY/DT0q
+ lyqL/1TbY9lw6Mk6ofMnsxQa0R5tG+ekC6WUSLcyfnxUCURU/dBA0VxXY7c6IJ9LBi
+ dspILvQPKUlPvqhEvwNtu+fRhuKR7/IUmABwpf10OfXceruEb+htOjuVlClrNaqJfU
+ QZNtMHJYtlsQdWeTBL2WlQglN7zceCD+RoTlZDKPvwA5Fz0NZs4QmCTFXTFDq7ZuUg
+ eXWdY/p99/aQ44iT5rRcus/JttgHgvk0uE55mO5Gfzz0M9Zot8coHQnhPz2Tn/edlI
+ y9z5UNwm6HZrw==
 From: SeongJae Park <sj@kernel.org>
 To: David Hildenbrand <david@redhat.com>
 Cc: SeongJae Park <sj@kernel.org>, linux-kernel@vger.kernel.org,
@@ -57,12 +57,12 @@ Cc: SeongJae Park <sj@kernel.org>, linux-kernel@vger.kernel.org,
  Suren Baghdasaryan <surenb@google.com>, Tejun Heo <tj@kernel.org>,
  virtualization@lists.linux.dev, Vlastimil Babka <vbabka@suse.cz>,
  wireguard@lists.zx2c4.com, x86@kernel.org, Zi Yan <ziy@nvidia.com>
-Subject: Re: [PATCH RFC 06/35] mm/page_alloc: reject unreasonable
- folio/compound page sizes in alloc_contig_range_noprof()
-Date: Fri, 22 Aug 2025 10:07:46 -0700
-Message-Id: <20250822170746.53309-1-sj@kernel.org>
+Subject: Re: [PATCH RFC 07/35] mm/memremap: reject unreasonable folio/compound
+ page sizes in memremap_pages()
+Date: Fri, 22 Aug 2025 10:09:51 -0700
+Message-Id: <20250822170951.53418-1-sj@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250821200701.1329277-7-david@redhat.com>
+In-Reply-To: <20250821200701.1329277-8-david@redhat.com>
 References: 
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -80,17 +80,18 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Thu, 21 Aug 2025 22:06:32 +0200 David Hildenbrand <david@redhat.com> wrote:
+On Thu, 21 Aug 2025 22:06:33 +0200 David Hildenbrand <david@redhat.com> wrote:
 
-> Let's reject them early,
-
-I like early failures. :)
-
-> which in turn makes folio_alloc_gigantic() reject
-> them properly.
+> Let's reject unreasonable folio sizes early, where we can still fail.
+> We'll add sanity checks to prepare_compound_head/prepare_compound_page
+> next.
 > 
-> To avoid converting from order to nr_pages, let's just add MAX_FOLIO_ORDER
-> and calculate MAX_FOLIO_NR_PAGES based on that.
+> Is there a way to configure a system such that unreasonable folio sizes
+> would be possible? It would already be rather questionable.
+> 
+> If so, we'd probably want to bail out earlier, where we can avoid a
+> WARN and just report a proper error message that indicates where
+> something went wrong such that we messed up.
 > 
 > Signed-off-by: David Hildenbrand <david@redhat.com>
 
