@@ -4,81 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51008CF2563
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 23:34:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46250CF2564
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 23:34:55 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 22159145;
-	Tue, 18 Nov 2025 17:26:54 +0000 (UTC)
-Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com
- [210.118.77.11])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8c4a4043
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a2224a19;
+	Tue, 18 Nov 2025 17:26:57 +0000 (UTC)
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com
+ [2a00:1450:4864:20::32d])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 13bf8f08
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 22 Aug 2025 08:15:20 +0000 (UTC)
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
- by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id
- 20250822081519euoutp01946853c37392c604dd0c3ef7d9f9864d~eCL6pnShX0804708047euoutp01V;
- Fri, 22 Aug 2025 08:15:19 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com
- 20250822081519euoutp01946853c37392c604dd0c3ef7d9f9864d~eCL6pnShX0804708047euoutp01V
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1755850519;
- bh=gSgM5v5QN4mf4R9UjO3p9g49c5fElcblzx9rfuNpgCM=;
- h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
- b=e4dvoXQdSu6m2XApKflo9WPmqpXymYx8peucZKWnnidxwTqyyGT6vyRmLSZhDupfy
- UQS833Dv4xDvMpcINMnXzIPqm8717h4UDC2WHsJO8GSlXAIbIu/HM+EmSf5f03lk+1
- DvviTyYYSXyxJn74yEGOVwAsfz9e64KnZWqZgVcw=
-Received: from eusmtip1.samsung.com (unknown [203.254.199.221]) by
- eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
- 20250822081519eucas1p173966299ee7e4ed7e44e5668490c5bb1~eCL6VCjyQ0206902069eucas1p1F;
- Fri, 22 Aug 2025 08:15:19 +0000 (GMT)
-Received: from [106.210.134.192] (unknown [106.210.134.192]) by
- eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
- 20250822081515eusmtip1e7bc345219f25d2646a53b4e40310c91~eCL2XTm3N1429714297eusmtip1U;
- Fri, 22 Aug 2025 08:15:14 +0000 (GMT)
-Message-ID: <8c4b0068-92be-427b-8bfc-9926eea6aa09@samsung.com>
-Date: Fri, 22 Aug 2025 10:15:14 +0200
+ Fri, 22 Aug 2025 11:31:28 +0000 (UTC)
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-45b4d89217aso9434365e9.2
+ for <wireguard@lists.zx2c4.com>; Fri, 22 Aug 2025 04:31:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1755862288; x=1756467088; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=SfbHPH5Jjp8Rpz5+ZFUkvP8crb1ywqdy8VPh1hjPgaM=;
+ b=GAFzUbu/KjjEK2p887uMsurCkigik+wbMCkgsmqwb9w40XncZ+2jR46HRk4f1qiKNF
+ +/zk5Wholiq8oV0OyEjZ7LTfRlk7iho615jBfV6lXbyjiVddV41ip229M9xIDkJQt4+6
+ vXlRmL/+OQa3n03q0Q+MUMVtFDetOXobddJr6bYnYgBLtxBzIxRIPFwOWNZiaBT80ov4
+ RlQyL+BsIymgjZ/CEZFY6F9YfugPyTUdjun7lGw/Wa2+7SFHZLcyPOMkGld/0JephPnU
+ EsdL+kNirGT22r6xUPTAq5rnkuFxkF44y8j6hPlQFSZTOANu7DJ+TN3kbA4CU4Zho7xP
+ 79qw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755862288; x=1756467088;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=SfbHPH5Jjp8Rpz5+ZFUkvP8crb1ywqdy8VPh1hjPgaM=;
+ b=DvWA0cj5dT3qjb+ixe1YQkAi2DOr1suIz5/tpMA+0Z5fUE4m3cjYfniLXP0nEqOr6k
+ YG5BnTwMW0kVBcY726qRt9nnspC7+fu21BsZ3u0IG/wrEORWS98rIZVK6+oJjof760wa
+ 541In1DF7qzKA1z6jSYEFP2PQwD5EqvRjn9u9TNNgPJS0QObdb+6qCX4HHWRO2n2XEHZ
+ ONaR9AB15z+++rNxA6jQ9oGTHiN8B+7rjKJBsyxyvWT9cIn96LTfALy7+7wPbTw4Rb7g
+ TjGc8F9WIWn7009RJglkgMRlO7AL7I6SVR5bLYHfIdIyrJ+KlhyD/lfhvT9czQrk1Xxj
+ X7Qw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWwbXcCE2vzsvV1W7n9dm9aJkKfsIMJuNw6nJbrZ7iCYpHFiAbw17ozSNmjruM9WSASiW9Vk8MUBZc=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YyZcQqHIgZXLaVdMMG2bCx0dEmwJ6Nbj/sSng8AfDRIcdhyo1tg
+ ZwoD6txi4t/WNdx8BgTE4Xu3hs1U3KL8bbe1AUT75tTIsQIQUU+0Bkuy
+X-Gm-Gg: ASbGnctehOpZsExVCtdFqLPJJHkm3EJI/fP0c6vV//nQlz/wBtVRAS5uaaTpVu4MszP
+ KxLSOCGXYXIJ+kVaKuf6i3k+zyUIDfa1ELfDiYFGYSkeZla/kdBZueH3pXcl8NVPBZhQcy5f+gD
+ JDkN4DttEtg3AzzAgC9beUkC2kHwq5qV/UUHDhggprb/dOSld5M5O6M1YcTpJYg/v4/S9CjmDEJ
+ JJIDwaakYilbzexypiXyTuPhk6rC+q2JqBuU539htS+nbrAK9nBcY6Ce7/o1l88zfWTpj73f5H/
+ r8KTHiqbarR6Kim6G94MvrhpghqlLw0N87AMS1Z8e6cyenvdRUWbZeoVKbLJBLHzY3q6+j9gPfM
+ LDIW97hQc0lC6V/FRKRUPED5nPQw3hmTuBRde9t30KxTJDIUy7x2xqmc=
+X-Google-Smtp-Source: AGHT+IGRxFKrTZ5eDvBkmi1zEgN6s0gJ3t3AoyWptSyZJnQ5Bb32czELomyx9FMDxkr1p0nFemiRbQ==
+X-Received: by 2002:a05:600c:4747:b0:459:e094:92cb with SMTP id
+ 5b1f17b1804b1-45b517ad81bmr24844685e9.12.1755862287996; 
+ Fri, 22 Aug 2025 04:31:27 -0700 (PDT)
+Received: from ?IPV6:2620:10d:c096:325:77fd:1068:74c8:af87?
+ ([2620:10d:c092:600::1:1b93]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45b50e4241dsm35921185e9.24.2025.08.22.04.31.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 22 Aug 2025 04:31:27 -0700 (PDT)
+Message-ID: <b5b08ad3-d8cd-45ff-9767-7cf1b22b5e03@gmail.com>
+Date: Fri, 22 Aug 2025 12:32:58 +0100
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH RFC 23/35] scatterlist: disallow non-contigous page
- ranges in a single SG entry
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 18/35] io_uring/zcrx: remove "struct io_copy_cache"
+ and one nth_page() usage
 To: David Hildenbrand <david@redhat.com>, linux-kernel@vger.kernel.org
-Cc: Alexander Potapenko <glider@google.com>, Andrew Morton
- <akpm@linux-foundation.org>, Brendan Jackman <jackmanb@google.com>,
- Christoph Lameter <cl@gentwo.org>, Dennis Zhou <dennis@kernel.org>, Dmitry
- Vyukov <dvyukov@google.com>, dri-devel@lists.freedesktop.org,
- intel-gfx@lists.freedesktop.org, iommu@lists.linux.dev,
- io-uring@vger.kernel.org, Jason Gunthorpe <jgg@nvidia.com>, Jens Axboe
- <axboe@kernel.dk>, Johannes Weiner <hannes@cmpxchg.org>, John Hubbard
- <jhubbard@nvidia.com>, kasan-dev@googlegroups.com, kvm@vger.kernel.org,
- "Liam R. Howlett" <Liam.Howlett@oracle.com>, Linus Torvalds
- <torvalds@linux-foundation.org>, linux-arm-kernel@axis.com,
+Cc: Jens Axboe <axboe@kernel.dk>, Alexander Potapenko <glider@google.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Brendan Jackman <jackmanb@google.com>, Christoph Lameter <cl@gentwo.org>,
+ Dennis Zhou <dennis@kernel.org>, Dmitry Vyukov <dvyukov@google.com>,
+ dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+ iommu@lists.linux.dev, io-uring@vger.kernel.org,
+ Jason Gunthorpe <jgg@nvidia.com>, Johannes Weiner <hannes@cmpxchg.org>,
+ John Hubbard <jhubbard@nvidia.com>, kasan-dev@googlegroups.com,
+ kvm@vger.kernel.org, "Liam R. Howlett" <Liam.Howlett@oracle.com>,
+ Linus Torvalds <torvalds@linux-foundation.org>, linux-arm-kernel@axis.com,
  linux-arm-kernel@lists.infradead.org, linux-crypto@vger.kernel.org,
  linux-ide@vger.kernel.org, linux-kselftest@vger.kernel.org,
  linux-mips@vger.kernel.org, linux-mmc@vger.kernel.org, linux-mm@kvack.org,
  linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
  linux-scsi@vger.kernel.org, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
- Marco Elver <elver@google.com>, Michal Hocko <mhocko@suse.com>, Mike
- Rapoport <rppt@kernel.org>, Muchun Song <muchun.song@linux.dev>,
- netdev@vger.kernel.org, Oscar Salvador <osalvador@suse.de>, Peter Xu
- <peterx@redhat.com>, Robin Murphy <robin.murphy@arm.com>, Suren Baghdasaryan
- <surenb@google.com>, Tejun Heo <tj@kernel.org>,
- virtualization@lists.linux.dev, Vlastimil Babka <vbabka@suse.cz>,
- wireguard@lists.zx2c4.com, x86@kernel.org, Zi Yan <ziy@nvidia.com>
-Content-Language: en-US
-From: Marek Szyprowski <m.szyprowski@samsung.com>
-In-Reply-To: <20250821200701.1329277-24-david@redhat.com>
-Content-Transfer-Encoding: 7bit
-X-CMS-MailID: 20250822081519eucas1p173966299ee7e4ed7e44e5668490c5bb1
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20250821200818eucas1p2c3df1e12eeba86a68679743d2f5929a8
-X-EPHeader: CA
-X-CMS-RootMailID: 20250821200818eucas1p2c3df1e12eeba86a68679743d2f5929a8
+ Marco Elver <elver@google.com>, Marek Szyprowski <m.szyprowski@samsung.com>,
+ Michal Hocko <mhocko@suse.com>, Mike Rapoport <rppt@kernel.org>,
+ Muchun Song <muchun.song@linux.dev>, netdev@vger.kernel.org,
+ Oscar Salvador <osalvador@suse.de>, Peter Xu <peterx@redhat.com>,
+ Robin Murphy <robin.murphy@arm.com>, Suren Baghdasaryan <surenb@google.com>,
+ Tejun Heo <tj@kernel.org>, virtualization@lists.linux.dev,
+ Vlastimil Babka <vbabka@suse.cz>, wireguard@lists.zx2c4.com, x86@kernel.org,
+ Zi Yan <ziy@nvidia.com>
 References: <20250821200701.1329277-1-david@redhat.com>
- <CGME20250821200818eucas1p2c3df1e12eeba86a68679743d2f5929a8@eucas1p2.samsung.com>
- <20250821200701.1329277-24-david@redhat.com>
-X-Mailman-Approved-At: Tue, 18 Nov 2025 17:23:15 +0000
+ <20250821200701.1329277-19-david@redhat.com>
+Content-Language: en-US
+From: Pavel Begunkov <asml.silence@gmail.com>
+In-Reply-To: <20250821200701.1329277-19-david@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Mailman-Approved-At: Tue, 18 Nov 2025 17:23:16 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -93,60 +113,35 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 21.08.2025 22:06, David Hildenbrand wrote:
-> The expectation is that there is currently no user that would pass in
-> non-contigous page ranges: no allocator, not even VMA, will hand these
-> out.
->
-> The only problematic part would be if someone would provide a range
-> obtained directly from memblock, or manually merge problematic ranges.
-> If we find such cases, we should fix them to create separate
-> SG entries.
->
-> Let's check in sg_set_page() that this is really the case. No need to
-> check in sg_set_folio(), as pages in a folio are guaranteed to be
-> contiguous.
->
-> We can now drop the nth_page() usage in sg_page_iter_page().
->
-> Signed-off-by: David Hildenbrand <david@redhat.com>
-Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> ---
->   include/linux/scatterlist.h | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/include/linux/scatterlist.h b/include/linux/scatterlist.h
-> index 6f8a4965f9b98..8196949dfc82c 100644
-> --- a/include/linux/scatterlist.h
-> +++ b/include/linux/scatterlist.h
-> @@ -6,6 +6,7 @@
->   #include <linux/types.h>
->   #include <linux/bug.h>
->   #include <linux/mm.h>
-> +#include <linux/mm_inline.h>
->   #include <asm/io.h>
->   
->   struct scatterlist {
-> @@ -158,6 +159,7 @@ static inline void sg_assign_page(struct scatterlist *sg, struct page *page)
->   static inline void sg_set_page(struct scatterlist *sg, struct page *page,
->   			       unsigned int len, unsigned int offset)
->   {
-> +	VM_WARN_ON_ONCE(!page_range_contiguous(page, ALIGN(len + offset, PAGE_SIZE) / PAGE_SIZE));
->   	sg_assign_page(sg, page);
->   	sg->offset = offset;
->   	sg->length = len;
-> @@ -600,7 +602,7 @@ void __sg_page_iter_start(struct sg_page_iter *piter,
->    */
->   static inline struct page *sg_page_iter_page(struct sg_page_iter *piter)
->   {
-> -	return nth_page(sg_page(piter->sg), piter->sg_pgoffset);
-> +	return sg_page(piter->sg) + piter->sg_pgoffset;
->   }
->   
->   /**
+On 8/21/25 21:06, David Hildenbrand wrote:
+> We always provide a single dst page, it's unclear why the io_copy_cache
+> complexity is required.
 
-Best regards
+Because it'll need to be pulled outside the loop to reuse the page for
+multiple copies, i.e. packing multiple fragments of the same skb into
+it. Not finished, and currently it's wasting memory.
+
+Why not do as below? Pages there never cross boundaries of their folios.
+
+Do you want it to be taken into the io_uring tree?
+
+diff --git a/io_uring/zcrx.c b/io_uring/zcrx.c
+index e5ff49f3425e..18c12f4b56b6 100644
+--- a/io_uring/zcrx.c
++++ b/io_uring/zcrx.c
+@@ -975,9 +975,9 @@ static ssize_t io_copy_page(struct io_copy_cache *cc, struct page *src_page,
+  
+  		if (folio_test_partial_kmap(page_folio(dst_page)) ||
+  		    folio_test_partial_kmap(page_folio(src_page))) {
+-			dst_page = nth_page(dst_page, dst_offset / PAGE_SIZE);
++			dst_page += dst_offset / PAGE_SIZE;
+  			dst_offset = offset_in_page(dst_offset);
+-			src_page = nth_page(src_page, src_offset / PAGE_SIZE);
++			src_page += src_offset / PAGE_SIZE;
+  			src_offset = offset_in_page(src_offset);
+  			n = min(PAGE_SIZE - src_offset, PAGE_SIZE - dst_offset);
+  			n = min(n, len);
+
 -- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
+Pavel Begunkov
 
