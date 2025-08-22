@@ -4,41 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED906CA0EEB
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 22 Aug 2025 02:02:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D10ECA0EED
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 22 Aug 2025 04:10:01 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c6845ef2;
-	Fri, 22 Aug 2025 01:59:31 +0000 (UTC)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org
- [2604:1380:4641:c500::1])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7d7ed191
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d051631f;
+	Fri, 22 Aug 2025 04:09:29 +0000 (UTC)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8595e7b8
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 22 Aug 2025 01:59:29 +0000 (UTC)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id BB83A5C6103;
- Fri, 22 Aug 2025 01:59:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0940C4CEEB;
- Fri, 22 Aug 2025 01:59:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1755827964;
- bh=hEGBgFk9rer7lwQXMpzjj4FPsIa17LEhE/UyLSIHv80=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=fwCb0/jzIQkNPwEVBU6dtHyOVey66bf/HcR/iNP6aS0AhxrgrvMe34HD6vjnkGUZf
- z1O8tLkMNZpr+UzcBZV9dLBbBCwOaf+NQwl5ntySvGabL1KCpUaRFv+wfDydW+poVi
- X5XvF2zmqSX16ZKS+hqRP+DFJCxEdKcM7wYo6L7tOqHJI3XrYsnweALvOp8+KSqJnD
- 2bWhxr7953gGHvjXyBJUoUfk/Lgb2omKSw1C8cEO/Qv3yAqSEKl2XaKQVhYluUWO/h
- UsLkNxPauxpS9RjmwleNolFzOVx4bdRBpqA+ZD7ACyej3l0Oe7T142W2dhwsBnQaC9
- DSd2Q1+ARL+Zw==
-Message-ID: <3812ed9e-2a47-4c1c-bd69-f37768e62ad3@kernel.org>
-Date: Fri, 22 Aug 2025 10:59:15 +0900
+ Fri, 22 Aug 2025 04:09:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755835765;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=wD6Kie9NmTYlBWSYITqg8VmPWCkzgpHh3Jn6J+e3AEM=;
+ b=ekVL8Jcem6q4cF0HM2y6xOx21D/FJFLgh+Adi11GsoKh93+dTphRUEqvPEAbV1jsnGf0+j
+ 76vWlhnV/nsaTW5nDgWVAmPnyWUl0TtjWGi7aVu71PRBgkpV7KBux/J7eN3g1ihAEe3TSt
+ 6lo4Vg1aDMs7A8C7PTZdjARZhrto0Jk=
+Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
+ [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-267-qEHA9DnAPnazBBj6mRkpqA-1; Fri, 22 Aug 2025 00:09:23 -0400
+X-MC-Unique: qEHA9DnAPnazBBj6mRkpqA-1
+X-Mimecast-MFC-AGG-ID: qEHA9DnAPnazBBj6mRkpqA_1755835762
+Received: by mail-lj1-f200.google.com with SMTP id
+ 38308e7fff4ca-333f933c559so6413741fa.3
+ for <wireguard@lists.zx2c4.com>; Thu, 21 Aug 2025 21:09:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755835762; x=1756440562;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wD6Kie9NmTYlBWSYITqg8VmPWCkzgpHh3Jn6J+e3AEM=;
+ b=JzKx5+0gwPjmPimJoToHu+p+ZVrAV/HWhFfRn49E2LDLqTmKHQUJGf1IRUVHxL5IqX
+ YD6tjPdMduQgHFhRJf+8mZkA9tI1PGWcYQ+V+Bpz9m+7SkGMcAQepRZ28KiA31iUQ5WS
+ L/Vp33FanWBCnEHI1hEheX5tw6I6WOJxUmsS8+U4JZSSLzphBbP+JIfnXO9b+BE1a2ia
+ mm0fuJGo07VHqDKb8eRsgAEB7RPm8G1EHGRTw8vdv2ldLTRaxEdC6o4ywisopRSDU0cW
+ MJysa5kn6uPdAz3MuiTqDMUAkzN5tA7EMvyYmI9GAogW04mTKiqbItL8TvanLPMdekQ+
+ gtaQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXyBkAhGyuLSTh12dyZJFJ0a/aPAgACCkV/C8DGp4N40ucpYzgDhpsAGM6Sf/VASmX9bKRgUjq/UPY=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YwaxkSKQCrHyXV9YQ3jQHTZI2pRiVfqtwaf/ywPocytymRDnPwy
+ vMnge+PfDm3GHaxXws/XPqKIME8ij85QYYU8U/BepW28MCGNff8ys/DIJBc3lRPs5lgTJy8rqy8
+ tmsRd3u0wiQMObUNCtGfKUVsTeqCAYIFtbhPti/B1gA9NRBdMoz8blbw2oDoq
+X-Gm-Gg: ASbGnctuZJiRB3IVODTpPrkZJp9ZulftS186OyrWCg6XAIPEAfIRbwsKMBqMuNtilki
+ hep21ekXpuR0SK3DOoAxdAXrFvBO/Vbt3fK4a2nnD95lF6AtwDpydoPyHd9pWxTxsLExlmeJmdR
+ 0osxcuf1rkhCAaP+9/vLi+sDcrvcSmaJf7FcUSHpn+qA96SaWFHSpWhCJ7nJ7G4BX9rZmAyv992
+ mvTSj3lYMKF4P3AYb/DHy0+tycp14cITSjbfqK74wnEsWRlPOgYhcWuVtGgXnTBZmfGmFMLre6G
+ sah+mQ1E3jpv+FWOuG0armLlNlX9owvrlkioC1C2HddBUGjBd7wzkdYNxHr/RznhPA==
+X-Received: by 2002:a2e:be0c:0:b0:333:b6b0:e665 with SMTP id
+ 38308e7fff4ca-33650fa8605mr4319521fa.30.1755835762120; 
+ Thu, 21 Aug 2025 21:09:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHIfwy5viYQG7CiACnNo0XJ1QLrkAQo6vQi0t/AKYxGuojOFc+bxzH8Oeop0sL+wr/cDEqByA==
+X-Received: by 2002:a2e:be0c:0:b0:333:b6b0:e665 with SMTP id
+ 38308e7fff4ca-33650fa8605mr4319091fa.30.1755835761548; 
+ Thu, 21 Aug 2025 21:09:21 -0700 (PDT)
+Received: from [192.168.1.86] (85-23-48-6.bb.dnainternet.fi. [85.23.48.6])
+ by smtp.gmail.com with ESMTPSA id
+ 38308e7fff4ca-3340a41e3cfsm35236551fa.6.2025.08.21.21.09.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 21 Aug 2025 21:09:19 -0700 (PDT)
+Message-ID: <9156d191-9ec4-4422-bae9-2e8ce66f9d5e@redhat.com>
+Date: Fri, 22 Aug 2025 07:09:17 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 24/35] ata: libata-eh: drop nth_page() usage within SG
- entry
+Subject: Re: [PATCH RFC 10/35] mm/hugetlb: cleanup
+ hugetlb_folio_init_tail_vmemmap()
 To: David Hildenbrand <david@redhat.com>, linux-kernel@vger.kernel.org
-Cc: Niklas Cassel <cassel@kernel.org>, Alexander Potapenko
- <glider@google.com>, Andrew Morton <akpm@linux-foundation.org>,
+Cc: Alexander Potapenko <glider@google.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
  Brendan Jackman <jackmanb@google.com>, Christoph Lameter <cl@gentwo.org>,
  Dennis Zhou <dennis@kernel.org>, Dmitry Vyukov <dvyukov@google.com>,
  dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
@@ -62,11 +100,13 @@ Cc: Niklas Cassel <cassel@kernel.org>, Alexander Potapenko
  Vlastimil Babka <vbabka@suse.cz>, wireguard@lists.zx2c4.com, x86@kernel.org,
  Zi Yan <ziy@nvidia.com>
 References: <20250821200701.1329277-1-david@redhat.com>
- <20250821200701.1329277-25-david@redhat.com>
+ <20250821200701.1329277-11-david@redhat.com>
+From: =?UTF-8?Q?Mika_Penttil=C3=A4?= <mpenttil@redhat.com>
+In-Reply-To: <20250821200701.1329277-11-david@redhat.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: twuk8OD3w21DQfCiK0T0vXeOroJ74quV5KkQ2-x6W8Y_1755835762
+X-Mimecast-Originator: redhat.com
 Content-Language: en-US
-From: Damien Le Moal <dlemoal@kernel.org>
-Organization: Western Digital Research
-In-Reply-To: <20250821200701.1329277-25-david@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -83,56 +123,81 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 8/22/25 05:06, David Hildenbrand wrote:
-> It's no longer required to use nth_page() when iterating pages within a
-> single SG entry, so let's drop the nth_page() usage.
-> 
-> Cc: Damien Le Moal <dlemoal@kernel.org>
-> Cc: Niklas Cassel <cassel@kernel.org>
+
+On 8/21/25 23:06, David Hildenbrand wrote:
+
+> All pages were already initialized and set to PageReserved() with a
+> refcount of 1 by MM init code.
+
+Just to be sure, how is this working with MEMBLOCK_RSRV_NOINIT, where MM is supposed not to
+initialize struct pages?
+
+> In fact, by using __init_single_page(), we will be setting the refcount to
+> 1 just to freeze it again immediately afterwards.
+>
+> So drop the __init_single_page() and use __ClearPageReserved() instead.
+> Adjust the comments to highlight that we are dealing with an open-coded
+> prep_compound_page() variant.
+>
+> Further, as we can now safely iterate over all pages in a folio, let's
+> avoid the page-pfn dance and just iterate the pages directly.
+>
+> Note that the current code was likely problematic, but we never ran into
+> it: prep_compound_tail() would have been called with an offset that might
+> exceed a memory section, and prep_compound_tail() would have simply
+> added that offset to the page pointer -- which would not have done the
+> right thing on sparsemem without vmemmap.
+>
 > Signed-off-by: David Hildenbrand <david@redhat.com>
 > ---
->  drivers/ata/libata-sff.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/ata/libata-sff.c b/drivers/ata/libata-sff.c
-> index 7fc407255eb46..9f5d0f9f6d686 100644
-> --- a/drivers/ata/libata-sff.c
-> +++ b/drivers/ata/libata-sff.c
-> @@ -614,7 +614,7 @@ static void ata_pio_sector(struct ata_queued_cmd *qc)
->  	offset = qc->cursg->offset + qc->cursg_ofs;
+>  mm/hugetlb.c | 21 ++++++++++-----------
+>  1 file changed, 10 insertions(+), 11 deletions(-)
+>
+> diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+> index d12a9d5146af4..ae82a845b14ad 100644
+> --- a/mm/hugetlb.c
+> +++ b/mm/hugetlb.c
+> @@ -3235,17 +3235,14 @@ static void __init hugetlb_folio_init_tail_vmemmap(struct folio *folio,
+>  					unsigned long start_page_number,
+>  					unsigned long end_page_number)
+>  {
+> -	enum zone_type zone = zone_idx(folio_zone(folio));
+> -	int nid = folio_nid(folio);
+> -	unsigned long head_pfn = folio_pfn(folio);
+> -	unsigned long pfn, end_pfn = head_pfn + end_page_number;
+> +	struct page *head_page = folio_page(folio, 0);
+> +	struct page *page = folio_page(folio, start_page_number);
+> +	unsigned long i;
+>  	int ret;
 >  
->  	/* get the current page and offset */
-> -	page = nth_page(page, (offset >> PAGE_SHIFT));
-> +	page += offset / PAGE_SHIFT;
-
-Shouldn't this be "offset >> PAGE_SHIFT" ?
-
->  	offset %= PAGE_SIZE;
->  
->  	/* don't overrun current sg */
-> @@ -631,7 +631,7 @@ static void ata_pio_sector(struct ata_queued_cmd *qc)
->  		unsigned int split_len = PAGE_SIZE - offset;
->  
->  		ata_pio_xfer(qc, page, offset, split_len);
-> -		ata_pio_xfer(qc, nth_page(page, 1), 0, count - split_len);
-> +		ata_pio_xfer(qc, page + 1, 0, count - split_len);
->  	} else {
->  		ata_pio_xfer(qc, page, offset, count);
+> -	for (pfn = head_pfn + start_page_number; pfn < end_pfn; pfn++) {
+> -		struct page *page = pfn_to_page(pfn);
+> -
+> -		__init_single_page(page, pfn, zone, nid);
+> -		prep_compound_tail((struct page *)folio, pfn - head_pfn);
+> +	for (i = start_page_number; i < end_page_number; i++, page++) {
+> +		__ClearPageReserved(page);
+> +		prep_compound_tail(head_page, i);
+>  		ret = page_ref_freeze(page, 1);
+>  		VM_BUG_ON(!ret);
 >  	}
-> @@ -751,7 +751,7 @@ static int __atapi_pio_bytes(struct ata_queued_cmd *qc, unsigned int bytes)
->  	offset = sg->offset + qc->cursg_ofs;
+> @@ -3257,12 +3254,14 @@ static void __init hugetlb_folio_init_vmemmap(struct folio *folio,
+>  {
+>  	int ret;
 >  
->  	/* get the current page and offset */
-> -	page = nth_page(page, (offset >> PAGE_SHIFT));
-> +	page += offset / PAGE_SIZE;
+> -	/* Prepare folio head */
+> +	/*
+> +	 * This is an open-coded prep_compound_page() whereby we avoid
+> +	 * walking pages twice by preparing+freezing them in the same go.
+> +	 */
+>  	__folio_clear_reserved(folio);
+>  	__folio_set_head(folio);
+>  	ret = folio_ref_freeze(folio, 1);
+>  	VM_BUG_ON(!ret);
+> -	/* Initialize the necessary tail struct pages */
+>  	hugetlb_folio_init_tail_vmemmap(folio, 1, nr_pages);
+>  	prep_compound_head((struct page *)folio, huge_page_order(h));
+>  }
 
-Same here, though this seems correct too.
+--Mika
 
->  	offset %= PAGE_SIZE;
->  
->  	/* don't overrun current sg */
-
-
--- 
-Damien Le Moal
-Western Digital Research
