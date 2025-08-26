@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94B86CA0FE9
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 26 Aug 2025 11:04:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE9F9CA0FE7
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 26 Aug 2025 13:08:23 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6ff09047;
-	Tue, 26 Aug 2025 11:04:47 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4dd66f60;
+	Tue, 26 Aug 2025 13:08:22 +0000 (UTC)
 Received: from us-smtp-delivery-124.mimecast.com
  (us-smtp-delivery-124.mimecast.com [170.10.129.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id fb1e9114
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5ae54a84
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 26 Aug 2025 11:04:44 +0000 (UTC)
+ Tue, 26 Aug 2025 13:08:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756206283;
+ s=mimecast20190719; t=1756213697;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=jhHf33zPn8FMTc4V2Pm10xsHI1Kc6Z2Rv/ZWcei/RDk=;
- b=NZYCH3+malxTFu01T8JvJqocL3yu2bb4NhqfzyGF5SK+xi9nVYBv7dJtER4Z2SQKtlS7HE
- wNLVo6VEEuuLUgA/3XksHb8GI/ui/tCyIGEx+OISHIuBLnRuzH9LeFiZDa7S+qgUjh2Faa
- P6/MATEs3MwJ9hS3gqWndbMwQ4wQIMU=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+33Ue2Cu5Y5oxJByCwLn3TsnRWViKb51w/F+XvIasfg=;
+ b=JhPiJ2uhjjKaE5XU5MQErSR/yUY26nylLw37gbGdJV/SqJUsiBJaoZNCadR0m2iheFj362
+ LICKJvLtiYUqfIJra5j1WkHrTP+2KEsRUULDwcu6MsblwCeyocTGiT5kl8YN1VuuiglHIL
+ pJrB/sE6WWUgRh+yAdg/e85zKD2LV0w=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-303-Z-zPNpS7M9KOORy0XxM1EQ-1; Tue, 26 Aug 2025 07:04:39 -0400
-X-MC-Unique: Z-zPNpS7M9KOORy0XxM1EQ-1
-X-Mimecast-MFC-AGG-ID: Z-zPNpS7M9KOORy0XxM1EQ_1756206279
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-618b3c75161so4481970a12.1
- for <wireguard@lists.zx2c4.com>; Tue, 26 Aug 2025 04:04:39 -0700 (PDT)
+ us-mta-395-CJoXf0VFMwqmavLG16kgEA-1; Tue, 26 Aug 2025 09:08:13 -0400
+X-MC-Unique: CJoXf0VFMwqmavLG16kgEA-1
+X-Mimecast-MFC-AGG-ID: CJoXf0VFMwqmavLG16kgEA_1756213692
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-45b612dbc28so13620075e9.0
+ for <wireguard@lists.zx2c4.com>; Tue, 26 Aug 2025 06:08:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756206278; x=1756811078;
+ d=1e100.net; s=20230601; t=1756213692; x=1756818492;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=jhHf33zPn8FMTc4V2Pm10xsHI1Kc6Z2Rv/ZWcei/RDk=;
- b=T9mcWSnZ29+JandpdmfH/4HPcnGhAwQ6PSko60gXfoEn3/yhQvLPnWCuT6kV7fUpgD
- Y/8OVzsogA4gWS9PiIrRCI881k1BJQSLL4ijXuMrqtAgUsMT0GrX1OVK9Y2HvxEjTm9T
- eeNBe+/K3bM+28VRDjhhNeWru7DHrAmoi9NwaMl9b312eZavNd0ydlj1m7qBhoeKlxYN
- XCBmxd5I05zfR0F4OWBtIcLJEaDTBuaAjSXTHBKfYjPcPdkqHpaiH6gcG4iyeN57BQgl
- ZC7gs5o0Jm+K3iSrpR1YzJyViWdLatzxBpeYr5fCoeiOoeWKAeSnP4vItRyfisieJbel
- X5Nw==
+ bh=+33Ue2Cu5Y5oxJByCwLn3TsnRWViKb51w/F+XvIasfg=;
+ b=dK5UKQQzkucO9IKkg44BFf8nULn9jQ4LXKaVYVgm2F2ey3MFAeoc9oFXPnQ9dLTeo7
+ ixAEs3K2bGL2RpqlpN3Tsl/EvIi22GAumyHdCcMNVJyrAfqn6DF9XdDuLmJ/MhylvncG
+ 3eTQe5Mi7ThJ7bOdAmyAAfqbjvKNRULgKEBKwjcWycN8Fi0pBwHnPNovHfjDZ9MY7ktH
+ QTr7FO+csdbEAP9QhwGuRTt/9AzMEeBKJMiM7K9PhbwDwxNeg7duW7CxVL6URn/UryqV
+ 5U/G31n+RqmxkbAupsZVYZ7y93KgpUF+z8/cQ6rYpBJVwjOuOoZKiroJx1sihHoOl/Kl
+ xDLg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVZ96oMTXMBvt+f5Lt+5FnGE6aBCcH9y/ux8UUt+XQ5ptqxfUuBEH5+VXgtsryp3OI/eiTKBvu002g=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YzEbDyFfnj5SZrZR795D7ian3LSWmH9YWwm+tAlDuUlW7iHOep8
- GRgq6LI31xcAmxem0aQCSsxaJTZJ8sKfH8QluEl/gSfVmcXFjcHtwBd1T3M+TI1N7ACCdptWmnc
- /hoKXAh8Vc8w9+/D0IVUvPC+iktxYHIs2/zGH4YL89CPoDH3iAHJ6UeZJZYtG6Q==
-X-Gm-Gg: ASbGncu51wKfoOuMtib0RlaNxMaze+AZkwVwOZo5xmCzbU7/7t8qy7HtsQA8winBjFG
- kO7uu0x2k3jw2sYHZCLVo9TaoL+gfInimlTqxs2QV2TH/L2LD7G3Aw5PbJ8Q/CdCeknUV60046O
- FisQb6ASRhOEaDDFa0nIM+Nnp4s6mPcL2TGu/wlDILQ07UEfWH5Jt+xdRSBkDphvEwoxYXEr9YC
- PyGZv3exgaIdoQQKYWooDNCqie+m8aTYDK9qzEyIAg/9YlAO7tDmOxposSiMYRN2ERIOTrjXuZC
- ShI+IM39UW/VrOWKinGWRSBbHVs52hOk04RLmHN1MgRKR10jc6UbxbaTzAmpEJ9hq7UceUQWBw=
+ AJvYcCXRKGY1tz5+nkMw17Kt+BpjIcBd/5VaFOgnaGsprPn5V8YeKx1JuGiqOYoO9CR9n8VXVh5yKJGD0zA=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YxhXb9K/rMQAnN5ZYNOBHRSOS1EzZ7tsG0JVoq3yk/GIu4DYQsD
+ gR0nI0PewOxWjdbvNCmLkbswUiZRvFljpmR53IsPseNpAgr5h+rBTZRQnfMqbBwuaTA7hwmyAOR
+ kA1L+5QLCRyPhVVay07qDic6KTGkoHnqD3R5r4Riaa6S0pVdtPaF3c+hnMGAOMw==
+X-Gm-Gg: ASbGncsg/qhGRNF+3TiVxq51RSILuYTVAOONgvGb9ElQo8Wm8pCXwdVIhhuBUwlu2Tc
+ OSTa16GuKH7ZzzwbLjFmwJSmlAzkOMctDrWwtU6CZNpu1URImimxN6Bin8CjxzVBQP7l4WERWj6
+ C/yjNbpv2wdtoI44MrQV+sN4zKx1O0OQpi5t6l3Od3pSOAQkQzeEhyj7iaEqOpQJk06nqa6Bpg/
+ c2T6GLks7biejd8Kdd+5d+fkc67wBrZrY8D4X+8+C1eR9Zep30p/IHQ1/rQen8I+4PSTeOoyL9R
+ L09FXKKoPyHTi62sK8vidEsdgaRXDZwd2Nr5kKn3zpP62LPrRKpsUFyx72+MTJGnmyPOysEi6g=
  =
-X-Received: by 2002:a05:6402:510e:b0:61c:a1a6:52a2 with SMTP id
- 4fb4d7f45d1cf-61ca1a65d0amr110499a12.28.1756206278272; 
- Tue, 26 Aug 2025 04:04:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFJfWOpyeYnJbaHVglB9KfY+PTnQ4jI93qRAexOTMKIRVofYBVmmLclF7ZKvry/r0B75eD1FQ==
-X-Received: by 2002:a05:6402:510e:b0:61c:a1a6:52a2 with SMTP id
- 4fb4d7f45d1cf-61ca1a65d0amr110409a12.28.1756206276561; 
- Tue, 26 Aug 2025 04:04:36 -0700 (PDT)
+X-Received: by 2002:a05:600c:19cb:b0:458:6733:fb5c with SMTP id
+ 5b1f17b1804b1-45b517d2751mr126238585e9.28.1756213691643; 
+ Tue, 26 Aug 2025 06:08:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE0uVvd3bkBu8Q9HfrtdCgTiP652NIGyMgKGC7lB/H2NXiQPCgnz3LGDq701BEdJbsSh2Pm8g==
+X-Received: by 2002:a05:600c:19cb:b0:458:6733:fb5c with SMTP id
+ 5b1f17b1804b1-45b517d2751mr126238015e9.28.1756213691060; 
+ Tue, 26 Aug 2025 06:08:11 -0700 (PDT)
 Received: from ?IPV6:2a09:80c0:192:0:5dac:bf3d:c41:c3e7?
  ([2a09:80c0:192:0:5dac:bf3d:c41:c3e7])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-61c3172bf4csm6850118a12.38.2025.08.26.04.04.34
+ 5b1f17b1804b1-45b57444963sm165603375e9.3.2025.08.26.06.08.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Aug 2025 04:04:36 -0700 (PDT)
-Message-ID: <ad521f4f-47aa-4728-916f-3704bf01f770@redhat.com>
-Date: Tue, 26 Aug 2025 13:04:33 +0200
+ Tue, 26 Aug 2025 06:08:10 -0700 (PDT)
+Message-ID: <ecc599ee-4175-4356-ab66-1d76a75f44f7@redhat.com>
+Date: Tue, 26 Aug 2025 15:08:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH RFC 21/35] mm/cma: refuse handing out non-contiguous page
@@ -104,6 +104,7 @@ Cc: linux-kernel@vger.kernel.org, Alexander Potapenko <glider@google.com>,
  Zi Yan <ziy@nvidia.com>
 References: <20250821200701.1329277-1-david@redhat.com>
  <20250821200701.1329277-22-david@redhat.com> <aK2QZnzS1ErHK5tP@raptor>
+ <ad521f4f-47aa-4728-916f-3704bf01f770@redhat.com> <aK2wlGYvCaFQXzBm@raptor>
 From: David Hildenbrand <david@redhat.com>
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
@@ -149,9 +150,9 @@ Autocrypt: addr=david@redhat.com; keydata=
  3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
  CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
  qIws/H2t
-In-Reply-To: <aK2QZnzS1ErHK5tP@raptor>
+In-Reply-To: <aK2wlGYvCaFQXzBm@raptor>
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: Bxds7wP1DljWjsFs0-oiUUzzoaWtvyw6lkv-HKwi32c_1756206279
+X-Mimecast-MFC-PROC-ID: K-JnUBYzigsKvFB2acx3UEgjYTboqXDRW5OeAmH29MQ_1756213692
 X-Mimecast-Originator: redhat.com
 Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8; format=flowed
@@ -170,62 +171,43 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
->>   
->>   		pr_debug("%s(): memory range at pfn 0x%lx %p is busy, retrying\n",
->> -			 __func__, pfn, pfn_to_page(pfn));
->> +			 __func__, pfn, page);
->>   
->>   		trace_cma_alloc_busy_retry(cma->name, pfn, pfn_to_page(pfn),
+On 26.08.25 15:03, Alexandru Elisei wrote:
+> Hi David,
 > 
-> Nitpick: I think you already have the page here.
+> On Tue, Aug 26, 2025 at 01:04:33PM +0200, David Hildenbrand wrote:
+> ..
+>>> Just so I can better understand the problem being fixed, I guess you can have
+>>> two consecutive pfns with non-consecutive associated struct page if you have two
+>>> adjacent memory sections spanning the same physical memory region, is that
+>>> correct?
+>>
+>> Exactly. Essentially on SPARSEMEM without SPARSEMEM_VMEMMAP it is not
+>> guaranteed that
+>>
+>> 	pfn_to_page(pfn + 1) == pfn_to_page(pfn) + 1
+>>
+>> when we cross memory section boundaries.
+>>
+>> It can be the case for early boot memory if we allocated consecutive areas
+>> from memblock when allocating the memmap (struct pages) per memory section,
+>> but it's not guaranteed.
+> 
+> Thank you for the explanation, but I'm a bit confused by the last paragraph. I
+> think what you're saying is that we can also have the reverse problem, where
+> consecutive struct page * represent non-consecutive pfns, because memmap
+> allocations happened to return consecutive virtual addresses, is that right?
 
-Indeed, forgot to clean that up as well.
-
-> 
->>   					   count, align);
->> -		/* try again with a bit different memory target */
->> -		start = bitmap_no + mask + 1;
->>   	}
->>   out:
->> -	*pagep = page;
->> +	if (!ret)
->> +		*pagep = page;
->>   	return ret;
->>   }
->>   
->> @@ -882,7 +892,7 @@ static struct page *__cma_alloc(struct cma *cma, unsigned long count,
->>   	 */
->>   	if (page) {
->>   		for (i = 0; i < count; i++)
->> -			page_kasan_tag_reset(nth_page(page, i));
->> +			page_kasan_tag_reset(page + i);
-> 
-> Had a look at it, not very familiar with CMA, but the changes look equivalent to
-> what was before. Not sure that's worth a Reviewed-by tag, but here it in case
-> you want to add it:
-> 
-> Reviewed-by: Alexandru Elisei <alexandru.elisei@arm.com>
-
-Thanks!
+Exactly, that's something we have to deal with elsewhere [1]. For this 
+code, it's not a problem because we always allocate a contiguous PFN range.
 
 > 
-> Just so I can better understand the problem being fixed, I guess you can have
-> two consecutive pfns with non-consecutive associated struct page if you have two
-> adjacent memory sections spanning the same physical memory region, is that
-> correct?
+> If that's correct, I don't think that's the case for CMA, which deals out
+> contiguous physical memory. Or were you just trying to explain the other side of
+> the problem, and I'm just overthinking it?
 
-Exactly. Essentially on SPARSEMEM without SPARSEMEM_VMEMMAP it is not 
-guaranteed that
+The latter :)
 
-	pfn_to_page(pfn + 1) == pfn_to_page(pfn) + 1
-
-when we cross memory section boundaries.
-
-It can be the case for early boot memory if we allocated consecutive 
-areas from memblock when allocating the memmap (struct pages) per memory 
-section, but it's not guaranteed.
-
-So we rule out that case.
+[1] https://lkml.kernel.org/r/20250814064714.56485-2-lizhe.67@bytedance.com
 
 -- 
 Cheers
