@@ -4,22 +4,22 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F7B2CF2561
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 23:47:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4980CF2561
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 23:56:02 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 784f1dbb;
-	Tue, 18 Nov 2025 17:27:16 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a544ba77;
+	Tue, 18 Nov 2025 17:27:18 +0000 (UTC)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4750c5fe
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b2e9f276
  for <wireguard@lists.zx2c4.com>;
- Tue, 26 Aug 2025 10:46:10 +0000 (UTC)
+ Tue, 26 Aug 2025 13:11:46 +0000 (UTC)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0AD2A1A00;
- Tue, 26 Aug 2025 03:46:01 -0700 (PDT)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7C1B82BF2;
+ Tue, 26 Aug 2025 06:11:36 -0700 (PDT)
 Received: from raptor (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 93FC13F694;
- Tue, 26 Aug 2025 03:46:01 -0700 (PDT)
-Date: Tue, 26 Aug 2025 11:45:58 +0100
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0B7A13F63F;
+ Tue, 26 Aug 2025 06:11:36 -0700 (PDT)
+Date: Tue, 26 Aug 2025 14:11:34 +0100
 From: Alexandru Elisei <alexandru.elisei@arm.com>
 To: David Hildenbrand <david@redhat.com>
 Cc: linux-kernel@vger.kernel.org, Alexander Potapenko <glider@google.com>,
@@ -50,13 +50,17 @@ Cc: linux-kernel@vger.kernel.org, Alexander Potapenko <glider@google.com>,
  wireguard@lists.zx2c4.com, x86@kernel.org, Zi Yan <ziy@nvidia.com>
 Subject: Re: [PATCH RFC 21/35] mm/cma: refuse handing out non-contiguous page
  ranges
-Message-ID: <aK2QZnzS1ErHK5tP@raptor>
+Message-ID: <aK2yhtQ0M_0hqQHh@raptor>
 References: <20250821200701.1329277-1-david@redhat.com>
  <20250821200701.1329277-22-david@redhat.com>
+ <aK2QZnzS1ErHK5tP@raptor>
+ <ad521f4f-47aa-4728-916f-3704bf01f770@redhat.com>
+ <aK2wlGYvCaFQXzBm@raptor>
+ <ecc599ee-4175-4356-ab66-1d76a75f44f7@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250821200701.1329277-22-david@redhat.com>
+In-Reply-To: <ecc599ee-4175-4356-ab66-1d76a75f44f7@redhat.com>
 X-Mailman-Approved-At: Tue, 18 Nov 2025 17:23:16 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -74,199 +78,43 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 Hi David,
 
-On Thu, Aug 21, 2025 at 10:06:47PM +0200, David Hildenbrand wrote:
-> Let's disallow handing out PFN ranges with non-contiguous pages, so we
-> can remove the nth-page usage in __cma_alloc(), and so any callers don't
-> have to worry about that either when wanting to blindly iterate pages.
+On Tue, Aug 26, 2025 at 03:08:08PM +0200, David Hildenbrand wrote:
+> On 26.08.25 15:03, Alexandru Elisei wrote:
+> > Hi David,
+> > 
+> > On Tue, Aug 26, 2025 at 01:04:33PM +0200, David Hildenbrand wrote:
+> > ..
+> > > > Just so I can better understand the problem being fixed, I guess you can have
+> > > > two consecutive pfns with non-consecutive associated struct page if you have two
+> > > > adjacent memory sections spanning the same physical memory region, is that
+> > > > correct?
+> > > 
+> > > Exactly. Essentially on SPARSEMEM without SPARSEMEM_VMEMMAP it is not
+> > > guaranteed that
+> > > 
+> > > 	pfn_to_page(pfn + 1) == pfn_to_page(pfn) + 1
+> > > 
+> > > when we cross memory section boundaries.
+> > > 
+> > > It can be the case for early boot memory if we allocated consecutive areas
+> > > from memblock when allocating the memmap (struct pages) per memory section,
+> > > but it's not guaranteed.
+> > 
+> > Thank you for the explanation, but I'm a bit confused by the last paragraph. I
+> > think what you're saying is that we can also have the reverse problem, where
+> > consecutive struct page * represent non-consecutive pfns, because memmap
+> > allocations happened to return consecutive virtual addresses, is that right?
 > 
-> This is really only a problem in configs with SPARSEMEM but without
-> SPARSEMEM_VMEMMAP, and only when we would cross memory sections in some
-> cases.
+> Exactly, that's something we have to deal with elsewhere [1]. For this code,
+> it's not a problem because we always allocate a contiguous PFN range.
 > 
-> Will this cause harm? Probably not, because it's mostly 32bit that does
-> not support SPARSEMEM_VMEMMAP. If this ever becomes a problem we could
-> look into allocating the memmap for the memory sections spanned by a
-> single CMA region in one go from memblock.
+> > 
+> > If that's correct, I don't think that's the case for CMA, which deals out
+> > contiguous physical memory. Or were you just trying to explain the other side of
+> > the problem, and I'm just overthinking it?
 > 
-> Signed-off-by: David Hildenbrand <david@redhat.com>
-> ---
->  include/linux/mm.h |  6 ++++++
->  mm/cma.c           | 36 +++++++++++++++++++++++-------------
->  mm/util.c          | 33 +++++++++++++++++++++++++++++++++
->  3 files changed, 62 insertions(+), 13 deletions(-)
-> 
-> diff --git a/include/linux/mm.h b/include/linux/mm.h
-> index ef360b72cb05c..f59ad1f9fc792 100644
-> --- a/include/linux/mm.h
-> +++ b/include/linux/mm.h
-> @@ -209,9 +209,15 @@ extern unsigned long sysctl_user_reserve_kbytes;
->  extern unsigned long sysctl_admin_reserve_kbytes;
->  
->  #if defined(CONFIG_SPARSEMEM) && !defined(CONFIG_SPARSEMEM_VMEMMAP)
-> +bool page_range_contiguous(const struct page *page, unsigned long nr_pages);
->  #define nth_page(page,n) pfn_to_page(page_to_pfn((page)) + (n))
->  #else
->  #define nth_page(page,n) ((page) + (n))
-> +static inline bool page_range_contiguous(const struct page *page,
-> +		unsigned long nr_pages)
-> +{
-> +	return true;
-> +}
->  #endif
->  
->  /* to align the pointer to the (next) page boundary */
-> diff --git a/mm/cma.c b/mm/cma.c
-> index 2ffa4befb99ab..1119fa2830008 100644
-> --- a/mm/cma.c
-> +++ b/mm/cma.c
-> @@ -780,10 +780,8 @@ static int cma_range_alloc(struct cma *cma, struct cma_memrange *cmr,
->  				unsigned long count, unsigned int align,
->  				struct page **pagep, gfp_t gfp)
->  {
-> -	unsigned long mask, offset;
-> -	unsigned long pfn = -1;
-> -	unsigned long start = 0;
->  	unsigned long bitmap_maxno, bitmap_no, bitmap_count;
-> +	unsigned long start, pfn, mask, offset;
->  	int ret = -EBUSY;
->  	struct page *page = NULL;
->  
-> @@ -795,7 +793,7 @@ static int cma_range_alloc(struct cma *cma, struct cma_memrange *cmr,
->  	if (bitmap_count > bitmap_maxno)
->  		goto out;
->  
-> -	for (;;) {
-> +	for (start = 0; ; start = bitmap_no + mask + 1) {
->  		spin_lock_irq(&cma->lock);
->  		/*
->  		 * If the request is larger than the available number
-> @@ -812,6 +810,22 @@ static int cma_range_alloc(struct cma *cma, struct cma_memrange *cmr,
->  			spin_unlock_irq(&cma->lock);
->  			break;
->  		}
-> +
-> +		pfn = cmr->base_pfn + (bitmap_no << cma->order_per_bit);
-> +		page = pfn_to_page(pfn);
-> +
-> +		/*
-> +		 * Do not hand out page ranges that are not contiguous, so
-> +		 * callers can just iterate the pages without having to worry
-> +		 * about these corner cases.
-> +		 */
-> +		if (!page_range_contiguous(page, count)) {
-> +			spin_unlock_irq(&cma->lock);
-> +			pr_warn_ratelimited("%s: %s: skipping incompatible area [0x%lx-0x%lx]",
-> +					    __func__, cma->name, pfn, pfn + count - 1);
-> +			continue;
-> +		}
-> +
->  		bitmap_set(cmr->bitmap, bitmap_no, bitmap_count);
->  		cma->available_count -= count;
->  		/*
-> @@ -821,29 +835,25 @@ static int cma_range_alloc(struct cma *cma, struct cma_memrange *cmr,
->  		 */
->  		spin_unlock_irq(&cma->lock);
->  
-> -		pfn = cmr->base_pfn + (bitmap_no << cma->order_per_bit);
->  		mutex_lock(&cma->alloc_mutex);
->  		ret = alloc_contig_range(pfn, pfn + count, ACR_FLAGS_CMA, gfp);
->  		mutex_unlock(&cma->alloc_mutex);
-> -		if (ret == 0) {
-> -			page = pfn_to_page(pfn);
-> +		if (!ret)
->  			break;
-> -		}
->  
->  		cma_clear_bitmap(cma, cmr, pfn, count);
->  		if (ret != -EBUSY)
->  			break;
->  
->  		pr_debug("%s(): memory range at pfn 0x%lx %p is busy, retrying\n",
-> -			 __func__, pfn, pfn_to_page(pfn));
-> +			 __func__, pfn, page);
->  
->  		trace_cma_alloc_busy_retry(cma->name, pfn, pfn_to_page(pfn),
+> The latter :)
 
-Nitpick: I think you already have the page here.
+Ok, sorry for the noise then, and thank you for educating me.
 
->  					   count, align);
-> -		/* try again with a bit different memory target */
-> -		start = bitmap_no + mask + 1;
->  	}
->  out:
-> -	*pagep = page;
-> +	if (!ret)
-> +		*pagep = page;
->  	return ret;
->  }
->  
-> @@ -882,7 +892,7 @@ static struct page *__cma_alloc(struct cma *cma, unsigned long count,
->  	 */
->  	if (page) {
->  		for (i = 0; i < count; i++)
-> -			page_kasan_tag_reset(nth_page(page, i));
-> +			page_kasan_tag_reset(page + i);
-
-Had a look at it, not very familiar with CMA, but the changes look equivalent to
-what was before. Not sure that's worth a Reviewed-by tag, but here it in case
-you want to add it:
-
-Reviewed-by: Alexandru Elisei <alexandru.elisei@arm.com>
-
-Just so I can better understand the problem being fixed, I guess you can have
-two consecutive pfns with non-consecutive associated struct page if you have two
-adjacent memory sections spanning the same physical memory region, is that
-correct?
-
-Thanks,
 Alex
-
->  	}
->  
->  	if (ret && !(gfp & __GFP_NOWARN)) {
-> diff --git a/mm/util.c b/mm/util.c
-> index d235b74f7aff7..0bf349b19b652 100644
-> --- a/mm/util.c
-> +++ b/mm/util.c
-> @@ -1280,4 +1280,37 @@ unsigned int folio_pte_batch(struct folio *folio, pte_t *ptep, pte_t pte,
->  {
->  	return folio_pte_batch_flags(folio, NULL, ptep, &pte, max_nr, 0);
->  }
-> +
-> +#if defined(CONFIG_SPARSEMEM) && !defined(CONFIG_SPARSEMEM_VMEMMAP)
-> +/**
-> + * page_range_contiguous - test whether the page range is contiguous
-> + * @page: the start of the page range.
-> + * @nr_pages: the number of pages in the range.
-> + *
-> + * Test whether the page range is contiguous, such that they can be iterated
-> + * naively, corresponding to iterating a contiguous PFN range.
-> + *
-> + * This function should primarily only be used for debug checks, or when
-> + * working with page ranges that are not naturally contiguous (e.g., pages
-> + * within a folio are).
-> + *
-> + * Returns true if contiguous, otherwise false.
-> + */
-> +bool page_range_contiguous(const struct page *page, unsigned long nr_pages)
-> +{
-> +	const unsigned long start_pfn = page_to_pfn(page);
-> +	const unsigned long end_pfn = start_pfn + nr_pages;
-> +	unsigned long pfn;
-> +
-> +	/*
-> +	 * The memmap is allocated per memory section. We need to check
-> +	 * each involved memory section once.
-> +	 */
-> +	for (pfn = ALIGN(start_pfn, PAGES_PER_SECTION);
-> +	     pfn < end_pfn; pfn += PAGES_PER_SECTION)
-> +		if (unlikely(page + (pfn - start_pfn) != pfn_to_page(pfn)))
-> +			return false;
-> +	return true;
-> +}
-> +#endif
->  #endif /* CONFIG_MMU */
-> -- 
-> 2.50.1
-> 
-> 
