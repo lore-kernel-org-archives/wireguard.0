@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EAA0CA0FED
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 25 Aug 2025 18:32:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94B86CA0FE9
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 26 Aug 2025 11:04:49 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 221f82b8;
-	Mon, 25 Aug 2025 18:32:39 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6ff09047;
+	Tue, 26 Aug 2025 11:04:47 +0000 (UTC)
 Received: from us-smtp-delivery-124.mimecast.com
  (us-smtp-delivery-124.mimecast.com [170.10.129.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 64219477
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id fb1e9114
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 25 Aug 2025 18:32:36 +0000 (UTC)
+ Tue, 26 Aug 2025 11:04:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756146755;
+ s=mimecast20190719; t=1756206283;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=bluti57k39MttADONVHVsAxBvXyqb5R7ZWo2ok70EgM=;
- b=RhYXThG3+tIFnfqzLIr9RPKxUxwraFl7lO2IPNcEbTyPNdKbVpERSCLZuCs+WhDSSPQMox
- 8AF8QwnYsxJ1QrHDYmS40C5kdt7ZdyEuAeCyVZfTk/DGGnAgMs5zVwdFTws8tKK4Jgeq82
- 8aePnOuj3pRFAfo75YAYdTeDDGMLxcE=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jhHf33zPn8FMTc4V2Pm10xsHI1Kc6Z2Rv/ZWcei/RDk=;
+ b=NZYCH3+malxTFu01T8JvJqocL3yu2bb4NhqfzyGF5SK+xi9nVYBv7dJtER4Z2SQKtlS7HE
+ wNLVo6VEEuuLUgA/3XksHb8GI/ui/tCyIGEx+OISHIuBLnRuzH9LeFiZDa7S+qgUjh2Faa
+ P6/MATEs3MwJ9hS3gqWndbMwQ4wQIMU=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-379-1R2l9dYMPROoqDQbVCdprg-1; Mon, 25 Aug 2025 14:32:33 -0400
-X-MC-Unique: 1R2l9dYMPROoqDQbVCdprg-1
-X-Mimecast-MFC-AGG-ID: 1R2l9dYMPROoqDQbVCdprg_1756146752
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-45a1b05d251so26422335e9.1
- for <wireguard@lists.zx2c4.com>; Mon, 25 Aug 2025 11:32:33 -0700 (PDT)
+ us-mta-303-Z-zPNpS7M9KOORy0XxM1EQ-1; Tue, 26 Aug 2025 07:04:39 -0400
+X-MC-Unique: Z-zPNpS7M9KOORy0XxM1EQ-1
+X-Mimecast-MFC-AGG-ID: Z-zPNpS7M9KOORy0XxM1EQ_1756206279
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-618b3c75161so4481970a12.1
+ for <wireguard@lists.zx2c4.com>; Tue, 26 Aug 2025 04:04:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756146752; x=1756751552;
+ d=1e100.net; s=20230601; t=1756206278; x=1756811078;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=bluti57k39MttADONVHVsAxBvXyqb5R7ZWo2ok70EgM=;
- b=NKcj9bW1HRRKdQvDm5nuYmnX6Cpar4ukE7YSRj2O3GatQjxvi/5+VAZALsLQ5Id5MJ
- AYo+jTQxn4o1b5NkNk9l+rZh2UxPCksXEvW3NR5GOX7UxBDhb60lprGAi758cOqxVAU4
- iooNPfRIAQDpZJX/sNOWkLbkJotKQRtK0C9W0EQhIE4l2UcD22bZUzHrDqwE9Rnre9hm
- d8qyLM8avV75lGzpK1eK3uXkQqoZsRUI2rGuqlR9OJp0lGjXNZcxoDjI/zUiOnQWgAQK
- ObOu1gbECnREq2AFb27GIQJY1UqMazgvhyB+BsRupD3YKYD6jwUenUKbOUOsydMheY0H
- mkyQ==
+ bh=jhHf33zPn8FMTc4V2Pm10xsHI1Kc6Z2Rv/ZWcei/RDk=;
+ b=T9mcWSnZ29+JandpdmfH/4HPcnGhAwQ6PSko60gXfoEn3/yhQvLPnWCuT6kV7fUpgD
+ Y/8OVzsogA4gWS9PiIrRCI881k1BJQSLL4ijXuMrqtAgUsMT0GrX1OVK9Y2HvxEjTm9T
+ eeNBe+/K3bM+28VRDjhhNeWru7DHrAmoi9NwaMl9b312eZavNd0ydlj1m7qBhoeKlxYN
+ XCBmxd5I05zfR0F4OWBtIcLJEaDTBuaAjSXTHBKfYjPcPdkqHpaiH6gcG4iyeN57BQgl
+ ZC7gs5o0Jm+K3iSrpR1YzJyViWdLatzxBpeYr5fCoeiOoeWKAeSnP4vItRyfisieJbel
+ X5Nw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU4wM89Vqk5Qkj8L99s44c2Nfc3w3ldOTHlWpDdCD/S2RS+S9flE6MKnGm/nBVZLBku459VxpRnpck=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YzHXON/A77hLHdAGLXpea6s9IesksKyWYka1cO2dGUy3MXN0+OA
- VSRITje0YBAHhfKGLyBLz9oP7l6sUjdOekywz1Rjr5hAAmnaJd+jt59nYTQ3o6p9k+Qvnyzn/he
- LZfGoMqtDcKytT4gvog76vZieCpzVo3WK1m+d6stVQ5QRIPT5fRuVvq87k2vA3g==
-X-Gm-Gg: ASbGncsO18mwxMq/cSTnvD7hmFKkax5s0q+j1J1z5EbvVYk+gOw24NEBj6LJtAar/xT
- kmx0OVYopKSUl1SyCaB/y3nPPur+icIAlu7l056ixK6XZ/ruVqcKBTeIm+ng29xFmWOOxsvRepb
- 3eUzwXXZzLI/U1gF3L24nx/2eTmseBeiUGhnw/JrfoXPBx17Pb9Qh5JVyl5bAhSEokeY3oR/DlA
- WRSgBY6QnfpVJjPWPB2YvxvKIkTUULIcuLqfp+jd9PoEG87di7jx/hDjEALHeeiuBerjrloMhq0
- diUo3je7GMdDRiPBh0li3XRaNJdE6aT9M+5OMfN/cIm1QrVRmB7UcLHA5pf+a/3dN4jOPktul19
- O0o8uHH8doIa3u+ggTkXGCi0Qprw47kPFYIEdiLLlU+HJiWR6EHxhenJ9TJ/Oo+Q5JVs=
-X-Received: by 2002:a05:600c:4e90:b0:458:a559:a693 with SMTP id
- 5b1f17b1804b1-45b517b957emr126710415e9.18.1756146752210; 
- Mon, 25 Aug 2025 11:32:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFxuQzAylX90vNEmmjxyPSaWFpv8tCbOTWCm8WazHqaDOnMAPM4HK8CKvM3oYkR/BEIZaOMIA==
-X-Received: by 2002:a05:600c:4e90:b0:458:a559:a693 with SMTP id
- 5b1f17b1804b1-45b517b957emr126710235e9.18.1756146751795; 
- Mon, 25 Aug 2025 11:32:31 -0700 (PDT)
-Received: from ?IPV6:2003:d8:2f4f:1300:42f1:98e5:ddf8:3a76?
- (p200300d82f4f130042f198e5ddf83a76.dip0.t-ipconnect.de.
- [2003:d8:2f4f:1300:42f1:98e5:ddf8:3a76])
+ AJvYcCVZ96oMTXMBvt+f5Lt+5FnGE6aBCcH9y/ux8UUt+XQ5ptqxfUuBEH5+VXgtsryp3OI/eiTKBvu002g=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YzEbDyFfnj5SZrZR795D7ian3LSWmH9YWwm+tAlDuUlW7iHOep8
+ GRgq6LI31xcAmxem0aQCSsxaJTZJ8sKfH8QluEl/gSfVmcXFjcHtwBd1T3M+TI1N7ACCdptWmnc
+ /hoKXAh8Vc8w9+/D0IVUvPC+iktxYHIs2/zGH4YL89CPoDH3iAHJ6UeZJZYtG6Q==
+X-Gm-Gg: ASbGncu51wKfoOuMtib0RlaNxMaze+AZkwVwOZo5xmCzbU7/7t8qy7HtsQA8winBjFG
+ kO7uu0x2k3jw2sYHZCLVo9TaoL+gfInimlTqxs2QV2TH/L2LD7G3Aw5PbJ8Q/CdCeknUV60046O
+ FisQb6ASRhOEaDDFa0nIM+Nnp4s6mPcL2TGu/wlDILQ07UEfWH5Jt+xdRSBkDphvEwoxYXEr9YC
+ PyGZv3exgaIdoQQKYWooDNCqie+m8aTYDK9qzEyIAg/9YlAO7tDmOxposSiMYRN2ERIOTrjXuZC
+ ShI+IM39UW/VrOWKinGWRSBbHVs52hOk04RLmHN1MgRKR10jc6UbxbaTzAmpEJ9hq7UceUQWBw=
+ =
+X-Received: by 2002:a05:6402:510e:b0:61c:a1a6:52a2 with SMTP id
+ 4fb4d7f45d1cf-61ca1a65d0amr110499a12.28.1756206278272; 
+ Tue, 26 Aug 2025 04:04:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFJfWOpyeYnJbaHVglB9KfY+PTnQ4jI93qRAexOTMKIRVofYBVmmLclF7ZKvry/r0B75eD1FQ==
+X-Received: by 2002:a05:6402:510e:b0:61c:a1a6:52a2 with SMTP id
+ 4fb4d7f45d1cf-61ca1a65d0amr110409a12.28.1756206276561; 
+ Tue, 26 Aug 2025 04:04:36 -0700 (PDT)
+Received: from ?IPV6:2a09:80c0:192:0:5dac:bf3d:c41:c3e7?
+ ([2a09:80c0:192:0:5dac:bf3d:c41:c3e7])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3c7119c4200sm12481975f8f.53.2025.08.25.11.32.28
+ 4fb4d7f45d1cf-61c3172bf4csm6850118a12.38.2025.08.26.04.04.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 25 Aug 2025 11:32:31 -0700 (PDT)
-Message-ID: <7ffd0abd-27a1-40a8-b538-9a01e21abb29@redhat.com>
-Date: Mon, 25 Aug 2025 20:32:27 +0200
+ Tue, 26 Aug 2025 04:04:36 -0700 (PDT)
+Message-ID: <ad521f4f-47aa-4728-916f-3704bf01f770@redhat.com>
+Date: Tue, 26 Aug 2025 13:04:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: update kernel-doc for MEMBLOCK_RSRV_NOINIT
-To: Mike Rapoport <rppt@kernel.org>
-Cc: =?UTF-8?Q?Mika_Penttil=C3=A4?= <mpenttil@redhat.com>,
- linux-kernel@vger.kernel.org, Alexander Potapenko <glider@google.com>,
+Subject: Re: [PATCH RFC 21/35] mm/cma: refuse handing out non-contiguous page
+ ranges
+To: Alexandru Elisei <alexandru.elisei@arm.com>
+Cc: linux-kernel@vger.kernel.org, Alexander Potapenko <glider@google.com>,
  Andrew Morton <akpm@linux-foundation.org>,
  Brendan Jackman <jackmanb@google.com>, Christoph Lameter <cl@gentwo.org>,
  Dennis Zhou <dennis@kernel.org>, Dmitry Vyukov <dvyukov@google.com>,
@@ -96,23 +95,15 @@ Cc: =?UTF-8?Q?Mika_Penttil=C3=A4?= <mpenttil@redhat.com>,
  linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
  linux-scsi@vger.kernel.org, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
  Marco Elver <elver@google.com>, Marek Szyprowski <m.szyprowski@samsung.com>,
- Michal Hocko <mhocko@suse.com>, Muchun Song <muchun.song@linux.dev>,
- netdev@vger.kernel.org, Oscar Salvador <osalvador@suse.de>,
- Peter Xu <peterx@redhat.com>, Robin Murphy <robin.murphy@arm.com>,
- Suren Baghdasaryan <surenb@google.com>, Tejun Heo <tj@kernel.org>,
- virtualization@lists.linux.dev, Vlastimil Babka <vbabka@suse.cz>,
- wireguard@lists.zx2c4.com, x86@kernel.org, Zi Yan <ziy@nvidia.com>
-References: <9156d191-9ec4-4422-bae9-2e8ce66f9d5e@redhat.com>
- <7077e09f-6ce9-43ba-8f87-47a290680141@redhat.com>
- <aKmDBobyvEX7ZUWL@kernel.org>
- <a90cf9a3-d662-4239-ad54-7ea917c802a5@redhat.com>
- <aKxz9HLQTflFNYEu@kernel.org>
- <a72080b4-5156-4add-ac7c-1160b44e0dfe@redhat.com>
- <aKx6SlYrj_hiPXBB@kernel.org>
- <f8140a17-c4ec-489b-b314-d45abe48bf36@redhat.com>
- <aKyMfvWe8JetkbRL@kernel.org>
- <dbd2ec55-0e7f-407a-a8bd-e1ac83ac2a0a@redhat.com>
- <aKyWIriZ1bmnIrBW@kernel.org>
+ Michal Hocko <mhocko@suse.com>, Mike Rapoport <rppt@kernel.org>,
+ Muchun Song <muchun.song@linux.dev>, netdev@vger.kernel.org,
+ Oscar Salvador <osalvador@suse.de>, Peter Xu <peterx@redhat.com>,
+ Robin Murphy <robin.murphy@arm.com>, Suren Baghdasaryan <surenb@google.com>,
+ Tejun Heo <tj@kernel.org>, virtualization@lists.linux.dev,
+ Vlastimil Babka <vbabka@suse.cz>, wireguard@lists.zx2c4.com, x86@kernel.org,
+ Zi Yan <ziy@nvidia.com>
+References: <20250821200701.1329277-1-david@redhat.com>
+ <20250821200701.1329277-22-david@redhat.com> <aK2QZnzS1ErHK5tP@raptor>
 From: David Hildenbrand <david@redhat.com>
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
@@ -158,9 +149,9 @@ Autocrypt: addr=david@redhat.com; keydata=
  3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
  CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
  qIws/H2t
-In-Reply-To: <aKyWIriZ1bmnIrBW@kernel.org>
+In-Reply-To: <aK2QZnzS1ErHK5tP@raptor>
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: L_vE1yRnI_qsJlwOGYjh9-1dfe90hQDaQ_cbn4eYTjw_1756146752
+X-Mimecast-MFC-PROC-ID: Bxds7wP1DljWjsFs0-oiUUzzoaWtvyw6lkv-HKwi32c_1756206279
 X-Mimecast-Originator: redhat.com
 Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8; format=flowed
@@ -179,67 +170,62 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 25.08.25 18:58, Mike Rapoport wrote:
-> On Mon, Aug 25, 2025 at 06:23:48PM +0200, David Hildenbrand wrote:
->>
->> I don't quite understand the interaction with PG_Reserved and why anybody
->> using this function should care.
->>
->> So maybe you can rephrase in a way that is easier to digest, and rather
->> focuses on what callers of this function are supposed to do vs. have the
->> liberty of not doing?
+>>   
+>>   		pr_debug("%s(): memory range at pfn 0x%lx %p is busy, retrying\n",
+>> -			 __func__, pfn, pfn_to_page(pfn));
+>> +			 __func__, pfn, page);
+>>   
+>>   		trace_cma_alloc_busy_retry(cma->name, pfn, pfn_to_page(pfn),
 > 
-> How about
->   
-> diff --git a/include/linux/memblock.h b/include/linux/memblock.h
-> index b96746376e17..fcda8481de9a 100644
-> --- a/include/linux/memblock.h
-> +++ b/include/linux/memblock.h
-> @@ -40,8 +40,9 @@ extern unsigned long long max_possible_pfn;
->    * via a driver, and never indicated in the firmware-provided memory map as
->    * system RAM. This corresponds to IORESOURCE_SYSRAM_DRIVER_MANAGED in the
->    * kernel resource tree.
-> - * @MEMBLOCK_RSRV_NOINIT: memory region for which struct pages are
-> - * not initialized (only for reserved regions).
-> + * @MEMBLOCK_RSRV_NOINIT: reserved memory region for which struct pages are not
-> + * fully initialized. Users of this flag are responsible to properly initialize
-> + * struct pages of this region
->    * @MEMBLOCK_RSRV_KERN: memory region that is reserved for kernel use,
->    * either explictitly with memblock_reserve_kern() or via memblock
->    * allocation APIs. All memblock allocations set this flag.
-> diff --git a/mm/memblock.c b/mm/memblock.c
-> index 154f1d73b61f..46b411fb3630 100644
-> --- a/mm/memblock.c
-> +++ b/mm/memblock.c
-> @@ -1091,13 +1091,20 @@ int __init_memblock memblock_clear_nomap(phys_addr_t base, phys_addr_t size)
->   
->   /**
->    * memblock_reserved_mark_noinit - Mark a reserved memory region with flag
-> - * MEMBLOCK_RSRV_NOINIT which results in the struct pages not being initialized
-> - * for this region.
-> + * MEMBLOCK_RSRV_NOINIT
-> + *
->    * @base: the base phys addr of the region
->    * @size: the size of the region
->    *
-> - * struct pages will not be initialized for reserved memory regions marked with
-> - * %MEMBLOCK_RSRV_NOINIT.
-> + * The struct pages for the reserved regions marked %MEMBLOCK_RSRV_NOINIT will
-> + * not be fully initialized to allow the caller optimize their initialization.
-> + *
-> + * When %CONFIG_DEFERRED_STRUCT_PAGE_INIT is enabled, setting this flag
-> + * completely bypasses the initialization of struct pages for such region.
-> + *
-> + * When %CONFIG_DEFERRED_STRUCT_PAGE_INIT is disabled, struct pages in this
-> + * region will be initialized with default values but won't be marked as
-> + * reserved.
+> Nitpick: I think you already have the page here.
 
-Sounds good.
+Indeed, forgot to clean that up as well.
 
-I am surprised regarding "reserved", but I guess that's because we don't 
-end up calling "reserve_bootmem_region()" on these regions in 
-memmap_init_reserved_pages().
+> 
+>>   					   count, align);
+>> -		/* try again with a bit different memory target */
+>> -		start = bitmap_no + mask + 1;
+>>   	}
+>>   out:
+>> -	*pagep = page;
+>> +	if (!ret)
+>> +		*pagep = page;
+>>   	return ret;
+>>   }
+>>   
+>> @@ -882,7 +892,7 @@ static struct page *__cma_alloc(struct cma *cma, unsigned long count,
+>>   	 */
+>>   	if (page) {
+>>   		for (i = 0; i < count; i++)
+>> -			page_kasan_tag_reset(nth_page(page, i));
+>> +			page_kasan_tag_reset(page + i);
+> 
+> Had a look at it, not very familiar with CMA, but the changes look equivalent to
+> what was before. Not sure that's worth a Reviewed-by tag, but here it in case
+> you want to add it:
+> 
+> Reviewed-by: Alexandru Elisei <alexandru.elisei@arm.com>
 
+Thanks!
+
+> 
+> Just so I can better understand the problem being fixed, I guess you can have
+> two consecutive pfns with non-consecutive associated struct page if you have two
+> adjacent memory sections spanning the same physical memory region, is that
+> correct?
+
+Exactly. Essentially on SPARSEMEM without SPARSEMEM_VMEMMAP it is not 
+guaranteed that
+
+	pfn_to_page(pfn + 1) == pfn_to_page(pfn) + 1
+
+when we cross memory section boundaries.
+
+It can be the case for early boot memory if we allocated consecutive 
+areas from memblock when allocating the memmap (struct pages) per memory 
+section, but it's not guaranteed.
+
+So we rule out that case.
 
 -- 
 Cheers
