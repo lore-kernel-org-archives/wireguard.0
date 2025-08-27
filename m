@@ -4,52 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A4E1CEE347
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E4C8CEE343
 	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 18:21:12 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7b4d2b74;
-	Tue, 18 Nov 2025 17:23:39 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3fd9ddc0;
+	Tue, 18 Nov 2025 17:23:42 +0000 (UTC)
 Received: from us-smtp-delivery-124.mimecast.com
  (us-smtp-delivery-124.mimecast.com [170.10.133.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6f10dd23
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 06089b97
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 27 Aug 2025 22:09:25 +0000 (UTC)
+ Wed, 27 Aug 2025 22:09:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756332564;
+ s=mimecast20190719; t=1756332581;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5INZuVEW8ZoCVRVHt0CSLhpT4h786L9PUsnD4NVlnkc=;
- b=hKzGHx2a113C4ilxVbZoPIZe8NOxX/6WDsZaNeiflelIv4RYct2k0UHU/H5tfv9hvl1+wk
- C01g/oZA0B1TEmcMYl0UcbAz/gdSDfg8WN895Kt8ESC4xxbYsNxnMDZ4hIT4u0iXujUeJ5
- 9LQXUQWbXeSC4Zm1U3vg91S1IYccyiA=
+ bh=8SUmSf66LiCJvVJzeEx0UA2HTOESqflB/UZ9jC2+86E=;
+ b=hivjoJNqToZoWhpAxS/VICmAsXxOV1crD22eagTEZQBuXnf3U+REiRAM/tUyAHiS+ARCpG
+ YEFrgekEtNSbXX5LPhLqzrdJdy0feGbJBPlIGWPuH7L2upf0aiDBxJ2cUSMdP712UBcQIb
+ IElo+w6loSykvtNaiAYCkqBP8rPNXnY=
 Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-452-xy2DE7SVOeOfWFxJcT2kQA-1; Wed,
- 27 Aug 2025 18:09:22 -0400
-X-MC-Unique: xy2DE7SVOeOfWFxJcT2kQA-1
-X-Mimecast-MFC-AGG-ID: xy2DE7SVOeOfWFxJcT2kQA_1756332556
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-638-wuVJZl_PPm-kz40j0XhWgA-1; Wed,
+ 27 Aug 2025 18:09:38 -0400
+X-MC-Unique: wuVJZl_PPm-kz40j0XhWgA-1
+X-Mimecast-MFC-AGG-ID: wuVJZl_PPm-kz40j0XhWgA_1756332573
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3265C1956087; Wed, 27 Aug 2025 22:09:16 +0000 (UTC)
+ id 006A91956095; Wed, 27 Aug 2025 22:09:33 +0000 (UTC)
 Received: from t14s.redhat.com (unknown [10.22.80.195])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8A03F30001A1; Wed, 27 Aug 2025 22:08:58 +0000 (UTC)
+ id C1B9F30001A1; Wed, 27 Aug 2025 22:09:16 +0000 (UTC)
 From: David Hildenbrand <david@redhat.com>
 To: linux-kernel@vger.kernel.org
-Cc: David Hildenbrand <david@redhat.com>,
- Jani Nikula <jani.nikula@linux.intel.com>,
- Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
- Rodrigo Vivi <rodrigo.vivi@intel.com>,
- Tvrtko Ursulin <tursulin@ursulin.net>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>, Alexander Potapenko <glider@google.com>,
+Cc: David Hildenbrand <david@redhat.com>, Ulf Hansson <ulf.hansson@linaro.org>,
+ Maxim Levitsky <maximlevitsky@gmail.com>, Alex Dubov <oakad@yahoo.com>,
+ Alexander Potapenko <glider@google.com>,
  Andrew Morton <akpm@linux-foundation.org>,
  Brendan Jackman <jackmanb@google.com>, Christoph Lameter <cl@gentwo.org>,
  Dennis Zhou <dennis@kernel.org>, Dmitry Vyukov <dvyukov@google.com>,
@@ -74,9 +71,9 @@ Cc: David Hildenbrand <david@redhat.com>,
  Suren Baghdasaryan <surenb@google.com>, Tejun Heo <tj@kernel.org>,
  virtualization@lists.linux.dev, Vlastimil Babka <vbabka@suse.cz>,
  wireguard@lists.zx2c4.com, x86@kernel.org, Zi Yan <ziy@nvidia.com>
-Subject: [PATCH v1 25/36] drm/i915/gem: drop nth_page() usage within SG entry
-Date: Thu, 28 Aug 2025 00:01:29 +0200
-Message-ID: <20250827220141.262669-26-david@redhat.com>
+Subject: [PATCH v1 26/36] mspro_block: drop nth_page() usage within SG entry
+Date: Thu, 28 Aug 2025 00:01:30 +0200
+Message-ID: <20250827220141.262669-27-david@redhat.com>
 In-Reply-To: <20250827220141.262669-1-david@redhat.com>
 References: <20250827220141.262669-1-david@redhat.com>
 MIME-Version: 1.0
@@ -100,30 +97,29 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 It's no longer required to use nth_page() when iterating pages within a
 single SG entry, so let's drop the nth_page() usage.
 
-Cc: Jani Nikula <jani.nikula@linux.intel.com>
-Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Tvrtko Ursulin <tursulin@ursulin.net>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Simona Vetter <simona@ffwll.ch>
+Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: Maxim Levitsky <maximlevitsky@gmail.com>
+Cc: Alex Dubov <oakad@yahoo.com>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: David Hildenbrand <david@redhat.com>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_pages.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/memstick/core/mspro_block.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gem/i915_gem_pages.c b/drivers/gpu/drm/i915/gem/i915_gem_pages.c
-index c16a57160b262..031d7acc16142 100644
---- a/drivers/gpu/drm/i915/gem/i915_gem_pages.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_pages.c
-@@ -779,7 +779,7 @@ __i915_gem_object_get_page(struct drm_i915_gem_object *obj, pgoff_t n)
- 	GEM_BUG_ON(!i915_gem_object_has_struct_page(obj));
+diff --git a/drivers/memstick/core/mspro_block.c b/drivers/memstick/core/mspro_block.c
+index c9853d887d282..d3f160dc0da4c 100644
+--- a/drivers/memstick/core/mspro_block.c
++++ b/drivers/memstick/core/mspro_block.c
+@@ -560,8 +560,7 @@ static int h_mspro_block_transfer_data(struct memstick_dev *card,
+ 		t_offset += msb->current_page * msb->page_size;
  
- 	sg = i915_gem_object_get_sg(obj, n, &offset);
--	return nth_page(sg_page(sg), offset);
-+	return sg_page(sg) + offset;
- }
+ 		sg_set_page(&t_sg,
+-			    nth_page(sg_page(&(msb->req_sg[msb->current_seg])),
+-				     t_offset >> PAGE_SHIFT),
++			    sg_page(&(msb->req_sg[msb->current_seg])) + (t_offset >> PAGE_SHIFT),
+ 			    msb->page_size, offset_in_page(t_offset));
  
- /* Like i915_gem_object_get_page(), but mark the returned page dirty */
+ 		memstick_init_req_sg(*mrq, msb->data_dir == READ
 -- 
 2.50.1
 
