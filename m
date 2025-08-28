@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29DCBCF2564
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 00:27:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F4A9CF2566
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 00:43:04 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b9de0214;
-	Tue, 18 Nov 2025 17:27:32 +0000 (UTC)
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com
- [2a00:1450:4864:20::436])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e379cf86
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a704d114;
+	Tue, 18 Nov 2025 17:27:34 +0000 (UTC)
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com
+ [2a00:1450:4864:20::62d])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9c37f6e1
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 28 Aug 2025 07:31:52 +0000 (UTC)
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3cb9268511bso371677f8f.0
- for <wireguard@lists.zx2c4.com>; Thu, 28 Aug 2025 00:31:52 -0700 (PDT)
+ Thu, 28 Aug 2025 07:35:29 +0000 (UTC)
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-afeec747e60so37494066b.0
+ for <wireguard@lists.zx2c4.com>; Thu, 28 Aug 2025 00:35:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756366311; x=1756971111; darn=lists.zx2c4.com;
+ d=gmail.com; s=20230601; t=1756366529; x=1756971329; darn=lists.zx2c4.com;
  h=user-agent:in-reply-to:content-disposition:mime-version:references
  :reply-to:message-id:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EuV0vIwmYzbGp0NvCAEdvEWsqc4i4ounAUIZgXtsn78=;
- b=ZksTH0G1aRtnf4ufaL5ro9Sf7BlC2Rwy2KBkq1CdNMTJgBvglgZijUaepScR3bmF9D
- vvssaI6ZSaWo8XRKFQIeDORKa2+Ppg7gi89SMpKRh+slhFu0wQyRwNhxo8+c6eHB4vEq
- LbEEhjNKKWS1LI6m5mCfoFkxgeg8iA0YvJiaJBUOfJfimvXGgg4T/NSzi144Rakf9GKh
- +xf8G8BKtrim7NTmyd5KfqHOBWf7ST76ZkiABKpmLIixr2WnZxMDMOtclAEzDmX+QmvE
- 7/CpaPs6CoZR7zOtVEqBWT/xvW83BSYn/c6lHSWAsUC7Zyzogt0IvCPi8RWpLB4n4k3D
- Rjfw==
+ bh=7wdLKdu3gRydbgkaOExgCyxr/LuNr8ANanTK9VurXYA=;
+ b=Z/ilyDOLJc9CauIeEDJvYx2hoMiDGV8HoExv17SgfZefqjc287q2AHCMUK2aiTUdLa
+ Ar7t+wmltHIqy42s+gqjRu35zIqOhQ9N7YgTSaU8HSM2t1rwNADCCxUZHSx30t+NstuC
+ CdKFq+t36m/cq1ZrVyBtiVzRIPxgBH6U54+c3+713zIYB+1DitEYU25BAD+LF7+g1VU1
+ e59PsehQQMNvXvnzxtVcoup3IK05fOkVieC59IOO1bfdENmxQ7fdiUIhJyh2sf5gPCau
+ tpOLMdzojfnvm9mVcj4KJ2lcV5rhQOa+bg4p7hjE5DnOZqi61uttihka4INdPcNhRZMV
+ HDDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756366311; x=1756971111;
+ d=1e100.net; s=20230601; t=1756366529; x=1756971329;
  h=user-agent:in-reply-to:content-disposition:mime-version:references
  :reply-to:message-id:subject:cc:to:from:date:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=EuV0vIwmYzbGp0NvCAEdvEWsqc4i4ounAUIZgXtsn78=;
- b=ZxRiDUNKDuSGDrOYZOOzKrP77+n+L+B8ntekJP/xrDU+LpMhuMR+6roJ0jsJThcipK
- b70SGNk8ljUI1U94gaKFsx12jBF3OPm439D/G+oaUpqvAeVsdC20cHSrOVYsy4gSdGI4
- 4xEAv0YKhgtMLGw6CLld5VKXiJk72AW+K6hZbXVhUkR/WNYxYyuPzxphr8LB/fPuQQJ9
- jnJ26xcktPhdvA51N7mH+ynZaYs8o5NYjrnOYQWmadnO9422qgShCp4tDV6nMvk0Qjye
- gkNF1MRP+0RnN2qh5/cSVg+UAMk8kovZioN40RGs4oHQwSZv9xTco1wAInWAxIGn0c/U
- ccUA==
+ bh=7wdLKdu3gRydbgkaOExgCyxr/LuNr8ANanTK9VurXYA=;
+ b=WvEpKY5us4CyeRAmtV1MRo9ci4T8SnlkhzX5pDecI6TwGrUPOGEtdNVR+vMNV0CN+v
+ puGvQRaBk0JSzUr+Tz0JM5irzR+YaIagOQtV2ZOyvThf3rzK4pqOYOIAUfXvbOqpwPok
+ wMRNfpnVc2aInjxV+T+7FNUKo+J3lZx80c3zghgg+RVmi467h+IaQLFtsrFfIJkVI5D/
+ 0rY1f3hLXDjRFvntU6QfJYgeCOnQBIZzeX64Y4gKfgDVx5eSrYfgGiZHUxGbvUVyizRo
+ RO4YnlPX9jPg2LCtqX/Ofh64Dp5Q/PXLl5FUOXLEF1TnwaSqptk2HxbFqOHUGqp1Jh9H
+ dYqw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW5WF958J7kusxbr3Pu0y6d5KJA+5AVRiQz2f1Eu14hHexo/ghftQX03+3aPiPdhPMI0GWEtwXo/Yg=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0Yz41dLebGPh1pVbZHPWIRcY/TnVzSpQcSYhxiKvNC3oTqu3xZUP
- FzMqYoaCnKnkfmjCuM18JHSTUc4P5UatPAHFGFLYcFoFseC98Vb9E5NS
-X-Gm-Gg: ASbGnctUhrIdYJjl0pM5GGAQlOmYDEWpzFWVslQnzI4KzjiLWHJckKu8wqdyRrfyJ/W
- 5E5/F+oazyVckheGCUZUL71X0jpz+XYStjICmpISC4dTHywWIdbyS93Jjkt7rLezzlQU5ystKO0
- ezzkvaz45BJ+MFEE9eES6ruzc2WHjAExkz8E7jQ7qLxxMyW9047bbWdfBaU6DdAIb6HPv2nwmOH
- p9zB2kXcNdycn5HKdDAJ09a+5uJrk1HGwD7obDJDf/WELc44zvLgCH7qaqLi++wNAn+JVMBKf/R
- kamhlJDLGS3wrc5spGUxpcFUEBOAiBiib78AQHh60wBewYBSiCBGxIqFgcsWJYSQXGtjDY/C3qG
- 6uvAiTS1UO06GJn+FI61Bj5OWaluGokNtgx+S
-X-Google-Smtp-Source: AGHT+IGYsCTFAB2u+mO+a+/7YQm7WCRYBnf/bqNrDbgJHuGpC+AeSLNYygCiHCIag3yJJPklKDadWQ==
-X-Received: by 2002:a05:6000:2891:b0:3cd:96bb:b948 with SMTP id
- ffacd0b85a97d-3cd96bbc28fmr1837267f8f.47.1756366311260; 
- Thu, 28 Aug 2025 00:31:51 -0700 (PDT)
+ AJvYcCVIh7qXhuOcZ7YncHDeanVLGjYJJ3d6s7IeqJQgeLS5IjwGZWLTQB8t0BDAhfz18MK6PF/1rpwdO9Y=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YxQwRnn/CmPK9qY9TvKxuLzaupro+p7IDsz06mvSbKz4NvXuAcN
+ /2YxZmkah+raDpZZv9VkaJl3510ZIJJA1lW6oChWoH6DrsjL65zYWOB1
+X-Gm-Gg: ASbGncsDIX2YfhGg9mZyPQMVfK+D3Cyhc9DXpQAZ7LZpQc/67XjwFaT1vj9j3Ir7/Dd
+ wN4ut2o1Tsxb81E3tb2d7dszrTxGzCE8nre4FyVd6nfwUxdW6EEYf7iC5Kz7/eodj+cChige6fn
+ 6Z8WNDsqDej/uzCuQkEeR/+scBtxcahgn89BkKm9nIgAveKJQvSWWwT/dr7TCoO2oJ62gHsLPOQ
+ 91Nz0xyc/OPXeZjAgqJfowUaaLN9oSDRJ3vXfKiWVmum+O8HK2MHjEiu3t1Ywzp7F1zizvg2CG9
+ aEycsSGWmLwZ2Am3PJyNa0K2XPXg2ZFiFfhRqyopWY/2crE29TRiQEetdeV3G7NDijT3tL2VOwJ
+ wwqZ6vQILGVMaMUfCKEctozuThg==
+X-Google-Smtp-Source: AGHT+IH+/HdQFSXw/W0bPc1NEIz4PAWk+piUx/7dt/vdSor64JcoeKILsFtoJ4Brv3+pRvjO+XdeaA==
+X-Received: by 2002:a17:907:3f0a:b0:afe:d590:b6af with SMTP id
+ a640c23a62f3a-afed590c109mr310258266b.20.1756366529084; 
+ Thu, 28 Aug 2025 00:35:29 -0700 (PDT)
 Received: from localhost ([185.92.221.13]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3c9c9324dc9sm14883755f8f.3.2025.08.28.00.31.50
+ a640c23a62f3a-afe77c2b758sm886311466b.84.2025.08.28.00.35.27
  (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
- Thu, 28 Aug 2025 00:31:50 -0700 (PDT)
-Date: Thu, 28 Aug 2025 07:31:50 +0000
+ Thu, 28 Aug 2025 00:35:28 -0700 (PDT)
+Date: Thu, 28 Aug 2025 07:35:27 +0000
 From: Wei Yang <richard.weiyang@gmail.com>
 To: David Hildenbrand <david@redhat.com>
-Cc: linux-kernel@vger.kernel.org, Zi Yan <ziy@nvidia.com>,
- SeongJae Park <sj@kernel.org>, Alexander Potapenko <glider@google.com>,
+Cc: linux-kernel@vger.kernel.org,
+ "Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+ Alexander Potapenko <glider@google.com>,
  Andrew Morton <akpm@linux-foundation.org>,
  Brendan Jackman <jackmanb@google.com>,
  Christoph Lameter <cl@gentwo.org>, Dennis Zhou <dennis@kernel.org>,
@@ -83,22 +84,21 @@ Cc: linux-kernel@vger.kernel.org, Zi Yan <ziy@nvidia.com>,
  linux-scsi@vger.kernel.org, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
  Marco Elver <elver@google.com>,
  Marek Szyprowski <m.szyprowski@samsung.com>,
- Michal Hocko <mhocko@suse.com>, Mike Rapoport <rppt@kernel.org>,
- Muchun Song <muchun.song@linux.dev>, netdev@vger.kernel.org,
- Oscar Salvador <osalvador@suse.de>, Peter Xu <peterx@redhat.com>,
- Robin Murphy <robin.murphy@arm.com>,
+ Michal Hocko <mhocko@suse.com>, Muchun Song <muchun.song@linux.dev>,
+ netdev@vger.kernel.org, Oscar Salvador <osalvador@suse.de>,
+ Peter Xu <peterx@redhat.com>, Robin Murphy <robin.murphy@arm.com>,
  Suren Baghdasaryan <surenb@google.com>, Tejun Heo <tj@kernel.org>,
  virtualization@lists.linux.dev, Vlastimil Babka <vbabka@suse.cz>,
- wireguard@lists.zx2c4.com, x86@kernel.org
-Subject: Re: [PATCH v1 06/36] mm/page_alloc: reject unreasonable
- folio/compound page sizes in alloc_contig_range_noprof()
-Message-ID: <20250828073150.jyafkufvkjfqwp3f@master>
+ wireguard@lists.zx2c4.com, x86@kernel.org, Zi Yan <ziy@nvidia.com>
+Subject: Re: [PATCH v1 09/36] mm/mm_init: make memmap_init_compound() look
+ more like prep_compound_page()
+Message-ID: <20250828073527.u4k47fohaquzf3pg@master>
 References: <20250827220141.262669-1-david@redhat.com>
- <20250827220141.262669-7-david@redhat.com>
+ <20250827220141.262669-10-david@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250827220141.262669-7-david@redhat.com>
+In-Reply-To: <20250827220141.262669-10-david@redhat.com>
 User-Agent: NeoMutt/20170113 (1.7.2)
 X-Mailman-Approved-At: Tue, 18 Nov 2025 17:23:16 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -116,15 +116,21 @@ Reply-To: Wei Yang <richard.weiyang@gmail.com>
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Thu, Aug 28, 2025 at 12:01:10AM +0200, David Hildenbrand wrote:
->Let's reject them early, which in turn makes folio_alloc_gigantic() reject
->them properly.
+On Thu, Aug 28, 2025 at 12:01:13AM +0200, David Hildenbrand wrote:
+>Grepping for "prep_compound_page" leaves on clueless how devdax gets its
+>compound pages initialized.
 >
->To avoid converting from order to nr_pages, let's just add MAX_FOLIO_ORDER
->and calculate MAX_FOLIO_NR_PAGES based on that.
+>Let's add a comment that might help finding this open-coded
+>prep_compound_page() initialization more easily.
 >
->Reviewed-by: Zi Yan <ziy@nvidia.com>
->Acked-by: SeongJae Park <sj@kernel.org>
+>Further, let's be less smart about the ordering of initialization and just
+>perform the prep_compound_head() call after all tail pages were
+>initialized: just like prep_compound_page() does.
+>
+>No need for a comment to describe the initialization order: again,
+>just like prep_compound_page().
+>
+>Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 >Signed-off-by: David Hildenbrand <david@redhat.com>
 
 Reviewed-by: Wei Yang <richard.weiyang@gmail.com>
