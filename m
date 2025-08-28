@@ -4,79 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE183CF2563
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 00:02:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5687CF2562
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 00:08:50 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 882cf154;
-	Tue, 18 Nov 2025 17:27:20 +0000 (UTC)
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com
- [2a00:1450:4864:20::431])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1af923f5
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e24024b1;
+	Tue, 18 Nov 2025 17:27:23 +0000 (UTC)
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com
+ (mail-co1nam11on2048.outbound.protection.outlook.com [40.107.220.48])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5ce64260
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 27 Aug 2025 09:42:40 +0000 (UTC)
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-3c98b309804so2574279f8f.1
- for <wireguard@lists.zx2c4.com>; Wed, 27 Aug 2025 02:42:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756287759; x=1756892559; darn=lists.zx2c4.com;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=s4gNirUawo/2N73RGh/VZFmiZovBEw6Zvsz5pkyBSog=;
- b=csGkeej1Rq+kwKBPZNEYazegUgU2FRfSSL+Pg5pJOTs+nviW2bPpSoVGrBK9m92i2x
- 7OSm8nm7OE0Gath0lArGnxMIUPfQSHJdyD0K/sB97zbgO5euF0ItHBqZGiC/Jou+uLlh
- 2O1oxqzvjQleGu03IObrS1wk1aMFBp26ZMIKrXKHL5eYOCxPoOzDzA5TYIgJG7pbcCBo
- GSutcbfBSWnUIQAiNdldQDck6LL5NVssc3wK1YiFh51mFIyi2su9FBo8o9lfRI+7FmOz
- Zj0e5Zfz/iQP1B+sULa8R6PIwE6lcxetzL8lVD02hfV3NwvyihjYz+be1DcnaX7HUwcK
- sJew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756287759; x=1756892559;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=s4gNirUawo/2N73RGh/VZFmiZovBEw6Zvsz5pkyBSog=;
- b=jrAJ9qrUh7G82paUzPyrUHD0qVkv9wt+Jv/HBcGsm50Zvlgr4tuh1Rww93E5Q4AF5/
- IdHkdJ6fvySkiMExnQG9lIVgKenZyn0tbuC4PZ+VxRCx2esPI/en8/RqvKbkRpKcvcg+
- /TvMwSHX+bG8RgjyB9EfY0mVprkEge1zuHKPSnhY2lmHId6Zajs4MVaPf1n0BIlylbY/
- N9FOrOHI3/fRkUnvabF3N4kxgHqbC25TUVnS1/Rca0Bx6Zp7K6gNs3oWEgJ4sVqhGx8r
- oMmstk4QagpC2zbq3WNfNM+itRMxHLaUu9PojW3Fc15W+HLGoYnBVv4CMsbPiKwln0C8
- 7NSQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW5E6Tkqx29WaNfSW80dPMfKsEWOkJaavRBqeYiTfpRmowCMdzCLsdxd83H7amPDSaN42HaCC4B4XQ=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0Yz7frkmxXoJcJFubzBsNwlJaSfhv8fB41NGdkjEwua0IcDtN3Sr
- VohkhsnND7leNjBhbVBYFFM/x/6azm40J3bJoaVOayWOPPObJYmUdMPb
-X-Gm-Gg: ASbGncs6677oGjEyFB55TVLr3TzCgjNhaYaNykibqzZHxn+yE6GFXjmCfRAeaPMP1ov
- VB1q9bhjZrR4N6oi9FI3x4i1/ay5E3GPiPxl+B5I6jGg6oUz4ipysSz8Wgs0hleY5GxLoGZWjJU
- EOLdUuoxtXgmQrX4TALu6CSkAoO8ZvOP6YIfnvrWRsYNut0H3na7daSJcvK3LG4WfVKPAoJXmHo
- RkEqACZLczpchvMxLZ6xM9YVevP7deo7GxSeOIwvonKTmfQWSAe/w2tyTvNUzycskWS5T4qpeL0
- g0ibswb+LUTE/A3/jEZXheFJ9W20KCg182ZtTGMw6LAVgPpXS6mi1/lKdt5gZe48qgyjimr53nZ
- oLbYz4jFePjDw6k/o/+y/p2NkZnX4FWaGIkPjBFayU1UGFnACxVzAtJAPYfeeuk34IA==
-X-Google-Smtp-Source: AGHT+IFkjO5GHbU1+2MUuKQvNL0fwH2etmLb7S57NgBpdq01aCYpWSgROxwdQQpXxfO8aoPZevSNpQ==
-X-Received: by 2002:a05:6000:3105:b0:3b8:d672:3cf8 with SMTP id
- ffacd0b85a97d-3c5dcb10b6amr14770182f8f.43.1756287759105; 
- Wed, 27 Aug 2025 02:42:39 -0700 (PDT)
-Received: from ?IPV6:2620:10d:c096:325:77fd:1068:74c8:af87?
- ([2620:10d:c092:600::1:4a1a]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cc4b102889sm3363615f8f.51.2025.08.27.02.42.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 Aug 2025 02:42:38 -0700 (PDT)
-Message-ID: <46d09557-1873-4d97-b073-ce0c7296b954@gmail.com>
-Date: Wed, 27 Aug 2025 10:43:59 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 18/35] io_uring/zcrx: remove "struct io_copy_cache"
- and one nth_page() usage
-To: David Hildenbrand <david@redhat.com>, linux-kernel@vger.kernel.org
-Cc: Jens Axboe <axboe@kernel.dk>, Alexander Potapenko <glider@google.com>,
+ Thu, 28 Aug 2025 01:04:42 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=SOWUFNiYrbtZFhq292gOefp6rE6KRwfxECB3wrHu6zJ/uI6bADu7V60oIR1R+Ce3fYvFTqjnK/XtlycfQvlE26dTTSuWszIb9XgnubNea17hTsy4uTTymxlHlm6ceHPDFRg85P3uU81YlZV5XV//dH8gpFwkTYMkrikLsAkJqKesL9VR0aqrfArLS3G7rMQicvkoIayxAzhcyoXjackflIKAL1olLOJ/kUWqO9BwAnG4l6YLTBABROPqZBsLHU0JhkT7g/I0ksn+tU4apjpTCNjHUKacAyDqS8pI0cSoSqYkcmsTPSxgh4s1Pm+HoxnYtGEbtWzWKMRhEUYJ1XjNJg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=p74A+sOl7DAz/FC+dByIeNJupwTvLp+3Bi5eknuxa5E=;
+ b=Nf99o3beE+liTmtbx5PrkubQE0y+hxFRAtpPCbA2SvRLqETWJ+QNrGUPMghh10OBxQBH+SvH4Qt5XzQoQz2nd0k9y4OCwLGOCLfVKFpif2AeqCPiM+Gq8pQFsMT4N1JJ2JODg4l3Ozi3FkMfGLmLMslYRtuHOBDNcLWnTmbsVqMTBgjGQ+51C4m/z4pixvp81lGs2g1i8iHyFPi2719ZiZA8CJp/kU2q7jrY+SUUXIITpKFfM+mTSvvjcm/SJNVQcsu09WOUyQbN9B3DYSVr4EhSlJGeF5ALl3WQN+EHz5T3wzO4BcjIOG9hKFZzyytkrJ7XHOHlxozihnO3rMLzzw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=p74A+sOl7DAz/FC+dByIeNJupwTvLp+3Bi5eknuxa5E=;
+ b=K1BPQ9gsNaRdCledITiDDfpnQb8+HAxATyaYHwPMnNe0Vo5SFw4pYbIEyqRZJbLvxNFqH+JqJzwZ1k0Mh/lH8C1Fk8pVfs83Mdv+YzXYdx8vGhkICSGNsyi7PVHzyFtIBlar+owQuFywwMbqozMJXTf9d7OAGi3r1UCU0MpWr5VX/OoEv96xcqVkmnk+zaeGcOQPib5oFzqgz2+pcMr10UJm1IBOh9syuPQx7VWdVR9MtDfDzmhvz+ZnKko/7i4fiLUkF4PHuL8NnCl6h2sAFdx5NlNQPwLLoZe3ELHjPi/mha3HCyTt5dK7TuQd0n8IxiThaDdtzK7C4OVCxkQceA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DS7PR12MB9473.namprd12.prod.outlook.com (2603:10b6:8:252::5) by
+ LV8PR12MB9084.namprd12.prod.outlook.com (2603:10b6:408:18e::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.20; Thu, 28 Aug
+ 2025 01:04:37 +0000
+Received: from DS7PR12MB9473.namprd12.prod.outlook.com
+ ([fe80::5189:ecec:d84a:133a]) by DS7PR12MB9473.namprd12.prod.outlook.com
+ ([fe80::5189:ecec:d84a:133a%6]) with mapi id 15.20.9052.019; Thu, 28 Aug 2025
+ 01:04:37 +0000
+From: Zi Yan <ziy@nvidia.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: linux-kernel@vger.kernel.org, Alexander Potapenko <glider@google.com>,
  Andrew Morton <akpm@linux-foundation.org>,
  Brendan Jackman <jackmanb@google.com>, Christoph Lameter <cl@gentwo.org>,
  Dennis Zhou <dennis@kernel.org>, Dmitry Vyukov <dvyukov@google.com>,
  dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
  iommu@lists.linux.dev, io-uring@vger.kernel.org,
- Jason Gunthorpe <jgg@nvidia.com>, Johannes Weiner <hannes@cmpxchg.org>,
- John Hubbard <jhubbard@nvidia.com>, kasan-dev@googlegroups.com,
- kvm@vger.kernel.org, "Liam R. Howlett" <Liam.Howlett@oracle.com>,
+ Jason Gunthorpe <jgg@nvidia.com>, Jens Axboe <axboe@kernel.dk>,
+ Johannes Weiner <hannes@cmpxchg.org>, John Hubbard <jhubbard@nvidia.com>,
+ kasan-dev@googlegroups.com, kvm@vger.kernel.org,
+ "Liam R. Howlett" <Liam.Howlett@oracle.com>,
  Linus Torvalds <torvalds@linux-foundation.org>, linux-arm-kernel@axis.com,
  linux-arm-kernel@lists.infradead.org, linux-crypto@vger.kernel.org,
  linux-ide@vger.kernel.org, linux-kselftest@vger.kernel.org,
@@ -89,17 +65,94 @@ Cc: Jens Axboe <axboe@kernel.dk>, Alexander Potapenko <glider@google.com>,
  Oscar Salvador <osalvador@suse.de>, Peter Xu <peterx@redhat.com>,
  Robin Murphy <robin.murphy@arm.com>, Suren Baghdasaryan <surenb@google.com>,
  Tejun Heo <tj@kernel.org>, virtualization@lists.linux.dev,
- Vlastimil Babka <vbabka@suse.cz>, wireguard@lists.zx2c4.com, x86@kernel.org,
- Zi Yan <ziy@nvidia.com>
-References: <20250821200701.1329277-1-david@redhat.com>
- <20250821200701.1329277-19-david@redhat.com>
- <b5b08ad3-d8cd-45ff-9767-7cf1b22b5e03@gmail.com>
- <473f3576-ddf3-4388-aeec-d486f639950a@redhat.com>
-Content-Language: en-US
-From: Pavel Begunkov <asml.silence@gmail.com>
-In-Reply-To: <473f3576-ddf3-4388-aeec-d486f639950a@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+ Vlastimil Babka <vbabka@suse.cz>, wireguard@lists.zx2c4.com, x86@kernel.org
+Subject: Re: [PATCH v1 08/36] mm/hugetlb: check for unreasonable folio sizes
+ when registering hstate
+Date: Wed, 27 Aug 2025 21:04:29 -0400
+X-Mailer: MailMate (2.0r6272)
+Message-ID: <A030470C-B89D-4250-ACBE-0FBC8D0BD0AB@nvidia.com>
+In-Reply-To: <20250827220141.262669-9-david@redhat.com>
+References: <20250827220141.262669-1-david@redhat.com>
+ <20250827220141.262669-9-david@redhat.com>
+Content-Type: text/plain
+X-ClientProxiedBy: BN9PR03CA0339.namprd03.prod.outlook.com
+ (2603:10b6:408:f6::14) To DS7PR12MB9473.namprd12.prod.outlook.com
+ (2603:10b6:8:252::5)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR12MB9473:EE_|LV8PR12MB9084:EE_
+X-MS-Office365-Filtering-Correlation-Id: 269f8bf3-675c-4fd2-0ec3-08dde5cedb94
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|7416014|376014|366016|1800799024|7053199007; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?d6nO1qiF4FKRrVs/wnxL11pnYyxVbsmIHSoyEeGgJ7Mj+PuH0xLGTo3nQw75?=
+ =?us-ascii?Q?SbcwS8dAblH/jCJXcH6aOVjEYDtgD+npkxnhnUAgioV0cXevCObR7vs55wTY?=
+ =?us-ascii?Q?06bb52HxKX59Qpgci2AVKByIlMOqBp4g4CTmX9H7HDaVwU7ysfDU0Ou3mpW+?=
+ =?us-ascii?Q?aCEEiDrG8JN5QG8WOe3drWcqfVANtwnQrmwWCgdiCYo92LPaCmilCr7SYnQ1?=
+ =?us-ascii?Q?DG9D/XdprTfy9mjxbZK21sF8+o0Hn/RiD0nNbhgpfoU2t28P91x5248u3tmw?=
+ =?us-ascii?Q?ILvTIeSZrdiqbALezM+nVQdUwNpj918zmlLsfBGsXOfaKKLZMzjipfSXw8V+?=
+ =?us-ascii?Q?EiWtIeOtwzC9i0Yx41yYFim3YG8oP2n7vOPtJERZJDZpQwhJY0gwDfxLYzYo?=
+ =?us-ascii?Q?BGoIwjxd9/QjqrFaCHvB4ohvwOkFaQBps1SQ5wnUa93OCzPo/M5WD5o42s5G?=
+ =?us-ascii?Q?40I9bmH3mYMH6wtkl6DWauio1x2hAHZuJDko4kaL5Ch/D0R4K2joAJVLSwp3?=
+ =?us-ascii?Q?/mjz83M7BVPVfzrUGGwYwLlVGiF6MpfENcDjgx0usF/0S04qwp2QIVwfEDEq?=
+ =?us-ascii?Q?AyY+g5jmZKtSEMxQJdBnO0YC74dBTD9J8BPylmfLLh1BeletnXep/qSdNbHx?=
+ =?us-ascii?Q?TfGjxCYjMcnPR/WPmcvgGsJfhBdgp3VF4j+PjMpp3Fr5O5hUuWrGjSL+Izve?=
+ =?us-ascii?Q?kyMjXbX0PGKfiD2fjXqAuF+moPL0USCDhKuYbNyBrdKoVkZtxPk8WxVSltn7?=
+ =?us-ascii?Q?cpoVBMuQgglATC7nt4X5YjtFf/nWFjKtutEDNGE2h7Bll1D6rrBvZSIKgnzW?=
+ =?us-ascii?Q?qYdJhMsLRkoCK9YZ0Y40iAGiS8EfM6/NknqyJtk6AX2mw7LcIYnfNhXjn5MT?=
+ =?us-ascii?Q?KqsFINY2gey1t3F56YQVS1z0hmqtpOgPNykBJfDM1Zcq2D5ZWZH7aqgkTFSu?=
+ =?us-ascii?Q?9KsyXjuOoFIejLihaGHcqmV9ilimbUUTTvdDOd/ygbHyOucawnVwD7oTYxVJ?=
+ =?us-ascii?Q?0GOp3M9aErkAtNaig2jbVeSwiLsSf/NPuCddlc5/zsl+zv4ZnX1WOws/nrQe?=
+ =?us-ascii?Q?D4E0QE5vJ/4uMelpSJCtdSYUCBE1iJ71mWdKNddXkfTqvDXJ2Vzy5pXslvsU?=
+ =?us-ascii?Q?0vpyh1e1gfVfMZnXKyIPyjkV4N9krj2jRbY/gcxLzG6AFTIQCz3fiEMFuKPf?=
+ =?us-ascii?Q?XI8oamhXN3SHv5Z3hcF3lpaBaFwkrAUAyw2d1oyzDBYtin0iinYQiTP7RbnZ?=
+ =?us-ascii?Q?1tnnPKJz5AKN8uVmZf5OqWyakHEz+UZNyrJsT1+t8EI4Vqrly/vjqXynBbSQ?=
+ =?us-ascii?Q?86Gha6MxBDmPFXmE4gbLVm/9amKGuFfsJjLtbx69PXRhE1OQ+QXf/pIALZIh?=
+ =?us-ascii?Q?qy4+GvIdw/gchVcB3IE1ccnKFkfKgpHcQiDYh+eh8ispy1bwzH9qaGxxtcvb?=
+ =?us-ascii?Q?WUJ2YiuGgIk=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DS7PR12MB9473.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(366016)(1800799024)(7053199007); DIR:OUT;
+ SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?10Xb7/jBdX+X+16JsVz81L+tfOIsN0BN5XnMkLRgDZbnTanK9OVnsY6VvKZr?=
+ =?us-ascii?Q?VBZP9TxOtqMFMtDyUwoq+Lf2ikJcDdbDW97DRu6wSy7WnIz1erlNbR/OIojZ?=
+ =?us-ascii?Q?jjNHkX70PHGtIJlPf4I27URQuubgZLxehEp79SWfLnx/Dfyc0TkWrm8SuTus?=
+ =?us-ascii?Q?xhKx+udao0gBL6CzKIxU5ieZihJWEWBrUS4HKe+0WAFbWCRIi5OTw8+OIJQD?=
+ =?us-ascii?Q?XFgGDI7/mjx6qtUsSTkn9ZYbXiG5fC+ooL2o5tzAAhgA+DX64CjoDZ0egix0?=
+ =?us-ascii?Q?v7f5cDu+zpmKbKSrk3+ej8s0E6bjaH9eoVXnxcbC/EXYZ93V2dhSwbJBtr/K?=
+ =?us-ascii?Q?bzTN414OWEA/1IrUw2RgUEm8LeEOosnD4gnLHryBMjlpjnOaeaIGH2SGcyLQ?=
+ =?us-ascii?Q?n87B9X58WG02+fEpqUe6vf9gaij81tw69RQEgXA4vqBfC2NgF4lC08gYMQ8J?=
+ =?us-ascii?Q?nRADf9S7T0qWiUqBfnTb2x1BqFNWm2uKdMPkmbgpVpyfXIYqdBoD2QFKL6PB?=
+ =?us-ascii?Q?lFFHqJBrCtyYBlX/qxCj/g+QsoimnEH1/rjjtzyplKnlf0BRqbD+6OcfUixP?=
+ =?us-ascii?Q?42HwU7fLUHhvYt8pBjzHjDJ6fqgh8CCPzms00qZAD3cBuroPpcXdfINiHEQ4?=
+ =?us-ascii?Q?kf86CtB9k4BDzttnV77dB9Mcs5syRFNcjfKjTXqq14eND/jbq6silMK82a6E?=
+ =?us-ascii?Q?s14NKlokNklBxKwlXehMfTbfT8SztsYRXMD5IRBkG+Sqasq2x2IrwLtVITQE?=
+ =?us-ascii?Q?oP1cn2MfvJ41zUXJJ/MUzqL++WFaelfSFV6fss6TKZtwkpriW5SMV3VNFQZQ?=
+ =?us-ascii?Q?wBjmxbwdylcOZk0KYkXfnuQcdYPDvJ3iePuDhEgQqpaSLjfiEoobY38RVZ8p?=
+ =?us-ascii?Q?V+X8j876ALcr0Q02JKSs/8os8npZ+Qu1J9sMvMJqw9Y/+fI8z30Gx4YiGEuR?=
+ =?us-ascii?Q?pS0yaolp7rui18ecYDAxS04UUiXJNwvCe3Mzb4u5DpDu8ZRdNi6AFcwM1jHz?=
+ =?us-ascii?Q?FuV4+rY3yKOZ5kclKySAd8qr1FjpwMpQ792hmkd2dJiLvaXM97JPOwamUTsH?=
+ =?us-ascii?Q?rXK6WG6BVJY9AReAjnO8MGYtSLTO4KU14EcT/YYPR4I5DHBwxUHEMdvky8n1?=
+ =?us-ascii?Q?n9YCui7DO1UQwBprWNUN8h50RlYsKG5VsP52dvg1ZU0BFAqnBgxpEDH6KdYg?=
+ =?us-ascii?Q?NGkjRumj7LT6FYhTJ0qN4aoTIM6cQDR6F1igLQjc0RVctvrnxEx8d2RdroSO?=
+ =?us-ascii?Q?naOhTF3gc0OchFFEZV+SYaa7eXZaxFOTx3KmOfspwLso7I16tkW/OvJXg867?=
+ =?us-ascii?Q?lZDzZZavhsF1Oiw3f+JhJ+YEugAKfVo5+r2ZQP4FHCu3LlPEHPPZlco2G7Tx?=
+ =?us-ascii?Q?+1c0rd1kiiXVOSwB4MnGK1Fmk3rlQEcI+LHyDSXaMjKSa2bgHyD47E1sW1pP?=
+ =?us-ascii?Q?dGHnblCKm7ql8fw2Ke62M6knxpHEtsHQLNLTP0z2Rd5RoBp/u6/ewSYytoTW?=
+ =?us-ascii?Q?ymu27gXDazm0h5WnoUaqY7XzIqxi5656NkNgHxKZKMcSTeX5w2Fp9zcwgbqX?=
+ =?us-ascii?Q?uIfhMIcwX+wZjt2hQYmypQYXSwLn6A0t1PZsQR1m?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 269f8bf3-675c-4fd2-0ec3-08dde5cedb94
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR12MB9473.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Aug 2025 01:04:36.7939 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: JeLUKWyXuZ9l/CVncUADOtX4g/h1zPNqduM41PIbCyxxagmVfuulCnmu4a+VCzYd
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR12MB9084
 X-Mailman-Approved-At: Tue, 18 Nov 2025 17:23:16 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -115,45 +168,27 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 8/22/25 14:59, David Hildenbrand wrote:
-> On 22.08.25 13:32, Pavel Begunkov wrote:
->> On 8/21/25 21:06, David Hildenbrand wrote:
->>> We always provide a single dst page, it's unclear why the io_copy_cache
->>> complexity is required.
->>
->> Because it'll need to be pulled outside the loop to reuse the page for
->> multiple copies, i.e. packing multiple fragments of the same skb into
->> it. Not finished, and currently it's wasting memory.
-> 
-> Okay, so what you're saying is that there will be follow-up work that will actually make this structure useful.
+On 27 Aug 2025, at 18:01, David Hildenbrand wrote:
 
-Exactly
+> Let's check that no hstate that corresponds to an unreasonable folio size
+> is registered by an architecture. If we were to succeed registering, we
+> could later try allocating an unsupported gigantic folio size.
+>
+> Further, let's add a BUILD_BUG_ON() for checking that HUGETLB_PAGE_ORDER
+> is sane at build time. As HUGETLB_PAGE_ORDER is dynamic on powerpc, we have
+> to use a BUILD_BUG_ON_INVALID() to make it compile.
+>
+> No existing kernel configuration should be able to trigger this check:
+> either SPARSEMEM without SPARSEMEM_VMEMMAP cannot be configured or
+> gigantic folios will not exceed a memory section (the case on sparse).
+>
+> Signed-off-by: David Hildenbrand <david@redhat.com>
+> ---
+>  mm/hugetlb.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+LGTM. Reviewed-by: Zi Yan <ziy@nvidia.com>
 
->> Why not do as below? Pages there never cross boundaries of their folios. > Do you want it to be taken into the io_uring tree?
-> 
-> This should better all go through the MM tree where we actually guarantee contiguous pages within a folio. (see the cover letter)
-
-Makes sense. No objection, hopefully it won't cause too many conflicts.
-
->> diff --git a/io_uring/zcrx.c b/io_uring/zcrx.c
->> index e5ff49f3425e..18c12f4b56b6 100644
->> --- a/io_uring/zcrx.c
->> +++ b/io_uring/zcrx.c
->> @@ -975,9 +975,9 @@ static ssize_t io_copy_page(struct io_copy_cache *cc, struct page *src_page,
->>            if (folio_test_partial_kmap(page_folio(dst_page)) ||
->>                folio_test_partial_kmap(page_folio(src_page))) {
->> -            dst_page = nth_page(dst_page, dst_offset / PAGE_SIZE);
->> +            dst_page += dst_offset / PAGE_SIZE;
->>                dst_offset = offset_in_page(dst_offset);
->> -            src_page = nth_page(src_page, src_offset / PAGE_SIZE);
->> +            src_page += src_offset / PAGE_SIZE;
-> 
-> Yeah, I can do that in the next version given that you have plans on extending that code soon.
-
-If we go with this version:
-
-Reviewed-by: Pavel Begunkov <asml.silence@gmail.com>
-
--- 
-Pavel Begunkov
-
+--
+Best Regards,
+Yan, Zi
