@@ -4,49 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF112CA0FFD
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 28 Aug 2025 00:13:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F966CA0FF6
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 28 Aug 2025 04:27:50 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 84245a86;
-	Wed, 27 Aug 2025 22:12:32 +0000 (UTC)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [170.10.133.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 98324ce7
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d1a444a5;
+	Thu, 28 Aug 2025 04:27:48 +0000 (UTC)
+Received: from tor.source.kernel.org (tor.source.kernel.org
+ [2600:3c04:e001:324:0:1991:8:25])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7df8f57e
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 27 Aug 2025 22:12:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756332748;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xokvzkSIEpQffuWgfIG7Waj6e5Wn3/nTay4YDrY+vKU=;
- b=RGhE5J1rTjGUUWILh7nTbTryRlWEMJe7FaGbMWjWk+JdEdlPgdevzMiQwMH3wSrLknQz/w
- svxYMU5xQTVD6AABj39WuzwXslQrS1p+4oAHyiI1f10DGJItB46S2faQgM3yac2a6h0qlP
- EdiZEyrfk0CWRArV5NvRfTLOupqUfiQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-488-RQvXUovaMI65FI3R-Bh1mA-1; Wed,
- 27 Aug 2025 18:12:26 -0400
-X-MC-Unique: RQvXUovaMI65FI3R-Bh1mA-1
-X-Mimecast-MFC-AGG-ID: RQvXUovaMI65FI3R-Bh1mA_1756332741
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A0A3C19560AA; Wed, 27 Aug 2025 22:12:21 +0000 (UTC)
-Received: from t14s.redhat.com (unknown [10.22.80.195])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2874830001A5; Wed, 27 Aug 2025 22:12:05 +0000 (UTC)
-From: David Hildenbrand <david@redhat.com>
-To: linux-kernel@vger.kernel.org
-Cc: David Hildenbrand <david@redhat.com>,
- Alexander Potapenko <glider@google.com>,
- Andrew Morton <akpm@linux-foundation.org>,
+ Thu, 28 Aug 2025 04:27:46 +0000 (UTC)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id EBB9A60204;
+ Thu, 28 Aug 2025 04:27:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33984C4CEEB;
+ Thu, 28 Aug 2025 04:27:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1756355264;
+ bh=hUnNfjGCPEWmiNNGGLZKDOsScYWj511icwVWbnrMbSE=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+ b=MDOpy7Q7+PtjV9ZnI/+71mkZCJrWQwTtFvdW0afXONz8h7wR9ImGTrV4WCC7mXn2B
+ 7EbOn3HGpIWLqjjSjwF8rGcKZhPtc4Gfky+zbxOUAt8Kl+cAXdXSfuUaya8Zvy1ya1
+ F1mYHsgG9WcnDg0zKq2bACZzcl/UPORrd7FsCsy3qdsnuRy8wAbqlzxL98joSNwLF6
+ w9WMn87Hpnp8f8IF6pk5vnsO7wQiX+Ib8XV+pManWrp62VQ4CdQPenZjvMUQSDERoQ
+ eOJ33fQuGDSZ49Qcix6/vKNOIhOhF/f6epJTEq5OJkbiyKYIE1xM/FteX3oGbk+Ymp
+ Up7jZQPpsB0CA==
+Message-ID: <c39104cf-f066-45d8-a13c-cad558312b6e@kernel.org>
+Date: Thu, 28 Aug 2025 13:24:45 +0900
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 24/36] ata: libata-eh: drop nth_page() usage within SG
+ entry
+To: David Hildenbrand <david@redhat.com>, linux-kernel@vger.kernel.org
+Cc: Niklas Cassel <cassel@kernel.org>, Alexander Potapenko
+ <glider@google.com>, Andrew Morton <akpm@linux-foundation.org>,
  Brendan Jackman <jackmanb@google.com>, Christoph Lameter <cl@gentwo.org>,
  Dennis Zhou <dennis@kernel.org>, Dmitry Vyukov <dvyukov@google.com>,
  dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
@@ -61,23 +53,22 @@ Cc: David Hildenbrand <david@redhat.com>,
  linux-mips@vger.kernel.org, linux-mmc@vger.kernel.org, linux-mm@kvack.org,
  linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
  linux-scsi@vger.kernel.org, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
- Marco Elver <elver@google.com>,
- Marek Szyprowski <m.szyprowski@samsung.com>,
+ Marco Elver <elver@google.com>, Marek Szyprowski <m.szyprowski@samsung.com>,
  Michal Hocko <mhocko@suse.com>, Mike Rapoport <rppt@kernel.org>,
  Muchun Song <muchun.song@linux.dev>, netdev@vger.kernel.org,
  Oscar Salvador <osalvador@suse.de>, Peter Xu <peterx@redhat.com>,
- Robin Murphy <robin.murphy@arm.com>,
- Suren Baghdasaryan <surenb@google.com>, Tejun Heo <tj@kernel.org>,
- virtualization@lists.linux.dev, Vlastimil Babka <vbabka@suse.cz>,
- wireguard@lists.zx2c4.com, x86@kernel.org, Zi Yan <ziy@nvidia.com>
-Subject: [PATCH v1 36/36] mm: remove nth_page()
-Date: Thu, 28 Aug 2025 00:01:40 +0200
-Message-ID: <20250827220141.262669-37-david@redhat.com>
-In-Reply-To: <20250827220141.262669-1-david@redhat.com>
+ Robin Murphy <robin.murphy@arm.com>, Suren Baghdasaryan <surenb@google.com>,
+ Tejun Heo <tj@kernel.org>, virtualization@lists.linux.dev,
+ Vlastimil Babka <vbabka@suse.cz>, wireguard@lists.zx2c4.com, x86@kernel.org,
+ Zi Yan <ziy@nvidia.com>
 References: <20250827220141.262669-1-david@redhat.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+ <20250827220141.262669-25-david@redhat.com>
+From: Damien Le Moal <dlemoal@kernel.org>
+Content-Language: en-US
+Organization: Western Digital Research
+In-Reply-To: <20250827220141.262669-25-david@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -92,40 +83,16 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Now that all users are gone, let's remove it.
+On 8/28/25 7:01 AM, David Hildenbrand wrote:
+> It's no longer required to use nth_page() when iterating pages within a
+> single SG entry, so let's drop the nth_page() usage.
+> 
+> Cc: Damien Le Moal <dlemoal@kernel.org>
+> Cc: Niklas Cassel <cassel@kernel.org>
+> Signed-off-by: David Hildenbrand <david@redhat.com>
 
-Signed-off-by: David Hildenbrand <david@redhat.com>
----
- include/linux/mm.h                   | 2 --
- tools/testing/scatterlist/linux/mm.h | 1 -
- 2 files changed, 3 deletions(-)
+Acked-by: Damien Le Moal <dlemoal@kernel.org>
 
-diff --git a/include/linux/mm.h b/include/linux/mm.h
-index 2ca1eb2db63ec..b26ca8b2162d9 100644
---- a/include/linux/mm.h
-+++ b/include/linux/mm.h
-@@ -210,9 +210,7 @@ extern unsigned long sysctl_admin_reserve_kbytes;
- 
- #if defined(CONFIG_SPARSEMEM) && !defined(CONFIG_SPARSEMEM_VMEMMAP)
- bool page_range_contiguous(const struct page *page, unsigned long nr_pages);
--#define nth_page(page,n) pfn_to_page(page_to_pfn((page)) + (n))
- #else
--#define nth_page(page,n) ((page) + (n))
- static inline bool page_range_contiguous(const struct page *page,
- 		unsigned long nr_pages)
- {
-diff --git a/tools/testing/scatterlist/linux/mm.h b/tools/testing/scatterlist/linux/mm.h
-index 5bd9e6e806254..121ae78d6e885 100644
---- a/tools/testing/scatterlist/linux/mm.h
-+++ b/tools/testing/scatterlist/linux/mm.h
-@@ -51,7 +51,6 @@ static inline unsigned long page_to_phys(struct page *page)
- 
- #define page_to_pfn(page) ((unsigned long)(page) / PAGE_SIZE)
- #define pfn_to_page(pfn) (void *)((pfn) * PAGE_SIZE)
--#define nth_page(page,n) pfn_to_page(page_to_pfn((page)) + (n))
- 
- #define __min(t1, t2, min1, min2, x, y) ({              \
- 	t1 min1 = (x);                                  \
 -- 
-2.50.1
-
+Damien Le Moal
+Western Digital Research
