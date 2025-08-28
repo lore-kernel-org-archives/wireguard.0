@@ -4,103 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3FCCEF06E3
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Feb 2026 17:13:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87489EF06E1
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Feb 2026 17:13:18 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6422c224;
-	Sun, 8 Feb 2026 17:10:14 +0000 (UTC)
-Received: from outbound.ms.icloud.com
- (p-west3-cluster4-host1-snip4-2.eps.apple.com [57.103.74.173])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7723fef6
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fe57f4f7;
+	Sun, 8 Feb 2026 17:10:18 +0000 (UTC)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1e9b4446
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 30 Jun 2025 20:27:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
- s=1a1hai; bh=IpiiKURuW77pswZJ9D2/Sa74iN4RfP9nuSseM32nLVE=;
- h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To:x-icloud-hme;
- b=wmb6SW37WC4FV/+eCznR9ry9249dmokRO+4O+dgdaizSNFrhIKyDHGj5OJNoTwUMZ
- YCN88ForCdgvZ2bl7Ra0kFiVT7qQJNIteGi+tQfSKx0gJ0iM5mUf9lGqRbPONDYaUW
- F/6Gujb0KJoULYfij9h42WVQ782FFVyuE5eQU7E1XyK0mj/uPFP8e16O9pEqSqs8QX
- IHjQ2wWx8E+qGfLtgd0oZApv+gDZb/EvzNsUR8lmpXkwRXn20C+FGETVjeObF8ANYD
- BwjOr/mKPZ/OrO9eWwpFshq26KWHQOdb0b6uKhZ3EVGjBCk7t/qCDAlukSC2PgG663
- 7yycPEnscNvoQ==
-Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
- by outbound.ms.icloud.com (Postfix) with ESMTPS id A5FD61800494
- for <wireguard@lists.zx2c4.com>; Mon, 30 Jun 2025 20:27:06 +0000 (UTC)
-Received: from
- p00-icloudmta-smtpin-us-west-3a-100-percent-13.p00-icloudmta-smtpin-vip.icloud-mail-production.svc.kube.us-west-3a.k8s.cloud.apple.com
- (ms-asmtpout-k8s.p00.prod.me.com [10.52.196.11])
- by outbound.ms.icloud.com (Postfix) with ESMTP id 5430C18004BA
- for <wireguard@lists.zx2c4.com>; Mon, 30 Jun 2025 20:27:06 +0000 (UTC)
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com
- [209.85.167.50]) by
- p00-icloudmta-smtpin-us-west-3a-100-percent-13.p00-icloudmta-smtpin-vip.icloud-mail-production.svc.kube.us-west-3a.k8s.cloud.apple.com
- (Postfix) with ESMTPS id 9F0A6C000F5
- for <wireguard_at_lists_zx2c4_com_zp48d60a9st896_ae7p8716@icloud.com>;
- Mon, 30 Jun 2025 20:27:03 +0000 (UTC)
-X-ICL-Info: GAtbRVYDBVFFSlVFSgQEUFUKE0oWX1gHVQoPB0UCBltbQVNZSQYBTEBJRhIcDV8iBxgNHgweXwxVHwJKClFdCwFXDxlYQlVfAhAUEh9FVxARJgcDJ1xfEQEKOQ0AAlVWKhoJGidKRlZNHVBHGQlFFk1AUCgZVQESTU5XQThZVQ4aDAJZG19bQh0cChhFXVcLGVQKEUkdUFdFVwEYF1daB1saCRpYQEIQSBQHHhQdWgREVABCSB5RDRoeChJWU1kPVR0CSgpRXQsBVw8ZWF1fBkhFXjNIAARSTUBLM0lxBE9BT1VFVXIEVzRUVjU8AwFWM0knNE4DdhAUEg8DVllYXA==
-X-ICL-Score: 2.33303322422
-X-ARC-Info: policy=fail; arc=none
-X-DMARC-Policy: v=DMARC1; p=quarantine;
- rua=mailto:7e81dff3142a45b2862d789356bf0c1a@dmarc-reports.cloudflare.net
-X-DMARC-Info: pass=pass; dmarc-policy=quarantine; s=r1; d=r1; pdomain=rakit.in
-Received: by mail-lf1-f50.google.com with SMTP id
- 2adb3069b0e04-55515213c3cso2152329e87.2
- for <wireguard_at_lists_zx2c4_com_zp48d60a9st896_ae7p8716@icloud.com>;
- Mon, 30 Jun 2025 13:27:03 -0700 (PDT)
+ Thu, 28 Aug 2025 18:52:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756407178;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ox+fdqHLvqvHkCQcV7jSITHMPKa6EWT2tpRcTnamaBA=;
+ b=E5WBwKoGQo9zqO/HLEpsrkpXIOyUZpErlYEJrl85UZI+vKSRJUAQwMGOSSx7lqmu1cb2CU
+ 5fJc4OMGF0GVr4Wi8tvBRYFzTmMWW2MwRdrH7RZy/1YiuyYZ25Najtv/JZrrWbeSqGya4e
+ 4F4ikQb7l52dvkvpxswwKeBKqLFNOfA=
+Received: from mail-il1-f197.google.com (mail-il1-f197.google.com
+ [209.85.166.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-500-gXMudZKEPiSqHULKCR3JTw-1; Thu, 28 Aug 2025 14:52:57 -0400
+X-MC-Unique: gXMudZKEPiSqHULKCR3JTw-1
+X-Mimecast-MFC-AGG-ID: gXMudZKEPiSqHULKCR3JTw_1756407176
+Received: by mail-il1-f197.google.com with SMTP id
+ e9e14a558f8ab-3e8dffcf41eso1108165ab.0
+ for <wireguard@lists.zx2c4.com>; Thu, 28 Aug 2025 11:52:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1751315222; x=1751920022;
- h=to:date:message-id:subject:mime-version:content-transfer-encoding
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IpiiKURuW77pswZJ9D2/Sa74iN4RfP9nuSseM32nLVE=;
- b=l72mxUZD7c7kme/hMcQ04BLstUyibJfnkBmi619PbfpUWVFF0rJwcC9yZQeYosD8jf
- l9y/t09i9lbag71W902ALyVb23swPZuGai/tLx8BdK2eVZwR8CKniltLUSuNSyb/jmEk
- 7hGFvkf+ZRXZ5S17lTEu8zE1qHwVtdszRcoj56u1ds8MVXzFTULFD2Bj3Un1sLWltgx6
- HPhMEHCfwAul8KJ9gBWyZHekwUPPMZ9qY03Y91WaDV7eNubvrT1AOwvpSmsYnfxFn/3Y
- 7C4fJWgBZrEgSAwBzeWG5AyEzD+Hiz4S7+O6MN+p7PpjC8v9zYxyVCzQm99LYUO+rmD1
- j76g==
-X-Gm-Message-State: AOJu0YwQZUe/mnhPkMjyRxzsN8mFn7TeeUS5m84RYAGlla/241vasVN6
- gumYtZs9clPFZ0zljtWmjNl5haPvlFbOosBvVxPVTGMM25F7TGSWlpvatEi45f78wz1hbxGcx9G
- aqo/r
-X-Gm-Gg: ASbGncvzxYtzS7W0fNGtdaS+TPkdr121hNqeIYMMXiOLgFeI/tXAdqpoNHAT/4qOhD+
- bRHFP7O8LfpkHyH2R1/P7x2EN5aGMEov57GWNeGyuz6rRaAG5bIDtrSrerlFLAnRwgPW3ezAn2M
- 5pmFTK9DRU/EN1EpW2KWuMQDDf3mlaRFimqnsLOzaMksDmRymnEY+e5vfcIwFk99YpYh8ifryIA
- +gzNKtBH8DzzLQXoBu+6l2A2WbdF/7tDXQ2k9ohAgrQT4wRgKULZDVWQI78oH0dxBT9TAqrtBG1
- Ax2+/ep/ZV1D/v2YmIVBRhaHFyz6eAvyct8+iWLIvbGU
-X-Google-Smtp-Source: AGHT+IEbBWG25k9x9xdIAbCE5CopIq3OrHCBDjRxPOsppHNcXZeA5Zb/bywNePsUiBzljGYlFMWtTA==
-X-Received: by 2002:a05:6512:3b0e:b0:553:65bc:4231 with SMTP id
- 2adb3069b0e04-5550b81ddc3mr4192979e87.21.1751315221850; 
- Mon, 30 Jun 2025 13:27:01 -0700 (PDT)
-Received: from smtpclient.apple ([2a09:bac5:5154:2373::388:5c])
- by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-5550b2b93adsm1543772e87.98.2025.06.30.13.27.01
- for <wireguard_at_lists_zx2c4_com_zp48d60a9st896_ae7p8716@icloud.com>
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 30 Jun 2025 13:27:01 -0700 (PDT)
-From: grates_54_doyenne@icloud.com
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: [BUG] Specific IPv6 AllowedIPs Values Cause "Go Backend Library" error
-Message-Id: <D379F7AD-9BFA-4028-9E2C-01EE0210C423@icloud.com>
-Date: Mon, 30 Jun 2025 23:26:50 +0300
-To: wireguard@lists.zx2c4.com
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
-X-Proofpoint-GUID: tucmjyYLNlK821DKjZTstfgUPKhXccTG
-X-Proofpoint-ORIG-GUID: tucmjyYLNlK821DKjZTstfgUPKhXccTG
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjMwMDE2NyBTYWx0ZWRfX2yC90NLzo8ZW
- zcvQK9Q9QE3NrFux/ird9r/VQd1gkZGoTWXZfdDYm2uFBZyWyLur/KLa2/e7eBfdhrsW+HTP0oH
- BcPdm+zDVVYws/5xpLrdoA6u6F2O7UIImd/RXmww/lu/zlncaSne3kjDvCi4Wc5YtfoSuFMICAo
- Brg3ux9QnA6am1j+BRP7rAvBmhkBmVIkgQfcM0DiltnpmFTIet3NqUbnPU8KFwzRV4TDjPORix9
- asq71MvSn6v3oFG8WkfzWnRYaHz2eAnOtgCESnA/xCeK/CkjSxdY8JyGRTzkDVKW1yhe3Ae1A=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-06-30_04,2025-06-27_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- bulkscore=0 suspectscore=0 mlxlogscore=999 malwarescore=0 phishscore=0
- spamscore=0 mlxscore=0 clxscore=1011 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2506060001 definitions=main-2506300167
+ d=1e100.net; s=20230601; t=1756407176; x=1757011976;
+ h=content-transfer-encoding:mime-version:organization:references
+ :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Ox+fdqHLvqvHkCQcV7jSITHMPKa6EWT2tpRcTnamaBA=;
+ b=lp2V2V+0d6KLp3z/y1K/+q57nnvHJmMx3YcAQwSsJlyj9P7ipEciyMeDw/bMeKmyi0
+ zI3rl6by4kCUpSxG0m1K0x5YIEXDb77N7LBvTjkuv9aTsp8fp2lWyL3w3Oq0sYT/7riF
+ 18iSyZq0r/SpdnDw5cK4Ls0BFFJRD0UzVnV9G7tf8l51rlbbKramm7JVh370JtVIk/ny
+ 13zGbCb2504Xi6xelCcEcS+tdWJuDmFTjJIvIWJxURsTeCWZAMsZqibjjs2lRoVe3QaE
+ jPrSRgduZazB0C9Aqu5eST8fLIbEliJD//KC7gxxPNU/gSNx+Pl7jwAaJ5T2yZT3mVbs
+ EVBg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUunhGsxDfBsvdsxO81qtEuP/jYhQ/ko9JxjRE8qZ01XYIk4ZW6iYgtObvtSC0Jj3p4saxzMQzDzvg=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YxGQsvsl5vj057RcExkYaEsRzyUJGzVx8MItAmVz2zp0vB1hCga
+ qRDBtAA9olRHwZiwpDz62nrP/M5DWtonsFHAaWodFCDjSRb6xQErqaa38tw/wgeoFSjv94pJGZI
+ KZ7Xx6tLQXJ+A1aFdEczBZalGnEFuj6hXpS+wxqlHpo6N3E0pGqLIcs4OvOiUYA==
+X-Gm-Gg: ASbGncsC/4MBemdY1L1/9y6G7XubgW+fwZeyHXN1++Q5mlj5m6mkqwnl3SUk7dZ+CiN
+ yalQ1m/W6GBO3zNZib7xwbUOwmIAqsl6qmN+upt2BUX2CKLKyhyHafcnb5O1ocNdzyZ71oOK9C+
+ 1QKtY4NQYM+Wwu9kZaXTIJGiQJF427eexKT2Loec16U7UzFSCH5lxLVSgjuuRe1F0AwXHHZT5AL
+ qNxe1K89FBohchqTHeacwGur+RcuLGhHzekppB9o7ObZ118BCbdwTfVRkFJuaoMRCsbqRD996BI
+ O2CQKwsZzu0Up1z+6uihsoWzD36T91vHLOXtJBF+V5k=
+X-Received: by 2002:a05:6e02:1a86:b0:3ee:cb14:e90f with SMTP id
+ e9e14a558f8ab-3eecb14ea03mr61889135ab.7.1756407176448; 
+ Thu, 28 Aug 2025 11:52:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEP6X5C8fKyFwSWmjzqPdfkbd7PprjZnYQm1xQXLb3Ss2KjE+y/MhfTqxlaUhO3jzRNfBiTrg==
+X-Received: by 2002:a05:6e02:1a86:b0:3ee:cb14:e90f with SMTP id
+ e9e14a558f8ab-3eecb14ea03mr61888495ab.7.1756407175934; 
+ Thu, 28 Aug 2025 11:52:55 -0700 (PDT)
+Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-50d78c67b4dsm47783173.7.2025.08.28.11.52.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 28 Aug 2025 11:52:54 -0700 (PDT)
+Date: Thu, 28 Aug 2025 12:52:51 -0600
+From: Alex Williamson <alex.williamson@redhat.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: linux-kernel@vger.kernel.org, Brett Creeley <brett.creeley@amd.com>,
+ Jason Gunthorpe <jgg@ziepe.ca>, Yishai Hadas <yishaih@nvidia.com>, Shameer
+ Kolothum <shameerali.kolothum.thodi@huawei.com>, Kevin Tian
+ <kevin.tian@intel.com>, Alexander Potapenko <glider@google.com>, Andrew
+ Morton <akpm@linux-foundation.org>, Brendan Jackman <jackmanb@google.com>,
+ Christoph Lameter <cl@gentwo.org>, Dennis Zhou <dennis@kernel.org>, Dmitry
+ Vyukov <dvyukov@google.com>, dri-devel@lists.freedesktop.org,
+ intel-gfx@lists.freedesktop.org, iommu@lists.linux.dev,
+ io-uring@vger.kernel.org, Jason Gunthorpe <jgg@nvidia.com>, Jens Axboe
+ <axboe@kernel.dk>, Johannes Weiner <hannes@cmpxchg.org>, John Hubbard
+ <jhubbard@nvidia.com>, kasan-dev@googlegroups.com, kvm@vger.kernel.org,
+ "Liam R. Howlett" <Liam.Howlett@oracle.com>, Linus Torvalds
+ <torvalds@linux-foundation.org>, linux-arm-kernel@axis.com,
+ linux-arm-kernel@lists.infradead.org, linux-crypto@vger.kernel.org,
+ linux-ide@vger.kernel.org, linux-kselftest@vger.kernel.org,
+ linux-mips@vger.kernel.org, linux-mmc@vger.kernel.org, linux-mm@kvack.org,
+ linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
+ linux-scsi@vger.kernel.org, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+ Marco Elver <elver@google.com>, Marek Szyprowski
+ <m.szyprowski@samsung.com>, Michal Hocko <mhocko@suse.com>, Mike Rapoport
+ <rppt@kernel.org>, Muchun Song <muchun.song@linux.dev>,
+ netdev@vger.kernel.org, Oscar Salvador <osalvador@suse.de>, Peter Xu
+ <peterx@redhat.com>, Robin Murphy <robin.murphy@arm.com>, Suren
+ Baghdasaryan <surenb@google.com>, Tejun Heo <tj@kernel.org>,
+ virtualization@lists.linux.dev, Vlastimil Babka <vbabka@suse.cz>,
+ wireguard@lists.zx2c4.com, x86@kernel.org, Zi Yan <ziy@nvidia.com>
+Subject: Re: [PATCH v1 31/36] vfio/pci: drop nth_page() usage within SG entry
+Message-ID: <20250828125251.08e4a429.alex.williamson@redhat.com>
+In-Reply-To: <20250827220141.262669-32-david@redhat.com>
+References: <20250827220141.262669-1-david@redhat.com>
+ <20250827220141.262669-32-david@redhat.com>
+Organization: Red Hat
+MIME-Version: 1.0
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: TtQ6zYPVLVt5EFpXunxBR2_tImcoyJnMlleysgrxyss_1756407176
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 X-Mailman-Approved-At: Sun, 08 Feb 2026 17:10:11 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -116,45 +123,52 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi folks,
+On Thu, 28 Aug 2025 00:01:35 +0200
+David Hildenbrand <david@redhat.com> wrote:
 
-I am writing to inquire about a potential bug.
+> It's no longer required to use nth_page() when iterating pages within a
+> single SG entry, so let's drop the nth_page() usage.
+> 
+> Cc: Brett Creeley <brett.creeley@amd.com>
+> Cc: Jason Gunthorpe <jgg@ziepe.ca>
+> Cc: Yishai Hadas <yishaih@nvidia.com>
+> Cc: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+> Cc: Kevin Tian <kevin.tian@intel.com>
+> Cc: Alex Williamson <alex.williamson@redhat.com>
+> Signed-off-by: David Hildenbrand <david@redhat.com>
+> ---
+>  drivers/vfio/pci/pds/lm.c         | 3 +--
+>  drivers/vfio/pci/virtio/migrate.c | 3 +--
+>  2 files changed, 2 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/vfio/pci/pds/lm.c b/drivers/vfio/pci/pds/lm.c
+> index f2673d395236a..4d70c833fa32e 100644
+> --- a/drivers/vfio/pci/pds/lm.c
+> +++ b/drivers/vfio/pci/pds/lm.c
+> @@ -151,8 +151,7 @@ static struct page *pds_vfio_get_file_page(struct pds_vfio_lm_file *lm_file,
+>  			lm_file->last_offset_sg = sg;
+>  			lm_file->sg_last_entry += i;
+>  			lm_file->last_offset = cur_offset;
+> -			return nth_page(sg_page(sg),
+> -					(offset - cur_offset) / PAGE_SIZE);
+> +			return sg_page(sg) + (offset - cur_offset) / PAGE_SIZE;
+>  		}
+>  		cur_offset += sg->length;
+>  	}
+> diff --git a/drivers/vfio/pci/virtio/migrate.c b/drivers/vfio/pci/virtio/migrate.c
+> index ba92bb4e9af94..7dd0ac866461d 100644
+> --- a/drivers/vfio/pci/virtio/migrate.c
+> +++ b/drivers/vfio/pci/virtio/migrate.c
+> @@ -53,8 +53,7 @@ virtiovf_get_migration_page(struct virtiovf_data_buffer *buf,
+>  			buf->last_offset_sg = sg;
+>  			buf->sg_last_entry += i;
+>  			buf->last_offset = cur_offset;
+> -			return nth_page(sg_page(sg),
+> -					(offset - cur_offset) / PAGE_SIZE);
+> +			return sg_page(sg) + (offset - cur_offset) / PAGE_SIZE;
+>  		}
+>  		cur_offset += sg->length;
+>  	}
 
-Description:
-Certain IPv6 ranges in the AllowedIPs field trigger the following error =
-when activating a tunnel:
-"Activation failure: Unable to turn on Go backend library.=E2=80=9D
+Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
 
-The issue was first observed in the macOS WireGuard client and later =
-reproduced on iOS.
-
-Root Cause:
-When the following IPv6 ranges are added to the config:
-fe80:1::/32, fe80:2::/31, fe80:4::/30, fe80:8::/29, fe80:10::/28
-The client silently modifies them upon saving, replacing them with:
-fe80::%lo0/32, fe80::%gif0/31, fe80::%anpi0/30, fe80::%en1/29, =
-fe80::%awdl0/28
-The injected suffixes (%lo0, %en1, etc.) appear to be network interface =
-names, which then cause the Go backend to fail during activation, I =
-guess.
-
-Steps to Reproduce:
-    =E2=80=A2 Create a new tunnel in the macOS or iOS WireGuard client.
-    =E2=80=A2 Add the following to AllowedIPs:
-fe80:1::/32, fe80:2::/31, fe80:4::/30, fe80:8::/29, fe80:10::/28
-    =E2=80=A2 Save and activate the tunnel =E2=86=92 Error occurs.
-    =E2=80=A2 Reopen the config =E2=86=92 Observe the modified IPs.
-
-Environment:
-    =E2=80=A2 OS: macOS 15.5, iOS 18.5
-    =E2=80=A2 WireGuard version: 1.0.16 (both clients)
-
-Notes:
-    =E2=80=A2 The issue appears specific to the GUI clients (macOS/iOS); =
-CLI utilities were not tested.
-    =E2=80=A2 The automatic substitution of fe80:X::/Y with =
-fe80::%<interface>/Y suggests a parsing bug in the config sanitization =
-logic.
-
-
-Igor=
