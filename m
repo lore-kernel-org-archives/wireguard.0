@@ -4,160 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 300B4C8303F
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 28 Aug 2025 08:33:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30E7ACA0EED
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 28 Aug 2025 08:33:20 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d1a80892;
-	Thu, 28 Aug 2025 08:18:37 +0000 (UTC)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [170.10.129.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ee259dfb
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 95266b93;
+	Thu, 28 Aug 2025 08:25:18 +0000 (UTC)
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com
+ [2607:f8b0:4864:20::1030])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5741249f
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 28 Aug 2025 08:18:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756369111;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=dQiayb6TF/jkGdLdQdDfmQoC9oGAqREv3FJiJ/1tw1w=;
- b=BJjycywlYO5+tYRwfuhNoHaRnlIVEGBfCCFaTXgc2Vw009UARHGblqpX5Yb6y23UTWh9Ni
- /z73jVbcE5pBXdr0LvJfF7W22QCe9VtqCEqPujRtbmCJE/aqYnt+7o0KfJ9Y4xURQl0ODR
- o82KDX7aPlCQVSCVepY/c/zjiVqDVtk=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-137-uDnVM8eKOQ6Oq1N7riP11A-1; Thu, 28 Aug 2025 04:18:28 -0400
-X-MC-Unique: uDnVM8eKOQ6Oq1N7riP11A-1
-X-Mimecast-MFC-AGG-ID: uDnVM8eKOQ6Oq1N7riP11A_1756369107
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-45b51baec92so1245775e9.1
- for <wireguard@lists.zx2c4.com>; Thu, 28 Aug 2025 01:18:28 -0700 (PDT)
+ Thu, 28 Aug 2025 08:25:17 +0000 (UTC)
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-32326e09f58so735495a91.2
+ for <wireguard@lists.zx2c4.com>; Thu, 28 Aug 2025 01:25:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sidebranch-com.20230601.gappssmtp.com; s=20230601; t=1756369515; x=1756974315;
+ darn=lists.zx2c4.com; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Sn5toHP2UTjOZ/DRMAyJtr7Bls8Mri2KQ79nYSbzKXc=;
+ b=MMygqe7F6DEd6kua9yIlZUQJ8QQSQ18RdTTB3latRV2b2qIqIEPp/XzwlioUbZS9q4
+ ucbB2ar4WIuwQJzdDy71iJG2qqNBa85448YMJQSIXrOj8tVmKY08F/ULDYfa21StdW7p
+ Zc9iksoGXQhLRZsEHM5zJeobK8Zgdt7Reu96ltUWnTaHw+E7+qMUaKRnFGf/lMssAB0G
+ zeCr02y0/nNDsAenHWkfqM4gCnL7U0CcxAnrBvXTQIHTeP+LavuPt0HRF5cv8ZBaXMx3
+ /ZcYosCnsfFJZaHMLCeYYtn8Wdl9e76qGjm4mFPCc6p5EnvmrOzD3DlX4xqhr3K5xfdJ
+ JRYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756369107; x=1756973907;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=dQiayb6TF/jkGdLdQdDfmQoC9oGAqREv3FJiJ/1tw1w=;
- b=EMJQRRdmCW8gR2n4SrFpOsifFm+3o6vMIS2dkbI6uzL7n6v0PDK+wRzW4ldIPsWYGu
- gM7w9aHtxlVRI0pPGAM8XstcqMUfikNzVj5pG81Q2ZqoVDrdanzouK3Ej52wejkLRuPb
- XhW8OE8Vdyl8/ZJs22JRCS5yooT3nYvQhCrvx8GbALDE/uHrI9qyveq8lw4nPHkmkR9B
- YAFXTF8CPaJFJ/GgP275qNTEuED2GZ7LiYa0b5AMZEGN6Dx+OtgZvYJ4e0ws2EkMNi9w
- uBVuBgaba0xBA+KrlEZjj/RArFRdvcz/kGJzDp2FowcWXzfHRfXAC4zWIQoSaEX/cV1T
- ZLyg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWFXkPEc+XQ2u5BQXMBPR3DNfxp97MqCMzRL4L64/KdxntnILGHofHdoOOwDIsGTjl8VXvNF1grCpU=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YxOka0Vc91pciktFstMoIPU+CXW5fh1ASCtR03gVx6CdU4VzTga
- 29KZPlU1UM9kSivpM5dqChumT5/BKnmPw4UxQXe8V6Da5c3JQ2MF00xBlNpCkETbzpW4nUXxaB7
- +4/r+DkXclerPZtBJNx8FQHnCYQP/5DikJTmZI9x0ZtP6dYUgv9ZQDI8R7W5KXQ==
-X-Gm-Gg: ASbGncsTzb9kMJV1nyn0Q+n005Zt8Sn5ZzUMAhcAgdK1Tsx+AHO5Wp16lONpBYUozN8
- 0wRmKHZKl9F7aVP/lXzciTxP7jtHYyJDIf18XRPgeLg1QSEyPThqAnyt2f/R2WDqPHq9xTsPAiQ
- AHx6Fk+KHRX3bRVSli/P+31L/6QG090zZtxvUCGDcsBf6rGTQhNwemeilUdLZ9CaeiwZaH5AmWa
- tAsgmA93q/ALVL8sSudBTKrjnpcWyRU/m4HxGdR7DiUsIFFNCmzo7SXFxn17Z3Mn/C8tG5uoJlw
- 1utOqOf3Wct7/sCyZwj/va23TSvpWI2SAGGBLP3MJL2FxYePzXdp23o54FgN5XjE00plQretpk+
- GNKRdtP9ZDTNokWE2yE2S+NFMVmMUaHfh+aXAVJfthA8AAewO6c78NnOaxENzgWknapo=
-X-Received: by 2002:a05:600c:190b:b0:45b:6743:2240 with SMTP id
- 5b1f17b1804b1-45b68aa25cbmr59785015e9.27.1756369107169; 
- Thu, 28 Aug 2025 01:18:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHUJsaR2J7iF3R+ldMkn3aeuQzBBUKQPNZcZ93/+SZsto/QZ9LRuZpML8ujkA6ncDdKY9np+A==
-X-Received: by 2002:a05:600c:190b:b0:45b:6743:2240 with SMTP id
- 5b1f17b1804b1-45b68aa25cbmr59784365e9.27.1756369106625; 
- Thu, 28 Aug 2025 01:18:26 -0700 (PDT)
-Received: from ?IPV6:2003:d8:2f28:c100:2225:10aa:f247:7b85?
- (p200300d82f28c100222510aaf2477b85.dip0.t-ipconnect.de.
- [2003:d8:2f28:c100:2225:10aa:f247:7b85])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b732671b7sm21138515e9.3.2025.08.28.01.18.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Aug 2025 01:18:26 -0700 (PDT)
-Message-ID: <6880f125-803d-4eea-88ac-b67fdcc5995d@redhat.com>
-Date: Thu, 28 Aug 2025 10:18:23 +0200
+ d=1e100.net; s=20230601; t=1756369515; x=1756974315;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Sn5toHP2UTjOZ/DRMAyJtr7Bls8Mri2KQ79nYSbzKXc=;
+ b=Xo3cuefhdWmAY77j6pJcVjm8VArgOUT6ChpL/UZATdq++Twlaqfz6DS4VppnHz2WBu
+ 1nksqK6KVnljP+LTncU4COdeYiUx0C+dG9yal0fIpd22c9jaMO3oAfRo/vPkPYxBzEQ1
+ bSZ18fFUnet77GO0SYn7SgrsJgMj0O03WSvjHmuK9X8pkw2xAsOik/13i3StcSaYSXw4
+ 5cpHOBnL5NeP2J2cZvTzHoFak12CeppeNjuop0AipncIP7ubNMC8JVQA75VjJICJPRxS
+ ISviGRZF3ZN78JOMxm+FMJWV65WsPO4eLSTkUUZcVOD2mESH/B7iaZNrS36ufg3kvYoJ
+ AURg==
+X-Gm-Message-State: AOJu0YweBdSawO2r//VSF6hnfAcg7Ij516vMs+RfmA7CXwRJjws4d/Tj
+ c3DB2RmzLRE+RWrFuZa2OpkYZ0sY4kyGUl+PRpNHfLGn+OGZsm+JTWhEQBCohLMJReldXtDarhP
+ EiVAOnEsFfvBCksAUbzeValDZP+M2Zl4/IETtEouoiw==
+X-Gm-Gg: ASbGncv1O2LC4csBKUkXijaFTDLrRIsboiYBN+dGSwMkcujhc2RczqBX5LPKW0o/gFB
+ AqxAFkrgRB+sSQtOGF4lehznqXPWXnVi/o74S4MrlQD9mtZpBo36sCmBOIc2XlJ+GLFynImk5D9
+ 9BLK4QwN8X4g1FcudhXGaCyJcXFh+JATvvv0INq7xH1L9LptyxnB5z/SYSnfYKr8eU7vWtnvypv
+ aqUjTKo4P92R6swVJP8LR5zRoMs6P1N+gzlpDq9Xl+9S+aW
+X-Google-Smtp-Source: AGHT+IHpUYzW3KnjU6Z4wpICS0bshcXWp/cQ3UNAGslZJRcUZoGNkbskMzZHV75VwBpC/Yey2xxhTI5mCm1dwUzq/sg=
+X-Received: by 2002:a17:90b:5281:b0:325:7307:bbc9 with SMTP id
+ 98e67ed59e1d1-3257307c19cmr20856689a91.18.1756369514813; Thu, 28 Aug 2025
+ 01:25:14 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 13/36] mm/hugetlb: cleanup
- hugetlb_folio_init_tail_vmemmap()
-To: Mike Rapoport <rppt@kernel.org>
-Cc: linux-kernel@vger.kernel.org, Alexander Potapenko <glider@google.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- Brendan Jackman <jackmanb@google.com>, Christoph Lameter <cl@gentwo.org>,
- Dennis Zhou <dennis@kernel.org>, Dmitry Vyukov <dvyukov@google.com>,
- dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
- iommu@lists.linux.dev, io-uring@vger.kernel.org,
- Jason Gunthorpe <jgg@nvidia.com>, Jens Axboe <axboe@kernel.dk>,
- Johannes Weiner <hannes@cmpxchg.org>, John Hubbard <jhubbard@nvidia.com>,
- kasan-dev@googlegroups.com, kvm@vger.kernel.org,
- "Liam R. Howlett" <Liam.Howlett@oracle.com>,
- Linus Torvalds <torvalds@linux-foundation.org>, linux-arm-kernel@axis.com,
- linux-arm-kernel@lists.infradead.org, linux-crypto@vger.kernel.org,
- linux-ide@vger.kernel.org, linux-kselftest@vger.kernel.org,
- linux-mips@vger.kernel.org, linux-mmc@vger.kernel.org, linux-mm@kvack.org,
- linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
- linux-scsi@vger.kernel.org, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
- Marco Elver <elver@google.com>, Marek Szyprowski <m.szyprowski@samsung.com>,
- Michal Hocko <mhocko@suse.com>, Muchun Song <muchun.song@linux.dev>,
- netdev@vger.kernel.org, Oscar Salvador <osalvador@suse.de>,
- Peter Xu <peterx@redhat.com>, Robin Murphy <robin.murphy@arm.com>,
- Suren Baghdasaryan <surenb@google.com>, Tejun Heo <tj@kernel.org>,
- virtualization@lists.linux.dev, Vlastimil Babka <vbabka@suse.cz>,
- wireguard@lists.zx2c4.com, x86@kernel.org, Zi Yan <ziy@nvidia.com>
-References: <20250827220141.262669-1-david@redhat.com>
- <20250827220141.262669-14-david@redhat.com> <aLADXP89cp6hAq0q@kernel.org>
- <377449bd-3c06-4a09-8647-e41354e64b30@redhat.com>
- <aLAN7xS4WQsN6Hpm@kernel.org>
-From: David Hildenbrand <david@redhat.com>
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- qIws/H2t
-In-Reply-To: <aLAN7xS4WQsN6Hpm@kernel.org>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: VkwTHCYhpaSh0pRnauKPN5-rRZWK2SyvvDYkNhSOxPk_1756369107
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <CABBZOsmKJYs9HeaMeNx60om81V2mCagWWhCgbxeppr_2FD_xfw@mail.gmail.com>
+In-Reply-To: <CABBZOsmKJYs9HeaMeNx60om81V2mCagWWhCgbxeppr_2FD_xfw@mail.gmail.com>
+From: Leon Woestenberg <leon@sidebranch.com>
+Date: Thu, 28 Aug 2025 10:25:03 +0200
+X-Gm-Features: Ac12FXysr2D7lcykSqAQJ876OE2UmqCujE2mnDzzPRlJpu8nnMs9-r35UnQeKXc
+Message-ID: <CAMjhiJjtnyRt5khY9L0cCNXr969mbmLDoWhzAL1wvnmXziSH2A@mail.gmail.com>
+Subject: Re: Google Play 16KB alignment issue with WireGuard library - fix
+ needed
+To: Houman <houmie@gmail.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -172,68 +81,19 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 28.08.25 10:06, Mike Rapoport wrote:
-> On Thu, Aug 28, 2025 at 09:44:27AM +0200, David Hildenbrand wrote:
->> On 28.08.25 09:21, Mike Rapoport wrote:
->>> On Thu, Aug 28, 2025 at 12:01:17AM +0200, David Hildenbrand wrote:
->>>> We can now safely iterate over all pages in a folio, so no need for the
->>>> pfn_to_page().
->>>>
->>>> Also, as we already force the refcount in __init_single_page() to 1,
->>>> we can just set the refcount to 0 and avoid page_ref_freeze() +
->>>> VM_BUG_ON. Likely, in the future, we would just want to tell
->>>> __init_single_page() to which value to initialize the refcount.
->>>>
->>>> Further, adjust the comments to highlight that we are dealing with an
->>>> open-coded prep_compound_page() variant, and add another comment explaining
->>>> why we really need the __init_single_page() only on the tail pages.
->>>>
->>>> Note that the current code was likely problematic, but we never ran into
->>>> it: prep_compound_tail() would have been called with an offset that might
->>>> exceed a memory section, and prep_compound_tail() would have simply
->>>> added that offset to the page pointer -- which would not have done the
->>>> right thing on sparsemem without vmemmap.
->>>>
->>>> Signed-off-by: David Hildenbrand <david@redhat.com>
->>>> ---
->>>>    mm/hugetlb.c | 20 ++++++++++++--------
->>>>    1 file changed, 12 insertions(+), 8 deletions(-)
->>>>
->>>> diff --git a/mm/hugetlb.c b/mm/hugetlb.c
->>>> index 4a97e4f14c0dc..1f42186a85ea4 100644
->>>> --- a/mm/hugetlb.c
->>>> +++ b/mm/hugetlb.c
->>>> @@ -3237,17 +3237,18 @@ static void __init hugetlb_folio_init_tail_vmemmap(struct folio *folio,
->>>>    {
->>>>    	enum zone_type zone = zone_idx(folio_zone(folio));
->>>>    	int nid = folio_nid(folio);
->>>> +	struct page *page = folio_page(folio, start_page_number);
->>>>    	unsigned long head_pfn = folio_pfn(folio);
->>>>    	unsigned long pfn, end_pfn = head_pfn + end_page_number;
->>>> -	int ret;
->>>> -
->>>> -	for (pfn = head_pfn + start_page_number; pfn < end_pfn; pfn++) {
->>>> -		struct page *page = pfn_to_page(pfn);
->>>> +	/*
->>>> +	 * We mark all tail pages with memblock_reserved_mark_noinit(),
->>>> +	 * so these pages are completely uninitialized.
->>>
->>>                                ^ not? ;-)
->>
->> Can you elaborate?
-> 
-> Oh, sorry, I misread "uninitialized".
-> Still, I'd phrase it as
-> 
-> 	/*
-> 	 * We marked all tail pages with memblock_reserved_mark_noinit(),
-> 	 * so we must initialize them here.
-> 	 */
+On Thu, Aug 28, 2025 at 9:31=E2=80=AFAM Houman <houmie@gmail.com> wrote:
+>
+> Google PlayStore is no longer accepting apps affected by Google Play's
+> 16 KB page size requirements.
+>
+> The native library `arm64-v8a/libwg-go.so` (from
+> `com.wireguard.android:tunnel:1.0.20230706`) is not 16 KB aligned
+>
+From what I read, the requirement is not to rely on 4KiB (hard coded)
+page sizes.  Or are they going to hard-code 16KiB now??!
 
-I prefer what I currently have, but thanks for the review.
+https://android-developers.googleblog.com/2024/12/get-your-apps-ready-for-1=
+6-kb-page-size-devices.html
 
--- 
-Cheers
-
-David / dhildenb
-
+-
+Leon.
