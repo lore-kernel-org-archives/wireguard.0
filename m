@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8992CA0FF9
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Aug 2025 14:49:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE660CA0FFD
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Aug 2025 14:49:27 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b6a1d5dd;
-	Fri, 29 Aug 2025 14:41:20 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9f64b210;
+	Fri, 29 Aug 2025 14:42:40 +0000 (UTC)
 Received: from us-smtp-delivery-124.mimecast.com
  (us-smtp-delivery-124.mimecast.com [170.10.133.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 11372ad9
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id bebc03be
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 29 Aug 2025 14:41:16 +0000 (UTC)
+ Fri, 29 Aug 2025 14:42:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756478475;
+ s=mimecast20190719; t=1756478556;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=IaQHZcwb14XTWilYbwjP6AKy4Qvx/cjgmhYjWqgMQRs=;
- b=DxlbUizhCB5BawKdtayUbZmKjwLNqyd5gybpB35feX3Y3ofc5PK006dkMcsh+WQJXlO3Ux
- Qh+WZm9hXmA9ld0gTCQ4XL9p4n23gQlWBf9Z6SB0mPBB8zKmjiJZulijjd0b9j3pF6xR9y
- zBv9r9VRUel4kLJcABjpOTMf5YsSlIA=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ReHesm1JzI77Ttn1crqpxEHfJBy9ITN9OqG2sWgOwWM=;
+ b=ggmBBqWE/YuVjG+H4tfBTt6+W0or6V/23DDrOchhzu76Q8pIMJAis5Oke4Qx6pIABAn5ya
+ 5sT7heW0ebxuIYfVlppvVqJ4XQVsjHEtpuTl4VHx1IyelpL/XDLPT1M/XjhX+I9+zjcNwA
+ zAGqaMveTKqWnJxY8rGNWtMdTeZkH2c=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-662-YFXTjXKSNfeF2Fq_96ha0A-1; Fri, 29 Aug 2025 10:41:14 -0400
-X-MC-Unique: YFXTjXKSNfeF2Fq_96ha0A-1
-X-Mimecast-MFC-AGG-ID: YFXTjXKSNfeF2Fq_96ha0A_1756478473
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-45b467f5173so17487735e9.3
- for <wireguard@lists.zx2c4.com>; Fri, 29 Aug 2025 07:41:13 -0700 (PDT)
+ us-mta-66-RDQ0aHu3OSWISQuLJZ-dQg-1; Fri, 29 Aug 2025 10:42:34 -0400
+X-MC-Unique: RDQ0aHu3OSWISQuLJZ-dQg-1
+X-Mimecast-MFC-AGG-ID: RDQ0aHu3OSWISQuLJZ-dQg_1756478554
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-45b7f0d1449so5191325e9.0
+ for <wireguard@lists.zx2c4.com>; Fri, 29 Aug 2025 07:42:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756478473; x=1757083273;
+ d=1e100.net; s=20230601; t=1756478554; x=1757083354;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=IaQHZcwb14XTWilYbwjP6AKy4Qvx/cjgmhYjWqgMQRs=;
- b=i6DoVAigWeunD6edS+nAiFEJn/+pCdKqBAVQB3kw6TjWGRf/ffqVl7kQNgfKFBh+cH
- xhONmvConXW9IBdDGGg8JO9aV4NDVOxEEtscHtGSgYMZ95UpokfAtzWrDdZPPplAF+Tx
- aD2gkARt+ujNWs8X/aEqhxlERDu7T2SplUys4dpijBUy6twWskdmIyZtCSfSo4x+H3JX
- 6KP3YlErO6dPqlgkJZY8IiQiU54dQwY5qWs0hmwXHXZDl/SwIN6RYylOeHI1CtaF0bTE
- 4eLjWGGOgWpq7/64a+7jU2zRHWATkThErNcG+SJD1heZWr4T5d5ZspD2JwDWUBF03r9E
- lTdQ==
+ bh=ReHesm1JzI77Ttn1crqpxEHfJBy9ITN9OqG2sWgOwWM=;
+ b=OWA5v0a/eJUQC6UkIBQkI5+rc5dIdgdUeGLLQGflfjrYfWvpPkV0hcVIO7P88F0hgh
+ pcTwOUHhedg0tXf2fl14wJ1IqspIVwTJr1todQ927Em33FilI+XxEnwcqyO59xpGZNsm
+ SUOLk4CdSz4KxDLuKpK0r+NC6NrPS5Iyd+TGJ4QrnJCYk4ofsjRiY/pyb+qWZV+CK2Hx
+ TDVBmWmKGA1NPplmYmDEPvoO3rXFNE5oEb+BIOaWzrrkStAWtv/Qm2EjsW6cQXG8MPKg
+ whHQV5H0wb60vpThq0xCBu/ARQr3ORqnz9rkU8QBUluQ01ruN5TjdFp12Ljaapc+dcDN
+ S3UQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUzdlYZMi5xU6KencN/49CxNNtZ2/+VWETffaD2++0qPDDFyWTj3xDKOuvZ3Dtz8Vc9b//+dFJkbZg=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0Ywoq60q4+KDkk8Lo/mw1Cl9pwGfH7eqXhiwgqe37ueWam3yL+wc
- XcF5NBcbCEbJQ4NtRgC3qMqh0nXmc3HU+b5dEN1hCPR+rrKWiZ5Z4JUrxq39nQAv6Vbnlcw8I8Y
- W8qiDZo0sfTQWntic7kIjTZ+Rrk0tx8ZD+ofq1FVcn2X58K88UDRF/C2OKnW+MA==
-X-Gm-Gg: ASbGncv9Fy01TLvzjTDNwbm2xzEQIFVPL/HdzRwUvTzgc7kai2oVaChBQfkBcfI5cu7
- jq9lvvha56SCI5OQKpmGyDPKc/p4ZOi8UiGU+66IARY0+KdE8Ca92y0FiYm29evllo2jQnTLgA3
- bCa3jF/YThxxk7TsXmJJ/uhsOqR4W2JrOpg/1FN4G187gMF2KmhqEePsfsulAlSikVeAWX97NoG
- KBVa3U0WpsDGe5fyQFeMlIbxceYSUnaEacR9QlKKhExoLffPVh5ebqShBXqgd8YQFHrfoXP3Nir
- eDwky/xyQwG6pyHtUsG+0Val+nQe91F5xEUcnBp/wIev4tVQ5Db++JNEu7bT8w7DtpyF9n1IyuH
- bhDE9NZDtF5G1Uy92kRhkfuzNFKtbT07vIR14aRXu0S+4oXx3i0b1xU5sIII38IVQ
-X-Received: by 2002:a05:600c:3b1d:b0:45b:80ff:58f7 with SMTP id
- 5b1f17b1804b1-45b80ff5a3emr17032515e9.36.1756478472587; 
- Fri, 29 Aug 2025 07:41:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFxRGXosrm3vEArUqUEmQe7+Z1YlIMaqjbXRbohfYu21MGvBWlOrWQFqI2M9QmqW3L3NnKwrg==
-X-Received: by 2002:a05:600c:3b1d:b0:45b:80ff:58f7 with SMTP id
- 5b1f17b1804b1-45b80ff5a3emr17032245e9.36.1756478471858; 
- Fri, 29 Aug 2025 07:41:11 -0700 (PDT)
+ AJvYcCXhrVB1TKCj3baIQ1ZNCLcPE20kABtoxB0VCbfg5CeP1BUmKUpPU1s3PSNUoak1b2uxwWFMSLwSS0M=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0Yzs0cZ15BNqnyy7HynKeU5aO+UXgYq6coP+TqEhod8oA+e/iE/C
+ 3tPo5hSG6hz2tfpgMOC5alc0j3lQ3rTF1XwgTuw0GsoV5fZ120A1pCtq8DDI6/YQKVIthCU7FBC
+ eL4az8T5QcbV47kQJoozkTe6EPNuCe2Lwjlxl22zRHSOzO5Bvn9mWJb7kHEPMsw==
+X-Gm-Gg: ASbGncuQFWG3ITV+5e9WgKR47SkLgs6GMYAVXb9BSv4kYwLhUvEcZPmO/lX9fP/yUHB
+ 8ThS7z7OoolOrPVGiTbiAtDtOWPdI8w62/FQZXlVCmdzQg2Vsfy2+NqvvJ6bXO4onTEb1B/hedF
+ FGimKT47szd1/qctEQtDRl/pw5dXiEcD63LL1TZo2W3ilRIGTX5XbiZgwWDx2HZhc20rwxDCRuV
+ rro9OHGvmfyLF5zy+0aE07SVNOssPeMBcsHTtSoMG0ATRfnad/NfLYrH4/WarVQLeSwkb6tyFgA
+ QiDXdGAlP5GhKC2k1Qyut6JSArI1NZqjXFA/endLJowZOGsv+SoPkqQv5W7BQbmxUWstT9dJCPH
+ sMj0BoIQeKMxhtrlTrfTSzH/xys4by0b30B3SReR1kAEN0Q3z976NiSeeJD9chj5O
+X-Received: by 2002:a05:600c:a47:b0:456:1824:4808 with SMTP id
+ 5b1f17b1804b1-45b517cfe66mr203887895e9.32.1756478553429; 
+ Fri, 29 Aug 2025 07:42:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGqWe4aldLOwoA0lSJmYOAtk/gyCTKTz2xhXTH3fTqBq+gNs3GiB4PdE3KR16CB5LbW/sn45Q==
+X-Received: by 2002:a05:600c:a47:b0:456:1824:4808 with SMTP id
+ 5b1f17b1804b1-45b517cfe66mr203887385e9.32.1756478552938; 
+ Fri, 29 Aug 2025 07:42:32 -0700 (PDT)
 Received: from ?IPV6:2003:d8:2f1d:100:4f8e:bb13:c3c7:f854?
  (p200300d82f1d01004f8ebb13c3c7f854.dip0.t-ipconnect.de.
  [2003:d8:2f1d:100:4f8e:bb13:c3c7:f854])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b74950639sm95314275e9.17.2025.08.29.07.41.09
+ 5b1f17b1804b1-45b7e89920dsm46578795e9.16.2025.08.29.07.42.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 29 Aug 2025 07:41:11 -0700 (PDT)
-Message-ID: <4b053602-7c80-4ea4-8617-0f5e526c02f6@redhat.com>
-Date: Fri, 29 Aug 2025 16:41:08 +0200
+ Fri, 29 Aug 2025 07:42:32 -0700 (PDT)
+Message-ID: <7cd5f8c9-9bd3-40ed-a3df-a359dcfe1567@redhat.com>
+Date: Fri, 29 Aug 2025 16:42:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 33/36] mm/gup: drop nth_page() usage in
- unpin_user_page_range_dirty_lock()
+Subject: Re: [PATCH v1 36/36] mm: remove nth_page()
 To: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 Cc: linux-kernel@vger.kernel.org, Alexander Potapenko <glider@google.com>,
  Andrew Morton <akpm@linux-foundation.org>,
@@ -103,8 +102,8 @@ Cc: linux-kernel@vger.kernel.org, Alexander Potapenko <glider@google.com>,
  virtualization@lists.linux.dev, Vlastimil Babka <vbabka@suse.cz>,
  wireguard@lists.zx2c4.com, x86@kernel.org, Zi Yan <ziy@nvidia.com>
 References: <20250827220141.262669-1-david@redhat.com>
- <20250827220141.262669-34-david@redhat.com>
- <c9527014-9a29-48f4-8ca9-a6226f962c00@lucifer.local>
+ <20250827220141.262669-37-david@redhat.com>
+ <18c6a175-507f-464c-b776-67d346863ddf@lucifer.local>
 From: David Hildenbrand <david@redhat.com>
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
@@ -150,9 +149,9 @@ Autocrypt: addr=david@redhat.com; keydata=
  3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
  CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
  qIws/H2t
-In-Reply-To: <c9527014-9a29-48f4-8ca9-a6226f962c00@lucifer.local>
+In-Reply-To: <18c6a175-507f-464c-b776-67d346863ddf@lucifer.local>
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: Kc0WKAWsEAp6oy9x13jLGnRKt3VrtNdryXIW2k6frSM_1756478473
+X-Mimecast-MFC-PROC-ID: pRn_O7P3AFXp26c-7l74xU5FVWxnzlF3ujv_ap9KvNk_1756478554
 X-Mimecast-Originator: redhat.com
 Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8; format=flowed
@@ -171,24 +170,19 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 28.08.25 20:09, Lorenzo Stoakes wrote:
-> On Thu, Aug 28, 2025 at 12:01:37AM +0200, David Hildenbrand wrote:
->> There is the concern that unpin_user_page_range_dirty_lock() might do
->> some weird merging of PFN ranges -- either now or in the future -- such
->> that PFN range is contiguous but the page range might not be.
->>
->> Let's sanity-check for that and drop the nth_page() usage.
+On 28.08.25 20:25, Lorenzo Stoakes wrote:
+> On Thu, Aug 28, 2025 at 12:01:40AM +0200, David Hildenbrand wrote:
+>> Now that all users are gone, let's remove it.
 >>
 >> Signed-off-by: David Hildenbrand <david@redhat.com>
 > 
-> Seems one user uses SG and the other is IOMMU and in each instance you'd
-> expect physical contiguity (maybe Jason G. or somebody else more familiar
-> with these uses can also chime in).
+> HAPPY DAYYS!!!!
+> 
+> Happy to have reached this bit, great work! :)
 
-Right, and I added the sanity-check so we can identify and fix any such 
-wrong merging of ranges.
+I was just as happy when I made it to the end of this series :)
 
-Thanks!
+Thanks for all the review!!
 
 -- 
 Cheers
