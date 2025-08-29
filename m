@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB1C8CA0FF0
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Aug 2025 12:00:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79977CA0FF0
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Aug 2025 12:04:23 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dd923c6f;
-	Fri, 29 Aug 2025 11:59:30 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4fa6daab;
+	Fri, 29 Aug 2025 12:00:50 +0000 (UTC)
 Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [170.10.133.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d770cfb1
+ (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ed9aa914
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 29 Aug 2025 11:59:26 +0000 (UTC)
+ Fri, 29 Aug 2025 12:00:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756468765;
+ s=mimecast20190719; t=1756468846;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=bF6XoHD5pMX2I9dADLrcLi6kiYTvPDGveY8Ow/uEvrs=;
- b=TKJXfljuBO2SQSW5KQgcc4LJ+TyzUUk7hn6l1Xxqq/pEAN6LuJr9XalBz3RPWBVzxuTFn9
- TVhopZvq8Ekjm0s8x/7R+LBxUrSCwXV6GGDQdLo5NJ1OiW0JafE5s0pVpg91cusYMMaiBg
- 1eWFfGz7+o4fF3RhgwYAkIJgseAKSZI=
+ bh=WRODc3MDTNqLHIXQzOQ9QRmb2QGRyzsJAWu0HJ+lHgE=;
+ b=flnilzGtRoc2cdFw93ldnRc8Dzfd/IZy5v+AFfA+B9h6ReiDY3YepHs/Y09oWwuAqdvram
+ zLNthJVhq1VsFxqlxKtxTZJmZ1kWARnLhkwSkR1GNulOjnsbHskTEic7cCFqLFxiZ6zjQv
+ jecPywRtM6SJgIOURV0YeRHm6vvwa8E=
 Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
  [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-426-KBEpXf7XMhOWF_KolpdxMw-1; Fri, 29 Aug 2025 07:59:24 -0400
-X-MC-Unique: KBEpXf7XMhOWF_KolpdxMw-1
-X-Mimecast-MFC-AGG-ID: KBEpXf7XMhOWF_KolpdxMw_1756468763
+ us-mta-167-tz5p-DC-P46bTVuzdc4O9Q-1; Fri, 29 Aug 2025 08:00:44 -0400
+X-MC-Unique: tz5p-DC-P46bTVuzdc4O9Q-1
+X-Mimecast-MFC-AGG-ID: tz5p-DC-P46bTVuzdc4O9Q_1756468843
 Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3c9bf5c8b12so1153249f8f.0
- for <wireguard@lists.zx2c4.com>; Fri, 29 Aug 2025 04:59:23 -0700 (PDT)
+ ffacd0b85a97d-3cba0146f7aso1009796f8f.3
+ for <wireguard@lists.zx2c4.com>; Fri, 29 Aug 2025 05:00:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756468763; x=1757073563;
+ d=1e100.net; s=20230601; t=1756468843; x=1757073643;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=bF6XoHD5pMX2I9dADLrcLi6kiYTvPDGveY8Ow/uEvrs=;
- b=KcSPgPHrBijX3iXuC69RtvK+D1x81QptCpOfrudYoKuxq0BvxQwBIFKUJ3WZDgVVhO
- BTxtblUPpshi4xnBmCuYpF5wPVKYZVdLLwySMypL9Wbt9Gij+Yi+rICU0lmWuV21b6d9
- mydHIazOt74hJ1Ivowj6Kahv8FnUMq11IJ4qcaymh3MrGnedIcTIeM+uJBWg1RQYc+yi
- X6TIkcF1z9ZGI4OXgT/79J5l2Mfxn14I1Gm2RFDdp3heK8Ku6fD3GEwpnIcLcp5buMXV
- pmJaIMkmKf9iMTSb10PFU0hZ3RAKKPyjcQIz4u5IbpiDkcVF7Scy0wchuKMymeCdpT/Q
- 1uMw==
+ bh=WRODc3MDTNqLHIXQzOQ9QRmb2QGRyzsJAWu0HJ+lHgE=;
+ b=tgx1Rs3sqw7HhsGzC4Ud8mTq7NDbD7W4zdcI07i0abrcw6j2v8W9OZyGOknuBMOy4k
+ hTRhaHokapQorOQj8JoyYpMi9gHCAemzTu6KOuJq1WmzRQBhnhzsWRCGOqLzMJ26Oxvp
+ YS5HkIiFbCxSxFSKSsCdsKS04ZQV5rk+b2x8I52V8xQrR7faOVW8T6+beRFm5GC67hfN
+ FLFebLxjZK8IvsAiRuZoxGTBYJCmYcS8oL9uHdSrMDHXyLHfJnmG3xqBA9XXYP2W34hI
+ HeFyEmyePk4ElYXUx9r3nS1YUVxKLf2tv9xzq6bcljFNVkq+J8Nk9OfHqiDJXFeUXvJ0
+ ISJQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU1LGmMri9eTXmiAG9LMAfukhRHskCSmRiDqsQfsLLfl4+XKXr1exRhN73gdEv3CX6ssqL+n14HLTI=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0Yy7yKEhau3MhT7K/DfRIf0TFSyc2lh15sEDvUS9fllxvdjq2ufJ
- /crpZFc91k/BpE+qV9maXmcFB5faL4qJnjGQ2hOnKiCEBLi8EnmN/OTCZgDlHlcuQjNQDLEL5/s
- Dd84JmQefFR8CFmUQJX54OGkwamacP4AoUDQM3zk/6diJHVnoxKjht0S/EY8nXQ==
-X-Gm-Gg: ASbGncsjPK8Br+GAwjaNKEjHYUBKGry4lY6SQJszUXyxLGiUBTdmbJkrneoqU8T9LTX
- NmNJPZONbgVRGZnz/wPDjt1yV6XFG6tmVKcOovBYov2XexP4qDjMVLK4sF7fZXo3sL6fVL1b9pD
- UflLbpQbihd4qArEj93XUAB3K0YTZ+J1LeFIrbqQveFqUdYyxrPzHSKTCb8kD9IdqLZYAZ3mpJb
- WQMrwDZUOFHNTjbZi6Ofvz5YAsOSKZbNlnjayeOU2mKuaeaFFSBQaC6lxnS7LKFNNtpmHSbwvVv
- qdt5qeRJAD0vJtrkDYAafCdBxCc/yJYEy54RKhg7J5reGUot+ZQF2CCxKnAmzu6b8bOjlBmTZqC
- IYSEuxL7YL8zON6mOlW8L/mxrr6OXbvAZ9g4EzDYVz0Nu/nh08sVnovfs/c6kr9c=
-X-Received: by 2002:a05:6000:200e:b0:3d0:820:6814 with SMTP id
- ffacd0b85a97d-3d008206caamr1378531f8f.30.1756468762695; 
- Fri, 29 Aug 2025 04:59:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEmTZMPZLsWUlDoIJtYZ4y1n4323fVpiEEHsVmNFQad1skciXIKlgwtKzfxNR+9KUHASW5nzg==
-X-Received: by 2002:a05:6000:200e:b0:3d0:820:6814 with SMTP id
- ffacd0b85a97d-3d008206caamr1378503f8f.30.1756468762265; 
- Fri, 29 Aug 2025 04:59:22 -0700 (PDT)
+ AJvYcCUufDE5DtcaV0x2XyeZbH/32qLn/mmaRjjtWkfzEenIspI01Hd6/cOpkNSzrx81sTpRwQcf0O4zAIQ=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YztnRnSAXr0OKpFQFDakHIYdpMLAn+9F+GQwLSaY59Slna0cnfU
+ 59zWL7wFj9Khn/7BWCSSqdJ0XM4j9fbvc14MhBI+VAc0j4mCq0oAfUuC+fzbP0Hux8nDL82ZLSO
+ 36fBITUcrXFjd8Vot2PqYZ0sLm9FRHT/a2krogHkaF/r1FKEMZSTvLE4AinbM9g==
+X-Gm-Gg: ASbGncvsdk1wC9JSVGjA/lL0S5acuFPUqSnsk2sepRLrWktO2jAtD6fo2zX0/maTh16
+ l0Jfup/GUd8+T725QYxEm++oxYmvvXDzS9g8HRcdcfSCiVKc8GXRjfFVR5hsO2EEWuIphgj52ba
+ YxLvgqFfqYslBDiO/In5PY0Z/+LlPD9xhGxn76FU3VrH9shUJA0Uge0K0ZEcZ/+hc4i1MOTnPD9
+ d7KR90W8vxn+DE42mjuJvE+n0dy4Ajc664MCijO8/cGfLwHNhdoGrFeU5T30jSryecZaa0j91wm
+ Fso9/tZIgOhmy1cmXL9pPCH7xI4dla9dKM84Jh/QA1OF/zQkxa6nfAUhX48eQ4YVIglFQEQCN7A
+ 6EY2NDrW7M8q1knN8A0mMpB71Nen1YsWJXqX+07IvmG+SUihJtnpuquKn/Fztsgg=
+X-Received: by 2002:a05:6000:4382:b0:3c8:89e9:6ac0 with SMTP id
+ ffacd0b85a97d-3c889e96e1dmr12052190f8f.3.1756468842721; 
+ Fri, 29 Aug 2025 05:00:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGRdmd8Qo16pG8X+TFP/6YOZ+W4nkc8QhqQPHcWWiC5lStBhb4N+Shci4juwvPlMY9VjElJMQ==
+X-Received: by 2002:a05:6000:4382:b0:3c8:89e9:6ac0 with SMTP id
+ ffacd0b85a97d-3c889e96e1dmr12052085f8f.3.1756468841352; 
+ Fri, 29 Aug 2025 05:00:41 -0700 (PDT)
 Received: from ?IPV6:2003:d8:2f1d:100:4f8e:bb13:c3c7:f854?
  (p200300d82f1d01004f8ebb13c3c7f854.dip0.t-ipconnect.de.
  [2003:d8:2f1d:100:4f8e:bb13:c3c7:f854])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3d0c344f6casm2018873f8f.36.2025.08.29.04.59.19
+ ffacd0b85a97d-3cf270fc0a8sm3118235f8f.7.2025.08.29.05.00.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 29 Aug 2025 04:59:21 -0700 (PDT)
-Message-ID: <0dcef56e-0ae7-401b-9453-f6dc6a4dcebf@redhat.com>
-Date: Fri, 29 Aug 2025 13:59:19 +0200
+ Fri, 29 Aug 2025 05:00:39 -0700 (PDT)
+Message-ID: <d0b06885-9f04-483f-a7e1-f197c8431491@redhat.com>
+Date: Fri, 29 Aug 2025 14:00:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v1 13/36] mm/hugetlb: cleanup
  hugetlb_folio_init_tail_vmemmap()
-To: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+To: Mike Rapoport <rppt@kernel.org>
 Cc: linux-kernel@vger.kernel.org, Alexander Potapenko <glider@google.com>,
  Andrew Morton <akpm@linux-foundation.org>,
  Brendan Jackman <jackmanb@google.com>, Christoph Lameter <cl@gentwo.org>,
@@ -94,17 +94,20 @@ Cc: linux-kernel@vger.kernel.org, Alexander Potapenko <glider@google.com>,
  linux-ide@vger.kernel.org, linux-kselftest@vger.kernel.org,
  linux-mips@vger.kernel.org, linux-mmc@vger.kernel.org, linux-mm@kvack.org,
  linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
- linux-scsi@vger.kernel.org, Marco Elver <elver@google.com>,
- Marek Szyprowski <m.szyprowski@samsung.com>, Michal Hocko <mhocko@suse.com>,
- Mike Rapoport <rppt@kernel.org>, Muchun Song <muchun.song@linux.dev>,
+ linux-scsi@vger.kernel.org, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+ Marco Elver <elver@google.com>, Marek Szyprowski <m.szyprowski@samsung.com>,
+ Michal Hocko <mhocko@suse.com>, Muchun Song <muchun.song@linux.dev>,
  netdev@vger.kernel.org, Oscar Salvador <osalvador@suse.de>,
  Peter Xu <peterx@redhat.com>, Robin Murphy <robin.murphy@arm.com>,
  Suren Baghdasaryan <surenb@google.com>, Tejun Heo <tj@kernel.org>,
  virtualization@lists.linux.dev, Vlastimil Babka <vbabka@suse.cz>,
  wireguard@lists.zx2c4.com, x86@kernel.org, Zi Yan <ziy@nvidia.com>
 References: <20250827220141.262669-1-david@redhat.com>
- <20250827220141.262669-14-david@redhat.com>
- <cebd5356-0fc6-40aa-9bc6-a3a5ffe918f8@lucifer.local>
+ <20250827220141.262669-14-david@redhat.com> <aLADXP89cp6hAq0q@kernel.org>
+ <377449bd-3c06-4a09-8647-e41354e64b30@redhat.com>
+ <aLAN7xS4WQsN6Hpm@kernel.org>
+ <6880f125-803d-4eea-88ac-b67fdcc5995d@redhat.com>
+ <aLAVUePBQuz9D89T@kernel.org>
 From: David Hildenbrand <david@redhat.com>
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
@@ -150,9 +153,9 @@ Autocrypt: addr=david@redhat.com; keydata=
  3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
  CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
  qIws/H2t
-In-Reply-To: <cebd5356-0fc6-40aa-9bc6-a3a5ffe918f8@lucifer.local>
+In-Reply-To: <aLAVUePBQuz9D89T@kernel.org>
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: MsNbEpom-JTCIX2HH755eqwjgF7FKE41Z2ZFgXtryOI_1756468763
+X-Mimecast-MFC-PROC-ID: C5klDJMLhKtGqbMV2mxU8OfUAXHICEpoFCMFEA5pC-M_1756468843
 X-Mimecast-Originator: redhat.com
 Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8; format=flowed
@@ -171,17 +174,39 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 28.08.25 17:37, Lorenzo Stoakes wrote:
-> On Thu, Aug 28, 2025 at 12:01:17AM +0200, David Hildenbrand wrote:
->> We can now safely iterate over all pages in a folio, so no need for the
->> pfn_to_page().
+On 28.08.25 10:37, Mike Rapoport wrote:
+> On Thu, Aug 28, 2025 at 10:18:23AM +0200, David Hildenbrand wrote:
+>> On 28.08.25 10:06, Mike Rapoport wrote:
+>>> On Thu, Aug 28, 2025 at 09:44:27AM +0200, David Hildenbrand wrote:
+>>>> On 28.08.25 09:21, Mike Rapoport wrote:
+>>>>> On Thu, Aug 28, 2025 at 12:01:17AM +0200, David Hildenbrand wrote:
+>>>>>> +	/*
+>>>>>> +	 * We mark all tail pages with memblock_reserved_mark_noinit(),
+>>>>>> +	 * so these pages are completely uninitialized.
+>>>>>
+>>>>>                                 ^ not? ;-)
+>>>>
+>>>> Can you elaborate?
+>>>
+>>> Oh, sorry, I misread "uninitialized".
+>>> Still, I'd phrase it as
+>>>
+>>> 	/*
+>>> 	 * We marked all tail pages with memblock_reserved_mark_noinit(),
+>>> 	 * so we must initialize them here.
+>>> 	 */
 >>
->> Also, as we already force the refcount in __init_single_page() to 1,
+>> I prefer what I currently have, but thanks for the review.
 > 
-> Mega huge nit (ignore if you want), but maybe worth saying 'via
-> init_page_count()'.
+> No strong feelings, feel free to add
+> 
+> Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+> 
 
-Will add, thanks!
+I now have
+
+"As we marked all tail pages with memblock_reserved_mark_noinit(), we 
+must initialize them ourselves here."
 
 -- 
 Cheers
