@@ -4,50 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93270CEE34C
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 19:14:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74815CEE34D
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 19:15:00 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4ab2897c;
-	Tue, 18 Nov 2025 17:24:42 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cdea4a2f;
+	Tue, 18 Nov 2025 17:24:44 +0000 (UTC)
 Received: from us-smtp-delivery-124.mimecast.com
  (us-smtp-delivery-124.mimecast.com [170.10.129.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e6f23355
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b0be08f0
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 1 Sep 2025 15:06:28 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Mon, 1 Sep 2025 15:11:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756739187;
+ s=mimecast20190719; t=1756739486;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NTgr/pqX3UqVNNKIBPC5IiEd0D/dsfuHo0zqlHJEFcE=;
- b=AyU5PoSIRAdB4EIpb9jUyOrLUqlMBUm2BofH0HAbf7I2gwxEXVYpytKFaBkTNh3kc/bwO6
- zWmeBuH8egBtVaCnA44Y3w2K3cnoTM58bvnCeusnAH2UVR9WU6wpfiZ+OE3kmRcnTY3GMD
- bZk6MgbZk2HcHJlQLamDoMSEvHEwyIc=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=EAbURELJ45jcqE6eG2dah5q682UY9xPl8wQ2wDImPZA=;
+ b=i7mSE8eeL3v88i8XSr539OhcYmYFLMYDXE/bbVuFwf1e+LrHrE0IQSV045b2YfPRBR3ZpF
+ +HBC43SRIJWqEUU4lAAl+KTHY2dp8+d8GBoV37Ffx5FVnDi7lkkqsv1NscUjoRivCqtPaE
+ L4YppbPgiGchgH4pF+KUJjpJcC3SVNE=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-LWOuJP0QNQig9xOBt6uhiw-1; Mon,
- 01 Sep 2025 11:06:25 -0400
-X-MC-Unique: LWOuJP0QNQig9xOBt6uhiw-1
-X-Mimecast-MFC-AGG-ID: LWOuJP0QNQig9xOBt6uhiw_1756739180
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-33-LCEUb69uOTm7Rg26mamX5A-1; Mon,
+ 01 Sep 2025 11:11:22 -0400
+X-MC-Unique: LCEUb69uOTm7Rg26mamX5A-1
+X-Mimecast-MFC-AGG-ID: LCEUb69uOTm7Rg26mamX5A_1756739477
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 330D5195608A; Mon,  1 Sep 2025 15:06:17 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6565919560B5; Mon,  1 Sep 2025 15:11:16 +0000 (UTC)
 Received: from t14s.fritz.box (unknown [10.22.88.45])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 344B51800280; Mon,  1 Sep 2025 15:06:01 +0000 (UTC)
+ id A6BF518003FC; Mon,  1 Sep 2025 15:11:00 +0000 (UTC)
 From: David Hildenbrand <david@redhat.com>
 To: linux-kernel@vger.kernel.org
-Cc: David Hildenbrand <david@redhat.com>, Zi Yan <ziy@nvidia.com>,
- SeongJae Park <sj@kernel.org>, Wei Yang <richard.weiyang@gmail.com>,
+Cc: David Hildenbrand <david@redhat.com>,
  Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
- "Liam R. Howlett" <Liam.Howlett@oracle.com>,
- Alexander Potapenko <glider@google.com>,
+ Jani Nikula <jani.nikula@linux.intel.com>,
+ Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+ Rodrigo Vivi <rodrigo.vivi@intel.com>,
+ Tvrtko Ursulin <tursulin@ursulin.net>, David Airlie <airlied@gmail.com>,
+ Simona Vetter <simona@ffwll.ch>, Alexander Potapenko <glider@google.com>,
  Andrew Morton <akpm@linux-foundation.org>,
  Brendan Jackman <jackmanb@google.com>, Christoph Lameter <cl@gentwo.org>,
  Dennis Zhou <dennis@kernel.org>, Dmitry Vyukov <dvyukov@google.com>,
@@ -56,6 +58,7 @@ Cc: David Hildenbrand <david@redhat.com>, Zi Yan <ziy@nvidia.com>,
  Jason Gunthorpe <jgg@nvidia.com>, Jens Axboe <axboe@kernel.dk>,
  Johannes Weiner <hannes@cmpxchg.org>, John Hubbard <jhubbard@nvidia.com>,
  kasan-dev@googlegroups.com, kvm@vger.kernel.org,
+ "Liam R. Howlett" <Liam.Howlett@oracle.com>,
  Linus Torvalds <torvalds@linux-foundation.org>, linux-arm-kernel@axis.com,
  linux-arm-kernel@lists.infradead.org, linux-crypto@vger.kernel.org,
  linux-ide@vger.kernel.org, linux-kselftest@vger.kernel.org,
@@ -69,11 +72,10 @@ Cc: David Hildenbrand <david@redhat.com>, Zi Yan <ziy@nvidia.com>,
  Robin Murphy <robin.murphy@arm.com>,
  Suren Baghdasaryan <surenb@google.com>, Tejun Heo <tj@kernel.org>,
  virtualization@lists.linux.dev, Vlastimil Babka <vbabka@suse.cz>,
- wireguard@lists.zx2c4.com, x86@kernel.org
-Subject: [PATCH v2 06/37] mm/page_alloc: reject unreasonable folio/compound
- page sizes in alloc_contig_range_noprof()
-Date: Mon,  1 Sep 2025 17:03:27 +0200
-Message-ID: <20250901150359.867252-7-david@redhat.com>
+ wireguard@lists.zx2c4.com, x86@kernel.org, Zi Yan <ziy@nvidia.com>
+Subject: [PATCH v2 26/37] drm/i915/gem: drop nth_page() usage within SG entry
+Date: Mon,  1 Sep 2025 17:03:47 +0200
+Message-ID: <20250901150359.867252-27-david@redhat.com>
 In-Reply-To: <20250901150359.867252-1-david@redhat.com>
 References: <20250901150359.867252-1-david@redhat.com>
 MIME-Version: 1.0
@@ -94,80 +96,34 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Let's reject them early, which in turn makes folio_alloc_gigantic() reject
-them properly.
+It's no longer required to use nth_page() when iterating pages within a
+single SG entry, so let's drop the nth_page() usage.
 
-To avoid converting from order to nr_pages, let's just add MAX_FOLIO_ORDER
-and calculate MAX_FOLIO_NR_PAGES based on that.
-
-While at it, let's just make the order a "const unsigned order".
-
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Acked-by: SeongJae Park <sj@kernel.org>
-Reviewed-by: Wei Yang <richard.weiyang@gmail.com>
 Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Reviewed-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Tvrtko Ursulin <tursulin@ursulin.net>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Simona Vetter <simona@ffwll.ch>
 Signed-off-by: David Hildenbrand <david@redhat.com>
 ---
- include/linux/mm.h |  6 ++++--
- mm/page_alloc.c    | 10 +++++++++-
- 2 files changed, 13 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/i915/gem/i915_gem_pages.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/mm.h b/include/linux/mm.h
-index 00c8a54127d37..77737cbf2216a 100644
---- a/include/linux/mm.h
-+++ b/include/linux/mm.h
-@@ -2055,11 +2055,13 @@ static inline long folio_nr_pages(const struct folio *folio)
+diff --git a/drivers/gpu/drm/i915/gem/i915_gem_pages.c b/drivers/gpu/drm/i915/gem/i915_gem_pages.c
+index c16a57160b262..031d7acc16142 100644
+--- a/drivers/gpu/drm/i915/gem/i915_gem_pages.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_pages.c
+@@ -779,7 +779,7 @@ __i915_gem_object_get_page(struct drm_i915_gem_object *obj, pgoff_t n)
+ 	GEM_BUG_ON(!i915_gem_object_has_struct_page(obj));
  
- /* Only hugetlbfs can allocate folios larger than MAX_ORDER */
- #ifdef CONFIG_ARCH_HAS_GIGANTIC_PAGE
--#define MAX_FOLIO_NR_PAGES	(1UL << PUD_ORDER)
-+#define MAX_FOLIO_ORDER		PUD_ORDER
- #else
--#define MAX_FOLIO_NR_PAGES	MAX_ORDER_NR_PAGES
-+#define MAX_FOLIO_ORDER		MAX_PAGE_ORDER
- #endif
+ 	sg = i915_gem_object_get_sg(obj, n, &offset);
+-	return nth_page(sg_page(sg), offset);
++	return sg_page(sg) + offset;
+ }
  
-+#define MAX_FOLIO_NR_PAGES	(1UL << MAX_FOLIO_ORDER)
-+
- /*
-  * compound_nr() returns the number of pages in this potentially compound
-  * page.  compound_nr() can be called on a tail page, and is defined to
-diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 27ea4c7acd158..7e96c69a06ccb 100644
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -6841,6 +6841,7 @@ static int __alloc_contig_verify_gfp_mask(gfp_t gfp_mask, gfp_t *gfp_cc_mask)
- int alloc_contig_range_noprof(unsigned long start, unsigned long end,
- 			      acr_flags_t alloc_flags, gfp_t gfp_mask)
- {
-+	const unsigned int order = ilog2(end - start);
- 	unsigned long outer_start, outer_end;
- 	int ret = 0;
- 
-@@ -6858,6 +6859,14 @@ int alloc_contig_range_noprof(unsigned long start, unsigned long end,
- 					    PB_ISOLATE_MODE_CMA_ALLOC :
- 					    PB_ISOLATE_MODE_OTHER;
- 
-+	/*
-+	 * In contrast to the buddy, we allow for orders here that exceed
-+	 * MAX_PAGE_ORDER, so we must manually make sure that we are not
-+	 * exceeding the maximum folio order.
-+	 */
-+	if (WARN_ON_ONCE((gfp_mask & __GFP_COMP) && order > MAX_FOLIO_ORDER))
-+		return -EINVAL;
-+
- 	gfp_mask = current_gfp_context(gfp_mask);
- 	if (__alloc_contig_verify_gfp_mask(gfp_mask, (gfp_t *)&cc.gfp_mask))
- 		return -EINVAL;
-@@ -6955,7 +6964,6 @@ int alloc_contig_range_noprof(unsigned long start, unsigned long end,
- 			free_contig_range(end, outer_end - end);
- 	} else if (start == outer_start && end == outer_end && is_power_of_2(end - start)) {
- 		struct page *head = pfn_to_page(start);
--		int order = ilog2(end - start);
- 
- 		check_new_pages(head, order);
- 		prep_new_page(head, order, gfp_mask, 0);
+ /* Like i915_gem_object_get_page(), but mark the returned page dirty */
 -- 
 2.50.1
 
