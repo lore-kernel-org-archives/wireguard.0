@@ -4,79 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1BEECA0FFF
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  1 Sep 2025 17:09:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 536F0CA0FF0
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  1 Sep 2025 18:52:13 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f4ea7347;
-	Mon, 1 Sep 2025 15:14:30 +0000 (UTC)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [170.10.133.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d6078be2
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d82e8120;
+	Mon, 1 Sep 2025 18:50:46 +0000 (UTC)
+Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7f15e446
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 1 Sep 2025 15:14:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756739663;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wgq8t08BL7RNfQ5mX4qRFuahvfg5EKXwRMG9Zf68USY=;
- b=D4HjlpuCgjLV7L3JDNtms4fVrs4paPOdyjVzNubbG9ElWQXxgv/jXHA6udiScr8nAzPsY1
- XugWGLC0g0+VWyWt8YNBLAF6sdr6iRMIajnrIF1tRhNGfy7r6LnmYBD/M9uZWRB44KWmHm
- LdsY5K1fztTk4ZBeAVQSgSmsuq3/Mj0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-618-GxSXaOqMOKWCp_wVKjXAog-1; Mon,
- 01 Sep 2025 11:14:20 -0400
-X-MC-Unique: GxSXaOqMOKWCp_wVKjXAog-1
-X-Mimecast-MFC-AGG-ID: GxSXaOqMOKWCp_wVKjXAog_1756739656
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C598B1800366; Mon,  1 Sep 2025 15:14:15 +0000 (UTC)
-Received: from t14s.fritz.box (unknown [10.22.88.45])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0A0B1180044F; Mon,  1 Sep 2025 15:14:00 +0000 (UTC)
-From: David Hildenbrand <david@redhat.com>
-To: linux-kernel@vger.kernel.org
-Cc: David Hildenbrand <david@redhat.com>,
- Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
- Alexander Potapenko <glider@google.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- Brendan Jackman <jackmanb@google.com>, Christoph Lameter <cl@gentwo.org>,
- Dennis Zhou <dennis@kernel.org>, Dmitry Vyukov <dvyukov@google.com>,
- dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
- iommu@lists.linux.dev, io-uring@vger.kernel.org,
- Jason Gunthorpe <jgg@nvidia.com>, Jens Axboe <axboe@kernel.dk>,
- Johannes Weiner <hannes@cmpxchg.org>, John Hubbard <jhubbard@nvidia.com>,
- kasan-dev@googlegroups.com, kvm@vger.kernel.org,
- "Liam R. Howlett" <Liam.Howlett@oracle.com>,
- Linus Torvalds <torvalds@linux-foundation.org>, linux-arm-kernel@axis.com,
- linux-arm-kernel@lists.infradead.org, linux-crypto@vger.kernel.org,
- linux-ide@vger.kernel.org, linux-kselftest@vger.kernel.org,
- linux-mips@vger.kernel.org, linux-mmc@vger.kernel.org, linux-mm@kvack.org,
- linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
- linux-scsi@vger.kernel.org, Marco Elver <elver@google.com>,
- Marek Szyprowski <m.szyprowski@samsung.com>,
- Michal Hocko <mhocko@suse.com>, Mike Rapoport <rppt@kernel.org>,
- Muchun Song <muchun.song@linux.dev>, netdev@vger.kernel.org,
- Oscar Salvador <osalvador@suse.de>, Peter Xu <peterx@redhat.com>,
- Robin Murphy <robin.murphy@arm.com>,
- Suren Baghdasaryan <surenb@google.com>, Tejun Heo <tj@kernel.org>,
- virtualization@lists.linux.dev, Vlastimil Babka <vbabka@suse.cz>,
- wireguard@lists.zx2c4.com, x86@kernel.org, Zi Yan <ziy@nvidia.com>
-Subject: [PATCH v2 37/37] mm: remove nth_page()
-Date: Mon,  1 Sep 2025 17:03:58 +0200
-Message-ID: <20250901150359.867252-38-david@redhat.com>
-In-Reply-To: <20250901150359.867252-1-david@redhat.com>
-References: <20250901150359.867252-1-david@redhat.com>
+ for <wireguard@lists.zx2c4.com>; Mon, 1 Sep 2025 18:50:45 +0000 (UTC)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id 99A0E60008;
+ Mon,  1 Sep 2025 18:50:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE27C4CEF0;
+ Mon,  1 Sep 2025 18:50:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1756752643;
+ bh=TaDxlRij1DMVVJ7SJ7L4VH6Il0973Q1GT0fLfbvUvgE=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=lgUHtMHOKguduGbiYVfwrbvQzEjJXroI2/q8xjw4mmexTV/ZpHVyZATn2n0XhV/qw
+ pGwXqbpinmwU8Ilyb5/LjRNs2xIzRso0WEcodZQCCRhQlsKAENXwakcGfKIdpaF+mG
+ M+Fr7SVpAacSSuQUboeSTewF9wrc8iuZ0BMr1ZB13/RpZjFR6swvc1vIofIm7hGpMF
+ VjY0dkN8P8glmTLmvvOGEFtaRHk9XrnZR81QYAESaZ74QlZLh9QPc2pmc12GbEK/iF
+ qbsagl9DejiJyf4gZIjUGxUnMJVVGbNq3kL4KtpMp+mufMEkXRoJuqm7fGA6m1MzPF
+ qlnZH3iA88nIQ==
+Date: Mon, 1 Sep 2025 11:50:41 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: =?UTF-8?B?QXNiasO4cm4=?= Sloth =?UTF-8?B?VMO4bm5lc2Vu?= <ast@fiberby.net>
+Cc: "David S. Miller" <davem@davemloft.net>, Eric Dumazet
+ <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>, Donald Hunter
+ <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>, Jacob Keller
+ <jacob.e.keller@intel.com>, Stanislav Fomichev <sdf@fomichev.me>, "Matthieu
+ Baerts (NGI0)" <matttbe@kernel.org>, David Ahern <dsahern@kernel.org>,
+ Chuck Lever <chuck.lever@oracle.com>, wireguard@lists.zx2c4.com,
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net 1/4] netlink: specs: fou: change local-v6/peer-v6 check
+Message-ID: <20250901115041.03d661fa@kernel.org>
+In-Reply-To: <20250901145034.525518-2-ast@fiberby.net>
+References: <20250901145034.525518-1-ast@fiberby.net>
+ <20250901145034.525518-2-ast@fiberby.net>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -91,41 +60,22 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Now that all users are gone, let's remove it.
+On Mon,  1 Sep 2025 14:50:20 +0000 Asbj=C3=B8rn Sloth T=C3=B8nnesen wrote:
+> While fixing the binary min-len implementaion, I noticed that
+> the only user, should AFAICT be using exact-len instead.
+>=20
+> In net/ipv4/fou_core.c FOU_ATTR_LOCAL_V6 and FOU_ATTR_PEER_V6
+> are only used for singular IPv6 addresses, a exact-len policy,
+> therefore seams like a better fit.
+>=20
+> AFAICT this was caused by lacking support for the exact-len check
+> at the time of the blamed commit, which was later remedied by
+> c63ad379526 ("tools: ynl-gen: add support for exact-len validation").
 
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Signed-off-by: David Hildenbrand <david@redhat.com>
----
- include/linux/mm.h                   | 2 --
- tools/testing/scatterlist/linux/mm.h | 1 -
- 2 files changed, 3 deletions(-)
+No, take a look at 1d562c32e43. The intention was to keep the code
+before and after the same. I agree that the check is not ideal but
+it's not really a bug to ignore some input. So if you want to clean
+this up -- net-next and no Fixes tag..
 
-diff --git a/include/linux/mm.h b/include/linux/mm.h
-index 2ca1eb2db63ec..b26ca8b2162d9 100644
---- a/include/linux/mm.h
-+++ b/include/linux/mm.h
-@@ -210,9 +210,7 @@ extern unsigned long sysctl_admin_reserve_kbytes;
- 
- #if defined(CONFIG_SPARSEMEM) && !defined(CONFIG_SPARSEMEM_VMEMMAP)
- bool page_range_contiguous(const struct page *page, unsigned long nr_pages);
--#define nth_page(page,n) pfn_to_page(page_to_pfn((page)) + (n))
- #else
--#define nth_page(page,n) ((page) + (n))
- static inline bool page_range_contiguous(const struct page *page,
- 		unsigned long nr_pages)
- {
-diff --git a/tools/testing/scatterlist/linux/mm.h b/tools/testing/scatterlist/linux/mm.h
-index 5bd9e6e806254..121ae78d6e885 100644
---- a/tools/testing/scatterlist/linux/mm.h
-+++ b/tools/testing/scatterlist/linux/mm.h
-@@ -51,7 +51,6 @@ static inline unsigned long page_to_phys(struct page *page)
- 
- #define page_to_pfn(page) ((unsigned long)(page) / PAGE_SIZE)
- #define pfn_to_page(pfn) (void *)((pfn) * PAGE_SIZE)
--#define nth_page(page,n) pfn_to_page(page_to_pfn((page)) + (n))
- 
- #define __min(t1, t2, min1, min2, x, y) ({              \
- 	t1 min1 = (x);                                  \
--- 
-2.50.1
-
+> This patch therefore changes the local-v6/peer-v6 attributes to
+> use an exact-len check, instead of a min-len check.
