@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00449CA100A
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  1 Sep 2025 17:09:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA499CA1009
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  1 Sep 2025 17:09:15 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 48db9d15;
-	Mon, 1 Sep 2025 15:14:02 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5639e5f7;
+	Mon, 1 Sep 2025 15:14:13 +0000 (UTC)
 Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [170.10.129.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3d53be02
+ (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a0451f7d
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 1 Sep 2025 15:13:56 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Mon, 1 Sep 2025 15:14:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756739635;
+ s=mimecast20190719; t=1756739649;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jkEShtyZMAsDf/J3X4vsiABth2SEec0fiHHSpv4k9x8=;
- b=WKXsh5P+H1qNTNZkPhx7SE/4NliaZ1lT4nEt0Y0cMkzZyM3PV1gZejAZu7eWSvGAkh9orm
- fW8JkbHKDzxzXxE7fSS/525xgxAsEwgNFS6v820IWoV0Amddm3faXwi7CoiMBAkUEV7oq5
- hu01y0ahMtIqckWvZxipvCWfQIXMuEk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ZB8VenTnhwuJsxCOtg12iGGVlRBSxMcM5zW2W1CE+LA=;
+ b=YNb1THl2gOHNnA7n7ZWoCPJn+55mK+NAaMR3HqySYKTgRgZqSfQ3V6tJ060t/anhhF0FsF
+ VlT71fff/iMEL7yH7kOxifbKoh/49jlPNed/pkV8aAq1nFpyQ8nm4CeQDNmSxEDGP6epmT
+ lZFPdb+kQWQ+MEqcEccZVJvj9p9Dr7c=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-1-o2-TD6CtMRuqF-LwyESxUQ-1; Mon,
- 01 Sep 2025 11:13:51 -0400
-X-MC-Unique: o2-TD6CtMRuqF-LwyESxUQ-1
-X-Mimecast-MFC-AGG-ID: o2-TD6CtMRuqF-LwyESxUQ_1756739625
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-160-CInaJEnEOsyAhyUHiabiVw-1; Mon,
+ 01 Sep 2025 11:14:05 -0400
+X-MC-Unique: CInaJEnEOsyAhyUHiabiVw-1
+X-Mimecast-MFC-AGG-ID: CInaJEnEOsyAhyUHiabiVw_1756739640
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4DA9F1800561; Mon,  1 Sep 2025 15:13:45 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6DCC31800342; Mon,  1 Sep 2025 15:14:00 +0000 (UTC)
 Received: from t14s.fritz.box (unknown [10.22.88.45])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CF9891800447; Mon,  1 Sep 2025 15:13:30 +0000 (UTC)
+ id C0BF81800447; Mon,  1 Sep 2025 15:13:45 +0000 (UTC)
 From: David Hildenbrand <david@redhat.com>
 To: linux-kernel@vger.kernel.org
-Cc: David Hildenbrand <david@redhat.com>, Marco Elver <elver@google.com>,
+Cc: David Hildenbrand <david@redhat.com>,
  Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
  Alexander Potapenko <glider@google.com>,
- Dmitry Vyukov <dvyukov@google.com>,
  Andrew Morton <akpm@linux-foundation.org>,
  Brendan Jackman <jackmanb@google.com>, Christoph Lameter <cl@gentwo.org>,
- Dennis Zhou <dennis@kernel.org>, dri-devel@lists.freedesktop.org,
- intel-gfx@lists.freedesktop.org, iommu@lists.linux.dev,
- io-uring@vger.kernel.org, Jason Gunthorpe <jgg@nvidia.com>,
- Jens Axboe <axboe@kernel.dk>, Johannes Weiner <hannes@cmpxchg.org>,
- John Hubbard <jhubbard@nvidia.com>, kasan-dev@googlegroups.com,
- kvm@vger.kernel.org, "Liam R. Howlett" <Liam.Howlett@oracle.com>,
+ Dennis Zhou <dennis@kernel.org>, Dmitry Vyukov <dvyukov@google.com>,
+ dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+ iommu@lists.linux.dev, io-uring@vger.kernel.org,
+ Jason Gunthorpe <jgg@nvidia.com>, Jens Axboe <axboe@kernel.dk>,
+ Johannes Weiner <hannes@cmpxchg.org>, John Hubbard <jhubbard@nvidia.com>,
+ kasan-dev@googlegroups.com, kvm@vger.kernel.org,
+ "Liam R. Howlett" <Liam.Howlett@oracle.com>,
  Linus Torvalds <torvalds@linux-foundation.org>, linux-arm-kernel@axis.com,
  linux-arm-kernel@lists.infradead.org, linux-crypto@vger.kernel.org,
  linux-ide@vger.kernel.org, linux-kselftest@vger.kernel.org,
  linux-mips@vger.kernel.org, linux-mmc@vger.kernel.org, linux-mm@kvack.org,
  linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
- linux-scsi@vger.kernel.org, Marek Szyprowski <m.szyprowski@samsung.com>,
+ linux-scsi@vger.kernel.org, Marco Elver <elver@google.com>,
+ Marek Szyprowski <m.szyprowski@samsung.com>,
  Michal Hocko <mhocko@suse.com>, Mike Rapoport <rppt@kernel.org>,
  Muchun Song <muchun.song@linux.dev>, netdev@vger.kernel.org,
  Oscar Salvador <osalvador@suse.de>, Peter Xu <peterx@redhat.com>,
@@ -68,9 +69,10 @@ Cc: David Hildenbrand <david@redhat.com>, Marco Elver <elver@google.com>,
  Suren Baghdasaryan <surenb@google.com>, Tejun Heo <tj@kernel.org>,
  virtualization@lists.linux.dev, Vlastimil Babka <vbabka@suse.cz>,
  wireguard@lists.zx2c4.com, x86@kernel.org, Zi Yan <ziy@nvidia.com>
-Subject: [PATCH v2 35/37] kfence: drop nth_page() usage
-Date: Mon,  1 Sep 2025 17:03:56 +0200
-Message-ID: <20250901150359.867252-36-david@redhat.com>
+Subject: [PATCH v2 36/37] block: update comment of "struct bio_vec" regarding
+ nth_page()
+Date: Mon,  1 Sep 2025 17:03:57 +0200
+Message-ID: <20250901150359.867252-37-david@redhat.com>
 In-Reply-To: <20250901150359.867252-1-david@redhat.com>
 References: <20250901150359.867252-1-david@redhat.com>
 MIME-Version: 1.0
@@ -90,78 +92,35 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-We want to get rid of nth_page(), and kfence init code is the last user.
+Ever since commit 858c708d9efb ("block: move the bi_size update out of
+__bio_try_merge_page"), page_is_mergeable() no longer exists, and the
+logic in bvec_try_merge_page() is now a simple page pointer
+comparison.
 
-Unfortunately, we might actually walk a PFN range where the pages are
-not contiguous, because we might be allocating an area from memblock
-that could span memory sections in problematic kernel configs (SPARSEMEM
-without SPARSEMEM_VMEMMAP).
-
-We could check whether the page range is contiguous
-using page_range_contiguous() and failing kfence init, or making kfence
-incompatible these problemtic kernel configs.
-
-Let's keep it simple and simply use pfn_to_page() by iterating PFNs.
-
-Reviewed-by: Marco Elver <elver@google.com>
 Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
 Signed-off-by: David Hildenbrand <david@redhat.com>
 ---
- mm/kfence/core.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ include/linux/bvec.h | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/mm/kfence/core.c b/mm/kfence/core.c
-index 0ed3be100963a..727c20c94ac59 100644
---- a/mm/kfence/core.c
-+++ b/mm/kfence/core.c
-@@ -594,15 +594,14 @@ static void rcu_guarded_free(struct rcu_head *h)
+diff --git a/include/linux/bvec.h b/include/linux/bvec.h
+index 0a80e1f9aa201..3fc0efa0825b1 100644
+--- a/include/linux/bvec.h
++++ b/include/linux/bvec.h
+@@ -22,11 +22,8 @@ struct page;
+  * @bv_len:    Number of bytes in the address range.
+  * @bv_offset: Start of the address range relative to the start of @bv_page.
+  *
+- * The following holds for a bvec if n * PAGE_SIZE < bv_offset + bv_len:
+- *
+- *   nth_page(@bv_page, n) == @bv_page + n
+- *
+- * This holds because page_is_mergeable() checks the above property.
++ * All pages within a bio_vec starting from @bv_page are contiguous and
++ * can simply be iterated (see bvec_advance()).
   */
- static unsigned long kfence_init_pool(void)
- {
--	unsigned long addr;
--	struct page *pages;
-+	unsigned long addr, start_pfn;
- 	int i;
- 
- 	if (!arch_kfence_init_pool())
- 		return (unsigned long)__kfence_pool;
- 
- 	addr = (unsigned long)__kfence_pool;
--	pages = virt_to_page(__kfence_pool);
-+	start_pfn = PHYS_PFN(virt_to_phys(__kfence_pool));
- 
- 	/*
- 	 * Set up object pages: they must have PGTY_slab set to avoid freeing
-@@ -613,11 +612,12 @@ static unsigned long kfence_init_pool(void)
- 	 * enters __slab_free() slow-path.
- 	 */
- 	for (i = 0; i < KFENCE_POOL_SIZE / PAGE_SIZE; i++) {
--		struct slab *slab = page_slab(nth_page(pages, i));
-+		struct slab *slab;
- 
- 		if (!i || (i % 2))
- 			continue;
- 
-+		slab = page_slab(pfn_to_page(start_pfn + i));
- 		__folio_set_slab(slab_folio(slab));
- #ifdef CONFIG_MEMCG
- 		slab->obj_exts = (unsigned long)&kfence_metadata_init[i / 2 - 1].obj_exts |
-@@ -665,10 +665,12 @@ static unsigned long kfence_init_pool(void)
- 
- reset_slab:
- 	for (i = 0; i < KFENCE_POOL_SIZE / PAGE_SIZE; i++) {
--		struct slab *slab = page_slab(nth_page(pages, i));
-+		struct slab *slab;
- 
- 		if (!i || (i % 2))
- 			continue;
-+
-+		slab = page_slab(pfn_to_page(start_pfn + i));
- #ifdef CONFIG_MEMCG
- 		slab->obj_exts = 0;
- #endif
+ struct bio_vec {
+ 	struct page	*bv_page;
 -- 
 2.50.1
 
