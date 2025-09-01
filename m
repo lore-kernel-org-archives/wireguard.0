@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88BBFCEE343
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 18:28:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00722CEE347
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 18:31:21 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9dbbf482;
-	Tue, 18 Nov 2025 17:24:16 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eb7aaed0;
+	Tue, 18 Nov 2025 17:24:19 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id cc3ae03d
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6ced7aff
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>; Mon, 1 Sep 2025 14:52:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
  s=202008; t=1756738334;
- bh=A3oQDNtC9t8GXyz1Onu5bXHPGEEu2KnjT/PlSY2LNfQ=;
+ bh=bwutvYte2v5M5foMclZwyKV+peJI6XWuEXuXe4HoaBw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=YZcn32pRvgCPxUHhdbcid7QSZs4Y0AsQQQOBZ4giN4TxgRTjsm/pQQicMkxrkngsQ
- +r1+J3vWSQLG4DNXN6ftUKzlB3ZS6ViJCAmDaSBnBPDWtpoN9D3TVtkpbyJhjp9kWq
- UUZToBMPGAlr+kFkxdPyxQY9njO4xtPk+1BzzCwUwKTVlU5fwlhXvnbaPt66SbFf84
- bpXrwF2C8BM9DQy2F+kUynrTgkzaGjn4x2FNNd82oB38Cq9/Uly0g+iKlzqxdh6hA6
- 6kOKLM/fH9fHPYAYVXYHyF5v7C9bGG0D+P4Ntpak4Q6F//oPAo0HJeT+iHUNhJA1Wh
- 2nr6CXCZRD5fQ==
+ b=SfTXFqewM4mrjsNbqjjJYpkzNzQSs7ILBxImJU2Q2lcDK1cdNpH0oOh/BRtAGjOvy
+ +telnDst07ECMTXoE312nn9vwMyp6X3wGPj5qjxhBZeX/5zuOSmk0Zf7muQPW8wmgQ
+ nSRlxYeZKCZ7N21bs9DYXi+6ZFjbHLa52GINp5PCyUY4h5filyjlPVzm4V8rFL6qgz
+ szjTmpdfv4rm/y/KomFOD05ixOEbs74pQF72HHQH3SzQ9TY7PbB4ioCChQOCsexwsC
+ TCATXFxr/xnZicSZUWjWdYzqEUGJ1+Jl64mnFRP9uBHxn4cSDlPpwaBJsvRQGkdEnk
+ PGuFwq/cqDh8A==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id DC5B160078;
+ by mail1.fiberby.net (Postfix) with ESMTPSA id EADA26012E;
  Mon,  1 Sep 2025 14:51:16 +0000 (UTC)
 Received: by x201s (Postfix, from userid 1000)
- id 82082202310; Mon, 01 Sep 2025 14:50:57 +0000 (UTC)
+ id 1106A202271; Mon, 01 Sep 2025 14:50:56 +0000 (UTC)
 From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
 To: "David S. Miller" <davem@davemloft.net>,
  Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
@@ -40,9 +40,9 @@ Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
  David Ahern <dsahern@kernel.org>, Chuck Lever <chuck.lever@oracle.com>,
  wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
  linux-kernel@vger.kernel.org
-Subject: [PATCH net 4/4] genetlink: fix typo in comment
-Date: Mon,  1 Sep 2025 14:50:23 +0000
-Message-ID: <20250901145034.525518-5-ast@fiberby.net>
+Subject: [PATCH net 2/4] tools: ynl-gen: use macro for binary min-len check
+Date: Mon,  1 Sep 2025 14:50:21 +0000
+Message-ID: <20250901145034.525518-3-ast@fiberby.net>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250901145034.525518-1-ast@fiberby.net>
 References: <20250901145034.525518-1-ast@fiberby.net>
@@ -64,27 +64,32 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-In this context "not that ..." should properly be "note that ...".
+This patch changes the generated min-len check for binary
+attributes to use the NLA_POLICY_MIN_LEN() macro, and thereby
+ensures that .validation_type is not left at NLA_VALIDATE_NONE.
 
-Fixes: b8fd60c36a44 ("genetlink: allow families to use split ops directly")
+This doesn't change any currently generated code, as it isn't
+used in any specs currently used for generating code.
+
+Fixes: be5bea1cc0bf ("net: add basic C code generators for Netlink")
 Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 ---
- include/net/genetlink.h | 2 +-
+ tools/net/ynl/pyynl/ynl_gen_c.py | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/genetlink.h b/include/net/genetlink.h
-index a03d567658328..7b84f2cef8b1f 100644
---- a/include/net/genetlink.h
-+++ b/include/net/genetlink.h
-@@ -62,7 +62,7 @@ struct genl_info;
-  * @small_ops: the small-struct operations supported by this family
-  * @n_small_ops: number of small-struct operations supported by this family
-  * @split_ops: the split do/dump form of operation definition
-- * @n_split_ops: number of entries in @split_ops, not that with split do/dump
-+ * @n_split_ops: number of entries in @split_ops, note that with split do/dump
-  *	ops the number of entries is not the same as number of commands
-  * @sock_priv_size: the size of per-socket private memory
-  * @sock_priv_init: the per-socket private memory initializer
+diff --git a/tools/net/ynl/pyynl/ynl_gen_c.py b/tools/net/ynl/pyynl/ynl_gen_c.py
+index ef032e17fec44..52f955ed84a7f 100755
+--- a/tools/net/ynl/pyynl/ynl_gen_c.py
++++ b/tools/net/ynl/pyynl/ynl_gen_c.py
+@@ -556,7 +556,7 @@ class TypeBinary(Type):
+         elif 'exact-len' in self.checks:
+             mem = 'NLA_POLICY_EXACT_LEN(' + self.get_limit_str('exact-len') + ')'
+         elif 'min-len' in self.checks:
+-            mem = '{ .len = ' + self.get_limit_str('min-len') + ', }'
++            mem = 'NLA_POLICY_MIN_LEN(' + self.get_limit_str('min-len') + ')'
+         elif 'max-len' in self.checks:
+             mem = 'NLA_POLICY_MAX_LEN(' + self.get_limit_str('max-len') + ')'
+ 
 -- 
 2.50.1
 
