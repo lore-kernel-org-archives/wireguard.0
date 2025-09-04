@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 329EECEE358
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1954DCEDD98
 	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 20:47:15 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 901d35fb;
-	Tue, 18 Nov 2025 17:25:27 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c8d9f91c;
+	Tue, 18 Nov 2025 17:25:30 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 86ffd031
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c77376be
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>; Thu, 4 Sep 2025 22:03:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
  s=202008; t=1757023398;
- bh=ECNMbXl3XLvGt4tALH0EaehkGJdjFoR5BhZ1oyO4DKU=;
+ bh=7mPaZYp6IBm/oj1/oMkLKS5KcOMTq2FZ1vUvfx3mqLc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=bzZnJJFp7x0TGcadOB6VkbUDx+lay5/40mepR8zc6VCVjxCiyGL1QiULRw/Qu5U+Q
- 8sw45x379bEcIu1SInV5H3yjZMonFjOgEljmG1gq8bpwpUi5lt9gXhx9oaNJap74aw
- xWxmOt1wAzXn2jCnjUrYVRCXC0ONm++TMeUForqMPkyncIpBCWgA0n503NU1oX9F+P
- qdHIz3R6B70msIoQIgUHFK43EypLTIZpH/2F52eMyojuHzFplUukL6A/shfIw4ufK3
- oz542vZ+n5Scvs0qw08/EUJGQXtIPQSyQcyv307bYeSa6mp4iF6leJdXNOWyHBZI+5
- DRPwypK2RjabQ==
+ b=Q08+1KNcfP0JSDXoY2eORt544YehFndoOuLJxAAvx+JPDINNxVOuU8sJZu0wGSXug
+ tJ/4k0dxxd71ZzD4oG/NDL+7Sd4S4P0PMcPsU2H8OeCEMdHo8pjhIBVJqQl4QLB/Tc
+ D53xrnNKZuU4sVHanNuKlqHiyh2o0k9pCIbuf6ZC54EcH3TwvMojywQUjtIOMSKZij
+ fSgEtA7ZCE+ZRvyylUc5ox73KqTLoga9lQupfnF7TElineIV4T/LkD6XwkWJ++OEz0
+ qiZkXRZg5ryGWxRwoiwQH0MErs0yuAIpVgwW0iU0wAEgJBFFKxvxDW+cA2LkLQmMB8
+ TzJZPXZV4DAHw==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id 5D3096013C;
+ by mail1.fiberby.net (Postfix) with ESMTPSA id 481F360137;
  Thu,  4 Sep 2025 22:03:18 +0000 (UTC)
 Received: by x201s (Postfix, from userid 1000)
- id B6C0E202B2F; Thu, 04 Sep 2025 22:02:58 +0000 (UTC)
+ id 9E68D202231; Thu, 04 Sep 2025 22:02:09 +0000 (UTC)
 From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  "David S. Miller" <davem@davemloft.net>,
@@ -38,13 +38,12 @@ Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
  Jacob Keller <jacob.e.keller@intel.com>,
  Andrew Lunn <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [RFC net-next 13/14] wireguard: netlink: enable strict genetlink
- validation
-Date: Thu,  4 Sep 2025 22:02:47 +0000
-Message-ID: <20250904220255.1006675-13-ast@fiberby.net>
+Subject: [PATCH net-next 03/11] tools: ynl-gen: add sub-type check
+Date: Thu,  4 Sep 2025 22:01:26 +0000
+Message-ID: <20250904220156.1006541-3-ast@fiberby.net>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250904-wg-ynl-rfc@fiberby.net>
-References: <20250904-wg-ynl-rfc@fiberby.net>
+In-Reply-To: <20250904-wg-ynl-prep@fiberby.net>
+References: <20250904-wg-ynl-prep@fiberby.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -63,30 +62,33 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Wireguard is a modern enough genetlink family, that it doesn't
-need resv_start_op. It already had policies in place when it was
-first merged, it has also never used reserved fields, or other
-things toggled by resv_start_op.
+Add a check to verify that the sub-type is "nest", and throw an
+exception if no policy could be generated, as a guard to prevent
+against generating a bad policy.
 
-[TODO: before v1, also test with ancient wireguard-tools versions]
+This is a trivial patch with no behavioural changes intended.
 
 Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 ---
- drivers/net/wireguard/netlink.c | 1 -
- 1 file changed, 1 deletion(-)
+ tools/net/ynl/pyynl/ynl_gen_c.py | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlink.c
-index 0e34817126b9..67c448eef25d 100644
---- a/drivers/net/wireguard/netlink.c
-+++ b/drivers/net/wireguard/netlink.c
-@@ -592,7 +592,6 @@ int wireguard_nl_set_device_doit(struct sk_buff *skb,
- static struct genl_family genl_family __ro_after_init = {
- 	.split_ops = wireguard_nl_ops,
- 	.n_split_ops = ARRAY_SIZE(wireguard_nl_ops),
--	.resv_start_op = WG_CMD_SET_DEVICE + 1,
- 	.name = WG_GENL_NAME,
- 	.version = WG_GENL_VERSION,
- 	.module = THIS_MODULE,
+diff --git a/tools/net/ynl/pyynl/ynl_gen_c.py b/tools/net/ynl/pyynl/ynl_gen_c.py
+index b7de7f6b1fc7..04c26ed92ca3 100755
+--- a/tools/net/ynl/pyynl/ynl_gen_c.py
++++ b/tools/net/ynl/pyynl/ynl_gen_c.py
+@@ -826,8 +826,10 @@ class TypeArrayNest(Type):
+             return f'.type = YNL_PT_U{c_upper(self.sub_type[1:])}, '
+         elif self.attr['sub-type'] == 'binary' and 'exact-len' in self.checks:
+             return f'.type = YNL_PT_BINARY, .len = {self.checks["exact-len"]}, '
+-        else:
++        elif self.attr['sub-type'] == 'nest':
+             return f'.type = YNL_PT_NEST, .nest = &{self.nested_render_name}_nest, '
++        else:
++            raise Exception(f"Typol for ArrayNest sub-type {self.attr['sub-type']} not supported, yet")
+ 
+     def _attr_get(self, ri, var):
+         local_vars = ['const struct nlattr *attr2;']
 -- 
 2.51.0
 
