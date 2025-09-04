@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30A4ACF2564
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C9EACF2561
 	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 22:44:37 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f6fa4778;
-	Tue, 18 Nov 2025 17:26:14 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5803a0ab;
+	Tue, 18 Nov 2025 17:26:16 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6e80f944
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ebd66e84
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>; Thu, 4 Sep 2025 22:03:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
  s=202008; t=1757023399;
- bh=ONNek9e9XXLRrSnQiiYpvkro4XvZ25Cp3066DjpUKos=;
- h=From:To:Cc:Subject:Date:From;
- b=a53Olmkqz4aRkLa/ZKdGhn7GnrBtXxsyRrkfDNYG1d/FdeeYyRthcvMvE9EjS2BFw
- gbKS4QeYgBxlk8RJFgutfGRq8144lRRUpo61hyhNdCyrBxcfdUnTb4mvZMT4fl2J0r
- 808iPYKXYKXarcAHLVTwoI6uO/FZ35Qdy3o0iCStTGmbJGf+nzjhWUKoxooW1dz8Sr
- raTBQTP5Dj8lUfFp8V6ibFSkr8En1gkkKP2mGnTH+FwKg5SoHsl+8v6U/GQwEg45Yr
- qbmVfMOP1x61QVTFGUrU/iJGzkLiqM5If9LgntOKm51b5WddhaOWiPOrlarVDGTPV1
- bQxVFP+Xsia2Q==
+ bh=CO/vHSTBdTAo/V5DNoVuti5MiqLKMG3c1AdHyp2ogNE=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=pdA9hRopUBhN4otUAIQhIHglPx8eiFkCbH18XD6SfoVQ6M45e+XGflfRTxI9k+S/Q
+ CplL+4deR/eoPTryNZoP/mFcwShrsLQQ5U80CEhgz+s8qSpnqW3q7q8RIUfZ+qhWcl
+ QPs9BXFt55PMn2e4ssRLz1fVY3hjwRUYp7TwvygJuP+4OPgzn2gErh+YwK4ot3EXbD
+ ZGhbmLLbNqUZerPP9i+kNByPvkaV+hkNsWp7Vaulo4a1yGxmle6rE3WnYTyILFLAPl
+ 81o52p5ES2NUE87ZpyaGrrxnPMZM3ZDf3eyge88UUKdQAAkK0NI2m6LnSyYbuyK4EK
+ e1jQyea+Sd9gQ==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id 1DBA56058A;
+ by mail1.fiberby.net (Postfix) with ESMTPSA id 1D3E360589;
  Thu,  4 Sep 2025 22:03:19 +0000 (UTC)
 Received: by x201s (Postfix, from userid 1000)
- id 6F0AC201EBF; Thu, 04 Sep 2025 22:01:56 +0000 (UTC)
+ id AD997202B05; Thu, 04 Sep 2025 22:02:58 +0000 (UTC)
 From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  "David S. Miller" <davem@davemloft.net>,
@@ -38,10 +38,13 @@ Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
  Jacob Keller <jacob.e.keller@intel.com>,
  Andrew Lunn <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next 00/11] tools: ynl: prepare for wireguard
-Date: Thu,  4 Sep 2025 22:01:23 +0000
-Message-ID: <20250904-wg-ynl-prep@fiberby.net>
+Subject: [RFC net-next 12/14] netlink: specs: wireguard: alternative to
+ wireguard_params.h
+Date: Thu,  4 Sep 2025 22:02:46 +0000
+Message-ID: <20250904220255.1006675-12-ast@fiberby.net>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250904-wg-ynl-rfc@fiberby.net>
+References: <20250904-wg-ynl-rfc@fiberby.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -60,30 +63,184 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This series contains the last batch of YNL changes to support
-the wireguard YNL conversion.
+This is an alternative to the approach taken in patch 04,
 
-The next batch has been posted as an RFC series here:
-https://lore.kernel.org/netdev/20250904-wg-ynl-rfc@fiberby.net/
+Use magic constants in C as well, and thereby obfuscate
+their origin.
 
-Asbjørn Sloth Tønnesen (11):
-  tools: ynl-gen: allow overriding name-prefix for constants
-  tools: ynl-gen: generate nested array policies
-  tools: ynl-gen: add sub-type check
-  tools: ynl-gen: define count iterator in print_dump()
-  tools: ynl-gen: define nlattr *array in a block scope
-  tools: ynl-gen: don't validate nested array attribute types
-  tools: ynl-gen: rename TypeArrayNest to TypeIndexedArray
-  tools: ynl: move nest packing to a helper function
-  tools: ynl: encode indexed-array
-  tools: ynl: decode hex input
-  tools: ynl: add ipv4-or-v6 display hint
+If this is preferred then I will split and squash this
+patch into the previous commits, so that it's done like
+this in the original specification patch.
 
- Documentation/netlink/genetlink-legacy.yaml |  2 +-
- tools/net/ynl/pyynl/lib/ynl.py              | 36 +++++++++++++++---
- tools/net/ynl/pyynl/ynl_gen_c.py            | 42 ++++++++++++++-------
- 3 files changed, 59 insertions(+), 21 deletions(-)
+Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+---
+ Documentation/netlink/specs/wireguard.yaml | 36 +++-------------------
+ drivers/net/wireguard/netlink_gen.c        | 11 +++----
+ drivers/net/wireguard/netlink_gen.h        |  1 -
+ include/uapi/linux/wireguard_params.h      | 18 -----------
+ 4 files changed, 9 insertions(+), 57 deletions(-)
+ delete mode 100644 include/uapi/linux/wireguard_params.h
 
+diff --git a/Documentation/netlink/specs/wireguard.yaml b/Documentation/netlink/specs/wireguard.yaml
+index 37011c3f158b..bb44171d9ac5 100644
+--- a/Documentation/netlink/specs/wireguard.yaml
++++ b/Documentation/netlink/specs/wireguard.yaml
+@@ -21,34 +21,6 @@ definitions:
+     name: key-len
+     type: const
+     value: 32
+-  -
+-    name-prefix: --wg-
+-    name: inaddr-sz
+-    type: const
+-    doc: Equivalent of ``sizeof(struct in_addr)``.
+-    header: linux/wireguard_params.h
+-    value: 4
+-  -
+-    name-prefix: --wg-
+-    name: sockaddr-sz
+-    type: const
+-    doc: Equivalent of ``sizeof(struct sockaddr)``.
+-    header: linux/wireguard_params.h
+-    value: 16
+-  -
+-    name-prefix: --wg-
+-    name: timespec-sz
+-    type: const
+-    doc: Equivalent of ``sizeof(struct __kernel_timespec)``.
+-    header: linux/wireguard_params.h
+-    value: 16
+-  -
+-    name-prefix: --wg-
+-    name: ifnamlen
+-    type: const
+-    doc: Equivalent of ``IFNAMSIZ - 1``.
+-    header: linux/wireguard_params.h
+-    value: 15
+   -
+     name: --kernel-timespec
+     type: struct
+@@ -103,7 +75,7 @@ attribute-sets:
+         name: ifname
+         type: string
+         checks:
+-          max-len: --wg-ifnamlen
++          max-len: 15
+       -
+         name: private-key
+         type: binary
+@@ -179,7 +151,7 @@ attribute-sets:
+         doc: struct sockaddr_in or struct sockaddr_in6
+         type: binary
+         checks:
+-          min-len: --wg-sockaddr-sz
++          min-len: 16
+       -
+         name: persistent-keepalive-interval
+         type: u16
+@@ -189,7 +161,7 @@ attribute-sets:
+         type: binary
+         struct: --kernel-timespec
+         checks:
+-          exact-len: --wg-timespec-sz
++          exact-len: 16
+       -
+         name: rx-bytes
+         type: u64
+@@ -226,7 +198,7 @@ attribute-sets:
+         doc: struct in_addr or struct in6_add
+         display-hint: ipv4-or-v6
+         checks:
+-          min-len: --wg-inaddr-sz
++          min-len: 4
+       -
+         name: cidr-mask
+         type: u8
+diff --git a/drivers/net/wireguard/netlink_gen.c b/drivers/net/wireguard/netlink_gen.c
+index 75f5b4b297a9..f95fa133778f 100644
+--- a/drivers/net/wireguard/netlink_gen.c
++++ b/drivers/net/wireguard/netlink_gen.c
+@@ -9,13 +9,12 @@
+ #include "netlink_gen.h"
+ 
+ #include <uapi/linux/wireguard.h>
+-#include <linux/wireguard_params.h>
+ #include <linux/time_types.h>
+ 
+ /* Common nested types */
+ const struct nla_policy wireguard_wgallowedip_nl_policy[WGALLOWEDIP_A_FLAGS + 1] = {
+ 	[WGALLOWEDIP_A_FAMILY] = { .type = NLA_U16, },
+-	[WGALLOWEDIP_A_IPADDR] = NLA_POLICY_MIN_LEN(__WG_INADDR_SZ),
++	[WGALLOWEDIP_A_IPADDR] = NLA_POLICY_MIN_LEN(4),
+ 	[WGALLOWEDIP_A_CIDR_MASK] = { .type = NLA_U8, },
+ 	[WGALLOWEDIP_A_FLAGS] = NLA_POLICY_MASK(NLA_U32, 0x1),
+ };
+@@ -24,9 +23,9 @@ const struct nla_policy wireguard_wgpeer_nl_policy[WGPEER_A_PROTOCOL_VERSION + 1
+ 	[WGPEER_A_PUBLIC_KEY] = NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
+ 	[WGPEER_A_PRESHARED_KEY] = NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
+ 	[WGPEER_A_FLAGS] = NLA_POLICY_MASK(NLA_U32, 0x7),
+-	[WGPEER_A_ENDPOINT] = NLA_POLICY_MIN_LEN(__WG_SOCKADDR_SZ),
++	[WGPEER_A_ENDPOINT] = NLA_POLICY_MIN_LEN(16),
+ 	[WGPEER_A_PERSISTENT_KEEPALIVE_INTERVAL] = { .type = NLA_U16, },
+-	[WGPEER_A_LAST_HANDSHAKE_TIME] = NLA_POLICY_EXACT_LEN(__WG_TIMESPEC_SZ),
++	[WGPEER_A_LAST_HANDSHAKE_TIME] = NLA_POLICY_EXACT_LEN(16),
+ 	[WGPEER_A_RX_BYTES] = { .type = NLA_U64, },
+ 	[WGPEER_A_TX_BYTES] = { .type = NLA_U64, },
+ 	[WGPEER_A_ALLOWEDIPS] = NLA_POLICY_NESTED_ARRAY(wireguard_wgallowedip_nl_policy),
+@@ -36,7 +35,7 @@ const struct nla_policy wireguard_wgpeer_nl_policy[WGPEER_A_PROTOCOL_VERSION + 1
+ /* WG_CMD_GET_DEVICE - dump */
+ static const struct nla_policy wireguard_get_device_nl_policy[WGDEVICE_A_PEERS + 1] = {
+ 	[WGDEVICE_A_IFINDEX] = { .type = NLA_U32, },
+-	[WGDEVICE_A_IFNAME] = { .type = NLA_NUL_STRING, .len = __WG_IFNAMLEN, },
++	[WGDEVICE_A_IFNAME] = { .type = NLA_NUL_STRING, .len = 15, },
+ 	[WGDEVICE_A_PRIVATE_KEY] = NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
+ 	[WGDEVICE_A_PUBLIC_KEY] = NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
+ 	[WGDEVICE_A_FLAGS] = NLA_POLICY_MASK(NLA_U32, 0x1),
+@@ -48,7 +47,7 @@ static const struct nla_policy wireguard_get_device_nl_policy[WGDEVICE_A_PEERS +
+ /* WG_CMD_SET_DEVICE - do */
+ static const struct nla_policy wireguard_set_device_nl_policy[WGDEVICE_A_PEERS + 1] = {
+ 	[WGDEVICE_A_IFINDEX] = { .type = NLA_U32, },
+-	[WGDEVICE_A_IFNAME] = { .type = NLA_NUL_STRING, .len = __WG_IFNAMLEN, },
++	[WGDEVICE_A_IFNAME] = { .type = NLA_NUL_STRING, .len = 15, },
+ 	[WGDEVICE_A_PRIVATE_KEY] = NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
+ 	[WGDEVICE_A_PUBLIC_KEY] = NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
+ 	[WGDEVICE_A_FLAGS] = NLA_POLICY_MASK(NLA_U32, 0x1),
+diff --git a/drivers/net/wireguard/netlink_gen.h b/drivers/net/wireguard/netlink_gen.h
+index a067ab0d61b6..e635b1f5f0df 100644
+--- a/drivers/net/wireguard/netlink_gen.h
++++ b/drivers/net/wireguard/netlink_gen.h
+@@ -10,7 +10,6 @@
+ #include <net/genetlink.h>
+ 
+ #include <uapi/linux/wireguard.h>
+-#include <linux/wireguard_params.h>
+ #include <linux/time_types.h>
+ 
+ /* Common nested types */
+diff --git a/include/uapi/linux/wireguard_params.h b/include/uapi/linux/wireguard_params.h
+deleted file mode 100644
+index c218e4b8042f..000000000000
+--- a/include/uapi/linux/wireguard_params.h
++++ /dev/null
+@@ -1,18 +0,0 @@
+-/* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-3-Clause) */
+-
+-#ifndef _UAPI_LINUX_WIREGUARD_PARAMS_H
+-#define _UAPI_LINUX_WIREGUARD_PARAMS_H
+-
+-#include <linux/time_types.h>
+-#include <linux/if.h>
+-#include <linux/in.h>
+-
+-/* These definitions are currently needed for definitions which can't
+- * be expressed directly in Documentation/netlink/specs/wireguard.yaml
+- */
+-#define __WG_INADDR_SZ (sizeof(struct in_addr))
+-#define __WG_SOCKADDR_SZ (sizeof(struct sockaddr))
+-#define __WG_TIMESPEC_SZ (sizeof(struct __kernel_timespec))
+-#define __WG_IFNAMLEN (IFNAMSIZ - 1)
+-
+-#endif /* _UAPI_LINUX_WIREGUARD_PARAMS_H */
 -- 
 2.51.0
 
