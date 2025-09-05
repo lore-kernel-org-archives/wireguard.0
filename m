@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C9EACF2561
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 22:44:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F312ACF2562
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 22:44:38 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5803a0ab;
-	Tue, 18 Nov 2025 17:26:16 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3b0798dd;
+	Tue, 18 Nov 2025 17:26:19 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ebd66e84
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4d9692a2
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 4 Sep 2025 22:03:25 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Fri, 5 Sep 2025 15:34:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
- s=202008; t=1757023399;
- bh=CO/vHSTBdTAo/V5DNoVuti5MiqLKMG3c1AdHyp2ogNE=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=pdA9hRopUBhN4otUAIQhIHglPx8eiFkCbH18XD6SfoVQ6M45e+XGflfRTxI9k+S/Q
- CplL+4deR/eoPTryNZoP/mFcwShrsLQQ5U80CEhgz+s8qSpnqW3q7q8RIUfZ+qhWcl
- QPs9BXFt55PMn2e4ssRLz1fVY3hjwRUYp7TwvygJuP+4OPgzn2gErh+YwK4ot3EXbD
- ZGhbmLLbNqUZerPP9i+kNByPvkaV+hkNsWp7Vaulo4a1yGxmle6rE3WnYTyILFLAPl
- 81o52p5ES2NUE87ZpyaGrrxnPMZM3ZDf3eyge88UUKdQAAkK0NI2m6LnSyYbuyK4EK
- e1jQyea+Sd9gQ==
+ s=202008; t=1757086477;
+ bh=wtTFmaz+N02R+TrK0pbOOzB15g2M3Ec/dVGk2zh3GXY=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+ b=CempboGfU5BbL6MvuQKGRxTq8ENz2ywbtLsQw+a5bYzwe9C35xnI3k5YCaHBxwGjn
+ Sl6s3hIRoVSzYWnBsWgXc9ZJVTVFnG0jhqmZpgfHqGkXzh6D6usbMe/GWYh4wO9hv5
+ CTG81e9yn3QpQ5HZDhmA2D1WxxdYguvLXgUJRNtLxLtMBvzy2Z6arqa1rgdAfdGm5l
+ qSFYqUl6IqMCiF+6t4r61zioeI1EjaCvWGP37SCPLK7I3q7nMOJCa2RK3WfoSqCns5
+ 9fhR/ceX5G3OnsdGCZGWXAsI2UrsZa05wFw0gQf4F6oEOrVBMkWptZFw8+Rn9DdcbL
+ 2qEyYp8mCXUow==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id 1D3E360589;
- Thu,  4 Sep 2025 22:03:19 +0000 (UTC)
-Received: by x201s (Postfix, from userid 1000)
- id AD997202B05; Thu, 04 Sep 2025 22:02:58 +0000 (UTC)
-From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>
-Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
- Donald Hunter <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>,
- Jacob Keller <jacob.e.keller@intel.com>,
+ by mail1.fiberby.net (Postfix) with ESMTPSA id 2E4A960078;
+ Fri,  5 Sep 2025 15:34:36 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+ by x201s (Postfix) with ESMTP id 1923B200402;
+ Fri, 05 Sep 2025 15:34:33 +0000 (UTC)
+Message-ID: <ab1ee9d4-8cf6-46ae-8c97-56d9a27fbb32@fiberby.net>
+Date: Fri, 5 Sep 2025 15:34:32 +0000
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next 09/11] tools: ynl: encode indexed-array
+To: Donald Hunter <donald.hunter@gmail.com>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Simon Horman <horms@kernel.org>, Jacob Keller <jacob.e.keller@intel.com>,
  Andrew Lunn <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [RFC net-next 12/14] netlink: specs: wireguard: alternative to
- wireguard_params.h
-Date: Thu,  4 Sep 2025 22:02:46 +0000
-Message-ID: <20250904220255.1006675-12-ast@fiberby.net>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250904-wg-ynl-rfc@fiberby.net>
-References: <20250904-wg-ynl-rfc@fiberby.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+References: <20250904-wg-ynl-prep@fiberby.net>
+ <20250904220156.1006541-9-ast@fiberby.net> <m2ldmtxjh6.fsf@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Asbj=C3=B8rn_Sloth_T=C3=B8nnesen?= <ast@fiberby.net>
+In-Reply-To: <m2ldmtxjh6.fsf@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Tue, 18 Nov 2025 17:23:15 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -63,184 +63,72 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is an alternative to the approach taken in patch 04,
+Hi Donald,
 
-Use magic constants in C as well, and thereby obfuscate
-their origin.
+Thanks for the reviews.
 
-If this is preferred then I will split and squash this
-patch into the previous commits, so that it's done like
-this in the original specification patch.
+On 9/5/25 10:49 AM, Donald Hunter wrote:
+> Asbjørn Sloth Tønnesen <ast@fiberby.net> writes:
+> 
+>> This patch adds support for encoding indexed-array
+>> attributes with sub-type nest in pyynl.
+>>
+>> Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+>> ---
+>>   tools/net/ynl/pyynl/lib/ynl.py | 17 +++++++++++++++++
+>>   1 file changed, 17 insertions(+)
+>>
+>> diff --git a/tools/net/ynl/pyynl/lib/ynl.py b/tools/net/ynl/pyynl/lib/ynl.py
+>> index 4928b41c636a..a37294a751da 100644
+>> --- a/tools/net/ynl/pyynl/lib/ynl.py
+>> +++ b/tools/net/ynl/pyynl/lib/ynl.py
+>> @@ -564,6 +564,11 @@ class YnlFamily(SpecFamily):
+>>               nl_type |= Netlink.NLA_F_NESTED
+>>               sub_space = attr['nested-attributes']
+>>               attr_payload = self._add_nest_attrs(value, sub_space, search_attrs)
+>> +        elif attr['type'] == 'indexed-array' and attr['sub-type'] == 'nest':
+>> +            nl_type |= Netlink.NLA_F_NESTED
+>> +            sub_space = attr['nested-attributes']
+>> +            attr_payload = self._encode_indexed_array(value, sub_space,
+>> +                                                      search_attrs)
+>>           elif attr["type"] == 'flag':
+>>               if not value:
+>>                   # If value is absent or false then skip attribute creation.
+>> @@ -617,6 +622,9 @@ class YnlFamily(SpecFamily):
+>>           else:
+>>               raise Exception(f'Unknown type at {space} {name} {value} {attr["type"]}')
+>>   
+>> +        return self._add_attr_raw(nl_type, attr_payload)
+>> +
+>> +    def _add_attr_raw(self, nl_type, attr_payload):
+>>           pad = b'\x00' * ((4 - len(attr_payload) % 4) % 4)
+>>           return struct.pack('HH', len(attr_payload) + 4, nl_type) + attr_payload + pad
+>>   
+>> @@ -628,6 +636,15 @@ class YnlFamily(SpecFamily):
+>>                                              sub_attrs)
+>>           return attr_payload
+>>   
+>> +    def _encode_indexed_array(self, vals, sub_space, search_attrs):
+>> +        attr_payload = b''
+>> +        nested_flag = Netlink.NLA_F_NESTED
+> 
+> This line is not doing anything, right?
 
-Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
----
- Documentation/netlink/specs/wireguard.yaml | 36 +++-------------------
- drivers/net/wireguard/netlink_gen.c        | 11 +++----
- drivers/net/wireguard/netlink_gen.h        |  1 -
- include/uapi/linux/wireguard_params.h      | 18 -----------
- 4 files changed, 9 insertions(+), 57 deletions(-)
- delete mode 100644 include/uapi/linux/wireguard_params.h
+Right, that line shouldn't be there, it is a remain of an early version, where
+I didn't add the indexes, as NLA_NESTED_ARRAY is actually an unindexed-array.
 
-diff --git a/Documentation/netlink/specs/wireguard.yaml b/Documentation/netlink/specs/wireguard.yaml
-index 37011c3f158b..bb44171d9ac5 100644
---- a/Documentation/netlink/specs/wireguard.yaml
-+++ b/Documentation/netlink/specs/wireguard.yaml
-@@ -21,34 +21,6 @@ definitions:
-     name: key-len
-     type: const
-     value: 32
--  -
--    name-prefix: --wg-
--    name: inaddr-sz
--    type: const
--    doc: Equivalent of ``sizeof(struct in_addr)``.
--    header: linux/wireguard_params.h
--    value: 4
--  -
--    name-prefix: --wg-
--    name: sockaddr-sz
--    type: const
--    doc: Equivalent of ``sizeof(struct sockaddr)``.
--    header: linux/wireguard_params.h
--    value: 16
--  -
--    name-prefix: --wg-
--    name: timespec-sz
--    type: const
--    doc: Equivalent of ``sizeof(struct __kernel_timespec)``.
--    header: linux/wireguard_params.h
--    value: 16
--  -
--    name-prefix: --wg-
--    name: ifnamlen
--    type: const
--    doc: Equivalent of ``IFNAMSIZ - 1``.
--    header: linux/wireguard_params.h
--    value: 15
-   -
-     name: --kernel-timespec
-     type: struct
-@@ -103,7 +75,7 @@ attribute-sets:
-         name: ifname
-         type: string
-         checks:
--          max-len: --wg-ifnamlen
-+          max-len: 15
-       -
-         name: private-key
-         type: binary
-@@ -179,7 +151,7 @@ attribute-sets:
-         doc: struct sockaddr_in or struct sockaddr_in6
-         type: binary
-         checks:
--          min-len: --wg-sockaddr-sz
-+          min-len: 16
-       -
-         name: persistent-keepalive-interval
-         type: u16
-@@ -189,7 +161,7 @@ attribute-sets:
-         type: binary
-         struct: --kernel-timespec
-         checks:
--          exact-len: --wg-timespec-sz
-+          exact-len: 16
-       -
-         name: rx-bytes
-         type: u64
-@@ -226,7 +198,7 @@ attribute-sets:
-         doc: struct in_addr or struct in6_add
-         display-hint: ipv4-or-v6
-         checks:
--          min-len: --wg-inaddr-sz
-+          min-len: 4
-       -
-         name: cidr-mask
-         type: u8
-diff --git a/drivers/net/wireguard/netlink_gen.c b/drivers/net/wireguard/netlink_gen.c
-index 75f5b4b297a9..f95fa133778f 100644
---- a/drivers/net/wireguard/netlink_gen.c
-+++ b/drivers/net/wireguard/netlink_gen.c
-@@ -9,13 +9,12 @@
- #include "netlink_gen.h"
- 
- #include <uapi/linux/wireguard.h>
--#include <linux/wireguard_params.h>
- #include <linux/time_types.h>
- 
- /* Common nested types */
- const struct nla_policy wireguard_wgallowedip_nl_policy[WGALLOWEDIP_A_FLAGS + 1] = {
- 	[WGALLOWEDIP_A_FAMILY] = { .type = NLA_U16, },
--	[WGALLOWEDIP_A_IPADDR] = NLA_POLICY_MIN_LEN(__WG_INADDR_SZ),
-+	[WGALLOWEDIP_A_IPADDR] = NLA_POLICY_MIN_LEN(4),
- 	[WGALLOWEDIP_A_CIDR_MASK] = { .type = NLA_U8, },
- 	[WGALLOWEDIP_A_FLAGS] = NLA_POLICY_MASK(NLA_U32, 0x1),
- };
-@@ -24,9 +23,9 @@ const struct nla_policy wireguard_wgpeer_nl_policy[WGPEER_A_PROTOCOL_VERSION + 1
- 	[WGPEER_A_PUBLIC_KEY] = NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
- 	[WGPEER_A_PRESHARED_KEY] = NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
- 	[WGPEER_A_FLAGS] = NLA_POLICY_MASK(NLA_U32, 0x7),
--	[WGPEER_A_ENDPOINT] = NLA_POLICY_MIN_LEN(__WG_SOCKADDR_SZ),
-+	[WGPEER_A_ENDPOINT] = NLA_POLICY_MIN_LEN(16),
- 	[WGPEER_A_PERSISTENT_KEEPALIVE_INTERVAL] = { .type = NLA_U16, },
--	[WGPEER_A_LAST_HANDSHAKE_TIME] = NLA_POLICY_EXACT_LEN(__WG_TIMESPEC_SZ),
-+	[WGPEER_A_LAST_HANDSHAKE_TIME] = NLA_POLICY_EXACT_LEN(16),
- 	[WGPEER_A_RX_BYTES] = { .type = NLA_U64, },
- 	[WGPEER_A_TX_BYTES] = { .type = NLA_U64, },
- 	[WGPEER_A_ALLOWEDIPS] = NLA_POLICY_NESTED_ARRAY(wireguard_wgallowedip_nl_policy),
-@@ -36,7 +35,7 @@ const struct nla_policy wireguard_wgpeer_nl_policy[WGPEER_A_PROTOCOL_VERSION + 1
- /* WG_CMD_GET_DEVICE - dump */
- static const struct nla_policy wireguard_get_device_nl_policy[WGDEVICE_A_PEERS + 1] = {
- 	[WGDEVICE_A_IFINDEX] = { .type = NLA_U32, },
--	[WGDEVICE_A_IFNAME] = { .type = NLA_NUL_STRING, .len = __WG_IFNAMLEN, },
-+	[WGDEVICE_A_IFNAME] = { .type = NLA_NUL_STRING, .len = 15, },
- 	[WGDEVICE_A_PRIVATE_KEY] = NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
- 	[WGDEVICE_A_PUBLIC_KEY] = NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
- 	[WGDEVICE_A_FLAGS] = NLA_POLICY_MASK(NLA_U32, 0x1),
-@@ -48,7 +47,7 @@ static const struct nla_policy wireguard_get_device_nl_policy[WGDEVICE_A_PEERS +
- /* WG_CMD_SET_DEVICE - do */
- static const struct nla_policy wireguard_set_device_nl_policy[WGDEVICE_A_PEERS + 1] = {
- 	[WGDEVICE_A_IFINDEX] = { .type = NLA_U32, },
--	[WGDEVICE_A_IFNAME] = { .type = NLA_NUL_STRING, .len = __WG_IFNAMLEN, },
-+	[WGDEVICE_A_IFNAME] = { .type = NLA_NUL_STRING, .len = 15, },
- 	[WGDEVICE_A_PRIVATE_KEY] = NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
- 	[WGDEVICE_A_PUBLIC_KEY] = NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
- 	[WGDEVICE_A_FLAGS] = NLA_POLICY_MASK(NLA_U32, 0x1),
-diff --git a/drivers/net/wireguard/netlink_gen.h b/drivers/net/wireguard/netlink_gen.h
-index a067ab0d61b6..e635b1f5f0df 100644
---- a/drivers/net/wireguard/netlink_gen.h
-+++ b/drivers/net/wireguard/netlink_gen.h
-@@ -10,7 +10,6 @@
- #include <net/genetlink.h>
- 
- #include <uapi/linux/wireguard.h>
--#include <linux/wireguard_params.h>
- #include <linux/time_types.h>
- 
- /* Common nested types */
-diff --git a/include/uapi/linux/wireguard_params.h b/include/uapi/linux/wireguard_params.h
-deleted file mode 100644
-index c218e4b8042f..000000000000
---- a/include/uapi/linux/wireguard_params.h
-+++ /dev/null
-@@ -1,18 +0,0 @@
--/* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-3-Clause) */
--
--#ifndef _UAPI_LINUX_WIREGUARD_PARAMS_H
--#define _UAPI_LINUX_WIREGUARD_PARAMS_H
--
--#include <linux/time_types.h>
--#include <linux/if.h>
--#include <linux/in.h>
--
--/* These definitions are currently needed for definitions which can't
-- * be expressed directly in Documentation/netlink/specs/wireguard.yaml
-- */
--#define __WG_INADDR_SZ (sizeof(struct in_addr))
--#define __WG_SOCKADDR_SZ (sizeof(struct sockaddr))
--#define __WG_TIMESPEC_SZ (sizeof(struct __kernel_timespec))
--#define __WG_IFNAMLEN (IFNAMSIZ - 1)
--
--#endif /* _UAPI_LINUX_WIREGUARD_PARAMS_H */
+The wireguard kernel code only sends zero types, and it doesn't care that user-
+space sends an indexed array back, eg. when setting multiple allowed ips.
+
+>> +        for i, val in enumerate(vals):
+>> +            idx = i | Netlink.NLA_F_NESTED
+>> +            val_payload = self._add_nest_attrs(val, sub_space, search_attrs)
+>> +            attr_payload += self._add_attr_raw(idx, val_payload)
+>> +        return attr_payload
+>> +
+>>       def _get_enum_or_unknown(self, enum, raw):
+>>           try:
+>>               name = enum.entries_by_val[raw].name
+
 -- 
-2.51.0
-
+pw-bot: cr
