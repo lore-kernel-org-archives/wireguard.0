@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C1E4CF34AC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ADA4CF34A9
 	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 12:56:27 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 443abdd5;
-	Tue, 18 Nov 2025 17:32:02 +0000 (UTC)
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com
- [2a00:1450:4864:20::330])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3fce2b87
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 25c17af5;
+	Tue, 18 Nov 2025 17:32:03 +0000 (UTC)
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com
+ [2a00:1450:4864:20::435])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f0198aae
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 5 Sep 2025 10:54:03 +0000 (UTC)
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-45dd5e24d16so7654995e9.3
- for <wireguard@lists.zx2c4.com>; Fri, 05 Sep 2025 03:54:03 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Fri, 5 Sep 2025 10:54:05 +0000 (UTC)
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3d118d8fa91so552135f8f.1
+ for <wireguard@lists.zx2c4.com>; Fri, 05 Sep 2025 03:54:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1757069643; x=1757674443; darn=lists.zx2c4.com;
+ d=gmail.com; s=20230601; t=1757069645; x=1757674445; darn=lists.zx2c4.com;
  h=content-transfer-encoding:mime-version:user-agent:references
  :message-id:date:in-reply-to:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to;
- bh=nWqeEYLMHIq8h3v6YSLMC28H8qUubeFkyVGEl+EW9eI=;
- b=jdiGoL84A2Poz+aAjGZ7giZwNNTMohv3WEIxXoWhyZkYzmvennwVuKb8W6uRoUmHEQ
- J1C3FsnaNpRzqgcz1uBNNaqL1GIKJLV0Dm6fi4tDlT7zWU52IXapY2zqxP8lH715NY+d
- rUA7TTacE9s+qFNMNnpO/Twj6gwiNQXdxElghFsq4BjoJJEnRp09GA8RENOO4QGmMv3B
- mKESPsaCjATe8MCJUDNCZDyLkJloa8tBfVAolrh2lVHFuK2ZitY8ypOBm9n27crxF0+Y
- 0dp96E7mxr25HH2UjOczuZJxVJyOHl08TG+Mdnf/7tggKP77Tbw3ENUCogpckhjKfx1G
- EmFQ==
+ bh=kKIEovFREh+RMQK1agLNyNMEj8+i63lgwl8odv/dpPw=;
+ b=kKa2UG11H7eCcRQRtMTJzL3TkLW/lrsKug4JH0BWCJl8JnepoOJ9ZFq+MF2Uz7uFpf
+ YGR9qiRZJ5s9FgAZRU9XNq1TkQDtO+BG3DaAk636knU+wvxMaJ98+MDdn+meUWMGlqg4
+ ZDyBZXb5uFNoLtIndOXRh3X8vKEj+nH4u0meptxfMjS0B+91L1X0n6BND5dSluW3YDPe
+ tezm4tGw+D7WdOfJ37xPR/HZQ2fKOquaNsgtK18WU7f/P/ItLCtRayrikSG4B1MJ1Gx2
+ rhE7x9erd9ReouFwYiFNTXoarOpRN1kYMowEK8r8ZDwYcSNXlEC3YmYKqFA9j5/Fd9eI
+ Mwpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757069643; x=1757674443;
+ d=1e100.net; s=20230601; t=1757069645; x=1757674445;
  h=content-transfer-encoding:mime-version:user-agent:references
  :message-id:date:in-reply-to:subject:cc:to:from:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=nWqeEYLMHIq8h3v6YSLMC28H8qUubeFkyVGEl+EW9eI=;
- b=mZnEveJv3YHE8KXaNJ6g3oQv2FHk5EJ4/GaVGULGCawx+5H6DOaIEjUx9HMKXsFRDr
- ZbD1g2gOPLsWU4TKBps3OkRXc9DXGZuxg9fFaP0xjknHBX6DuBiWwAOzddD590AcrR7M
- AtiFe6fmCN83GWe5Ex5NEbcZ0AGvEcBxfBJwzZTdwnc1eKj37sEXRCuNA4hBlUGLeabJ
- w43hO2rYKZk6TKEhfdEgbCZlj+Acp0dzLx0/WSzShelUA/HBAckaMjLPu1sDLqP2g0K3
- OjcNzWjEekhTdx83Ul7D2iij+AERUXzGkFEjmtEOKV15vhxvROJ3h62uzB6gVNorUASA
- Unag==
+ bh=kKIEovFREh+RMQK1agLNyNMEj8+i63lgwl8odv/dpPw=;
+ b=eLL94MJMYlzE42zHBX7j08hLuOoRfDw4SPeSYynBavtYkXPu4Q/OWQFH5nuQxP9iAz
+ 6LxQ/8vp6aOIbzhMANohGHhWLG9z2hvTJN1uMVo/aW4u2DJDTuYyj4niK5fHeVcEFYEF
+ 5wqH+Tx/84VITpqEBlHV6KrTveKU/lLZ/HFgKpdWJIhGZ8xgP0wYyntFCyfq2GP5YZoo
+ qlmBcCjdajmRUfvjoBKn1coox7t2Hpm1Iv5bB8a9zVdFHap1QGUdte8DUPYz0YiX66Rh
+ 1jgGdL5F3rr6d6cRoMGeYV5kJDxTW1PVvmcM4pUnNvCyOBGmAhGYPj45IR90qqsO4qZN
+ HLpg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUBEkwHiV7JfivtjjeepYvBKVz49/qXmlO+/NNKLeKdcx4oMRlbt9sAduD89YtFnfhlgVkZurD0Y9c=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YxN9glMbUwGmGWopVOMVwcn55tPAf7af7VJArEf7V7R7v+WAboJ
- C686wewigKYsrqRyD7BKyFUyqLnygKU8R9O6rwFt8Qzg++f/5HN/AhnR
-X-Gm-Gg: ASbGncvLXpxs0r3YmqkNhYYvnB8h/PJfgt6cG/he6khX73a5V7ZjkIOF4OoSRJNMhs3
- wU0KlbESbDzEA28iAYQ6/3oY7eCBExPe9MI6a27DAVFSpmE7rKN9srW7k9+8kNneS943l88PmuJ
- bbriEmSPsrpO1iZRC8wD6ChQd6x5JNO75Vn7F67ieAKkd1w4FwDJVviBrOt2scuC5W3TuJ+6fDc
- 7mKgt2UBy6Guy7UzCS0mehdrGgyFakh8GVp36wPWXNRe71ieYLS+J1r1YDoLdA9uwIcmhTFplKk
- tjN0gH3rdH9qU+qcmVH7ahioEaDMrjKFmHuIclVDhfe0tlL0r/D4Xa6SlqxCSKTuM7DENW9fxf7
- 8tmMevnkEv9MRvTRUvko1ZtyMHkj9kuz9F+RPI7AFbPRuCg==
-X-Google-Smtp-Source: AGHT+IFre4je9aX0hE0DtE7GN22/+c6dGLc5GGdRk67qwV6Xk/fcd1S/XONZz/Y4orXr60TEmO3k1w==
-X-Received: by 2002:a05:600c:4692:b0:45b:5f3d:aa3d with SMTP id
- 5b1f17b1804b1-45b85570b4cmr169521185e9.21.1757069643241; 
- Fri, 05 Sep 2025 03:54:03 -0700 (PDT)
+ AJvYcCUH8VTePFD7vAeBPImnt1UboOF92dx4kyZi1cGcS272HH8GXXYzHlsEsHtGb/P1l824jL1/mkU5yfA=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YyuuBdS2Icu1KrchSFvLdRIITidPZdOSQLcq333bsgCRZUeElzN
+ Jj3v/JfMaxHenPGMoFYa5GuCyeYh06G6q+HRaPDV4kL1FEBO5rZpiLKH
+X-Gm-Gg: ASbGncvCPey2Dp7UrRe4+Vsmpgx++Uc9iWlYtNi3NJcXILYSZLhJun+2q9BI8qnkVPl
+ /kNiFBAQ2moW3kCQ4+zMCSORbVsJgSW7loOqnHorhQx70cfCH3PZSVo++Qbu+KmkRBn83tPUV8A
+ 7TqFl0aZlO0mJ12+HPichUo4V54EZu4RGdiTznvGRCzOYxk60X0TYDjI8aFJJnV4BHqSgYqnmb2
+ lvhOgFZo/tUSTEuNU9TaRaDXWEK8N5Ov6d8PWmRU+28mM4Sh0liOvM7Uccno5HruekeY5DnKo/f
+ KD5nf4Cs0JlHLG7lOk7bV0DmDgJxhM8uXJbqrLHfMVnua2QufWpcZQfWN/5PGte+dKc4KBERnUQ
+ wvsft66wi5egRIy2sKtdYKW8ENlI8doTTHqJjnQElWyzSvg==
+X-Google-Smtp-Source: AGHT+IHxGOCnDwrLnrDrI91qnSsK6syMZ9DOdu1bcAn2K/11lIA4Xxelsfj+qwKYrbNR8DYfn66WCw==
+X-Received: by 2002:a05:6000:26c1:b0:3c2:502:d944 with SMTP id
+ ffacd0b85a97d-3e2faa20867mr2786820f8f.0.1757069644718; 
+ Fri, 05 Sep 2025 03:54:04 -0700 (PDT)
 Received: from imac ([2a02:8010:60a0:0:8157:959d:adbf:6d52])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b8f2d3c88sm192332845e9.19.2025.09.05.03.54.02
+ ffacd0b85a97d-3d21a32dbc5sm28607491f8f.11.2025.09.05.03.54.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Sep 2025 03:54:02 -0700 (PDT)
+ Fri, 05 Sep 2025 03:54:04 -0700 (PDT)
 From: Donald Hunter <donald.hunter@gmail.com>
 To: =?utf-8?Q?Asbj=C3=B8rn?= Sloth =?utf-8?Q?T=C3=B8nnesen?= <ast@fiberby.net>
 Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,  "David S. Miller"
@@ -68,13 +68,13 @@ Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,  "David S. Miller"
  Horman <horms@kernel.org>,  Jacob Keller <jacob.e.keller@intel.com>,
  Andrew Lunn <andrew+netdev@lunn.ch>,  wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org,  linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next 07/11] tools: ynl-gen: rename TypeArrayNest to
- TypeIndexedArray
-In-Reply-To: <20250904220156.1006541-7-ast@fiberby.net>
-Date: Fri, 05 Sep 2025 11:44:48 +0100
-Message-ID: <m2tt1hxjof.fsf@gmail.com>
+Subject: Re: [PATCH net-next 08/11] tools: ynl: move nest packing to a
+ helper function
+In-Reply-To: <20250904220156.1006541-8-ast@fiberby.net>
+Date: Fri, 05 Sep 2025 11:45:23 +0100
+Message-ID: <m2plc5xjng.fsf@gmail.com>
 References: <20250904-wg-ynl-prep@fiberby.net>
- <20250904220156.1006541-7-ast@fiberby.net>
+ <20250904220156.1006541-8-ast@fiberby.net>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -96,11 +96,10 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 Asbj=C3=B8rn Sloth T=C3=B8nnesen <ast@fiberby.net> writes:
 
-> As TypeArrayNest can now be used with many other sub-types
-> than nest, then rename it to TypeIndexedArray, to reduce
-> confusion.
+> This patch moves nest packing into a helper function,
+> that can also be used for packing indexed arrays.
 >
-> This is a trivial patch with no behavioural changes intended.
+> No behavioural changes intended.
 >
 > Signed-off-by: Asbj=C3=B8rn Sloth T=C3=B8nnesen <ast@fiberby.net>
 
