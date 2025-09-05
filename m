@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ADA4CF34A9
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 12:56:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04EC3CF34AD
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 12:56:28 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 25c17af5;
-	Tue, 18 Nov 2025 17:32:03 +0000 (UTC)
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com
- [2a00:1450:4864:20::435])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f0198aae
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 441b04c7;
+	Tue, 18 Nov 2025 17:32:05 +0000 (UTC)
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com
+ [2a00:1450:4864:20::334])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 960a150f
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 5 Sep 2025 10:54:05 +0000 (UTC)
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3d118d8fa91so552135f8f.1
- for <wireguard@lists.zx2c4.com>; Fri, 05 Sep 2025 03:54:05 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Fri, 5 Sep 2025 10:54:06 +0000 (UTC)
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-45b8b25296fso12733065e9.2
+ for <wireguard@lists.zx2c4.com>; Fri, 05 Sep 2025 03:54:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1757069645; x=1757674445; darn=lists.zx2c4.com;
+ d=gmail.com; s=20230601; t=1757069646; x=1757674446; darn=lists.zx2c4.com;
  h=content-transfer-encoding:mime-version:user-agent:references
  :message-id:date:in-reply-to:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to;
- bh=kKIEovFREh+RMQK1agLNyNMEj8+i63lgwl8odv/dpPw=;
- b=kKa2UG11H7eCcRQRtMTJzL3TkLW/lrsKug4JH0BWCJl8JnepoOJ9ZFq+MF2Uz7uFpf
- YGR9qiRZJ5s9FgAZRU9XNq1TkQDtO+BG3DaAk636knU+wvxMaJ98+MDdn+meUWMGlqg4
- ZDyBZXb5uFNoLtIndOXRh3X8vKEj+nH4u0meptxfMjS0B+91L1X0n6BND5dSluW3YDPe
- tezm4tGw+D7WdOfJ37xPR/HZQ2fKOquaNsgtK18WU7f/P/ItLCtRayrikSG4B1MJ1Gx2
- rhE7x9erd9ReouFwYiFNTXoarOpRN1kYMowEK8r8ZDwYcSNXlEC3YmYKqFA9j5/Fd9eI
- Mwpg==
+ bh=ae2pZGeOxUWNnhVB6ytgG1+LzEott/yDmnkqH6AHVYU=;
+ b=B7hotrBpWfak7+bLy1ghkYRUD2ACZsGRYnp6IZnooaoC4LIlZnZfxJ7X73Opthw593
+ HtAc9H8DqhfNYKB99zDd9RXeRrUvnPY8H45ft4RTj/YUIBHjb0JD1vCXrtXNfdcLxJPV
+ VG9t2q32h6wWQDNfDSVE93TXPEocjQ0Ry0O314hFGxWIhbHD0PN0rsaTSpHknk+K2vZ9
+ iVuBR7YBU9zLfw8Was9CCyLevA5Kk01WDHli1F687NcP9/+cHNjKjZ0oUwQ3wR8CqqO1
+ 9eRgKowQqHiMpZmFrC5/IT111R1zspDAHx1nRz5xqTxCvNA7ptgcnwcDfT2TmGsbFaAH
+ aVPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757069645; x=1757674445;
+ d=1e100.net; s=20230601; t=1757069646; x=1757674446;
  h=content-transfer-encoding:mime-version:user-agent:references
  :message-id:date:in-reply-to:subject:cc:to:from:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=kKIEovFREh+RMQK1agLNyNMEj8+i63lgwl8odv/dpPw=;
- b=eLL94MJMYlzE42zHBX7j08hLuOoRfDw4SPeSYynBavtYkXPu4Q/OWQFH5nuQxP9iAz
- 6LxQ/8vp6aOIbzhMANohGHhWLG9z2hvTJN1uMVo/aW4u2DJDTuYyj4niK5fHeVcEFYEF
- 5wqH+Tx/84VITpqEBlHV6KrTveKU/lLZ/HFgKpdWJIhGZ8xgP0wYyntFCyfq2GP5YZoo
- qlmBcCjdajmRUfvjoBKn1coox7t2Hpm1Iv5bB8a9zVdFHap1QGUdte8DUPYz0YiX66Rh
- 1jgGdL5F3rr6d6cRoMGeYV5kJDxTW1PVvmcM4pUnNvCyOBGmAhGYPj45IR90qqsO4qZN
- HLpg==
+ bh=ae2pZGeOxUWNnhVB6ytgG1+LzEott/yDmnkqH6AHVYU=;
+ b=KPb1nO3cdb8kQ1/r9M5jQkdv6JuWhekC8dinkdT6TLFKV1NwtZWAG0HoNWI8ViMzsU
+ e+PPfq+IbPlx5jiGxNPm78nPndFVMrXw7YphRtvnIJ/y0+Q9SQcn8gokiGmCpMV7BW+7
+ owvbAgXAm4yhqm+0xBnhR+FETp2ftDcGgD21/36hu3bbq9FRvHXd0nbOg8VyOq/KBcWW
+ Y1ueYMiDH6S5uTlfH/+6E8lyBsQPfxV3tGFDO8bU7wGMF8EaExQRijRRxgPCcfOQRhl2
+ Pt5YDLQR5hVyeq5Ico8oeHcdyD3/yOupEJrK7/6PczCO7ZnYJRhbyf9iskO1WRpg5CU7
+ ESCg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUH8VTePFD7vAeBPImnt1UboOF92dx4kyZi1cGcS272HH8GXXYzHlsEsHtGb/P1l824jL1/mkU5yfA=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YyuuBdS2Icu1KrchSFvLdRIITidPZdOSQLcq333bsgCRZUeElzN
- Jj3v/JfMaxHenPGMoFYa5GuCyeYh06G6q+HRaPDV4kL1FEBO5rZpiLKH
-X-Gm-Gg: ASbGncvCPey2Dp7UrRe4+Vsmpgx++Uc9iWlYtNi3NJcXILYSZLhJun+2q9BI8qnkVPl
- /kNiFBAQ2moW3kCQ4+zMCSORbVsJgSW7loOqnHorhQx70cfCH3PZSVo++Qbu+KmkRBn83tPUV8A
- 7TqFl0aZlO0mJ12+HPichUo4V54EZu4RGdiTznvGRCzOYxk60X0TYDjI8aFJJnV4BHqSgYqnmb2
- lvhOgFZo/tUSTEuNU9TaRaDXWEK8N5Ov6d8PWmRU+28mM4Sh0liOvM7Uccno5HruekeY5DnKo/f
- KD5nf4Cs0JlHLG7lOk7bV0DmDgJxhM8uXJbqrLHfMVnua2QufWpcZQfWN/5PGte+dKc4KBERnUQ
- wvsft66wi5egRIy2sKtdYKW8ENlI8doTTHqJjnQElWyzSvg==
-X-Google-Smtp-Source: AGHT+IHxGOCnDwrLnrDrI91qnSsK6syMZ9DOdu1bcAn2K/11lIA4Xxelsfj+qwKYrbNR8DYfn66WCw==
-X-Received: by 2002:a05:6000:26c1:b0:3c2:502:d944 with SMTP id
- ffacd0b85a97d-3e2faa20867mr2786820f8f.0.1757069644718; 
- Fri, 05 Sep 2025 03:54:04 -0700 (PDT)
+ AJvYcCU13pmlThpyvp5qi6z60tlGQ0zlhmih4zmYMLDhmAIbdQPAQt0Rv3/qhIK91nD8AU9tP+IZXr22fXA=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YwED5lMYMMzGocakvAfSbsa4yDfnvNXCqcCmBwVJHeIKc3cFy30
+ gaNpa7R8ayEguYiXl+GkK9btS4HO5MucHpffMVZhvjyYnMzPVSwkdUd/
+X-Gm-Gg: ASbGncsWfJ34pZlXeciYhWgLg83rjulIrvCULcNuP/fjAmoQnGLe/lB2XqsllwewW7N
+ Z0QJQ3F1Ejh8VGt2btK4Nk3kLDGseLZbpOO20+7vVvzA8oy2QX9Z7X5KhpMLZQvIAEcx8hCOqRm
+ c00oqPwJywnoGiDfQgBwHH50amrFixdS21znqYMoHuwgLJdfre0fqr8LNnjNVOeJlBO5KGwtcUw
+ tnni6QCtY38As9K2w0kqFTylF629rcxglZKJMsUic3wkY7LnYyPctAcnUa6KndnsGraDP0IlSVi
+ d718GhYfhIi9pg63DqBZ2ZSwd7YatEIQ3usrSAJELZ32jYaxHRfckwMb0F71ygy9tllBRRFyF4k
+ agVMr6tQi+bsOejK30doEN9ivl4FtbD1T//w=
+X-Google-Smtp-Source: AGHT+IErKZNogTKW8vD9MH4j6VFAS9sssyaSu6xJlnSctBMhQvR4qqCnPzMGjDlbH+jJnp/0mbVdaw==
+X-Received: by 2002:a05:600c:c0c3:20b0:45b:7699:f96c with SMTP id
+ 5b1f17b1804b1-45b855fba81mr126256125e9.21.1757069646200; 
+ Fri, 05 Sep 2025 03:54:06 -0700 (PDT)
 Received: from imac ([2a02:8010:60a0:0:8157:959d:adbf:6d52])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3d21a32dbc5sm28607491f8f.11.2025.09.05.03.54.03
+ ffacd0b85a97d-3cf276d5e5fsm31345266f8f.27.2025.09.05.03.54.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Sep 2025 03:54:04 -0700 (PDT)
+ Fri, 05 Sep 2025 03:54:05 -0700 (PDT)
 From: Donald Hunter <donald.hunter@gmail.com>
 To: =?utf-8?Q?Asbj=C3=B8rn?= Sloth =?utf-8?Q?T=C3=B8nnesen?= <ast@fiberby.net>
 Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,  "David S. Miller"
@@ -68,13 +68,12 @@ Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,  "David S. Miller"
  Horman <horms@kernel.org>,  Jacob Keller <jacob.e.keller@intel.com>,
  Andrew Lunn <andrew+netdev@lunn.ch>,  wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org,  linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next 08/11] tools: ynl: move nest packing to a
- helper function
-In-Reply-To: <20250904220156.1006541-8-ast@fiberby.net>
-Date: Fri, 05 Sep 2025 11:45:23 +0100
-Message-ID: <m2plc5xjng.fsf@gmail.com>
+Subject: Re: [PATCH net-next 09/11] tools: ynl: encode indexed-array
+In-Reply-To: <20250904220156.1006541-9-ast@fiberby.net>
+Date: Fri, 05 Sep 2025 11:49:09 +0100
+Message-ID: <m2ldmtxjh6.fsf@gmail.com>
 References: <20250904-wg-ynl-prep@fiberby.net>
- <20250904220156.1006541-8-ast@fiberby.net>
+ <20250904220156.1006541-9-ast@fiberby.net>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -96,11 +95,63 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 Asbj=C3=B8rn Sloth T=C3=B8nnesen <ast@fiberby.net> writes:
 
-> This patch moves nest packing into a helper function,
-> that can also be used for packing indexed arrays.
->
-> No behavioural changes intended.
+> This patch adds support for encoding indexed-array
+> attributes with sub-type nest in pyynl.
 >
 > Signed-off-by: Asbj=C3=B8rn Sloth T=C3=B8nnesen <ast@fiberby.net>
+> ---
+>  tools/net/ynl/pyynl/lib/ynl.py | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
+>
+> diff --git a/tools/net/ynl/pyynl/lib/ynl.py b/tools/net/ynl/pyynl/lib/ynl=
+.py
+> index 4928b41c636a..a37294a751da 100644
+> --- a/tools/net/ynl/pyynl/lib/ynl.py
+> +++ b/tools/net/ynl/pyynl/lib/ynl.py
+> @@ -564,6 +564,11 @@ class YnlFamily(SpecFamily):
+>              nl_type |=3D Netlink.NLA_F_NESTED
+>              sub_space =3D attr['nested-attributes']
+>              attr_payload =3D self._add_nest_attrs(value, sub_space, sear=
+ch_attrs)
+> +        elif attr['type'] =3D=3D 'indexed-array' and attr['sub-type'] =
+=3D=3D 'nest':
+> +            nl_type |=3D Netlink.NLA_F_NESTED
+> +            sub_space =3D attr['nested-attributes']
+> +            attr_payload =3D self._encode_indexed_array(value, sub_space,
+> +                                                      search_attrs)
+>          elif attr["type"] =3D=3D 'flag':
+>              if not value:
+>                  # If value is absent or false then skip attribute creati=
+on.
+> @@ -617,6 +622,9 @@ class YnlFamily(SpecFamily):
+>          else:
+>              raise Exception(f'Unknown type at {space} {name} {value} {at=
+tr["type"]}')
+>=20=20
+> +        return self._add_attr_raw(nl_type, attr_payload)
+> +
+> +    def _add_attr_raw(self, nl_type, attr_payload):
+>          pad =3D b'\x00' * ((4 - len(attr_payload) % 4) % 4)
+>          return struct.pack('HH', len(attr_payload) + 4, nl_type) + attr_=
+payload + pad
+>=20=20
+> @@ -628,6 +636,15 @@ class YnlFamily(SpecFamily):
+>                                             sub_attrs)
+>          return attr_payload
+>=20=20
+> +    def _encode_indexed_array(self, vals, sub_space, search_attrs):
+> +        attr_payload =3D b''
+> +        nested_flag =3D Netlink.NLA_F_NESTED
 
-Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
+This line is not doing anything, right?
+
+> +        for i, val in enumerate(vals):
+> +            idx =3D i | Netlink.NLA_F_NESTED
+> +            val_payload =3D self._add_nest_attrs(val, sub_space, search_=
+attrs)
+> +            attr_payload +=3D self._add_attr_raw(idx, val_payload)
+> +        return attr_payload
+> +
+>      def _get_enum_or_unknown(self, enum, raw):
+>          try:
+>              name =3D enum.entries_by_val[raw].name
