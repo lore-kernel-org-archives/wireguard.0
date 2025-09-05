@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC7E4CF34AB
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 12:56:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC68BCF34A9
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 12:56:23 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0679256b;
-	Tue, 18 Nov 2025 17:31:56 +0000 (UTC)
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com
- [2a00:1450:4864:20::32f])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 69ade9a2
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1cc8b34b;
+	Tue, 18 Nov 2025 17:31:57 +0000 (UTC)
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com
+ [2a00:1450:4864:20::32b])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 73fe8bb7
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 5 Sep 2025 10:53:56 +0000 (UTC)
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-45dcff2f313so12368145e9.0
- for <wireguard@lists.zx2c4.com>; Fri, 05 Sep 2025 03:53:56 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Fri, 5 Sep 2025 10:53:58 +0000 (UTC)
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-45b9a856dc2so13205295e9.0
+ for <wireguard@lists.zx2c4.com>; Fri, 05 Sep 2025 03:53:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1757069636; x=1757674436; darn=lists.zx2c4.com;
+ d=gmail.com; s=20230601; t=1757069637; x=1757674437; darn=lists.zx2c4.com;
  h=content-transfer-encoding:mime-version:user-agent:references
  :message-id:date:in-reply-to:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to;
- bh=cZ91k52qR45aiWRI11wxOihV1b6M8Vq0BGMkzafS080=;
- b=LVtkRYGxuWewzAa6F+1xg4y7Ytq/l7sRg4NMz8sQLe/x9XOxUxm55rvmKnyoAsQaOp
- PdrDCA4LNvrqlM84VvKG046n22SM6dN6Y0CmUhawqy2AYnx1p9c5CiM4x22WkqGKPCiX
- kmTcXJjhIhQV/HxL8NFT//KgJ2Zs3BR5mDrl2Q1dyu6/uerKxAErmRwACogpxXhwnE89
- 2ubETNq9kSUaitEMTBr4pr9VDs5mBJNIuEAtKYlma0HO8tfsUVjrO1S7p1RnT3iX+6Hh
- PUqjhFrIzHw/fIImcQHCNPFJeIGB0kosLqHrsSMAIqoPPD1YDMnWmaD9LrBxb4NRE6pw
- rGSQ==
+ bh=z41bjByaFM60LnQEd6Oew9k8K6jjJWYfgMsisJ7Td+Y=;
+ b=TWf4dyFvJyFJYlGqjsDXLcTyQK9r7eeiZMUYTawMIfHjqqaKGFB0KjAe/JYSJijHHN
+ rwRcoZgohOPDICxn0Z5AmK95v7R2hT8nxuqD8LMVbIQnsYkqUaR7owvb9noMY1ytoyap
+ jQxRhhWtfC+n8jK4g24UQQVEM7VAcJM3GFVdpruetItXdLBYbK256JH5t6C58AE3Jm0M
+ QeP1nlLThY6hIjYDNAIfaq//1NnKWvcFYN8182L1BdzrdBZIGeXnmYyM7InRyeY9vnRZ
+ svbg4Czk6qXeZnOZEO6YWmJ/iDKBlIJ8gg2H6/ZNm35MO1yVkXtp3jPPZsu7lPFEFQUB
+ YT+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757069636; x=1757674436;
+ d=1e100.net; s=20230601; t=1757069637; x=1757674437;
  h=content-transfer-encoding:mime-version:user-agent:references
  :message-id:date:in-reply-to:subject:cc:to:from:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=cZ91k52qR45aiWRI11wxOihV1b6M8Vq0BGMkzafS080=;
- b=Gcwz2FwBfKyGUkMloLkFLdzOb/N4zSDxZTBq6kUMP2exqAF8fExzM0VbkEGKzFbQkb
- B1isiYrtH8J8uaPRRm0jnW9KFlFq+08aHeYaipje3zXvEO79rTTMzpJGP+60Ue/lUBNE
- +pFnvdj+0wGMkJv8WFKlXWBSWHBoeR+1LRt7CXJcfWxkpRF9q+UvFcoCVUgJBrxR+dLa
- xf3iHYiAhdosRE4vTKTIwsOuH16u/yVT/tyi4vvadiWHQUDS1FgTr31I0xSuiOUqUHSm
- mgCaz++EOWh2iKfLkLeCF89JvPSOUA4M780dsRwYCV3B9q5KzNzuNMgLc99D5mkFZZqO
- ZDtA==
+ bh=z41bjByaFM60LnQEd6Oew9k8K6jjJWYfgMsisJ7Td+Y=;
+ b=dOYrxLUiDftVfQCPho3kMJg55xWns0bdevuGHzZ9AJ8X1+EMtXmznNmq65JC3wiegm
+ 3eytGFez+6fajqQKIVKYVdHPbQMNL16zurbnlgQnJorZsUk0Ula5giWMtahjdVuvsvTI
+ qZQgQTJosW6CnRrhvjwkOM8+XOpWEkdfBEGI2Ur7/VfvIMkY1Zl7FPkAJzdoaas/0/+x
+ mDlTOr7zF8rJkBm8Bd7BAyiE3k2H7M+Fm8YGJ6NXrsmscQWlWZdyLIaAAXZTQaXiNasR
+ 89qdIaJwHdkHRpXR+tmgyM0P1zQqERCt8AAqihPaRCY1cwOk5BUcZAUycYqKWqG2JYzq
+ /1qw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWfruKaiq03UrWS+lgoxbYR6kZsb7yu7jcc8SbFXr6o4f0m7/RqcoZ9QXgZfnfDTnnkOtZzwvN+SSM=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YwQerTha8bHdlqUtqQNNhUtSbUK+lfAvJ4gS8XJ2pfSuO4Cw0rQ
- 9P/8BBiuzZKSUQQ5v+f7FkSlSCWVLPX+LLeFJqOp9vDfrVoO3Rg595TC
-X-Gm-Gg: ASbGnctlmvIKMikEXVlOyf+BChWiSgVmvyoskYf5h9c3zhwB/RS7QIeNnhIaSAZqmkI
- cv35gOE51UszyggE7yifkGBhZqVjaAaMe6sa1rdV2ac82VP6GjYWpKvFb7oSjisPgxAIpVuz3Io
- 86mcOR/nRdNpDClPcwvUDImQga3zn1fs4QBA8oBYjcarP+qV78zSypDt8mtFnUWmsODesSroJb6
- p7er30m2e0Lq0oRTiJ8cCGV1P3tISNe9L4uxN0HWFSsA8iZeBA7rl3hHvileQyLiEOrDjm/E3t1
- kqc6DM3dgDEJ3iM9dldTB+Hmz4QP7EpZCxuTDT2GwMggoK+Gn+Wlwv26/iAhWrMjgZ9j+ous4yH
- 1idctz7PrK8E8XY0XflKm+uJPvEm5ctzUsqc=
-X-Google-Smtp-Source: AGHT+IGV0V3oPnun7Z+s99bPB1MIypO1yxi1dOVcuTckULlQHv9YRvW4+4DnaXzlyLC9eUlQ9HNgAw==
-X-Received: by 2002:a05:600c:c4ab:b0:45b:47e1:ef6d with SMTP id
- 5b1f17b1804b1-45b855b3032mr173294965e9.36.1757069635818; 
- Fri, 05 Sep 2025 03:53:55 -0700 (PDT)
+ AJvYcCVUZFQr8jG9IvsdlJsKBWItNWiQVGJMXSM2Te0ubU9iN1DDWrux+i2gPLmIbAfC/Wxq90Z2uzIPnko=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0Yz+c6aVia9d2NhyimPqIg1vDb3AEe07IcMRwx6M3oxpdeJOqhBI
+ S+U9053DmjxwQzzZI75OyfVwNRCzumbofFLLxgWKZho0QEwxZcojJaE3
+X-Gm-Gg: ASbGncszsT2sMDuPE1nTbNLZQ2RfrfEdYjTF8sSDtMvXlLV/1cesws8uM+sK9+IXLrz
+ 3uyK+VhD+pq6DIIT1pM58cF7KX2Vgz/O5akYX97cAIhAeEspOMf+vGk0hZFhmB6jNIllPXkbRDX
+ Im/K141z9iVhnSmO/eB8HJHePpOJoQ35SO75UcLZudde0I1yIn2MlEJ6Rxu4kuus1muM3AN+aox
+ CR4xkWlzFObL2rm7faEI3y9Z7EobKccz8kYr0U+iKbBWw+2WElqOSnC4m++ZN3gkBA2iKFF2E/L
+ RYMB8h5nh4JzYrLYqqt/AWNYa6pDGAPbKxHvcr+i7j3pkzWrNbhQ/4jyQdkG4z6ar+B7C/PHQSR
+ fapIncMeGJ4jxH5XYH/lyRinhNsbHQ3yxpfhSXbtTLSJaNw==
+X-Google-Smtp-Source: AGHT+IGOY4bwB+izuGnbd5LE84YducDA7sGQmtMlij3Az404K/MZ+AIoA8ONqCveaO1sAzbVbdxh4Q==
+X-Received: by 2002:a05:600c:35ca:b0:45c:b5eb:b0bd with SMTP id
+ 5b1f17b1804b1-45cb5ebb156mr92165805e9.8.1757069637272; 
+ Fri, 05 Sep 2025 03:53:57 -0700 (PDT)
 Received: from imac ([2a02:8010:60a0:0:8157:959d:adbf:6d52])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45dd2df4c8dsm54645465e9.15.2025.09.05.03.53.54
+ 5b1f17b1804b1-45dd3aadbcesm51030585e9.17.2025.09.05.03.53.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Sep 2025 03:53:55 -0700 (PDT)
+ Fri, 05 Sep 2025 03:53:56 -0700 (PDT)
 From: Donald Hunter <donald.hunter@gmail.com>
 To: =?utf-8?Q?Asbj=C3=B8rn?= Sloth =?utf-8?Q?T=C3=B8nnesen?= <ast@fiberby.net>
 Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,  "David S. Miller"
@@ -68,13 +68,13 @@ Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,  "David S. Miller"
  Horman <horms@kernel.org>,  Jacob Keller <jacob.e.keller@intel.com>,
  Andrew Lunn <andrew+netdev@lunn.ch>,  wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org,  linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next 01/11] tools: ynl-gen: allow overriding
- name-prefix for constants
-In-Reply-To: <20250904220156.1006541-1-ast@fiberby.net>
-Date: Fri, 05 Sep 2025 11:36:38 +0100
-Message-ID: <m2frd1yymh.fsf@gmail.com>
+Subject: Re: [PATCH net-next 02/11] tools: ynl-gen: generate nested array
+ policies
+In-Reply-To: <20250904220156.1006541-2-ast@fiberby.net>
+Date: Fri, 05 Sep 2025 11:37:24 +0100
+Message-ID: <m2bjnpyyl7.fsf@gmail.com>
 References: <20250904-wg-ynl-prep@fiberby.net>
- <20250904220156.1006541-1-ast@fiberby.net>
+ <20250904220156.1006541-2-ast@fiberby.net>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -96,11 +96,22 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 Asbj=C3=B8rn Sloth T=C3=B8nnesen <ast@fiberby.net> writes:
 
-> Allow using custom name-prefix with constants,
-> just like it is for enum and flags declarations.
+> This patch adds support for NLA_POLICY_NESTED_ARRAY() policies.
 >
-> This is needed for generating WG_KEY_LEN in
-> include/uapi/linux/wireguard.h from a spec.
+> Example spec (from future wireguard.yaml):
+> -
+>   name: wgpeer
+>   attributes:
+>     -
+>       name: allowedips
+>       type: indexed-array
+>       sub-type: nest
+>       nested-attributes: wgallowedip
+>
+> yields NLA_POLICY_NESTED_ARRAY(wireguard_wgallowedip_nl_policy).
+>
+> This doesn't change any currently generated code, as it isn't
+> used in any specs currently used for generating code.
 >
 > Signed-off-by: Asbj=C3=B8rn Sloth T=C3=B8nnesen <ast@fiberby.net>
 
