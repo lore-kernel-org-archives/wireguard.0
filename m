@@ -4,158 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4C8ACA1012
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  6 Sep 2025 07:03:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B92ACA1012
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  6 Sep 2025 19:08:02 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6c3517ca;
-	Sat, 6 Sep 2025 07:01:05 +0000 (UTC)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [170.10.129.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6e25a49d
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5632b9f4;
+	Sat, 6 Sep 2025 19:08:00 +0000 (UTC)
+Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 920853cd
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sat, 6 Sep 2025 07:01:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757142061;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=T2JJG+ZfsCIb5mNyWFksWhvinuGju8fueKzmBULEe5U=;
- b=KGpHYhHxiD+7YN+3JLfySWCD7JyAQN3s8PfW4RiZZ9qT9dRIHfry+6iURcKqBrBPRxXdWb
- rXSxYNYPeWOMiXtxXanJGit9pBd2MNdqtU4X89wcEcOUuSM+qI+s3tcka3S09glBbgvt0y
- QDjNdBfQd+6hmiwdej2bcPn8MaAjUPI=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-627-tZD_7qBrPm2RcGLucTOLSA-1; Sat, 06 Sep 2025 03:00:59 -0400
-X-MC-Unique: tZD_7qBrPm2RcGLucTOLSA-1
-X-Mimecast-MFC-AGG-ID: tZD_7qBrPm2RcGLucTOLSA_1757142058
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3da4c617a95so2803234f8f.0
- for <wireguard@lists.zx2c4.com>; Sat, 06 Sep 2025 00:00:59 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757142058; x=1757746858;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=T2JJG+ZfsCIb5mNyWFksWhvinuGju8fueKzmBULEe5U=;
- b=t8ye7n2Cizymb7C2zvAQKpSo6QFulelJjAFEHvfQgjZI+RBkqNh5SJth4CJPjo8I+R
- iy48nVy5o/6ynM/l9eMn/O3Hm/7MGbVUgIC4IBhjDf9hG3r7sBtPQLn6KYAjxgUKzsiT
- I2unFjEJRzYgif0JRlMu6JZKkAnQzg6WaEZ+j51QgM3QM6ZzgwwhbciEj4G52Ei3lfd2
- WLdcFHGLY8dYzyYpcoNngek6bVbkHySSm5ydwEpyj9sCwmDl+3K2aLdraaJz/Nm5dsw8
- I+Q9RZbP+K03zfori2uzEvtHDvEaBWW8nAF+UMBa65PGu9n8BkaslkjnLjLz4P2IOzuQ
- blgg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUeW2MwnkLSJ6zkddvS0a61SDPud16cY74GIRc8haKqOlUTOMRhwCxhUfjFhzqwaW6/7kYzjJyTt+I=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0Yx0fgGek7a2gIN3XoctvGI4WmX/cvajXHsHLn0mz2eHjCYIEbT0
- LKYAzivUXyqSCVgbqnpy9L54ga0R/Yy8HZPhCFgSxmeNrILb2KyBij6zFccsAueK0CEtpf/kjTP
- 4Yndh3ZhGMEiRfbnwEXn9u0JOJ1i4F5z5lA1pWKPJySOFBqjkiCYx24T/MCy5Tg==
-X-Gm-Gg: ASbGncvsx0pXG+sqSWwC13KcoygCSUa0EOztsqA7Y/gWyDp1WnH/73r59OQz1y0IG7H
- u9DQ0zvggYvafGoSQHauzmFUO2UwZb0Wcanr8E4ibLzoDNsn8rR6xBqJeDNmf2lI6Oa9hwzD+gY
- ksFNb8K66PlpbSTEIF3VDgdgW2vnkf0Am6xzRYJZgNtdSuGkHEyGO534JpUx8qppK9ILidCjfC6
- Zb3qgI0qW6ZymHh8r9bMQg5N7qTH3gKy5bpaWFt/dvNnhM+VKaNz8IYcKDJU7iL05uwqjilb1Kf
- y+H/JiyrUMVc/yeSXKmDWXo4fqCIBeyYJzseNgV48+EuyAP8ZOTz8Rkcivejw3JrjGgsZd9KUHA
- wJcdltHws7c82QP9BtpObNrVVf6gT5RAhezOECTNb0lEFs/3vWAW2nAJ0Tbr/fasXSuo=
-X-Received: by 2002:a5d:5f87:0:b0:3e2:804b:bfed with SMTP id
- ffacd0b85a97d-3e64c1c2183mr835275f8f.42.1757142058286; 
- Sat, 06 Sep 2025 00:00:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGdr4VmZX14HWt6vWJrgVQl61309Yoz3EBz+B4BvfuTuYDfgHO59nfbR4v+s7YipRZZX7VN6g==
-X-Received: by 2002:a5d:5f87:0:b0:3e2:804b:bfed with SMTP id
- ffacd0b85a97d-3e64c1c2183mr835230f8f.42.1757142057809; 
- Sat, 06 Sep 2025 00:00:57 -0700 (PDT)
-Received: from ?IPV6:2003:d8:2f30:de00:8132:f6dc:cba2:9134?
- (p200300d82f30de008132f6dccba29134.dip0.t-ipconnect.de.
- [2003:d8:2f30:de00:8132:f6dc:cba2:9134])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cf3458a67fsm6794555f8f.62.2025.09.06.00.00.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 06 Sep 2025 00:00:56 -0700 (PDT)
-Message-ID: <815cbde4-a56d-446d-b517-c63e12e473de@redhat.com>
-Date: Sat, 6 Sep 2025 09:00:54 +0200
+ for <wireguard@lists.zx2c4.com>; Sat, 6 Sep 2025 19:07:58 +0000 (UTC)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id 43A3E41573;
+ Sat,  6 Sep 2025 19:07:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EB1BC4CEE7;
+ Sat,  6 Sep 2025 19:07:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1757185676;
+ bh=gVQxgJDG/hVQtG1HjsZygJpYDl5EUtgtz/PBvFVrOyU=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=q+mFAiR08SBlMO52nyQV5x8Ckzaq209dYKqIE6BDTNYGo3M7mJTD5DTq7f7tdRNdh
+ 4kGgqnMI5MBeFAAsmP4W4LsYh1UUCVxREseZoKaO724QS262NxkU6LNt/Cm64QWDsN
+ Ukjk623XcVlXyEURrRa/hJkjyYVrqH5QYqze0b8sBWf7DPdybfB/4UskmIwJXPFQcY
+ FfQsyS5Dh3N2bWn/AICiDZQuYvU3TwGB1MVmsmtFb+BgXHgtwUgcXgfxzq+9wiYJ/g
+ RCkVuMdtfNP/q0QeJ1a/DLREycy5IBpXh1eb4AEM3PSSRmbpiwnKIssXMY0U49cBl+
+ wF23214GL5o9A==
+Date: Sat, 6 Sep 2025 12:07:54 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: =?UTF-8?B?QXNiasO4cm4=?= Sloth =?UTF-8?B?VMO4bm5lc2Vu?= <ast@fiberby.net>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, "David S. Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Paolo Abeni
+ <pabeni@redhat.com>, Donald Hunter <donald.hunter@gmail.com>, Simon Horman
+ <horms@kernel.org>, Jacob Keller <jacob.e.keller@intel.com>, Andrew Lunn
+ <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net-next 05/11] tools: ynl-gen: define nlattr *array in
+ a block scope
+Message-ID: <20250906120754.7b90c718@kernel.org>
+In-Reply-To: <4eda9c57-bde0-43c3-b8a0-3e45f2e672ac@fiberby.net>
+References: <20250904-wg-ynl-prep@fiberby.net>
+ <20250904220156.1006541-5-ast@fiberby.net>
+ <20250905171809.694562c6@kernel.org>
+ <4eda9c57-bde0-43c3-b8a0-3e45f2e672ac@fiberby.net>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 19/37] mm/gup: remove record_subpages()
-From: David Hildenbrand <david@redhat.com>
-To: John Hubbard <jhubbard@nvidia.com>, linux-kernel@vger.kernel.org
-Cc: Alexander Potapenko <glider@google.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- Brendan Jackman <jackmanb@google.com>, Christoph Lameter <cl@gentwo.org>,
- Dennis Zhou <dennis@kernel.org>, Dmitry Vyukov <dvyukov@google.com>,
- dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
- iommu@lists.linux.dev, io-uring@vger.kernel.org,
- Jason Gunthorpe <jgg@nvidia.com>, Jens Axboe <axboe@kernel.dk>,
- Johannes Weiner <hannes@cmpxchg.org>, kasan-dev@googlegroups.com,
- kvm@vger.kernel.org, "Liam R. Howlett" <Liam.Howlett@oracle.com>,
- Linus Torvalds <torvalds@linux-foundation.org>, linux-arm-kernel@axis.com,
- linux-arm-kernel@lists.infradead.org, linux-crypto@vger.kernel.org,
- linux-ide@vger.kernel.org, linux-kselftest@vger.kernel.org,
- linux-mips@vger.kernel.org, linux-mmc@vger.kernel.org, linux-mm@kvack.org,
- linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
- linux-scsi@vger.kernel.org, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
- Marco Elver <elver@google.com>, Marek Szyprowski <m.szyprowski@samsung.com>,
- Michal Hocko <mhocko@suse.com>, Mike Rapoport <rppt@kernel.org>,
- Muchun Song <muchun.song@linux.dev>, netdev@vger.kernel.org,
- Oscar Salvador <osalvador@suse.de>, Peter Xu <peterx@redhat.com>,
- Robin Murphy <robin.murphy@arm.com>, Suren Baghdasaryan <surenb@google.com>,
- Tejun Heo <tj@kernel.org>, virtualization@lists.linux.dev,
- Vlastimil Babka <vbabka@suse.cz>, wireguard@lists.zx2c4.com, x86@kernel.org,
- Zi Yan <ziy@nvidia.com>
-References: <20250901150359.867252-1-david@redhat.com>
- <20250901150359.867252-20-david@redhat.com>
- <016307ba-427d-4646-8e4d-1ffefd2c1968@nvidia.com>
- <85e760cf-b994-40db-8d13-221feee55c60@redhat.com>
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- qIws/H2t
-In-Reply-To: <85e760cf-b994-40db-8d13-221feee55c60@redhat.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: fR_AZREGjvZpmEl7ocPQ_GKV5Ho6e_KynFzse6PAHv0_1757142058
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -170,41 +62,101 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+On Sat, 6 Sep 2025 13:13:29 +0000 Asbj=C3=B8rn Sloth T=C3=B8nnesen wrote:
+> In patch 4, it is about a variable used by multiple Type classes having
+> presence_type() =3D 'count', which is currently 3 classes:
+> - TypeBinaryScalarArray
+> - TypeMultiAttr
+> - TypeArrayNest (later renamed to TypeIndexedArray)
+>=20
+> In patch 5, I move code for a special variable used by one Type class,
+> to be contained within that class. It makes it easier to ensure that the
+> variable is only defined, when used, and vice versa. This comes at the
+> cost of the generated code looking generated.
 
->    	pmdp = pmd_offset_lockless(pudp, pud, addr);
-> @@ -3046,23 +3041,21 @@ static int gup_fast_pmd_range(pud_t *pudp, pud_t pud, unsigned long addr,
->    
->    		next = pmd_addr_end(addr, end);
->    		if (!pmd_present(pmd))
-> -			return 0;
-> +			break;
->    
-> -		if (unlikely(pmd_leaf(pmd))) {
-> -			/* See gup_fast_pte_range() */
-> -			if (pmd_protnone(pmd))
-> -				return 0;
-> +		if (unlikely(pmd_leaf(pmd)))
-> +			cur_nr_pages = gup_fast_pmd_leaf(pmd, pmdp, addr, next, flags, pages);
-> +		else
-> +			cur_nr_pages = gup_fast_pte_range(pmd, pmdp, addr, next, flags, pages);
->    
-> -			if (!gup_fast_pmd_leaf(pmd, pmdp, addr, next, flags,
-> -				pages, nr))
-> -				return 0;
-> +		nr_pages += cur_nr_pages;
-> +		pages += cur_nr_pages;
->    
-> -		} else if (!gup_fast_pte_range(pmd, pmdp, addr, next, flags,
-> -					       pages, nr))
-> -			return 0;
-> +		if (nr_pages != (next - addr) >> PAGE_SIZE)
-> +			break;
+So you're agreeing?
 
-^ cur_nr_pages. Open for suggestions on how to make that thing here even 
-better.
+> If we should make the generated code look like it was written by humans,
+> then I would move the definition of these local variables into a class
+> method, so `i` can be generated by the generic implementation, and `array`
+> can be implemented in it's class. I will take a stab at this, but it might
+> be too much refactoring for this series, eg. `len` is also defined local
+> to conditional blocks multiple branches in a row.
+>=20
+> tools/net/ynl/generated/nl80211-user.c:
+> nl80211_iftype_data_attrs_parse(..) {
+>    [..]
+>    ynl_attr_for_each_nested(attr, nested) {
+>      unsigned int type =3D ynl_attr_type(attr);
+>=20
+>      if (type =3D=3D NL80211_BAND_IFTYPE_ATTR_IFTYPES) {
+>        unsigned int len;
+>        [..]
+>      } else if (type =3D=3D NL80211_BAND_IFTYPE_ATTR_HE_CAP_MAC) {
+>        unsigned int len;
+>        [..]
+>      [same pattern 8 times, so 11 times in total]
+>      } else if (type =3D=3D NL80211_BAND_IFTYPE_ATTR_EHT_CAP_PPE) {
+>        unsigned int len;
+>        [..]
+>      }
+>    }
+>    return 0;
+> }
 
--- 
-Cheers
+It's pretty easily doable, I already gave up on not calling _attr_get()
+for sub-messages.
 
-David / dhildenb
+> That looks very generated, I would have `len` defined together with `type=
+`,
+> and a switch statement would also look a lot more natural, but maybe leave
+> the if->switch conversion for the compiler to detect.
 
+diff --git a/tools/net/ynl/pyynl/ynl_gen_c.py b/tools/net/ynl/pyynl/ynl_gen=
+_c.py
+index fb7e03805a11..8a1f8a477566 100755
+--- a/tools/net/ynl/pyynl/ynl_gen_c.py
++++ b/tools/net/ynl/pyynl/ynl_gen_c.py
+@@ -243,7 +243,7 @@ from lib import SpecSubMessage, SpecSubMessageFormat
+         raise Exception(f"Attr get not implemented for class type {self.ty=
+pe}")
+=20
+     def attr_get(self, ri, var, first):
+-        lines, init_lines, local_vars =3D self._attr_get(ri, var)
++        lines, init_lines, _ =3D self._attr_get(ri, var)
+         if type(lines) is str:
+             lines =3D [lines]
+         if type(init_lines) is str:
+@@ -251,10 +251,6 @@ from lib import SpecSubMessage, SpecSubMessageFormat
+=20
+         kw =3D 'if' if first else 'else if'
+         ri.cw.block_start(line=3Df"{kw} (type =3D=3D {self.enum_name})")
+-        if local_vars:
+-            for local in local_vars:
+-                ri.cw.p(local)
+-            ri.cw.nl()
+=20
+         if not self.is_multi_val():
+             ri.cw.p("if (ynl_attr_validate(yarg, attr))")
+@@ -2101,6 +2097,7 @@ _C_KW =3D {
+             else:
+                 raise Exception(f"Per-op fixed header not supported, yet")
+=20
++    var_set =3D set()
+     array_nests =3D set()
+     multi_attrs =3D set()
+     needs_parg =3D False
+@@ -2118,6 +2115,13 @@ _C_KW =3D {
+             multi_attrs.add(arg)
+         needs_parg |=3D 'nested-attributes' in aspec
+         needs_parg |=3D 'sub-message' in aspec
++
++        try:
++            _, _, l_vars =3D aspec._attr_get(ri, '')
++            var_set |=3D set(l_vars) if l_vars else set()
++        except:
++            pass  # _attr_get() not implemented by simple types, ignore
++    local_vars +=3D list(var_set)
+     if array_nests or multi_attrs:
+         local_vars.append('int i;')
+     if needs_parg:
