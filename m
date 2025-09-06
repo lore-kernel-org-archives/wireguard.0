@@ -4,201 +4,157 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C4B4CAC580
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  6 Sep 2025 01:05:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C6BECAC581
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  6 Sep 2025 06:57:08 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id daa40e11;
-	Sat, 6 Sep 2025 00:28:04 +0000 (UTC)
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 29688f9f
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sat, 6 Sep 2025 00:28:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1757118481; x=1788654481;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:mime-version;
- bh=2l+CBscNhtdUaHZLWxdh1rqP9yGfybXPw8XTaeKrjXQ=;
- b=JFvqHnd5umL5R2FJ1OsOJiyL/50a6AMtrnxauFGhFmw6uK3mC5tZ9tOQ
- xBTUNyP4hAbnAm+wQlMoRMgH12hOyOU/TjzNIdNDqUL/HGgM+SLnI+z8O
- uAlbgTh3HJGm6HzP2HYMcf1He5jx4n8wiKqEeOGtjeDijcMZeRph4udDc
- X7VDsUgPSX4Unv5h0uckln+FcsLyDBDuO1btVrdly1XZpcJakrgWv7gdM
- em2i2wFRwtvz0bzI6KqrO0F0FHyODCUyopQmCspy2MIvRRyCoy3sDkZby
- C09BS/CxG8L8Rt62Icx028ajSLF23B0sD7FTiTkpvXcvOZYxOaTH5AfOG w==;
-X-CSE-ConnectionGUID: vvNIDRTdQpSQ9WDlr5yMqA==
-X-CSE-MsgGUID: es401G8KReelcHkkqzcnBQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11544"; a="59169683"
-X-IronPort-AV: E=Sophos;i="6.18,242,1751266800"; 
- d="asc'?scan'208";a="59169683"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Sep 2025 17:27:59 -0700
-X-CSE-ConnectionGUID: 64vcsKAjTWKgcOBBxmFwSA==
-X-CSE-MsgGUID: sluusf8mRvmMvuAm4wZfcw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,242,1751266800"; 
- d="asc'?scan'208";a="172196008"
-Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
- by fmviesa006.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Sep 2025 17:27:59 -0700
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Fri, 5 Sep 2025 17:27:58 -0700
-Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17 via Frontend Transport; Fri, 5 Sep 2025 17:27:58 -0700
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (40.107.236.76)
- by edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Fri, 5 Sep 2025 17:27:57 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=eypCwYSKLWZHF9OsxHfZ/829md+09Zeu1p/hByYrzNscE9AFt1sDLLIFmb6S/3HTkpSdPbGaBz5TJ0YZEgCw0V94SRw2wQY77KBlJqhQhrwR6S8RCJzN2x50o3M08j7EvAAAbk5GNwCzgAO0ium19+C3ImeDvu2+Q1ZR++81L6zNm24xXHoUkKqDCdbxbnpFI9C0wY6GvhvnRaZGsW6Mva0WkmbFqwpOi60oF74bt9aHxobfhqzo3ZxLcPnyX2bBbDHUh2vJn1jQwhdiWb+QMboaF8xRELPS3UoVNSQr6azxRPo25AbNy0UdyUe25QsE/PyeU4nL3w6jMT4lMksCJQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5VBY8nG06nqhQfbrzshzdZ2thnSn8cA2Cp4vekoGjZE=;
- b=DgoCrui0v6ak9z5/bR+wylQFLs8s7IYoKXlkdQj1J5Gf6FLi7NbUXYjV3RTAp6Z+Esqdl6nT3a/1qiCffwIVr5lOEOdN5rYZIaxQ32QPKo+k3Kb59Ci7jpChTjKXfKda7O0uQxbEilVsjNF35kwGxRIy7uNXqxomU73RJifmJ6Sl3/O9s97rS5uD9hF7F9Z37rjymU1OhRGfLWhZuAqdnVfJAjcs+hKeremZKWOQXib3gnDb7RCzGL2MuSb5PizDes65phImM1MHZrHZgr0iiIXtUH0AOWZHvxFFKI1fEyeFCzJqw1xOC/HDzZJT/4uP2D8vje7s5Qxvwlzfjom9eg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from CO1PR11MB5089.namprd11.prod.outlook.com (2603:10b6:303:9b::16)
- by DS7PR11MB7857.namprd11.prod.outlook.com (2603:10b6:8:da::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.19; Sat, 6 Sep
- 2025 00:27:49 +0000
-Received: from CO1PR11MB5089.namprd11.prod.outlook.com
- ([fe80::81f7:c6c0:ca43:11c3]) by CO1PR11MB5089.namprd11.prod.outlook.com
- ([fe80::81f7:c6c0:ca43:11c3%4]) with mapi id 15.20.9094.018; Sat, 6 Sep 2025
- 00:27:49 +0000
-Message-ID: <410d69e5-d1f8-40e0-84b1-b5d56e0d9366@intel.com>
-Date: Fri, 5 Sep 2025 17:27:46 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next 10/11] tools: ynl: decode hex input
-To: Donald Hunter <donald.hunter@gmail.com>,
- =?UTF-8?Q?Asbj=C3=B8rn_Sloth_T=C3=B8nnesen?= <ast@fiberby.net>
-CC: "Jason A. Donenfeld" <Jason@zx2c4.com>, "David S. Miller"
- <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub Kicinski
- <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Simon Horman
- <horms@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>,
- <wireguard@lists.zx2c4.com>, <netdev@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>
-References: <20250904-wg-ynl-prep@fiberby.net>
- <20250904220156.1006541-10-ast@fiberby.net> <m2h5xhxjd5.fsf@gmail.com>
-Content-Language: en-US
-From: Jacob Keller <jacob.e.keller@intel.com>
-Autocrypt: addr=jacob.e.keller@intel.com; keydata=
- xjMEaFx9ShYJKwYBBAHaRw8BAQdAE+TQsi9s60VNWijGeBIKU6hsXLwMt/JY9ni1wnsVd7nN
- J0phY29iIEtlbGxlciA8amFjb2IuZS5rZWxsZXJAaW50ZWwuY29tPsKTBBMWCgA7FiEEIEBU
- qdczkFYq7EMeapZdPm8PKOgFAmhcfUoCGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AA
- CgkQapZdPm8PKOiZAAEA4UV0uM2PhFAw+tlK81gP+fgRqBVYlhmMyroXadv0lH4BAIf4jLxI
- UPEL4+zzp4ekaw8IyFz+mRMUBaS2l+cpoBUBzjgEaFx9ShIKKwYBBAGXVQEFAQEHQF386lYe
- MPZBiQHGXwjbBWS5OMBems5rgajcBMKc4W4aAwEIB8J4BBgWCgAgFiEEIEBUqdczkFYq7EMe
- apZdPm8PKOgFAmhcfUoCGwwACgkQapZdPm8PKOjbUQD+MsPBANqBUiNt+7w0dC73R6UcQzbg
- cFx4Yvms6cJjeD4BAKf193xbq7W3T7r9BdfTw6HRFYDiHXgkyoc/2Q4/T+8H
-In-Reply-To: <m2h5xhxjd5.fsf@gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------n8uGMrTWfv0xFR6Or2xhxXG8"
-X-ClientProxiedBy: MW4PR03CA0302.namprd03.prod.outlook.com
- (2603:10b6:303:dd::7) To CO1PR11MB5089.namprd11.prod.outlook.com
- (2603:10b6:303:9b::16)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6851503e;
+	Sat, 6 Sep 2025 06:57:06 +0000 (UTC)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 25c98e7c
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Sat, 6 Sep 2025 06:57:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757141822;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Vne0EVwrnVHw6NJLJyd+zZpE6+oJG9x8TCUx1n8W1nw=;
+ b=XZrKF99GR2ORuvxthwEW6Te6I+RhSBG9EHHS5WwDFEcQq8J5QRB4kwTnzrOkXA9o+xUypv
+ u7dNGFdkieAhqh2eP6izMCtqALK+LgiMQJFrHALnnsPoDSUUcmVi4d9cRhIGkHfK2BCwvU
+ JsVu5NwtKFMWr2k85iws3GSeqEr90kI=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-676-rrCyPJrSPPS2ynKGxtHyMg-1; Sat, 06 Sep 2025 02:57:00 -0400
+X-MC-Unique: rrCyPJrSPPS2ynKGxtHyMg-1
+X-Mimecast-MFC-AGG-ID: rrCyPJrSPPS2ynKGxtHyMg_1757141819
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3b9dc5c2ba0so1415307f8f.1
+ for <wireguard@lists.zx2c4.com>; Fri, 05 Sep 2025 23:56:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757141819; x=1757746619;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Vne0EVwrnVHw6NJLJyd+zZpE6+oJG9x8TCUx1n8W1nw=;
+ b=Y3yoAGPj15AlmDCmP7ReKsE7YUdKdoCtczJGX37ySXUZlc1NiMdOr6ed3JewiTHAgf
+ ABUa06ETmUlHbgZz6531aIQFoWNnwQJQw4EhMIKfjxzbwCcWe4dtR6YtoN2B5++aqYkS
+ PDOcmUpMKP2tuj0Vg09P+EckGX4ktizZP3sNLYkqDv4s3VOqXqvvbjMVcg54LSs7Fh8/
+ OHvGhjro+3nI/O1b97YhEJYxnDWSo2Pr+O/fC5EgsWecnmBrcpeyhGZhq246ocsxnY9P
+ shJ7HG2x6p+rAkaHzlrnLvF0f6qt6uHXqsgX7JwAErwn8niQlO2zcxNec43elJnIcisd
+ U3NA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUbSML2eCp0Q11LuEkmgdq3HXHM6J4MRNwlwZuAvCnVkTfcWmrL6HdhO0oxnY6IKbqIAVJhOIHDsO4=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YyxZ+X+FehKjGi4v4DpZ606KRwXpByCT0LXj8+WE+j6DIxwzl4p
+ pvrBt3rXAcZfSV2y2eW42msW13tWggoduCivhqdAOesbePErlfsez+H3RluU7rZ53GHtlJxPOKg
+ M8pa+NyTi71GI3hdYUxG66NLzJr06ga5jk4JG1lVdcD3GGal2xyntINgJ4YU27g==
+X-Gm-Gg: ASbGncvBEntedoFznpBhNAx05e5lwii759AhHxKjQpXavJh4t1H9mdKbZFhF214ntGq
+ tQQUhIChP6kpxBJN4ku+wJAxx6B3qQcKRmNVXgyEAs4eBT6JJGiSCLZRHem30G12dpOjPrPHjgT
+ vF0Ork12NjMQseyeA9YqmgxJP/PO3u1982LvR9aLTALOjEdl9aBDgDbkJ+iMFbMQql9ki756bK7
+ mCYyOAXG+5lXgxllMlGp+StxGHCP3WZ8b0mVvqUyY0TkzHcHTSi3bzHCynpTJNN1/MOkWeFGb26
+ y1smQBI7lnyVdotQsFBTP9xiTNOX7R3+N/S+mXcaBy0jzVgmmU+NBUiPA9wVwxZ4qy1XBj5C0GL
+ GnsGKXqHhEIYDeggDo+clFDNu4f2ZdHoO1W3brNx3iaL5eqKAVaXF8EI7uA5dN/JbxzA=
+X-Received: by 2002:a05:6000:4406:b0:3e7:404f:6b9 with SMTP id
+ ffacd0b85a97d-3e7404f0ad9mr25540f8f.24.1757141818676; 
+ Fri, 05 Sep 2025 23:56:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHTOe1nfTlzU6tKtOOERnuEGL0krwza2F9vwEf5QifLuwYgeR9BVKfnULAEyM/P+fsTi5oZpw==
+X-Received: by 2002:a05:6000:4406:b0:3e7:404f:6b9 with SMTP id
+ ffacd0b85a97d-3e7404f0ad9mr25486f8f.24.1757141818148; 
+ Fri, 05 Sep 2025 23:56:58 -0700 (PDT)
+Received: from ?IPV6:2003:d8:2f30:de00:8132:f6dc:cba2:9134?
+ (p200300d82f30de008132f6dccba29134.dip0.t-ipconnect.de.
+ [2003:d8:2f30:de00:8132:f6dc:cba2:9134])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3df4fd372ccsm11959114f8f.32.2025.09.05.23.56.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 05 Sep 2025 23:56:53 -0700 (PDT)
+Message-ID: <85e760cf-b994-40db-8d13-221feee55c60@redhat.com>
+Date: Sat, 6 Sep 2025 08:56:48 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PR11MB5089:EE_|DS7PR11MB7857:EE_
-X-MS-Office365-Filtering-Correlation-Id: 87a2e933-5107-4b0f-331a-08ddecdc350d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|366016|7416014|1800799024|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?WHVRSktxSTdYSkpuenUySFNlOUZiMHJFd0lGN1BrODNSOHJOckFDN1M5VjNS?=
- =?utf-8?B?WmZVMENJazViNmhqdTNtNUJVTGZMRUJtNmdMb1k1UEJSVHM3Z09uV1lDakJ3?=
- =?utf-8?B?WlMzc0VhSVhraG53ZkZ6cS9lT3VuRlNQRUMrMHp3YUJMZ2tzMHMwWWdLUVRi?=
- =?utf-8?B?UUJmbVpOUTBFRnZXN2pGbHlnckRhRkNQbkVoRS9ISndLaHhaaEw3cDNybzgz?=
- =?utf-8?B?QU1RWUtzczM5YVlhUjNXY0g0SU16ZXhhU0JEcTBJNjZpYnMrMEMrWHZ5Rk5H?=
- =?utf-8?B?NXRMWWJmbXVEYmRYbmRneHRia29HOXpCMWkyVXpmZmR5MVUwL1hDZlJDbzYy?=
- =?utf-8?B?clZMRURCSW9ubStzSTZSVlFFTmxBRm5IRUxUNmM4V2pmMzYrQTNzVmtSak9K?=
- =?utf-8?B?eExTUWFKN2I1ZmE3TXNGbkx4MFNNdlBHbUxTZ09xNDd2Ny8wZHpQWDgwR3VN?=
- =?utf-8?B?Q0Z5MnduRDA0aUNlYzV5QjFaN0FKQjBGaVlHSkE2dENXL1E1MWxXNFpoamRM?=
- =?utf-8?B?RnJyUWJYTmRZVGdsVFFZbjBsejl1K1E5SHlvWEI1em5UdG9paEl6aVVoMWla?=
- =?utf-8?B?TDJScS9nREJEQXZuYW5KTk5Cd2RxK2FFRnUvNStxSWNmK3U1WVl0b1pDaFY4?=
- =?utf-8?B?WkNlRktueTZJOUxRTjFhbEQyUTlOT1pHVmlCSkRCUlFsbTh5aFoxdVVCWnp3?=
- =?utf-8?B?QUVVQkpWY0tOeDNJTnJoNzhWVHAvaTcvZDIvK3ZXbWpSYmI3NTZycVJCNFpJ?=
- =?utf-8?B?OFB5bjF1alBCeXNiSUpQS3Q0b1k0MmlqNERYWk5LOFg0ZDV3UWd2dTJZL3I3?=
- =?utf-8?B?eEVvbVhwZDJnUjdZcUd5d2xPQzRQbjdYNDRmcjcwdWlYZ0xRRG5seXRXZGF5?=
- =?utf-8?B?c01BSXI1Mm00QzBjNFIzMTBhRGovRm40ODdQcFJPRXZuZUdTL1paZmFyeDdY?=
- =?utf-8?B?NmhOaEdvYVZvR3ExeDlQVmtZNFc0TVV4Y3Vyak94bWlYQ1ZMRFg4M0pQai92?=
- =?utf-8?B?NTRnNGZyTFBGVGhoK0ZvcUh0bzFHL08rT2xzRHZCaEtRZ216Tlg2YUV4SHVO?=
- =?utf-8?B?dis3V0dDSGdWQ1JkLzdydGtvY1dyQ1lJMlcydjh6blc1YlNua3paQkFkVTlp?=
- =?utf-8?B?SmxiUEo2WGFWT0g2cWMwejhKdkcxZ3FHZSt4QitQSXgraWgySTlMNTlic3Yy?=
- =?utf-8?B?ZTVtZ3ZvRjdrRGlxSTFKSUVxbDVHcFZMdVRNbHBIN3A0bFFudytoU0ZvcFg1?=
- =?utf-8?B?UlQ2SHRGUHYwa0V4SW9YdDloTVNqaU84bnZUTlhjZ3hmSjRQRFhFVXl4VURO?=
- =?utf-8?B?WDcrWllwMGkzM0tFUzd2VEEwRkx4R3BRcTZpK0ZQb0lkYWhoMkQwV0tWazVn?=
- =?utf-8?B?UWNPNGZaV0hYNTdPMXhKWnNnVG44OER0SVc0N0k0d295RHZoWWJkcEk3bVNT?=
- =?utf-8?B?OG1NRkNnRldPREdVNUZZeXNVQnBEbEViejNlTDZhNFpUbE95dm5ENWVEZ1Yx?=
- =?utf-8?B?WC9wemRWT05oRmtJQ1hyb2diWTdPVGZvYW9peEh2S0dnYUJJckNrRnJhUEk3?=
- =?utf-8?B?cHlPK0tOazNLODNNYnE4Szh0eUdsdjRJaU5kQXo3cDFpWlFyWHc0VGFOWFow?=
- =?utf-8?B?OFFDcGdPU2ZKV0UrTDFVWFNPN3ZxdWVxRTkwZlNzV0RMRnRiQURPV3hHb0FV?=
- =?utf-8?B?d1J0aTh0dmNuVDlOY1hsb1dEMHRQTzVsTjBtaGwxMHErck95cUl1V3N3ZElP?=
- =?utf-8?B?cFRaTEppY3BnY3o2VisxQWYyNmppRU9UYTF3UU8vRTRXelYyQVVEU3BvYjht?=
- =?utf-8?B?VEw5UHhYTXY2SjAybnZvVkJNSHl1b3RHYlVydmU1T0ZFYkJ0YjFpNWpDNTBr?=
- =?utf-8?B?ZXlCdnRnbHNSbXFaUDRVeFpmRXdJUFBFN1pCRG9HYzRQZkNCbHd1ank4MDZF?=
- =?utf-8?Q?ZVXaBW6SzxE=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CO1PR11MB5089.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(7416014)(1800799024)(7053199007); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cTVrZldqT1BtcTcwL0ZscFkvck9kS3J6cjRpN2xBMzRjSmdaSUpabzQrdTVt?=
- =?utf-8?B?N05iVHcvb3d1eVY3cTFsUWdBbEh6YXJZMWVhdlJuTk9JcU9sTFFXVHBzRG9i?=
- =?utf-8?B?U242T2xRM2pSSlg0T3phWmhNM1lqdFgvNVFlRmNyL3Y5SWM4N3FFSW5GbVRa?=
- =?utf-8?B?YnUxUGVReEFiUjlLOURCYUNXUDg5M3d2NFNjMWRaZ2RmcFFDSnF3NlNuTndu?=
- =?utf-8?B?SW40M2F3Tk5TYlF4QVVOWU5CVHhqMVorVzJEQldEdk9YSUc2b0ZhSHpwbTNL?=
- =?utf-8?B?UGUzNUIwTmlVRE5DUW1tbS8zUkR3WHg0ZDNDM29mR3E2RU5aOS9vTE5tcGtW?=
- =?utf-8?B?b1pqeCtWaWNDYzZqOE5ESWIyYmd6b05SWFhMNmFzcno5OVNxU1luMjdDK1JK?=
- =?utf-8?B?ZUg5ZnplOWxWRDd2RzJmYlpuc0pVdFBNazlTZ2pIajBzRXJwOUhydjNXeFpV?=
- =?utf-8?B?YmovZVdnUmp6dklOczVlc0l4MEg2QXBZWW4ybkxGeDVodXpGT2wwREZ4SVBl?=
- =?utf-8?B?dVYrMSsxR2tzRjVvMkZzTmZqbWlMS0pCSXh1cko5c0NJZytRUDNMQU51cHF5?=
- =?utf-8?B?UUdlUkVpSHhVR0V0TkRJM3ByZTlIKzlhUkVLdUVxK2JRL1dQNVM4ajVnUVp3?=
- =?utf-8?B?Y2FqMEZVOGtiSHNRYkp6K0drSEFxVVFyS3hDYWZmRlFkRnRqYVlLUUxVY2tr?=
- =?utf-8?B?VG0xK0IxNit5dnJTMGMxejBRNTV5TmxLbDhmM1BkRFhYWlVDMFlnTnlGQW1L?=
- =?utf-8?B?NzczbjdvMDA2aVZya0xLbHFWaGJSbVBtUk1TYUlDQWpJWU1SUC8zVnhFYUJn?=
- =?utf-8?B?SHBreWJnemhvNlRraHpWVzRuRjNWcmpLZURBUXpXTUlIL2l2d2ZDYWE2VlY4?=
- =?utf-8?B?UzRIYXhsa3ZWWUMwbitlYVJrQlNCRXVwUmFIU3NHVVFqa21ON1Y3TW9BSnFZ?=
- =?utf-8?B?M0RaNC9UUlVONFNOeDZtemZrUTQwT2NKamlCcVdlUms0KzYydWk1YUVqcFZw?=
- =?utf-8?B?S2E2YnB0UTBaV0Z4Um45OHVXNTFsK2xKNENQMlYrQXk4Z2dwN21DNzJBdnhi?=
- =?utf-8?B?SkhEYzdnQXN5UnRUYVRXRkJWdWorT2JsRk5ZZ1hlRFlnWnozL2p2alBhZFlU?=
- =?utf-8?B?UHIrZ3M1cnppTjBOalU0enN6WENjOEMvS0dwOERWbkhtMm1XZTFhcXBONm9x?=
- =?utf-8?B?MDBpMGRaMUZTREo5MkhlRWNwNEI2cnlkZTNxRWFSUmdNazc4Wm10TzZhTUFZ?=
- =?utf-8?B?TzRWSTR3UUNrUVhVdU9ZR2VObDlzekU0REp2VWtwaFFFbXk3RXhScGFiN3RP?=
- =?utf-8?B?ekR2ZE9Ob3ZhZ0JJbkh4SVFOZXpuZ3d3NlFpb2lLRG1zL2dNUCtKMWFvZXpi?=
- =?utf-8?B?ODhxaXFiS1pueVlTVVFoZ05IZWtrKzd1ZE5aR0Z6U1VSNlpKV0hyMCs3THF4?=
- =?utf-8?B?eEs1ZXpSWnFBQUlCcTlNOU9TTmRmeEVxVWJKelFkejhXOENEWDhjaWxQRUFm?=
- =?utf-8?B?M0hMTGVVNlRacjcxdmRrK2lVUFBqYWdpd0VzOHIzWE1uRTA4dEFaMTc0YmJK?=
- =?utf-8?B?NERmN1ExSll2RmxDK2dGdm4rQldkMitKNzBDNFVkRERhendoL0dXN2dyRWFl?=
- =?utf-8?B?NzRCVlBBTmxxWFBMV0IxZExhUHVNVHhFS1JJSS9VMElhTmU2ckpPWThJS3hv?=
- =?utf-8?B?Rm5oVWxyaktENDhrUGYrNjdXTUF5Z1dEZ0dSa0dubXlsVlR4MkxjQjhZMlVq?=
- =?utf-8?B?cXZzMWdpUUMzVnJuVjk4OEtTMFMwRGdsQmp3QTZSRTJ0bEVuZ01sckFnNUVB?=
- =?utf-8?B?UklORnVFbUVwR3FlckFyUG5tTjZ1VjRkOUl3eEhxVkgvd08rcWtsazNXZThN?=
- =?utf-8?B?TjZWVkh4MjFXSEozeUo0QW1tR0JjTjVINW16NkVWNWF2VC9ZQzd2eW55YlY0?=
- =?utf-8?B?bnVjcFlVempYRk16NWxRZkpiYzZyN2taeXpZYUlqUDVIWStZNWR2Z1MxSk1T?=
- =?utf-8?B?TVg5UXpaMkczQjZ3TEdUVzdNekFibEVEc0M0YmZUTkVhZzNyNGxKQVYraDhs?=
- =?utf-8?B?cVlWdXlpM1ptZnQ4ODREVkllNkFtaFhMaCsxajZnSkIxUk11eEplckRCRGJr?=
- =?utf-8?B?eXhNbnNBTlV2TkhoYWlWYm1jMzdNaHNJWlQ1SnZLdE9RbFJrRVNYRzhIMHpv?=
- =?utf-8?B?ZkE9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 87a2e933-5107-4b0f-331a-08ddecdc350d
-X-MS-Exchange-CrossTenant-AuthSource: CO1PR11MB5089.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Sep 2025 00:27:49.0302 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: GgC+Ns89bjar1ZlD4G2V9EkEGM0oKkaCyUzLh3xLGVazeYp94pX+AYsjSpkA1Zgyb+/EKpONVhORGYrKP3szCzYaZz88hlNULrvq7BHHQ+M=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR11MB7857
-X-OriginatorOrg: intel.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 19/37] mm/gup: remove record_subpages()
+To: John Hubbard <jhubbard@nvidia.com>, linux-kernel@vger.kernel.org
+Cc: Alexander Potapenko <glider@google.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Brendan Jackman <jackmanb@google.com>, Christoph Lameter <cl@gentwo.org>,
+ Dennis Zhou <dennis@kernel.org>, Dmitry Vyukov <dvyukov@google.com>,
+ dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+ iommu@lists.linux.dev, io-uring@vger.kernel.org,
+ Jason Gunthorpe <jgg@nvidia.com>, Jens Axboe <axboe@kernel.dk>,
+ Johannes Weiner <hannes@cmpxchg.org>, kasan-dev@googlegroups.com,
+ kvm@vger.kernel.org, "Liam R. Howlett" <Liam.Howlett@oracle.com>,
+ Linus Torvalds <torvalds@linux-foundation.org>, linux-arm-kernel@axis.com,
+ linux-arm-kernel@lists.infradead.org, linux-crypto@vger.kernel.org,
+ linux-ide@vger.kernel.org, linux-kselftest@vger.kernel.org,
+ linux-mips@vger.kernel.org, linux-mmc@vger.kernel.org, linux-mm@kvack.org,
+ linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
+ linux-scsi@vger.kernel.org, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+ Marco Elver <elver@google.com>, Marek Szyprowski <m.szyprowski@samsung.com>,
+ Michal Hocko <mhocko@suse.com>, Mike Rapoport <rppt@kernel.org>,
+ Muchun Song <muchun.song@linux.dev>, netdev@vger.kernel.org,
+ Oscar Salvador <osalvador@suse.de>, Peter Xu <peterx@redhat.com>,
+ Robin Murphy <robin.murphy@arm.com>, Suren Baghdasaryan <surenb@google.com>,
+ Tejun Heo <tj@kernel.org>, virtualization@lists.linux.dev,
+ Vlastimil Babka <vbabka@suse.cz>, wireguard@lists.zx2c4.com, x86@kernel.org,
+ Zi Yan <ziy@nvidia.com>
+References: <20250901150359.867252-1-david@redhat.com>
+ <20250901150359.867252-20-david@redhat.com>
+ <016307ba-427d-4646-8e4d-1ffefd2c1968@nvidia.com>
+From: David Hildenbrand <david@redhat.com>
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ qIws/H2t
+In-Reply-To: <016307ba-427d-4646-8e4d-1ffefd2c1968@nvidia.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: _YdCzoeM_Ff4NBcwcyjqM60cNI_ktjMo1gohyKFKVGA_1757141819
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -213,66 +169,350 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---------------n8uGMrTWfv0xFR6Or2xhxXG8
-Content-Type: multipart/mixed; boundary="------------pcaGaxQBYsUkPC54SpjtEuzK";
- protected-headers="v1"
-From: Jacob Keller <jacob.e.keller@intel.com>
-To: Donald Hunter <donald.hunter@gmail.com>,
- =?UTF-8?Q?Asbj=C3=B8rn_Sloth_T=C3=B8nnesen?= <ast@fiberby.net>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Simon Horman <horms@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>,
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Message-ID: <410d69e5-d1f8-40e0-84b1-b5d56e0d9366@intel.com>
-Subject: Re: [PATCH net-next 10/11] tools: ynl: decode hex input
-References: <20250904-wg-ynl-prep@fiberby.net>
- <20250904220156.1006541-10-ast@fiberby.net> <m2h5xhxjd5.fsf@gmail.com>
-In-Reply-To: <m2h5xhxjd5.fsf@gmail.com>
-
---------------pcaGaxQBYsUkPC54SpjtEuzK
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-
-
-On 9/5/2025 3:51 AM, Donald Hunter wrote:
-> Asbj=C3=B8rn Sloth T=C3=B8nnesen <ast@fiberby.net> writes:
->=20
->> This patch add support for decoding hex input, so
->> that binary attributes can be read through --json.
+On 06.09.25 03:05, John Hubbard wrote:
+> On 9/1/25 8:03 AM, David Hildenbrand wrote:
+>> We can just cleanup the code by calculating the #refs earlier,
+>> so we can just inline what remains of record_subpages().
 >>
->> Example (using future wireguard.yaml):
->>  $ sudo ./tools/net/ynl/pyynl/cli.py --family wireguard \
->>    --do set-device --json '{"ifindex":3,
->>      "private-key":"2a ae 6c 35 c9 4f cf <... to 32 bytes>"}'
+>> Calculate the number of references/pages ahead of times, and record them
+>> only once all our tests passed.
 >>
->> Signed-off-by: Asbj=C3=B8rn Sloth T=C3=B8nnesen <ast@fiberby.net>
->=20
-> Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
->=20
-> FWIW, the hex can include spaces or not when using bytes.fromhex(). Whe=
-n
-> formatting hex for output, I chose to include spaces, but I don't reall=
-y
-> know if that was a good choice or not.
+>> Signed-off-by: David Hildenbrand <david@redhat.com>
+>> ---
+>>   mm/gup.c | 25 ++++++++-----------------
+>>   1 file changed, 8 insertions(+), 17 deletions(-)
+>>
+>> diff --git a/mm/gup.c b/mm/gup.c
+>> index c10cd969c1a3b..f0f4d1a68e094 100644
+>> --- a/mm/gup.c
+>> +++ b/mm/gup.c
+>> @@ -484,19 +484,6 @@ static inline void mm_set_has_pinned_flag(struct mm_struct *mm)
+>>   #ifdef CONFIG_MMU
+>>   
+>>   #ifdef CONFIG_HAVE_GUP_FAST
+>> -static int record_subpages(struct page *page, unsigned long sz,
+>> -			   unsigned long addr, unsigned long end,
+>> -			   struct page **pages)
+>> -{
+>> -	int nr;
+>> -
+>> -	page += (addr & (sz - 1)) >> PAGE_SHIFT;
+>> -	for (nr = 0; addr != end; nr++, addr += PAGE_SIZE)
+>> -		pages[nr] = page++;
+>> -
+>> -	return nr;
+>> -}
+>> -
+>>   /**
+>>    * try_grab_folio_fast() - Attempt to get or pin a folio in fast path.
+>>    * @page:  pointer to page to be grabbed
+>> @@ -2967,8 +2954,8 @@ static int gup_fast_pmd_leaf(pmd_t orig, pmd_t *pmdp, unsigned long addr,
+>>   	if (pmd_special(orig))
+>>   		return 0;
+>>   
+>> -	page = pmd_page(orig);
+>> -	refs = record_subpages(page, PMD_SIZE, addr, end, pages + *nr);
+>> +	refs = (end - addr) >> PAGE_SHIFT;
+>> +	page = pmd_page(orig) + ((addr & ~PMD_MASK) >> PAGE_SHIFT);
+>>   
+>>   	folio = try_grab_folio_fast(page, refs, flags);
+>>   	if (!folio)
+>> @@ -2989,6 +2976,8 @@ static int gup_fast_pmd_leaf(pmd_t orig, pmd_t *pmdp, unsigned long addr,
+>>   	}
+>>   
+>>   	*nr += refs;
+>> +	for (; refs; refs--)
+>> +		*(pages++) = page++;
+>>   	folio_set_referenced(folio);
+>>   	return 1;
+>>   }
+>> @@ -3007,8 +2996,8 @@ static int gup_fast_pud_leaf(pud_t orig, pud_t *pudp, unsigned long addr,
+>>   	if (pud_special(orig))
+>>   		return 0;
+>>   
+>> -	page = pud_page(orig);
+>> -	refs = record_subpages(page, PUD_SIZE, addr, end, pages + *nr);
+>> +	refs = (end - addr) >> PAGE_SHIFT;
+>> +	page = pud_page(orig) + ((addr & ~PUD_MASK) >> PAGE_SHIFT);
+>>   
+>>   	folio = try_grab_folio_fast(page, refs, flags);
+>>   	if (!folio)
+>> @@ -3030,6 +3019,8 @@ static int gup_fast_pud_leaf(pud_t orig, pud_t *pudp, unsigned long addr,
+>>   	}
+>>   
+>>   	*nr += refs;
+>> +	for (; refs; refs--)
+>> +		*(pages++) = page++;
+> 
+> Hi David,
 
-I also prefer the spaces for readability.
+Hi!
 
---------------pcaGaxQBYsUkPC54SpjtEuzK--
+> 
+> Probably a similar sentiment as Lorenzo here...the above diffs make the code
+> *worse* to read. In fact, I recall adding record_subpages() here long ago,
+> specifically to help clarify what was going on.
 
---------------n8uGMrTWfv0xFR6Or2xhxXG8
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+Well, there is a lot I dislike about record_subpages() to go back there.
+Starting with "as Willy keeps explaining, the concept of subpages do
+not exist and ending with "why do we fill out the array even on failure".
 
------BEGIN PGP SIGNATURE-----
+:)
 
-wnsEABYIACMWIQQgQFSp1zOQVirsQx5qll0+bw8o6AUCaLuAAwUDAAAAAAAKCRBqll0+bw8o6FUB
-AP4+TG3BZpjRxgVGJgY3+/i7Y1XHG84uqwuGW+hkX+k1BAEAyrdfKsXXXDKVHEqrU+0kbeEwJasZ
-OTTAah2NZ2brMww=
-=8zw/
------END PGP SIGNATURE-----
+> 
+> Now it's been returned to it's original, cryptic form.
+> 
 
---------------n8uGMrTWfv0xFR6Or2xhxXG8--
+The code in the caller was so uncryptic that both me and Lorenzo missed
+that magical addition. :P
+
+> Just my take on it, for whatever that's worth. :)
+
+As always, appreciated.
+
+I could of course keep the simple loop in some "record_folio_pages"
+function and clean up what I dislike about record_subpages().
+
+But I much rather want the call chain to be cleaned up instead, if possible.
+
+
+Roughly, what I am thinking (limiting it to pte+pmd case) about is the following:
+
+
+ From d6d6d21dbf435d8030782a627175e36e6c7b2dfb Mon Sep 17 00:00:00 2001
+From: David Hildenbrand <david@redhat.com>
+Date: Sat, 6 Sep 2025 08:33:42 +0200
+Subject: [PATCH] tmp
+
+Signed-off-by: David Hildenbrand <david@redhat.com>
+---
+  mm/gup.c | 79 ++++++++++++++++++++++++++------------------------------
+  1 file changed, 36 insertions(+), 43 deletions(-)
+
+diff --git a/mm/gup.c b/mm/gup.c
+index 22420f2069ee1..98907ead749c0 100644
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -2845,12 +2845,11 @@ static void __maybe_unused gup_fast_undo_dev_pagemap(int *nr, int nr_start,
+   * also check pmd here to make sure pmd doesn't change (corresponds to
+   * pmdp_collapse_flush() in the THP collapse code path).
+   */
+-static int gup_fast_pte_range(pmd_t pmd, pmd_t *pmdp, unsigned long addr,
+-		unsigned long end, unsigned int flags, struct page **pages,
+-		int *nr)
++static unsigned long gup_fast_pte_range(pmd_t pmd, pmd_t *pmdp, unsigned long addr,
++		unsigned long end, unsigned int flags, struct page **pages)
+  {
+  	struct dev_pagemap *pgmap = NULL;
+-	int ret = 0;
++	unsigned long nr_pages = 0;
+  	pte_t *ptep, *ptem;
+  
+  	ptem = ptep = pte_offset_map(&pmd, addr);
+@@ -2908,24 +2907,20 @@ static int gup_fast_pte_range(pmd_t pmd, pmd_t *pmdp, unsigned long addr,
+  		 * details.
+  		 */
+  		if (flags & FOLL_PIN) {
+-			ret = arch_make_folio_accessible(folio);
+-			if (ret) {
++			if (arch_make_folio_accessible(folio)) {
+  				gup_put_folio(folio, 1, flags);
+  				goto pte_unmap;
+  			}
+  		}
+  		folio_set_referenced(folio);
+-		pages[*nr] = page;
+-		(*nr)++;
++		pages[nr_pages++] = page;
+  	} while (ptep++, addr += PAGE_SIZE, addr != end);
+  
+-	ret = 1;
+-
+  pte_unmap:
+  	if (pgmap)
+  		put_dev_pagemap(pgmap);
+  	pte_unmap(ptem);
+-	return ret;
++	return nr_pages;
+  }
+  #else
+  
+@@ -2938,21 +2933,24 @@ static int gup_fast_pte_range(pmd_t pmd, pmd_t *pmdp, unsigned long addr,
+   * get_user_pages_fast_only implementation that can pin pages. Thus it's still
+   * useful to have gup_fast_pmd_leaf even if we can't operate on ptes.
+   */
+-static int gup_fast_pte_range(pmd_t pmd, pmd_t *pmdp, unsigned long addr,
+-		unsigned long end, unsigned int flags, struct page **pages,
+-		int *nr)
++static unsigned long gup_fast_pte_range(pmd_t pmd, pmd_t *pmdp, unsigned long addr,
++		unsigned long end, unsigned int flags, struct page **pages)
+  {
+  	return 0;
+  }
+  #endif /* CONFIG_ARCH_HAS_PTE_SPECIAL */
+  
+-static int gup_fast_pmd_leaf(pmd_t orig, pmd_t *pmdp, unsigned long addr,
+-		unsigned long end, unsigned int flags, struct page **pages,
+-		int *nr)
++static unsigned long gup_fast_pmd_leaf(pmd_t orig, pmd_t *pmdp, unsigned long addr,
++		unsigned long end, unsigned int flags, struct page **pages)
+  {
++	const unsigned long nr_pages = (end - addr) >> PAGE_SHIFT;
+  	struct page *page;
+  	struct folio *folio;
+-	int refs;
++	unsigned long i;
++
++	/* See gup_fast_pte_range() */
++	if (pmd_protnone(orig))
++		return 0;
+  
+  	if (!pmd_access_permitted(orig, flags & FOLL_WRITE))
+  		return 0;
+@@ -2960,33 +2958,30 @@ static int gup_fast_pmd_leaf(pmd_t orig, pmd_t *pmdp, unsigned long addr,
+  	if (pmd_special(orig))
+  		return 0;
+  
+-	refs = (end - addr) >> PAGE_SHIFT;
+  	page = pmd_page(orig) + ((addr & ~PMD_MASK) >> PAGE_SHIFT);
+  
+-	folio = try_grab_folio_fast(page, refs, flags);
++	folio = try_grab_folio_fast(page, nr_pages, flags);
+  	if (!folio)
+  		return 0;
+  
+  	if (unlikely(pmd_val(orig) != pmd_val(*pmdp))) {
+-		gup_put_folio(folio, refs, flags);
++		gup_put_folio(folio, nr_pages, flags);
+  		return 0;
+  	}
+  
+  	if (!gup_fast_folio_allowed(folio, flags)) {
+-		gup_put_folio(folio, refs, flags);
++		gup_put_folio(folio, nr_pages, flags);
+  		return 0;
+  	}
+  	if (!pmd_write(orig) && gup_must_unshare(NULL, flags, &folio->page)) {
+-		gup_put_folio(folio, refs, flags);
++		gup_put_folio(folio, nr_pages, flags);
+  		return 0;
+  	}
+  
+-	pages += *nr;
+-	*nr += refs;
+-	for (; refs; refs--)
++	for (i = 0; i < nr_pages; i++)
+  		*(pages++) = page++;
+  	folio_set_referenced(folio);
+-	return 1;
++	return nr_pages;
+  }
+  
+  static int gup_fast_pud_leaf(pud_t orig, pud_t *pudp, unsigned long addr,
+@@ -3033,11 +3028,11 @@ static int gup_fast_pud_leaf(pud_t orig, pud_t *pudp, unsigned long addr,
+  	return 1;
+  }
+  
+-static int gup_fast_pmd_range(pud_t *pudp, pud_t pud, unsigned long addr,
+-		unsigned long end, unsigned int flags, struct page **pages,
+-		int *nr)
++static unsigned long gup_fast_pmd_range(pud_t *pudp, pud_t pud, unsigned long addr,
++		unsigned long end, unsigned int flags, struct page **pages)
+  {
+-	unsigned long next;
++	unsigned long cur_nr_pages, next;
++	unsigned long nr_pages = 0;
+  	pmd_t *pmdp;
+  
+  	pmdp = pmd_offset_lockless(pudp, pud, addr);
+@@ -3046,23 +3041,21 @@ static int gup_fast_pmd_range(pud_t *pudp, pud_t pud, unsigned long addr,
+  
+  		next = pmd_addr_end(addr, end);
+  		if (!pmd_present(pmd))
+-			return 0;
++			break;
+  
+-		if (unlikely(pmd_leaf(pmd))) {
+-			/* See gup_fast_pte_range() */
+-			if (pmd_protnone(pmd))
+-				return 0;
++		if (unlikely(pmd_leaf(pmd)))
++			cur_nr_pages = gup_fast_pmd_leaf(pmd, pmdp, addr, next, flags, pages);
++		else
++			cur_nr_pages = gup_fast_pte_range(pmd, pmdp, addr, next, flags, pages);
+  
+-			if (!gup_fast_pmd_leaf(pmd, pmdp, addr, next, flags,
+-				pages, nr))
+-				return 0;
++		nr_pages += cur_nr_pages;
++		pages += cur_nr_pages;
+  
+-		} else if (!gup_fast_pte_range(pmd, pmdp, addr, next, flags,
+-					       pages, nr))
+-			return 0;
++		if (nr_pages != (next - addr) >> PAGE_SIZE)
++			break;
+  	} while (pmdp++, addr = next, addr != end);
+  
+-	return 1;
++	return nr_pages;
+  }
+  
+  static int gup_fast_pud_range(p4d_t *p4dp, p4d_t p4d, unsigned long addr,
+-- 
+2.50.1
+
+
+
+Oh, I might even have found a bug moving away from that questionable
+"ret==1 means success" handling in gup_fast_pte_range()? Will
+have to double-check, but likely the following is the right thing to do.
+
+
+
+ From 8f48b25ef93e7ef98611fd58ec89384ad5171782 Mon Sep 17 00:00:00 2001
+From: David Hildenbrand <david@redhat.com>
+Date: Sat, 6 Sep 2025 08:46:45 +0200
+Subject: [PATCH] mm/gup: fix handling of errors from
+  arch_make_folio_accessible() in follow_page_pte()
+
+In case we call arch_make_folio_accessible() and it fails, we would
+incorrectly return a value that is "!= 0" to the caller, indicating that
+we pinned all requested pages and that the caller can keep going.
+
+follow_page_pte() is not supposed to return error values, but instead
+0 on failure and 1 on success.
+
+That is of course wrong, because the caller will just keep going pinning
+more pages. If we happen to pin a page afterwards, we're in trouble,
+because we essentially skipped some pages.
+
+Fixes: f28d43636d6f ("mm/gup/writeback: add callbacks for inaccessible pages")
+Signed-off-by: David Hildenbrand <david@redhat.com>
+---
+  mm/gup.c | 3 +--
+  1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/mm/gup.c b/mm/gup.c
+index 22420f2069ee1..cff226ec0ee7d 100644
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -2908,8 +2908,7 @@ static int gup_fast_pte_range(pmd_t pmd, pmd_t *pmdp, unsigned long addr,
+  		 * details.
+  		 */
+  		if (flags & FOLL_PIN) {
+-			ret = arch_make_folio_accessible(folio);
+-			if (ret) {
++			if (arch_make_folio_accessible(folio)) {
+  				gup_put_folio(folio, 1, flags);
+  				goto pte_unmap;
+  			}
+-- 
+2.50.1
+
+
+-- 
+Cheers
+
+David / dhildenb
+
