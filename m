@@ -4,50 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5F47CF2563
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 22:44:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F61ACF2564
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 22:44:41 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ea1dca70;
-	Tue, 18 Nov 2025 17:26:23 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8669f972;
+	Tue, 18 Nov 2025 17:26:25 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b735746d
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6e719991
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sat, 6 Sep 2025 13:22:13 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Sat, 6 Sep 2025 14:13:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
- s=202008; t=1757164932;
- bh=WuJjhnpVAljlL69bb7BMFtboVVhRumBRvD7e4BdACi0=;
+ s=202008; t=1757167994;
+ bh=SUTg28ZJsRkSXTT3PgjawxQbv7QSVrlXljA/sqN5les=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=O3J+fR624oSv3ySdbCx2BarAaQYFJR8TAxdaB7GcuXgRmuPbzHvlvD/5ZiwSD9ncv
- GE6N5x9WREsaDYQKVBhAkWuCgxa7JR40Ex+P+FNRKVmCNakhhfnxJGCReTKUO4ugdu
- erOh9hBWfj4Kmue+GGCV8bCn2MMJktm7n7GGLKPppwanRWdkuA2gC4CoZhXTR+sr0z
- S8PMkbTxuw1pXDAyDpeK4yd892mFhLu18g6cVGij3FyFp07JP54NygG505Z6LJ9sWG
- 2ZwuAlwQ690SJUPrX8g2asaN5thk2jvK6dvsMZcR1irzsnPUZOvZao8DHChUqv/shZ
- qyDKYlRb9vKhQ==
+ b=IibiyyiR36CqAMePCOPEGLevQFe4TV1rnLOTwQc4XOsn988+RmVBF5Upac97jh2AK
+ OJ4ifamAu3cgvY2fpNBaifPxEJUZHe2bCI2/UH4L2zVyOi9yMyxFCRG/WCw++y4Wiu
+ /6+0vjg2WhTjt6bCDwCJegj9rQM/B6oIjOW569jTWgYTMOYXMA1tXc9XYHEIkJEk1C
+ d29e4y5ccZhhIo488E+YV1HSAsTpmh5LFgp61nWlqQxo2TJ/sVpFy79+SK0kAS0syK
+ P502Zmb1/WbAuLT1u+sSTYs4roXmNHEDiz24xhccECrXoLdVmZVJhO4zCCFOVHwc+X
+ 1Ru5Jx8/yXGtw==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id 738776000C;
- Sat,  6 Sep 2025 13:22:12 +0000 (UTC)
+ by mail1.fiberby.net (Postfix) with ESMTPSA id 76DCB6000C;
+ Sat,  6 Sep 2025 14:13:08 +0000 (UTC)
 Received: from [127.0.0.1] (localhost [127.0.0.1])
- by x201s (Postfix) with ESMTP id B6DB6200438;
- Sat, 06 Sep 2025 13:22:01 +0000 (UTC)
-Message-ID: <0a9a7c41-7deb-4078-8cc9-aee8f8784443@fiberby.net>
-Date: Sat, 6 Sep 2025 13:22:01 +0000
+ by x201s (Postfix) with ESMTP id 880A7201BC9;
+ Sat, 06 Sep 2025 14:13:01 +0000 (UTC)
+Message-ID: <6e31a9e0-5450-4b45-a557-2aa08d23c25a@fiberby.net>
+Date: Sat, 6 Sep 2025 14:13:01 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next 06/11] tools: ynl-gen: don't validate nested
- array attribute types
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Paolo Abeni <pabeni@redhat.com>, Donald Hunter <donald.hunter@gmail.com>,
- Simon Horman <horms@kernel.org>, Jacob Keller <jacob.e.keller@intel.com>,
+Subject: Re: [PATCH net-next 02/11] tools: ynl-gen: generate nested array
+ policies
+To: Jacob Keller <jacob.e.keller@intel.com>,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>, "David S. Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>
+Cc: Donald Hunter <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>, 
  Andrew Lunn <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com,
- netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Johannes Berg <johannes.berg@intel.com>
 References: <20250904-wg-ynl-prep@fiberby.net>
- <20250904220156.1006541-6-ast@fiberby.net>
- <20250905172334.0411e05e@kernel.org>
+ <20250904220156.1006541-2-ast@fiberby.net>
+ <e24f5baf-7085-4db0-aaad-5318555988b3@intel.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Asbj=C3=B8rn_Sloth_T=C3=B8nnesen?= <ast@fiberby.net>
-In-Reply-To: <20250905172334.0411e05e@kernel.org>
+In-Reply-To: <e24f5baf-7085-4db0-aaad-5318555988b3@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Tue, 18 Nov 2025 17:23:15 +0000
@@ -65,52 +66,76 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 9/6/25 12:23 AM, Jakub Kicinski wrote:
-> On Thu,  4 Sep 2025 22:01:29 +0000 Asbjørn Sloth Tønnesen wrote:
->> In nested arrays don't require that the intermediate
->> attribute type should be a valid attribute type, it
->> might just be an index or simple 0, it is often not
->> even used.
+CC: Johannes
+
+On 9/6/25 12:19 AM, Jacob Keller wrote:
+> On 9/4/2025 3:01 PM, Asbjørn Sloth Tønnesen wrote:
+>> This patch adds support for NLA_POLICY_NESTED_ARRAY() policies.
 >>
->> See include/net/netlink.h about NLA_NESTED_ARRAY:
->>> The difference to NLA_NESTED is the structure:
->>> NLA_NESTED has the nested attributes directly inside
->>> while an array has the nested attributes at another
->>> level down and the attribute types directly in the
->>> nesting don't matter.
+>> Example spec (from future wireguard.yaml):
+>> -
+>>    name: wgpeer
+>>    attributes:
+>>      -
+>>        name: allowedips
+>>        type: indexed-array
+>>        sub-type: nest
+>>        nested-attributes: wgallowedip
+>>
+>> yields NLA_POLICY_NESTED_ARRAY(wireguard_wgallowedip_nl_policy).
+>>
+>> This doesn't change any currently generated code, as it isn't
+>> used in any specs currently used for generating code.
+>>
+>> Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+>> ---
 > 
-> I don't understand, please provide more details.
-> This is an ArrayNest, right?
+> Is this keyed of off the sub-type? Does you mean that all the existing
+> uses of 'sub-type: nest' don't generate code today? Or that this
+> _attr_policy implementation is not called yet?
+
+Thanks for the reviews. Yeah, it is a careful wording, because we have
+specs matching it, but there aren't any source files that triggers
+ynl-gen to generate code based on those specs.
+
+Therefore this patch, doesn't result in any code changes when running:
+$ ./tools/net/ynl/ynl-regen.sh -f
+
+Actually ynl-gen generates a fictive "{ .type = NLA_INDEXED_ARRAY, }"
+policy, without this patch, leading to a build failure.
+
+> I checked and we have quite a number of uses:
 > 
-> [ARRAY-ATTR]
->    [ENTRY]
->      [MEMBER1]
->      [MEMBER2]
->    [ENTRY]
->      [MEMBER1]
->      [MEMBER2]
-> 
-> Which level are you saying doesn't matter?
-> If entry is a nest it must be a valid nest.
-> What the comment you're quoting is saying is that the nla_type of ENTRY
-> doesn't matter.
+>> $ rg 'sub-type: nest'
+>> Documentation/netlink/specs/nlctrl.yaml
+ >> [..]
+>> Documentation/netlink/specs/tc.yaml
+>> [..]
+>> Documentation/netlink/specs/rt-link.yaml
+>> [..]
+>> Documentation/netlink/specs/nl80211.yaml
+>> [..]
 
-I will expand this in v2, but the gist of it is that this is part of the
-"split attribute counting, and later allocating an array to hold them" code.
+None of those currently have a generated netlink policy.
 
-The check that I remove for nested arrays, is an early exit during the
-counting phase. Later in the allocation and parse phase it validates the
-nested payload.
+These are the netlink policies currently generated by ynl-gen:
+$ git grep -h -B1 'YNL-GEN kernel source' | grep '^/\*[^ ]'
+/*      Documentation/netlink/specs/dpll.yaml */
+/*      Documentation/netlink/specs/ovpn.yaml */
+/*      Documentation/netlink/specs/team.yaml */
+/*      Documentation/netlink/specs/lockd.yaml */
+/*      Documentation/netlink/specs/nfsd.yaml */
+/*      Documentation/netlink/specs/netdev.yaml */
+/*      Documentation/netlink/specs/devlink.yaml */
+/*      Documentation/netlink/specs/handshake.yaml */
+/*      Documentation/netlink/specs/fou.yaml */
+/*      Documentation/netlink/specs/mptcp_pm.yaml */
+/*      Documentation/netlink/specs/net_shaper.yaml */
 
-In include/uapi/linux/wireguard.h:
- > WGDEVICE_A_PEERS: NLA_NESTED
- >   0: NLA_NESTED
- >     WGPEER_A_PUBLIC_KEY: NLA_EXACT_LEN, len WG_KEY_LEN
- >     [..]
- >   0: NLA_NESTED
- >     ...
- >   ...
+Johannes introduced NLA_NESTED_ARRAY and the NLA_POLICY_NESTED_ARRAY()
+macro in commit 1501d13596b9 for use in nl80211, and it's therefore
+used in net/wireless/nl80211.c, but outside of that the macro is
+only sparsely adopted (only by mac80211_hwsim.c and nf_tables_api.c).
 
-The current check requires that the nested type is valid in the nested
-attribute set, which in this case resolves to WGDEVICE_A_UNSPEC, which is
-YNL_PT_REJECT, and it takes the early exit and returns YNL_PARSE_CB_ERROR.
+Wireguard adopts the macro in this RFC patch:
+https://lore.kernel.org/netdev/20250904220255.1006675-2-ast@fiberby.net/
