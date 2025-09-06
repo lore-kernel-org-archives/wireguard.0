@@ -4,69 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C33E1CA1013
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  5 Sep 2025 23:01:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FB6DCA0FED
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  6 Sep 2025 00:07:31 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 002b9a8c;
-	Fri, 5 Sep 2025 23:01:25 +0000 (UTC)
-Received: from tor.source.kernel.org (tor.source.kernel.org
- [2600:3c04:e001:324:0:1991:8:25])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c95bf74b
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d5990bbe;
+	Sat, 6 Sep 2025 00:07:30 +0000 (UTC)
+Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c5808579
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 5 Sep 2025 23:01:22 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Sat, 6 Sep 2025 00:07:28 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id CBCC2601AA;
- Fri,  5 Sep 2025 23:01:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2CEDC4CEF1;
- Fri,  5 Sep 2025 23:01:18 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 19CBB6029B;
+ Sat,  6 Sep 2025 00:07:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C12C4CEF1;
+ Sat,  6 Sep 2025 00:07:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1757113280;
- bh=+lhopyxIHPkimkHLqjBagKsowbxPduHdhl1alB5XIHw=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=FKhh4N0YC7rktiPdXEfXclWanEDKYne9TN6cdcuCjqPCtcq4Rn0r96yLuECJbiw+4
- LjwCnjQtLBAm0edveUnCZZYiNonj/7aqKLJr2wGtnUHH+scBK/7r7JUigttXLAScDm
- pXeFnpIPvL1/rZKX9LdznwwDYBYkDL4/X0Q74Dlpx/NmySnEYO46ImCPWzvWXVlUfn
- 7nKQ1fERSefzbF0N9pUOtT2Ew99OpHStRZ+01KHKpecJw2kFIukduhp+K3hQulq8o0
- 47VhyxuU+d72ralUlgkhIgcgxiZyD9aQX9YFUuu3Ep7hq8BTDKfbNp6DFssdME8qWg
- uTEId8/MJZDQg==
-Date: Fri, 5 Sep 2025 16:00:06 -0700
-From: Eric Biggers <ebiggers@kernel.org>
-To: David Hildenbrand <david@redhat.com>
-Cc: linux-kernel@vger.kernel.org, Alexander Potapenko <glider@google.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- Brendan Jackman <jackmanb@google.com>,
- Christoph Lameter <cl@gentwo.org>, Dennis Zhou <dennis@kernel.org>,
- Dmitry Vyukov <dvyukov@google.com>, dri-devel@lists.freedesktop.org,
- intel-gfx@lists.freedesktop.org, iommu@lists.linux.dev,
- io-uring@vger.kernel.org, Jason Gunthorpe <jgg@nvidia.com>,
- Jens Axboe <axboe@kernel.dk>, Johannes Weiner <hannes@cmpxchg.org>,
- John Hubbard <jhubbard@nvidia.com>, kasan-dev@googlegroups.com,
- kvm@vger.kernel.org, "Liam R. Howlett" <Liam.Howlett@oracle.com>,
- Linus Torvalds <torvalds@linux-foundation.org>,
- linux-arm-kernel@axis.com, linux-arm-kernel@lists.infradead.org,
- linux-crypto@vger.kernel.org, linux-ide@vger.kernel.org,
- linux-kselftest@vger.kernel.org, linux-mips@vger.kernel.org,
- linux-mmc@vger.kernel.org, linux-mm@kvack.org,
- linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
- linux-scsi@vger.kernel.org, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
- Marco Elver <elver@google.com>,
- Marek Szyprowski <m.szyprowski@samsung.com>,
- Michal Hocko <mhocko@suse.com>, Mike Rapoport <rppt@kernel.org>,
- Muchun Song <muchun.song@linux.dev>, netdev@vger.kernel.org,
- Oscar Salvador <osalvador@suse.de>, Peter Xu <peterx@redhat.com>,
- Robin Murphy <robin.murphy@arm.com>,
- Suren Baghdasaryan <surenb@google.com>, Tejun Heo <tj@kernel.org>,
- virtualization@lists.linux.dev, Vlastimil Babka <vbabka@suse.cz>,
- wireguard@lists.zx2c4.com, x86@kernel.org, Zi Yan <ziy@nvidia.com>
-Subject: Re: [PATCH v2 19/37] mm/gup: remove record_subpages()
-Message-ID: <20250905230006.GA1776@sol>
-References: <20250901150359.867252-1-david@redhat.com>
- <20250901150359.867252-20-david@redhat.com>
- <5090355d-546a-4d06-99e1-064354d156b5@redhat.com>
+ s=k20201202; t=1757117246;
+ bh=zYE+E8tCnsrg0b34NooGYBFJYA5zkC/kI80cDxPkmU4=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=RaYItX7HMlPCJtzaZ6iSHJrQc6glP5zIoPvr54tOfCwePX8/b+FHC33PySiigmcXv
+ b9l6pqkRGgzygknbMRy0J/Emy4Z6hKNxcBm7iIo8bxUS7+ctzOh1uiv+w/l2LipbW2
+ UBtVypzWE8kBGwDkVVsZnCsCvYv85BH8NzwiOMxTM+xk3jJ09dGs/bE7rFCBbYEEXp
+ 9iaw0uSVNAJDCDQpf6eMd1XMCQdMbI4XKcmLV0Di6qtrnYFllRaJvI01pJ9qHYKbRN
+ mywsea84URLRiWvaQ5DfE6ByQyD7vaDvzWDYwW+EUjieNgHnPri1DqL9q7pFCGVQB5
+ pMyVO51jH045A==
+Date: Fri, 5 Sep 2025 17:07:25 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: =?UTF-8?B?QXNiasO4cm4=?= Sloth =?UTF-8?B?VMO4bm5lc2Vu?= <ast@fiberby.net>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, "David S. Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Paolo Abeni
+ <pabeni@redhat.com>, Donald Hunter <donald.hunter@gmail.com>, Simon Horman
+ <horms@kernel.org>, Jacob Keller <jacob.e.keller@intel.com>, Andrew Lunn
+ <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net-next 01/11] tools: ynl-gen: allow overriding
+ name-prefix for constants
+Message-ID: <20250905170725.20387dc6@kernel.org>
+In-Reply-To: <20250904220156.1006541-1-ast@fiberby.net>
+References: <20250904-wg-ynl-prep@fiberby.net>
+ <20250904220156.1006541-1-ast@fiberby.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5090355d-546a-4d06-99e1-064354d156b5@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -81,111 +60,11 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Fri, Sep 05, 2025 at 08:41:23AM +0200, David Hildenbrand wrote:
-> On 01.09.25 17:03, David Hildenbrand wrote:
-> > We can just cleanup the code by calculating the #refs earlier,
-> > so we can just inline what remains of record_subpages().
-> > 
-> > Calculate the number of references/pages ahead of times, and record them
-> > only once all our tests passed.
-> > 
-> > Signed-off-by: David Hildenbrand <david@redhat.com>
-> > ---
-> >   mm/gup.c | 25 ++++++++-----------------
-> >   1 file changed, 8 insertions(+), 17 deletions(-)
-> > 
-> > diff --git a/mm/gup.c b/mm/gup.c
-> > index c10cd969c1a3b..f0f4d1a68e094 100644
-> > --- a/mm/gup.c
-> > +++ b/mm/gup.c
-> > @@ -484,19 +484,6 @@ static inline void mm_set_has_pinned_flag(struct mm_struct *mm)
-> >   #ifdef CONFIG_MMU
-> >   #ifdef CONFIG_HAVE_GUP_FAST
-> > -static int record_subpages(struct page *page, unsigned long sz,
-> > -			   unsigned long addr, unsigned long end,
-> > -			   struct page **pages)
-> > -{
-> > -	int nr;
-> > -
-> > -	page += (addr & (sz - 1)) >> PAGE_SHIFT;
-> > -	for (nr = 0; addr != end; nr++, addr += PAGE_SIZE)
-> > -		pages[nr] = page++;
-> > -
-> > -	return nr;
-> > -}
-> > -
-> >   /**
-> >    * try_grab_folio_fast() - Attempt to get or pin a folio in fast path.
-> >    * @page:  pointer to page to be grabbed
-> > @@ -2967,8 +2954,8 @@ static int gup_fast_pmd_leaf(pmd_t orig, pmd_t *pmdp, unsigned long addr,
-> >   	if (pmd_special(orig))
-> >   		return 0;
-> > -	page = pmd_page(orig);
-> > -	refs = record_subpages(page, PMD_SIZE, addr, end, pages + *nr);
-> > +	refs = (end - addr) >> PAGE_SHIFT;
-> > +	page = pmd_page(orig) + ((addr & ~PMD_MASK) >> PAGE_SHIFT);
-> >   	folio = try_grab_folio_fast(page, refs, flags);
-> >   	if (!folio)
-> > @@ -2989,6 +2976,8 @@ static int gup_fast_pmd_leaf(pmd_t orig, pmd_t *pmdp, unsigned long addr,
-> >   	}
-> >   	*nr += refs;
-> > +	for (; refs; refs--)
-> > +		*(pages++) = page++;
-> >   	folio_set_referenced(folio);
-> >   	return 1;
-> >   }
-> > @@ -3007,8 +2996,8 @@ static int gup_fast_pud_leaf(pud_t orig, pud_t *pudp, unsigned long addr,
-> >   	if (pud_special(orig))
-> >   		return 0;
-> > -	page = pud_page(orig);
-> > -	refs = record_subpages(page, PUD_SIZE, addr, end, pages + *nr);
-> > +	refs = (end - addr) >> PAGE_SHIFT;
-> > +	page = pud_page(orig) + ((addr & ~PUD_MASK) >> PAGE_SHIFT);
-> >   	folio = try_grab_folio_fast(page, refs, flags);
-> >   	if (!folio)
-> > @@ -3030,6 +3019,8 @@ static int gup_fast_pud_leaf(pud_t orig, pud_t *pudp, unsigned long addr,
-> >   	}
-> >   	*nr += refs;
-> > +	for (; refs; refs--)
-> > +		*(pages++) = page++;
-> >   	folio_set_referenced(folio);
-> >   	return 1;
-> >   }
-> 
-> Okay, this code is nasty. We should rework this code to just return the nr and receive a the proper
-> pages pointer, getting rid of the "*nr" parameter.
-> 
-> For the time being, the following should do the trick:
-> 
-> commit bfd07c995814354f6b66c5b6a72e96a7aa9fb73b (HEAD -> nth_page)
-> Author: David Hildenbrand <david@redhat.com>
-> Date:   Fri Sep 5 08:38:43 2025 +0200
-> 
->     fixup: mm/gup: remove record_subpages()
->     pages is not adjusted by the caller, but idnexed by existing *nr.
->     Signed-off-by: David Hildenbrand <david@redhat.com>
-> 
-> diff --git a/mm/gup.c b/mm/gup.c
-> index 010fe56f6e132..22420f2069ee1 100644
-> --- a/mm/gup.c
-> +++ b/mm/gup.c
-> @@ -2981,6 +2981,7 @@ static int gup_fast_pmd_leaf(pmd_t orig, pmd_t *pmdp, unsigned long addr,
->                 return 0;
->         }
-> +       pages += *nr;
->         *nr += refs;
->         for (; refs; refs--)
->                 *(pages++) = page++;
-> @@ -3024,6 +3025,7 @@ static int gup_fast_pud_leaf(pud_t orig, pud_t *pudp, unsigned long addr,
->                 return 0;
->         }
-> +       pages += *nr;
->         *nr += refs;
->         for (; refs; refs--)
->                 *(pages++) = page++;
+On Thu,  4 Sep 2025 22:01:24 +0000 Asbj=C3=B8rn Sloth T=C3=B8nnesen wrote:
+> Allow using custom name-prefix with constants,
+> just like it is for enum and flags declarations.
+>=20
+> This is needed for generating WG_KEY_LEN in
+> include/uapi/linux/wireguard.h from a spec.
 
-Can this get folded in soon?  This bug is causing crashes in AF_ALG too.
-
-Thanks,
-
-- Eric
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
