@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3ADDCF2565
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 22:44:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5F47CF2563
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 22:44:40 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 796c6770;
-	Tue, 18 Nov 2025 17:26:21 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ea1dca70;
+	Tue, 18 Nov 2025 17:26:23 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ee31242a
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b735746d
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sat, 6 Sep 2025 13:13:39 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Sat, 6 Sep 2025 13:22:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
- s=202008; t=1757164418;
- bh=U6Wn//k2dt+WlP5FxdkKg0o/lsaAgnjgIxpLlAHFjRQ=;
+ s=202008; t=1757164932;
+ bh=WuJjhnpVAljlL69bb7BMFtboVVhRumBRvD7e4BdACi0=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=OgLxGL9PmY2hDenIKO9MTOuA3hj3rjjLAE6gjC9/ut3CTDj/0n6d/ADaLV5sS/pre
- qdp9FbPirBIExy5Mm6og2meB1/orgHoCFAjd1mkFfN6LpqT5tDkT+pt1SvnX6v4Rr3
- S+dUj2BvE4zyk7sJXMzhEK+TNEpx0jSsvlRlZlz1sGzjD4U7Pbw7Lc9JjP0N1JkP6X
- aJBoU8dj0tx2HIbz7+5uGBtNJa4Rd/kls/Gn4E9QNFJgn/AewqUzY9R7NJduTXFdld
- zISErTvpey3eCskU22l+eQ26xZTtEPZOgNdeKHDXVD3NPo5/0eVwBL78KMSspEUwe4
- 9UiA8dfLBbK1A==
+ b=O3J+fR624oSv3ySdbCx2BarAaQYFJR8TAxdaB7GcuXgRmuPbzHvlvD/5ZiwSD9ncv
+ GE6N5x9WREsaDYQKVBhAkWuCgxa7JR40Ex+P+FNRKVmCNakhhfnxJGCReTKUO4ugdu
+ erOh9hBWfj4Kmue+GGCV8bCn2MMJktm7n7GGLKPppwanRWdkuA2gC4CoZhXTR+sr0z
+ S8PMkbTxuw1pXDAyDpeK4yd892mFhLu18g6cVGij3FyFp07JP54NygG505Z6LJ9sWG
+ 2ZwuAlwQ690SJUPrX8g2asaN5thk2jvK6dvsMZcR1irzsnPUZOvZao8DHChUqv/shZ
+ qyDKYlRb9vKhQ==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id 5E7046000C;
- Sat,  6 Sep 2025 13:13:38 +0000 (UTC)
+ by mail1.fiberby.net (Postfix) with ESMTPSA id 738776000C;
+ Sat,  6 Sep 2025 13:22:12 +0000 (UTC)
 Received: from [127.0.0.1] (localhost [127.0.0.1])
- by x201s (Postfix) with ESMTP id E9D4C200438;
- Sat, 06 Sep 2025 13:13:29 +0000 (UTC)
-Message-ID: <4eda9c57-bde0-43c3-b8a0-3e45f2e672ac@fiberby.net>
-Date: Sat, 6 Sep 2025 13:13:29 +0000
+ by x201s (Postfix) with ESMTP id B6DB6200438;
+ Sat, 06 Sep 2025 13:22:01 +0000 (UTC)
+Message-ID: <0a9a7c41-7deb-4078-8cc9-aee8f8784443@fiberby.net>
+Date: Sat, 6 Sep 2025 13:22:01 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next 05/11] tools: ynl-gen: define nlattr *array in a
- block scope
+Subject: Re: [PATCH net-next 06/11] tools: ynl-gen: don't validate nested
+ array attribute types
 To: Jakub Kicinski <kuba@kernel.org>
 Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
@@ -43,11 +43,11 @@ Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  Andrew Lunn <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20250904-wg-ynl-prep@fiberby.net>
- <20250904220156.1006541-5-ast@fiberby.net>
- <20250905171809.694562c6@kernel.org>
+ <20250904220156.1006541-6-ast@fiberby.net>
+ <20250905172334.0411e05e@kernel.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Asbj=C3=B8rn_Sloth_T=C3=B8nnesen?= <ast@fiberby.net>
-In-Reply-To: <20250905171809.694562c6@kernel.org>
+In-Reply-To: <20250905172334.0411e05e@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Tue, 18 Nov 2025 17:23:15 +0000
@@ -65,73 +65,52 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 9/6/25 12:18 AM, Jakub Kicinski wrote:
-> On Thu,  4 Sep 2025 22:01:28 +0000 Asbjørn Sloth Tønnesen wrote:
->> Instead of trying to define "struct nlattr *array;" in the all
->> the right places, then simply define it in a block scope,
->> as it's only used here.
+On 9/6/25 12:23 AM, Jakub Kicinski wrote:
+> On Thu,  4 Sep 2025 22:01:29 +0000 Asbjørn Sloth Tønnesen wrote:
+>> In nested arrays don't require that the intermediate
+>> attribute type should be a valid attribute type, it
+>> might just be an index or simple 0, it is often not
+>> even used.
 >>
->> Before this patch it was generated for attribute set _put()
->> functions, like wireguard_wgpeer_put(), but missing and caused a
->> compile error for the command function wireguard_set_device().
->>
->> $ make -C tools/net/ynl/generated wireguard-user.o
->> -e      CC wireguard-user.o
->> wireguard-user.c: In function ‘wireguard_set_device’:
->> wireguard-user.c:548:9: error: ‘array’ undeclared (first use in ..)
->>    548 |         array = ynl_attr_nest_start(nlh, WGDEVICE_A_PEERS);
->>        |         ^~~~~
+>> See include/net/netlink.h about NLA_NESTED_ARRAY:
+>>> The difference to NLA_NESTED is the structure:
+>>> NLA_NESTED has the nested attributes directly inside
+>>> while an array has the nested attributes at another
+>>> level down and the attribute types directly in the
+>>> nesting don't matter.
 > 
-> Dunno about this one. In patch 4 you basically add another instance of
-> the "let's declare local vars at function level" approach. And here
-> you're going the other way. This patch will certainly work, but I felt
-> like I wouldn't have written it this way if I was typing in the parsers
-> by hand.
+> I don't understand, please provide more details.
+> This is an ArrayNest, right?
+> 
+> [ARRAY-ATTR]
+>    [ENTRY]
+>      [MEMBER1]
+>      [MEMBER2]
+>    [ENTRY]
+>      [MEMBER1]
+>      [MEMBER2]
+> 
+> Which level are you saying doesn't matter?
+> If entry is a nest it must be a valid nest.
+> What the comment you're quoting is saying is that the nla_type of ENTRY
+> doesn't matter.
 
-Thanks for the reviews.
+I will expand this in v2, but the gist of it is that this is part of the
+"split attribute counting, and later allocating an array to hold them" code.
 
-In patch 4, it is about a variable used by multiple Type classes having
-presence_type() = 'count', which is currently 3 classes:
-- TypeBinaryScalarArray
-- TypeMultiAttr
-- TypeArrayNest (later renamed to TypeIndexedArray)
+The check that I remove for nested arrays, is an early exit during the
+counting phase. Later in the allocation and parse phase it validates the
+nested payload.
 
-In patch 5, I move code for a special variable used by one Type class,
-to be contained within that class. It makes it easier to ensure that the
-variable is only defined, when used, and vice versa. This comes at the
-cost of the generated code looking generated.
+In include/uapi/linux/wireguard.h:
+ > WGDEVICE_A_PEERS: NLA_NESTED
+ >   0: NLA_NESTED
+ >     WGPEER_A_PUBLIC_KEY: NLA_EXACT_LEN, len WG_KEY_LEN
+ >     [..]
+ >   0: NLA_NESTED
+ >     ...
+ >   ...
 
-If we should make the generated code look like it was written by humans,
-then I would move the definition of these local variables into a class
-method, so `i` can be generated by the generic implementation, and `array`
-can be implemented in it's class. I will take a stab at this, but it might
-be too much refactoring for this series, eg. `len` is also defined local
-to conditional blocks multiple branches in a row.
-
-tools/net/ynl/generated/nl80211-user.c:
-nl80211_iftype_data_attrs_parse(..) {
-   [..]
-   ynl_attr_for_each_nested(attr, nested) {
-     unsigned int type = ynl_attr_type(attr);
-
-     if (type == NL80211_BAND_IFTYPE_ATTR_IFTYPES) {
-       unsigned int len;
-       [..]
-     } else if (type == NL80211_BAND_IFTYPE_ATTR_HE_CAP_MAC) {
-       unsigned int len;
-       [..]
-     [same pattern 8 times, so 11 times in total]
-     } else if (type == NL80211_BAND_IFTYPE_ATTR_EHT_CAP_PPE) {
-       unsigned int len;
-       [..]
-     }
-   }
-   return 0;
-}
-
-(I didn't have to search for this, I saw the pattern in wireguard-user.c,
-looked for it in nl80211-user.c and this was the first `len` usage there.)
-
-That looks very generated, I would have `len` defined together with `type`,
-and a switch statement would also look a lot more natural, but maybe leave
-the if->switch conversion for the compiler to detect.
+The current check requires that the nested type is valid in the nested
+attribute set, which in this case resolves to WGDEVICE_A_UNSPEC, which is
+YNL_PT_REJECT, and it takes the early exit and returns YNL_PARSE_CB_ERROR.
