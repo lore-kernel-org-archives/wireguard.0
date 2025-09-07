@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97887CF34AC
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 12:56:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79862CF34A9
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 12:56:32 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a60e0d43;
-	Tue, 18 Nov 2025 17:32:08 +0000 (UTC)
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com
- (mail-dm6nam12on2079.outbound.protection.outlook.com [40.107.243.79])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a34d36d8
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e58199d0;
+	Tue, 18 Nov 2025 17:32:09 +0000 (UTC)
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com
+ (mail-co1nam11on2079.outbound.protection.outlook.com [40.107.220.79])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ff2e4bf7
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sat, 6 Sep 2025 01:05:31 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Sun, 7 Sep 2025 05:14:32 +0000 (UTC)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=MqkbB6StSne28owvikLsjAi64NBTS0DJxXDYR82NPm81Dfmz0yCI8onJbKLsaPd9AwpVlbLoh+VhZtM3piLpt4kmwaE3/uQQmH0kzK3zYtzPDnN6rJBbXl8kZ+Id1vH08t7Pjv3T7K18T5bjsPaK3btlPmuL6/9TYtE/8qbhBAg4nGgM9YmRdAHD5GKiwYPloDUDMBeVgTSBpeJ/8bem5C6Ik9gjjiUpySWu22jTTO3E2kHLNxpBn8eh/PylT1tXWH5EAvExttAgxsYGarLpb5mN/si4NAi98M0AurMoJ7YqMeulN/lnVpKl0fbMsr14TpMf4IDb1UCnbwqZ0DnLOg==
+ b=yUBsZoa48ubr5UfQCm1JGG4S8RpaYQuK3qinFtfTVoIyblstuFvs1UtepWrL6qmhVxym1pIpbEsbMAvn8OLpFtnGKLdFRogzsXju1CrLLfxBypz+Hkszu+T6TOwyetB17oSLAcgJzki+fDcVYN+oiTtl/ehsF6gZlXmpmGbHNSDpgD44y8PNgeLafTwUoVPHuULARbhwZIgo3c8tKzUiTcLIbjk9SxJ0Ts4DKpyC1PPtY5Ts15C7DoSWyHHrOZcmwjhmNkBgLbdBHDWKr41d/hH0Iq4wl03K3165j0jxtSFnMsVtfLQLsKI5Op+VEBMmGm8nEPF6cEUtHrz9CFbJvw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qmNEjp4wJqKTIanwJekG5BKHGlxuhcysz2RSi1jiRbg=;
- b=O1MTW8e8YU+D+YGUzTk3UG8zD/KNd4eF1Q18jXFhEmiIL1IcMUKiOfWyAFUMLEwkKGP8hsuugPuI3TgabCXHIkjzvmvBhqPSItaYizcRlhJ9XjhVOjnjReVt0YPZHUoQSXRXEKqQrmxVGP95rU7le7syfDcpEJsO0aiGwyzrZte+3DkF81bd/E0UM2Xh8ZEq0bGO6goU8LhXa+zTEOnGuwpcz41jn9m41vKQvhv6iNesryBJvqJXOCMiyfv61CxmapsVQQaGJYph4LBCx/LllhP2j95qHG2x4Movf+ai+HWAMB6mBzN7DxwwXv9iHGXKm5cLq+YRrqNZIYwwGJ4WCw==
+ bh=ZBp52V91Gxr27f7RudT0aNk9Xj8vFIecZ5YmKsPh8yA=;
+ b=GGSMAlpnRrdP4a44ktU29+KpniQMk+UW6Gda+8KCQog3qwPiGbBpp73s+/BJXgR5l5bJpq0nocNaVsitWzZ27gkvAs7+LxMqwmYUV2xlKVIBVq5LtnfXWkMzSe/DZQIkP8OYzgKltBhzt4+fC0FDtL1N5BxRrHQ6eiPyq6WPHX7Mw70yooOKJZYN8RX93Z/eXOoJCFvUeMmcLM1q/RmGzGzlKZ0t8Hie845b//12OtmTUXi4bBsLE8ZzjltETh8kwzNO/DLMfeCGMi39ZmzVvGlWny5kJms7IhwCe7n+ssvUIfmauKp8Nas/sp0t4pEIwgYbDOC5YTUN1q3j61eICw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qmNEjp4wJqKTIanwJekG5BKHGlxuhcysz2RSi1jiRbg=;
- b=BpCj3rnlKit5YpE6JoxZjQdmLBHHtB17RpTV79tZpLIUZQdYTyLuUFKWayfczIHI1O9MazYN3vUvLLvLXSx9tHWVpmadtp/UNDyY4KmJX89HbXCJAfFyFnUDdQm8WIJxVT2y22wIvpkIerKF/xYHJK/iNQT1u9J4025VUWz+VgVa8lMw/tEyZ+SyBCX9C060sY+YK12/03ChqA+2X/o5Nv1q9+fckWRmwtACBtIVb7Gc4fDZj4sX4ks2l1KZGw3J8lniTa95l+ACuJ1W6qCn7GMVwdljddhHtoRwqXgtphh7Z3XEasApliUGu40VvJAgpV29dmAc3TDPD8u3k8LE4g==
+ bh=ZBp52V91Gxr27f7RudT0aNk9Xj8vFIecZ5YmKsPh8yA=;
+ b=GJCW+3DSmriH1MADLp7VlsqRk2CVBWqYaaZCnkrNj9TbrTt6BEgQdv1kl/bPCLxxWONcA5b3HSE64EHr5tjCu6yjJpMegbjJgswtpzQdoqLvQOiiujYIZT3K0YBRTycLIXZ6Ou7WG3XMLHyTM/e0/txaULr9tJCar2wjSGunmmp/paDLnohvQsoxjL2yYEpwgWaCnYt3R61pMuTiBf7SZU14mP6PbMIiMe96MNr5AzKQ1lYjYeivnO3lExo92w7ONdvD0naIzzrKG43FmjQU26Y1sHC7eistWEzdn2W5ldnyprC9DRSDIom6a/g/qJD3t2BQfO6vC9HdWZQheuBdjg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV2PR12MB5968.namprd12.prod.outlook.com (2603:10b6:408:14f::7)
- by SA0PR12MB7479.namprd12.prod.outlook.com (2603:10b6:806:24b::19)
+ by DS5PPFDF2DDE6CD.namprd12.prod.outlook.com (2603:10b6:f:fc00::665)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.19; Sat, 6 Sep
- 2025 01:05:26 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.19; Sun, 7 Sep
+ 2025 05:14:26 +0000
 Received: from LV2PR12MB5968.namprd12.prod.outlook.com
  ([fe80::e6dd:1206:6677:f9c4]) by LV2PR12MB5968.namprd12.prod.outlook.com
- ([fe80::e6dd:1206:6677:f9c4%6]) with mapi id 15.20.9094.016; Sat, 6 Sep 2025
- 01:05:26 +0000
-Message-ID: <016307ba-427d-4646-8e4d-1ffefd2c1968@nvidia.com>
-Date: Fri, 5 Sep 2025 18:05:21 -0700
+ ([fe80::e6dd:1206:6677:f9c4%6]) with mapi id 15.20.9094.016; Sun, 7 Sep 2025
+ 05:14:25 +0000
+Message-ID: <0a28adde-acaf-4d55-96ba-c32d6113285f@nvidia.com>
+Date: Sat, 6 Sep 2025 22:14:19 -0700
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 19/37] mm/gup: remove record_subpages()
 To: David Hildenbrand <david@redhat.com>, linux-kernel@vger.kernel.org
@@ -70,105 +70,108 @@ Cc: Alexander Potapenko <glider@google.com>,
  Zi Yan <ziy@nvidia.com>
 References: <20250901150359.867252-1-david@redhat.com>
  <20250901150359.867252-20-david@redhat.com>
+ <016307ba-427d-4646-8e4d-1ffefd2c1968@nvidia.com>
+ <85e760cf-b994-40db-8d13-221feee55c60@redhat.com>
 Content-Language: en-US
 From: John Hubbard <jhubbard@nvidia.com>
-In-Reply-To: <20250901150359.867252-20-david@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SJ0PR13CA0205.namprd13.prod.outlook.com
- (2603:10b6:a03:2c3::30) To LV2PR12MB5968.namprd12.prod.outlook.com
+In-Reply-To: <85e760cf-b994-40db-8d13-221feee55c60@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SJ0PR05CA0048.namprd05.prod.outlook.com
+ (2603:10b6:a03:33f::23) To LV2PR12MB5968.namprd12.prod.outlook.com
  (2603:10b6:408:14f::7)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV2PR12MB5968:EE_|SA0PR12MB7479:EE_
-X-MS-Office365-Filtering-Correlation-Id: 61650efe-33fd-403e-2700-08ddece176ce
+X-MS-TrafficTypeDiagnostic: LV2PR12MB5968:EE_|DS5PPFDF2DDE6CD:EE_
+X-MS-Office365-Filtering-Correlation-Id: 89b9ab1e-80e3-48bd-897d-08ddedcd6976
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|7416014|376014|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?MUVHMC9aQ2NWa0MrQTFBY0FZeXlwRlN0c1U2SEtrTWk1UjdzTEJaM091TFc5?=
- =?utf-8?B?dHJKQ1lPT3FSeE4rSVp3VWQvak41cC9uVmlXaUQrcW1yYU5MTmw2Y24wc0xi?=
- =?utf-8?B?cnBGL1BZZTZhNUxhUDhaWWZhaUIwQk85a0FBd0M4UlRsV2RTVEVSd0VQYjAv?=
- =?utf-8?B?K2N4R1RXQVFKUGw5bVVPN0pXZ2hXWS9wa1hhK0szbFZpT3QzMndxRzVkL1JJ?=
- =?utf-8?B?ZXFmaXNFWHgrcm5IanhmSE8vd3ZuWWF6N2xxbEliYzdHVHMxUG9QVGhjYzJX?=
- =?utf-8?B?Y1JUWkNWaFVvSDV1aHpYaG5zSFk3dk42UEpaby9telVicW1KMG4xWnpzc1JE?=
- =?utf-8?B?N1hUakxjdUdwaW1vWkxpQ1lTK2wxMjRsaDl6VzUzdGswaEhjeTFsd2FyUS8v?=
- =?utf-8?B?VXkzTkFYY1JrcTdXclYxMFFVZVRPbHdYZjdIbTAxVExKSk51UHdRT09jZndX?=
- =?utf-8?B?V3dJRWU3Nzc4UWZrTTBFTW9uSGFqRUNFTEY0NXZnWE1meHpTN0hyMDltNWJt?=
- =?utf-8?B?Wk42ZlZJa1RUZFR3eU1pWkFKQkV3bFJJWXNXV1EwTkJQSklYVHZwaVpMNDh3?=
- =?utf-8?B?aTNwZWJhUWw0SHdWalJtelQ2dFphaGlmVHpyY0FNZndWS0hEeEsvY0dmOHdK?=
- =?utf-8?B?NEV4VlA1NWFwUzRoQndvVHhlcXFRaGJKWW5HT0hWZGk5eUR0UzNVeWkwQmxp?=
- =?utf-8?B?SFM2K2xYRDJKN1VITkZMOW5CNUFVV2ZZbDZuNVlOcDRUQkVMQ1N4TmFTcFF3?=
- =?utf-8?B?VE1HRWhjSGt1UTJ6SjA1eUZndEdxTHAyY25SNWxBbExwSG00Rm5pbFBibXl4?=
- =?utf-8?B?RXdvalFsU1dqUVk1QXdMYVZBM1NFcEpUMWtzV1lWTDNTb0YzaC8vcXNnOVM5?=
- =?utf-8?B?L1FDM0tXYm14YTFzdFU1TWgxYWY1ejhYUHRYMFJvdEFuenR2aFNzK2E0QytG?=
- =?utf-8?B?V21JTmwxelhOWUlGMTJ2K1FoY1ZSZk9EL3BVcWw3MVkvOUoxSVIzOXE4REJQ?=
- =?utf-8?B?Ky9yWlBaaHJGNUh4SEErdnRXNE1XSUdUNkNqY1dlSE15QUhseTh4azVXVmwz?=
- =?utf-8?B?Z2IrNnFCbk9HY040MnE4STNXTFJJSDgyYWltTnU0c3B0LzRETDlPRDJIbEV1?=
- =?utf-8?B?dExaaWxzcXEvTjNuYWhXb00zdXVSNHQrMEVCN3JtcnVGVUFoVWszSi9XS3gz?=
- =?utf-8?B?THQrckdLNjhhbXo2YWkyNTJzV3VUNzh2TWUyZlVwdC9EdVZXRzFXdjV6R2NS?=
- =?utf-8?B?UE1mWXJ6Rkx4cVdjS2hzaHlneEZ6blM0MzVJQ2xFZVdzU3dZYzN0ckQ4Q0xM?=
- =?utf-8?B?N3FXdFBmelVXVTVkak9MY3BHamJ1UWhEZzN4V0F0eDZTNnJnZ0djdFU4OFZB?=
- =?utf-8?B?L28vZHRXZVorVm5DWDMzbDJtN3dHT3JucWx0b3RTZ2Zkd2IydXdnbGliR3ls?=
- =?utf-8?B?MGQwNUpyTFJlSTJweGpqclJadXF6VDRnK2ZQNWhSclRwejZoVTJVcHBDZGZC?=
- =?utf-8?B?RzRQY2hpbDJjNUJtaXZMSjlpb05md2g5WC8vdEgrT0JWYlVkZCtjL2ZHQjlq?=
- =?utf-8?B?WjhiUE8rTCtmN2JCaVVnNkdvQkVaRVVKRjd5bTJLbURncGJqM1pWQ3VrZmVt?=
- =?utf-8?B?Z0lCdDduZFFkYW11czFremV6RHN1OWVheENVMExHSVpNeGZXN2ZtbklDUGZU?=
- =?utf-8?B?TWhQMkhGLzBxandrN0dOWGpqemRTWCs0TlFNdm1makg3b0RDcEQvMmdIQjVr?=
- =?utf-8?B?eEJnc2xnSWE1K1kwb3RZaFB0dzBoYUhRZUFYeThuR09CWE5QVkNlanJPczQ0?=
- =?utf-8?B?Q3FEdXAyVWRhamRTaW1sckdqQ0d5MHkwbmxObGY1N3ZwNVhtSUp0Wm84Sm1S?=
- =?utf-8?B?OFJKeldCMTlsVFNEbHQ5b1BKMXlaRFFOWkdKR2w0WjhlaEE9PQ==?=
+ ARA:13230040|10070799003|1800799024|376014|7416014|366016|7053199007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?N3VhS0huWjQ4a3lsVHYzQ0ZwUFpBUjlPQjE2VXV6aS8zdmFuZzZLajVkaXpz?=
+ =?utf-8?B?bEpMMWxBZ1BOWVU3QjZRaVpkNFA2dFdMTXJ0VmJCc0tSYmJTd1ZSQjhWS0NR?=
+ =?utf-8?B?L2JCYU5wYXhNU2tweXhzcFUwQlVkSTgwQjRaSCsxUWdwSHpvU1NqYWo3eWlN?=
+ =?utf-8?B?YWphSzhUcWxUU1dsY2VtdDdvZmRHRC92Sk1nSmZCeW1tTFQ3YUVia0pxZGtv?=
+ =?utf-8?B?aTRMa2hmMEYzVEZTejRBck5nSXdWb2tHbnNaOWkyMDNmV1FTWUNYNVRHMmFw?=
+ =?utf-8?B?cUJmdGM5WmJDTk1SWkREeTlUR2E5cFpRTjFDTHdkSFRLZ3FNNFVXQmtyMnZY?=
+ =?utf-8?B?MlZCS1JScTJPWWNjaWRnYSt3STA1Nm94bGorSHlkZ05iM1RrQmNVaFRzRjM2?=
+ =?utf-8?B?b0s5MnUwV0w4RVArdXVLcmFtUW9JT0VORFpqbEFOYnROZDQ0Uk1idHNnSnZQ?=
+ =?utf-8?B?TzdIVHZpRExrMFRjV2Y0YUtKU0NJRnRxR3hhbHIxQ0RmNG1rczd1NWtDWVZs?=
+ =?utf-8?B?ZTdJQTZGSmFHczhaWHRCVjVQWjdiVnA3MW9wdXNPQVp6djJVU3lFTTcybFNo?=
+ =?utf-8?B?UFNHTkg3Z2RCZEYyTVVFSUVna2thM3Jwd3hZYkFuUm1oZlFtUDRnRTZxVGVq?=
+ =?utf-8?B?N1ZDVjk0UE9seTRvTmxDTVYrUFJ0Uy9yV2xROEliWk51eEtDdXU0Z3pYWXJp?=
+ =?utf-8?B?anBGUkt5bnRwSFo2a2ljNmVxTEIwKys2T2lQSFhwTkQrdkVvY2hxU0VUWThS?=
+ =?utf-8?B?OHgweUV2elJuR2VmYU1kb0VBRHNnYXpyODFueFEzSktNQUNMTnRzTkRKbDdP?=
+ =?utf-8?B?RlBvWGVvMm1uV0tlcmc4cTlRMllKTGYvUEpmMmVVTTNnWFJrMjhMSlRtNzBG?=
+ =?utf-8?B?ZDArTVhwaHJZdXVoOXhFYXA1QVJRWFRJd1NkTnBmdngrWGxnVWNhUUVSUmov?=
+ =?utf-8?B?K1RLQnNvQUM2NzM0WE1ONzNjUzdFeUl2RjB1NmFVRDR6VlJLTHpMdTNlOHNB?=
+ =?utf-8?B?SVNXa05oOUw2UDhkWWZmZmpLd215c3lubnphcWUrMHpKSkxSR21MOEJDMllY?=
+ =?utf-8?B?aWFVbEd2cnc4WGhkcEdMTnJKaVFBNHl0YVBVV0FxclZEb0JoVjlEV1AxNHFh?=
+ =?utf-8?B?Kzh5d1JQcmNoRmlpalRrc2ljTGtKQVc2aUJJdlZML1pGVVVCZTByTGFFWW5N?=
+ =?utf-8?B?eTRIOE5Nb2Y3OGFucVZSVGtMaW5xeHdwV0tad1E4cE9GUk12MDJOU0w1U25N?=
+ =?utf-8?B?dDgrdzZWbUd4VjFXZTk1OFZMZmxMbi93cXp5c0Z2UHBWOXc3OHpJUEhCOHFQ?=
+ =?utf-8?B?MUk5RG5DeWs1MXVLOHE5TTRCMkl3cXFTRHA0WWxxNWhVV0gwa3phRitqTlNC?=
+ =?utf-8?B?c2pTdlpFdW9wblI3c3AyYmQrNDFvNWFYT0dzM3YwRnZXUk9SUHFEUTJqM1pp?=
+ =?utf-8?B?M1FJRUVVOWpEd1hTOWYwUjAzVjJpcnlNZkhWTnhIdGJ4NzhlTGJIK2NabTgv?=
+ =?utf-8?B?OGxGNUQ0cU43UTZuNXErdGVnanJuTEd2M0VFaTlDNzJOZXQwOTVYQ2tkWnlO?=
+ =?utf-8?B?K0cyMEFKUGFzL1R2ZXlYLzVRbWpTNUZMeU5qSGVVYXpCOTV5OFcrdlFrL0JT?=
+ =?utf-8?B?cEFROEViM1JtN3FySDd4b0xJbXpyemgyN0x6QmkxYWpZUlprU3VMR0oyYlVQ?=
+ =?utf-8?B?M1FNY1lpVjhhYmlhVVl3U1JBTUJ4SjFVOUdURFZDVm1RdFB2Q1hMS0lCeEY4?=
+ =?utf-8?B?NUtsMjNRa0NQUHJHU1MvMURkK3BEcEEzY0ZUcDBjR1N1Qit6RTJHU1kreEVr?=
+ =?utf-8?B?MUxxZW11V1JCSGR2R0w0RTRzNENkeEc5dGtFWDZKanBZaGNGVDBsL0VjdzQy?=
+ =?utf-8?B?U0FKMWs2N3lqR2txMkI0Sm5kMEdkeGpSN3U1dDhHZzg4Qnc9PQ==?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:LV2PR12MB5968.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(7416014)(376014)(7053199007); DIR:OUT;
- SFP:1101; 
+ SFS:(13230040)(10070799003)(1800799024)(376014)(7416014)(366016)(7053199007);
+ DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Z0VaUEgvYjVMZkE1Rzd4NTRoaVhWU281RTFZcklIb0FNbC9Hb3dJdDdLM0V5?=
- =?utf-8?B?aytHdlpnZlJFUmZoQTVZRU1takd1RFZxUTRvMFdLRVZmRkpCa0NyME9RK1NX?=
- =?utf-8?B?TDU4aXZ2ZXFYYnRzUU9jSnpXYmJhSjFMeTJudjFtQlNHRFl1UzRvUmphYkY4?=
- =?utf-8?B?SFBOWlpobnRheXdpNHFmWGx2Y3V4VGNoL0R4TlNmOENIQ3dtMXFXSHhNUlpM?=
- =?utf-8?B?d1AwTXMzRlRSUEV2SXAxcW9hV3plN25RdjZGbEJ3YlFVUVFBL2RmVUx5SUMv?=
- =?utf-8?B?YnI3V0M0S3BwK2dIeWhmNXFFS3Q2TEhCa3I5Z3JubVJpUWhqWm1rNkVCUDlx?=
- =?utf-8?B?VTRPUWE1K3VMNTF6bmdsWUxiUHg1UGVKb2J4bVZFeS9oN1A5ZWxPdW9vK254?=
- =?utf-8?B?VEppd0FoV25wOUlXMlJNcFJTR3hTVVJ3N1lVdTM0QW1wb0lkZms0UkJJc2dx?=
- =?utf-8?B?dzZyLzJVNUw4K3A0eXpkVHg5QmM5b3lKVFdFaEFPZEtkdnBTSWRWMDJtRFM4?=
- =?utf-8?B?bC9qRVo0RFN5MFRlUlJTSVIyWkdtR04reUJpUHl4T2JFeFF6Zk1JZU5CMnBz?=
- =?utf-8?B?N1lpZEIzNzdnb1U4ZWNUd1MrdCsvZFdZYVI0OUpTRjlHNmhIZnA2QzNGMEd1?=
- =?utf-8?B?Y0h3Ri83SGdHQXdacjVwQitqaDFLZUM3ZkRKK3dhUEJHKzlLVkgvWW9xUjNT?=
- =?utf-8?B?aHBnaTFyMjVMTmVwRWVRNDIrVTY1MVprZjRBYWd4UkpVUFlOMFZCMFVRK0l3?=
- =?utf-8?B?cDB5dWZjNkU0R04wcmFycW52Uk1LcEYyekNaQ3c4d0U1d3FrU1lsWGJ0Vy9a?=
- =?utf-8?B?dEQzNkgrVTZjRlIvOUlIVWNsdENvTFE5Tm5jbi9QSG4xN21WWEoxUFNIT29L?=
- =?utf-8?B?UVlRWGMyU2FQMWFKbi9vbGRES0gxZld2UTdUYzJqc20wNjFtT1pkRXBmVzAy?=
- =?utf-8?B?aFM5MVdXVkl3OUtQUnBUVUl4dFlrU0pLOWN1R3kyTW80K1laaDZKSlZjK2N5?=
- =?utf-8?B?WjhQc1RIQ3grNzMvNUdUOHY2aFNwMURnNjdTcWRuMGY0WTNjc2ZqcXN0QlRG?=
- =?utf-8?B?QVdQbk93cDZYZGNNd05GbUVjdU5ld00vdVlNVHUxWThlM3F0UDVQU1d2Q2Ew?=
- =?utf-8?B?R1RHdHhRb0VSUnZiYjc3d2RCaTBjSG9INXN1eVVtNERQc0tBVE9xNzNpcGxU?=
- =?utf-8?B?b2lwSmZHdTNydXFJck1BOVJDcktKUEJ3UmR5Z3FKMm50TndodkRSb000U3p4?=
- =?utf-8?B?TTVwSjZwRHJmRDcyUS9iZFI2V2ZsL3luSkJRTDF5ZlBvTU00eFU3TVpTR1dl?=
- =?utf-8?B?aFZiVDBtSUtVKzRhQlpnWm0vUUNkeld3K2pDWEViSFJpSG5kU0RZK2Fyd1Rj?=
- =?utf-8?B?RnlJSjM0T1l0L0dUMEM0dHY1bkhYZm1wVVFKMGpUVkxxQ2pDV05ZZ3lNb0Vt?=
- =?utf-8?B?M3hDVHZrelpUSzRpcTkzQloxejlSV3IzTktZRFBLU3VKM3p0eDZlUXV3RlZq?=
- =?utf-8?B?MnlHTDl5SWE1MVptQUxIa0JUWVE2KzR1UzZSc0c3N1lmVHY2NDkvZnhxeS9h?=
- =?utf-8?B?c1JRb1piTi9wR3NDWWJXVWRFNjVZUzIxUWVvRVpyMVF5Q0xSMlhzMDlBN2Fi?=
- =?utf-8?B?ZWFkM3dicytDR2JkNk1MWkd4UzNYVGs2MGF3N3dMbWhCQ3FZZnRUVWh1SXNW?=
- =?utf-8?B?aXZROFFmTVR0cVZjNlgwN1dzbWJpaGxnUjAzNlhkVmsyZVBwVVE3R1I2djk3?=
- =?utf-8?B?M1lhWDRDVlZScU92UEY5Wkprb1piUHdEZkE4STdBWERmYmRqWlY2bHZHM2wy?=
- =?utf-8?B?WEttRXBiSkVnRGo0ci9SVUZWYnpRWGk0MFNEbVRmYldTY2lzYml2NmFQUzFo?=
- =?utf-8?B?R3V4d2FVMEZROUhaVVE0TEVlU3VjdTJWakJMQUtDS3VSdlNYWnRNWjNDR1VM?=
- =?utf-8?B?TUJ2dmp1TkpqdDFEempoTVFTL0FzVk8zQm5hKzR6Q2x6MHRxNkZoSkZ2NEp2?=
- =?utf-8?B?ZGtUdGp4Zlc4Q2luODNmSWdqQjhwWVhqVS84NGVHNjNGVDY2cVRWYXJ2bzg1?=
- =?utf-8?B?em5XSWcrL2dKNjIxR0Y3ZkdGbWFkak10aWh2QWJYOUpqMFR4bFZ4d1dJNndX?=
- =?utf-8?Q?3h13tEnKqa8tV44hmzJKkEJS2?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Z2FmbGhrTlFWREJvWjdCU1VYNHgya0haRTlqdUtTa0c0Z2VPbG4rS3NOQ3VP?=
+ =?utf-8?B?aTc3dURUbGo5WXg3ZXNRWEJQVWdabGRxOWw4R2RUS3UwczltdmtmdnZlUlRz?=
+ =?utf-8?B?OVp6R3NaazB0RXVzZUxHTld4Ny9jU3BxMWd2ZVF6YlFhV2lYQnVrK3orK2pZ?=
+ =?utf-8?B?aWMvOFN2UG1DTDVZaDFtUVVkQ3pRV08yTVNYRTdkMTIvbTB1OWh0Sm1HMCs3?=
+ =?utf-8?B?WUpNTnVkSytmdHZmOVZvR2tVbTNxQjlkb29xZnB1bzhObzliaU84UG92RW9E?=
+ =?utf-8?B?M0lzeXUvYnpkelJiQk1zLzhWazN1dThSN0JnRzkyQWZMSVdnMjY3cnViQjhZ?=
+ =?utf-8?B?QkhxUVpFZHpGRDRObnkzbTA5QnJlMlhnaXYrSCtWMXBQZ0V2MktGVTJhbTRn?=
+ =?utf-8?B?bGJFeU5EUlpPVGwyd3hxc0JSa3ZOUTh3NmxZdkkrOUZRVUR4ck0zVTh4dzlY?=
+ =?utf-8?B?YTdUTXBtZHhMdUQxRzJwdDB1YmFiRUQ0YzFCa0JjQ08zU1V4N0tVUGJjTmVo?=
+ =?utf-8?B?RE5JTUV5VFlOaVlTMEFzaU03UitTVnprSXZoOWxwU0doN0ZsK0JCRlJMaitY?=
+ =?utf-8?B?UmFHeXV0ekg3QVZoNENJaEc2QjQ5WUpaMWp5bTBwMnllTGs1Z20xZ0x3a0Fs?=
+ =?utf-8?B?Q2NKblU2NUVEV0lqQjZBUUYzN0w0RE9kUk9ySlM2eDVqTG1ERzlTOWUzMjJj?=
+ =?utf-8?B?M0JrZXN1MmxoU1RLNFZMK0pwLzA3NHdCUTNmazZJM01zYTcrNGsrYXNIZWVM?=
+ =?utf-8?B?TlBlT245aDZ1VHlVcVlDdUxEMWw2QXRNU1BFVW5UajduclBnenMrNXBRNUMr?=
+ =?utf-8?B?NWFyQ3FsVzhuNGNmSnY1Mi9ISndPWjliWW0rS0xJc2V5QzVKSTRvalA2aFUw?=
+ =?utf-8?B?SE1KTkVpTEVFQmtKUTg2VmkvbXF2L1NLdFBMRzNDS1I2MDAwKzZuZmtzd1FV?=
+ =?utf-8?B?TjhreGszMlJkdFJyK3RRbnpQZ0RxVzEranZVNS9kRmNQUHIzNzBNNWVOUHVi?=
+ =?utf-8?B?RGYyVU9qVStQQXUzR0lYaXlKOENCV0RWOFVDT1dOZ01tRGNRdHhVazNKKzdB?=
+ =?utf-8?B?Q25OT3FaNThIV3RWVmVDV0paV2FJU01sb3IwTTVrRzZEaWRzY3pBUmJlRit1?=
+ =?utf-8?B?MmhJbmp4ajI5OENiYTNra2RlaEZjRmhiRmFPVDZZdGN6YUFyc1N1MDlrVlJ2?=
+ =?utf-8?B?TnpqdWJpVWxyRTFXN09MSDMvUUdjZ1lrdGZhN2xEeldEQjRGRjA1RWV4cGdS?=
+ =?utf-8?B?eTBMZWRFU3NLMnYrTXdTMGFEbXI2V2M1SU1KZVVIVGF0dFkxV0xMNmdWNWhF?=
+ =?utf-8?B?dDBUZ0l1Mm4zU3Y1UWR0dnVsWExuL0Z2bHVEQ21ML09TWlgwQXJRTzhaQTJr?=
+ =?utf-8?B?SDVvQ001cFV1NmdNaGF0ZUJneEFlam1zWlAwY0lzTWVjelEzNnFscGhZbGtv?=
+ =?utf-8?B?S0crbnF2MDc3U1QxLy9WS1ZvSUdqc0cyK2wyWk9mRnZXWGIxaGE5WWFwbWlZ?=
+ =?utf-8?B?UjNMT0hIQTRhUHV3MFNVVFNjSEtmbklKamVzMDZpOVdNRGdnNG8wbVpKakdo?=
+ =?utf-8?B?eXpGaDZobXM5NWVTZnY2VUcvN1dJek1YT0w1UFduazVqOUR2RjVHQ3lZOG5E?=
+ =?utf-8?B?cHhzSHpmeXBQYmEvTHNEdWlFVjVtdTFoMzZpVVVZaGxQc2oxNUt4bFBIT0do?=
+ =?utf-8?B?SEhDMDRJK2NHOUZpaVNqWkxxNFF1WkNRTlZ5amJhcXBIS1BDYzVhcnVVNUI0?=
+ =?utf-8?B?Vy9vOWFWWG1HcHNOWEtCRHR5L2JqM2drU2pFSHZmcVJ0Wm53Q1NGdktNMDl1?=
+ =?utf-8?B?dU9VUUdMaldtdkQyVTJRLysvR3ZKZHZmem85alRmUGtzSlQxZlFOdkZHVlJy?=
+ =?utf-8?B?OHBkYTZ4OWdia2tXTXk5dE5EZkdTQVNrSmc5QXlDNUdDU1BQbmo2c3ZaNEY1?=
+ =?utf-8?B?YTBlelUxU0F3Z2h5alpQNUdkM3pwNDFwSHRkV2lUbWIrTUVscVljeUVlbUsy?=
+ =?utf-8?B?eWkwdDF1Vk5uUDB6N1pDU2UzSVVoZXUvU2JWRjhTK0NMZFppUzhLbEgrTkUy?=
+ =?utf-8?B?NXo3KzBPdkFPNXpTSUZaY0R4Z2hMbkZpaXhpeWxCbzVhWExlZUtxUmM5T0Ri?=
+ =?utf-8?B?NmNoNmZJdXZTRU04OGRJWjhMU1FDZTZDUGlhVHRxYm8zZzRVQWtQamFCdm41?=
+ =?utf-8?B?a1E9PQ==?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 61650efe-33fd-403e-2700-08ddece176ce
+X-MS-Exchange-CrossTenant-Network-Message-Id: 89b9ab1e-80e3-48bd-897d-08ddedcd6976
 X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5968.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Sep 2025 01:05:26.3811 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Sep 2025 05:14:25.2162 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: uf3O0ZJFuEbXVLypywsJNCqDz+wgeCuhr6ze1GG/5gYI7E64YgDaDhkKq51vcMr5G3zgZbO3N1fcV2W8gz30bQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR12MB7479
+X-MS-Exchange-CrossTenant-UserPrincipalName: nMH9E6FIAuGh537ODX0TA1FL8Y+H+9s2oVS0wOHG+o0yolAQXZ6PgvaRmfySFg15SGYvEm2Bjkc1N1v56jE8Fw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS5PPFDF2DDE6CD
 X-Mailman-Approved-At: Tue, 18 Nov 2025 17:23:16 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -184,96 +187,246 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 9/1/25 8:03 AM, David Hildenbrand wrote:
-> We can just cleanup the code by calculating the #refs earlier,
-> so we can just inline what remains of record_subpages().
+On 9/5/25 11:56 PM, David Hildenbrand wrote:
+> On 06.09.25 03:05, John Hubbard wrote:
+>> On 9/1/25 8:03 AM, David Hildenbrand wrote:
+...> Well, there is a lot I dislike about record_subpages() to go back 
+there.
+> Starting with "as Willy keeps explaining, the concept of subpages do
+> not exist and ending with "why do we fill out the array even on failure".
 > 
-> Calculate the number of references/pages ahead of times, and record them
-> only once all our tests passed.
+> :)
+
+I am also very glad to see the entire concept of subpages disappear.
+
+>>
+>> Now it's been returned to it's original, cryptic form.
+>>
 > 
-> Signed-off-by: David Hildenbrand <david@redhat.com>
-> ---
->  mm/gup.c | 25 ++++++++-----------------
->  1 file changed, 8 insertions(+), 17 deletions(-)
+> The code in the caller was so uncryptic that both me and Lorenzo missed
+> that magical addition. :P
 > 
-> diff --git a/mm/gup.c b/mm/gup.c
-> index c10cd969c1a3b..f0f4d1a68e094 100644
-> --- a/mm/gup.c
-> +++ b/mm/gup.c
-> @@ -484,19 +484,6 @@ static inline void mm_set_has_pinned_flag(struct mm_struct *mm)
->  #ifdef CONFIG_MMU
->  
->  #ifdef CONFIG_HAVE_GUP_FAST
-> -static int record_subpages(struct page *page, unsigned long sz,
-> -			   unsigned long addr, unsigned long end,
-> -			   struct page **pages)
-> -{
-> -	int nr;
-> -
-> -	page += (addr & (sz - 1)) >> PAGE_SHIFT;
-> -	for (nr = 0; addr != end; nr++, addr += PAGE_SIZE)
-> -		pages[nr] = page++;
-> -
-> -	return nr;
-> -}
-> -
->  /**
->   * try_grab_folio_fast() - Attempt to get or pin a folio in fast path.
->   * @page:  pointer to page to be grabbed
-> @@ -2967,8 +2954,8 @@ static int gup_fast_pmd_leaf(pmd_t orig, pmd_t *pmdp, unsigned long addr,
->  	if (pmd_special(orig))
->  		return 0;
->  
-> -	page = pmd_page(orig);
-> -	refs = record_subpages(page, PMD_SIZE, addr, end, pages + *nr);
-> +	refs = (end - addr) >> PAGE_SHIFT;
-> +	page = pmd_page(orig) + ((addr & ~PMD_MASK) >> PAGE_SHIFT);
->  
->  	folio = try_grab_folio_fast(page, refs, flags);
->  	if (!folio)
-> @@ -2989,6 +2976,8 @@ static int gup_fast_pmd_leaf(pmd_t orig, pmd_t *pmdp, unsigned long addr,
->  	}
->  
->  	*nr += refs;
-> +	for (; refs; refs--)
-> +		*(pages++) = page++;
->  	folio_set_referenced(folio);
->  	return 1;
->  }
-> @@ -3007,8 +2996,8 @@ static int gup_fast_pud_leaf(pud_t orig, pud_t *pudp, unsigned long addr,
->  	if (pud_special(orig))
->  		return 0;
->  
-> -	page = pud_page(orig);
-> -	refs = record_subpages(page, PUD_SIZE, addr, end, pages + *nr);
-> +	refs = (end - addr) >> PAGE_SHIFT;
-> +	page = pud_page(orig) + ((addr & ~PUD_MASK) >> PAGE_SHIFT);
->  
->  	folio = try_grab_folio_fast(page, refs, flags);
->  	if (!folio)
-> @@ -3030,6 +3019,8 @@ static int gup_fast_pud_leaf(pud_t orig, pud_t *pudp, unsigned long addr,
->  	}
->  
->  	*nr += refs;
-> +	for (; refs; refs--)
-> +		*(pages++) = page++;
+>> Just my take on it, for whatever that's worth. :)
+> 
+> As always, appreciated.
+> 
+> I could of course keep the simple loop in some "record_folio_pages"
+> function and clean up what I dislike about record_subpages().
+> 
+> But I much rather want the call chain to be cleaned up instead, if 
+> possible.
+> 
 
-Hi David,
+Right! The primary way that record_subpages() helped was in showing
+what was going on: a function call helps a lot to self-document,
+sometimes.
 
-Probably a similar sentiment as Lorenzo here...the above diffs make the code
-*worse* to read. In fact, I recall adding record_subpages() here long ago,
-specifically to help clarify what was going on.
+> 
+> Roughly, what I am thinking (limiting it to pte+pmd case) about is the 
+> following:
 
-Now it's been returned to it's original, cryptic form.
-
-Just my take on it, for whatever that's worth. :)
-
+The code below looks much cleaner, that's great!
 
 thanks,
 -- 
 John Hubbard
 
->  	folio_set_referenced(folio);
->  	return 1;
->  }
+> 
+> 
+>  From d6d6d21dbf435d8030782a627175e36e6c7b2dfb Mon Sep 17 00:00:00 2001
+> From: David Hildenbrand <david@redhat.com>
+> Date: Sat, 6 Sep 2025 08:33:42 +0200
+> Subject: [PATCH] tmp
+> 
+> Signed-off-by: David Hildenbrand <david@redhat.com>
+> ---
+>   mm/gup.c | 79 ++++++++++++++++++++++++++------------------------------
+>   1 file changed, 36 insertions(+), 43 deletions(-)
+> 
+> diff --git a/mm/gup.c b/mm/gup.c
+> index 22420f2069ee1..98907ead749c0 100644
+> --- a/mm/gup.c
+> +++ b/mm/gup.c
+> @@ -2845,12 +2845,11 @@ static void __maybe_unused 
+> gup_fast_undo_dev_pagemap(int *nr, int nr_start,
+>    * also check pmd here to make sure pmd doesn't change (corresponds to
+>    * pmdp_collapse_flush() in the THP collapse code path).
+>    */
+> -static int gup_fast_pte_range(pmd_t pmd, pmd_t *pmdp, unsigned long addr,
+> -        unsigned long end, unsigned int flags, struct page **pages,
+> -        int *nr)
+> +static unsigned long gup_fast_pte_range(pmd_t pmd, pmd_t *pmdp, 
+> unsigned long addr,
+> +        unsigned long end, unsigned int flags, struct page **pages)
+>   {
+>       struct dev_pagemap *pgmap = NULL;
+> -    int ret = 0;
+> +    unsigned long nr_pages = 0;
+>       pte_t *ptep, *ptem;
+> 
+>       ptem = ptep = pte_offset_map(&pmd, addr);
+> @@ -2908,24 +2907,20 @@ static int gup_fast_pte_range(pmd_t pmd, pmd_t 
+> *pmdp, unsigned long addr,
+>            * details.
+>            */
+>           if (flags & FOLL_PIN) {
+> -            ret = arch_make_folio_accessible(folio);
+> -            if (ret) {
+> +            if (arch_make_folio_accessible(folio)) {
+>                   gup_put_folio(folio, 1, flags);
+>                   goto pte_unmap;
+>               }
+>           }
+>           folio_set_referenced(folio);
+> -        pages[*nr] = page;
+> -        (*nr)++;
+> +        pages[nr_pages++] = page;
+>       } while (ptep++, addr += PAGE_SIZE, addr != end);
+> 
+> -    ret = 1;
+> -
+>   pte_unmap:
+>       if (pgmap)
+>           put_dev_pagemap(pgmap);
+>       pte_unmap(ptem);
+> -    return ret;
+> +    return nr_pages;
+>   }
+>   #else
+> 
+> @@ -2938,21 +2933,24 @@ static int gup_fast_pte_range(pmd_t pmd, pmd_t 
+> *pmdp, unsigned long addr,
+>    * get_user_pages_fast_only implementation that can pin pages. Thus 
+> it's still
+>    * useful to have gup_fast_pmd_leaf even if we can't operate on ptes.
+>    */
+> -static int gup_fast_pte_range(pmd_t pmd, pmd_t *pmdp, unsigned long addr,
+> -        unsigned long end, unsigned int flags, struct page **pages,
+> -        int *nr)
+> +static unsigned long gup_fast_pte_range(pmd_t pmd, pmd_t *pmdp, 
+> unsigned long addr,
+> +        unsigned long end, unsigned int flags, struct page **pages)
+>   {
+>       return 0;
+>   }
+>   #endif /* CONFIG_ARCH_HAS_PTE_SPECIAL */
+> 
+> -static int gup_fast_pmd_leaf(pmd_t orig, pmd_t *pmdp, unsigned long addr,
+> -        unsigned long end, unsigned int flags, struct page **pages,
+> -        int *nr)
+> +static unsigned long gup_fast_pmd_leaf(pmd_t orig, pmd_t *pmdp, 
+> unsigned long addr,
+> +        unsigned long end, unsigned int flags, struct page **pages)
+>   {
+> +    const unsigned long nr_pages = (end - addr) >> PAGE_SHIFT;
+>       struct page *page;
+>       struct folio *folio;
+> -    int refs;
+> +    unsigned long i;
+> +
+> +    /* See gup_fast_pte_range() */
+> +    if (pmd_protnone(orig))
+> +        return 0;
+> 
+>       if (!pmd_access_permitted(orig, flags & FOLL_WRITE))
+>           return 0;
+> @@ -2960,33 +2958,30 @@ static int gup_fast_pmd_leaf(pmd_t orig, pmd_t 
+> *pmdp, unsigned long addr,
+>       if (pmd_special(orig))
+>           return 0;
+> 
+> -    refs = (end - addr) >> PAGE_SHIFT;
+>       page = pmd_page(orig) + ((addr & ~PMD_MASK) >> PAGE_SHIFT);
+> 
+> -    folio = try_grab_folio_fast(page, refs, flags);
+> +    folio = try_grab_folio_fast(page, nr_pages, flags);
+>       if (!folio)
+>           return 0;
+> 
+>       if (unlikely(pmd_val(orig) != pmd_val(*pmdp))) {
+> -        gup_put_folio(folio, refs, flags);
+> +        gup_put_folio(folio, nr_pages, flags);
+>           return 0;
+>       }
+> 
+>       if (!gup_fast_folio_allowed(folio, flags)) {
+> -        gup_put_folio(folio, refs, flags);
+> +        gup_put_folio(folio, nr_pages, flags);
+>           return 0;
+>       }
+>       if (!pmd_write(orig) && gup_must_unshare(NULL, flags, &folio- 
+>  >page)) {
+> -        gup_put_folio(folio, refs, flags);
+> +        gup_put_folio(folio, nr_pages, flags);
+>           return 0;
+>       }
+> 
+> -    pages += *nr;
+> -    *nr += refs;
+> -    for (; refs; refs--)
+> +    for (i = 0; i < nr_pages; i++)
+>           *(pages++) = page++;
+>       folio_set_referenced(folio);
+> -    return 1;
+> +    return nr_pages;
+>   }
+> 
+>   static int gup_fast_pud_leaf(pud_t orig, pud_t *pudp, unsigned long addr,
+> @@ -3033,11 +3028,11 @@ static int gup_fast_pud_leaf(pud_t orig, pud_t 
+> *pudp, unsigned long addr,
+>       return 1;
+>   }
+> 
+> -static int gup_fast_pmd_range(pud_t *pudp, pud_t pud, unsigned long addr,
+> -        unsigned long end, unsigned int flags, struct page **pages,
+> -        int *nr)
+> +static unsigned long gup_fast_pmd_range(pud_t *pudp, pud_t pud, 
+> unsigned long addr,
+> +        unsigned long end, unsigned int flags, struct page **pages)
+>   {
+> -    unsigned long next;
+> +    unsigned long cur_nr_pages, next;
+> +    unsigned long nr_pages = 0;
+>       pmd_t *pmdp;
+> 
+>       pmdp = pmd_offset_lockless(pudp, pud, addr);
+> @@ -3046,23 +3041,21 @@ static int gup_fast_pmd_range(pud_t *pudp, pud_t 
+> pud, unsigned long addr,
+> 
+>           next = pmd_addr_end(addr, end);
+>           if (!pmd_present(pmd))
+> -            return 0;
+> +            break;
+> 
+> -        if (unlikely(pmd_leaf(pmd))) {
+> -            /* See gup_fast_pte_range() */
+> -            if (pmd_protnone(pmd))
+> -                return 0;
+> +        if (unlikely(pmd_leaf(pmd)))
+> +            cur_nr_pages = gup_fast_pmd_leaf(pmd, pmdp, addr, next, 
+> flags, pages);
+> +        else
+> +            cur_nr_pages = gup_fast_pte_range(pmd, pmdp, addr, next, 
+> flags, pages);
+> 
+> -            if (!gup_fast_pmd_leaf(pmd, pmdp, addr, next, flags,
+> -                pages, nr))
+> -                return 0;
+> +        nr_pages += cur_nr_pages;
+> +        pages += cur_nr_pages;
+> 
+> -        } else if (!gup_fast_pte_range(pmd, pmdp, addr, next, flags,
+> -                           pages, nr))
+> -            return 0;
+> +        if (nr_pages != (next - addr) >> PAGE_SIZE)
+> +            break;
+>       } while (pmdp++, addr = next, addr != end);
+> 
+> -    return 1;
+> +    return nr_pages;
+>   }
+> 
+>   static int gup_fast_pud_range(p4d_t *p4dp, p4d_t p4d, unsigned long addr,
+
+
 
