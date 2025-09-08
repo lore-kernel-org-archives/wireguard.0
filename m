@@ -4,50 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92DF4CA1002
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  6 Sep 2025 21:13:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E8FACA1016
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  8 Sep 2025 07:54:25 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ae6bef92;
-	Sat, 6 Sep 2025 21:12:08 +0000 (UTC)
-Received: from mail.as397444.net (mail.as397444.net [2620:6e:a000:1::99])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c8902767
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 295ffbfe;
+	Mon, 8 Sep 2025 07:54:23 +0000 (UTC)
+Received: from sipsolutions.net (s3.sipsolutions.net [2a01:4f8:242:246e::2])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 96a0470e
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sat, 6 Sep 2025 21:12:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bluematt.me
- ; s=1757191261;
- h=Subject:From:To:From:Subject:To:Cc:Cc:Reply-To:In-Reply-To:
- References; bh=EU3FFls8QY3IHgMDncU13AS5KkzDFnoZ30hssy6TtOU=; b=oqQxYBvvqAvTcq
- /zBqa/nchZlKJLdijcyVvzo6HCH8lwiGz9Rn43wW0kRgze1m1hEiA4ruWS7h+xROAybJ4SsaLbAjI
- pr8qPB6FRFdqvu7GuhlwffEp9oiDKHDLeBK8fPU9ASMNz3acfIsGl1wAhEnztl7KjzxFtxpYrd3Ua
- sI3VznLLhbhRQzYzT7qCJc27vOArxPNYQqD1QUX+Op8pyOrUCZm/SVLuPfR/r5liVf3O7XxnwFzz1
- 8R53napbhzzMJLR+C/H6GDDfB3zPCGD9G3P5ifzRnGzFADqgGIG9aaDqP9RpthT5LHEG1ZLAQRBZq
- pU9/jJ/1+9JyLxOuaVeQ==;
+ for <wireguard@lists.zx2c4.com>; Mon, 8 Sep 2025 07:54:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=clients.mail.as397444.net; s=1757191264; h=Subject:From:To:From:Subject:To:
- Cc:Cc:Reply-To:In-Reply-To:References;
- bh=EU3FFls8QY3IHgMDncU13AS5KkzDFnoZ30hssy6TtOU=; b=WJ6aoY3ys3kwfw8nnFignbhodp
- f73NuKJv5kG9a8v07IyThKq4YxwYTAKtsaAgGuxypfh+k14A8MjggFcmulmIr8RidvTyW9N7EdJLk
- mgvH8EBYD7OAb8OoEt0+y1Ng7gsVHEsUbOSm+AQmRByDgxnhRAODMNwmKZzIjOQUmmq11tCyMk20h
- FMH3SkfnqgVElfzsiY+bg41tqtbElaBssi+41qdUpgeSG8xDcSlg7j+VMd0kzYTCUUl2jnJDG58Az
- lEQtiQSTwO1D3docsxamVOJQ2rHYXggMp7NxD5QAjSUQ9rch47Ce5XjpZwZDv9ofKqdcMITOOKRNE
- L9ZzC4Yw==;
-X-DKIM-Note: Keys used to sign are likely public at
-X-DKIM-Note: https://as397444.net/dkim/bluematt.me and
-X-DKIM-Note: https://as397444.net/dkim/clients.mail.as397444.net
-X-DKIM-Note: For more info, see https://as397444.net/dkim/
-Received: by mail.as397444.net with esmtpsa (TLS1.3) (Exim)
- (envelope-from <wg-lists@bluematt.me>)
- id 1uv0CZ-00000001au4-0M2N for wireguard@lists.zx2c4.com;
- Sat, 06 Sep 2025 21:12:03 +0000
-Message-ID: <043598bd-198a-4d79-8749-789e578e07fe@bluematt.me>
-Date: Sat, 6 Sep 2025 17:12:02 -0400
+ d=sipsolutions.net; s=mail; h=MIME-Version:Content-Transfer-Encoding:
+ Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
+ :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
+ Resent-Cc:Resent-Message-ID; bh=xRtcOqdjtsdZI6kf5ebzBEjwO+H4XBq0PeK8BgyDANI=; 
+ t=1757318061; x=1758527661; b=rO+gsWxfSyWvCmjqF6wmpOGHH/Up+pJSoIwBHrcS4Jh8zcO
+ VNe+dtf+wJ5HzT+nrFniR06k9iUpHEpGPUMICyg4jNAO6scZsu0Pt0Z83dPT3e2GKxu4GA4WLoBaw
+ Wp9JIxR6uGDd4JQI4tdgnsz/qJ9DxY1auVzOS2z3BE3krYTIXTD6V56vUF4aE6dxTW4O6tyQ2iuoE
+ zWGkc3lm2UKG9OUYGvAdSL6wfoQFDyuK7yGWHJtU6ClZbhFVgqtIBqF4d8gXRw9Q0mqM3H+1i6mUJ
+ Uj1E0bDp2J2MJjpbEAfdShI17RoGfE1u+PB6OyyFPksAGQH4LH6AxnjBIAF5tA4g==;
+Received: by sipsolutions.net with esmtpsa
+ (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+ (Exim 4.98.2) (envelope-from <johannes@sipsolutions.net>)
+ id 1uvWhQ-00000006zQ9-1xiK; Mon, 08 Sep 2025 09:54:04 +0200
+Message-ID: <c1a4da4cb54c0436d5f67efacf6866b4bc057b3e.camel@sipsolutions.net>
+Subject: Re: [PATCH net-next 02/11] tools: ynl-gen: generate nested array
+ policies
+From: Johannes Berg <johannes@sipsolutions.net>
+To: =?ISO-8859-1?Q?Asbj=F8rn?= Sloth =?ISO-8859-1?Q?T=F8nnesen?=	
+ <ast@fiberby.net>, "Keller, Jacob E" <jacob.e.keller@intel.com>, "Jason A.
+ Donenfeld" <Jason@zx2c4.com>, "David S. Miller" <davem@davemloft.net>, Eric
+ Dumazet <edumazet@google.com>,  Jakub Kicinski	 <kuba@kernel.org>, Paolo
+ Abeni <pabeni@redhat.com>
+Cc: Donald Hunter <donald.hunter@gmail.com>, Simon Horman
+ <horms@kernel.org>,  Andrew Lunn <andrew+netdev@lunn.ch>,
+ "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>, 
+ "netdev@vger.kernel.org"	 <netdev@vger.kernel.org>,
+ "linux-kernel@vger.kernel.org"	 <linux-kernel@vger.kernel.org>
+Date: Mon, 08 Sep 2025 09:54:03 +0200
+In-Reply-To: <6e31a9e0-5450-4b45-a557-2aa08d23c25a@fiberby.net>
+References: <20250904-wg-ynl-prep@fiberby.net>
+ <20250904220156.1006541-2-ast@fiberby.net>
+ <e24f5baf-7085-4db0-aaad-5318555988b3@intel.com>
+ <6e31a9e0-5450-4b45-a557-2aa08d23c25a@fiberby.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
 MIME-Version: 1.0
-Content-Language: en-US
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-From: Matt Corallo <wg-lists@bluematt.me>
-Subject: Leaving skb->priority alone when encapsulating?
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-malware-bazaar: not-scanned
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -62,17 +66,48 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Its (I presume) fairly common to have multiple wireguard links on a single machine which ultimately 
-has its outbound interface shaped with some tc qdisc. While wg_reset_packet leaves the skb hash flag 
-alone to allow that qdisc to have visibility into the header hash, it wipes all other skb headers 
-with a `memset(&skb->headers...)`. This makes it (I believe) impossible to allow the primary qdisc 
-to operate on the DSCP of the inner packet (which wireguard reasonably wipes, but could otherwise be 
-copied into skb->priority, which is generally an appropriate place for it).
+On Sat, 2025-09-06 at 14:13 +0000, Asbj=C3=B8rn Sloth T=C3=B8nnesen wrote:
+>=20
+> Johannes introduced NLA_NESTED_ARRAY and the NLA_POLICY_NESTED_ARRAY()
+> macro in commit 1501d13596b9 for use in nl80211, and it's therefore
+> used in net/wireless/nl80211.c, but outside of that the macro is
+> only sparsely adopted (only by mac80211_hwsim.c and nf_tables_api.c).
+>=20
+> Wireguard adopts the macro in this RFC patch:
+> https://lore.kernel.org/netdev/20250904220255.1006675-2-ast@fiberby.net/
 
-This appears to differ from every other tunneling protocol (the only instances of `memset.*headers` 
-in the entire tree are in wireguard and the mellanox drivers) and other encapsulation protocols 
-appear to rely on iptunnel_xmit's clearing of the relevant flags, rather than doing it themselves.
+I think the general consensus now is that preference should be towards
+arrays being expressed by giving the attribute holding the array
+multiple times, i.e. each occurrence of an attribute holds a single
+entry of the array:
 
-While most of the fields in a skb's headers are perfectly reasonable to clear, I do wonder why 
-wireguard is special here, but in any case it would be very nice to allow at least priority to 
-propagate past wg_reset_packet.
+[header][type1:a1][type2:b][type1:a2][type1:a3]
+
+resulting in an array
+
+[a1, a2, a3] and a separate value "b",
+
+rather than a nested array:
+
+[header][type1:[1:a1][2:a2][3:a3]][type2:b]
+
+
+Of course if each entry has multiple values, then you'd still need
+nesting:
+
+[header][type1:[subtype1:x1][subtype2:x2]][type1:[subtype1:y1][subtype2:y2]=
+]
+
+would be an array
+
+[[x1, x2], [y1, y2]].
+
+
+I can't get rid of the nested array types in nl80211 though, of course.
+
+I'm not sure the nl80211 ynl code was ever merged, but it wasn't
+authoritative anyway, just for some limited userspace generation, so I'm
+not sure the whole ynl handling this is needed at all?
+
+
+johannes
