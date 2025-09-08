@@ -4,77 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3A6BCA1016
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  8 Sep 2025 08:05:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B958CAC581
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  8 Sep 2025 12:54:09 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id be53882f;
-	Mon, 8 Sep 2025 08:00:19 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 60e6d89f;
+	Mon, 8 Sep 2025 12:53:12 +0000 (UTC)
 Received: from us-smtp-delivery-124.mimecast.com
  (us-smtp-delivery-124.mimecast.com [170.10.133.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e185d780
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 50f151b3
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 8 Sep 2025 08:00:16 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Mon, 8 Sep 2025 12:53:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757318415;
+ s=mimecast20190719; t=1757335988;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=6ZtGxzPBBhWZb8TdeGEHePc9lnXNDI+6sWWhJSedy84=;
- b=ie/viIKOuwXFGYfAL6jz5WjYEtaUfhdyGPG3G2UsmozNGJ5J0unzEzabpvDkUI9gwEgOJI
- WmsMa09l+qn4q9QXiQEteuzbf6oRlOTATGJ1+MhZ/qA3rqZcXk4z9MOIqjYK68Ism79C2S
- LdxARZuu4R5AIHZ0LeetP8fnHsQ2SoE=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=nqKqSNT26uK0ctF10EJrKeCsL0Ppf+8ee2pPXGgNN7Q=;
+ b=ei1EcvQ42kp4zIyxUpsFKMJyMkc0lXrfM8OjM5kopJTapu1t7l5M/UfWRGVryH9m8XXCI9
+ vsqF1U2+hMIgdpcLY6y4GMsbJq1akTak5dKcYBfMxlzIPyeBfNrh4PlSNeoVHRsHcC6l0H
+ Oqx3UTAlNNsjpjmjEazNSn11UcDDcSo=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-590-JLCMbBAmOb-mfQMvncT_Ng-1; Mon, 08 Sep 2025 04:00:11 -0400
-X-MC-Unique: JLCMbBAmOb-mfQMvncT_Ng-1
-X-Mimecast-MFC-AGG-ID: JLCMbBAmOb-mfQMvncT_Ng_1757318409
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3dbc72f8d32so1692409f8f.3
- for <wireguard@lists.zx2c4.com>; Mon, 08 Sep 2025 01:00:10 -0700 (PDT)
+ us-mta-186-4JRt3-QDPcm5YxfJC9fL4w-1; Mon, 08 Sep 2025 08:53:06 -0400
+X-MC-Unique: 4JRt3-QDPcm5YxfJC9fL4w-1
+X-Mimecast-MFC-AGG-ID: 4JRt3-QDPcm5YxfJC9fL4w_1757335985
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3e38ae5394aso2512573f8f.3
+ for <wireguard@lists.zx2c4.com>; Mon, 08 Sep 2025 05:53:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757318409; x=1757923209;
+ d=1e100.net; s=20230601; t=1757335985; x=1757940785;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=6ZtGxzPBBhWZb8TdeGEHePc9lnXNDI+6sWWhJSedy84=;
- b=R419S++L+1Z1Sd6PeTelAKZEky3WogtL7SOR7a0AjNSWJKWcZEbx8fZbdD66wq3EeY
- uDfP2mkqyz7pfd/sgbBG5iMrzFUTJVPNGouC4neuROyOmD32rJzam2uSK6SfNwDXcTVD
- CKTJYSeuGTnse/l+pXdQDt95br4ldxp+XxxPEkO4LDvi+y+4PoHXOLU92VmW/Ap3sRhH
- KEHSLPnzSJpnQn7KEultyHfjip/kSptm/9QM4Pv781YgbKW4OniZqaB2p2rvlZQOYIAA
- NJw2sxGu57OBNMfTbu4bxM5Ssi+hdTKbJViVyYdOdlMRgEUT+KhqUrmYS9qjFupSMhDL
- cnTw==
+ bh=nqKqSNT26uK0ctF10EJrKeCsL0Ppf+8ee2pPXGgNN7Q=;
+ b=NwZBMs4rgyDH4vaKT3q7Ud9Pl6XQYOXKzWz7k4fbQ9hx+paaSql/Ihoaiz/vCxEHdn
+ eLPUq82kkfvx+OGgRn2i3YMbp+09FJ47WtELgjD2cusVkhZ5j/ZHZWT1gHNtCAFd1Ewg
+ sFQ3NNWYQ/5ig8Ne7AogHbKzFZ7CCCDCa9/22yfZfmJd0OxSPI1VKLgDK0k6LBXtV4KG
+ xTsWgsXWpN6lO5Kmd7PZgApjuOyaHBtYY6eyWnHtI+nHjhAYW7vw4ZBEdCgmEpEARoUS
+ Ub73wAL8ZWbJbiX/4ew5U48+tbV+7tstBiLS4B9lcA1/Ti2ZgALpAqg0lpWTf3qaHGVo
+ czGQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVgKSqpCYrAyV3e5vrG5hVkLamrB1lV/nHfLoZGTo45cDcDMym2PoTQTaFIsnFzepzN8xnhajGUPxI=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YwA4r6bYW4zaEq05WfTN7IE6d206VMsJVy1o3easspc+Gy5VsMm
- 3lpoELxfEmkT2fbLBCmuWy6ZVbHKw34gnujRHLD8NlfUA/BoKpovV5WCkzwAB8hpeVUNPRcPNNj
- LUlXF2mrwYPiYRvadAj/FRcwHPtCr6xbdjxEtlXfQNd3EMXUtDHKxI7DnhWUH7g==
-X-Gm-Gg: ASbGncuY3k8JQTXxRvD+A2MKa0qAklU3BOc7IfCY0RpzLcJAJS435TVfwXQxTEziHXv
- 5qjAWPpWX7vmAfNENfuD2mz5wqbfNRAohFNUvvQKB/rqSDuDX9da2pucAdDr7j1WJGH6fDXKZZe
- ERXlnmkwM+/+bOQsFCsK0XpsHi5wz8gBe0TMyBuVJ/lciFnw7j7iAEGsNPWOzRmvEhbELFGQ+3X
- 0nzDiC3ydw4fvDdRlfhwPDDIr85er6WXNa9P+/lksSZHrpyfT1iqhjmmFGDF/Ava+/sDU2MB9a0
- Y3UE6pRnW9swP184oizxGBNyfUI10GTSD+0n8YGZ8SubrQHSll/tWbKJZeMOlj9QLsCsYlE=
-X-Received: by 2002:a05:6000:26cd:b0:3e0:2a95:dc9e with SMTP id
- ffacd0b85a97d-3e64ce50347mr4840536f8f.57.1757318409160; 
- Mon, 08 Sep 2025 01:00:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF+e2xgTQYe5kT3rV+uD8LRSVafVXIklNJL7Am05EAxkn8s4rPl3yNNJ7oQs/EOmF2miaT83w==
-X-Received: by 2002:a05:6000:26cd:b0:3e0:2a95:dc9e with SMTP id
- ffacd0b85a97d-3e64ce50347mr4840495f8f.57.1757318408663; 
- Mon, 08 Sep 2025 01:00:08 -0700 (PDT)
-Received: from [192.168.3.141] (p57a1ae98.dip0.t-ipconnect.de.
- [87.161.174.152]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e740369f1esm6798834f8f.11.2025.09.08.01.00.06
+ AJvYcCUrQsk4kNoTRf9hknR33kHgue/8iRvoFyDI5RVMNyK83umx8RrU4Tqth4JAqcPKzuYffn0bHp3wmtI=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0Yz8t2TECUPX6g6vhrgQXuwTO92vN+mCLPOado6y90P9Cbmd0njD
+ lFabUf9gl0kM3CtvTUQ8PlU0dgKKlx7u+5MbojjoPGlfnmb0DB532jxMYOQ+s5fbXlw9FDDocP4
+ 3OIAdQNrXXfuu20Z+NLpBKsoEb5KWREruNZDOOOcMrJ/vgP7UeL+Phf/MGyXm3w==
+X-Gm-Gg: ASbGnculVfIRt+vFZEM27GwKMIZT3T55Y5l0WCCscUIG7oP+qwZs/C/7a2oY/adwzQ5
+ Sob91ZEyc0e2qb4rVboBSAN8NOuK4zoJo8UtOCuVqfgP7FgnqJFyww6DJjJQG2D731RomBf4Y3r
+ BGJVVvPrTai9P4bBgKiUJsGq/o8KZG9SmG5RefYZDgaYH6SZTLpOIUcgHN4LkIIOP7tJYPc+KUN
+ 8VwoQpGE0NlXEZCdH96e05PR6ezaEUyBkks1bp3+TXOITJN8mlSQf7ZnYgo9h7J/UNSQQY0JKgB
+ Uwfo7U7ULXNUl2hPKWhzGe3Z2gw1lRhuGY9LImonG6gcZ+SjSqI/0rDbKCl4uKZQFajbH7qkTmh
+ Hg0aMvWmTuuK3XcNUZgiSXJ/MKdPcScN16Rowz2sLP6iKFZyUvCceTlxZIE6a97wk
+X-Received: by 2002:a5d:64e4:0:b0:3df:58c5:efd1 with SMTP id
+ ffacd0b85a97d-3e6427d6e15mr6188463f8f.25.1757335984634; 
+ Mon, 08 Sep 2025 05:53:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFCDxFquotzqnajJLjBsVtEGOKTyR3mfE6vqo6/1C+mdI526t5VUp3r/8RO80kgSz2c6+Q56w==
+X-Received: by 2002:a5d:64e4:0:b0:3df:58c5:efd1 with SMTP id
+ ffacd0b85a97d-3e6427d6e15mr6188391f8f.25.1757335984032; 
+ Mon, 08 Sep 2025 05:53:04 -0700 (PDT)
+Received: from ?IPV6:2003:d8:2f25:700:d846:15f3:6ca0:8029?
+ (p200300d82f250700d84615f36ca08029.dip0.t-ipconnect.de.
+ [2003:d8:2f25:700:d846:15f3:6ca0:8029])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3d1007c0dc8sm40030772f8f.53.2025.09.08.05.53.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Sep 2025 01:00:08 -0700 (PDT)
-Message-ID: <28fc8fb3-f16b-4efb-b8e3-24081f035c73@redhat.com>
-Date: Mon, 8 Sep 2025 10:00:05 +0200
+ Mon, 08 Sep 2025 05:53:03 -0700 (PDT)
+Message-ID: <7ee0b58a-8fe4-46fe-bfef-f04f900f3040@redhat.com>
+Date: Mon, 8 Sep 2025 14:53:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 19/37] mm/gup: remove record_subpages()
-To: John Hubbard <jhubbard@nvidia.com>, linux-kernel@vger.kernel.org
-Cc: Alexander Potapenko <glider@google.com>,
+To: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: John Hubbard <jhubbard@nvidia.com>, linux-kernel@vger.kernel.org,
+ Alexander Potapenko <glider@google.com>,
  Andrew Morton <akpm@linux-foundation.org>,
  Brendan Jackman <jackmanb@google.com>, Christoph Lameter <cl@gentwo.org>,
  Dennis Zhou <dennis@kernel.org>, Dmitry Vyukov <dvyukov@google.com>,
@@ -88,20 +92,19 @@ Cc: Alexander Potapenko <glider@google.com>,
  linux-ide@vger.kernel.org, linux-kselftest@vger.kernel.org,
  linux-mips@vger.kernel.org, linux-mmc@vger.kernel.org, linux-mm@kvack.org,
  linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
- linux-scsi@vger.kernel.org, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
- Marco Elver <elver@google.com>, Marek Szyprowski <m.szyprowski@samsung.com>,
- Michal Hocko <mhocko@suse.com>, Mike Rapoport <rppt@kernel.org>,
- Muchun Song <muchun.song@linux.dev>, netdev@vger.kernel.org,
- Oscar Salvador <osalvador@suse.de>, Peter Xu <peterx@redhat.com>,
- Robin Murphy <robin.murphy@arm.com>, Suren Baghdasaryan <surenb@google.com>,
- Tejun Heo <tj@kernel.org>, virtualization@lists.linux.dev,
- Vlastimil Babka <vbabka@suse.cz>, wireguard@lists.zx2c4.com, x86@kernel.org,
- Zi Yan <ziy@nvidia.com>, Aristeu Rozanski <aris@redhat.com>
+ linux-scsi@vger.kernel.org, Marco Elver <elver@google.com>,
+ Marek Szyprowski <m.szyprowski@samsung.com>, Michal Hocko <mhocko@suse.com>,
+ Mike Rapoport <rppt@kernel.org>, Muchun Song <muchun.song@linux.dev>,
+ netdev@vger.kernel.org, Oscar Salvador <osalvador@suse.de>,
+ Peter Xu <peterx@redhat.com>, Robin Murphy <robin.murphy@arm.com>,
+ Suren Baghdasaryan <surenb@google.com>, Tejun Heo <tj@kernel.org>,
+ virtualization@lists.linux.dev, Vlastimil Babka <vbabka@suse.cz>,
+ wireguard@lists.zx2c4.com, x86@kernel.org, Zi Yan <ziy@nvidia.com>
 References: <20250901150359.867252-1-david@redhat.com>
  <20250901150359.867252-20-david@redhat.com>
  <016307ba-427d-4646-8e4d-1ffefd2c1968@nvidia.com>
  <85e760cf-b994-40db-8d13-221feee55c60@redhat.com>
- <0a28adde-acaf-4d55-96ba-c32d6113285f@nvidia.com>
+ <727cabec-5ee8-4793-926b-8d78febcd623@lucifer.local>
 From: David Hildenbrand <david@redhat.com>
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
@@ -147,9 +150,9 @@ Autocrypt: addr=david@redhat.com; keydata=
  3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
  CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
  qIws/H2t
-In-Reply-To: <0a28adde-acaf-4d55-96ba-c32d6113285f@nvidia.com>
+In-Reply-To: <727cabec-5ee8-4793-926b-8d78febcd623@lucifer.local>
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: r7Jly1SwQu4q4s3OhH7b8Gl17CSd_aCF2NB3GvrVAIg_1757318409
+X-Mimecast-MFC-PROC-ID: oOy_cm58mMbv6qXIi1ffb561EAnDpFFjrdTxbKUk9wM_1757335985
 X-Mimecast-Originator: redhat.com
 Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8; format=flowed
@@ -168,12 +171,125 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
->> Roughly, what I am thinking (limiting it to pte+pmd case) about is the
->> following:
+On 08.09.25 14:25, Lorenzo Stoakes wrote:
+> On Sat, Sep 06, 2025 at 08:56:48AM +0200, David Hildenbrand wrote:
+>> On 06.09.25 03:05, John Hubbard wrote:
+>>>
+>>> Probably a similar sentiment as Lorenzo here...the above diffs make the code
+>>> *worse* to read. In fact, I recall adding record_subpages() here long ago,
+>>> specifically to help clarify what was going on.
+>>
+>> Well, there is a lot I dislike about record_subpages() to go back there.
+>> Starting with "as Willy keeps explaining, the concept of subpages do
+>> not exist and ending with "why do we fill out the array even on failure".
 > 
-> The code below looks much cleaner, that's great!
+> Yes
+> 
+>>
+>> :)
+>>
+>>>
+>>> Now it's been returned to it's original, cryptic form.
+>>>
+>>
+>> The code in the caller was so uncryptic that both me and Lorenzo missed
+>> that magical addition. :P
+> 
+> :'(
+> 
+>>
+>>> Just my take on it, for whatever that's worth. :)
+>>
+>> As always, appreciated.
+>>
+>> I could of course keep the simple loop in some "record_folio_pages"
+>> function and clean up what I dislike about record_subpages().
+>>
+>> But I much rather want the call chain to be cleaned up instead, if possible.
+>>
+>>
+>> Roughly, what I am thinking (limiting it to pte+pmd case) about is the following:
+> 
+> I cannot get the below to apply even with the original patch here applied + fix.
+> 
+> It looks like (in mm-new :) commit e73f43a66d5f ("mm/gup: remove dead pgmap
+> refcounting code") by Alastair has conflicted here, but even then I can't make
+> it apply, with/without your fix...!
 
-Great, I (or Aristeu if he has capacity) will clean this all up soon.
+To be clear: it was never intended to be applied, because it wouldn't 
+even compile in the current form.
+
+It was based on this nth_page submission + fix.
+
+
+[...]
+
+>>   }
+>>   static int gup_fast_pud_range(p4d_t *p4dp, p4d_t p4d, unsigned long addr,
+> 
+> OK I guess you intentionally left the rest as a TODO :)
+> 
+> So I'll wait for you to post it before reviewing in-depth.
+> 
+> This generally LGTM as an approach, getting rid of *nr is important that's
+> really horrible.
+
+Yes. Expect a cleanup in that direction soonish (again, either from me 
+or someone else I poke)
+
+> 
+>> --
+>> 2.50.1
+>>
+>>
+>>
+>> Oh, I might even have found a bug moving away from that questionable
+>> "ret==1 means success" handling in gup_fast_pte_range()? Will
+>> have to double-check, but likely the following is the right thing to do.
+>>
+>>
+>>
+>>  From 8f48b25ef93e7ef98611fd58ec89384ad5171782 Mon Sep 17 00:00:00 2001
+>> From: David Hildenbrand <david@redhat.com>
+>> Date: Sat, 6 Sep 2025 08:46:45 +0200
+>> Subject: [PATCH] mm/gup: fix handling of errors from
+>>   arch_make_folio_accessible() in follow_page_pte()
+>>
+>> In case we call arch_make_folio_accessible() and it fails, we would
+>> incorrectly return a value that is "!= 0" to the caller, indicating that
+>> we pinned all requested pages and that the caller can keep going.
+>>
+>> follow_page_pte() is not supposed to return error values, but instead
+>> 0 on failure and 1 on success.
+>>
+>> That is of course wrong, because the caller will just keep going pinning
+>> more pages. If we happen to pin a page afterwards, we're in trouble,
+>> because we essentially skipped some pages.
+>>
+>> Fixes: f28d43636d6f ("mm/gup/writeback: add callbacks for inaccessible pages")
+>> Signed-off-by: David Hildenbrand <david@redhat.com>
+>> ---
+>>   mm/gup.c | 3 +--
+>>   1 file changed, 1 insertion(+), 2 deletions(-)
+>>
+>> diff --git a/mm/gup.c b/mm/gup.c
+>> index 22420f2069ee1..cff226ec0ee7d 100644
+>> --- a/mm/gup.c
+>> +++ b/mm/gup.c
+>> @@ -2908,8 +2908,7 @@ static int gup_fast_pte_range(pmd_t pmd, pmd_t *pmdp, unsigned long addr,
+>>   		 * details.
+>>   		 */
+>>   		if (flags & FOLL_PIN) {
+>> -			ret = arch_make_folio_accessible(folio);
+>> -			if (ret) {
+>> +			if (arch_make_folio_accessible(folio)) {
+> 
+> Oh Lord above. Lol. Yikes.
+> 
+> Yeah I think your fix is valid...
+
+I sent it out earlier today. Fortunately that function shouldn't usually 
+really fail IIUC.
 
 -- 
 Cheers
