@@ -4,65 +4,158 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6831CAC581
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  9 Sep 2025 04:25:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C6E1CAC589
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  9 Sep 2025 09:56:02 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 386a4657;
-	Tue, 9 Sep 2025 04:25:27 +0000 (UTC)
-Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4208625d
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 11dbd465;
+	Tue, 9 Sep 2025 09:56:01 +0000 (UTC)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 14ec4e71
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 9 Sep 2025 04:25:25 +0000 (UTC)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 05467449E2;
- Tue,  9 Sep 2025 04:25:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9D2C4CEF4;
- Tue,  9 Sep 2025 04:25:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
- s=korg; t=1757391922;
- bh=RrzY4SDc18Ci2TyOyhCgyGYX7hmnnBCU2e/pxbH8zRw=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=i9pJ18PLXuxKbzs/Iruw3PpLBgKXy9ssEffV+i7Q9gMAvoRB7kzd+iGGYRZ4Vjd4z
- nsdDoX1b8RjqFfB2U020ZMoVgWz32DH/3KHr9yu4W24HNyAdp4ShFmw5Gwb3/8dyxq
- YI0F046jfWbWEKO92OxW3X9LzuK+WjtFkn1xH7Gk=
-Date: Mon, 8 Sep 2025 21:25:18 -0700
-From: Andrew Morton <akpm@linux-foundation.org>
-To: David Hildenbrand <david@redhat.com>
-Cc: Eric Biggers <ebiggers@kernel.org>, linux-kernel@vger.kernel.org,
- Alexander Potapenko <glider@google.com>, Brendan Jackman
- <jackmanb@google.com>, Christoph Lameter <cl@gentwo.org>, Dennis Zhou
- <dennis@kernel.org>, Dmitry Vyukov <dvyukov@google.com>,
+ for <wireguard@lists.zx2c4.com>; Tue, 9 Sep 2025 09:55:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757411757;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=uuhn5XZ+k/yXfBkz6uI/EJtHiraKm76UcsqU/6SM9xI=;
+ b=he7uv1ANAW01eUnXD+VlJxKPV9Yg/8eHB0FFOy7vX9PsI3RMRddchVeInBeXBfCt+Njqsd
+ mIZlrOJICr129i4mcdn8gv6Kn/R4KeBGOenSyIexiOOP5RkI5uCpfEj1ysuOuesGxJHpra
+ tsdiZBstVMj0VcVmxEbVH6/XjqSqP6k=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-495-X8ifHNGuM7ux7voKjA9aEQ-1; Tue, 09 Sep 2025 05:55:55 -0400
+X-MC-Unique: X8ifHNGuM7ux7voKjA9aEQ-1
+X-Mimecast-MFC-AGG-ID: X8ifHNGuM7ux7voKjA9aEQ_1757411755
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-45b9912a07dso32781305e9.3
+ for <wireguard@lists.zx2c4.com>; Tue, 09 Sep 2025 02:55:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757411754; x=1758016554;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=uuhn5XZ+k/yXfBkz6uI/EJtHiraKm76UcsqU/6SM9xI=;
+ b=OjG1JH1Q1pVG1z2Vh7O0HrMmtGr9d4a3veESVCgru9NMYBAfaJbH80KQyyxyKKPbOH
+ Wxxp7+XBTIgMwC3Jb6JgOcUBF3C8GBhvbIFQUewl/op8+qVXaF6tQ4thW9mOhFc9B7/P
+ tsrAYZvltFKqlPGm0SIIggQAaYDdgvpv2kQZtwQNIErJH5df7nFwLJeWNClx6xFVNPLA
+ x9hcqF+tuKA8Z8HO2GACou2GoZ8AUJ+b+ML2IZv+WupmUMC2/kTyULAkrPz2DXvVWcdy
+ eEa2lHXZCRdvubygG7WGzrtlHexiKtek4qyjWIiHS4NxOQrhMK+7r8bPwFWDjv2amIH3
+ WEbQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX0b/oka6/HVQ0zbWlqcXb6jK1Q3NekFF/7kEqQtLMut/hnSKiUWFliKgsGaFmZOLe4m7cd/jmjfqs=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YzeoGTLJEogQFS75AgS3hqjC8pQKnhEaA+LBUpcRwnnis5RXMAW
+ XyUoGLGgYos64AvGkciaHnpt9fQ806Cr4foAEHzSasUNqBIqQFVYSI2VZPmXuQaWd/asQqvbvIS
+ Bsj8PZEQSrHRWJ65AioPBwpxuHRvxgS+d8FcbI74LDQVP6YZ8T6VDpAr0zvjGuA==
+X-Gm-Gg: ASbGncuw0YB+n1aio5ujt3qKWzSsPgNSsEdSPRFPCyqlk0WXpK2fa8KAF+wb9KuBhB0
+ rCfZ3FdrZbCYn9Zhzz60dc5TXdqtynnZoBCjIn9zms7mFBzP45s6VTbRJpEx2sfVruXalpKUf3L
+ 1UfoYrtVY1RyCX1AkxnA6v14yA+MTYMH1JqXMhrDlo6LxG5dv3SjiFtf9Ou/HzEVULuz1Mvlfs9
+ r6gIX8MR0Rt6LV+gBtE/sGCG5roKK3kcvcIZMPBHCkja0ltyJikqFo6zyk3lWZ1Tsfv42A5PH65
+ /hKjuHnHTyUf9U7oIIC2sQrMAc9OuY4dWWwiDfWk34UGrGaQr5fA5tiPNSXKM7HQ3LCHr+dJyjQ
+ ARrbak4phm1/V7ilcn18QEE8hflYV+E2kxLSCwFk+DdzoBnioCdRSb6Kg/kceD4B/B9w=
+X-Received: by 2002:a05:600c:3510:b0:45b:8366:2a1a with SMTP id
+ 5b1f17b1804b1-45ddde829ebmr106120525e9.11.1757411754446; 
+ Tue, 09 Sep 2025 02:55:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFywLrR0DszeWqgd9Y5zxb2+w3HhCmkVKXj/s/GXP5Ci/2ssUudLpQTkEWfsIqoDp37rN0MYw==
+X-Received: by 2002:a05:600c:3510:b0:45b:8366:2a1a with SMTP id
+ 5b1f17b1804b1-45ddde829ebmr106119935e9.11.1757411753943; 
+ Tue, 09 Sep 2025 02:55:53 -0700 (PDT)
+Received: from ?IPV6:2003:d8:2f23:9c00:d1f6:f7fe:8f14:7e34?
+ (p200300d82f239c00d1f6f7fe8f147e34.dip0.t-ipconnect.de.
+ [2003:d8:2f23:9c00:d1f6:f7fe:8f14:7e34])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45dd296ed51sm228257165e9.3.2025.09.09.02.55.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 09 Sep 2025 02:55:53 -0700 (PDT)
+Message-ID: <6ec933b1-b3f7-41c0-95d8-e518bb87375e@redhat.com>
+Date: Tue, 9 Sep 2025 11:55:51 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 22/37] mm/cma: refuse handing out non-contiguous page
+ ranges
+To: linux-kernel@vger.kernel.org, Andrew Morton <akpm@linuxfoundation.org>
+Cc: Alexandru Elisei <alexandru.elisei@arm.com>,
+ Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+ Alexander Potapenko <glider@google.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Brendan Jackman <jackmanb@google.com>, Christoph Lameter <cl@gentwo.org>,
+ Dennis Zhou <dennis@kernel.org>, Dmitry Vyukov <dvyukov@google.com>,
  dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
- iommu@lists.linux.dev, io-uring@vger.kernel.org, Jason Gunthorpe
- <jgg@nvidia.com>, Jens Axboe <axboe@kernel.dk>, Johannes Weiner
- <hannes@cmpxchg.org>, John Hubbard <jhubbard@nvidia.com>,
- kasan-dev@googlegroups.com, kvm@vger.kernel.org, "Liam R. Howlett"
- <Liam.Howlett@oracle.com>, Linus Torvalds <torvalds@linux-foundation.org>,
- linux-arm-kernel@axis.com, linux-arm-kernel@lists.infradead.org,
- linux-crypto@vger.kernel.org, linux-ide@vger.kernel.org,
- linux-kselftest@vger.kernel.org, linux-mips@vger.kernel.org,
- linux-mmc@vger.kernel.org, linux-mm@kvack.org,
+ iommu@lists.linux.dev, io-uring@vger.kernel.org,
+ Jason Gunthorpe <jgg@nvidia.com>, Jens Axboe <axboe@kernel.dk>,
+ Johannes Weiner <hannes@cmpxchg.org>, John Hubbard <jhubbard@nvidia.com>,
+ kasan-dev@googlegroups.com, kvm@vger.kernel.org,
+ "Liam R. Howlett" <Liam.Howlett@oracle.com>,
+ Linus Torvalds <torvalds@linux-foundation.org>, linux-arm-kernel@axis.com,
+ linux-arm-kernel@lists.infradead.org, linux-crypto@vger.kernel.org,
+ linux-ide@vger.kernel.org, linux-kselftest@vger.kernel.org,
+ linux-mips@vger.kernel.org, linux-mmc@vger.kernel.org, linux-mm@kvack.org,
  linux-riscv@lists.infradead.org, linux-s390@vger.kernel.org,
- linux-scsi@vger.kernel.org, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
- Marco Elver <elver@google.com>, Marek Szyprowski
- <m.szyprowski@samsung.com>, Michal Hocko <mhocko@suse.com>, Mike Rapoport
- <rppt@kernel.org>, Muchun Song <muchun.song@linux.dev>,
- netdev@vger.kernel.org, Oscar Salvador <osalvador@suse.de>, Peter Xu
- <peterx@redhat.com>, Robin Murphy <robin.murphy@arm.com>, Suren
- Baghdasaryan <surenb@google.com>, Tejun Heo <tj@kernel.org>,
+ linux-scsi@vger.kernel.org, Marco Elver <elver@google.com>,
+ Marek Szyprowski <m.szyprowski@samsung.com>, Michal Hocko <mhocko@suse.com>,
+ Mike Rapoport <rppt@kernel.org>, Muchun Song <muchun.song@linux.dev>,
+ netdev@vger.kernel.org, Oscar Salvador <osalvador@suse.de>,
+ Peter Xu <peterx@redhat.com>, Robin Murphy <robin.murphy@arm.com>,
+ Suren Baghdasaryan <surenb@google.com>, Tejun Heo <tj@kernel.org>,
  virtualization@lists.linux.dev, Vlastimil Babka <vbabka@suse.cz>,
  wireguard@lists.zx2c4.com, x86@kernel.org, Zi Yan <ziy@nvidia.com>
-Subject: Re: [PATCH v2 19/37] mm/gup: remove record_subpages()
-Message-Id: <20250908212518.77671b31aaad2832c17eab07@linux-foundation.org>
-In-Reply-To: <64fe4c61-f9cc-4a5a-9c33-07bd0f089e94@redhat.com>
 References: <20250901150359.867252-1-david@redhat.com>
- <20250901150359.867252-20-david@redhat.com>
- <5090355d-546a-4d06-99e1-064354d156b5@redhat.com>
- <20250905230006.GA1776@sol>
- <64fe4c61-f9cc-4a5a-9c33-07bd0f089e94@redhat.com>
-X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+ <20250901150359.867252-23-david@redhat.com>
+From: David Hildenbrand <david@redhat.com>
+Autocrypt: addr=david@redhat.com; keydata=
+ xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
+ dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
+ QZLQMzNE74ap+GDK0wnacPQFpcG1AE9RMq3aeErY5tujekBS32jfC/7AnH7I0v1v1TbbK3Gp
+ XNeiN4QroO+5qaSr0ID2sz5jtBLRb15RMre27E1ImpaIv2Jw8NJgW0k/D1RyKCwaTsgRdwuK
+ Kx/Y91XuSBdz0uOyU/S8kM1+ag0wvsGlpBVxRR/xw/E8M7TEwuCZQArqqTCmkG6HGcXFT0V9
+ PXFNNgV5jXMQRwU0O/ztJIQqsE5LsUomE//bLwzj9IVsaQpKDqW6TAPjcdBDPLHvriq7kGjt
+ WhVhdl0qEYB8lkBEU7V2Yb+SYhmhpDrti9Fq1EsmhiHSkxJcGREoMK/63r9WLZYI3+4W2rAc
+ UucZa4OT27U5ZISjNg3Ev0rxU5UH2/pT4wJCfxwocmqaRr6UYmrtZmND89X0KigoFD/XSeVv
+ jwBRNjPAubK9/k5NoRrYqztM9W6sJqrH8+UWZ1Idd/DdmogJh0gNC0+N42Za9yBRURfIdKSb
+ B3JfpUqcWwE7vUaYrHG1nw54pLUoPG6sAA7Mehl3nd4pZUALHwARAQABzSREYXZpZCBIaWxk
+ ZW5icmFuZCA8ZGF2aWRAcmVkaGF0LmNvbT7CwZoEEwEIAEQCGwMCF4ACGQEFCwkIBwICIgIG
+ FQoJCAsCBBYCAwECHgcWIQQb2cqtc1xMOkYN/MpN3hD3AP+DWgUCaJzangUJJlgIpAAKCRBN
+ 3hD3AP+DWhAxD/9wcL0A+2rtaAmutaKTfxhTP0b4AAp1r/eLxjrbfbCCmh4pqzBhmSX/4z11
+ opn2KqcOsueRF1t2ENLOWzQu3Roiny2HOU7DajqB4dm1BVMaXQya5ae2ghzlJN9SIoopTWlR
+ 0Af3hPj5E2PYvQhlcqeoehKlBo9rROJv/rjmr2x0yOM8qeTroH/ZzNlCtJ56AsE6Tvl+r7cW
+ 3x7/Jq5WvWeudKrhFh7/yQ7eRvHCjd9bBrZTlgAfiHmX9AnCCPRPpNGNedV9Yty2Jnxhfmbv
+ Pw37LA/jef8zlCDyUh2KCU1xVEOWqg15o1RtTyGV1nXV2O/mfuQJud5vIgzBvHhypc3p6VZJ
+ lEf8YmT+Ol5P7SfCs5/uGdWUYQEMqOlg6w9R4Pe8d+mk8KGvfE9/zTwGg0nRgKqlQXrWRERv
+ cuEwQbridlPAoQHrFWtwpgYMXx2TaZ3sihcIPo9uU5eBs0rf4mOERY75SK+Ekayv2ucTfjxr
+ Kf014py2aoRJHuvy85ee/zIyLmve5hngZTTe3Wg3TInT9UTFzTPhItam6dZ1xqdTGHZYGU0O
+ otRHcwLGt470grdiob6PfVTXoHlBvkWRadMhSuG4RORCDpq89vu5QralFNIf3EysNohoFy2A
+ LYg2/D53xbU/aa4DDzBb5b1Rkg/udO1gZocVQWrDh6I2K3+cCs7BTQRVy5+RARAA59fefSDR
+ 9nMGCb9LbMX+TFAoIQo/wgP5XPyzLYakO+94GrgfZjfhdaxPXMsl2+o8jhp/hlIzG56taNdt
+ VZtPp3ih1AgbR8rHgXw1xwOpuAd5lE1qNd54ndHuADO9a9A0vPimIes78Hi1/yy+ZEEvRkHk
+ /kDa6F3AtTc1m4rbbOk2fiKzzsE9YXweFjQvl9p+AMw6qd/iC4lUk9g0+FQXNdRs+o4o6Qvy
+ iOQJfGQ4UcBuOy1IrkJrd8qq5jet1fcM2j4QvsW8CLDWZS1L7kZ5gT5EycMKxUWb8LuRjxzZ
+ 3QY1aQH2kkzn6acigU3HLtgFyV1gBNV44ehjgvJpRY2cC8VhanTx0dZ9mj1YKIky5N+C0f21
+ zvntBqcxV0+3p8MrxRRcgEtDZNav+xAoT3G0W4SahAaUTWXpsZoOecwtxi74CyneQNPTDjNg
+ azHmvpdBVEfj7k3p4dmJp5i0U66Onmf6mMFpArvBRSMOKU9DlAzMi4IvhiNWjKVaIE2Se9BY
+ FdKVAJaZq85P2y20ZBd08ILnKcj7XKZkLU5FkoA0udEBvQ0f9QLNyyy3DZMCQWcwRuj1m73D
+ sq8DEFBdZ5eEkj1dCyx+t/ga6x2rHyc8Sl86oK1tvAkwBNsfKou3v+jP/l14a7DGBvrmlYjO
+ 59o3t6inu6H7pt7OL6u6BQj7DoMAEQEAAcLBfAQYAQgAJgIbDBYhBBvZyq1zXEw6Rg38yk3e
+ EPcA/4NaBQJonNqrBQkmWAihAAoJEE3eEPcA/4NaKtMQALAJ8PzprBEXbXcEXwDKQu+P/vts
+ IfUb1UNMfMV76BicGa5NCZnJNQASDP/+bFg6O3gx5NbhHHPeaWz/VxlOmYHokHodOvtL0WCC
+ 8A5PEP8tOk6029Z+J+xUcMrJClNVFpzVvOpb1lCbhjwAV465Hy+NUSbbUiRxdzNQtLtgZzOV
+ Zw7jxUCs4UUZLQTCuBpFgb15bBxYZ/BL9MbzxPxvfUQIPbnzQMcqtpUs21CMK2PdfCh5c4gS
+ sDci6D5/ZIBw94UQWmGpM/O1ilGXde2ZzzGYl64glmccD8e87OnEgKnH3FbnJnT4iJchtSvx
+ yJNi1+t0+qDti4m88+/9IuPqCKb6Stl+s2dnLtJNrjXBGJtsQG/sRpqsJz5x1/2nPJSRMsx9
+ 5YfqbdrJSOFXDzZ8/r82HgQEtUvlSXNaXCa95ez0UkOG7+bDm2b3s0XahBQeLVCH0mw3RAQg
+ r7xDAYKIrAwfHHmMTnBQDPJwVqxJjVNr7yBic4yfzVWGCGNE4DnOW0vcIeoyhy9vnIa3w1uZ
+ 3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
+ CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
+ qIws/H2t
+In-Reply-To: <20250901150359.867252-23-david@redhat.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: AWkroPlk-63rUq3IHnRNrYJn-0vsGMITuTtLc86LNb0_1757411755
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -78,20 +171,64 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Sat, 6 Sep 2025 08:57:37 +0200 David Hildenbrand <david@redhat.com> wrote:
-
-> >> @@ -3024,6 +3025,7 @@ static int gup_fast_pud_leaf(pud_t orig, pud_t *pudp, unsigned long addr,
-> >>                  return 0;
-> >>          }
-> >> +       pages += *nr;
-> >>          *nr += refs;
-> >>          for (; refs; refs--)
-> >>                  *(pages++) = page++;
-> > 
-> > Can this get folded in soon?  This bug is causing crashes in AF_ALG too.
+On 01.09.25 17:03, David Hildenbrand wrote:
+> Let's disallow handing out PFN ranges with non-contiguous pages, so we
+> can remove the nth-page usage in __cma_alloc(), and so any callers don't
+> have to worry about that either when wanting to blindly iterate pages.
 > 
-> Andrew immediately dropped the original patch, so it's gone from 
-> mm-unstable and should be gone from next soon (today?).
+> This is really only a problem in configs with SPARSEMEM but without
+> SPARSEMEM_VMEMMAP, and only when we would cross memory sections in some
+> cases.
+> 
+> Will this cause harm? Probably not, because it's mostly 32bit that does
+> not support SPARSEMEM_VMEMMAP. If this ever becomes a problem we could
+> look into allocating the memmap for the memory sections spanned by a
+> single CMA region in one go from memblock.
+> 
+> Reviewed-by: Alexandru Elisei <alexandru.elisei@arm.com>
+> Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+> Signed-off-by: David Hildenbrand <david@redhat.com>
+> ---
 
-I restored it once you sent out the fix.  It doesn't seem to be in
-present -next but it should be there in the next one.
+@Andrew, the following fixup on top. I'm still cross-compiling it, but
+at the time you read this mail my cross compiles should have been done.
+
+
+ From cbfa2763e1820b917ce3430f45e5f3a55eb2970f Mon Sep 17 00:00:00 2001
+From: David Hildenbrand <david@redhat.com>
+Date: Tue, 9 Sep 2025 05:50:13 -0400
+Subject: [PATCH] fixup: mm/cma: refuse handing out non-contiguous page ranges
+
+Apparently we can have NUMMU configs with SPARSEMEM enabled.
+
+Signed-off-by: David Hildenbrand <david@redhat.com>
+---
+  mm/util.c | 2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mm/util.c b/mm/util.c
+index 248f877f629b6..6c1d64ed02211 100644
+--- a/mm/util.c
++++ b/mm/util.c
+@@ -1306,6 +1306,7 @@ unsigned int folio_pte_batch(struct folio *folio, pte_t *ptep, pte_t pte,
+  {
+  	return folio_pte_batch_flags(folio, NULL, ptep, &pte, max_nr, 0);
+  }
++#endif /* CONFIG_MMU */
+  
+  #if defined(CONFIG_SPARSEMEM) && !defined(CONFIG_SPARSEMEM_VMEMMAP)
+  /**
+@@ -1342,4 +1343,3 @@ bool page_range_contiguous(const struct page *page, unsigned long nr_pages)
+  }
+  EXPORT_SYMBOL(page_range_contiguous);
+  #endif
+-#endif /* CONFIG_MMU */
+-- 
+2.50.1
+
+
+-- 
+Cheers
+
+David / dhildenb
+
