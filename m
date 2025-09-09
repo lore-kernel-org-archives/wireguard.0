@@ -4,55 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E415CF2565
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 22:44:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36070CF2564
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 22:44:45 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 09b29f49;
-	Tue, 18 Nov 2025 17:26:35 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a4d3db66;
+	Tue, 18 Nov 2025 17:26:37 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 236bf79c
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 569687e5
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 8 Sep 2025 09:08:23 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Tue, 9 Sep 2025 20:19:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
- s=202008; t=1757322503;
- bh=MhMgcHHloqdsvpGVS4XMV4EJ/KcTgELqX1VRtRedv10=;
+ s=202008; t=1757449139;
+ bh=3o1bfZbLCt8J7pWRJRYVzqtmslvWn0MLJ4VQR0em3ZQ=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=N8qUxz9GarM32aXEpFClgSN1X9YmPiA2/Cye3eCjKaljfvBxPtLiIRTL2SM0SAjf4
- VQdvRKI49OiqfOQ9IAHUsCg3Y4mwaUH61Eyy8qZCH0OeU5xRiPoDSYVIvphO5QCnsu
- WIoChJDkzakpAcbjpqctgm0FtGeW/0c/tQsNZlC7cSkOwSvww4M8EBOHGCPr/w5bPo
- 9XsIaarbsNVskh/KaMCWXvM5jBPQDWatUyAMBPjGJHv0cHtbFSxcAjrc3V0w01Eqg0
- Go8a1IztY6bbh2sak9PiIM8uVIDdqoKplkrIB3UrgsSfjr/Nxse0wvCLx0mJJ5mZff
- wyKaKmCtOJehQ==
+ b=KJVcGHey7azgW4GL+oD23RM6BVTuehzyp/Pl0yR+78zDsWoty11htmgoFtGUjbQbu
+ 8SUqVrfXnWuwsFUBlMgtSVf+yH+FiQvgb/XYCIte5IIfyrlimh7ZTPF2bCTuHKGEMs
+ w/s0bq1AFrztN54+uVzl6G7pj40EP+N7qPT2QTC9jSjKlBe6oloRhzB+diLaAaGAsJ
+ gy+tBaDejUaqN9X8tnKQOBx2WuPB7+YgA3KPQfD+HEhXKxAHiqdhjAjWgAryoB8vUN
+ +fCXXypNnlIgl6H1kXsP6pN7bbcT8hHHiqmH4GMMb0c42VsBJI9CH7ze+PmO0nc5sH
+ 2LR4Tvz9P+qqg==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id 754826000C;
- Mon,  8 Sep 2025 09:08:22 +0000 (UTC)
+ by mail1.fiberby.net (Postfix) with ESMTPSA id 6E2746000C;
+ Tue,  9 Sep 2025 20:18:57 +0000 (UTC)
 Received: from [127.0.0.1] (localhost [127.0.0.1])
- by x201s (Postfix) with ESMTP id 4D922200C27;
- Mon, 08 Sep 2025 09:08:17 +0000 (UTC)
-Message-ID: <f574e4b9-d0ea-46ef-bbed-8f607ab7276f@fiberby.net>
-Date: Mon, 8 Sep 2025 09:08:16 +0000
+ by x201s (Postfix) with ESMTP id 47950201867;
+ Tue, 09 Sep 2025 20:18:54 +0000 (UTC)
+Message-ID: <412f5811-bc54-45d4-92cd-7eea02a7ecc0@fiberby.net>
+Date: Tue, 9 Sep 2025 20:18:54 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next 02/11] tools: ynl-gen: generate nested array
- policies
-To: Johannes Berg <johannes@sipsolutions.net>,
- "Keller, Jacob E" <jacob.e.keller@intel.com>,
- "Jason A. Donenfeld" <Jason@zx2c4.com>, "David S. Miller"
- <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>
-Cc: Donald Hunter <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>, 
- Andrew Lunn <andrew+netdev@lunn.ch>,
- "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>,
- "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH net-next 10/11] tools: ynl: decode hex input
+To: Sabrina Dubroca <sd@queasysnail.net>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Donald Hunter <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>,
+ Jacob Keller <jacob.e.keller@intel.com>, Andrew Lunn
+ <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org
 References: <20250904-wg-ynl-prep@fiberby.net>
- <20250904220156.1006541-2-ast@fiberby.net>
- <e24f5baf-7085-4db0-aaad-5318555988b3@intel.com>
- <6e31a9e0-5450-4b45-a557-2aa08d23c25a@fiberby.net>
- <c1a4da4cb54c0436d5f67efacf6866b4bc057b3e.camel@sipsolutions.net>
+ <20250904220156.1006541-10-ast@fiberby.net> <aMBteqR5KP9KGcc3@krikkit>
 Content-Language: en-US
 From: =?UTF-8?Q?Asbj=C3=B8rn_Sloth_T=C3=B8nnesen?= <ast@fiberby.net>
-In-Reply-To: <c1a4da4cb54c0436d5f67efacf6866b4bc057b3e.camel@sipsolutions.net>
+In-Reply-To: <aMBteqR5KP9KGcc3@krikkit>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Tue, 18 Nov 2025 17:23:15 +0000
@@ -70,61 +64,52 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 9/8/25 7:54 AM, Johannes Berg wrote:
-> On Sat, 2025-09-06 at 14:13 +0000, Asbjørn Sloth Tønnesen wrote:
->> Johannes introduced NLA_NESTED_ARRAY and the NLA_POLICY_NESTED_ARRAY()
->> macro in commit 1501d13596b9 for use in nl80211, and it's therefore
->> used in net/wireless/nl80211.c, but outside of that the macro is
->> only sparsely adopted (only by mac80211_hwsim.c and nf_tables_api.c).
+On 9/9/25 6:10 PM, Sabrina Dubroca wrote:
+> 2025-09-04, 22:01:33 +0000, Asbjørn Sloth Tønnesen wrote:
+>> This patch add support for decoding hex input, so
+>> that binary attributes can be read through --json.
 >>
->> Wireguard adopts the macro in this RFC patch:
->> https://lore.kernel.org/netdev/20250904220255.1006675-2-ast@fiberby.net/
+>> Example (using future wireguard.yaml):
+>>   $ sudo ./tools/net/ynl/pyynl/cli.py --family wireguard \
+>>     --do set-device --json '{"ifindex":3,
+>>       "private-key":"2a ae 6c 35 c9 4f cf <... to 32 bytes>"}'
+>>
+>> Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+>> ---
+>>   tools/net/ynl/pyynl/lib/ynl.py | 2 ++
+>>   1 file changed, 2 insertions(+)
+>>
+>> diff --git a/tools/net/ynl/pyynl/lib/ynl.py b/tools/net/ynl/pyynl/lib/ynl.py
+>> index a37294a751da..78c0245ca587 100644
+>> --- a/tools/net/ynl/pyynl/lib/ynl.py
+>> +++ b/tools/net/ynl/pyynl/lib/ynl.py
+>> @@ -973,6 +973,8 @@ class YnlFamily(SpecFamily):
+>>                   raw = ip.packed
+>>               else:
+>>                   raw = int(ip)
+>> +        elif attr_spec.display_hint == 'hex':
+>> +            raw = bytes.fromhex(string)
 > 
- > I think the general consensus now is that preference should be towards
- > arrays being expressed by giving the attribute holding the array
- > multiple times, i.e. each occurrence of an attribute holds a single
- > entry of the array:
- >
- > [header][type1:a1][type2:b][type1:a2][type1:a3]
- >
- > resulting in an array
- >
- > [a1, a2, a3] and a separate value "b",
- >
- > rather than a nested array:
- >
- > [header][type1:[1:a1][2:a2][3:a3]][type2:b]
- >
- >
- > Of course if each entry has multiple values, then you'd still need
- > nesting:
- >
- > [header][type1:[subtype1:x1][subtype2:x2]][type1:[subtype1:y1][subtype2:y2]]
- >
- > would be an array
- >
- > [[x1, x2], [y1, y2]].
+> I'm working on a spec for macsec and ended up with a similar change,
+> but doing instead:
+> 
+> +        elif attr_spec.display_hint == 'hex':
+> +            raw = int(string, 16)
+> 
+> since the destination attribute is u32/u64 and not binary for macsec.
+> 
+> So maybe this should be:
+> 
+> +            if attr_spec['type'] == 'binary':
+> +                raw = bytes.fromhex(string)
+> +            else:
+> +                raw = int(string, 16)
+> 
+> to cover both cases?
+> 
+> I think it matches better what's already in _formatted_string.
+> 
+> (I don't mind having the current patch go in and making this change
+> together with the macsec spec when it's ready)
 
-Thank you for the consensus write up. Should we prohibit indexed-array with sub-type
-nest for families with a genetlink protocol?
-
-It is currently only used in families with a netlink-raw or genetlink-legacy protocol.
-
-> I can't get rid of the nested array types in nl80211 though, of course.
-
-Wireguard is already in the same boat. It is not using the term, nor the policy,
-but it is doing the validation in the handler through, so it can adopt a
-NLA_POLICY_NESTED_ARRAY() policy, instead of a plain '{ .type = NLA_NESTED }'.
-
-Comments on the protocol in include/uapi/linux/wireguard.h:
- > WGDEVICE_A_PEERS: NLA_NESTED
- >   0: NLA_NESTED
- >     WGPEER_A_PUBLIC_KEY: NLA_EXACT_LEN, len WG_KEY_LEN
- >     [..]
- >   0: NLA_NESTED
- >     ...
- >   ...
-
-Given that, as Jacob pointed out, there are more families with nested arrays in
-their YNL spec, than those using NLA_NESTED_ARRAY, then it appears that there
-are more families already in the boat.
+Cool, I will include it in v2, which I hope to get out tomorrow.
