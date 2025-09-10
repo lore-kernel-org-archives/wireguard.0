@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6CBDCF2562
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 22:53:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE420CF2560
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 22:53:48 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 33e6a737;
-	Tue, 18 Nov 2025 17:26:40 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2ba17c08;
+	Tue, 18 Nov 2025 17:26:42 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a6f6ed54
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b9fc3801
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
  Wed, 10 Sep 2025 23:08:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
  s=202008; t=1757545730;
- bh=KNcy1v4zfi/eZP7HpihPuqSy+gZFwWXsgS/ILoEcbXQ=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=aCrbd/pDy5sdCqEDbrrk8TrMRDl8uwg5JTucd5QYqK6209lFjYSKFJRv4zEe3CyAb
- EG6I46jSQEneIJdLDmzAaJd/zoQwViUkrV1v/TSZyHIm3WurPd8tc9GmaYLPFBSizB
- +fT0OSl5aQCmXo0QqB+Vu5LZhPJJ35JrYSUXr0FtaQqxe8KNCYxRG4Y34KAdRZLRCh
- CYP6cOrGh97EeYxz+4bBoFgUYWGV87F66Keue6JA2n7y/lstOwiH9xDxru6us8NTpV
- yHf4rA6caFdsMDJVvaxxr+LXKZP97GyGXbshVaj/d+C0YHv4ampJYTKMi4lRxcfxwe
- eTQ1kSxL/z2EA==
+ bh=yVwAAwA8ZqRChTcsBFbq0ZzAjSu1W4vNRIY3ubw2sZM=;
+ h=From:To:Cc:Subject:Date:From;
+ b=RLr7MtZ4rHKmaE1FQIIoWsxuAKru9AKHAzTux5QvM2HLOtQCzwp8yp3Sra3LYIP+L
+ xjcQd7aX9Ynrxg6CxpVOTTh/ZZR3LND1SGPQL4IT7TYRBBYkycwoNidbaT2cQD6+6D
+ 8wOPud1z8QP1OsoiN/oS1VEsToeQ/KU/cKTnCb1TZcTDUh3EeaOzg8936wlh9Ia5JH
+ 6xtNJ9z5pHQ/7VoJilMsu1+2oKQ3I0ay6p8lokB06Df/J468YERIgpzl9jPKJZjIyX
+ hIyFT2QYrpUmZJlGmSiXSIy+1zde8hsQ30MdIpaTu3hh/Oj2s+gXEDqd2n7kDW49qc
+ WPyPgoKJAvsGw==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id 4C921600C4;
+ by mail1.fiberby.net (Postfix) with ESMTPSA id 56DB360128;
  Wed, 10 Sep 2025 23:08:50 +0000 (UTC)
 Received: by x201s (Postfix, from userid 1000)
- id D36E8202A89; Wed, 10 Sep 2025 23:08:42 +0000 (UTC)
+ id BFDE9201BFB; Wed, 10 Sep 2025 23:08:42 +0000 (UTC)
 From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  "David S. Miller" <davem@davemloft.net>,
@@ -40,13 +40,10 @@ Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
  Andrew Lunn <andrew+netdev@lunn.ch>, Sabrina Dubroca <sd@queasysnail.net>,
  wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
  linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v2 02/12] tools: ynl-gen: generate nested array
- policies
-Date: Wed, 10 Sep 2025 23:08:24 +0000
-Message-ID: <20250910230841.384545-3-ast@fiberby.net>
+Subject: [PATCH net-next v2 00/12] tools: ynl: prepare for wireguard
+Date: Wed, 10 Sep 2025 23:08:22 +0000
+Message-ID: <20250910230841.384545-1-ast@fiberby.net>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250910230841.384545-1-ast@fiberby.net>
-References: <20250910230841.384545-1-ast@fiberby.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -65,46 +62,48 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This patch adds support for NLA_POLICY_NESTED_ARRAY() policies.
 
-Example spec (from future wireguard.yaml):
--
-  name: wgpeer
-  attributes:
-    -
-      name: allowedips
-      type: indexed-array
-      sub-type: nest
-      nested-attributes: wgallowedip
+This series contains the last batch of YNL changes to support
+the wireguard YNL conversion.
 
-yields NLA_POLICY_NESTED_ARRAY(wireguard_wgallowedip_nl_policy).
+The wireguard changes, to be applied on top of this series,
+has been posted as an RFC series here:
+  https://lore.kernel.org/netdev/20250904-wg-ynl-rfc@fiberby.net/
 
-This doesn't change any currently generated code, as it isn't
-used in any specs currently used for generating code.
-
-Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
-Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
 ---
- tools/net/ynl/pyynl/ynl_gen_c.py | 5 +++++
- 1 file changed, 5 insertions(+)
+v2:
+- Added Reviewed-By's to unchanged patches. Thanks to all reviewers.
+- Patch 4, refactors local variables for .attr_put() callers, and
+  replaces the old patch 4 and 5.
+- Patch 5 and 6 are new, and reduces the differences between the 3
+  .attr_put() callers, so it might be easier to keep them in sync.
+- Patch 7, now validates the nested payload (thanks Jakub).
+- Patch 8, now renames more variables (thanks Jakub),
+- Patch 10, got a dead line remove (thanks Donald).
+- Patch 11, revised hex input to support macsec (suggested by Sabrina).
+v1: https://lore.kernel.org/netdev/20250904-wg-ynl-prep@fiberby.net/
 
-diff --git a/tools/net/ynl/pyynl/ynl_gen_c.py b/tools/net/ynl/pyynl/ynl_gen_c.py
-index 1543d4911bf5..b7de7f6b1fc7 100755
---- a/tools/net/ynl/pyynl/ynl_gen_c.py
-+++ b/tools/net/ynl/pyynl/ynl_gen_c.py
-@@ -816,6 +816,11 @@ class TypeArrayNest(Type):
-                     f'unsigned int n_{self.c_name}']
-         return super().arg_member(ri)
- 
-+    def _attr_policy(self, policy):
-+        if self.attr['sub-type'] == 'nest':
-+            return f'NLA_POLICY_NESTED_ARRAY({self.nested_render_name}_nl_policy)'
-+        return super()._attr_policy(policy)
-+
-     def _attr_typol(self):
-         if self.attr['sub-type'] in scalars:
-             return f'.type = YNL_PT_U{c_upper(self.sub_type[1:])}, '
+Asbjørn Sloth Tønnesen (12):
+  tools: ynl-gen: allow overriding name-prefix for constants
+  tools: ynl-gen: generate nested array policies
+  tools: ynl-gen: add sub-type check
+  tools: ynl-gen: refactor local vars for .attr_put() callers
+  tools: ynl-gen: add CodeWriter.p_lines() helper
+  tools: ynl-gen: deduplicate fixed_header handling
+  tools: ynl-gen: only validate nested array payload
+  tools: ynl-gen: rename TypeArrayNest to TypeIndexedArray
+  tools: ynl: move nest packing to a helper function
+  tools: ynl: encode indexed-arrays
+  tools: ynl: decode hex input
+  tools: ynl: add ipv4-or-v6 display hint
+
+ Documentation/netlink/genetlink-legacy.yaml |   2 +-
+ tools/net/ynl/lib/ynl-priv.h                |   2 +
+ tools/net/ynl/lib/ynl.c                     |  17 ++-
+ tools/net/ynl/pyynl/lib/ynl.py              |  38 ++++-
+ tools/net/ynl/pyynl/ynl_gen_c.py            | 152 +++++++++++---------
+ 5 files changed, 133 insertions(+), 78 deletions(-)
+
 -- 
 2.51.0
 
