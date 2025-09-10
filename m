@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5D2BCF2563
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 22:53:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 798F2CF2560
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 22:56:27 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 90b68aee;
-	Tue, 18 Nov 2025 17:26:44 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 22a22da0;
+	Tue, 18 Nov 2025 17:26:46 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d0dcb837
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0afba71e
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
  Wed, 10 Sep 2025 23:08:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
  s=202008; t=1757545730;
- bh=nmFUdln7rWayXOvm+tCjXRJq0z3FgFYUv+rQXSS1YKI=;
+ bh=mHCxHMaMTlUNc8yNdBlBwvuCNIWstdK/GS0nKVCzvbM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=HltxTKhiOHnCSUfdLrTG0iql13BAsPaDviXRRjJeOvWgY0+fo21zV1lKcSz2gEXNL
- L1FC5zrJ8EISxDPPjVrprNtiWuZaGH+2kl9PSTZt+vCj8QpgQiRX6QsVbRQ4iZA8KZ
- g6uI2QCbYkiOI3atxij7Wnul56VLVU6cGkmxReUsofKV4jy+CeR2gMaKLPoLekwKkK
- 5Vl3ihDFfXTiE+Lc/bhpFBTLcgl2orys1DvV0XVlPDmCOEOJxywPjSV/5+7w2i6ZGX
- KqFdn6b3y0ewBDHrc7XyDXsyhjGNLe6TNW0RO+TvLO5rAHp8hy+Pku72gThVtot2Ty
- lzZIp2a/SfYSQ==
+ b=uidoNNm48j4rEEdkjJMfaKXIcU2W5eWc8JlPd1inHIZAEeBg9e33lXkR0p8KsI9gw
+ YpIvfri0nB/UXDskxgy897Ao39UtgpKXvb2LuU6ruAtmyfEZpcejVXVQ3l9jryoSxl
+ jWbV5FjHCzAXPL/ngfcdtlACoar+nChkt6kYYgVktCTbomNRdt1RyXcpZGrjTsv9RC
+ HTmqp+H58yJO+PClPNBPvX+9FoqEJQg2hjn/1XDk8rj9twWhgmXPdoOm4WCaa7QiAA
+ w4KNhZUPOxNMpjkRie75wkok/k/3wwt5XS4dqyLD+U7CfQzXq8nPazfKQcPjAVBA4n
+ sz9VMGz9tTpQw==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id 3DB566000C;
- Wed, 10 Sep 2025 23:08:49 +0000 (UTC)
+ by mail1.fiberby.net (Postfix) with ESMTPSA id 7E7746012E;
+ Wed, 10 Sep 2025 23:08:50 +0000 (UTC)
 Received: by x201s (Postfix, from userid 1000)
- id F351E203A9B; Wed, 10 Sep 2025 23:08:42 +0000 (UTC)
+ id 44AB02051E5; Wed, 10 Sep 2025 23:08:43 +0000 (UTC)
 From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  "David S. Miller" <davem@davemloft.net>,
@@ -40,10 +40,9 @@ Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
  Andrew Lunn <andrew+netdev@lunn.ch>, Sabrina Dubroca <sd@queasysnail.net>,
  wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
  linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v2 05/12] tools: ynl-gen: add CodeWriter.p_lines()
- helper
-Date: Wed, 10 Sep 2025 23:08:27 +0000
-Message-ID: <20250910230841.384545-6-ast@fiberby.net>
+Subject: [PATCH net-next v2 12/12] tools: ynl: add ipv4-or-v6 display hint
+Date: Wed, 10 Sep 2025 23:08:34 +0000
+Message-ID: <20250910230841.384545-13-ast@fiberby.net>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250910230841.384545-1-ast@fiberby.net>
 References: <20250910230841.384545-1-ast@fiberby.net>
@@ -65,103 +64,59 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Add a helper for writing an array of lines, and convert
-all the existing loops doing that, to use the new helper.
+The attribute WGALLOWEDIP_A_IPADDR can contain either an IPv4
+or an IPv6 address depending on WGALLOWEDIP_A_FAMILY, however
+in practice it is enough to look at the attribute length.
 
-This is a trivial patch with no behavioural changes intended,
-there are no changes to the generated code.
+This patch implements an ipv4-or-v6 display hint, that can
+deal with this kind of attribute.
+
+It only implements this display hint for genetlink-legacy, it
+can be added to other protocol variants if needed, but we don't
+want to encourage it's use.
 
 Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
 ---
- tools/net/ynl/pyynl/ynl_gen_c.py | 32 ++++++++++++++------------------
- 1 file changed, 14 insertions(+), 18 deletions(-)
+ Documentation/netlink/genetlink-legacy.yaml | 2 +-
+ tools/net/ynl/pyynl/lib/ynl.py              | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/net/ynl/pyynl/ynl_gen_c.py b/tools/net/ynl/pyynl/ynl_gen_c.py
-index 6441d5a31391..18c6ed0044b9 100755
---- a/tools/net/ynl/pyynl/ynl_gen_c.py
-+++ b/tools/net/ynl/pyynl/ynl_gen_c.py
-@@ -181,8 +181,7 @@ class Type(SpecAttr):
+diff --git a/Documentation/netlink/genetlink-legacy.yaml b/Documentation/netlink/genetlink-legacy.yaml
+index b29d62eefa16..66fb8653a344 100644
+--- a/Documentation/netlink/genetlink-legacy.yaml
++++ b/Documentation/netlink/genetlink-legacy.yaml
+@@ -154,7 +154,7 @@ properties:
+                   Optional format indicator that is intended only for choosing
+                   the right formatting mechanism when displaying values of this
+                   type.
+-                enum: [ hex, mac, fddi, ipv4, ipv6, uuid ]
++                enum: [ hex, mac, fddi, ipv4, ipv6, ipv4-or-v6, uuid ]
+               struct:
+                 description: Name of the nested struct type.
+                 type: string
+diff --git a/tools/net/ynl/pyynl/lib/ynl.py b/tools/net/ynl/pyynl/lib/ynl.py
+index 50f4889e721b..4f2c8126d6e9 100644
+--- a/tools/net/ynl/pyynl/lib/ynl.py
++++ b/tools/net/ynl/pyynl/lib/ynl.py
+@@ -957,7 +957,7 @@ class YnlFamily(SpecFamily):
+                 formatted = hex(raw)
+             else:
+                 formatted = bytes.hex(raw, ' ')
+-        elif display_hint in [ 'ipv4', 'ipv6' ]:
++        elif display_hint in [ 'ipv4', 'ipv6', 'ipv4-or-v6' ]:
+             formatted = format(ipaddress.ip_address(raw))
+         elif display_hint == 'uuid':
+             formatted = str(uuid.UUID(bytes=raw))
+@@ -966,7 +966,7 @@ class YnlFamily(SpecFamily):
+         return formatted
  
-     def free(self, ri, var, ref):
-         lines = self._free_lines(ri, var, ref)
--        for line in lines:
--            ri.cw.p(line)
-+        ri.cw.p_lines(lines)
- 
-     def arg_member(self, ri):
-         member = self._complex_member_type(ri)
-@@ -268,13 +267,9 @@ class Type(SpecAttr):
-             if self.presence_type() == 'present':
-                 ri.cw.p(f"{var}->_present.{self.c_name} = 1;")
- 
--        if init_lines:
--            ri.cw.nl()
--            for line in init_lines:
--                ri.cw.p(line)
-+        ri.cw.p_lines(init_lines, nl_before=True)
- 
--        for line in lines:
--            ri.cw.p(line)
-+        ri.cw.p_lines(lines)
-         ri.cw.block_end()
-         return True
- 
-@@ -1789,8 +1784,7 @@ class CodeWriter:
-         self.block_start()
-         self.write_func_lvar(local_vars=local_vars)
- 
--        for line in body:
--            self.p(line)
-+        self.p_lines(body)
-         self.block_end()
- 
-     def writes_defines(self, defines):
-@@ -1831,6 +1825,12 @@ class CodeWriter:
-             self.p('#ifdef ' + config_option)
-         self._ifdef_block = config_option
- 
-+    def p_lines(self, lines, nl_before=False):
-+        if lines and nl_before:
-+            self.nl()
-+        for line in lines or []:
-+            self.p(line)
-+
- 
- scalars = {'u8', 'u16', 'u32', 'u64', 's8', 's16', 's32', 's64', 'uint', 'sint'}
- 
-@@ -2088,8 +2088,7 @@ def put_req_nested(ri, struct):
-     ri.cw.block_start()
-     ri.cw.write_func_lvar(local_vars)
- 
--    for line in init_lines:
--        ri.cw.p(line)
-+    ri.cw.p_lines(init_lines)
- 
-     for _, arg in struct.member_list():
-         arg.attr_put(ri, "obj")
-@@ -2150,8 +2149,7 @@ def _multi_parse(ri, struct, init_lines, local_vars):
-     ri.cw.block_start()
-     ri.cw.write_func_lvar(local_vars)
- 
--    for line in init_lines:
--        ri.cw.p(line)
-+    ri.cw.p_lines(init_lines)
-     ri.cw.nl()
- 
-     for arg in struct.inherited:
-@@ -2280,10 +2278,8 @@ def parse_rsp_submsg(ri, struct):
- 
-         ri.cw.block_start(line=f'{kw} (!strcmp(sel, "{name}"))')
-         get_lines, init_lines, _ = arg._attr_get(ri, var)
--        for line in init_lines or []:
--            ri.cw.p(line)
--        for line in get_lines:
--            ri.cw.p(line)
-+        ri.cw.p_lines(init_lines)
-+        ri.cw.p_lines(get_lines)
-         if arg.presence_type() == 'present':
-             ri.cw.p(f"{var}->_present.{arg.c_name} = 1;")
-         ri.cw.block_end()
+     def _from_string(self, string, attr_spec):
+-        if attr_spec.display_hint in ['ipv4', 'ipv6']:
++        if attr_spec.display_hint in ['ipv4', 'ipv6', 'ipv4-or-v6']:
+             ip = ipaddress.ip_address(string)
+             if attr_spec['type'] == 'binary':
+                 raw = ip.packed
 -- 
 2.51.0
 
