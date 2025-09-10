@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27F33CF2580
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 04:41:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C745CCF2579
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 04:41:39 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9f81e781;
-	Tue, 18 Nov 2025 17:29:00 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 86f24700;
+	Tue, 18 Nov 2025 17:29:02 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 56de0f47
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1721c702
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 10 Sep 2025 23:08:53 +0000 (UTC)
+ Wed, 10 Sep 2025 23:08:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
  s=202008; t=1757545731;
- bh=9YMEML/2cAF/dYFs5UWYG9j95tdvfBp0b58/5bdDpPo=;
+ bh=Dv6vpp6X/AAuz1b30uuf1mx68WEBTMVd1Kg6gyPEzLY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=LWCYqDZlxeZ1RYVDqKTrcp2TOseJUtrLdk/brH+iTTmlvJkr4ivvSNGy7r5A/22hA
- A6yJqVxBmaguVaHjY2LNXfpHkpawZWXUHes17bcT39zMU5Hl1VOcu6ourEVa7M8sxh
- nlL6OaABOOsufOkY6xf8YzFJYzjBM88eW+EyUK821kAg/JqikFVRuQZoK1N1wdVxpS
- LPb/Bm468DOCsu8Z4c3jwghh1gDXOXJVQIeAJQBEImss1OSt76vZ7xYFPsyDQgp9p2
- FmY3SfVpqn4cLDYaOmvc2NdGMCX3IKlgGr0R6x8NiMokk1sQRojL9MDrizOWZpP91N
- bH7aqG2Fe/bkQ==
+ b=E4j0kdv2eni1WM/7CAHkGhsViAFNy7p0a4Mau5GfYuZ4ij+KAvQ6mB7Vmm2Jn0EoX
+ BNYobMkHu4pIbHKdckHiTC8BP3jpcnqPtqIlXDL6ujjwIeqzXjZALDzeIrQsf1FfaM
+ gKX/MWKkm2r/egCXmxDL1vTjWMths2fGYYF2iIqp0qJ3UTzk9kngd539US0vcH8ZeS
+ pPrvQRWPcGcFgEAHGCzdZaZkn7aJuoP8fIN3m22JvosisoIKv6WiJl2j33gXlUpjhI
+ QrAIHeTVPaXSmnTmW8sMnCh5s1RcecwK4gyI/9rpwC3G3taBlRM7ox9GzwmN/CNIgs
+ wHLitHkBzqirQ==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id 40FA360078;
+ by mail1.fiberby.net (Postfix) with ESMTPSA id C4B6A60137;
  Wed, 10 Sep 2025 23:08:50 +0000 (UTC)
 Received: by x201s (Postfix, from userid 1000)
- id 09DAD2044FF; Wed, 10 Sep 2025 23:08:43 +0000 (UTC)
+ id 13C24204B0E; Wed, 10 Sep 2025 23:08:43 +0000 (UTC)
 From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  "David S. Miller" <davem@davemloft.net>,
@@ -40,10 +40,10 @@ Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
  Andrew Lunn <andrew+netdev@lunn.ch>, Sabrina Dubroca <sd@queasysnail.net>,
  wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
  linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v2 06/12] tools: ynl-gen: deduplicate fixed_header
- handling
-Date: Wed, 10 Sep 2025 23:08:28 +0000
-Message-ID: <20250910230841.384545-7-ast@fiberby.net>
+Subject: [PATCH net-next v2 07/12] tools: ynl-gen: only validate nested array
+ payload
+Date: Wed, 10 Sep 2025 23:08:29 +0000
+Message-ID: <20250910230841.384545-8-ast@fiberby.net>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250910230841.384545-1-ast@fiberby.net>
 References: <20250910230841.384545-1-ast@fiberby.net>
@@ -65,122 +65,118 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Fixed headers are handled nearly identical in print_dump(),
-print_req() and put_req_nested(), generalize them and use a
-common function to generate them.
+In nested arrays don't require that the intermediate attribute
+type should be a valid attribute type, it might just be zero
+or an incrementing index, it is often not even used.
 
-This only causes cosmetic changes to tc_netem_attrs_put() in
-tc-user.c.
+See include/net/netlink.h about NLA_NESTED_ARRAY:
+> The difference to NLA_NESTED is the structure:
+> NLA_NESTED has the nested attributes directly inside
+> while an array has the nested attributes at another
+> level down and the attribute types directly in the
+> nesting don't matter.
+
+Example based on include/uapi/linux/wireguard.h:
+ > WGDEVICE_A_PEERS: NLA_NESTED
+ >   0: NLA_NESTED
+ >     WGPEER_A_PUBLIC_KEY: NLA_EXACT_LEN, len WG_KEY_LEN
+ >     [..]
+ >   0: NLA_NESTED
+ >     ...
+ >   ...
+
+Previous the check required that the nested type was valid in
+the parent attribute set, which in this case resolves to
+WGDEVICE_A_UNSPEC, which is YNL_PT_REJECT, and it took the
+early exit and returned YNL_PARSE_CB_ERROR.
+
+This patch adds a new helper, ynl_attr_validate_payload(),
+which we can use to validate the payload of the nested
+attribute, in the context of the parents attribute type,
+and it's policy, which in the above case is generated as:
+[WGDEVICE_A_PEERS] = {
+  .name = "peers",
+  .type = YNL_PT_NEST,
+  .nest = &wireguard_wgpeer_nest,
+},
+
+Some other examples are NL80211_BAND_ATTR_FREQS (nest) and
+NL80211_ATTR_SUPPORTED_COMMANDS (u32).
 
 Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 ---
- tools/net/ynl/pyynl/ynl_gen_c.py | 39 ++++++++++++++++----------------
- 1 file changed, 20 insertions(+), 19 deletions(-)
+ tools/net/ynl/lib/ynl-priv.h     |  2 ++
+ tools/net/ynl/lib/ynl.c          | 17 ++++++++++++++---
+ tools/net/ynl/pyynl/ynl_gen_c.py |  2 +-
+ 3 files changed, 17 insertions(+), 4 deletions(-)
 
+diff --git a/tools/net/ynl/lib/ynl-priv.h b/tools/net/ynl/lib/ynl-priv.h
+index 824777d7e05e..70ea14c0a0e9 100644
+--- a/tools/net/ynl/lib/ynl-priv.h
++++ b/tools/net/ynl/lib/ynl-priv.h
+@@ -107,6 +107,8 @@ struct nlmsghdr *
+ ynl_gemsg_start_dump(struct ynl_sock *ys, __u32 id, __u8 cmd, __u8 version);
+ 
+ int ynl_attr_validate(struct ynl_parse_arg *yarg, const struct nlattr *attr);
++int ynl_attr_validate_payload(struct ynl_parse_arg *yarg,
++			      const struct nlattr *attr, unsigned int type);
+ int ynl_submsg_failed(struct ynl_parse_arg *yarg, const char *field_name,
+ 		      const char *sel_name);
+ 
+diff --git a/tools/net/ynl/lib/ynl.c b/tools/net/ynl/lib/ynl.c
+index 2a169c3c0797..d52aa188401f 100644
+--- a/tools/net/ynl/lib/ynl.c
++++ b/tools/net/ynl/lib/ynl.c
+@@ -360,15 +360,15 @@ static int ynl_cb_done(const struct nlmsghdr *nlh, struct ynl_parse_arg *yarg)
+ 
+ /* Attribute validation */
+ 
+-int ynl_attr_validate(struct ynl_parse_arg *yarg, const struct nlattr *attr)
++int __ynl_attr_validate(struct ynl_parse_arg *yarg, const struct nlattr *attr,
++			unsigned int type)
+ {
+ 	const struct ynl_policy_attr *policy;
+-	unsigned int type, len;
+ 	unsigned char *data;
++	unsigned int len;
+ 
+ 	data = ynl_attr_data(attr);
+ 	len = ynl_attr_data_len(attr);
+-	type = ynl_attr_type(attr);
+ 	if (type > yarg->rsp_policy->max_attr) {
+ 		yerr(yarg->ys, YNL_ERROR_INTERNAL,
+ 		     "Internal error, validating unknown attribute");
+@@ -450,6 +450,17 @@ int ynl_attr_validate(struct ynl_parse_arg *yarg, const struct nlattr *attr)
+ 	return 0;
+ }
+ 
++int ynl_attr_validate(struct ynl_parse_arg *yarg, const struct nlattr *attr)
++{
++	return __ynl_attr_validate(yarg, attr, ynl_attr_type(attr));
++}
++
++int ynl_attr_validate_payload(struct ynl_parse_arg *yarg,
++			      const struct nlattr *attr, unsigned int type)
++{
++	return __ynl_attr_validate(yarg, attr, type);
++}
++
+ int ynl_submsg_failed(struct ynl_parse_arg *yarg, const char *field_name,
+ 		      const char *sel_name)
+ {
 diff --git a/tools/net/ynl/pyynl/ynl_gen_c.py b/tools/net/ynl/pyynl/ynl_gen_c.py
-index 18c6ed0044b9..f149c68ae84e 100755
+index f149c68ae84e..e93f5d724b42 100755
 --- a/tools/net/ynl/pyynl/ynl_gen_c.py
 +++ b/tools/net/ynl/pyynl/ynl_gen_c.py
-@@ -1829,7 +1829,10 @@ class CodeWriter:
-         if lines and nl_before:
-             self.nl()
-         for line in lines or []:
--            self.p(line)
-+            if line == '':
-+                self.nl()
-+            else:
-+                self.p(line)
- 
- 
- scalars = {'u8', 'u16', 'u32', 'u64', 's8', 's16', 's32', 's64', 'uint', 'sint'}
-@@ -1922,6 +1925,15 @@ def type_name(ri, direction, deref=False):
-     return f"struct {op_prefix(ri, direction, deref=deref)}"
- 
- 
-+def prepare_fixed_header(var, local_vars, init_lines):
-+    local_vars += ['size_t hdr_len;',
-+                   'void *hdr;']
-+    init_lines += [f'hdr_len = sizeof({var}->_hdr);',
-+                   'hdr = ynl_nlmsg_put_extra_header(nlh, hdr_len);',
-+                   f'memcpy(hdr, &{var}->_hdr, hdr_len);',
-+                   '']
-+
-+
- def print_prototype(ri, direction, terminate=True, doc=None):
-     suffix = ';' if terminate else ''
- 
-@@ -2077,10 +2089,7 @@ def put_req_nested(ri, struct):
-         local_vars.append('struct nlattr *nest;')
-         init_lines.append("nest = ynl_attr_nest_start(nlh, attr_type);")
-     if struct.fixed_header:
--        local_vars.append('void *hdr;')
--        struct_sz = f'sizeof({struct.fixed_header})'
--        init_lines.append(f"hdr = ynl_nlmsg_put_extra_header(nlh, {struct_sz});")
--        init_lines.append(f"memcpy(hdr, &obj->_hdr, {struct_sz});")
-+        prepare_fixed_header('obj', local_vars, init_lines)
- 
-     local_vars += put_local_vars(struct)
- 
-@@ -2349,6 +2358,7 @@ def print_req(ri):
-     ret_ok = '0'
-     ret_err = '-1'
-     direction = "request"
-+    init_lines = []
-     local_vars = ['struct ynl_req_state yrs = { .yarg = { .ys = ys, }, };',
-                   'struct nlmsghdr *nlh;',
-                   'int err;']
-@@ -2359,8 +2369,7 @@ def print_req(ri):
-         local_vars += [f'{type_name(ri, rdir(direction))} *rsp;']
- 
-     if ri.struct["request"].fixed_header:
--        local_vars += ['size_t hdr_len;',
--                       'void *hdr;']
-+        prepare_fixed_header('req', local_vars, init_lines)
- 
-     local_vars += put_local_vars(ri.struct["request"])
- 
-@@ -2379,11 +2388,7 @@ def print_req(ri):
-         ri.cw.p(f"yrs.yarg.rsp_policy = &{ri.struct['reply'].render_name}_nest;")
-     ri.cw.nl()
- 
--    if ri.struct['request'].fixed_header:
--        ri.cw.p("hdr_len = sizeof(req->_hdr);")
--        ri.cw.p("hdr = ynl_nlmsg_put_extra_header(nlh, hdr_len);")
--        ri.cw.p("memcpy(hdr, &req->_hdr, hdr_len);")
--        ri.cw.nl()
-+    ri.cw.p_lines(init_lines)
- 
-     for _, attr in ri.struct["request"].member_list():
-         attr.attr_put(ri, "req")
-@@ -2421,13 +2426,13 @@ def print_dump(ri):
-     direction = "request"
-     print_prototype(ri, direction, terminate=False)
-     ri.cw.block_start()
-+    init_lines = []
-     local_vars = ['struct ynl_dump_state yds = {};',
-                   'struct nlmsghdr *nlh;',
-                   'int err;']
- 
-     if ri.struct['request'].fixed_header:
--        local_vars += ['size_t hdr_len;',
--                       'void *hdr;']
-+        prepare_fixed_header('req', local_vars, init_lines)
- 
-     if "request" in ri.op[ri.op_mode]:
-         local_vars += put_local_vars(ri.struct["request"])
-@@ -2449,11 +2454,7 @@ def print_dump(ri):
-     else:
-         ri.cw.p(f"nlh = ynl_gemsg_start_dump(ys, {ri.nl.get_family_id()}, {ri.op.enum_name}, 1);")
- 
--    if ri.struct['request'].fixed_header:
--        ri.cw.p("hdr_len = sizeof(req->_hdr);")
--        ri.cw.p("hdr = ynl_nlmsg_put_extra_header(nlh, hdr_len);")
--        ri.cw.p("memcpy(hdr, &req->_hdr, hdr_len);")
--        ri.cw.nl()
-+    ri.cw.p_lines(init_lines)
- 
-     if "request" in ri.op[ri.op_mode]:
-         ri.cw.p(f"ys->req_policy = &{ri.struct['request'].render_name}_nest;")
+@@ -836,7 +836,7 @@ class TypeArrayNest(Type):
+         local_vars = ['const struct nlattr *attr2;']
+         get_lines = [f'attr_{self.c_name} = attr;',
+                      'ynl_attr_for_each_nested(attr2, attr) {',
+-                     '\tif (ynl_attr_validate(yarg, attr2))',
++                     '\tif (ynl_attr_validate_payload(yarg, attr2, type))',
+                      '\t\treturn YNL_PARSE_CB_ERROR;',
+                      f'\tn_{self.c_name}++;',
+                      '}']
 -- 
 2.51.0
 
