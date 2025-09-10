@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9387ACF2582
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 04:41:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86909CF256C
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 04:41:35 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2e5e72ae;
-	Tue, 18 Nov 2025 17:28:49 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 983cbe48;
+	Tue, 18 Nov 2025 17:28:51 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 993a3020
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 864aca09
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
  Wed, 10 Sep 2025 23:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
  s=202008; t=1757545730;
- bh=BXBJfFZ+zTwLVHSQB68jOM4LzO0NIRI61RviYfjsvu0=;
+ bh=gPzW3wCV+qM3pD5q/z5sXTnTfFB9BV31CnXtVtDMhXI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=bBqxdVSi6kSZofaDl44lkOtbNg80c6YNbSYMuAf/AVwIgtPHOnlUkvjG6C+9f/qb/
- n4eJh4JMpEt/CuHjB3UuvkMvSsAqrNZ8ZnrHKL5NM2IZJWygHJYezgIte5L5XJK4T+
- sG7WJwx/nA9z27PkDE5BWAvytDssIibs9UkxXW3Ybq5b0K6pMxFEFy0SuNIGLSKA7g
- sBbv6SugbhobBsrALc3zjxhz54HVei8JvaGYG5GWxHN25rGr/hLr+wYd9Pj/xePqV7
- fIbWxY/BL9W5L1KlIh3b2+ilAFSTMWwblORxPM4FQch3U/h9Nn9tguwN7/PpvpO+a+
- ycqzJ+476TWZA==
+ b=hyH/WVOoCpQXnsmm/RhKX8w55PKl+c6IaIxkkHUJMtocIu6ROFzZaQLMEtFETOjbC
+ T0+1wMFchb6H5DS+dk/blqGvnoEA1XU6E+bG7lxLLEEJ66uspRFdy5lrQcSsqqqIRw
+ mePeC3azkYm3GXema0IW58Wb8ccnFg6Q4sovumUjHsyCMIs9s5gtZ36iaOBpJO45yt
+ IBpyvFhUKiVSS+6xllPdq0x5iP2KdILcYSH8Zf7kyzpxBiR9ozbhB8rFVKPMcdzGkq
+ 1VtMH02EGSFLmPC695ZI/uTyG8BW+FEXOx+h0C7Q4rQQJ3FK7ZHbaHxIepgg7sdikq
+ 3gknIExnuyazA==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id E947960140;
+ by mail1.fiberby.net (Postfix) with ESMTPSA id D73AB6013E;
  Wed, 10 Sep 2025 23:08:50 +0000 (UTC)
 Received: by x201s (Postfix, from userid 1000)
- id C7C10201D12; Wed, 10 Sep 2025 23:08:42 +0000 (UTC)
+ id 3B22F20519B; Wed, 10 Sep 2025 23:08:43 +0000 (UTC)
 From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  "David S. Miller" <davem@davemloft.net>,
@@ -40,10 +40,9 @@ Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
  Andrew Lunn <andrew+netdev@lunn.ch>, Sabrina Dubroca <sd@queasysnail.net>,
  wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
  linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v2 01/12] tools: ynl-gen: allow overriding
- name-prefix for constants
-Date: Wed, 10 Sep 2025 23:08:23 +0000
-Message-ID: <20250910230841.384545-2-ast@fiberby.net>
+Subject: [PATCH net-next v2 11/12] tools: ynl: decode hex input
+Date: Wed, 10 Sep 2025 23:08:33 +0000
+Message-ID: <20250910230841.384545-12-ast@fiberby.net>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250910230841.384545-1-ast@fiberby.net>
 References: <20250910230841.384545-1-ast@fiberby.net>
@@ -65,35 +64,38 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Allow using custom name-prefix with constants,
-just like it is for enum and flags declarations.
+This patch adds support for decoding hex input, so
+that binary attributes can be read through --json.
 
-This is needed for generating WG_KEY_LEN in
-include/uapi/linux/wireguard.h from a spec.
+Example (using future wireguard.yaml):
+ $ sudo ./tools/net/ynl/pyynl/cli.py --family wireguard \
+   --do set-device --json '{"ifindex":3,
+     "private-key":"2a ae 6c 35 c9 4f cf <... to 32 bytes>"}'
+
+In order to somewhat mirror what is done in _formatted_string(),
+then for non-binary attributes attempt to convert it to an int.
 
 Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
-Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
 ---
- tools/net/ynl/pyynl/ynl_gen_c.py | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/net/ynl/pyynl/lib/ynl.py | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/tools/net/ynl/pyynl/ynl_gen_c.py b/tools/net/ynl/pyynl/ynl_gen_c.py
-index fb7e03805a11..1543d4911bf5 100755
---- a/tools/net/ynl/pyynl/ynl_gen_c.py
-+++ b/tools/net/ynl/pyynl/ynl_gen_c.py
-@@ -3211,8 +3211,9 @@ def render_uapi(family, cw):
-             cw.block_end(line=';')
-             cw.nl()
-         elif const['type'] == 'const':
-+            name_pfx = const.get('name-prefix', f"{family.ident_name}-")
-             defines.append([c_upper(family.get('c-define-name',
--                                               f"{family.ident_name}-{const['name']}")),
-+                                               f"{name_pfx}{const['name']}")),
-                             const['value']])
- 
-     if defines:
+diff --git a/tools/net/ynl/pyynl/lib/ynl.py b/tools/net/ynl/pyynl/lib/ynl.py
+index 7ddf689a2a6e..50f4889e721b 100644
+--- a/tools/net/ynl/pyynl/lib/ynl.py
++++ b/tools/net/ynl/pyynl/lib/ynl.py
+@@ -972,6 +972,11 @@ class YnlFamily(SpecFamily):
+                 raw = ip.packed
+             else:
+                 raw = int(ip)
++        elif attr_spec.display_hint == 'hex':
++            if attr_spec['type'] == 'binary':
++                raw = bytes.fromhex(string)
++            else:
++                raw = int(string, 16)
+         else:
+             raise Exception(f"Display hint '{attr_spec.display_hint}' not implemented"
+                             f" when parsing '{attr_spec['name']}'")
 -- 
 2.51.0
 
