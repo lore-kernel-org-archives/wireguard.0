@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74197CF2579
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 04:41:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58196CF257F
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 04:41:37 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1b7264af;
-	Tue, 18 Nov 2025 17:28:53 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 161b7990;
+	Tue, 18 Nov 2025 17:28:56 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9760017c
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id be3329b0
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
  Wed, 10 Sep 2025 23:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
  s=202008; t=1757545730;
- bh=AJhXtkWuMzpABxvSR0d9FQM3KyK8VD9yoZ5MetyiYuU=;
+ bh=5iWNx54sGjcK9fIya6c+VTdunUg4fVj+MTblZK2rNog=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=EGexIctJYnZrFmOZKzEMxSehii6fotVPm7gk9m/CLcRMi4P7IGNuLXyh66CtANQR3
- ji0nCVE5RUX4HTyHTIGWzSYNfQxesLXuK4du+w+jI6zior+IbeSs/JEE46WY/HyZmp
- r7UwUVVmzqnRqG2qIFVfqSocXCmqynVcAGJxKK9pK0bzNt6mHY4XKsfUH7wuT9gwaR
- 6SMaq8cY0RHoDqfRm/t5MCbuA2USSe8rkz7JfJwKv1CPyK7Cf99oLlNlug+5+QfFKa
- ycdvyrpBpf4G6XsOHsROPrl86MG2Hi4Dg2dKwrzn9rrbPdjIJjN+SYU4S7RmeSjkjI
- arQQEmzV8Rk7g==
+ b=v+HYsVyfHhzCBm7h8zMSS4thzij7x9TsWwDoNPhjnjHRt2S6YCTyyxwkqoYhs+CMT
+ Z9AX4QK+TZbUT+ZIYcVZuZ9JXcShU+LdHJyNSQXJpY57c56CAY/KckNNWufc/39Qhh
+ vl6pXyzdZTXLVXtsro69o1gWZsZMiwDkg4SoBl89ldMrgzORob2fb1ilS5nI4Qg5xz
+ Z14xnXPsEfVQAuc1LAXuXtaVYMBwaf/CXoL2FvvoaVluyz/7Zs3/DjjW8ff3TB80be
+ fASMwBfOsN0phj9ixmxlGCSPczmsG1Pu5z1u3a0IbedJx5aSGUFcWY30RYaE0e+twX
+ ji85+5xg0GoOw==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id C7B1160138;
+ by mail1.fiberby.net (Postfix) with ESMTPSA id CB80F60139;
  Wed, 10 Sep 2025 23:08:50 +0000 (UTC)
 Received: by x201s (Postfix, from userid 1000)
- id 1DFF5204C9F; Wed, 10 Sep 2025 23:08:43 +0000 (UTC)
+ id E93582038ED; Wed, 10 Sep 2025 23:08:42 +0000 (UTC)
 From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  "David S. Miller" <davem@davemloft.net>,
@@ -40,10 +40,10 @@ Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
  Andrew Lunn <andrew+netdev@lunn.ch>, Sabrina Dubroca <sd@queasysnail.net>,
  wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
  linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v2 08/12] tools: ynl-gen: rename TypeArrayNest to
- TypeIndexedArray
-Date: Wed, 10 Sep 2025 23:08:30 +0000
-Message-ID: <20250910230841.384545-9-ast@fiberby.net>
+Subject: [PATCH net-next v2 04/12] tools: ynl-gen: refactor local vars for
+ .attr_put() callers
+Date: Wed, 10 Sep 2025 23:08:26 +0000
+Message-ID: <20250910230841.384545-5-ast@fiberby.net>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250910230841.384545-1-ast@fiberby.net>
 References: <20250910230841.384545-1-ast@fiberby.net>
@@ -65,138 +65,124 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Since TypeArrayNest can now be used with many other sub-types
-than nest, then rename it to TypeIndexedArray, to reduce
-confusion.
+Refactor the generation of local variables needed when building
+requests, by moving the logic into the Type classes, and use the
+same helper in all places where .attr_put() is called.
 
-This patch continues the rename, that was started in commit
-aa6485d813ad ("ynl: rename array-nest to indexed-array"),
-when the YNL type was renamed.
+If any attributes requests identical local_vars, then they will
+be deduplicated, attributes are assumed to only use their local
+variables transiently.
 
-In order to get rid of all references to the old naming,
-within ynl, then renaming some variables in _multi_parse().
-
-This is a trivial patch with no behavioural changes intended.
+This patch fixes the build errors below:
+$ make -C tools/net/ynl/generated/
+[...]
+-e      GEN wireguard-user.c
+-e      GEN wireguard-user.h
+-e      CC wireguard-user.o
+wireguard-user.c: In function ‘wireguard_get_device_dump’:
+wireguard-user.c:480:9: error: ‘array’ undeclared (first use in func)
+  480 |         array = ynl_attr_nest_start(nlh, WGDEVICE_A_PEERS);
+      |         ^~~~~
+wireguard-user.c:480:9: note: each undeclared identifier is reported
+                        only once for each function it appears in
+wireguard-user.c:481:14: error: ‘i’ undeclared (first use in func)
+  481 |         for (i = 0; i < req->_count.peers; i++)
+      |              ^
+wireguard-user.c: In function ‘wireguard_set_device’:
+wireguard-user.c:533:9: error: ‘array’ undeclared (first use in func)
+  533 |         array = ynl_attr_nest_start(nlh, WGDEVICE_A_PEERS);
+      |         ^~~~~
+make: *** [Makefile:52: wireguard-user.o] Error 1
+make: Leaving directory '/usr/src/linux/tools/net/ynl/generated'
 
 Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 ---
- tools/net/ynl/pyynl/ynl_gen_c.py | 34 ++++++++++++++++----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+ tools/net/ynl/pyynl/ynl_gen_c.py | 37 +++++++++++++++++++++-----------
+ 1 file changed, 24 insertions(+), 13 deletions(-)
 
 diff --git a/tools/net/ynl/pyynl/ynl_gen_c.py b/tools/net/ynl/pyynl/ynl_gen_c.py
-index e93f5d724b42..574faa89b1f7 100755
+index 04c26ed92ca3..6441d5a31391 100755
 --- a/tools/net/ynl/pyynl/ynl_gen_c.py
 +++ b/tools/net/ynl/pyynl/ynl_gen_c.py
-@@ -793,7 +793,7 @@ class TypeMultiAttr(Type):
-                 f"{presence} = n_{self.c_name};"]
+@@ -236,6 +236,12 @@ class Type(SpecAttr):
+         line = f"ynl_attr_put_{put_type}(nlh, {self.enum_name}, {var}->{self.c_name})"
+         self._attr_put_line(ri, var, line)
+ 
++    def attr_put_local_vars(self):
++        local_vars = []
++        if self.presence_type() == 'count':
++            local_vars.append('unsigned int i;')
++        return local_vars
++
+     def attr_put(self, ri, var):
+         raise Exception(f"Put not implemented for class type {self.type}")
+ 
+@@ -841,6 +847,10 @@ class TypeArrayNest(Type):
+                      '}']
+         return get_lines, None, local_vars
+ 
++    def attr_put_local_vars(self):
++        local_vars = ['struct nlattr *array;']
++        return local_vars + super().attr_put_local_vars()
++
+     def attr_put(self, ri, var):
+         ri.cw.p(f'array = ynl_attr_nest_start(nlh, {self.enum_name});')
+         if self.sub_type in scalars:
+@@ -2041,6 +2051,15 @@ def put_enum_to_str(family, cw, enum):
+     _put_enum_to_str_helper(cw, enum.render_name, map_name, 'value', enum=enum)
  
  
--class TypeArrayNest(Type):
-+class TypeIndexedArray(Type):
-     def is_multi_val(self):
-         return True
++def put_local_vars(struct):
++    local_vars = []
++    for _, attr in struct.member_list():
++        for local_var in attr.attr_put_local_vars():
++            if local_var not in local_vars:
++                local_vars.append(local_var)
++    return local_vars
++
++
+ def put_req_nested_prototype(ri, struct, suffix=';'):
+     func_args = ['struct nlmsghdr *nlh',
+                  'unsigned int attr_type',
+@@ -2063,15 +2082,7 @@ def put_req_nested(ri, struct):
+         init_lines.append(f"hdr = ynl_nlmsg_put_extra_header(nlh, {struct_sz});")
+         init_lines.append(f"memcpy(hdr, &obj->_hdr, {struct_sz});")
  
-@@ -830,7 +830,7 @@ class TypeArrayNest(Type):
-         elif self.attr['sub-type'] == 'nest':
-             return f'.type = YNL_PT_NEST, .nest = &{self.nested_render_name}_nest, '
-         else:
--            raise Exception(f"Typol for ArrayNest sub-type {self.attr['sub-type']} not supported, yet")
-+            raise Exception(f"Typol for IndexedArray sub-type {self.attr['sub-type']} not supported, yet")
+-    has_anest = False
+-    has_count = False
+-    for _, arg in struct.member_list():
+-        has_anest |= arg.type == 'indexed-array'
+-        has_count |= arg.presence_type() == 'count'
+-    if has_anest:
+-        local_vars.append('struct nlattr *array;')
+-    if has_count:
+-        local_vars.append('unsigned int i;')
++    local_vars += put_local_vars(struct)
  
-     def _attr_get(self, ri, var):
-         local_vars = ['const struct nlattr *attr2;']
-@@ -860,7 +860,7 @@ class TypeArrayNest(Type):
-             ri.cw.p(f'for (i = 0; i < {var}->_count.{self.c_name}; i++)')
-             ri.cw.p(f"{self.nested_render_name}_put(nlh, i, &{var}->{self.c_name}[i]);")
-         else:
--            raise Exception(f"Put for ArrayNest sub-type {self.attr['sub-type']} not supported, yet")
-+            raise Exception(f"Put for IndexedArray sub-type {self.attr['sub-type']} not supported, yet")
-         ri.cw.p('ynl_attr_nest_end(nlh, array);')
- 
-     def _setter_lines(self, ri, member, presence):
-@@ -1137,7 +1137,7 @@ class AttrSet(SpecAttrSet):
-             t = TypeNest(self.family, self, elem, value)
-         elif elem['type'] == 'indexed-array' and 'sub-type' in elem:
-             if elem["sub-type"] in ['binary', 'nest', 'u32']:
--                t = TypeArrayNest(self.family, self, elem, value)
-+                t = TypeIndexedArray(self.family, self, elem, value)
-             else:
-                 raise Exception(f'new_attr: unsupported sub-type {elem["sub-type"]}')
-         elif elem['type'] == 'nest-type-value':
-@@ -2127,33 +2127,33 @@ def _multi_parse(ri, struct, init_lines, local_vars):
-             else:
-                 raise Exception(f"Per-op fixed header not supported, yet")
- 
--    array_nests = set()
-+    indexed_arrays = set()
-     multi_attrs = set()
-     needs_parg = False
-     for arg, aspec in struct.member_list():
-         if aspec['type'] == 'indexed-array' and 'sub-type' in aspec:
-             if aspec["sub-type"] in {'binary', 'nest'}:
-                 local_vars.append(f'const struct nlattr *attr_{aspec.c_name};')
--                array_nests.add(arg)
-+                indexed_arrays.add(arg)
-             elif aspec['sub-type'] in scalars:
-                 local_vars.append(f'const struct nlattr *attr_{aspec.c_name};')
--                array_nests.add(arg)
-+                indexed_arrays.add(arg)
-             else:
-                 raise Exception(f'Not supported sub-type {aspec["sub-type"]}')
-         if 'multi-attr' in aspec:
-             multi_attrs.add(arg)
-         needs_parg |= 'nested-attributes' in aspec
-         needs_parg |= 'sub-message' in aspec
--    if array_nests or multi_attrs:
-+    if indexed_arrays or multi_attrs:
-         local_vars.append('int i;')
-     if needs_parg:
-         local_vars.append('struct ynl_parse_arg parg;')
-         init_lines.append('parg.ys = yarg->ys;')
- 
--    all_multi = array_nests | multi_attrs
-+    all_multi = indexed_arrays | multi_attrs
- 
--    for anest in sorted(all_multi):
--        local_vars.append(f"unsigned int n_{struct[anest].c_name} = 0;")
-+    for arg in sorted(all_multi):
-+        local_vars.append(f"unsigned int n_{struct[arg].c_name} = 0;")
- 
+     put_req_nested_prototype(ri, struct, suffix='')
      ri.cw.block_start()
+@@ -2355,10 +2366,7 @@ def print_req(ri):
+         local_vars += ['size_t hdr_len;',
+                        'void *hdr;']
+ 
+-    for _, attr in ri.struct["request"].member_list():
+-        if attr.presence_type() == 'count':
+-            local_vars += ['unsigned int i;']
+-            break
++    local_vars += put_local_vars(ri.struct["request"])
+ 
+     print_prototype(ri, direction, terminate=False)
+     ri.cw.block_start()
+@@ -2425,6 +2433,9 @@ def print_dump(ri):
+         local_vars += ['size_t hdr_len;',
+                        'void *hdr;']
+ 
++    if "request" in ri.op[ri.op_mode]:
++        local_vars += put_local_vars(ri.struct["request"])
++
      ri.cw.write_func_lvar(local_vars)
-@@ -2172,8 +2172,8 @@ def _multi_parse(ri, struct, init_lines, local_vars):
-         else:
-             ri.cw.p('hdr = ynl_nlmsg_data_offset(nlh, sizeof(struct genlmsghdr));')
-         ri.cw.p(f"memcpy(&dst->_hdr, hdr, sizeof({struct.fixed_header}));")
--    for anest in sorted(all_multi):
--        aspec = struct[anest]
-+    for arg in sorted(all_multi):
-+        aspec = struct[arg]
-         ri.cw.p(f"if (dst->{aspec.c_name})")
-         ri.cw.p(f'return ynl_error_parse(yarg, "attribute already present ({struct.attr_set.name}.{aspec.name})");')
  
-@@ -2191,8 +2191,8 @@ def _multi_parse(ri, struct, init_lines, local_vars):
-     ri.cw.block_end()
-     ri.cw.nl()
- 
--    for anest in sorted(array_nests):
--        aspec = struct[anest]
-+    for arg in sorted(indexed_arrays):
-+        aspec = struct[arg]
- 
-         ri.cw.block_start(line=f"if (n_{aspec.c_name})")
-         ri.cw.p(f"dst->{aspec.c_name} = calloc(n_{aspec.c_name}, sizeof(*dst->{aspec.c_name}));")
-@@ -2217,8 +2217,8 @@ def _multi_parse(ri, struct, init_lines, local_vars):
-         ri.cw.block_end()
-     ri.cw.nl()
- 
--    for anest in sorted(multi_attrs):
--        aspec = struct[anest]
-+    for arg in sorted(multi_attrs):
-+        aspec = struct[arg]
-         ri.cw.block_start(line=f"if (n_{aspec.c_name})")
-         ri.cw.p(f"dst->{aspec.c_name} = calloc(n_{aspec.c_name}, sizeof(*dst->{aspec.c_name}));")
-         ri.cw.p(f"dst->_count.{aspec.c_name} = n_{aspec.c_name};")
+     ri.cw.p('yds.yarg.ys = ys;')
 -- 
 2.51.0
 
