@@ -4,49 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6DA6CF2582
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 04:41:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DD0CCF2583
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 04:41:39 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dfe2b34b;
-	Tue, 18 Nov 2025 17:29:07 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ac22b04a;
+	Tue, 18 Nov 2025 17:29:05 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 05c19b76
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 77f040ce
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 11 Sep 2025 20:05:27 +0000 (UTC)
+ Thu, 11 Sep 2025 00:01:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
- s=202008; t=1757621127;
- bh=cBJ8N3+usDyC0kts12vANVIdZbJUEHQHgUg3Ehv0XcY=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=p954Zw0DXV1nCLEnrXMHUbaYWpXk6FPwoHeSN8IJ2aGGThLLjS0F79TIjgvs+v2Af
- siMe/sDs+zpTlU9xPE2sPnC+CflXGs3Tdg6YZ1Ae3rdEVIa1vc9/9WbDEjKW3bjNe5
- WSPsVDnzMWtOlI1Ed5zDZQ8daypp79UcicpFhfqBod3m9KsrJm5xrE51/4uQ9+WOVu
- 5OCLFQwMx9kRh8COcEkVqdV3HvLWjdumVIdpqI6AtSyB6ML5KDZf0B8cgoCMCb8XKF
- lP77tJgd8+3iZcLyym/Z5wHSSGhwaceWgtmh2efqqRPxLEAB7kj3f0t0HnNYf6iDJF
- QJSAo9v+lD+gw==
+ s=202008; t=1757548915;
+ bh=hcPnMipU2xqeVVWkjAP2fKprVNClO0nQS9RLP+GCumk=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+ b=VGcVaBXnbMBS5Aq7c37tqFGeHyRyrIxBUmXQQ04+cwqej6MYGPoDJmZ4gTMP9jA4H
+ fls++6Ivu6BsQHF5Zyc9FffCbdYugrf/w8IxzTvFhdKZFudv9Xyr58cupp5U3Sml++
+ zBbhVZRQN4vTuyIzfkc3jozO0tsStW27onFnyzKWNqnIZBEhUFp8djorMwBDhdflxH
+ flbKMfYRzr0t4ge/YB0vKxPKwqDVwhQ74m+ogHDjb740HW+eH6NObDVojxBa7Qzaha
+ VKOfn/oiIEjNCdIddhFyFEZ2PAnUB4XEGnJ6kBb/+lTPMz7mA01Y+QJAFTWbeafz+x
+ bmPLX9Rz985QA==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id 8DFED600C4;
- Thu, 11 Sep 2025 20:05:26 +0000 (UTC)
-Received: by x201s (Postfix, from userid 1000)
- id 46FA62054AD; Thu, 11 Sep 2025 20:05:21 +0000 (UTC)
-From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>
-Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
- Donald Hunter <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>,
- Jacob Keller <jacob.e.keller@intel.com>,
- Sabrina Dubroca <sd@queasysnail.net>, wireguard@lists.zx2c4.com,
- netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v3 11/13] tools: ynl: encode indexed-arrays
-Date: Thu, 11 Sep 2025 20:05:04 +0000
-Message-ID: <20250911200508.79341-12-ast@fiberby.net>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250911200508.79341-1-ast@fiberby.net>
-References: <20250911200508.79341-1-ast@fiberby.net>
+ by mail1.fiberby.net (Postfix) with ESMTPSA id DA8066000C;
+ Thu, 11 Sep 2025 00:01:54 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+ by x201s (Postfix) with ESMTP id 01FCC201AFC;
+ Thu, 11 Sep 2025 00:01:48 +0000 (UTC)
+Message-ID: <3b52386e-6127-4bdc-b7db-e3c885b03f72@fiberby.net>
+Date: Thu, 11 Sep 2025 00:01:48 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next 05/11] tools: ynl-gen: define nlattr *array in a
+ block scope
+To: Jakub Kicinski <kuba@kernel.org>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Paolo Abeni <pabeni@redhat.com>, Donald Hunter <donald.hunter@gmail.com>,
+ Simon Horman <horms@kernel.org>, Jacob Keller <jacob.e.keller@intel.com>,
+ Andrew Lunn <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com,
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250904-wg-ynl-prep@fiberby.net>
+ <20250904220156.1006541-5-ast@fiberby.net>
+ <20250905171809.694562c6@kernel.org>
+ <4eda9c57-bde0-43c3-b8a0-3e45f2e672ac@fiberby.net>
+ <20250906120754.7b90c718@kernel.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Asbj=C3=B8rn_Sloth_T=C3=B8nnesen?= <ast@fiberby.net>
+In-Reply-To: <20250906120754.7b90c718@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Tue, 18 Nov 2025 17:23:15 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -63,55 +68,126 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This patch adds support for encoding indexed-array
-attributes with sub-type nest in pyynl.
+On 9/6/25 7:07 PM, Jakub Kicinski wrote:
+> On Sat, 6 Sep 2025 13:13:29 +0000 Asbjørn Sloth Tønnesen wrote:
+>> In patch 4, it is about a variable used by multiple Type classes having
+>> presence_type() = 'count', which is currently 3 classes:
+>> - TypeBinaryScalarArray
+>> - TypeMultiAttr
+>> - TypeArrayNest (later renamed to TypeIndexedArray)
+>>
+>> In patch 5, I move code for a special variable used by one Type class,
+>> to be contained within that class. It makes it easier to ensure that the
+>> variable is only defined, when used, and vice versa. This comes at the
+>> cost of the generated code looking generated.
+> 
+> So you're agreeing?
+> 
+>> If we should make the generated code look like it was written by humans,
+>> then I would move the definition of these local variables into a class
+>> method, so `i` can be generated by the generic implementation, and `array`
+>> can be implemented in it's class. I will take a stab at this, but it might
+>> be too much refactoring for this series, eg. `len` is also defined local
+>> to conditional blocks multiple branches in a row.
+>>
+>> tools/net/ynl/generated/nl80211-user.c:
+>> nl80211_iftype_data_attrs_parse(..) {
+>>     [..]
+>>     ynl_attr_for_each_nested(attr, nested) {
+>>       unsigned int type = ynl_attr_type(attr);
+>>
+>>       if (type == NL80211_BAND_IFTYPE_ATTR_IFTYPES) {
+>>         unsigned int len;
+>>         [..]
+>>       } else if (type == NL80211_BAND_IFTYPE_ATTR_HE_CAP_MAC) {
+>>         unsigned int len;
+>>         [..]
+>>       [same pattern 8 times, so 11 times in total]
+>>       } else if (type == NL80211_BAND_IFTYPE_ATTR_EHT_CAP_PPE) {
+>>         unsigned int len;
+>>         [..]
+>>       }
+>>     }
+>>     return 0;
+>> }
+> 
+> It's pretty easily doable, I already gave up on not calling _attr_get()
+> for sub-messages.
+> 
+>> That looks very generated, I would have `len` defined together with `type`,
+>> and a switch statement would also look a lot more natural, but maybe leave
+>> the if->switch conversion for the compiler to detect.
+> 
+> diff --git a/tools/net/ynl/pyynl/ynl_gen_c.py b/tools/net/ynl/pyynl/ynl_gen_c.py
+> index fb7e03805a11..8a1f8a477566 100755
+> --- a/tools/net/ynl/pyynl/ynl_gen_c.py
+> +++ b/tools/net/ynl/pyynl/ynl_gen_c.py
+> @@ -243,7 +243,7 @@ from lib import SpecSubMessage, SpecSubMessageFormat
+>           raise Exception(f"Attr get not implemented for class type {self.type}")
+>   
+>       def attr_get(self, ri, var, first):
+> -        lines, init_lines, local_vars = self._attr_get(ri, var)
+> +        lines, init_lines, _ = self._attr_get(ri, var)
+>           if type(lines) is str:
+>               lines = [lines]
+>           if type(init_lines) is str:
+> @@ -251,10 +251,6 @@ from lib import SpecSubMessage, SpecSubMessageFormat
+>   
+>           kw = 'if' if first else 'else if'
+>           ri.cw.block_start(line=f"{kw} (type == {self.enum_name})")
+> -        if local_vars:
+> -            for local in local_vars:
+> -                ri.cw.p(local)
+> -            ri.cw.nl()
+>   
+>           if not self.is_multi_val():
+>               ri.cw.p("if (ynl_attr_validate(yarg, attr))")
+> @@ -2101,6 +2097,7 @@ _C_KW = {
+>               else:
+>                   raise Exception(f"Per-op fixed header not supported, yet")
+>   
+> +    var_set = set()
+>       array_nests = set()
+>       multi_attrs = set()
+>       needs_parg = False
+> @@ -2118,6 +2115,13 @@ _C_KW = {
+>               multi_attrs.add(arg)
+>           needs_parg |= 'nested-attributes' in aspec
+>           needs_parg |= 'sub-message' in aspec
+> +
+> +        try:
+> +            _, _, l_vars = aspec._attr_get(ri, '')
+> +            var_set |= set(l_vars) if l_vars else set()
+> +        except:
+> +            pass  # _attr_get() not implemented by simple types, ignore
+> +    local_vars += list(var_set)
+>       if array_nests or multi_attrs:
+>           local_vars.append('int i;')
+>       if needs_parg:
+I left this for you to submit, there is a trivial conflict with patch 8
+in my v2 posting.
 
-Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
----
- tools/net/ynl/pyynl/lib/ynl.py | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+It gives a pretty nice diffstat when comparing the generated code:
 
-diff --git a/tools/net/ynl/pyynl/lib/ynl.py b/tools/net/ynl/pyynl/lib/ynl.py
-index 92ff26f34f4d..9fd83f8b091f 100644
---- a/tools/net/ynl/pyynl/lib/ynl.py
-+++ b/tools/net/ynl/pyynl/lib/ynl.py
-@@ -563,6 +563,11 @@ class YnlFamily(SpecFamily):
-             nl_type |= Netlink.NLA_F_NESTED
-             sub_space = attr['nested-attributes']
-             attr_payload = self._add_nest_attrs(value, sub_space, search_attrs)
-+        elif attr['type'] == 'indexed-array' and attr['sub-type'] == 'nest':
-+            nl_type |= Netlink.NLA_F_NESTED
-+            sub_space = attr['nested-attributes']
-+            attr_payload = self._encode_indexed_array(value, sub_space,
-+                                                      search_attrs)
-         elif attr["type"] == 'flag':
-             if not value:
-                 # If value is absent or false then skip attribute creation.
-@@ -616,6 +621,9 @@ class YnlFamily(SpecFamily):
-         else:
-             raise Exception(f'Unknown type at {space} {name} {value} {attr["type"]}')
- 
-+        return self._add_attr_raw(nl_type, attr_payload)
-+
-+    def _add_attr_raw(self, nl_type, attr_payload):
-         pad = b'\x00' * ((4 - len(attr_payload) % 4) % 4)
-         return struct.pack('HH', len(attr_payload) + 4, nl_type) + attr_payload + pad
- 
-@@ -627,6 +635,14 @@ class YnlFamily(SpecFamily):
-                                            sub_attrs)
-         return attr_payload
- 
-+    def _encode_indexed_array(self, vals, sub_space, search_attrs):
-+        attr_payload = b''
-+        for i, val in enumerate(vals):
-+            idx = i | Netlink.NLA_F_NESTED
-+            val_payload = self._add_nest_attrs(val, sub_space, search_attrs)
-+            attr_payload += self._add_attr_raw(idx, val_payload)
-+        return attr_payload
-+
-     def _get_enum_or_unknown(self, enum, raw):
-         try:
-             name = enum.entries_by_val[raw].name
--- 
-2.51.0
-
+  devlink-user.c      |  187 +++----------------
+  dpll-user.c         |   10 -
+  ethtool-user.c      |   49 +----
+  fou-user.c          |    5
+  handshake-user.c    |    3
+  mptcp_pm-user.c     |    3
+  nfsd-user.c         |   16 -
+  nl80211-user.c      |  159 +---------------
+  nlctrl-user.c       |   21 --
+  ovpn-user.c         |    7
+  ovs_datapath-user.c |    9
+  ovs_flow-user.c     |   89 ---------
+  ovs_vport-user.c    |    7
+  rt-addr-user.c      |   14 -
+  rt-link-user.c      |  183 ++----------------
+  rt-neigh-user.c     |   14 -
+  rt-route-user.c     |   26 --
+  rt-rule-user.c      |   11 -
+  tc-user.c           |  380 +++++----------------------------------
+  tcp_metrics-user.c  |    7
+  team-user.c         |    5
+  21 files changed, 175 insertions(+), 1030 deletions(-)
