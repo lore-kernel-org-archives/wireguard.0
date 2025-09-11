@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A2DFCF2582
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 05:13:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 509F7CF2584
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 05:13:18 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ccf3aa70;
-	Tue, 18 Nov 2025 17:29:16 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c44f7fb4;
+	Tue, 18 Nov 2025 17:29:20 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5c82c4c0
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ee0296f4
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
  Thu, 11 Sep 2025 20:05:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
  s=202008; t=1757621127;
- bh=S0gMc72oPdc0g0sj6y+NzdUsQ1houqygFTU/3OS/3SU=;
+ bh=lcInuRuB+vNuJa4fGRHJlvJD9iDvGJACqmazL3h49mo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=frqESVFNCJwluZln0HPUxGZ80dbNhFim/N+up5JtWOkk+G2eOjy6rzkB7wavmOv9x
- NB3jBmKxS2T3kQdE7hOCSZUfkZ60p8EuFmLmlsv9BLj1siRUgQ5+dhuXhzF0Weldhl
- pRxvmvUcU6ZrcO6g86acDlCP6pA+y9rverAgrjAoGz9DtvaW6eUGnBdOiilXu5Q91G
- PVeJJNa8Q0YqPlG/hyNL3HLUID5A670hyEcP8KGfl/jeHIPEU0ZCi8FYVk7pQFPEE8
- xnWKniptFyLUx+iBS+iek8mEXWeppqXLMT723Usqvr/41PJnGcXlghIzEt+g+M3Q56
- 6zEBzN3lBgk5A==
+ b=KTps+Ak3z9B88aI2xES6gW/itFyEksAj2Na5VSiHTFw496zhNGJYX75h/HwL4u6Yi
+ zhLSI75/6qifk21s3i+vDBYCe44U3iVHaDscqq/tIuX9qV5swoIdgtib92Iw5zMl4Y
+ G6MCd63pj4T84dTcJskwwpIRY5aGMYjBnlGaJSALslf1HWrO4EzJUd1gm1gw+40FXi
+ 4SywbKNn86VDw6I8xRGLE4Qo0kfnrx084mFu4CIOk76S095+VqzlRNqTNbSvsKdsNj
+ wInScr1wtH4WUzXGdl2GAmSVmKI0zeWMcLAFyfzRcY9RJZc/wtSIvUjFzjXu6RCK3J
+ TH1xTKvzl/Ylw==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id 32D7C6013B;
+ by mail1.fiberby.net (Postfix) with ESMTPSA id 2C1D460137;
  Thu, 11 Sep 2025 20:05:27 +0000 (UTC)
 Received: by x201s (Postfix, from userid 1000)
- id 4FAD22054BC; Thu, 11 Sep 2025 20:05:21 +0000 (UTC)
+ id 20275204CAF; Thu, 11 Sep 2025 20:05:21 +0000 (UTC)
 From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  "David S. Miller" <davem@davemloft.net>,
@@ -39,9 +39,10 @@ Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
  Jacob Keller <jacob.e.keller@intel.com>,
  Sabrina Dubroca <sd@queasysnail.net>, wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v3 12/13] tools: ynl: decode hex input
-Date: Thu, 11 Sep 2025 20:05:05 +0000
-Message-ID: <20250911200508.79341-13-ast@fiberby.net>
+Subject: [PATCH net-next v3 07/13] tools: ynl-gen: avoid repetitive variables
+ definitions
+Date: Thu, 11 Sep 2025 20:05:00 +0000
+Message-ID: <20250911200508.79341-8-ast@fiberby.net>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250911200508.79341-1-ast@fiberby.net>
 References: <20250911200508.79341-1-ast@fiberby.net>
@@ -63,38 +64,137 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This patch adds support for decoding hex input, so
-that binary attributes can be read through --json.
+In the generated attribute parsing code, avoid repetitively
+defining the same variables over and over again, local to
+the conditional block for each attribute.
 
-Example (using future wireguard.yaml):
- $ sudo ./tools/net/ynl/pyynl/cli.py --family wireguard \
-   --do set-device --json '{"ifindex":3,
-     "private-key":"2a ae 6c 35 c9 4f cf <... to 32 bytes>"}'
+This patch consolidates the definitions of local variables
+for attribute parsing, so that they are defined at the
+function level, and re-used across attributes, thus making
+the generated code read more natural.
 
-In order to somewhat mirror what is done in _formatted_string(),
-then for non-binary attributes attempt to convert it to an int.
+If attributes defines identical local_vars, then they will
+be deduplicated, attributes are assumed to only use their
+local variables transiently.
 
+The example below shows how `len` was defined repeatedly in
+tools/net/ynl/generated/nl80211-user.c:
+
+nl80211_iftype_data_attrs_parse(..) {
+   [..]
+   ynl_attr_for_each_nested(attr, nested) {
+     unsigned int type = ynl_attr_type(attr);
+
+     if (type == NL80211_BAND_IFTYPE_ATTR_IFTYPES) {
+       unsigned int len;
+       [..]
+     } else if (type == NL80211_BAND_IFTYPE_ATTR_HE_CAP_MAC) {
+       unsigned int len;
+       [..]
+     [same pattern 8 times, so 11 times in total]
+     } else if (type == NL80211_BAND_IFTYPE_ATTR_EHT_CAP_PPE) {
+       unsigned int len;
+       [..]
+     }
+   }
+   return 0;
+}
+
+This patch results in this diffstat for the generated code:
+
+$ diff -Naur pre/ post/ | diffstat
+  devlink-user.c      |  187 +++----------------
+  dpll-user.c         |   10 -
+  ethtool-user.c      |   49 +----
+  fou-user.c          |    5
+  handshake-user.c    |    3
+  mptcp_pm-user.c     |    3
+  nfsd-user.c         |   16 -
+  nl80211-user.c      |  159 +---------------
+  nlctrl-user.c       |   21 --
+  ovpn-user.c         |    7
+  ovs_datapath-user.c |    9
+  ovs_flow-user.c     |   89 ---------
+  ovs_vport-user.c    |    7
+  rt-addr-user.c      |   14 -
+  rt-link-user.c      |  183 ++----------------
+  rt-neigh-user.c     |   14 -
+  rt-route-user.c     |   26 --
+  rt-rule-user.c      |   11 -
+  tc-user.c           |  380 +++++----------------------------------
+  tcp_metrics-user.c  |    7
+  team-user.c         |    5
+  21 files changed, 175 insertions(+), 1030 deletions(-)
+
+The changed lines are mostly `unsigned int len;` definitions:
+
+$ diff -Naur pre/ post/ | grep ^[-+] | grep -v '^[-+]\{3\}' |
+  grep -v '^.$' | sed -e 's/\t\+/ /g' | sort | uniq -c | sort -nr
+    488 - unsigned int len;
+    153 + unsigned int len;
+     24 - const struct nlattr *attr2;
+     18 + const struct nlattr *attr2;
+      1 - __u32 policy_id, attr_id;
+      1 + __u32 policy_id, attr_id;
+      1 - __u32 op_id;
+      1 + __u32 op_id;
+      1 - const struct nlattr *attr_policy_id, *attr_attr_id;
+      1 + const struct nlattr *attr_policy_id, *attr_attr_id;
+      1 - const struct nlattr *attr_op_id;
+      1 + const struct nlattr *attr_op_id;
+
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 ---
- tools/net/ynl/pyynl/lib/ynl.py | 5 +++++
- 1 file changed, 5 insertions(+)
+ tools/net/ynl/pyynl/ynl_gen_c.py | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/tools/net/ynl/pyynl/lib/ynl.py b/tools/net/ynl/pyynl/lib/ynl.py
-index 9fd83f8b091f..707753e371e2 100644
---- a/tools/net/ynl/pyynl/lib/ynl.py
-+++ b/tools/net/ynl/pyynl/lib/ynl.py
-@@ -971,6 +971,11 @@ class YnlFamily(SpecFamily):
-                 raw = ip.packed
+diff --git a/tools/net/ynl/pyynl/ynl_gen_c.py b/tools/net/ynl/pyynl/ynl_gen_c.py
+index b3ce0901a19b..d63b63ac0b8e 100755
+--- a/tools/net/ynl/pyynl/ynl_gen_c.py
++++ b/tools/net/ynl/pyynl/ynl_gen_c.py
+@@ -247,7 +247,7 @@ class Type(SpecAttr):
+         raise Exception(f"Attr get not implemented for class type {self.type}")
+ 
+     def attr_get(self, ri, var, first):
+-        lines, init_lines, local_vars = self._attr_get(ri, var)
++        lines, init_lines, _ = self._attr_get(ri, var)
+         if type(lines) is str:
+             lines = [lines]
+         if type(init_lines) is str:
+@@ -255,10 +255,6 @@ class Type(SpecAttr):
+ 
+         kw = 'if' if first else 'else if'
+         ri.cw.block_start(line=f"{kw} (type == {self.enum_name})")
+-        if local_vars:
+-            for local in local_vars:
+-                ri.cw.p(local)
+-            ri.cw.nl()
+ 
+         if not self.is_multi_val():
+             ri.cw.p("if (ynl_attr_validate(yarg, attr))")
+@@ -2124,6 +2120,7 @@ def _multi_parse(ri, struct, init_lines, local_vars):
              else:
-                 raw = int(ip)
-+        elif attr_spec.display_hint == 'hex':
-+            if attr_spec['type'] == 'binary':
-+                raw = bytes.fromhex(string)
-+            else:
-+                raw = int(string, 16)
-         else:
-             raise Exception(f"Display hint '{attr_spec.display_hint}' not implemented"
-                             f" when parsing '{attr_spec['name']}'")
+                 raise Exception("Per-op fixed header not supported, yet")
+ 
++    var_set = set()
+     array_nests = set()
+     multi_attrs = set()
+     needs_parg = False
+@@ -2141,6 +2138,13 @@ def _multi_parse(ri, struct, init_lines, local_vars):
+             multi_attrs.add(arg)
+         needs_parg |= 'nested-attributes' in aspec
+         needs_parg |= 'sub-message' in aspec
++
++        try:
++            _, _, l_vars = aspec._attr_get(ri, '')
++            var_set |= set(l_vars) if l_vars else set()
++        except Exception:
++            pass  # _attr_get() not implemented by simple types, ignore
++    local_vars += list(var_set)
+     if array_nests or multi_attrs:
+         local_vars.append('int i;')
+     if needs_parg:
 -- 
 2.51.0
 
