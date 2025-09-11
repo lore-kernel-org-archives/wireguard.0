@@ -4,204 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2BE7CA0FED
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 10 Sep 2025 16:58:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C0F1CAC58E
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 11 Sep 2025 00:27:21 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a82978e7;
-	Wed, 10 Sep 2025 16:58:53 +0000 (UTC)
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 182a1dbd
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0b7423ee;
+	Thu, 11 Sep 2025 00:27:19 +0000 (UTC)
+Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id fcb8b6aa
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 10 Sep 2025 16:58:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1757523530; x=1789059530;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:mime-version;
- bh=nQkPiFouxmoUPxvnDjfXavjOhUMCYEUljkg5fPqV6qY=;
- b=JGX45Q+bkAtOi95/V4M2n3uVHDTKBFmwcek9FCM/Gnsh3jXe+gkbjcWO
- 5GqtHFXaMIJgTnQD+mGMMvYEDPP5uV1aqTGqPnKrjqzgoF1TD+po0IK+i
- ig2DdZMCeAk5f0ibIVnSzK6qx5fcy6QanUs+LyDY0jP/oY2m1SnnqSIfD
- HPid0T4G7IsVf+00jAEEvQiWtNe/WoEnwx1HV9sBrV0kGpcaNsTCwi2Dz
- AgX1fMYNDlKlCnvDVyyffjPPGI8dkFotqG6aycS9xApceFxwriGOIc6rx
- FaaqLG91nfsWOpc068qQeRR6q/A2dwI1cGYAH/o5xkK2ihZD4Cch24fpI Q==;
-X-CSE-ConnectionGUID: XeDbc/BgQkST1wFFW6Jveg==
-X-CSE-MsgGUID: mj0T3OnsQemO3f0w3tN3Ow==
-X-IronPort-AV: E=McAfee;i="6800,10657,11549"; a="63670314"
-X-IronPort-AV: E=Sophos;i="6.18,254,1751266800"; 
- d="asc'?scan'208";a="63670314"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Sep 2025 09:58:44 -0700
-X-CSE-ConnectionGUID: Yx6zUs/jSIuCNK/r6weaOg==
-X-CSE-MsgGUID: uU//epc5Qz+/0N3LqoVAkw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,254,1751266800"; 
- d="asc'?scan'208";a="173292287"
-Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
- by orviesa007.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Sep 2025 09:58:43 -0700
-Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
- fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Wed, 10 Sep 2025 09:58:41 -0700
-Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
- FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17 via Frontend Transport; Wed, 10 Sep 2025 09:58:41 -0700
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (40.107.236.84)
- by edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Wed, 10 Sep 2025 09:58:41 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=WRe5nOsVoObJOYHwdGGHFN8h0dT1DeyMXhVuURoslCEWi3LYfsyqNM8tRaIseI+ws18JYZGeWehV3XUK47C4jjSTfDt/wYJf7nibhmPfX4qTIpLvVChLfQWOm70iwSLbTKSvfHJ17qCqDvxLR7EQZNmz0MEI0sr3SlLaacWnas7V4B8H/e0qXGsoS04h/gRhg+Cq1bpy17dXwc5ttCB2yhEpsf13NWoVsayt5Hy7ztbHiRb7ExTwu31q3qZfr6w4HEkfdz6NTlojUrazXqCemBypkJcia6XQ5JAsR7x33jJqqsn121im+JMIHkke5hkyPwdmI2JPKIA8DbTK48sU1g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nQkPiFouxmoUPxvnDjfXavjOhUMCYEUljkg5fPqV6qY=;
- b=Dhb0Qocs/PavtWiEEosBOeRu2AisqQOcR1CYc5WBkl0E8OZIXcpC6VyuBLAJx7texAYYoUXUBTlMJIb2Smq+NvebFyTD1LAUXJoU2H9AFtRECsYLurCTQp9gnL4frcfz6FBMu8gjoQ2EFlhssB68mPScX3wsYHAiman1q1KF8b8XxqC3YiVLUUYxXrnsMaxh/hROh8g6H3JnSnnwKjBuoQcbvEGYP+meBtV+hugGRP+UuMepPJ3sJUg8SD+hICb7P53RTaViYdbixsXMDdg077jB7GvwxJz7lmDRizxt+PvTSDPCWkrewzd/JcJ5ZGDTIZmM+u5x4VslXTxX7Y2LgA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from CO1PR11MB5089.namprd11.prod.outlook.com (2603:10b6:303:9b::16)
- by SN7PR11MB7042.namprd11.prod.outlook.com (2603:10b6:806:299::5)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.22; Wed, 10 Sep
- 2025 16:58:39 +0000
-Received: from CO1PR11MB5089.namprd11.prod.outlook.com
- ([fe80::81f7:c6c0:ca43:11c3]) by CO1PR11MB5089.namprd11.prod.outlook.com
- ([fe80::81f7:c6c0:ca43:11c3%4]) with mapi id 15.20.9094.021; Wed, 10 Sep 2025
- 16:58:39 +0000
-Message-ID: <7fff6b2f-f17e-4179-8507-397b76ea24bb@intel.com>
-Date: Wed, 10 Sep 2025 09:58:37 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next 06/11] tools: ynl-gen: don't validate nested
- array attribute types
-To: =?UTF-8?Q?Asbj=C3=B8rn_Sloth_T=C3=B8nnesen?= <ast@fiberby.net>, "Jason A.
- Donenfeld" <Jason@zx2c4.com>, "David S. Miller" <davem@davemloft.net>,
- "Eric
- Dumazet" <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni
- <pabeni@redhat.com>
-CC: Donald Hunter <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>, 
- Andrew Lunn <andrew+netdev@lunn.ch>, <wireguard@lists.zx2c4.com>,
- <netdev@vger.kernel.org>, <linux-kernel@vger.kernel.org>, Johannes Berg
- <johannes.berg@intel.com>
+ Thu, 11 Sep 2025 00:27:18 +0000 (UTC)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id 2115740218;
+ Thu, 11 Sep 2025 00:27:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90746C4CEEB;
+ Thu, 11 Sep 2025 00:27:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1757550436;
+ bh=ekesoh0ujj8ocHBC1cUZS+xosIHxerCs0+Ur0dMvGi0=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=YIhN/Jjk8lbtMZhvPs99IMb6DdxMzOmkgeqMoNjFFvsSopF4C03eCmdaNXFunkFvO
+ tJTq/3wP9RJO953v+ZcFNXousLQ89L9a9Fxk3q0QJ25jSpKj6Vew4cN7EguQCDPCH9
+ sHsefFAn5irX2yQFIuJaVaETLuvCq3YTu1MDf5cvsIBU4jpUjxbA1tZkhtQ6M/Bnix
+ vJMmJNlCa+W8d8TwNUWKgi9CfTtwsahcoRWE1QdLP5Qp6tEaHKpNR9ldc5NlidxcGY
+ +RTt664nXbt5PDp6riNGqdNGB1s4nrkEihivlt0a8pFnjERj0lV1yrsVN+yGtEYY5L
+ a0ezPeEfv34dg==
+Date: Wed, 10 Sep 2025 17:27:14 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: =?UTF-8?B?QXNiasO4cm4=?= Sloth =?UTF-8?B?VMO4bm5lc2Vu?= <ast@fiberby.net>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, "David S. Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Paolo Abeni
+ <pabeni@redhat.com>, Donald Hunter <donald.hunter@gmail.com>, Simon Horman
+ <horms@kernel.org>, Jacob Keller <jacob.e.keller@intel.com>, Andrew Lunn
+ <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net-next 05/11] tools: ynl-gen: define nlattr *array in
+ a block scope
+Message-ID: <20250910172714.25274ad0@kernel.org>
+In-Reply-To: <3b52386e-6127-4bdc-b7db-e3c885b03f72@fiberby.net>
 References: <20250904-wg-ynl-prep@fiberby.net>
- <20250904220156.1006541-6-ast@fiberby.net>
- <d2705570-7ad2-4771-af2a-4ba78393a8c4@intel.com>
- <d612ce20-ae4a-4f6d-9d1b-a3d56f3d10a9@fiberby.net>
-Content-Language: en-US
-From: Jacob Keller <jacob.e.keller@intel.com>
-Autocrypt: addr=jacob.e.keller@intel.com; keydata=
- xjMEaFx9ShYJKwYBBAHaRw8BAQdAE+TQsi9s60VNWijGeBIKU6hsXLwMt/JY9ni1wnsVd7nN
- J0phY29iIEtlbGxlciA8amFjb2IuZS5rZWxsZXJAaW50ZWwuY29tPsKTBBMWCgA7FiEEIEBU
- qdczkFYq7EMeapZdPm8PKOgFAmhcfUoCGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AA
- CgkQapZdPm8PKOiZAAEA4UV0uM2PhFAw+tlK81gP+fgRqBVYlhmMyroXadv0lH4BAIf4jLxI
- UPEL4+zzp4ekaw8IyFz+mRMUBaS2l+cpoBUBzjgEaFx9ShIKKwYBBAGXVQEFAQEHQF386lYe
- MPZBiQHGXwjbBWS5OMBems5rgajcBMKc4W4aAwEIB8J4BBgWCgAgFiEEIEBUqdczkFYq7EMe
- apZdPm8PKOgFAmhcfUoCGwwACgkQapZdPm8PKOjbUQD+MsPBANqBUiNt+7w0dC73R6UcQzbg
- cFx4Yvms6cJjeD4BAKf193xbq7W3T7r9BdfTw6HRFYDiHXgkyoc/2Q4/T+8H
-In-Reply-To: <d612ce20-ae4a-4f6d-9d1b-a3d56f3d10a9@fiberby.net>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------OLVVMmZtyz00u3KW05g9oYFp"
-X-ClientProxiedBy: MW4PR04CA0219.namprd04.prod.outlook.com
- (2603:10b6:303:87::14) To CO1PR11MB5089.namprd11.prod.outlook.com
- (2603:10b6:303:9b::16)
+ <20250904220156.1006541-5-ast@fiberby.net>
+ <20250905171809.694562c6@kernel.org>
+ <4eda9c57-bde0-43c3-b8a0-3e45f2e672ac@fiberby.net>
+ <20250906120754.7b90c718@kernel.org>
+ <3b52386e-6127-4bdc-b7db-e3c885b03f72@fiberby.net>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PR11MB5089:EE_|SN7PR11MB7042:EE_
-X-MS-Office365-Filtering-Correlation-Id: b6561463-d256-4eb1-8410-08ddf08b4a39
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|7416014|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?YTVFVVZJSnFGbzlwVkc2WkdoMnRtVmwzcXM5WjRIejhhdWtaNFpCQ1pRclg0?=
- =?utf-8?B?QlF4YXRMNE9tbWlOaGs1V2NIUmxyODNmVlA3VUlJNDEya0drb1J4QXB5OEJp?=
- =?utf-8?B?VlhMNkdBZndJekU5T2c4dEVrT0hLUU43R1BDNFQ0VDg1MS9mdGRoVEpFOW1i?=
- =?utf-8?B?YytIdERGWmZMTkZYUU83dWRTamtqQ3R4WWRjSjRLNFN1K09Kam0wK29pZjJM?=
- =?utf-8?B?by9FbmJBOG51di9mMkJJdDBHOStYYjlQZ1BiOFVkazNKaDB5T1B5UTBVTVNW?=
- =?utf-8?B?RmI2YU1GVGkzMGg2czFwNjR3T3ZIMDdseVIrbDF0NHpJYUtpMnpNNGhkQzZt?=
- =?utf-8?B?bG1jV2hldklrMmU2aWd0VFZ5ZlF0bzFpUjB6MnU1YnFnaHU4M2taTjhDYnRX?=
- =?utf-8?B?WkMyZVFqdDJjSGJwd05NS0NWUWJTbVNYZmRoTm8zV1RGUUFYMFMxbkJ0SDVw?=
- =?utf-8?B?VTVFdEdsUFZyVzBJWXBhTzZUaER3bDgxUEJNNnkvNnRDdS92aVJEYUcwSDhX?=
- =?utf-8?B?NHE2REh5Q1JQTFJNK2FDV1dKQmcrSjhGSUVqc2FhODNMOENBeWJyaEJzN3E0?=
- =?utf-8?B?S1ZIcXRmd3JIbzlIZUN0LzVwWWZLQXZBK1YrOTdhdFBiaTV2SDB4azR4Q1VX?=
- =?utf-8?B?NnJ3bmZJem1ORFBhS1NKMDdMc0FKejVOeGJWK0k2YjhmaHpJajRSdlhxdE4y?=
- =?utf-8?B?Mi9Kdk1hOFRsYThDWjJKdFhpaXp6ZFk0MzRUT1JNY2dBbytsc2VoTGQxQllv?=
- =?utf-8?B?b0J3UVJKL2pIWTlVN3BIQ3J2aWxkVDlvQWQ3SXk0cng1aGdpRVdYa0lXbDA2?=
- =?utf-8?B?N2NjZHVyWXpyWVUrbHNERmhSc3p0OGM2MUJkeVhMZkZCV3h2eExGeEdGTi9x?=
- =?utf-8?B?d1FYaUtRQUM2TmNrWTJoeENZYm5hOHBLL09JMEtVTWt1QlZNYWJBeDFIeUVE?=
- =?utf-8?B?UHBvVmlMYWk4R3ZkUmVLQzFlbXFsUkREYVJoWmxQdllNVlN1alk3N3c5bVdm?=
- =?utf-8?B?N2ZaRmpoVlhCU3UrNythWG5ienpvbElwUVJkWkRSSCs0TmkyYkwvaC9lS0FU?=
- =?utf-8?B?U00vUkxNSHVxN1VwcWNvNkpxaHdxRFBSakZIaC80OXlhM2FVNzhFckFieSs5?=
- =?utf-8?B?OXdOYzUvY3VGT2pCeHMvVHprRHA3T1FKNU9OcFV4eitWOTAvclZyZ0ZwcndF?=
- =?utf-8?B?L1BranhxK3oxN3AyZ0xjRzdnUVZmZjdvNXRuS2xYdlhKRmtGZjJMSVhHN2JN?=
- =?utf-8?B?WllQUXNKQWI4d3U1VmU2NzY4Z3QvUk9FNXJoN0oxRGt4Z0Vyb2k2bE52NmZi?=
- =?utf-8?B?OVpJaHFCdFMwN1FENlNjTEg4OHF4QnhwRkNWTXJzNjRaSzNxL2pWR0VzOG1D?=
- =?utf-8?B?Wkkza1c3Z1ErU1V0RU9CMTNTTlFxNENlQ0dtNUZ5SXlDRGMzRVJWZm5hTmIw?=
- =?utf-8?B?UDhhZ0xKWTh2SmVKcXIvbVJyd1VLQU8yOUY4S0N1SGVjTnQzV0JCK2lpeVlq?=
- =?utf-8?B?aFVLODBiSWUzaVFKejFsdmI3NEhzTGZOZVBoYndRbDZ1V2FaeHFweDFabVJ3?=
- =?utf-8?B?UEFxVU5pcUoyRnJNQ0p3S0JVRm95NHRHK3FZM2F5dm9sSW81aFJpK1RsdUdK?=
- =?utf-8?B?ZjhHa1hzQlBGMnN3RFFOQVhNbk9mY3pudmdvQ2x3TUI3RHM3VU15UUlWa2pz?=
- =?utf-8?B?MzdMTGRubFJobjJIWVBtd0lHSGpvMXNVU21SVnFjbkJmNTkxMDNlVWU0c0RB?=
- =?utf-8?B?ZkdQMENjWGN4eHhIQWxEMDNmSFRNYjlQSEcvckNIOGtHaWw0SDVXai95V2NN?=
- =?utf-8?B?YUJKL2hjM2I0QXYyZGZVbHZJcnJ0dEQvclRqdEdDazE2K0QwZ1BSUzE4N2F0?=
- =?utf-8?B?bllCSkRIQktNSUNIOXJnK1A4a0d6WCsyNkhPNXBxRGpnczZkS3lmN0ZsZVVp?=
- =?utf-8?Q?i6yAGAHTQ1Q=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CO1PR11MB5089.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(7416014)(1800799024); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bUpacXNPUjFVSEFST3k3WTZEZlc3cStzQXpveHFNL24zVkt0Ylg1UW1QemFa?=
- =?utf-8?B?ZFEvTkgxcHJPUG1tNkZGd2tVcE4yYWxyRjJXZ2lSdWNnUHNVZWNZUXFGcEVH?=
- =?utf-8?B?ZFFwaVJDeG1zek5qbE9EZ2VYKzRFOXJOWjVSdUJPSlBSbzZHQXRHeWh4Mkh4?=
- =?utf-8?B?TURUaFQvS3NsUXNBK3dHSjZ0SXh2UzlEbVNMcDRIejNWaVJKL2M2YXBqcHpt?=
- =?utf-8?B?M053ZXJoRFl0UVlsSWw4MEJUSjJEemZyNldzQlNYRVFiYnZUU2NGcXpBb20r?=
- =?utf-8?B?OXVMT1hDeFRaVk1VRjhsblVhQVlqTXBJbW1GSmliSEROSFhaU2doYUFMWjJw?=
- =?utf-8?B?VVVCSGR4a244bU96R21NbmNxZitVK3BzSWIxbjZMRjVSYnRRVEtaanVUeVN3?=
- =?utf-8?B?ZDdHMDE0ZmRQMnorRzF6L3pzQnJxMFRCZkJqZld0bVZuWWsxSTQySWVlZFJt?=
- =?utf-8?B?bHZqcWtHbmF6K2J0dWZtYTV5dmxaTXBQL1BZWWVsMnVmTnZVV1ZlZWdhcFl4?=
- =?utf-8?B?UGs3UnJnVG01QWtBQ09ITklERTRVRXZRV04vYmZmUTFEWGVUUlVEbFZRczhm?=
- =?utf-8?B?d2FEVkplV3Nqck40OFhxbk00cURKN2Exd0hoVThlWFk0MXhWMkwzbGhHUUFu?=
- =?utf-8?B?cFZoaXlsNkI5Nnc0cjlYbmxpSUpmeHlFS1dBanA5RGxQWEVJZ0FRTXluYWdk?=
- =?utf-8?B?UDJ0V2pSYVpLZWJjc3hNSTVVUi9FU1ZmaWFZb2ZmUDhsQlIvVklOeVp0KzNM?=
- =?utf-8?B?OW5maXBUT0x4YzR6OTF6T05lRWZKRVUremQvUkIzY0RxTitHSFpDSG84QlZy?=
- =?utf-8?B?Rk9laVlobTRwcC9YQkprRXJ1TTNMdy92clNjeDIyQTRBa1o1a2pZZ2w1ZWZy?=
- =?utf-8?B?R09HMjdBT2ltS1JvcXRUMnRiZ3JCS2krOStQRkp5aDlDMktRQkV4UXhlRW1v?=
- =?utf-8?B?b3VlMTltbGhYYk1QZFhDK3FZeDNQaVVwSWhrS1ZBVFkxUDFVbnVSaHVRdUdZ?=
- =?utf-8?B?NTFEdjBVWE1lYTZ0aGhiVlJFRmdWM2xkWFRXWEtxTjg3VkRzak92WkVEczFU?=
- =?utf-8?B?RFIxYWQ1WC9jT2xLVWMvaTV5RUJ2bGcrTGcwbWRvZmhMRTR5TzlYUVdkcEVM?=
- =?utf-8?B?QWU2emMzdk1iRGJSZmJKRXBsUE10QUhrVjkzQ0g5L0RsOWJ3bFd0YWdHSXhM?=
- =?utf-8?B?QllWWW5mNkFYTmx2aEQ3VkVhbEg0aXhYZis2M2VQQzdWTFYrSGR5MWFUWEs0?=
- =?utf-8?B?Mi9iakNhWkF4dkNsMW5QbUxvekluMU1FYnN4aCs2Mjk0R3BQaFR0bEFGbGpu?=
- =?utf-8?B?ZS9Xam03R0xWUGFRanN0V0VXRmZGYkdVT2NIbHhmMzU0RUZ0UEpJbVFwdk5n?=
- =?utf-8?B?UXMvN3NJODA3ZDVhV2FZUmpwOU91TDBCOXNrNFlvdWZSdVdoVWVyQ2hLa0dC?=
- =?utf-8?B?blFvNjVFdXJDNXdkcWFuZmVIc1dKZnNSZkJTenBTRzVWc0hOc0s3OHRlVURU?=
- =?utf-8?B?WmU5eEd3eHFuNTJGSFAwdmxCUkh2YzNaYkhDMXdYcjlUYWtXVzM1OC9RSVNX?=
- =?utf-8?B?RkJyWWg1cmVnWjlrRG9kbDNudmIrSEduNlp2eCtzNzVPbTR3c1NFN0ErVURM?=
- =?utf-8?B?dSsrOHhJbFJ3akxiNFpHSmdDQmwzVlN3dGxYTE9VQ2toVXdIZUY1YU9BaEJp?=
- =?utf-8?B?WDBGRW1FbDJlTlN2R0wxMlU1Wi95Z1hZcXpucjZTaXpTUUJFamtxTGRZbUpv?=
- =?utf-8?B?ZGRhZTZjQStzVHJBRFYwd3lldDhhVTlnWU1pRlZLODBLT0NNY2dzUjU4Vkoz?=
- =?utf-8?B?Yytwc21GczBnMWNDcVNGZ20zbWloWmVTd2Z3YzdVbzJmUDNQUE5zTERFZE9B?=
- =?utf-8?B?M0VWL0QweGY0UnMvTmZpS21xamhYNjRVSGd4TERYRWFrNHcwVStGbkorWmhI?=
- =?utf-8?B?eGxZNllYQTdFbmIvZjAxV2pZWHJBZmhLS3U5Um1qNzdRYXE5K3A5MU5IdFRX?=
- =?utf-8?B?UmV4djYyOGt0L2h3elR0N0hqTUtlUmRIVlQ5TjRTZjZ3elRJVUdtWjVOOStL?=
- =?utf-8?B?d1BVR3lwc0FKODRXVml0RWpLVzErY3hiUFV6Lys3SlcxdU1wWWJPT0NZWUJV?=
- =?utf-8?B?aDFnZjdCUWdBVi9aZlQ3QUtZQUNIMVpFbkpqMXZwRStnTVFEbFZnZjBiM3FZ?=
- =?utf-8?B?OFE9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: b6561463-d256-4eb1-8410-08ddf08b4a39
-X-MS-Exchange-CrossTenant-AuthSource: CO1PR11MB5089.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Sep 2025 16:58:39.4858 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 844i+c/S4cqCr/JfAP2GJ59lUEwzC0FRhaxPUB/jdGHxViHooMeSA/Dhhg5xsW/3u8qQJRmrJ++hCbsdamn1n5t+gUD+mjgcEW6YAnTt8OA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR11MB7042
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -216,129 +65,11 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---------------OLVVMmZtyz00u3KW05g9oYFp
-Content-Type: multipart/mixed; boundary="------------BJSaVYFrV8QZqf1QmEtBi3k0";
- protected-headers="v1"
-From: Jacob Keller <jacob.e.keller@intel.com>
-To: =?UTF-8?Q?Asbj=C3=B8rn_Sloth_T=C3=B8nnesen?= <ast@fiberby.net>,
- "Jason A. Donenfeld" <Jason@zx2c4.com>, "David S. Miller"
- <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>
-Cc: Donald Hunter <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>,
- Andrew Lunn <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com,
- netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
- Johannes Berg <johannes.berg@intel.com>
-Message-ID: <7fff6b2f-f17e-4179-8507-397b76ea24bb@intel.com>
-Subject: Re: [PATCH net-next 06/11] tools: ynl-gen: don't validate nested
- array attribute types
-References: <20250904-wg-ynl-prep@fiberby.net>
- <20250904220156.1006541-6-ast@fiberby.net>
- <d2705570-7ad2-4771-af2a-4ba78393a8c4@intel.com>
- <d612ce20-ae4a-4f6d-9d1b-a3d56f3d10a9@fiberby.net>
-In-Reply-To: <d612ce20-ae4a-4f6d-9d1b-a3d56f3d10a9@fiberby.net>
+On Thu, 11 Sep 2025 00:01:48 +0000 Asbj=C3=B8rn Sloth T=C3=B8nnesen wrote:
+> I left this for you to submit, there is a trivial conflict with patch 8
+> in my v2 posting.
 
---------------BJSaVYFrV8QZqf1QmEtBi3k0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-
-
-On 9/6/2025 8:10 AM, Asbj=C3=B8rn Sloth T=C3=B8nnesen wrote:
-> CC: Johannes
->=20
-> On 9/6/25 12:24 AM, Jacob Keller wrote:
->> On 9/4/2025 3:01 PM, Asbj=C3=B8rn Sloth T=C3=B8nnesen wrote:
->>> In nested arrays don't require that the intermediate
->>> attribute type should be a valid attribute type, it
->>> might just be an index or simple 0, it is often not
->>> even used.
->>>
->>> See include/net/netlink.h about NLA_NESTED_ARRAY:
->>>> The difference to NLA_NESTED is the structure:
->>>> NLA_NESTED has the nested attributes directly inside
->>>> while an array has the nested attributes at another
->>>> level down and the attribute types directly in the
->>>> nesting don't matter.
->>>
->>
->> To me, it would seem like it makes more sense to define these (even if=
-
->> thats defined per family?) than to just say they aren't defined at all=
-?
->>
->> Hm.
->=20
-> I considered adding some of that metadata too, as I am actually removin=
-g
-> it for wireguard (in comment form, but still).
->=20
-> In include/uapi/linux/wireguard.h in the comment block at the top, it i=
-s
-> very clear that wireguard only used type 0 for all the nested array
-> entries, however the truth is that it doesn't care. It therefore doesn'=
-t
-> matter if the generated -user.* keeps track of the index in .idx, or th=
-at
-> cli.py decodes a JSON array and sends it with indexes, it's not needed,=
-
-> but it still works.
->=20
-> In practice I don't think we will break any clients if we enforced it, =
-and
-> validated that wireguard only accepts type 0 entries, in it's nested ar=
-rays.
->=20
-> For the other families, I don't know how well defined it is, Johannes h=
-ave
-> stated that nl80211 doesn't care which types are used, but I have no id=
-ea
-> how consistent clients have abused that statement to send random data,
-> or do they all just send zeros?
->=20
-
-Changing it at this point could be a significant backwards compat break,
-as some clients might somehow send data that wasn't zero-initialized,
-and checking would break them. At this point I guess it makes sense to
-leave it as is... It would increase code cost and complexity for no gain.=
-
-
-> This would make a lot more sense if 'array-nest' hadn't been renamed to=
-
-> 'indexed-array' in ynl, because it feels wrong to add 'unindexed: true'=
- now.
-> We could also call it 'all-zero-indexed: true'.
->=20
-> In cli.py this gives some extra issues, as seen in [1], the nested arra=
-ys
-> are outputted as '[{0: {..}}, {0: {..}}, ..]', but on input has the for=
-mat
-> '[{..},{..}, ..]' because it has to be JSON-compatible on input.
->=20
-> If we had an attribute like 'all-zero-indexed' then cli.py, could also =
-output
-> '[{..},{..}, ..]'.
->=20
-
-This part would be cool. If we know the index is "uninteresting",
-eliding it so that the input and output formats match is good.
-
-> [1] https://lore.kernel.org/netdev/20250904220255.1006675-3-ast@fiberby=
-=2Enet/
-
-
---------------BJSaVYFrV8QZqf1QmEtBi3k0--
-
---------------OLVVMmZtyz00u3KW05g9oYFp
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQQgQFSp1zOQVirsQx5qll0+bw8o6AUCaMGuPgUDAAAAAAAKCRBqll0+bw8o6Emy
-AQCN0z0QVh4QT2Oh9Y5N4JGEHGZwkfJC++FfUA31iwaVzAD+IkuC76JKatIeWkbOP2cwIbr0FLKz
-GHKICpDY/5aL6gs=
-=RN/n
------END PGP SIGNATURE-----
-
---------------OLVVMmZtyz00u3KW05g9oYFp--
+Hah, no, please take this and submit as yours if you can. You can add
+me as Suggested-by. I already dropped it form my tree.
+Maintainers tend to throw random snippets of code at people, it's just
+quicker than explaining but we have enough commits in our name..
