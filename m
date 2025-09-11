@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 509F7CF2584
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 05:13:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66CCDCF2583
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 05:13:17 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c44f7fb4;
-	Tue, 18 Nov 2025 17:29:20 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 09b6ecb2;
+	Tue, 18 Nov 2025 17:29:18 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ee0296f4
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 476be341
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
  Thu, 11 Sep 2025 20:05:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
  s=202008; t=1757621127;
- bh=lcInuRuB+vNuJa4fGRHJlvJD9iDvGJACqmazL3h49mo=;
+ bh=BQC1Dyawkb1Zu4qHJO8XzZ7e0+gVs8UpteFavlIpea0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=KTps+Ak3z9B88aI2xES6gW/itFyEksAj2Na5VSiHTFw496zhNGJYX75h/HwL4u6Yi
- zhLSI75/6qifk21s3i+vDBYCe44U3iVHaDscqq/tIuX9qV5swoIdgtib92Iw5zMl4Y
- G6MCd63pj4T84dTcJskwwpIRY5aGMYjBnlGaJSALslf1HWrO4EzJUd1gm1gw+40FXi
- 4SywbKNn86VDw6I8xRGLE4Qo0kfnrx084mFu4CIOk76S095+VqzlRNqTNbSvsKdsNj
- wInScr1wtH4WUzXGdl2GAmSVmKI0zeWMcLAFyfzRcY9RJZc/wtSIvUjFzjXu6RCK3J
- TH1xTKvzl/Ylw==
+ b=YhFg3m8mEc3vLKlbqULWgOnI9myrPsQ9F+e4kyCfm7ZfNE8b5R7Y5S7g9Jd+QQy1R
+ q2B/3Uz2mYplB8lWyeOnex7J/x8ChWA2QNLNXQMx736/02NVnedEwBI+ulWIr7tXVh
+ Pzz3W+ncc/Blwub/tffxUGx2XTNmRQwxpiF8j5F/mO7yUQEjKARxxJX0Q2mKcCKCH1
+ cbfc6mlycr73/j5YtHBYgD6AtG6Ebymq0udsInXTj0AXNRRd0fLezIE6LLE8aBC1O2
+ nT0KMhRGh3euayOfYFRc8vX9cqKiKkr5+7EeVRyVyHakhGab/noBuSr9CP8J96UmHu
+ lAtpesUcFaJfA==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id 2C1D460137;
- Thu, 11 Sep 2025 20:05:27 +0000 (UTC)
+ by mail1.fiberby.net (Postfix) with ESMTPSA id C4C3B60128;
+ Thu, 11 Sep 2025 20:05:26 +0000 (UTC)
 Received: by x201s (Postfix, from userid 1000)
- id 20275204CAF; Thu, 11 Sep 2025 20:05:21 +0000 (UTC)
+ id 0CC8C204AFE; Thu, 11 Sep 2025 20:05:21 +0000 (UTC)
 From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  "David S. Miller" <davem@davemloft.net>,
@@ -39,10 +39,10 @@ Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
  Jacob Keller <jacob.e.keller@intel.com>,
  Sabrina Dubroca <sd@queasysnail.net>, wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v3 07/13] tools: ynl-gen: avoid repetitive variables
- definitions
-Date: Thu, 11 Sep 2025 20:05:00 +0000
-Message-ID: <20250911200508.79341-8-ast@fiberby.net>
+Subject: [PATCH net-next v3 05/13] tools: ynl-gen: add CodeWriter.p_lines()
+ helper
+Date: Thu, 11 Sep 2025 20:04:58 +0000
+Message-ID: <20250911200508.79341-6-ast@fiberby.net>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250911200508.79341-1-ast@fiberby.net>
 References: <20250911200508.79341-1-ast@fiberby.net>
@@ -64,137 +64,104 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-In the generated attribute parsing code, avoid repetitively
-defining the same variables over and over again, local to
-the conditional block for each attribute.
+Add a helper for writing an array of lines, and convert
+all the existing loops doing that, to use the new helper.
 
-This patch consolidates the definitions of local variables
-for attribute parsing, so that they are defined at the
-function level, and re-used across attributes, thus making
-the generated code read more natural.
+This is a trivial patch with no behavioural changes intended,
+there are no changes to the generated code.
 
-If attributes defines identical local_vars, then they will
-be deduplicated, attributes are assumed to only use their
-local variables transiently.
-
-The example below shows how `len` was defined repeatedly in
-tools/net/ynl/generated/nl80211-user.c:
-
-nl80211_iftype_data_attrs_parse(..) {
-   [..]
-   ynl_attr_for_each_nested(attr, nested) {
-     unsigned int type = ynl_attr_type(attr);
-
-     if (type == NL80211_BAND_IFTYPE_ATTR_IFTYPES) {
-       unsigned int len;
-       [..]
-     } else if (type == NL80211_BAND_IFTYPE_ATTR_HE_CAP_MAC) {
-       unsigned int len;
-       [..]
-     [same pattern 8 times, so 11 times in total]
-     } else if (type == NL80211_BAND_IFTYPE_ATTR_EHT_CAP_PPE) {
-       unsigned int len;
-       [..]
-     }
-   }
-   return 0;
-}
-
-This patch results in this diffstat for the generated code:
-
-$ diff -Naur pre/ post/ | diffstat
-  devlink-user.c      |  187 +++----------------
-  dpll-user.c         |   10 -
-  ethtool-user.c      |   49 +----
-  fou-user.c          |    5
-  handshake-user.c    |    3
-  mptcp_pm-user.c     |    3
-  nfsd-user.c         |   16 -
-  nl80211-user.c      |  159 +---------------
-  nlctrl-user.c       |   21 --
-  ovpn-user.c         |    7
-  ovs_datapath-user.c |    9
-  ovs_flow-user.c     |   89 ---------
-  ovs_vport-user.c    |    7
-  rt-addr-user.c      |   14 -
-  rt-link-user.c      |  183 ++----------------
-  rt-neigh-user.c     |   14 -
-  rt-route-user.c     |   26 --
-  rt-rule-user.c      |   11 -
-  tc-user.c           |  380 +++++----------------------------------
-  tcp_metrics-user.c  |    7
-  team-user.c         |    5
-  21 files changed, 175 insertions(+), 1030 deletions(-)
-
-The changed lines are mostly `unsigned int len;` definitions:
-
-$ diff -Naur pre/ post/ | grep ^[-+] | grep -v '^[-+]\{3\}' |
-  grep -v '^.$' | sed -e 's/\t\+/ /g' | sort | uniq -c | sort -nr
-    488 - unsigned int len;
-    153 + unsigned int len;
-     24 - const struct nlattr *attr2;
-     18 + const struct nlattr *attr2;
-      1 - __u32 policy_id, attr_id;
-      1 + __u32 policy_id, attr_id;
-      1 - __u32 op_id;
-      1 + __u32 op_id;
-      1 - const struct nlattr *attr_policy_id, *attr_attr_id;
-      1 + const struct nlattr *attr_policy_id, *attr_attr_id;
-      1 - const struct nlattr *attr_op_id;
-      1 + const struct nlattr *attr_op_id;
-
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
 ---
- tools/net/ynl/pyynl/ynl_gen_c.py | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ tools/net/ynl/pyynl/ynl_gen_c.py | 32 ++++++++++++++------------------
+ 1 file changed, 14 insertions(+), 18 deletions(-)
 
 diff --git a/tools/net/ynl/pyynl/ynl_gen_c.py b/tools/net/ynl/pyynl/ynl_gen_c.py
-index b3ce0901a19b..d63b63ac0b8e 100755
+index e4cb8c95632c..7a2e49a84735 100755
 --- a/tools/net/ynl/pyynl/ynl_gen_c.py
 +++ b/tools/net/ynl/pyynl/ynl_gen_c.py
-@@ -247,7 +247,7 @@ class Type(SpecAttr):
-         raise Exception(f"Attr get not implemented for class type {self.type}")
+@@ -180,8 +180,7 @@ class Type(SpecAttr):
  
-     def attr_get(self, ri, var, first):
--        lines, init_lines, local_vars = self._attr_get(ri, var)
-+        lines, init_lines, _ = self._attr_get(ri, var)
-         if type(lines) is str:
-             lines = [lines]
-         if type(init_lines) is str:
-@@ -255,10 +255,6 @@ class Type(SpecAttr):
+     def free(self, ri, var, ref):
+         lines = self._free_lines(ri, var, ref)
+-        for line in lines:
+-            ri.cw.p(line)
++        ri.cw.p_lines(lines)
  
-         kw = 'if' if first else 'else if'
-         ri.cw.block_start(line=f"{kw} (type == {self.enum_name})")
--        if local_vars:
--            for local in local_vars:
--                ri.cw.p(local)
+     def arg_member(self, ri):
+         member = self._complex_member_type(ri)
+@@ -267,13 +266,9 @@ class Type(SpecAttr):
+             if self.presence_type() == 'present':
+                 ri.cw.p(f"{var}->_present.{self.c_name} = 1;")
+ 
+-        if init_lines:
 -            ri.cw.nl()
+-            for line in init_lines:
+-                ri.cw.p(line)
++        ri.cw.p_lines(init_lines, nl_before=True)
  
-         if not self.is_multi_val():
-             ri.cw.p("if (ynl_attr_validate(yarg, attr))")
-@@ -2124,6 +2120,7 @@ def _multi_parse(ri, struct, init_lines, local_vars):
-             else:
-                 raise Exception("Per-op fixed header not supported, yet")
+-        for line in lines:
+-            ri.cw.p(line)
++        ri.cw.p_lines(lines)
+         ri.cw.block_end()
+         return True
  
-+    var_set = set()
-     array_nests = set()
-     multi_attrs = set()
-     needs_parg = False
-@@ -2141,6 +2138,13 @@ def _multi_parse(ri, struct, init_lines, local_vars):
-             multi_attrs.add(arg)
-         needs_parg |= 'nested-attributes' in aspec
-         needs_parg |= 'sub-message' in aspec
+@@ -1788,8 +1783,7 @@ class CodeWriter:
+         self.block_start()
+         self.write_func_lvar(local_vars=local_vars)
+ 
+-        for line in body:
+-            self.p(line)
++        self.p_lines(body)
+         self.block_end()
+ 
+     def writes_defines(self, defines):
+@@ -1830,6 +1824,12 @@ class CodeWriter:
+             self.p('#ifdef ' + config_option)
+         self._ifdef_block = config_option
+ 
++    def p_lines(self, lines, nl_before=False):
++        if lines and nl_before:
++            self.nl()
++        for line in lines or []:
++            self.p(line)
 +
-+        try:
-+            _, _, l_vars = aspec._attr_get(ri, '')
-+            var_set |= set(l_vars) if l_vars else set()
-+        except Exception:
-+            pass  # _attr_get() not implemented by simple types, ignore
-+    local_vars += list(var_set)
-     if array_nests or multi_attrs:
-         local_vars.append('int i;')
-     if needs_parg:
+ 
+ scalars = {'u8', 'u16', 'u32', 'u64', 's8', 's16', 's32', 's64', 'uint', 'sint'}
+ 
+@@ -2085,8 +2085,7 @@ def put_req_nested(ri, struct):
+     ri.cw.block_start()
+     ri.cw.write_func_lvar(local_vars)
+ 
+-    for line in init_lines:
+-        ri.cw.p(line)
++    ri.cw.p_lines(init_lines)
+ 
+     for _, arg in struct.member_list():
+         arg.attr_put(ri, "obj")
+@@ -2147,8 +2146,7 @@ def _multi_parse(ri, struct, init_lines, local_vars):
+     ri.cw.block_start()
+     ri.cw.write_func_lvar(local_vars)
+ 
+-    for line in init_lines:
+-        ri.cw.p(line)
++    ri.cw.p_lines(init_lines)
+     ri.cw.nl()
+ 
+     for arg in struct.inherited:
+@@ -2277,10 +2275,8 @@ def parse_rsp_submsg(ri, struct):
+ 
+         ri.cw.block_start(line=f'{kw} (!strcmp(sel, "{name}"))')
+         get_lines, init_lines, _ = arg._attr_get(ri, var)
+-        for line in init_lines or []:
+-            ri.cw.p(line)
+-        for line in get_lines:
+-            ri.cw.p(line)
++        ri.cw.p_lines(init_lines)
++        ri.cw.p_lines(get_lines)
+         if arg.presence_type() == 'present':
+             ri.cw.p(f"{var}->_present.{arg.c_name} = 1;")
+         ri.cw.block_end()
 -- 
 2.51.0
 
