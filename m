@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21B87CF2570
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 05:37:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C08CCF2570
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 05:44:16 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id efa65214;
-	Tue, 18 Nov 2025 17:29:32 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b4cd591c;
+	Tue, 18 Nov 2025 17:29:34 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c9370e2b
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0e373ba8
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
  Thu, 11 Sep 2025 20:05:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
  s=202008; t=1757621127;
- bh=B0xFRM28DmWIgrG1Q+a6XZkJNRKEo5x4SQ82oQgZwfQ=;
+ bh=HqyIhwC1Ng9W9Rs+TyJnvWCNwSRIXH4apSsRMl21lQA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=NJVWSvktbBPJ4GVMV4hCwrMnoeJ0HehiBFmmPCyj7OR4+NS45L5wdp1OTWcgfbo6J
- MQxqF49AA+Yb+MQ9Y3jDeE/EuNkN2MlA+SGtxSr/AdS5D145VXt2q30iJirSuBx7jm
- SMYCqCnD8Ki/NaplmZutVlRSc3JI6wrePf0kWROSGNlpgSQfvlYJEyRexPeR5EV2bD
- 9BX7biFn8C1PqBiO0S/bdFu8iraU15EI661XondqvaP3+PWC8pxcBqzYqdxMl0P6Dx
- kHvmdQOYGrv+ajmoYwjV+aJVZ7VvIFF/lqFw98rEiJ1ydcfAMIMk6A4nFHUcCyaCDJ
- fIwbJBfQ0/zlw==
+ b=R1eIAfT4gNvjKWImBI6ECcJxub9SVJj0y/ul+m0dloFG4jGE7pLAGoMs8W5BVqbtH
+ 1jUHdAgrQzNF2lQC68Yw252tvzRLU39DUkLDM1IiYjQtcXGlzCpVRVruAdMb2iAuR0
+ FvcD9iJrHOVBT4sxJBlF75uBe3hHxqDCStyJ7b3bYDNIS2eX/fcL2CTuwbGv6qL3Le
+ AM8tCDqIu05g+eNFUAB61+xqgZr9jyBqUritWs8PALMwT4aYjEAzPeK5RBorzc+4kx
+ /k59qfBf7un1ESRO6vBc24dOux4PQkyQ3r8OGQAn8HDr+FWBPEoWTb87iUFfh6bh+V
+ AmfAeSCZN69vg==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id 423646013E;
+ by mail1.fiberby.net (Postfix) with ESMTPSA id 96B42601BA;
  Thu, 11 Sep 2025 20:05:27 +0000 (UTC)
 Received: by x201s (Postfix, from userid 1000)
- id E2394202FBF; Thu, 11 Sep 2025 20:05:20 +0000 (UTC)
+ id 3D2662051A8; Thu, 11 Sep 2025 20:05:21 +0000 (UTC)
 From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  "David S. Miller" <davem@davemloft.net>,
@@ -39,10 +39,10 @@ Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
  Jacob Keller <jacob.e.keller@intel.com>,
  Sabrina Dubroca <sd@queasysnail.net>, wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v3 02/13] tools: ynl-gen: generate nested array
- policies
-Date: Thu, 11 Sep 2025 20:04:55 +0000
-Message-ID: <20250911200508.79341-3-ast@fiberby.net>
+Subject: [PATCH net-next v3 10/13] tools: ynl: move nest packing to a helper
+ function
+Date: Thu, 11 Sep 2025 20:05:03 +0000
+Message-ID: <20250911200508.79341-11-ast@fiberby.net>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250911200508.79341-1-ast@fiberby.net>
 References: <20250911200508.79341-1-ast@fiberby.net>
@@ -64,46 +64,49 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This patch adds support for NLA_POLICY_NESTED_ARRAY() policies.
+This patch moves nest packing into a helper function,
+that can also be used for packing indexed arrays.
 
-Example spec (from future wireguard.yaml):
--
-  name: wgpeer
-  attributes:
-    -
-      name: allowedips
-      type: indexed-array
-      sub-type: nest
-      nested-attributes: wgallowedip
-
-yields NLA_POLICY_NESTED_ARRAY(wireguard_wgallowedip_nl_policy).
-
-This doesn't change any currently generated code, as it isn't
-used in any specs currently used for generating code.
+No behavioural changes intended.
 
 Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
 ---
- tools/net/ynl/pyynl/ynl_gen_c.py | 5 +++++
- 1 file changed, 5 insertions(+)
+ tools/net/ynl/pyynl/lib/ynl.py | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/tools/net/ynl/pyynl/ynl_gen_c.py b/tools/net/ynl/pyynl/ynl_gen_c.py
-index c8b15569ecc1..95a60fdaf14e 100755
---- a/tools/net/ynl/pyynl/ynl_gen_c.py
-+++ b/tools/net/ynl/pyynl/ynl_gen_c.py
-@@ -815,6 +815,11 @@ class TypeArrayNest(Type):
-                     f'unsigned int n_{self.c_name}']
-         return super().arg_member(ri)
+diff --git a/tools/net/ynl/pyynl/lib/ynl.py b/tools/net/ynl/pyynl/lib/ynl.py
+index 50805e05020a..92ff26f34f4d 100644
+--- a/tools/net/ynl/pyynl/lib/ynl.py
++++ b/tools/net/ynl/pyynl/lib/ynl.py
+@@ -561,11 +561,8 @@ class YnlFamily(SpecFamily):
  
-+    def _attr_policy(self, policy):
-+        if self.attr['sub-type'] == 'nest':
-+            return f'NLA_POLICY_NESTED_ARRAY({self.nested_render_name}_nl_policy)'
-+        return super()._attr_policy(policy)
+         if attr["type"] == 'nest':
+             nl_type |= Netlink.NLA_F_NESTED
+-            attr_payload = b''
+             sub_space = attr['nested-attributes']
+-            sub_attrs = SpaceAttrs(self.attr_sets[sub_space], value, search_attrs)
+-            for subname, subvalue in value.items():
+-                attr_payload += self._add_attr(sub_space, subname, subvalue, sub_attrs)
++            attr_payload = self._add_nest_attrs(value, sub_space, search_attrs)
+         elif attr["type"] == 'flag':
+             if not value:
+                 # If value is absent or false then skip attribute creation.
+@@ -622,6 +619,14 @@ class YnlFamily(SpecFamily):
+         pad = b'\x00' * ((4 - len(attr_payload) % 4) % 4)
+         return struct.pack('HH', len(attr_payload) + 4, nl_type) + attr_payload + pad
+ 
++    def _add_nest_attrs(self, value, sub_space, search_attrs):
++        sub_attrs = SpaceAttrs(self.attr_sets[sub_space], value, search_attrs)
++        attr_payload = b''
++        for subname, subvalue in value.items():
++            attr_payload += self._add_attr(sub_space, subname, subvalue,
++                                           sub_attrs)
++        return attr_payload
 +
-     def _attr_typol(self):
-         if self.attr['sub-type'] in scalars:
-             return f'.type = YNL_PT_U{c_upper(self.sub_type[1:])}, '
+     def _get_enum_or_unknown(self, enum, raw):
+         try:
+             name = enum.entries_by_val[raw].name
 -- 
 2.51.0
 
