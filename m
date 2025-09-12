@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBB0DCF34C0
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 14:47:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDB22CF34C2
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 14:47:47 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 301a4255;
-	Tue, 18 Nov 2025 17:32:17 +0000 (UTC)
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com
- [2a00:1450:4864:20::32d])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a1290f17
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f17acbfc;
+	Tue, 18 Nov 2025 17:32:18 +0000 (UTC)
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com
+ [2a00:1450:4864:20::335])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0dd0f7ed
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 12 Sep 2025 12:08:51 +0000 (UTC)
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-45df7cb7f6bso9793325e9.3
- for <wireguard@lists.zx2c4.com>; Fri, 12 Sep 2025 05:08:51 -0700 (PDT)
+ Fri, 12 Sep 2025 12:08:53 +0000 (UTC)
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-45cb6428c46so21829155e9.1
+ for <wireguard@lists.zx2c4.com>; Fri, 12 Sep 2025 05:08:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1757678931; x=1758283731; darn=lists.zx2c4.com;
+ d=gmail.com; s=20230601; t=1757678933; x=1758283733; darn=lists.zx2c4.com;
  h=content-transfer-encoding:mime-version:user-agent:references
  :message-id:date:in-reply-to:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to;
- bh=PqPZ8RULX7eu8BAG8aFIfDKASv+ULLACp+JE+crY35g=;
- b=jl2JAvNAVqdGXNnTxsX1+eTQ/s0FiMwS4ZmP5OpTdeZ9iW2jcHPUpx3T/ALUXGA1EM
- 4cVtkGut5HOI46VQ5SJ30ewWq7V1IS6k6Z7mw1SEuybmv8MDUfHLMoDAv7+1BdGDNUSd
- mhXAan3yXTiycnvHCnm5h5ukWbqjylsv1OI4yfZgVBJIl0yWUQwN4zqZPgI9UH98dY6p
- tQ0T5eBMrJisaNirkRwe8/5GpPzsJ5P1m9CMhgIqszFV/XP7gtNluA4oV/wt+AJCrdpF
- 2Zs6JdvYCCIyecBEcydJWA5m4YOC2pjHzoBM1SeuGVoWE9LEnFlWSGtBEDrTzh+iP8e0
- V6+g==
+ bh=Wz4E5peEWJEuLH5HpKzn2maiOPcV7d/t/JntClDMc3Y=;
+ b=nPom/foY/oM7OZXChMNxT+g25EWAvKMBb+H6XhKCFeCPf5WLTdFJqzoeZZ0/K3+PG/
+ yUWc83KNHG1/IC+H4HMI/wp5mnMlFluMh/sIDwQRjHI95BxJ2Fb2b65unXhO1gHYqu9P
+ 0zNLgSf+wOQL/yRQM9BOxWplVWY/9UgWshwndOrLLyuDWR+VAMi3JoqQE5/9zvqQzn1d
+ D7fHsPcWpS+yalakXed2To604f2QRcIMQkv6+rV05MacT1De7AmShPVKVEvLrblgVWeG
+ aC0pOuh1vTq8V9HJaQVtnnC9beWMsoVEOm3ELLGB0h21JSA2TIE/eH6ng+WeugQEJmvF
+ l2Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757678931; x=1758283731;
+ d=1e100.net; s=20230601; t=1757678933; x=1758283733;
  h=content-transfer-encoding:mime-version:user-agent:references
  :message-id:date:in-reply-to:subject:cc:to:from:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=PqPZ8RULX7eu8BAG8aFIfDKASv+ULLACp+JE+crY35g=;
- b=gdWqWxMo7pT1xBWrA0Y/inbMftS7ScO2gxvbYg0eeO8j73MJc7nPB2QGRFLCue3pZj
- Tn2mKTK5m5ghyhsV+gcW++O+Z+wBfCzEj0z7MuBWinKZaNPKzxwnwe0Qiavg7YKmkZ1H
- CZkC5d3lgxBfAcrbAG3VgHuR6zB0GlqjbQqnrO3DtDy6S38AdJCRHczdc00UBgfhbV93
- 3QQ+WISaHl7k6MAIrxbt8N1DGKCRLzHx8bSgi4SbdbrSA+zVvEHDz93F5Wo6uy1ohScR
- f/mXZ12q9yHV4lTLcRkI8iRZ48stzRM+2/vS6L4AI3sRTataRq8ZEJqAFTr6mYAlOiHX
- W2pQ==
+ bh=Wz4E5peEWJEuLH5HpKzn2maiOPcV7d/t/JntClDMc3Y=;
+ b=CjqmmP/WpY8hzPiP9HlOfkPnx57gx++sUrrRuKLgBRDPjrjqTJno8ZLDQnJTXoHPEA
+ /nCNyg7/vQilWCVtkSK+F7VjQ0HfMmsKiJ1/BGjaqmMGGLjybgLM7y8jgJ4q1kGtXm2h
+ vuMr1+ciWGwljam4ixLWgBBYuHvWUka/YSrnI3/FcX9MHxahBazNFMHFbIq/knxzA1kg
+ tPFRLJc7QYXnJbrT/WA1SFAiwszS+GnPRz8QEj1saM8XWLiFgOAVQCH17kwQVZC2+TGN
+ oTNMsMw1+SoZ8yz5JCbGdESbBQELmNnjJmxa+U5KOr3lvmNJuoQwkw1iLt/39Z4FCzTE
+ 1ubA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXGpe5DEOfq7BKTc9yD2eje1djgpgSs+kwkBfaRjvrYkjyfnC3i9DgBnmqxuXen3pw0J13DzB10tDM=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0Yy6XMe70QHMNRR7VdOCH/nOYz2B4HleDlOY+Zj0Rv5oed8HfXV4
- pJ/S04vDi5aHF0HwVn4NgfvwRMuuWuLru5ckbnsTAHbxcxUTWDPsrFPu
-X-Gm-Gg: ASbGnctdWUDcF6EaMteSuLtnGhpfoXq8MsZIErBWPE+px2RicFlrc2cSMvGxKqsr46L
- FjLBUEYHhkewkPXbYx69U2BrzW81BJaFTPcREwqLFX+G2cpKDFZOJedvKL2GIuvVnHFlu/wKlqb
- KrePVQLYM/49AiEDzX57XDLLcaBCk5+bBGkd5XQscvEmUNEVOty7zaoshAFVbCH86ySOJ6MNXcl
- F5xySG2Od0uqDWmKm121evW40ezxUR8ykp7MAdevUjWYiXmdrjp1H1uoPXgFIdUKkEH4q86M9Lm
- AxAm1gknA9q2l1HrRsJG9G+ChwFkr55eACDxm9/8b1Gm8JA3PB4ELQGStEz+zvasBBeT6Mk8jlp
- c2xWX0M8kfEhiq0J10SD36RUot+L9R0oIwCBm/CnDXFl0
-X-Google-Smtp-Source: AGHT+IFcON1v4F5KgBV9t7GPfhbJioy7Wd6FGUuDsb9CuUxnRc9simG96y0fBd2RO2HzmYnS97o6Tw==
-X-Received: by 2002:a7b:c84d:0:b0:45d:da7c:b36 with SMTP id
- 5b1f17b1804b1-45f211f67camr17284045e9.19.1757678930584; 
- Fri, 12 Sep 2025 05:08:50 -0700 (PDT)
+ AJvYcCWFQKfJNPkqK9LHwnPO7R3fjVe+7Aam7ZdmjC6uBczChNqbxr2jfi5G9fptkc6caEUpCCYEQDjuAgk=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YxFCQ10PaNZoajqFRYpy9lpbwjkQvIjuFrDN52tHZ3uRkbMBaDU
+ 7GKikWOGdh6kL1YUnr8iQEhZoUWG9LwmlqLXNUt39iyaCx+9Rf5as4KY
+X-Gm-Gg: ASbGncuedk9B7gStGEfRiaR/EQQ2LFANYEt4N8zR+gsnKN/Rlh7Wrcw6TQpzAsGxkGj
+ MVVN9tFRsA+lFfPIFbPTMWV+6sbJtiQDD4k5lEZxclRY4XKrAhVcIQZ4bUGkaaueiu3bVif39jc
+ wJHi+/Nc7KWvLO4X3nWY8JVYnMK7dr38gruLz0H9IXCOiB+1gfOG8AmNe9GbUv1ArgC0ZOQWdBb
+ RVfEOFxCh0FNkC3Ww+buuxI2wz4wFzIgdZVegNxaLq3s/6G4/SFvy6HezG8nu87kzDjFaL8yvo/
+ jPnw/a7yfF8OjQ0hgL1F3gK5FvuQrwzdSmjK0NstT8Obkmy+IAMKDdt/htZ+mMtr4JRIANp8pda
+ J93npmELlq4ya+7B2ZSwDWmr+k+TY3MHHknrtkRLFltFn
+X-Google-Smtp-Source: AGHT+IFBSzBHrD878oYYF5kKGavS67qgNolUi5Ck7EzGdSc891Ykev73AV+0ueAWDKAT71qdNTJHOA==
+X-Received: by 2002:a05:600c:1d2a:b0:45b:9c93:d21d with SMTP id
+ 5b1f17b1804b1-45f24ef20d0mr11997575e9.8.1757678932165; 
+ Fri, 12 Sep 2025 05:08:52 -0700 (PDT)
 Received: from imac ([2a02:8010:60a0:0:18f9:fa9:c12a:ac60])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45e037d7595sm59573645e9.24.2025.09.12.05.08.49
+ 5b1f17b1804b1-45e017b2722sm33750515e9.1.2025.09.12.05.08.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Sep 2025 05:08:50 -0700 (PDT)
+ Fri, 12 Sep 2025 05:08:51 -0700 (PDT)
 From: Donald Hunter <donald.hunter@gmail.com>
 To: =?utf-8?Q?Asbj=C3=B8rn?= Sloth =?utf-8?Q?T=C3=B8nnesen?= <ast@fiberby.net>
 Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,  "David S. Miller"
@@ -69,13 +69,13 @@ Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,  "David S. Miller"
  Horman <horms@kernel.org>,  Jacob Keller <jacob.e.keller@intel.com>,
  Sabrina Dubroca <sd@queasysnail.net>,  wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org,  linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next v3 06/13] tools: ynl-gen: deduplicate
- fixed_header handling
-In-Reply-To: <20250911200508.79341-7-ast@fiberby.net>
-Date: Fri, 12 Sep 2025 12:24:32 +0100
-Message-ID: <m25xdnvrpr.fsf@gmail.com>
+Subject: Re: [PATCH net-next v3 07/13] tools: ynl-gen: avoid repetitive
+ variables definitions
+In-Reply-To: <20250911200508.79341-8-ast@fiberby.net>
+Date: Fri, 12 Sep 2025 12:30:32 +0100
+Message-ID: <m21pobvrfr.fsf@gmail.com>
 References: <20250911200508.79341-1-ast@fiberby.net>
- <20250911200508.79341-7-ast@fiberby.net>
+ <20250911200508.79341-8-ast@fiberby.net>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -97,13 +97,22 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 Asbj=C3=B8rn Sloth T=C3=B8nnesen <ast@fiberby.net> writes:
 
-> Fixed headers are handled nearly identical in print_dump(),
-> print_req() and put_req_nested(), generalize them and use a
-> common function to generate them.
+> In the generated attribute parsing code, avoid repetitively
+> defining the same variables over and over again, local to
+> the conditional block for each attribute.
 >
-> This only causes cosmetic changes to tc_netem_attrs_put() in
-> tc-user.c.
+> This patch consolidates the definitions of local variables
+> for attribute parsing, so that they are defined at the
+> function level, and re-used across attributes, thus making
+> the generated code read more natural.
 >
+> If attributes defines identical local_vars, then they will
+> be deduplicated, attributes are assumed to only use their
+> local variables transiently.
+>
+> ...
+>
+> Suggested-by: Jakub Kicinski <kuba@kernel.org>
 > Signed-off-by: Asbj=C3=B8rn Sloth T=C3=B8nnesen <ast@fiberby.net>
 
 Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
