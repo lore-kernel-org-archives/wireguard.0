@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67EBBCA101F
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 13 Sep 2025 00:24:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60050CA101F
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 13 Sep 2025 00:30:04 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id df63526b;
-	Sat, 13 Sep 2025 00:24:23 +0000 (UTC)
-Received: from tor.source.kernel.org (tor.source.kernel.org
- [2600:3c04:e001:324:0:1991:8:25])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ffe48fea
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 93595768;
+	Sat, 13 Sep 2025 00:27:46 +0000 (UTC)
+Received: from sea.source.kernel.org (sea.source.kernel.org
+ [2600:3c0a:e001:78e:0:1991:8:25])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e0a330c9
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 13 Sep 2025 00:24:21 +0000 (UTC)
+ Sat, 13 Sep 2025 00:27:44 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 578A6601FC;
- Sat, 13 Sep 2025 00:24:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99B0CC4CEF1;
- Sat, 13 Sep 2025 00:24:19 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 3F92A401F1;
+ Sat, 13 Sep 2025 00:27:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CCDC4CEF1;
+ Sat, 13 Sep 2025 00:27:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1757723060;
- bh=sxUedUP+MYOFlJfnA//ovQa/iV1ta0xI8YrzfhybySs=;
+ s=k20201202; t=1757723263;
+ bh=HrdxcHyCtTTpJcAiGydPfegXvya3mJ/jU4zuZbNMC1c=;
  h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=RIBMiDKHAVVUuJHNTBDmqerPnclOmfi7GuLsEP09bz8J10RgAeUPNhjQslosxXHAu
- 199aUWHzOW9CBiNw4Xy+gTZSpbgD2fVKfFRmvQQYvgNuUUEWiv1z4tpgL4JQ5bUYjG
- hQMqcSQ79TNXWbnmCDUmj6nfQH4JtSJ7NN5dfbnZNPTO+4jFgiSq0GRnMQYsSxUZxO
- bTOy+sMN1I+AHi1EzZOvMkDlMWurdJmFpyiq7gFXc3wOKdC325+Cii6nu1VPzVKPF6
- vi25oDG4KHp/diCBL7WtZ/vt1cegp+Aw0IvPPfA16OGBS058Uw0U87DGEhshW4HNCg
- cm4xItpq1JgZg==
-Date: Fri, 12 Sep 2025 17:24:18 -0700
+ b=jl8r/DQaPWLqwN59Ues0LAqaFmw1BsYEWwk6QoB/JaWfdLS0H1jTp347z+nrvefOK
+ 6A8BuEy/INlx4poANaVVGdXnEcvBvERS/HS0V94TY/ozx+6snBsFFhV3tAp7X1WQp5
+ oS8B5X8c26FdRzOzpS7T9I2GxsHmZ7iN+/AjzjYVrYstLLy2eYQlCnU6etIqMzcGNg
+ 3N8Ie/7RZQ2XgF3eJsvemrnL6Lwd9LTi/CcB7qPOLMLHadZNPViaGUit0tdSbYyO49
+ 5BD+9o2M2D4sKptHi7c7NCZqYoeJOoR2jQlt9IiOJqKpc8ewoVabq4oFnzL3qw/HRD
+ t0Gov+OCRR/+A==
+Date: Fri, 12 Sep 2025 17:27:42 -0700
 From: Jakub Kicinski <kuba@kernel.org>
 To: =?UTF-8?B?QXNiasO4cm4=?= Sloth =?UTF-8?B?VMO4bm5lc2Vu?= <ast@fiberby.net>
 Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, "David S. Miller"
@@ -39,12 +39,12 @@ Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, "David S. Miller"
  <horms@kernel.org>, Jacob Keller <jacob.e.keller@intel.com>, Sabrina
  Dubroca <sd@queasysnail.net>, wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next v3 06/13] tools: ynl-gen: deduplicate
- fixed_header handling
-Message-ID: <20250912172418.1271771d@kernel.org>
-In-Reply-To: <20250911200508.79341-7-ast@fiberby.net>
+Subject: Re: [PATCH net-next v3 08/13] tools: ynl-gen: only validate nested
+ array payload
+Message-ID: <20250912172742.3a41b81e@kernel.org>
+In-Reply-To: <20250911200508.79341-9-ast@fiberby.net>
 References: <20250911200508.79341-1-ast@fiberby.net>
- <20250911200508.79341-7-ast@fiberby.net>
+ <20250911200508.79341-9-ast@fiberby.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
@@ -62,17 +62,14 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Thu, 11 Sep 2025 20:04:59 +0000 Asbj=C3=B8rn Sloth T=C3=B8nnesen wrote:
-> Fixed headers are handled nearly identical in print_dump(),
-> print_req() and put_req_nested(), generalize them and use a
-> common function to generate them.
->=20
-> This only causes cosmetic changes to tc_netem_attrs_put() in
-> tc-user.c.
->=20
-> Signed-off-by: Asbj=C3=B8rn Sloth T=C3=B8nnesen <ast@fiberby.net>
-> ---
->  tools/net/ynl/pyynl/ynl_gen_c.py | 39 ++++++++++++++++----------------
->  1 file changed, 20 insertions(+), 19 deletions(-)
+On Thu, 11 Sep 2025 20:05:01 +0000 Asbj=C3=B8rn Sloth T=C3=B8nnesen wrote:
+> +int ynl_attr_validate_payload(struct ynl_parse_arg *yarg,
+> +			      const struct nlattr *attr, unsigned int type)
+> +{
+> +	return __ynl_attr_validate(yarg, attr, type);
+> +}
 
-This only makes the code longer and harder to follow.
+Why not expose __ynl_attr_validate() to the callers?
+I don't think the _payload() suffix is crystal clear, we're still
+validating attr, _payload() makes it sound like we're validating
+what's inside attr?
