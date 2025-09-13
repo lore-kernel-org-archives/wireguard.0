@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CDF0CF2567
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 07:07:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CD3CCF2590
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 07:07:12 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 68a58b65;
-	Tue, 18 Nov 2025 17:30:05 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a3fb3a4c;
+	Tue, 18 Nov 2025 17:30:08 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 30cbff7d
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4e6b191d
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
  Sat, 13 Sep 2025 23:59:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
  s=202008; t=1757807953;
- bh=+xB7OdBH5/hOoPqTnhZSd84UXQV32QC9Igc+BZIJ9TQ=;
+ bh=pnz1Z9RsFEA/w79qMxEPA9j3gcVp4d2qUkVblwMqsWk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=NrZQX0B6c0VYXfc1W00IuMRAyT6sTusNLKz0qI/f5ImeJ7fPVHXoy3ak5EVb4vh7q
- 0S2olyQRNCz2A8EzsHc1Tn2+JmwYG6aOd8Edzd2wd8MQJdHei68rRnZK+oDCrBHPf4
- FI0Wt8gSTuCE41u8idQDSSHdwhoDCtj4cWdp6vpRShRZ8TzAj4Rpdu3nHSK8S8Ojfa
- EFyF7+iEjaFafzs7QJUF57VN5r5TMv1td5k3HcX9rofv8W6KjaGlPzSRn5RXBdRUbg
- WNnVfGd99JQ21uoCzjBs6RBd4xmlYw0P7s0r759v3lzBIZ7+BzYmY98AfS2wlAkuz8
- zY5EddjHEE39g==
+ b=L/RsZVTfXxK53xZh9BYw91H4z1fUKTKXs+zwXuivg3L874idQG4oILRW0JVnf+IPY
+ xlvt9r7xZSMp8FVdA1sUmwyB3KXsGhyuHSdw0ViofxPzbpAgNSXCg3AePedT/ELTg4
+ to2R8tYwbjqZUtUXmDLAZFd62Fn5mGRDJ3eRaeLenRLmdWMw+uGBojDkwl4hTtysZ5
+ fTPLHc1btgDQsuqvLaHy+TegH1YPJjtGyhHdSSOmDBsH1Ugzx0tqeAUBNp4VvKY7N9
+ j3GY938J2cK7qkrGpiQrkJHTocpktmXxTq1v1bJ5ELx25lGqGTZd72CvBNfaujXxhv
+ FhLTX8vMQbC7w==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id 9B8866013B;
+ by mail1.fiberby.net (Postfix) with ESMTPSA id 9D3356013E;
  Sat, 13 Sep 2025 23:59:13 +0000 (UTC)
 Received: by x201s (Postfix, from userid 1000)
- id 7E196204EED; Sat, 13 Sep 2025 23:58:57 +0000 (UTC)
+ id 315412022B0; Sat, 13 Sep 2025 23:58:57 +0000 (UTC)
 From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  "David S. Miller" <davem@davemloft.net>,
@@ -39,9 +39,10 @@ Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
  Jacob Keller <jacob.e.keller@intel.com>,
  Sabrina Dubroca <sd@queasysnail.net>, wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v4 09/11] tools: ynl: encode indexed-arrays
-Date: Sat, 13 Sep 2025 23:58:30 +0000
-Message-ID: <20250913235847.358851-10-ast@fiberby.net>
+Subject: [PATCH net-next v4 01/11] tools: ynl-gen: allow overriding
+ name-prefix for constants
+Date: Sat, 13 Sep 2025 23:58:22 +0000
+Message-ID: <20250913235847.358851-2-ast@fiberby.net>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250913235847.358851-1-ast@fiberby.net>
 References: <20250913235847.358851-1-ast@fiberby.net>
@@ -63,56 +64,35 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This patch adds support for encoding indexed-array
-attributes with sub-type nest in pyynl.
+Allow using custom name-prefix with constants,
+just like it is for enum and flags declarations.
+
+This is needed for generating WG_KEY_LEN in
+include/uapi/linux/wireguard.h from a spec.
 
 Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
 ---
- tools/net/ynl/pyynl/lib/ynl.py | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ tools/net/ynl/pyynl/ynl_gen_c.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/net/ynl/pyynl/lib/ynl.py b/tools/net/ynl/pyynl/lib/ynl.py
-index 92ff26f34f4d..9fd83f8b091f 100644
---- a/tools/net/ynl/pyynl/lib/ynl.py
-+++ b/tools/net/ynl/pyynl/lib/ynl.py
-@@ -563,6 +563,11 @@ class YnlFamily(SpecFamily):
-             nl_type |= Netlink.NLA_F_NESTED
-             sub_space = attr['nested-attributes']
-             attr_payload = self._add_nest_attrs(value, sub_space, search_attrs)
-+        elif attr['type'] == 'indexed-array' and attr['sub-type'] == 'nest':
-+            nl_type |= Netlink.NLA_F_NESTED
-+            sub_space = attr['nested-attributes']
-+            attr_payload = self._encode_indexed_array(value, sub_space,
-+                                                      search_attrs)
-         elif attr["type"] == 'flag':
-             if not value:
-                 # If value is absent or false then skip attribute creation.
-@@ -616,6 +621,9 @@ class YnlFamily(SpecFamily):
-         else:
-             raise Exception(f'Unknown type at {space} {name} {value} {attr["type"]}')
+diff --git a/tools/net/ynl/pyynl/ynl_gen_c.py b/tools/net/ynl/pyynl/ynl_gen_c.py
+index 101d8ba9626f..c8b15569ecc1 100755
+--- a/tools/net/ynl/pyynl/ynl_gen_c.py
++++ b/tools/net/ynl/pyynl/ynl_gen_c.py
+@@ -3208,8 +3208,9 @@ def render_uapi(family, cw):
+             cw.block_end(line=';')
+             cw.nl()
+         elif const['type'] == 'const':
++            name_pfx = const.get('name-prefix', f"{family.ident_name}-")
+             defines.append([c_upper(family.get('c-define-name',
+-                                               f"{family.ident_name}-{const['name']}")),
++                                               f"{name_pfx}{const['name']}")),
+                             const['value']])
  
-+        return self._add_attr_raw(nl_type, attr_payload)
-+
-+    def _add_attr_raw(self, nl_type, attr_payload):
-         pad = b'\x00' * ((4 - len(attr_payload) % 4) % 4)
-         return struct.pack('HH', len(attr_payload) + 4, nl_type) + attr_payload + pad
- 
-@@ -627,6 +635,14 @@ class YnlFamily(SpecFamily):
-                                            sub_attrs)
-         return attr_payload
- 
-+    def _encode_indexed_array(self, vals, sub_space, search_attrs):
-+        attr_payload = b''
-+        for i, val in enumerate(vals):
-+            idx = i | Netlink.NLA_F_NESTED
-+            val_payload = self._add_nest_attrs(val, sub_space, search_attrs)
-+            attr_payload += self._add_attr_raw(idx, val_payload)
-+        return attr_payload
-+
-     def _get_enum_or_unknown(self, enum, raw):
-         try:
-             name = enum.entries_by_val[raw].name
+     if defines:
 -- 
 2.51.0
 
