@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28AEFCF2592
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47705CF2588
 	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 07:07:13 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a1784b2c;
-	Tue, 18 Nov 2025 17:30:13 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 69b05d43;
+	Tue, 18 Nov 2025 17:30:10 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5f7eb6b1
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id daed54e7
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
  Sat, 13 Sep 2025 23:59:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
  s=202008; t=1757807953;
- bh=WEAYPSa2cbIp0UFaudtrcyt/21OA9AIcAOuHxxlvsEQ=;
- h=From:To:Cc:Subject:Date:From;
- b=nOeZyzL7ngnAeneb1vFuBo1FYIqWH+3V4VvQ+ipRqLa3JjmfbKNHIjYlu8JY5CQAp
- OFDPpsWnU7xq37Tbduw7yo8lmXfDXbsaFXcZnERmXTaY1g7zm16H+MMMoNwpCz19G2
- eo8AAxMxaUkHJZY4JUxjhhYA+MN6+U2r0HEO1bqsr6iLh3b/1k65SGosI9y0NMymXa
- wevH8nVWsdVlIu/0+YI6zRr7xKkdDjwaQOY/5KcB30dyT4j6ymVk7rwy9VE8jqYCaa
- gdn/JmRp0KyyRL/VUKn58fjQPl5WvxFYJ5KSP9OkPAGVf0jhRSgYGG2d1s0d1PsHxk
- jLYZhA2JwceSw==
+ bh=isN9nfZe/xsnXb7EvebVXPVfEeOjs2MBmF1UCAMY/qk=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=Zq5DYmkVsf0nokW5rVwmeFLd5WdW9eQydGs4RPOYNxiDAbQC/xja11MuqZWQn2xF4
+ Pj16ocpATtRjgJMDBhvzlNULxawllsL4sULPW32xzsYz/4fxGyggbxDto2WqoY5b66
+ AbdlX2Qk7izyE6IuY+xzHFUoXvhnVMacCdYUkh1x8M8T7vYcEFlvBJR06hnGZhw4FU
+ ORpaIy5qhijaeWTtQ1a5iwAT94JIZ6+mY77J3W9a6wCq/xsuZ0m6wqGD5RttLaePJL
+ 65N6bMnSFI11udUQm9ELAzO7iYQrlDjzGjcwTRGux+HOrU7ILZupz0a0BI4qDzQAjD
+ 6MDr7+JyqB/HQ==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id 9BDE96013D;
+ by mail1.fiberby.net (Postfix) with ESMTPSA id B50E460140;
  Sat, 13 Sep 2025 23:59:13 +0000 (UTC)
 Received: by x201s (Postfix, from userid 1000)
- id 29DD9201DC8; Sat, 13 Sep 2025 23:58:57 +0000 (UTC)
+ id 61FE8204B0E; Sat, 13 Sep 2025 23:58:57 +0000 (UTC)
 From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  "David S. Miller" <davem@davemloft.net>,
@@ -39,10 +39,12 @@ Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
  Jacob Keller <jacob.e.keller@intel.com>,
  Sabrina Dubroca <sd@queasysnail.net>, wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v4 00/11] tools: ynl: prepare for wireguard
-Date: Sat, 13 Sep 2025 23:58:21 +0000
-Message-ID: <20250913235847.358851-1-ast@fiberby.net>
+Subject: [PATCH net-next v4 06/11] tools: ynl-gen: validate nested arrays
+Date: Sat, 13 Sep 2025 23:58:27 +0000
+Message-ID: <20250913235847.358851-7-ast@fiberby.net>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250913235847.358851-1-ast@fiberby.net>
+References: <20250913235847.358851-1-ast@fiberby.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -61,58 +63,126 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This series contains the last batch of YNL changes to support
-the wireguard YNL conversion.
+In nested arrays don't require that the intermediate attribute
+type should be a valid attribute type, it might just be zero
+or an incrementing index, it is often not even used.
 
-The wireguard changes, to be applied on top of this series,
-has been posted as an RFC series here:
-  https://lore.kernel.org/netdev/20250904-wg-ynl-rfc@fiberby.net/
+See include/net/netlink.h about NLA_NESTED_ARRAY:
+> The difference to NLA_NESTED is the structure:
+> NLA_NESTED has the nested attributes directly inside
+> while an array has the nested attributes at another
+> level down and the attribute types directly in the
+> nesting don't matter.
 
+Example based on include/uapi/linux/wireguard.h:
+ > WGDEVICE_A_PEERS: NLA_NESTED
+ >   0: NLA_NESTED
+ >     WGPEER_A_PUBLIC_KEY: NLA_EXACT_LEN, len WG_KEY_LEN
+ >     [..]
+ >   0: NLA_NESTED
+ >     ...
+ >   ...
+
+Previous the check required that the nested type was valid
+in the parent attribute set, which in this case resolves to
+WGDEVICE_A_UNSPEC, which is YNL_PT_REJECT, and it took the
+early exit and returned YNL_PARSE_CB_ERROR.
+
+This patch renames the old nl_attr_validate() to
+__nl_attr_validate(), and creates a new inline function
+nl_attr_validate() to mimic the old one.
+
+The new __nl_attr_validate() takes the attribute type as an
+argument, so we can use it to validate attributes of a
+nested attribute, in the context of the parents attribute
+type, which in the above case is generated as:
+[WGDEVICE_A_PEERS] = {
+  .name = "peers",
+  .type = YNL_PT_NEST,
+  .nest = &wireguard_wgpeer_nest,
+},
+
+__nl_attr_validate() only checks if the attribute length
+is plausible for a given attribute type, so the .nest in
+the above example is not used.
+
+As the new inline function needs to be defined after
+ynl_attr_type(), then the definitions are moved down,
+so we avoid a forward declaration of ynl_attr_type().
+
+Some other examples are NL80211_BAND_ATTR_FREQS (nest) and
+NL80211_ATTR_SUPPORTED_COMMANDS (u32) both in nl80211-user.c
+$ make -C tools/net/ynl/generated nl80211-user.c
+
+Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 ---
-v4:
-- Added a few Reviewed-by (thanks Donald).
-- In patch 4, changed the implementation a bit, to avoid overloading.
-- In patch 6, expose __ynl_attr_validate(), and move ynl_attr_validate()
-  to ynl-priv.h, as an inline function.
-- Dropped v3 patch 5 and 6 from this series.
-v3: https://lore.kernel.org/netdev/20250911200508.79341-1-ast@fiberby.net/
-- Rebased on top of new net-next, after Matthieu's cleanup.
-- Added a Reviewed-by (thanks Donald).
-- Added the parsing local vars cleanup as patch 7
-- In patch 4, change to use set() for deduplication.
-- In patch 8, declare __ynl_attr_validate() as static.
-v2: https://lore.kernel.org/netdev/20250910230841.384545-1-ast@fiberby.net/
-- Added Reviewed-by's to unchanged patches. Thanks to all reviewers.
-- Patch 4, refactors local variables for .attr_put() callers, and
-  replaces the old patch 4 and 5.
-- Patch 5 and 6 are new, and reduces the differences between the 3
-  .attr_put() callers, so it might be easier to keep them in sync.
-- Patch 7, now validates the nested payload (thanks Jakub).
-- Patch 8, now renames more variables (thanks Jakub),
-- Patch 10, got a dead line remove (thanks Donald).
-- Patch 11, revised hex input to support macsec (suggested by Sabrina).
-v1: https://lore.kernel.org/netdev/20250904-wg-ynl-prep@fiberby.net/
+ tools/net/ynl/lib/ynl-priv.h     | 10 +++++++++-
+ tools/net/ynl/lib/ynl.c          |  6 +++---
+ tools/net/ynl/pyynl/ynl_gen_c.py |  2 +-
+ 3 files changed, 13 insertions(+), 5 deletions(-)
 
-Asbjørn Sloth Tønnesen (11):
-  tools: ynl-gen: allow overriding name-prefix for constants
-  tools: ynl-gen: generate nested array policies
-  tools: ynl-gen: add sub-type check
-  tools: ynl-gen: refactor local vars for .attr_put() callers
-  tools: ynl-gen: avoid repetitive variables definitions
-  tools: ynl-gen: validate nested arrays
-  tools: ynl-gen: rename TypeArrayNest to TypeIndexedArray
-  tools: ynl: move nest packing to a helper function
-  tools: ynl: encode indexed-arrays
-  tools: ynl: decode hex input
-  tools: ynl: add ipv4-or-v6 display hint
-
- Documentation/netlink/genetlink-legacy.yaml |  2 +-
- tools/net/ynl/lib/ynl-priv.h                | 10 ++-
- tools/net/ynl/lib/ynl.c                     |  6 +-
- tools/net/ynl/pyynl/lib/ynl.py              | 38 +++++++--
- tools/net/ynl/pyynl/ynl_gen_c.py            | 93 +++++++++++++--------
- 5 files changed, 101 insertions(+), 48 deletions(-)
-
+diff --git a/tools/net/ynl/lib/ynl-priv.h b/tools/net/ynl/lib/ynl-priv.h
+index 824777d7e05e..29481989ea76 100644
+--- a/tools/net/ynl/lib/ynl-priv.h
++++ b/tools/net/ynl/lib/ynl-priv.h
+@@ -106,7 +106,6 @@ ynl_gemsg_start_req(struct ynl_sock *ys, __u32 id, __u8 cmd, __u8 version);
+ struct nlmsghdr *
+ ynl_gemsg_start_dump(struct ynl_sock *ys, __u32 id, __u8 cmd, __u8 version);
+ 
+-int ynl_attr_validate(struct ynl_parse_arg *yarg, const struct nlattr *attr);
+ int ynl_submsg_failed(struct ynl_parse_arg *yarg, const char *field_name,
+ 		      const char *sel_name);
+ 
+@@ -467,4 +466,13 @@ ynl_attr_put_sint(struct nlmsghdr *nlh, __u16 type, __s64 data)
+ 	else
+ 		ynl_attr_put_s64(nlh, type, data);
+ }
++
++int __ynl_attr_validate(struct ynl_parse_arg *yarg, const struct nlattr *attr,
++			unsigned int type);
++
++static inline int ynl_attr_validate(struct ynl_parse_arg *yarg,
++				    const struct nlattr *attr)
++{
++	return __ynl_attr_validate(yarg, attr, ynl_attr_type(attr));
++}
+ #endif
+diff --git a/tools/net/ynl/lib/ynl.c b/tools/net/ynl/lib/ynl.c
+index 2a169c3c0797..2bcd781111d7 100644
+--- a/tools/net/ynl/lib/ynl.c
++++ b/tools/net/ynl/lib/ynl.c
+@@ -360,15 +360,15 @@ static int ynl_cb_done(const struct nlmsghdr *nlh, struct ynl_parse_arg *yarg)
+ 
+ /* Attribute validation */
+ 
+-int ynl_attr_validate(struct ynl_parse_arg *yarg, const struct nlattr *attr)
++int __ynl_attr_validate(struct ynl_parse_arg *yarg, const struct nlattr *attr,
++			unsigned int type)
+ {
+ 	const struct ynl_policy_attr *policy;
+-	unsigned int type, len;
+ 	unsigned char *data;
++	unsigned int len;
+ 
+ 	data = ynl_attr_data(attr);
+ 	len = ynl_attr_data_len(attr);
+-	type = ynl_attr_type(attr);
+ 	if (type > yarg->rsp_policy->max_attr) {
+ 		yerr(yarg->ys, YNL_ERROR_INTERNAL,
+ 		     "Internal error, validating unknown attribute");
+diff --git a/tools/net/ynl/pyynl/ynl_gen_c.py b/tools/net/ynl/pyynl/ynl_gen_c.py
+index 9555c9a2fea5..8f8d33593326 100755
+--- a/tools/net/ynl/pyynl/ynl_gen_c.py
++++ b/tools/net/ynl/pyynl/ynl_gen_c.py
+@@ -830,7 +830,7 @@ class TypeArrayNest(Type):
+         local_vars = ['const struct nlattr *attr2;']
+         get_lines = [f'attr_{self.c_name} = attr;',
+                      'ynl_attr_for_each_nested(attr2, attr) {',
+-                     '\tif (ynl_attr_validate(yarg, attr2))',
++                     '\tif (__ynl_attr_validate(yarg, attr2, type))',
+                      '\t\treturn YNL_PARSE_CB_ERROR;',
+                      f'\tn_{self.c_name}++;',
+                      '}']
 -- 
 2.51.0
 
