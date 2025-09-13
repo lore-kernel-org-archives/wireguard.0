@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5ADBCF258E
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 06:41:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CDF0CF2567
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 07:07:11 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6b8ba73c;
-	Tue, 18 Nov 2025 17:30:02 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 68a58b65;
+	Tue, 18 Nov 2025 17:30:05 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6ce1f304
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 30cbff7d
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 13 Sep 2025 23:59:14 +0000 (UTC)
+ Sat, 13 Sep 2025 23:59:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
- s=202008; t=1757807952;
- bh=M8RZw0PcAr23td7B4SWZsTm8GfTk/HQcBuK2/+z1TOk=;
+ s=202008; t=1757807953;
+ bh=+xB7OdBH5/hOoPqTnhZSd84UXQV32QC9Igc+BZIJ9TQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=is9uAdaN3UZ0mzHCMX0szSPW7peuoWfu+HJ9BcWLE0npk2Je3H+rNphAB1f7b6n9b
- U3wa9DTDS+ktV/g9CrKQUXMQhZvIq8pjnqf0pGWsX+lFU2hkA0eBqBOY41ZDeFFa2P
- ubNrF9EHP8wa8AiyMkaQD0+JxDwxm0+znMtQ0Xa8Y2w5IBCrZRMnewdlGd42x1mKJr
- eb4je4zeyQ2RecQMSQPZxRoW8h5jlNor+7/HkxsIQAtj0EWJ3KqxS5LVpf58jYjWNB
- zmwT1iDInze2uP5Z88JsigSQRVuxSuiARFr4eyrQlpXvAp4X6cJg3NEHqB/j8IIAZV
- XnWFyaDesxDwQ==
+ b=NrZQX0B6c0VYXfc1W00IuMRAyT6sTusNLKz0qI/f5ImeJ7fPVHXoy3ak5EVb4vh7q
+ 0S2olyQRNCz2A8EzsHc1Tn2+JmwYG6aOd8Edzd2wd8MQJdHei68rRnZK+oDCrBHPf4
+ FI0Wt8gSTuCE41u8idQDSSHdwhoDCtj4cWdp6vpRShRZ8TzAj4Rpdu3nHSK8S8Ojfa
+ EFyF7+iEjaFafzs7QJUF57VN5r5TMv1td5k3HcX9rofv8W6KjaGlPzSRn5RXBdRUbg
+ WNnVfGd99JQ21uoCzjBs6RBd4xmlYw0P7s0r759v3lzBIZ7+BzYmY98AfS2wlAkuz8
+ zY5EddjHEE39g==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id BF3BF6012E;
- Sat, 13 Sep 2025 23:59:12 +0000 (UTC)
+ by mail1.fiberby.net (Postfix) with ESMTPSA id 9B8866013B;
+ Sat, 13 Sep 2025 23:59:13 +0000 (UTC)
 Received: by x201s (Postfix, from userid 1000)
- id 912D32051E5; Sat, 13 Sep 2025 23:58:57 +0000 (UTC)
+ id 7E196204EED; Sat, 13 Sep 2025 23:58:57 +0000 (UTC)
 From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  "David S. Miller" <davem@davemloft.net>,
@@ -39,9 +39,9 @@ Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
  Jacob Keller <jacob.e.keller@intel.com>,
  Sabrina Dubroca <sd@queasysnail.net>, wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v4 11/11] tools: ynl: add ipv4-or-v6 display hint
-Date: Sat, 13 Sep 2025 23:58:32 +0000
-Message-ID: <20250913235847.358851-12-ast@fiberby.net>
+Subject: [PATCH net-next v4 09/11] tools: ynl: encode indexed-arrays
+Date: Sat, 13 Sep 2025 23:58:30 +0000
+Message-ID: <20250913235847.358851-10-ast@fiberby.net>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250913235847.358851-1-ast@fiberby.net>
 References: <20250913235847.358851-1-ast@fiberby.net>
@@ -63,59 +63,56 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-The attribute WGALLOWEDIP_A_IPADDR can contain either an IPv4
-or an IPv6 address depending on WGALLOWEDIP_A_FAMILY, however
-in practice it is enough to look at the attribute length.
-
-This patch implements an ipv4-or-v6 display hint, that can
-deal with this kind of attribute.
-
-It only implements this display hint for genetlink-legacy, it
-can be added to other protocol variants if needed, but we don't
-want to encourage it's use.
+This patch adds support for encoding indexed-array
+attributes with sub-type nest in pyynl.
 
 Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
 ---
- Documentation/netlink/genetlink-legacy.yaml | 2 +-
- tools/net/ynl/pyynl/lib/ynl.py              | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ tools/net/ynl/pyynl/lib/ynl.py | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/Documentation/netlink/genetlink-legacy.yaml b/Documentation/netlink/genetlink-legacy.yaml
-index b29d62eefa16..66fb8653a344 100644
---- a/Documentation/netlink/genetlink-legacy.yaml
-+++ b/Documentation/netlink/genetlink-legacy.yaml
-@@ -154,7 +154,7 @@ properties:
-                   Optional format indicator that is intended only for choosing
-                   the right formatting mechanism when displaying values of this
-                   type.
--                enum: [ hex, mac, fddi, ipv4, ipv6, uuid ]
-+                enum: [ hex, mac, fddi, ipv4, ipv6, ipv4-or-v6, uuid ]
-               struct:
-                 description: Name of the nested struct type.
-                 type: string
 diff --git a/tools/net/ynl/pyynl/lib/ynl.py b/tools/net/ynl/pyynl/lib/ynl.py
-index 707753e371e2..62383c70ebb9 100644
+index 92ff26f34f4d..9fd83f8b091f 100644
 --- a/tools/net/ynl/pyynl/lib/ynl.py
 +++ b/tools/net/ynl/pyynl/lib/ynl.py
-@@ -956,7 +956,7 @@ class YnlFamily(SpecFamily):
-                 formatted = hex(raw)
-             else:
-                 formatted = bytes.hex(raw, ' ')
--        elif display_hint in [ 'ipv4', 'ipv6' ]:
-+        elif display_hint in [ 'ipv4', 'ipv6', 'ipv4-or-v6' ]:
-             formatted = format(ipaddress.ip_address(raw))
-         elif display_hint == 'uuid':
-             formatted = str(uuid.UUID(bytes=raw))
-@@ -965,7 +965,7 @@ class YnlFamily(SpecFamily):
-         return formatted
+@@ -563,6 +563,11 @@ class YnlFamily(SpecFamily):
+             nl_type |= Netlink.NLA_F_NESTED
+             sub_space = attr['nested-attributes']
+             attr_payload = self._add_nest_attrs(value, sub_space, search_attrs)
++        elif attr['type'] == 'indexed-array' and attr['sub-type'] == 'nest':
++            nl_type |= Netlink.NLA_F_NESTED
++            sub_space = attr['nested-attributes']
++            attr_payload = self._encode_indexed_array(value, sub_space,
++                                                      search_attrs)
+         elif attr["type"] == 'flag':
+             if not value:
+                 # If value is absent or false then skip attribute creation.
+@@ -616,6 +621,9 @@ class YnlFamily(SpecFamily):
+         else:
+             raise Exception(f'Unknown type at {space} {name} {value} {attr["type"]}')
  
-     def _from_string(self, string, attr_spec):
--        if attr_spec.display_hint in ['ipv4', 'ipv6']:
-+        if attr_spec.display_hint in ['ipv4', 'ipv6', 'ipv4-or-v6']:
-             ip = ipaddress.ip_address(string)
-             if attr_spec['type'] == 'binary':
-                 raw = ip.packed
++        return self._add_attr_raw(nl_type, attr_payload)
++
++    def _add_attr_raw(self, nl_type, attr_payload):
+         pad = b'\x00' * ((4 - len(attr_payload) % 4) % 4)
+         return struct.pack('HH', len(attr_payload) + 4, nl_type) + attr_payload + pad
+ 
+@@ -627,6 +635,14 @@ class YnlFamily(SpecFamily):
+                                            sub_attrs)
+         return attr_payload
+ 
++    def _encode_indexed_array(self, vals, sub_space, search_attrs):
++        attr_payload = b''
++        for i, val in enumerate(vals):
++            idx = i | Netlink.NLA_F_NESTED
++            val_payload = self._add_nest_attrs(val, sub_space, search_attrs)
++            attr_payload += self._add_attr_raw(idx, val_payload)
++        return attr_payload
++
+     def _get_enum_or_unknown(self, enum, raw):
+         try:
+             name = enum.entries_by_val[raw].name
 -- 
 2.51.0
 
