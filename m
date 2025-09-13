@@ -4,51 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC6DFCF2583
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 06:11:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44245CF2588
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 06:15:41 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bcef2a1c;
-	Tue, 18 Nov 2025 17:29:50 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bce8cc34;
+	Tue, 18 Nov 2025 17:29:52 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4689777d
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a4c42fe7
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 13 Sep 2025 23:14:50 +0000 (UTC)
+ Sat, 13 Sep 2025 23:59:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
- s=202008; t=1757805289;
- bh=hdvUQ1mYN4bd9lUCkvNBWXP9pwpsysgRgSzVxZsOjKc=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=v+zyZQA1XpyrYDKPYVquDr3wzJSpMv6MVpylqIT9EIjBomM1zdQSaflKqiMY6SA09
- CpqSn7ndm8yEBpWAUZLH8chwsd+9u6Geg/KkQFxI0cBAs6bBHGXvnhIS5Be2hZpPrn
- dTSth+QMpUvAMlCXwlFWx4BHEXj1sHW16ED30MgQQDwhbzSJMwIR7Js/Q8SxX1eeeg
- 2eh11MlJW27R2MvdUCBDXgxvRtwcFcNjJSknUOUEMaCY57m3Y7iCMcbzwf7e20PAPO
- RH8YS0wG9qOO8hVAWz9hd0cfa/6bUrgGmL+10kAO+55T8Q8+ujxrw+eEIYUo9lB5hj
- YE1GF70r9zjYA==
+ s=202008; t=1757807952;
+ bh=CklzBOgUQddwzBO3UlL2pkEPjFixeUSxqIJvFTCFOhk=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=ZFbeA0obsZ/LV8zfxCNfnZr8P4fn3Izl0iP8loTpz26QA5GLRLQbhr07vsyiqvzu2
+ HXSxDiAFT6+ebF4L/cfkX7RVaboS2r+GNrWugJeHtc5TyVEGAkm40/rQ89dLvRKMe0
+ TerYLVBMzIM5GzwQZrUMT5WnQfkLUKVoPvha0FnJ7AO97JTeZD3QwVgvgFaW15gnIw
+ J4UemLGvg9KLghk8Yb/D2yjU1ElPyIas0QzJprWMAId83fchbSpS+LfywCle/tJ9hz
+ g5bDx5aKUZvdqTmrYsPtWe62Z8qmHJ+mg7o3JsGUDtxH+loDxFOHg46SKnD7bC4kS1
+ PvtYvCI9CaeMQ==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id C68B66000C;
- Sat, 13 Sep 2025 23:14:48 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1])
- by x201s (Postfix) with ESMTP id 8135920393F;
- Sat, 13 Sep 2025 23:14:40 +0000 (UTC)
-Message-ID: <32fde530-f462-4ccf-99bf-7ee1e192b76a@fiberby.net>
-Date: Sat, 13 Sep 2025 23:14:40 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v3 05/13] tools: ynl-gen: add
- CodeWriter.p_lines() helper
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Paolo Abeni <pabeni@redhat.com>, Donald Hunter <donald.hunter@gmail.com>,
- Simon Horman <horms@kernel.org>, Jacob Keller <jacob.e.keller@intel.com>,
+ by mail1.fiberby.net (Postfix) with ESMTPSA id 5310960078;
+ Sat, 13 Sep 2025 23:59:12 +0000 (UTC)
+Received: by x201s (Postfix, from userid 1000)
+ id 878D420519B; Sat, 13 Sep 2025 23:58:57 +0000 (UTC)
+From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>
+Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
+ Donald Hunter <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>,
+ Jacob Keller <jacob.e.keller@intel.com>,
  Sabrina Dubroca <sd@queasysnail.net>, wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250911200508.79341-1-ast@fiberby.net>
- <20250911200508.79341-6-ast@fiberby.net> <20250912172124.57f96054@kernel.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Asbj=C3=B8rn_Sloth_T=C3=B8nnesen?= <ast@fiberby.net>
-In-Reply-To: <20250912172124.57f96054@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: [PATCH net-next v4 10/11] tools: ynl: decode hex input
+Date: Sat, 13 Sep 2025 23:58:31 +0000
+Message-ID: <20250913235847.358851-11-ast@fiberby.net>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250913235847.358851-1-ast@fiberby.net>
+References: <20250913235847.358851-1-ast@fiberby.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Tue, 18 Nov 2025 17:23:15 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -65,17 +63,39 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 9/13/25 12:21 AM, Jakub Kicinski wrote:
-> On Thu, 11 Sep 2025 20:04:58 +0000 Asbjørn Sloth Tønnesen wrote:
->> Add a helper for writing an array of lines, and convert
->> all the existing loops doing that, to use the new helper.
->>
->> This is a trivial patch with no behavioural changes intended,
->> there are no changes to the generated code.
-> 
-> I don't see the need for this.
+This patch adds support for decoding hex input, so
+that binary attributes can be read through --json.
 
-Ok, loop macros are only for C, not Python. :)
+Example (using future wireguard.yaml):
+ $ sudo ./tools/net/ynl/pyynl/cli.py --family wireguard \
+   --do set-device --json '{"ifindex":3,
+     "private-key":"2a ae 6c 35 c9 4f cf <... to 32 bytes>"}'
 
-I have dropped this patch in v4, as it's not important for this
-series.
+In order to somewhat mirror what is done in _formatted_string(),
+then for non-binary attributes attempt to convert it to an int.
+
+Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
+---
+ tools/net/ynl/pyynl/lib/ynl.py | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/tools/net/ynl/pyynl/lib/ynl.py b/tools/net/ynl/pyynl/lib/ynl.py
+index 9fd83f8b091f..707753e371e2 100644
+--- a/tools/net/ynl/pyynl/lib/ynl.py
++++ b/tools/net/ynl/pyynl/lib/ynl.py
+@@ -971,6 +971,11 @@ class YnlFamily(SpecFamily):
+                 raw = ip.packed
+             else:
+                 raw = int(ip)
++        elif attr_spec.display_hint == 'hex':
++            if attr_spec['type'] == 'binary':
++                raw = bytes.fromhex(string)
++            else:
++                raw = int(string, 16)
+         else:
+             raise Exception(f"Display hint '{attr_spec.display_hint}' not implemented"
+                             f" when parsing '{attr_spec['name']}'")
+-- 
+2.51.0
+
