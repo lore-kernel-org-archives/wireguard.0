@@ -4,45 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29908CA101F
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 11 Sep 2025 01:30:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83FDECAC582
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 13 Sep 2025 00:20:01 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ecd8a464;
-	Thu, 11 Sep 2025 01:29:59 +0000 (UTC)
-Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 881d8d09
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6c42b260;
+	Sat, 13 Sep 2025 00:19:59 +0000 (UTC)
+Received: from sea.source.kernel.org (sea.source.kernel.org
+ [2600:3c0a:e001:78e:0:1991:8:25])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ef6b4cfb
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 11 Sep 2025 01:29:58 +0000 (UTC)
+ Sat, 13 Sep 2025 00:19:57 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id C30086013D;
- Thu, 11 Sep 2025 01:29:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E11C5C4CEEB;
- Thu, 11 Sep 2025 01:29:55 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 9BD2A444DE;
+ Sat, 13 Sep 2025 00:19:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D336C4CEF5;
+ Sat, 13 Sep 2025 00:19:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1757554196;
- bh=vqtwsbfCxiSwrtPhdMyCQgn1rx2fHdnoowDHVEMTgAk=;
+ s=k20201202; t=1757722795;
+ bh=o1QSNiz0UzcqavKMQnmLCDRESQ6DZ5RarZ2P71WApQQ=;
  h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=AoKl+ySNYgdiYkzJ7ned6aSDSsz/NnTFoYi33bb105CeUgoPp4SZaxBgqlFZhuO/B
- YPsje5Gxw4QnH2gzDhfLhChe/WTuLUgIro+PlnAI19q8PBnRshacdNhy2gO+OLuXG6
- K0eaFIeaieXgkm6nlEWFAkD5cAPc+nLEuVo3MWIoUetQF7Vzv9b9JORiaXVCTbSBHm
- 9WntbPisN8ih6TsW2NGLLfaZUXDN6IK3MCgw/l9vEaYoeNDrVNhaHGcpbS5jFFkQgx
- aA+yZ8R3z5BTlYu7GSB48ilTPJAtQfSnYKFY0o5zu/PgxN9jaQPShwfMXwL98mrU6t
- QRDy8ucF3pD6A==
-Date: Wed, 10 Sep 2025 18:29:55 -0700
+ b=KyBgXnjE7P3nLM/EVnF+DOZqxinRKhuWogvAhX5DeUtn7sT0o7E6jr4uBdSCCztWE
+ 2xmV3ca+MS2rMFK8zuWMLibQkK+K1NpltJKuXlLdDqsLxNTjkMSzsifAkG6WH5Ul/w
+ ChNRvlCQUcUjksYtWdGwiR71S3c9ISkPft1eUMarjh2sRXZiiEuOB0LbgLeQRq1pYn
+ kzdG03teeE2YMXZt+U6geIh6z+xC8HdiGcPX93/e2P2x/O3x2ZsxDbbnLMugWTnqVc
+ mxINwwZN0wGNYIdRg/e3O57ITLbhbpAe+WTkhtlzYo8UvS+YFXf1AxRZt0ewZlAqCl
+ enN32tbTMURUA==
+Date: Fri, 12 Sep 2025 17:19:54 -0700
 From: Jakub Kicinski <kuba@kernel.org>
 To: =?UTF-8?B?QXNiasO4cm4=?= Sloth =?UTF-8?B?VMO4bm5lc2Vu?= <ast@fiberby.net>
 Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, "David S. Miller"
  <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Paolo Abeni
  <pabeni@redhat.com>, Donald Hunter <donald.hunter@gmail.com>, Simon Horman
- <horms@kernel.org>, Jacob Keller <jacob.e.keller@intel.com>, Andrew Lunn
- <andrew+netdev@lunn.ch>, Sabrina Dubroca <sd@queasysnail.net>,
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next v2 00/12] tools: ynl: prepare for wireguard
-Message-ID: <20250910182955.5d220149@kernel.org>
-In-Reply-To: <20250910230841.384545-1-ast@fiberby.net>
-References: <20250910230841.384545-1-ast@fiberby.net>
+ <horms@kernel.org>, Jacob Keller <jacob.e.keller@intel.com>, Sabrina
+ Dubroca <sd@queasysnail.net>, wireguard@lists.zx2c4.com,
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net-next v3 04/13] tools: ynl-gen: refactor local vars
+ for .attr_put() callers
+Message-ID: <20250912171954.7c020c60@kernel.org>
+In-Reply-To: <20250911200508.79341-5-ast@fiberby.net>
+References: <20250911200508.79341-1-ast@fiberby.net>
+ <20250911200508.79341-5-ast@fiberby.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
@@ -60,8 +62,25 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, 10 Sep 2025 23:08:22 +0000 Asbj=C3=B8rn Sloth T=C3=B8nnesen wrote:
-> This series contains the last batch of YNL changes to support
-> the wireguard YNL conversion.
+On Thu, 11 Sep 2025 20:04:57 +0000 Asbj=C3=B8rn Sloth T=C3=B8nnesen wrote:
+> +    def attr_put_local_vars(self):
+> +        local_vars =3D []
+> +        if self.presence_type() =3D=3D 'count':
+> +            local_vars.append('unsigned int i;')
+> +        return local_vars
+> +
+>      def attr_put(self, ri, var):
+>          raise Exception(f"Put not implemented for class type {self.type}=
+")
+> =20
+> @@ -840,6 +846,10 @@ class TypeArrayNest(Type):
+>                       '}']
+>          return get_lines, None, local_vars
+> =20
+> +    def attr_put_local_vars(self):
+> +        local_vars =3D ['struct nlattr *array;']
+> +        return local_vars + super().attr_put_local_vars()
 
-please rebase
+Doesn't feel right. The Type method is a helper which is compatible
+with the specific types by checking presence, then you override it,
+and on top of that combine the output with super(). I don't like.
