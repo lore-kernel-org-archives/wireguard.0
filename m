@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAC41CF259D
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 08:15:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEBE8CF259B
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 08:15:12 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 303cf3cd;
-	Tue, 18 Nov 2025 17:30:44 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 87e04fb7;
+	Tue, 18 Nov 2025 17:30:46 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9de3f964
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c0e5b406
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
  Mon, 15 Sep 2025 14:47:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
  s=202008; t=1757947661;
- bh=IsmjNeaXavqPvifeThqRq8BNJU4LPyh8Y4FXmPIrN2A=;
+ bh=+xB7OdBH5/hOoPqTnhZSd84UXQV32QC9Igc+BZIJ9TQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=WEW24BMrMoIAB6//FCu9YqsdwI5AcZBBuX+35+Ggi7+lMKwLnQ+a52vkM1tbBhyPd
- ebI37IDVsiZJeeKtMvFrihYh3b5MTjPu1nmXdWJ40CencVLpV8KguEPlHAhoswSvJl
- oDQZ36lRXm6+Rd/uQiqxSjhwGUv13Q47Ytj1v7B7juFEmrBf8pRrGr4hLVnPESTfnH
- 3PP8pbEQhqMp1PkYLWDdtliGMAmyt+Vsey8OoSviFnscS0Cm0excutaR55atOpJnpi
- Vrxvjox43wlpUJpZrzcbUXSKzGI+vm6/uWGmu5SOSS0rsM7Uuj/rom/GKRMlHC+SRL
- BwlE1zzNqdtXg==
+ b=R3xdIgxCeA3n4EbMNYcIrRdec2kx3Q55RbVNs+fSZKSnNH5f96l+aN38xj69pVEAt
+ db26hmc7StGFTbOrlTaTgzK1klDBXy7P1S7lqjLT6P/LWOC5cvG6Bj5dRfeskgLJpZ
+ /R2sICGICoqeRWvob38nD55yijrLSrt268BJkwPAJrq0IhSxX1jy2I51aRjxuSUBLl
+ vQ0XTBI1pTD9sALnALoMt25Kb+Kv+7lFY+ArK6S7FbU0eu7TnKpn0psSQ2PQ//7XNP
+ Leyzagw/8nm2vQsAzjv6hvQOIJSlZuk8JrN/8jiNamkdoJqAS4Gso4KCtKEcIudQ3l
+ IFk5MM98qlD5Q==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id 044D06013B;
+ by mail1.fiberby.net (Postfix) with ESMTPSA id 1A8A960140;
  Mon, 15 Sep 2025 14:47:41 +0000 (UTC)
 Received: by x201s (Postfix, from userid 1000)
- id 2BC77203CF3; Mon, 15 Sep 2025 14:43:06 +0000 (UTC)
+ id 60EC0204FB3; Mon, 15 Sep 2025 14:43:06 +0000 (UTC)
 From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  "David S. Miller" <davem@davemloft.net>,
@@ -39,10 +39,9 @@ Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
  Jacob Keller <jacob.e.keller@intel.com>,
  Sabrina Dubroca <sd@queasysnail.net>, wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v5 04/11] tools: ynl-gen: refactor local vars for
- .attr_put() callers
-Date: Mon, 15 Sep 2025 14:42:49 +0000
-Message-ID: <20250915144301.725949-5-ast@fiberby.net>
+Subject: [PATCH net-next v5 09/11] tools: ynl: encode indexed-arrays
+Date: Mon, 15 Sep 2025 14:42:54 +0000
+Message-ID: <20250915144301.725949-10-ast@fiberby.net>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250915144301.725949-1-ast@fiberby.net>
 References: <20250915144301.725949-1-ast@fiberby.net>
@@ -64,106 +63,56 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Refactor the generation of local variables needed when building
-requests, by moving the logic from put_req_nested() into a new
-helper put_local_vars(), and use the helper before .attr_put() is
-called, thus generating the local variables assumed by .attr_put().
-
-Previously only put_req_nested() generated the variables assumed
-by .attr_put(),  print_req() only generated the count iterator `i`,
-and print_dump() neither generated `i` nor `array`.
-
-This patch fixes the build errors below:
-$ make -C tools/net/ynl/generated/
-[...]
--e      GEN wireguard-user.c
--e      GEN wireguard-user.h
--e      CC wireguard-user.o
-wireguard-user.c: In function ‘wireguard_get_device_dump’:
-wireguard-user.c:480:9: error: ‘array’ undeclared (first use in func)
-  480 |         array = ynl_attr_nest_start(nlh, WGDEVICE_A_PEERS);
-      |         ^~~~~
-wireguard-user.c:480:9: note: each undeclared identifier is reported
-                        only once for each function it appears in
-wireguard-user.c:481:14: error: ‘i’ undeclared (first use in func)
-  481 |         for (i = 0; i < req->_count.peers; i++)
-      |              ^
-wireguard-user.c: In function ‘wireguard_set_device’:
-wireguard-user.c:533:9: error: ‘array’ undeclared (first use in func)
-  533 |         array = ynl_attr_nest_start(nlh, WGDEVICE_A_PEERS);
-      |         ^~~~~
-make: *** [Makefile:52: wireguard-user.o] Error 1
-make: Leaving directory '/usr/src/linux/tools/net/ynl/generated'
+This patch adds support for encoding indexed-array
+attributes with sub-type nest in pyynl.
 
 Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
 ---
- tools/net/ynl/pyynl/ynl_gen_c.py | 32 +++++++++++++++++++-------------
- 1 file changed, 19 insertions(+), 13 deletions(-)
+ tools/net/ynl/pyynl/lib/ynl.py | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/tools/net/ynl/pyynl/ynl_gen_c.py b/tools/net/ynl/pyynl/ynl_gen_c.py
-index 3266af19edcd..a0c571456236 100755
---- a/tools/net/ynl/pyynl/ynl_gen_c.py
-+++ b/tools/net/ynl/pyynl/ynl_gen_c.py
-@@ -2040,6 +2040,20 @@ def put_enum_to_str(family, cw, enum):
-     _put_enum_to_str_helper(cw, enum.render_name, map_name, 'value', enum=enum)
+diff --git a/tools/net/ynl/pyynl/lib/ynl.py b/tools/net/ynl/pyynl/lib/ynl.py
+index 92ff26f34f4d..9fd83f8b091f 100644
+--- a/tools/net/ynl/pyynl/lib/ynl.py
++++ b/tools/net/ynl/pyynl/lib/ynl.py
+@@ -563,6 +563,11 @@ class YnlFamily(SpecFamily):
+             nl_type |= Netlink.NLA_F_NESTED
+             sub_space = attr['nested-attributes']
+             attr_payload = self._add_nest_attrs(value, sub_space, search_attrs)
++        elif attr['type'] == 'indexed-array' and attr['sub-type'] == 'nest':
++            nl_type |= Netlink.NLA_F_NESTED
++            sub_space = attr['nested-attributes']
++            attr_payload = self._encode_indexed_array(value, sub_space,
++                                                      search_attrs)
+         elif attr["type"] == 'flag':
+             if not value:
+                 # If value is absent or false then skip attribute creation.
+@@ -616,6 +621,9 @@ class YnlFamily(SpecFamily):
+         else:
+             raise Exception(f'Unknown type at {space} {name} {value} {attr["type"]}')
  
- 
-+def put_local_vars(struct):
-+    local_vars = []
-+    has_array = False
-+    has_count = False
-+    for _, arg in struct.member_list():
-+        has_array |= arg.type == 'indexed-array'
-+        has_count |= arg.presence_type() == 'count'
-+    if has_array:
-+        local_vars.append('struct nlattr *array;')
-+    if has_count:
-+        local_vars.append('unsigned int i;')
-+    return local_vars
++        return self._add_attr_raw(nl_type, attr_payload)
 +
++    def _add_attr_raw(self, nl_type, attr_payload):
+         pad = b'\x00' * ((4 - len(attr_payload) % 4) % 4)
+         return struct.pack('HH', len(attr_payload) + 4, nl_type) + attr_payload + pad
+ 
+@@ -627,6 +635,14 @@ class YnlFamily(SpecFamily):
+                                            sub_attrs)
+         return attr_payload
+ 
++    def _encode_indexed_array(self, vals, sub_space, search_attrs):
++        attr_payload = b''
++        for i, val in enumerate(vals):
++            idx = i | Netlink.NLA_F_NESTED
++            val_payload = self._add_nest_attrs(val, sub_space, search_attrs)
++            attr_payload += self._add_attr_raw(idx, val_payload)
++        return attr_payload
 +
- def put_req_nested_prototype(ri, struct, suffix=';'):
-     func_args = ['struct nlmsghdr *nlh',
-                  'unsigned int attr_type',
-@@ -2062,15 +2076,7 @@ def put_req_nested(ri, struct):
-         init_lines.append(f"hdr = ynl_nlmsg_put_extra_header(nlh, {struct_sz});")
-         init_lines.append(f"memcpy(hdr, &obj->_hdr, {struct_sz});")
- 
--    has_anest = False
--    has_count = False
--    for _, arg in struct.member_list():
--        has_anest |= arg.type == 'indexed-array'
--        has_count |= arg.presence_type() == 'count'
--    if has_anest:
--        local_vars.append('struct nlattr *array;')
--    if has_count:
--        local_vars.append('unsigned int i;')
-+    local_vars += put_local_vars(struct)
- 
-     put_req_nested_prototype(ri, struct, suffix='')
-     ri.cw.block_start()
-@@ -2354,10 +2360,7 @@ def print_req(ri):
-         local_vars += ['size_t hdr_len;',
-                        'void *hdr;']
- 
--    for _, attr in ri.struct["request"].member_list():
--        if attr.presence_type() == 'count':
--            local_vars += ['unsigned int i;']
--            break
-+    local_vars += put_local_vars(ri.struct['request'])
- 
-     print_prototype(ri, direction, terminate=False)
-     ri.cw.block_start()
-@@ -2424,6 +2427,9 @@ def print_dump(ri):
-         local_vars += ['size_t hdr_len;',
-                        'void *hdr;']
- 
-+    if 'request' in ri.op[ri.op_mode]:
-+        local_vars += put_local_vars(ri.struct['request'])
-+
-     ri.cw.write_func_lvar(local_vars)
- 
-     ri.cw.p('yds.yarg.ys = ys;')
+     def _get_enum_or_unknown(self, enum, raw):
+         try:
+             name = enum.entries_by_val[raw].name
 -- 
 2.51.0
 
