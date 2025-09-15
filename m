@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50B65CF259D
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 08:15:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BC09CF259C
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 08:15:07 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 79fee514;
-	Tue, 18 Nov 2025 17:30:35 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 470d8d06;
+	Tue, 18 Nov 2025 17:30:32 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3c0e8292
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id addf50ac
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 15 Sep 2025 14:47:43 +0000 (UTC)
+ Mon, 15 Sep 2025 14:47:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
- s=202008; t=1757947661;
- bh=EZJrSC8HKLIZeYkZ/ou7/O3NW58W1W8t+y2LSY8Uu94=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=tyjBku43tj5Ngtx33BqGjDhluLloINzzLYhgEj0Aw6/Xg/XCW6Hqz6mGydYZJVZdO
- xGYD1rPntX8gDe/oiDlrHjS/GyytFUk/XyxMZcmr333KyFWEozze0OD0c6m0hMFXGM
- 2Bq90pXxy3ygMazeyZIcDZcdDzqt3jRwGlQDxlzK/+KG1NS27tIpS+YjtCakQcdAWc
- dDUWRZsb0yuAWDWiKgoNetqq2wyi6gr4WtJT6CxJ2C5QkUCYiAJyxf8f7GZ/wcyK2N
- m4AJeWRKDcnxvaCzOQKLhmseH6PodzaK3zI3q0jQ4n1JKdo7Q8OHpQnJ7hIuEz49B2
- I8u8GHu5EsThg==
+ s=202008; t=1757947660;
+ bh=RbIKwA1YEbJ9B7hJPqXCkfvKOCOA7kqlj5tzz3+rIX4=;
+ h=From:To:Cc:Subject:Date:From;
+ b=NA8xF+H6E0QwDJU+/6IiEQBcJIE2tW6qMYTk9BF4TMKtUVDe+b9m6mnefi1Pe+Fxg
+ Ttb0HG4q1Ny4mbpQWDqOgThDA14FWM+ibf32SsoRV4tJuQABhnv5k9Of10MeV/dcHb
+ Hsty9YfGo6Bb92Z0T8jpkVclWq8GkpNX+P+WSMidgfJQxT/XYjrQJuNF0QW2XjvGJ7
+ ilRDwdKYxX/Fr5x7V4sSF+rH7RBHIg0OWyKaf5VgWkfnbgtBAj5oDhsm3Xvv66K5Np
+ 4p5pW3S2WpSTSEUsy6nqhH5RYfkYWJQkQlVxyduRoNuFQAnL16ysXTXicVBJwlGnoE
+ 7cKN7w3Y82wGg==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id 063BD6013C;
- Mon, 15 Sep 2025 14:47:41 +0000 (UTC)
+ by mail1.fiberby.net (Postfix) with ESMTPSA id DDC8F60078;
+ Mon, 15 Sep 2025 14:47:39 +0000 (UTC)
 Received: by x201s (Postfix, from userid 1000)
- id 202DB20393F; Mon, 15 Sep 2025 14:43:06 +0000 (UTC)
+ id F3401201BEC; Mon, 15 Sep 2025 14:43:05 +0000 (UTC)
 From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  "David S. Miller" <davem@davemloft.net>,
@@ -39,12 +39,10 @@ Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
  Jacob Keller <jacob.e.keller@intel.com>,
  Sabrina Dubroca <sd@queasysnail.net>, wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v5 03/11] tools: ynl-gen: add sub-type check
-Date: Mon, 15 Sep 2025 14:42:48 +0000
-Message-ID: <20250915144301.725949-4-ast@fiberby.net>
+Subject: [PATCH net-next v5 00/11] tools: ynl: prepare for wireguard
+Date: Mon, 15 Sep 2025 14:42:45 +0000
+Message-ID: <20250915144301.725949-1-ast@fiberby.net>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250915144301.725949-1-ast@fiberby.net>
-References: <20250915144301.725949-1-ast@fiberby.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -63,36 +61,60 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Add a check to verify that the sub-type is "nest", and throw an
-exception if no policy could be generated, as a guard to prevent
-against generating a bad policy.
+This series contains the last batch of YNL changes to support
+the wireguard YNL conversion.
 
-This is a trivial patch with no behavioural changes intended.
+The wireguard changes, to be applied on top of this series,
+has been posted as an RFC series here:
+  https://lore.kernel.org/netdev/20250904-wg-ynl-rfc@fiberby.net/
 
-Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
-Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
 ---
- tools/net/ynl/pyynl/ynl_gen_c.py | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+v5:
+- In patch 4, just copy the old local_vars logic into the new helper.
+v4:
+- Added a few Reviewed-by (thanks Donald).
+- In patch 4, changed the implementation a bit, to avoid overloading.
+- In patch 6, expose __ynl_attr_validate(), and move ynl_attr_validate()
+  to ynl-priv.h, as an inline function.
+- Dropped v3 patch 5 and 6 from this series.
+v3: https://lore.kernel.org/netdev/20250911200508.79341-1-ast@fiberby.net/
+- Rebased on top of new net-next, after Matthieu's cleanup.
+- Added a Reviewed-by (thanks Donald).
+- Added the parsing local vars cleanup as patch 7
+- In patch 4, change to use set() for deduplication.
+- In patch 8, declare __ynl_attr_validate() as static.
+v2: https://lore.kernel.org/netdev/20250910230841.384545-1-ast@fiberby.net/
+- Added Reviewed-by's to unchanged patches. Thanks to all reviewers.
+- Patch 4, refactors local variables for .attr_put() callers, and
+  replaces the old patch 4 and 5.
+- Patch 5 and 6 are new, and reduces the differences between the 3
+  .attr_put() callers, so it might be easier to keep them in sync.
+- Patch 7, now validates the nested payload (thanks Jakub).
+- Patch 8, now renames more variables (thanks Jakub),
+- Patch 10, got a dead line remove (thanks Donald).
+- Patch 11, revised hex input to support macsec (suggested by Sabrina).
+v1: https://lore.kernel.org/netdev/20250904-wg-ynl-prep@fiberby.net/
 
-diff --git a/tools/net/ynl/pyynl/ynl_gen_c.py b/tools/net/ynl/pyynl/ynl_gen_c.py
-index 95a60fdaf14e..3266af19edcd 100755
---- a/tools/net/ynl/pyynl/ynl_gen_c.py
-+++ b/tools/net/ynl/pyynl/ynl_gen_c.py
-@@ -825,8 +825,10 @@ class TypeArrayNest(Type):
-             return f'.type = YNL_PT_U{c_upper(self.sub_type[1:])}, '
-         elif self.attr['sub-type'] == 'binary' and 'exact-len' in self.checks:
-             return f'.type = YNL_PT_BINARY, .len = {self.checks["exact-len"]}, '
--        else:
-+        elif self.attr['sub-type'] == 'nest':
-             return f'.type = YNL_PT_NEST, .nest = &{self.nested_render_name}_nest, '
-+        else:
-+            raise Exception(f"Typol for ArrayNest sub-type {self.attr['sub-type']} not supported, yet")
- 
-     def _attr_get(self, ri, var):
-         local_vars = ['const struct nlattr *attr2;']
+Asbjørn Sloth Tønnesen (11):
+  tools: ynl-gen: allow overriding name-prefix for constants
+  tools: ynl-gen: generate nested array policies
+  tools: ynl-gen: add sub-type check
+  tools: ynl-gen: refactor local vars for .attr_put() callers
+  tools: ynl-gen: avoid repetitive variables definitions
+  tools: ynl-gen: validate nested arrays
+  tools: ynl-gen: rename TypeArrayNest to TypeIndexedArray
+  tools: ynl: move nest packing to a helper function
+  tools: ynl: encode indexed-arrays
+  tools: ynl: decode hex input
+  tools: ynl: add ipv4-or-v6 display hint
+
+ Documentation/netlink/genetlink-legacy.yaml |  2 +-
+ tools/net/ynl/lib/ynl-priv.h                | 10 ++-
+ tools/net/ynl/lib/ynl.c                     |  6 +-
+ tools/net/ynl/pyynl/lib/ynl.py              | 38 +++++++--
+ tools/net/ynl/pyynl/ynl_gen_c.py            | 92 ++++++++++++---------
+ 5 files changed, 100 insertions(+), 48 deletions(-)
+
 -- 
 2.51.0
 
