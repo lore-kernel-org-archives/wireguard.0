@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69865CF2598
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 08:17:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08626CF2599
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 08:25:13 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5cc97850;
-	Tue, 18 Nov 2025 17:30:49 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 283ec945;
+	Tue, 18 Nov 2025 17:30:51 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6d15d693
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6f59bff0
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 15 Sep 2025 14:47:44 +0000 (UTC)
+ Mon, 15 Sep 2025 14:47:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
  s=202008; t=1757947661;
- bh=HqyIhwC1Ng9W9Rs+TyJnvWCNwSRIXH4apSsRMl21lQA=;
+ bh=CklzBOgUQddwzBO3UlL2pkEPjFixeUSxqIJvFTCFOhk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=YQuirKBE7nmnkHnjZ+/f5UNewQW0CsnPpiH2DG62E5cu/dGlE/dwMyOTAzJqBhjG6
- vqUROmNXoNGpG+WqNETsk7hHD6oJXL2zLInMgiqpnItA6bRYWbl/VlT3lReGQJEZQw
- rPeqmojL3dkmfkIy147FLlilZD1NUQmTNzjn51EEISChIc9PzU0JavUwmA6oeAfHBR
- 38OKjZRSbgeOLJd3FOwNXjL6CcYPu7O2vGOJFEQprcHnFt0HPloNMxd8ufTPzNx/Xc
- vw2GX6NnKpcJXlinvpX8P1JBNIaNQC6+IZyu2z5DuBWEdu1rFv+KKYonzaXZZOLChL
- OdrgDMAwKoxSw==
+ b=NbaxkH1VfBJI70Q8opnolbnjhvJ1jUIqdURF+XM4qienrRTxTbBacP/Pw/cmf1Cdx
+ OSNJpX2wL5Flr4MC81YhmyL+TJCYYQsUulAdZfdRU/d2OI1uDeHIuzmhIUjc/aMNPJ
+ tijZZqTH/dwvDdA9PrdgHEW/bnXTlKcICBtdArHZGgODGK4Pe6gRdgLQFZ3Xx2lsBc
+ FRRfrykrJ0EKgz6K6a6mZ33FuTe9x8fK9lg14ZajECK8xJhItyI1K4ZWECkhbIsIIP
+ kMkhJql1ilT2J3iiReDSVGLJz/a/qFXGLsFdeqXXEYjNf7Rbur+7PEkMd1LC0B7vHs
+ n1kuyYAByvgAA==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id 0CEFF6013E;
+ by mail1.fiberby.net (Postfix) with ESMTPSA id 1556C6013F;
  Mon, 15 Sep 2025 14:47:41 +0000 (UTC)
 Received: by x201s (Postfix, from userid 1000)
- id 56735204EE2; Mon, 15 Sep 2025 14:43:06 +0000 (UTC)
+ id 6B8212051A8; Mon, 15 Sep 2025 14:43:06 +0000 (UTC)
 From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  "David S. Miller" <davem@davemloft.net>,
@@ -39,10 +39,9 @@ Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
  Jacob Keller <jacob.e.keller@intel.com>,
  Sabrina Dubroca <sd@queasysnail.net>, wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v5 08/11] tools: ynl: move nest packing to a helper
- function
-Date: Mon, 15 Sep 2025 14:42:53 +0000
-Message-ID: <20250915144301.725949-9-ast@fiberby.net>
+Subject: [PATCH net-next v5 10/11] tools: ynl: decode hex input
+Date: Mon, 15 Sep 2025 14:42:55 +0000
+Message-ID: <20250915144301.725949-11-ast@fiberby.net>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250915144301.725949-1-ast@fiberby.net>
 References: <20250915144301.725949-1-ast@fiberby.net>
@@ -64,49 +63,39 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This patch moves nest packing into a helper function,
-that can also be used for packing indexed arrays.
+This patch adds support for decoding hex input, so
+that binary attributes can be read through --json.
 
-No behavioural changes intended.
+Example (using future wireguard.yaml):
+ $ sudo ./tools/net/ynl/pyynl/cli.py --family wireguard \
+   --do set-device --json '{"ifindex":3,
+     "private-key":"2a ae 6c 35 c9 4f cf <... to 32 bytes>"}'
+
+In order to somewhat mirror what is done in _formatted_string(),
+then for non-binary attributes attempt to convert it to an int.
 
 Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
 ---
- tools/net/ynl/pyynl/lib/ynl.py | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ tools/net/ynl/pyynl/lib/ynl.py | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/tools/net/ynl/pyynl/lib/ynl.py b/tools/net/ynl/pyynl/lib/ynl.py
-index 50805e05020a..92ff26f34f4d 100644
+index 9fd83f8b091f..707753e371e2 100644
 --- a/tools/net/ynl/pyynl/lib/ynl.py
 +++ b/tools/net/ynl/pyynl/lib/ynl.py
-@@ -561,11 +561,8 @@ class YnlFamily(SpecFamily):
- 
-         if attr["type"] == 'nest':
-             nl_type |= Netlink.NLA_F_NESTED
--            attr_payload = b''
-             sub_space = attr['nested-attributes']
--            sub_attrs = SpaceAttrs(self.attr_sets[sub_space], value, search_attrs)
--            for subname, subvalue in value.items():
--                attr_payload += self._add_attr(sub_space, subname, subvalue, sub_attrs)
-+            attr_payload = self._add_nest_attrs(value, sub_space, search_attrs)
-         elif attr["type"] == 'flag':
-             if not value:
-                 # If value is absent or false then skip attribute creation.
-@@ -622,6 +619,14 @@ class YnlFamily(SpecFamily):
-         pad = b'\x00' * ((4 - len(attr_payload) % 4) % 4)
-         return struct.pack('HH', len(attr_payload) + 4, nl_type) + attr_payload + pad
- 
-+    def _add_nest_attrs(self, value, sub_space, search_attrs):
-+        sub_attrs = SpaceAttrs(self.attr_sets[sub_space], value, search_attrs)
-+        attr_payload = b''
-+        for subname, subvalue in value.items():
-+            attr_payload += self._add_attr(sub_space, subname, subvalue,
-+                                           sub_attrs)
-+        return attr_payload
-+
-     def _get_enum_or_unknown(self, enum, raw):
-         try:
-             name = enum.entries_by_val[raw].name
+@@ -971,6 +971,11 @@ class YnlFamily(SpecFamily):
+                 raw = ip.packed
+             else:
+                 raw = int(ip)
++        elif attr_spec.display_hint == 'hex':
++            if attr_spec['type'] == 'binary':
++                raw = bytes.fromhex(string)
++            else:
++                raw = int(string, 16)
+         else:
+             raise Exception(f"Display hint '{attr_spec.display_hint}' not implemented"
+                             f" when parsing '{attr_spec['name']}'")
 -- 
 2.51.0
 
