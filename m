@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5639DCF2567
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 07:24:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ECEECF2598
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 08:15:05 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 21e261ce;
-	Tue, 18 Nov 2025 17:30:23 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dc907644;
+	Tue, 18 Nov 2025 17:30:25 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f86444fd
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ac69b9a0
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
  Mon, 15 Sep 2025 14:47:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
  s=202008; t=1757947660;
- bh=pnz1Z9RsFEA/w79qMxEPA9j3gcVp4d2qUkVblwMqsWk=;
+ bh=M8RZw0PcAr23td7B4SWZsTm8GfTk/HQcBuK2/+z1TOk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=hoMUSXVKFfde3bsoRfAP+zKKVg8wQ4eLCkWF1SzvhH1Wb6HPrw1v8MmYimae+etjC
- Sn9cxM2gVRlBrAJuYUrDNhJMzt9o5bHQg/M67nFE8tf/b5V7cwR3spDypevXEYSKp/
- IccJ6FRAys2IHLZOPcLEy61sP/qfB4LJGQDbAHROORyWNHwoffBho6lYDWUb8X/hPF
- lw59aqHGpAJ0oUVcEIXYIyA/2oTwtWXagwKy9bjzk8Lr7o7DPy1GiKvpypIuRa3o7w
- +jmI9PQiTe8MEDl3ZeVoyohEV43LO1fMh3WPu34OExv4gZIuJtSiRhSTAaL6RMm2Za
- VQtXhQFWrs7pQ==
+ b=as0GBHV0zPBIF3vPf/Xn8QmEv/ATEJXmEpq/t/DjKQB1j5tfGayg5uClH77bjdVEU
+ SCyE/KncrSDIGYFVYvocihwMR2GOmjT/baz1ppscCC0j3s+zfzOidwDmRp0imzTIA8
+ 6f9M8vpaiC7+3gF2JIitPTSHBaT6TtcgjzjBq7om8KLce6RxQkJCvp4PYrfZwwLSnI
+ zcY0FBdEB1i5Wmc1HiDQqXTZucwYr6J0Digh/KrY+y2YVmYHxsYbe+IsoyJrVf6SfR
+ ANBLXkN3BCS9SEpVbLA+geKOXqYFRIUZSc2bBdsbSvbDIQRRd2xM9Kf6noj1OUYh66
+ TJOyDOG/owh4Q==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id CD0FB6000C;
+ by mail1.fiberby.net (Postfix) with ESMTPSA id E316860128;
  Mon, 15 Sep 2025 14:47:39 +0000 (UTC)
 Received: by x201s (Postfix, from userid 1000)
- id 06495201B79; Mon, 15 Sep 2025 14:43:06 +0000 (UTC)
+ id 75DD42054AD; Mon, 15 Sep 2025 14:43:06 +0000 (UTC)
 From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  "David S. Miller" <davem@davemloft.net>,
@@ -39,10 +39,9 @@ Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
  Jacob Keller <jacob.e.keller@intel.com>,
  Sabrina Dubroca <sd@queasysnail.net>, wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v5 01/11] tools: ynl-gen: allow overriding
- name-prefix for constants
-Date: Mon, 15 Sep 2025 14:42:46 +0000
-Message-ID: <20250915144301.725949-2-ast@fiberby.net>
+Subject: [PATCH net-next v5 11/11] tools: ynl: add ipv4-or-v6 display hint
+Date: Mon, 15 Sep 2025 14:42:56 +0000
+Message-ID: <20250915144301.725949-12-ast@fiberby.net>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250915144301.725949-1-ast@fiberby.net>
 References: <20250915144301.725949-1-ast@fiberby.net>
@@ -64,35 +63,59 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Allow using custom name-prefix with constants,
-just like it is for enum and flags declarations.
+The attribute WGALLOWEDIP_A_IPADDR can contain either an IPv4
+or an IPv6 address depending on WGALLOWEDIP_A_FAMILY, however
+in practice it is enough to look at the attribute length.
 
-This is needed for generating WG_KEY_LEN in
-include/uapi/linux/wireguard.h from a spec.
+This patch implements an ipv4-or-v6 display hint, that can
+deal with this kind of attribute.
+
+It only implements this display hint for genetlink-legacy, it
+can be added to other protocol variants if needed, but we don't
+want to encourage it's use.
 
 Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
 ---
- tools/net/ynl/pyynl/ynl_gen_c.py | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ Documentation/netlink/genetlink-legacy.yaml | 2 +-
+ tools/net/ynl/pyynl/lib/ynl.py              | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/net/ynl/pyynl/ynl_gen_c.py b/tools/net/ynl/pyynl/ynl_gen_c.py
-index 101d8ba9626f..c8b15569ecc1 100755
---- a/tools/net/ynl/pyynl/ynl_gen_c.py
-+++ b/tools/net/ynl/pyynl/ynl_gen_c.py
-@@ -3208,8 +3208,9 @@ def render_uapi(family, cw):
-             cw.block_end(line=';')
-             cw.nl()
-         elif const['type'] == 'const':
-+            name_pfx = const.get('name-prefix', f"{family.ident_name}-")
-             defines.append([c_upper(family.get('c-define-name',
--                                               f"{family.ident_name}-{const['name']}")),
-+                                               f"{name_pfx}{const['name']}")),
-                             const['value']])
+diff --git a/Documentation/netlink/genetlink-legacy.yaml b/Documentation/netlink/genetlink-legacy.yaml
+index b29d62eefa16..66fb8653a344 100644
+--- a/Documentation/netlink/genetlink-legacy.yaml
++++ b/Documentation/netlink/genetlink-legacy.yaml
+@@ -154,7 +154,7 @@ properties:
+                   Optional format indicator that is intended only for choosing
+                   the right formatting mechanism when displaying values of this
+                   type.
+-                enum: [ hex, mac, fddi, ipv4, ipv6, uuid ]
++                enum: [ hex, mac, fddi, ipv4, ipv6, ipv4-or-v6, uuid ]
+               struct:
+                 description: Name of the nested struct type.
+                 type: string
+diff --git a/tools/net/ynl/pyynl/lib/ynl.py b/tools/net/ynl/pyynl/lib/ynl.py
+index 707753e371e2..62383c70ebb9 100644
+--- a/tools/net/ynl/pyynl/lib/ynl.py
++++ b/tools/net/ynl/pyynl/lib/ynl.py
+@@ -956,7 +956,7 @@ class YnlFamily(SpecFamily):
+                 formatted = hex(raw)
+             else:
+                 formatted = bytes.hex(raw, ' ')
+-        elif display_hint in [ 'ipv4', 'ipv6' ]:
++        elif display_hint in [ 'ipv4', 'ipv6', 'ipv4-or-v6' ]:
+             formatted = format(ipaddress.ip_address(raw))
+         elif display_hint == 'uuid':
+             formatted = str(uuid.UUID(bytes=raw))
+@@ -965,7 +965,7 @@ class YnlFamily(SpecFamily):
+         return formatted
  
-     if defines:
+     def _from_string(self, string, attr_spec):
+-        if attr_spec.display_hint in ['ipv4', 'ipv6']:
++        if attr_spec.display_hint in ['ipv4', 'ipv6', 'ipv4-or-v6']:
+             ip = ipaddress.ip_address(string)
+             if attr_spec['type'] == 'binary':
+                 raw = ip.packed
 -- 
 2.51.0
 
