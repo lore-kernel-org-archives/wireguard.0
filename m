@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13EFFCF2599
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 08:15:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAC41CF259D
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 08:15:11 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 46de3497;
-	Tue, 18 Nov 2025 17:30:43 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 303cf3cd;
+	Tue, 18 Nov 2025 17:30:44 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3a68bfc5
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9de3f964
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
  Mon, 15 Sep 2025 14:47:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
  s=202008; t=1757947661;
- bh=LLyu7PizKBvF6PcAcs8jJH0K9Wfc0Q/trc3t4+4AZ/I=;
+ bh=IsmjNeaXavqPvifeThqRq8BNJU4LPyh8Y4FXmPIrN2A=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=QTl2Bgt1gvfoUc82TkXiq+cSPM+xaVpSdCq2O7ilg3JRvSCFniUcpoj0XyIo8fAkH
- C5/ECXd5chT0vSWwyohZr8wS4ugbU8Zca7xgrLeKiF362vRmIZA3gDLPZEggwaMeww
- AeJ9EcA5t7l68M5uH4GtJL7YqlLfwjxv9MkrXOap941bjWXVqkZgUX2RoE+2d1LT0j
- Nbyg1C6o5PB6boOIH7HLZcoOOdmh9+dnQF7hUvwxBfkO35HpGlpWaxBC2bpiXGXl3X
- IAGvuqN6WrEhN51EpEBHXKDPXWsoDg1I6N1Jd0WNT9wLhm68nwXcTVIMk7TJ286I4v
- nZzBJAGhb58yg==
+ b=WEW24BMrMoIAB6//FCu9YqsdwI5AcZBBuX+35+Ggi7+lMKwLnQ+a52vkM1tbBhyPd
+ ebI37IDVsiZJeeKtMvFrihYh3b5MTjPu1nmXdWJ40CencVLpV8KguEPlHAhoswSvJl
+ oDQZ36lRXm6+Rd/uQiqxSjhwGUv13Q47Ytj1v7B7juFEmrBf8pRrGr4hLVnPESTfnH
+ 3PP8pbEQhqMp1PkYLWDdtliGMAmyt+Vsey8OoSviFnscS0Cm0excutaR55atOpJnpi
+ Vrxvjox43wlpUJpZrzcbUXSKzGI+vm6/uWGmu5SOSS0rsM7Uuj/rom/GKRMlHC+SRL
+ BwlE1zzNqdtXg==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id 075F66013D;
+ by mail1.fiberby.net (Postfix) with ESMTPSA id 044D06013B;
  Mon, 15 Sep 2025 14:47:41 +0000 (UTC)
 Received: by x201s (Postfix, from userid 1000)
- id 372D0204AFE; Mon, 15 Sep 2025 14:43:06 +0000 (UTC)
+ id 2BC77203CF3; Mon, 15 Sep 2025 14:43:06 +0000 (UTC)
 From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  "David S. Miller" <davem@davemloft.net>,
@@ -39,10 +39,10 @@ Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
  Jacob Keller <jacob.e.keller@intel.com>,
  Sabrina Dubroca <sd@queasysnail.net>, wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v5 05/11] tools: ynl-gen: avoid repetitive variables
- definitions
-Date: Mon, 15 Sep 2025 14:42:50 +0000
-Message-ID: <20250915144301.725949-6-ast@fiberby.net>
+Subject: [PATCH net-next v5 04/11] tools: ynl-gen: refactor local vars for
+ .attr_put() callers
+Date: Mon, 15 Sep 2025 14:42:49 +0000
+Message-ID: <20250915144301.725949-5-ast@fiberby.net>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250915144301.725949-1-ast@fiberby.net>
 References: <20250915144301.725949-1-ast@fiberby.net>
@@ -64,137 +64,106 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-In the generated attribute parsing code, avoid repetitively
-defining the same variables over and over again, local to
-the conditional block for each attribute.
+Refactor the generation of local variables needed when building
+requests, by moving the logic from put_req_nested() into a new
+helper put_local_vars(), and use the helper before .attr_put() is
+called, thus generating the local variables assumed by .attr_put().
 
-This patch consolidates the definitions of local variables
-for attribute parsing, so that they are defined at the
-function level, and re-used across attributes, thus making
-the generated code read more natural.
+Previously only put_req_nested() generated the variables assumed
+by .attr_put(),  print_req() only generated the count iterator `i`,
+and print_dump() neither generated `i` nor `array`.
 
-If attributes defines identical local_vars, then they will
-be deduplicated, attributes are assumed to only use their
-local variables transiently.
+This patch fixes the build errors below:
+$ make -C tools/net/ynl/generated/
+[...]
+-e      GEN wireguard-user.c
+-e      GEN wireguard-user.h
+-e      CC wireguard-user.o
+wireguard-user.c: In function ‘wireguard_get_device_dump’:
+wireguard-user.c:480:9: error: ‘array’ undeclared (first use in func)
+  480 |         array = ynl_attr_nest_start(nlh, WGDEVICE_A_PEERS);
+      |         ^~~~~
+wireguard-user.c:480:9: note: each undeclared identifier is reported
+                        only once for each function it appears in
+wireguard-user.c:481:14: error: ‘i’ undeclared (first use in func)
+  481 |         for (i = 0; i < req->_count.peers; i++)
+      |              ^
+wireguard-user.c: In function ‘wireguard_set_device’:
+wireguard-user.c:533:9: error: ‘array’ undeclared (first use in func)
+  533 |         array = ynl_attr_nest_start(nlh, WGDEVICE_A_PEERS);
+      |         ^~~~~
+make: *** [Makefile:52: wireguard-user.o] Error 1
+make: Leaving directory '/usr/src/linux/tools/net/ynl/generated'
 
-The example below shows how `len` was defined repeatedly in
-tools/net/ynl/generated/nl80211-user.c:
-
-nl80211_iftype_data_attrs_parse(..) {
-   [..]
-   ynl_attr_for_each_nested(attr, nested) {
-     unsigned int type = ynl_attr_type(attr);
-
-     if (type == NL80211_BAND_IFTYPE_ATTR_IFTYPES) {
-       unsigned int len;
-       [..]
-     } else if (type == NL80211_BAND_IFTYPE_ATTR_HE_CAP_MAC) {
-       unsigned int len;
-       [..]
-     [same pattern 8 times, so 11 times in total]
-     } else if (type == NL80211_BAND_IFTYPE_ATTR_EHT_CAP_PPE) {
-       unsigned int len;
-       [..]
-     }
-   }
-   return 0;
-}
-
-This patch results in this diffstat for the generated code:
-
-$ diff -Naur pre/ post/ | diffstat
-  devlink-user.c      |  187 +++----------------
-  dpll-user.c         |   10 -
-  ethtool-user.c      |   49 +----
-  fou-user.c          |    5
-  handshake-user.c    |    3
-  mptcp_pm-user.c     |    3
-  nfsd-user.c         |   16 -
-  nl80211-user.c      |  159 +---------------
-  nlctrl-user.c       |   21 --
-  ovpn-user.c         |    7
-  ovs_datapath-user.c |    9
-  ovs_flow-user.c     |   89 ---------
-  ovs_vport-user.c    |    7
-  rt-addr-user.c      |   14 -
-  rt-link-user.c      |  183 ++----------------
-  rt-neigh-user.c     |   14 -
-  rt-route-user.c     |   26 --
-  rt-rule-user.c      |   11 -
-  tc-user.c           |  380 +++++----------------------------------
-  tcp_metrics-user.c  |    7
-  team-user.c         |    5
-  21 files changed, 175 insertions(+), 1030 deletions(-)
-
-The changed lines are mostly `unsigned int len;` definitions:
-
-$ diff -Naur pre/ post/ | grep ^[-+] | grep -v '^[-+]\{3\}' |
-  grep -v '^.$' | sed -e 's/\t\+/ /g' | sort | uniq -c | sort -nr
-    488 - unsigned int len;
-    153 + unsigned int len;
-     24 - const struct nlattr *attr2;
-     18 + const struct nlattr *attr2;
-      1 - __u32 policy_id, attr_id;
-      1 + __u32 policy_id, attr_id;
-      1 - __u32 op_id;
-      1 + __u32 op_id;
-      1 - const struct nlattr *attr_policy_id, *attr_attr_id;
-      1 + const struct nlattr *attr_policy_id, *attr_attr_id;
-      1 - const struct nlattr *attr_op_id;
-      1 + const struct nlattr *attr_op_id;
-
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 ---
- tools/net/ynl/pyynl/ynl_gen_c.py | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ tools/net/ynl/pyynl/ynl_gen_c.py | 32 +++++++++++++++++++-------------
+ 1 file changed, 19 insertions(+), 13 deletions(-)
 
 diff --git a/tools/net/ynl/pyynl/ynl_gen_c.py b/tools/net/ynl/pyynl/ynl_gen_c.py
-index a0c571456236..a7c65edc863d 100755
+index 3266af19edcd..a0c571456236 100755
 --- a/tools/net/ynl/pyynl/ynl_gen_c.py
 +++ b/tools/net/ynl/pyynl/ynl_gen_c.py
-@@ -242,7 +242,7 @@ class Type(SpecAttr):
-         raise Exception(f"Attr get not implemented for class type {self.type}")
+@@ -2040,6 +2040,20 @@ def put_enum_to_str(family, cw, enum):
+     _put_enum_to_str_helper(cw, enum.render_name, map_name, 'value', enum=enum)
  
-     def attr_get(self, ri, var, first):
--        lines, init_lines, local_vars = self._attr_get(ri, var)
-+        lines, init_lines, _ = self._attr_get(ri, var)
-         if type(lines) is str:
-             lines = [lines]
-         if type(init_lines) is str:
-@@ -250,10 +250,6 @@ class Type(SpecAttr):
  
-         kw = 'if' if first else 'else if'
-         ri.cw.block_start(line=f"{kw} (type == {self.enum_name})")
--        if local_vars:
--            for local in local_vars:
--                ri.cw.p(local)
--            ri.cw.nl()
- 
-         if not self.is_multi_val():
-             ri.cw.p("if (ynl_attr_validate(yarg, attr))")
-@@ -2113,6 +2109,7 @@ def _multi_parse(ri, struct, init_lines, local_vars):
-             else:
-                 raise Exception("Per-op fixed header not supported, yet")
- 
-+    var_set = set()
-     array_nests = set()
-     multi_attrs = set()
-     needs_parg = False
-@@ -2130,6 +2127,13 @@ def _multi_parse(ri, struct, init_lines, local_vars):
-             multi_attrs.add(arg)
-         needs_parg |= 'nested-attributes' in aspec
-         needs_parg |= 'sub-message' in aspec
++def put_local_vars(struct):
++    local_vars = []
++    has_array = False
++    has_count = False
++    for _, arg in struct.member_list():
++        has_array |= arg.type == 'indexed-array'
++        has_count |= arg.presence_type() == 'count'
++    if has_array:
++        local_vars.append('struct nlattr *array;')
++    if has_count:
++        local_vars.append('unsigned int i;')
++    return local_vars
 +
-+        try:
-+            _, _, l_vars = aspec._attr_get(ri, '')
-+            var_set |= set(l_vars) if l_vars else set()
-+        except Exception:
-+            pass  # _attr_get() not implemented by simple types, ignore
-+    local_vars += list(var_set)
-     if array_nests or multi_attrs:
-         local_vars.append('int i;')
-     if needs_parg:
++
+ def put_req_nested_prototype(ri, struct, suffix=';'):
+     func_args = ['struct nlmsghdr *nlh',
+                  'unsigned int attr_type',
+@@ -2062,15 +2076,7 @@ def put_req_nested(ri, struct):
+         init_lines.append(f"hdr = ynl_nlmsg_put_extra_header(nlh, {struct_sz});")
+         init_lines.append(f"memcpy(hdr, &obj->_hdr, {struct_sz});")
+ 
+-    has_anest = False
+-    has_count = False
+-    for _, arg in struct.member_list():
+-        has_anest |= arg.type == 'indexed-array'
+-        has_count |= arg.presence_type() == 'count'
+-    if has_anest:
+-        local_vars.append('struct nlattr *array;')
+-    if has_count:
+-        local_vars.append('unsigned int i;')
++    local_vars += put_local_vars(struct)
+ 
+     put_req_nested_prototype(ri, struct, suffix='')
+     ri.cw.block_start()
+@@ -2354,10 +2360,7 @@ def print_req(ri):
+         local_vars += ['size_t hdr_len;',
+                        'void *hdr;']
+ 
+-    for _, attr in ri.struct["request"].member_list():
+-        if attr.presence_type() == 'count':
+-            local_vars += ['unsigned int i;']
+-            break
++    local_vars += put_local_vars(ri.struct['request'])
+ 
+     print_prototype(ri, direction, terminate=False)
+     ri.cw.block_start()
+@@ -2424,6 +2427,9 @@ def print_dump(ri):
+         local_vars += ['size_t hdr_len;',
+                        'void *hdr;']
+ 
++    if 'request' in ri.op[ri.op_mode]:
++        local_vars += put_local_vars(ri.struct['request'])
++
+     ri.cw.write_func_lvar(local_vars)
+ 
+     ri.cw.p('yds.yarg.ys = ys;')
 -- 
 2.51.0
 
