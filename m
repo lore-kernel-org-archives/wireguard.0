@@ -4,49 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA971CAC598
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 16 Sep 2025 15:40:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1660ECAC599
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 16 Sep 2025 15:54:35 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 24fd69f6;
-	Tue, 16 Sep 2025 15:38:05 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 59d64da1;
+	Tue, 16 Sep 2025 15:51:43 +0000 (UTC)
 Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b1cd6377
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id be9741b0
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 16 Sep 2025 15:38:04 +0000 (UTC)
+ Tue, 16 Sep 2025 15:51:40 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id D89AD6020A;
- Tue, 16 Sep 2025 15:38:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78CA4C4CEEB;
- Tue, 16 Sep 2025 15:38:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1758037082;
- bh=ZV1/ZgIDRprs7axQ6TQnrVXYxz9AalJXylNl+cUmS9E=;
- h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
- b=SpC8htl2dZYhzkI/LEZ9wRT+2WVngbKP3PssF0IAMmyghFhx9H8g0pdZmDUynt+TM
- ssj1ZhMEZ4/OPVihcn/OfncjMrhdvNusZIolYVN6cWJnWrtQF/bsCPmUcW9cQUm69M
- y5PeuCk7TtJUlF+12ay53vpt5u1UaTMrGf4peN4ALNp1QrY9Thmh3q8KZyx68Batv2
- aNSiiOKIORqw9hhSiqcVg3w/ckL0X3MwoOTdawXNTH1fOFUG72QYOLBIkbdWBdNpj1
- vU7syqgU/jOWfczM37Cn1BKRkI1K5ha8saIQ2hofPsAzjHf23P6z4RuUx2Kqo1dzXR
- JVW7phFNgr34A==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
- by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id
- EAF7F39D0C1A; Tue, 16 Sep 2025 15:38:04 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+ by tor.source.kernel.org (Postfix) with ESMTP id B5D81601E4
+ for <wireguard@lists.zx2c4.com>; Tue, 16 Sep 2025 15:51:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2236AC4CEFE
+ for <wireguard@lists.zx2c4.com>; Tue, 16 Sep 2025 15:51:39 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="Qo+NIX5m"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1758037894;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=LWvtPY8JOaJUdfA6RqqgaTmXzD6Rya5jbmVIeuYMqlk=;
+ b=Qo+NIX5mhGe2yd4oJbXiPz7RY+ol8CmGTpRFuJco7KjFapGtERQR/OjwbbZw2zeCD04y9w
+ Y1W19Z/NkrHQLCNoQ93+Yf/Vv82M3IU40/LSqLp0F7XC+MWwOX9r5bLRt4Kg5H4dS1m3+j
+ gsdUO5jODHhxBHhOQNsaRulnVeBU8UY=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a151a8fd
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 16 Sep 2025 15:51:34 +0000 (UTC)
+Received: by mail-ot1-f48.google.com with SMTP id
+ 46e09a7af769-75731ec93bcso812991a34.1
+ for <wireguard@lists.zx2c4.com>; Tue, 16 Sep 2025 08:51:34 -0700 (PDT)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXoEngO7bd+oDXuETBwm1kQW8MGH5L34QR2wlcbwg/ntnchNqSkeg8eF3XZ+cd1rBHJMHsCs/ElDFc=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YwF7ZWcHgaI5lTp13GKn0NxOUqi9pnmia4F2EQOSA5jZ9aOvSe0
+ qmP2t1ilxvs3yYsWf316UZIOrefRYf6B+zOOVxI/wsagSHco5UYaq0S0Elk6kVnaDVl9dGwS73A
+ 1jfmerJSKmhSjcaodaNbBBfSRPNIDQ+Y=
+X-Google-Smtp-Source: AGHT+IGP3SbAdOU4oqfpbda8n9JY4xGEouxACuVPUK518Vvhsmppkle9doyRfdV089EzJh2FTqLp3XYTq06dthgl3G8=
+X-Received: by 2002:a05:6808:1b0a:b0:438:384c:36db with SMTP id
+ 5614622812f47-43b8d90d7c5mr7717876b6e.15.1758037892410; Tue, 16 Sep 2025
+ 08:51:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next v5 00/11] tools: ynl: prepare for wireguard
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: <175803708374.1166060.16728108514341236086.git-patchwork-notify@kernel.org>
-Date: Tue, 16 Sep 2025 15:38:03 +0000
-References: <20250915144301.725949-1-ast@fiberby.net>
-In-Reply-To: <20250915144301.725949-1-ast@fiberby.net>
-To: =?utf-8?b?QXNiasO4cm4gU2xvdGggVMO4bm5lc2VuIDxhc3RAZmliZXJieS5uZXQ+?=@aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org
-Cc: Jason@zx2c4.com, davem@davemloft.net, edumazet@google.com,
- kuba@kernel.org, pabeni@redhat.com, donald.hunter@gmail.com,
- horms@kernel.org, jacob.e.keller@intel.com, sd@queasysnail.net,
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
+References: <20250904-wg-ynl-rfc@fiberby.net>
+In-Reply-To: <20250904-wg-ynl-rfc@fiberby.net>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 16 Sep 2025 17:51:21 +0200
+X-Gmail-Original-Message-ID: <CAHmME9ra4_P0-FdVV75gaAWiW8yWsUJJsmTes_kac0EdTgnjHQ@mail.gmail.com>
+X-Gm-Features: AS18NWBaLEA3oFeqxFk5qRFGjst8026RADBzbjhLf2Na8sHUXJEqAzutzDYhGUA
+Message-ID: <CAHmME9ra4_P0-FdVV75gaAWiW8yWsUJJsmTes_kac0EdTgnjHQ@mail.gmail.com>
+Subject: Re: [RFC net-next 00/14] wireguard: netlink: ynl conversion
+To: =?UTF-8?B?QXNiasO4cm4gU2xvdGggVMO4bm5lc2Vu?= <ast@fiberby.net>
+Cc: "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+ Donald Hunter <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>, 
+ Jacob Keller <jacob.e.keller@intel.com>, Andrew Lunn <andrew+netdev@lunn.ch>, 
+ wireguard@lists.zx2c4.com, netdev@vger.kernel.org, 
  linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -61,48 +80,20 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello:
+Hi Asbjorn,
 
-This series was applied to netdev/net-next.git (main)
-by Jakub Kicinski <kuba@kernel.org>:
+On Fri, Sep 5, 2025 at 12:03=E2=80=AFAM Asbj=C3=B8rn Sloth T=C3=B8nnesen <a=
+st@fiberby.net> wrote:
+>
+> This series contains the wireguard changes needed to adopt
+> an YNL-based generated netlink code.
+>
+> This RFC series is posted for reference, as it is referenced
+> from the current v1 series of ynl preparations, which has to
+> go in before this series can be submitted for net-next.
 
-On Mon, 15 Sep 2025 14:42:45 +0000 you wrote:
-> This series contains the last batch of YNL changes to support
-> the wireguard YNL conversion.
-> 
-> The wireguard changes, to be applied on top of this series,
-> has been posted as an RFC series here:
->   https://lore.kernel.org/netdev/20250904-wg-ynl-rfc@fiberby.net/
-> 
-> [...]
+I'm not actually convinced this makes anything better. It seems like
+the code becomes more complicated and less obvious. What is the
+benefit here? As is, I really don't like this direction.
 
-Here is the summary with links:
-  - [net-next,v5,01/11] tools: ynl-gen: allow overriding name-prefix for constants
-    https://git.kernel.org/netdev/net-next/c/3ff5258b9781
-  - [net-next,v5,02/11] tools: ynl-gen: generate nested array policies
-    https://git.kernel.org/netdev/net-next/c/d0bdfe36d777
-  - [net-next,v5,03/11] tools: ynl-gen: add sub-type check
-    https://git.kernel.org/netdev/net-next/c/8df78d97e498
-  - [net-next,v5,04/11] tools: ynl-gen: refactor local vars for .attr_put() callers
-    https://git.kernel.org/netdev/net-next/c/db4ea3baa484
-  - [net-next,v5,05/11] tools: ynl-gen: avoid repetitive variables definitions
-    https://git.kernel.org/netdev/net-next/c/099902fc66f8
-  - [net-next,v5,06/11] tools: ynl-gen: validate nested arrays
-    https://git.kernel.org/netdev/net-next/c/1d99aa4ed707
-  - [net-next,v5,07/11] tools: ynl-gen: rename TypeArrayNest to TypeIndexedArray
-    https://git.kernel.org/netdev/net-next/c/a44a93ea6f06
-  - [net-next,v5,08/11] tools: ynl: move nest packing to a helper function
-    https://git.kernel.org/netdev/net-next/c/328c13426240
-  - [net-next,v5,09/11] tools: ynl: encode indexed-arrays
-    https://git.kernel.org/netdev/net-next/c/5c51ae2446c2
-  - [net-next,v5,10/11] tools: ynl: decode hex input
-    https://git.kernel.org/netdev/net-next/c/52550d518d24
-  - [net-next,v5,11/11] tools: ynl: add ipv4-or-v6 display hint
-    https://git.kernel.org/netdev/net-next/c/1b255e1beabf
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+Jason
