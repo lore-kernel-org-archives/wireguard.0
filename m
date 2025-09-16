@@ -4,67 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2CE8CAC598
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 16 Sep 2025 15:54:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CACFCAC592
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 16 Sep 2025 22:41:54 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2779c19b;
-	Tue, 16 Sep 2025 15:53:20 +0000 (UTC)
-Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id af38fa31
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d026e44e;
+	Tue, 16 Sep 2025 22:39:37 +0000 (UTC)
+Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 06d0f652
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 16 Sep 2025 15:53:18 +0000 (UTC)
+ Tue, 16 Sep 2025 22:39:35 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id EFFF64169B
- for <wireguard@lists.zx2c4.com>; Tue, 16 Sep 2025 15:53:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90167C4CEF0
- for <wireguard@lists.zx2c4.com>; Tue, 16 Sep 2025 15:53:15 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="H55oyeaW"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1758037993;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QdhsLLTi6x2P00SOdHfDzgBCCPRrEZ2OxxiHXGo3X0U=;
- b=H55oyeaWjML93nNQVTWuh7rT6YX1P61S2Dhz77e91JuQjlzvZTw1SqL1oOhgOnbzbXVzjf
- lBepXGG5uizyEm2OggZsooXC5KUCOjngNwQd9jwbXDCQAiEYsjJC8lxG7qLao1O1JK8IXv
- 2doy5ngRPBcWsrqAj+QeNQy9rhXLzls=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 67d9c8e4
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 16 Sep 2025 15:53:13 +0000 (UTC)
-Received: by mail-oo1-f53.google.com with SMTP id
- 006d021491bc7-6219e33ba2dso1657875eaf.1
- for <wireguard@lists.zx2c4.com>; Tue, 16 Sep 2025 08:53:13 -0700 (PDT)
-X-Forwarded-Encrypted: i=1;
- AJvYcCVdq/Y98fDxT7BH+yttqWn783lM4AA/SzdVXZ6C/D/TFlWJpA4Al+uwpZp63FAUhsXXKCl5+jFmyGw=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YyHg1ZVs/LlG0b7rStQPjJMHtiorDkEDI4Z9UfpX+kxV7gk2wQM
- NEUXDOrfISQ49tieCGvac4lqjvEMXC7OhGhrKIL1cKjQL5JdW7KOkDeiml7/mO3oYfXCrDx1+HD
- edqtbs5pZ8zsaGCfqiTeMrMtJqpWm98U=
-X-Google-Smtp-Source: AGHT+IHIsWlCqXP6w2ex+u5oDjE8Qk5JpGJiSn5HO81iROUQUIe3rwbuy+iUOnTAxJz5JFUcLFFDPdjI0OFKgCB57WE=
-X-Received: by 2002:a05:6870:15c3:b0:318:70e5:3ce with SMTP id
- 586e51a60fabf-33453569978mr1595607fac.21.1758037992013; Tue, 16 Sep 2025
- 08:53:12 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250915144301.725949-1-ast@fiberby.net>
-In-Reply-To: <20250915144301.725949-1-ast@fiberby.net>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 16 Sep 2025 17:53:00 +0200
-X-Gmail-Original-Message-ID: <CAHmME9rf9NGRVtJBnjUJVPraGKL6dk0nRxzXmSi-7X6Y1zjmsA@mail.gmail.com>
-X-Gm-Features: AS18NWDjjoLajNux7GbGPgbtVGxD8CQj2DjICrmFvFsHsH0-lOTbkqsL1kkKnR4
-Message-ID: <CAHmME9rf9NGRVtJBnjUJVPraGKL6dk0nRxzXmSi-7X6Y1zjmsA@mail.gmail.com>
+ by tor.source.kernel.org (Postfix) with ESMTP id E55A36022A;
+ Tue, 16 Sep 2025 22:39:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 163A6C4CEEB;
+ Tue, 16 Sep 2025 22:39:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1758062373;
+ bh=Ort8kF21YmqS/VszU+RQlm6xUoyQ77hb3hySCxPgjDk=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=s+cOa2LrKFip85zl7kxfCjTEXmwSTQ87NTyhrwlFjZ1FGAr6a48/UdWwirn3ixWo+
+ QD4g5Vb6nkKT2n6zllDTiSUUb9zIDkUVND5IMyNREKoohCP8J6LFSG2QVMTv3l2kf1
+ uOEpqH80l4uIcUk3y94BVc0b09Awuk9H2a1dpdY/oCqUJ4TOB0wxi9QFeXk7NouzaC
+ gzPfjevTfZzqnNp+6/9VWfssfLYTxHoeJjaitIhn57y5PW7aiMVoSL+qJChB3VYnJY
+ xvzdxHu/G/UnRzIGt52uKd8wvfRkO6dQ1pG8ds56koRuAjapL7TTJLF/YtWH6TcQip
+ 6VPbZ7JY8gnjA==
+Date: Tue, 16 Sep 2025 15:39:32 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: =?UTF-8?B?QXNiasO4cm4=?= Sloth =?UTF-8?B?VMO4bm5lc2Vu?=
+ <ast@fiberby.net>, "David S. Miller" <davem@davemloft.net>, Eric Dumazet
+ <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>, Donald Hunter
+ <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>, Jacob Keller
+ <jacob.e.keller@intel.com>, Sabrina Dubroca <sd@queasysnail.net>,
+ wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org
 Subject: Re: [PATCH net-next v5 00/11] tools: ynl: prepare for wireguard
-To: =?UTF-8?B?QXNiasO4cm4gU2xvdGggVMO4bm5lc2Vu?= <ast@fiberby.net>
-Cc: "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
- Donald Hunter <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>, 
- Jacob Keller <jacob.e.keller@intel.com>, Sabrina Dubroca <sd@queasysnail.net>,
- wireguard@lists.zx2c4.com, 
- netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <20250916153932.200647ad@kernel.org>
+In-Reply-To: <CAHmME9rf9NGRVtJBnjUJVPraGKL6dk0nRxzXmSi-7X6Y1zjmsA@mail.gmail.com>
+References: <20250915144301.725949-1-ast@fiberby.net>
+ <CAHmME9rf9NGRVtJBnjUJVPraGKL6dk0nRxzXmSi-7X6Y1zjmsA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -80,18 +61,36 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Asbjorn,
+On Tue, 16 Sep 2025 17:53:00 +0200 Jason A. Donenfeld wrote:
+> On Mon, Sep 15, 2025 at 4:47=E2=80=AFPM Asbj=C3=B8rn Sloth T=C3=B8nnesen =
+<ast@fiberby.net> wrote:
+> >
+> > This series contains the last batch of YNL changes to support
+> > the wireguard YNL conversion. =20
+>=20
+> "the wireguard YNL conversion"
 
-On Mon, Sep 15, 2025 at 4:47=E2=80=AFPM Asbj=C3=B8rn Sloth T=C3=B8nnesen <a=
-st@fiberby.net> wrote:
->
-> This series contains the last batch of YNL changes to support
-> the wireguard YNL conversion.
+FWIW these patches stand on their own whether we accept the wireguard
+patches or not. Put more plainly - please do not read me applying this
+set as an endorsement of the larger plan..
 
-"the wireguard YNL conversion"
+> Did I miss some conversation about this? I figure I must have. I must
+> say I'm not too keen on wireguard (and apparently only wireguard?)
+> being a guinea pig for this.
 
-Did I miss some conversation about this? I figure I must have. I must
-say I'm not too keen on wireguard (and apparently only wireguard?)
-being a guinea pig for this.
+The specs themselves are gaining maturity. I think adding a YNL spec
+for wireguard would be quite nice. Whether we should be converting
+the kernel code and uAPI to take advantage of the auto-generation is
+a completely separate conversation. If you're not anticipating many
+new additions in the uAPI there's little to be gained.
 
-Jason
+Intro:
+https://docs.kernel.org/next/userspace-api/netlink/specs.html
+Existing specs:
+https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net-next.git/tree/Do=
+cumentation/netlink/specs/
+Libs:
+https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net-next.git/tree/to=
+ols/net/ynl/pyynl/lib/ynl.py
+https://github.com/linux-netdev/ynl-c (this one is also in tree)
+https://github.com/linux-netdev/ynl-cpp
