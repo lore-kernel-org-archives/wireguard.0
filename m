@@ -4,48 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CACFCAC592
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 16 Sep 2025 22:41:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86F26CAC5BB
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  5 Oct 2025 13:07:46 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d026e44e;
-	Tue, 16 Sep 2025 22:39:37 +0000 (UTC)
-Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 06d0f652
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 61219a50;
+	Sun, 5 Oct 2025 13:04:48 +0000 (UTC)
+Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com
+ [2607:f8b0:4864:20::82d])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id cf4d66fa
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 16 Sep 2025 22:39:35 +0000 (UTC)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id E55A36022A;
- Tue, 16 Sep 2025 22:39:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 163A6C4CEEB;
- Tue, 16 Sep 2025 22:39:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1758062373;
- bh=Ort8kF21YmqS/VszU+RQlm6xUoyQ77hb3hySCxPgjDk=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=s+cOa2LrKFip85zl7kxfCjTEXmwSTQ87NTyhrwlFjZ1FGAr6a48/UdWwirn3ixWo+
- QD4g5Vb6nkKT2n6zllDTiSUUb9zIDkUVND5IMyNREKoohCP8J6LFSG2QVMTv3l2kf1
- uOEpqH80l4uIcUk3y94BVc0b09Awuk9H2a1dpdY/oCqUJ4TOB0wxi9QFeXk7NouzaC
- gzPfjevTfZzqnNp+6/9VWfssfLYTxHoeJjaitIhn57y5PW7aiMVoSL+qJChB3VYnJY
- xvzdxHu/G/UnRzIGt52uKd8wvfRkO6dQ1pG8ds56koRuAjapL7TTJLF/YtWH6TcQip
- 6VPbZ7JY8gnjA==
-Date: Tue, 16 Sep 2025 15:39:32 -0700
-From: Jakub Kicinski <kuba@kernel.org>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: =?UTF-8?B?QXNiasO4cm4=?= Sloth =?UTF-8?B?VMO4bm5lc2Vu?=
- <ast@fiberby.net>, "David S. Miller" <davem@davemloft.net>, Eric Dumazet
- <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>, Donald Hunter
- <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>, Jacob Keller
- <jacob.e.keller@intel.com>, Sabrina Dubroca <sd@queasysnail.net>,
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next v5 00/11] tools: ynl: prepare for wireguard
-Message-ID: <20250916153932.200647ad@kernel.org>
-In-Reply-To: <CAHmME9rf9NGRVtJBnjUJVPraGKL6dk0nRxzXmSi-7X6Y1zjmsA@mail.gmail.com>
-References: <20250915144301.725949-1-ast@fiberby.net>
- <CAHmME9rf9NGRVtJBnjUJVPraGKL6dk0nRxzXmSi-7X6Y1zjmsA@mail.gmail.com>
+ for <wireguard@lists.zx2c4.com>; Sun, 5 Oct 2025 13:04:46 +0000 (UTC)
+Received: by mail-qt1-x82d.google.com with SMTP id
+ d75a77b69052e-4da3019b6b6so37792791cf.3
+ for <wireguard@lists.zx2c4.com>; Sun, 05 Oct 2025 06:04:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1759669485; x=1760274285; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=N+RJQKjQrFkOXYT+itRREJcbwRQ3We70gB/GA7XkcNY=;
+ b=qWYlTvqnjk9E2c5T1MkrUYKYuu3fobnVoaKMoKzKVPm6i6Xqpr8oURLuMXCEoPDr1e
+ AHx39kuIY4+lDpVYcrwhwEJB3aashbpFFidvPPy7aIEKDcxs2hh/f2vbfMfvJ4RUox7M
+ DYwsqtCzihRd4dqVZrLPWhiWqbxG4xpwax/w+vO/siSoQBXu2xKrByLCHHULTLZaH/7y
+ pQwvpieJbG1ebLeymG+gInYR0yvxKtPhAShSUwEnPgJ8Vtdi8GjznFrroRTO94SUuYme
+ clMHsfPkTfampalq0pHsXn0qGzucYvZLaO6sf8+hZJtNKRkAF2plxQGF46fP0r4EU/N8
+ Yqrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1759669485; x=1760274285;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=N+RJQKjQrFkOXYT+itRREJcbwRQ3We70gB/GA7XkcNY=;
+ b=xSI6T2LvVyrgMHdvBPK5kqnNaxjscELaNTu/QoAwxj3jG0dmoukPUEj5JFuGRbR5En
+ HAkqcUfCzmUl/sIyhsoH5eqy72eBqoKarkk+SRT+3w3fgu+sm9JOHYx7tZxja1Ou8Poz
+ DSl9y9eFW5IikvWvyXReFq6MEYTWUwafJkd0okBXsmPcZCQVD7lSDsGRVwSdRcTa/icj
+ lRUH2ewiFwDgtBkAVjzH84UE5Cnv6plaO4pfs9JDVtf6iEX1o6A3+ADMsPz+mj4M4pvF
+ Gnyo8LTXap9QJJOq0i19tgsixE2nqLfrgle3hO+j+Nj5tAgMQnyVG4zMrQmMeirrI6X5
+ 0ZVA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUPATuBKZ1axblMJLDtalI5fPwV6ljnierhvpRXnPFI+EU8zvs3VbriT/5z6Za46nznFN7h5bkuORw=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0Yzq5lhbOTn0hFpGW6lOvzk97lFmD1ty9+GNZp+NnWKy9DM0+Xtp
+ Zm4BwcEixPAJfclCGwoIk706f8gtcVABy4JU3IyPY4nytRaSqu9bJa4ltmt6g/GobN/G/zj4bDN
+ OIHJ8MpbP3xdfHXJLMsFHmrwb+HiQE0dyIHB8G6Hi
+X-Gm-Gg: ASbGncuDKHHpjXzByTkZ0xB4zvmFVIrLM+S0n+3pRZQMOTMyQiTUk2UMaDHGpUQTJND
+ wIiHkPL9S80fFEw3LcfCgh38Hj8aCqonIFqk/lV6ZGLvw67clHgBZ7xchA62OqIqwHst9blssBk
+ DPoGg01qjDCFokyPXxV0rXAwCW801rWZynv2azK+0hGVJdVk/GmGVWmsWqJO8MhyarXuJpoI1KH
+ oNvN8AHgSZSjHQkZ65XCmmXzgsnpGP04RIy+HGsUWPguMyV
+X-Google-Smtp-Source: AGHT+IGPsbMcZU+vFeo9ZAmXgvwpBCCrndDdbMORhec+3i6dz7273LfwEIxnyR+I3xhjhE1r1jbPhGJsmb1RmGw5LpA=
+X-Received: by 2002:a05:622a:1885:b0:4b7:90e2:40df with SMTP id
+ d75a77b69052e-4e576a44e99mr114292601cf.1.1759669484326; Sun, 05 Oct 2025
+ 06:04:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+References: <20251005122626.26988-1-wangfushuai@baidu.com>
+In-Reply-To: <20251005122626.26988-1-wangfushuai@baidu.com>
+From: Eric Dumazet <edumazet@google.com>
+Date: Sun, 5 Oct 2025 06:04:31 -0700
+X-Gm-Features: AS18NWAzrupW0HYnpOxSwBwRSmRYD-ffu1xxO0-ekzBqui4Dt-9D_s306e6ZH0E
+Message-ID: <CANn89iJs+Y7Ge2sbAOQSsuE6O1GbxuHbNrFxBO0fq1C3HOfxPA@mail.gmail.com>
+Subject: Re: [PATCH] wireguard: allowedips: Use kfree_rcu() instead of
+ call_rcu()
+To: Fushuai Wang <wangfushuai@baidu.com>
+Cc: Jason@zx2c4.com, andrew+netdev@lunn.ch, davem@davemloft.net, 
+ kuba@kernel.org, pabeni@redhat.com, wireguard@lists.zx2c4.com, 
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -61,36 +83,66 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Tue, 16 Sep 2025 17:53:00 +0200 Jason A. Donenfeld wrote:
-> On Mon, Sep 15, 2025 at 4:47=E2=80=AFPM Asbj=C3=B8rn Sloth T=C3=B8nnesen =
-<ast@fiberby.net> wrote:
-> >
-> > This series contains the last batch of YNL changes to support
-> > the wireguard YNL conversion. =20
->=20
-> "the wireguard YNL conversion"
+On Sun, Oct 5, 2025 at 5:26=E2=80=AFAM Fushuai Wang <wangfushuai@baidu.com>=
+ wrote:
+>
+> Replace call_rcu() + kmem_cache_free() with kfree_rcu() to simplify
+> the code and reduce function size.
+>
+> Signed-off-by: Fushuai Wang <wangfushuai@baidu.com>
 
-FWIW these patches stand on their own whether we accept the wireguard
-patches or not. Put more plainly - please do not read me applying this
-set as an endorsement of the larger plan..
+Hmm... have you compiled this patch ?
 
-> Did I miss some conversation about this? I figure I must have. I must
-> say I'm not too keen on wireguard (and apparently only wireguard?)
-> being a guinea pig for this.
+I think  all compilers would complain loudly.
 
-The specs themselves are gaining maturity. I think adding a YNL spec
-for wireguard would be quite nice. Whether we should be converting
-the kernel code and uAPI to take advantage of the auto-generation is
-a completely separate conversation. If you're not anticipating many
-new additions in the uAPI there's little to be gained.
+> ---
+>  drivers/net/wireguard/allowedips.c | 9 ++-------
+>  1 file changed, 2 insertions(+), 7 deletions(-)
+>
+> diff --git a/drivers/net/wireguard/allowedips.c b/drivers/net/wireguard/a=
+llowedips.c
+> index 09f7fcd7da78..506f7cf0d7cf 100644
+> --- a/drivers/net/wireguard/allowedips.c
+> +++ b/drivers/net/wireguard/allowedips.c
+> @@ -48,11 +48,6 @@ static void push_rcu(struct allowedips_node **stack,
+>         }
+>  }
+>
+> -static void node_free_rcu(struct rcu_head *rcu)
+> -{
+> -       kmem_cache_free(node_cache, container_of(rcu, struct allowedips_n=
+ode, rcu));
+> -}
+> -
+>  static void root_free_rcu(struct rcu_head *rcu)
+>  {
+>         struct allowedips_node *node, *stack[MAX_ALLOWEDIPS_DEPTH] =3D {
+> @@ -271,13 +266,13 @@ static void remove_node(struct allowedips_node *nod=
+e, struct mutex *lock)
+>         if (free_parent)
+>                 child =3D rcu_dereference_protected(parent->bit[!(node->p=
+arent_bit_packed & 1)],
+>                                                   lockdep_is_held(lock));
+> -       call_rcu(&node->rcu, node_free_rcu);
+> +       kfree_rcu(&node, rcu);
 
-Intro:
-https://docs.kernel.org/next/userspace-api/netlink/specs.html
-Existing specs:
-https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net-next.git/tree/Do=
-cumentation/netlink/specs/
-Libs:
-https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net-next.git/tree/to=
-ols/net/ynl/pyynl/lib/ynl.py
-https://github.com/linux-netdev/ynl-c (this one is also in tree)
-https://github.com/linux-netdev/ynl-cpp
+kfree_rcu(node, rcu);
+
+>         if (!free_parent)
+>                 return;
+>         if (child)
+>                 child->parent_bit_packed =3D parent->parent_bit_packed;
+>         *(struct allowedips_node **)(parent->parent_bit_packed & ~3UL) =
+=3D child;
+> -       call_rcu(&parent->rcu, node_free_rcu);
+> +       kfree_rcu(&parent, rcu);
+
+kfree_rcu(parent, rcu);
+
+>  }
+>
+>  static int remove(struct allowedips_node __rcu **trie, u8 bits, const u8=
+ *key,
+> --
+> 2.36.1
+>
