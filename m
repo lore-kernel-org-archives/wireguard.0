@@ -4,39 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57385CF34B7
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 14:47:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 419DACF34C0
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 14:47:52 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5b3ba0c0;
-	Tue, 18 Nov 2025 17:32:22 +0000 (UTC)
-Received: from mail-24420.protonmail.ch (mail-24420.protonmail.ch
- [109.224.244.20])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6b080132
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 623a433c;
+	Tue, 18 Nov 2025 17:32:23 +0000 (UTC)
+Received: from baidu.com (mx22.baidu.com [220.181.50.185])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 927571e9
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 18 Sep 2025 12:33:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tcarey.uk;
- s=protonmail; t=1758198782; x=1758457982;
- bh=Dhuee6i8nQUqCAQxEyGKAbtdRVAOo3Kgp8kTj/RP8x8=;
- h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
- Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
- b=A66hdy3/ExMj0GZWCn6nDxMqio2EzLOa19BpTtdyxXzBx0cUyUKgj4WKUOIn0GJWR
- ye66Lsj2kagWchPlD6l3GJK0ozHdibtCo2b0sJ3MAX+CBc2jirvag/6K1+W6MeKah6
- yBI/KjKcRZM9FWRuDgWqg+3ofi0AW7KS1nOBEQnCz2Qt3TdD9afoGMm5ONBZixgkC9
- Tg7n6hI+vl63u07kpc9U4bv+hoVatwHwzv4fbwRike0Hevs4bu76c3sNSBe9WuTx7T
- sWPzAYmjksLM1yKrH+vXxI7Ki+uYRa7VgHitU4hW/iLjj2N7c8oypKV3Jzjd07AS0+
- MubMxxIokfE0A==
-Date: Thu, 18 Sep 2025 12:32:58 +0000
-To: wireguard@lists.zx2c4.com
-From: Torin Carey <torin@tcarey.uk>
-Cc: netdev@vger.kernel.org, "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [PATCH] wireguard: remove unnecessary use of ipv6_stub
-Message-ID: <20250918123234.297856-1-torin@tcarey.uk>
-Feedback-ID: 43460779:user:proton
-X-Pm-Message-ID: fce568dd48d251d9349f9357e3a00c789e048133
+ for <wireguard@lists.zx2c4.com>; Sun, 5 Oct 2025 12:27:05 +0000 (UTC)
+From: Fushuai Wang <wangfushuai@baidu.com>
+To: <Jason@zx2c4.com>, <andrew+netdev@lunn.ch>, <davem@davemloft.net>,
+ <edumazet@google.com>, <kuba@kernel.org>, <pabeni@redhat.com>
+CC: <wireguard@lists.zx2c4.com>, <netdev@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, Fushuai Wang <wangfushuai@baidu.com>
+Subject: [PATCH] wireguard: allowedips: Use kfree_rcu() instead of call_rcu()
+Date: Sun, 5 Oct 2025 20:26:26 +0800
+Message-ID: <20251005122626.26988-1-wangfushuai@baidu.com>
+X-Mailer: git-send-email 2.39.2 (Apple Git-143)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.127.72.16]
+X-ClientProxiedBy: bjkjy-exc2.internal.baidu.com (172.31.50.46) To
+ bjkjy-exc17.internal.baidu.com (172.31.50.13)
+X-FEAS-Client-IP: 172.31.50.13
+X-FE-Policy-ID: 52:10:53:SYSTEM
 X-Mailman-Approved-At: Tue, 18 Nov 2025 17:23:16 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -52,43 +45,46 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-ipv6_stub is required for cases where ipv6 may be compiled as a module
-and might not be loaded from a given context.
+Replace call_rcu() + kmem_cache_free() with kfree_rcu() to simplify
+the code and reduce function size.
 
-wireguard has a Kconfig dependence of IPV6 || !IPV6 so will also be compile=
-d
-as a module if ipv6 is, and wireguard already accesses a symbol of this mod=
-ule
-via ipv6_mod_enabled, so already has a module dependence on ipv6.
-
-Removal is desireable since it removes an unnecessary indirect branch, but
-also reduces the effort needed should ipv6_stub ever be modified/replaced.
-
-Signed-off-by: Torin Carey <torin@tcarey.uk>
+Signed-off-by: Fushuai Wang <wangfushuai@baidu.com>
 ---
- drivers/net/wireguard/socket.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireguard/allowedips.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireguard/socket.c b/drivers/net/wireguard/socket.=
-c
-index 253488f8c00f..593324d564d2 100644
---- a/drivers/net/wireguard/socket.c
-+++ b/drivers/net/wireguard/socket.c
-@@ -136,8 +136,8 @@ static int send6(struct wg_device *wg, struct sk_buff *=
-skb,
- =09=09=09if (cache)
- =09=09=09=09dst_cache_reset(cache);
- =09=09}
--=09=09dst =3D ipv6_stub->ipv6_dst_lookup_flow(sock_net(sock), sock, &fl,
--=09=09=09=09=09=09      NULL);
-+=09=09dst =3D ip6_dst_lookup_flow(sock_net(sock), sock, &fl,
-+=09=09=09=09=09  NULL);
- =09=09if (IS_ERR(dst)) {
- =09=09=09ret =3D PTR_ERR(dst);
- =09=09=09net_dbg_ratelimited("%s: No route to %pISpfsc, error %d\n",
-
-base-commit: 8f5ae30d69d7543eee0d70083daf4de8fe15d585
---=20
-2.48.1
-
+diff --git a/drivers/net/wireguard/allowedips.c b/drivers/net/wireguard/allowedips.c
+index 09f7fcd7da78..506f7cf0d7cf 100644
+--- a/drivers/net/wireguard/allowedips.c
++++ b/drivers/net/wireguard/allowedips.c
+@@ -48,11 +48,6 @@ static void push_rcu(struct allowedips_node **stack,
+ 	}
+ }
+ 
+-static void node_free_rcu(struct rcu_head *rcu)
+-{
+-	kmem_cache_free(node_cache, container_of(rcu, struct allowedips_node, rcu));
+-}
+-
+ static void root_free_rcu(struct rcu_head *rcu)
+ {
+ 	struct allowedips_node *node, *stack[MAX_ALLOWEDIPS_DEPTH] = {
+@@ -271,13 +266,13 @@ static void remove_node(struct allowedips_node *node, struct mutex *lock)
+ 	if (free_parent)
+ 		child = rcu_dereference_protected(parent->bit[!(node->parent_bit_packed & 1)],
+ 						  lockdep_is_held(lock));
+-	call_rcu(&node->rcu, node_free_rcu);
++	kfree_rcu(&node, rcu);
+ 	if (!free_parent)
+ 		return;
+ 	if (child)
+ 		child->parent_bit_packed = parent->parent_bit_packed;
+ 	*(struct allowedips_node **)(parent->parent_bit_packed & ~3UL) = child;
+-	call_rcu(&parent->rcu, node_free_rcu);
++	kfree_rcu(&parent, rcu);
+ }
+ 
+ static int remove(struct allowedips_node __rcu **trie, u8 bits, const u8 *key,
+-- 
+2.36.1
 
