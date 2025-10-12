@@ -4,32 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F951CF34B7
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 14:47:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF23CCF34C1
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 14:47:54 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 295e467d;
-	Tue, 18 Nov 2025 17:32:25 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cd01dddf;
+	Tue, 18 Nov 2025 17:32:27 +0000 (UTC)
 Received: from baidu.com (mx22.baidu.com [220.181.50.185])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ad0dbc75
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 52f48593
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 5 Oct 2025 13:40:02 +0000 (UTC)
-From: Fushuai Wang <wangfushuai@baidu.com>
-To: <Jason@zx2c4.com>, <andrew+netdev@lunn.ch>, <davem@davemloft.net>,
- <edumazet@google.com>, <kuba@kernel.org>, <pabeni@redhat.com>
-CC: <wireguard@lists.zx2c4.com>, <netdev@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, Fushuai Wang <wangfushuai@baidu.com>
-Subject: [PATCH v2] wireguard: allowedips: Use kfree_rcu() instead of
- call_rcu()
-Date: Sun, 5 Oct 2025 21:39:36 +0800
-Message-ID: <20251005133936.32667-1-wangfushuai@baidu.com>
-X-Mailer: git-send-email 2.39.2 (Apple Git-143)
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 12 Oct 2025 11:53:19 +0000 (UTC)
+From: lirongqing <lirongqing@baidu.com>
+To: Jonathan Corbet <corbet@lwn.net>, Russell King <linux@armlinux.org.uk>,
+ Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Andrew Morton <akpm@linux-foundation.org>, Lance Yang <lance.yang@linux.dev>, 
+ Masami Hiramatsu <mhiramat@kernel.org>, "Jason A . Donenfeld"
+ <Jason@zx2c4.com>, Shuah Khan <shuah@kernel.org>, "Paul E . McKenney"
+ <paulmck@kernel.org>, Petr Mladek <pmladek@suse.com>, Randy Dunlap
+ <rdunlap@infradead.org>, Steven Rostedt <rostedt@goodmis.org>, Feng Tang
+ <feng.tang@linux.alibaba.com>, Pawan Gupta
+ <pawan.kumar.gupta@linux.intel.com>, Kees Cook <kees@kernel.org>, Arnd
+ Bergmann <arnd@arndb.de>, Li RongQing <lirongqing@baidu.com>, Phil Auld
+ <pauld@redhat.com>, Joel Granados <joel.granados@kernel.org>, Jakub Kicinski
+ <kuba@kernel.org>, Simon Horman <horms@kernel.org>, Anshuman Khandual
+ <anshuman.khandual@arm.com>, Stanislav Fomichev <sdf@fomichev.me>, "Liam R .
+ Howlett" <Liam.Howlett@oracle.com>, Lorenzo Stoakes
+ <lorenzo.stoakes@oracle.com>, David Hildenbrand <david@redhat.com>, Florian
+ Westphal <fw@strlen.de>, <linux-doc@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+ <linux-aspeed@lists.ozlabs.org>, <wireguard@lists.zx2c4.com>,
+ <netdev@vger.kernel.org>, <linux-kselftest@vger.kernel.org>
+Subject: [PATCH][v3] hung_task: Panic after fixed number of hung tasks
+Date: Sun, 12 Oct 2025 19:50:35 +0800
+Message-ID: <20251012115035.2169-1-lirongqing@baidu.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Originating-IP: [10.127.72.20]
-X-ClientProxiedBy: bjkjy-exc5.internal.baidu.com (172.31.50.49) To
- bjkjy-exc17.internal.baidu.com (172.31.50.13)
-X-FEAS-Client-IP: 172.31.50.13
+X-Originating-IP: [10.127.73.8]
+X-ClientProxiedBy: bjkjy-exc11.internal.baidu.com (172.31.51.11) To
+ bjkjy-exc3.internal.baidu.com (172.31.50.47)
+X-FEAS-Client-IP: 172.31.50.47
 X-FE-Policy-ID: 52:10:53:SYSTEM
 X-Mailman-Approved-At: Tue, 18 Nov 2025 17:23:16 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -46,46 +60,212 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Replace call_rcu() + kmem_cache_free() with kfree_rcu() to simplify
-the code and reduce function size.
+From: Li RongQing <lirongqing@baidu.com>
 
-Signed-off-by: Fushuai Wang <wangfushuai@baidu.com>
+Currently, when 'hung_task_panic' is enabled, the kernel panics
+immediately upon detecting the first hung task. However, some hung
+tasks are transient and the system can recover, while others are
+persistent and may accumulate progressively.
+
+This patch extends the 'hung_task_panic' sysctl to allow specifying
+the number of hung tasks that must be detected before triggering
+a kernel panic. This provides finer control for environments where
+transient hangs may occur but persistent hangs should still be fatal.
+
+The sysctl can be set to:
+- 0: disabled (never panic)
+- 1: original behavior (panic on first hung task)
+- N: panic when N hung tasks are detected
+
+This maintains backward compatibility while providing more flexibility
+for handling different hang scenarios.
+
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
 ---
- drivers/net/wireguard/allowedips.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+Diff with v2: not add new sysctl, extend hung_task_panic
 
-diff --git a/drivers/net/wireguard/allowedips.c b/drivers/net/wireguard/allowedips.c
-index 09f7fcd7da78..5ece9acad64d 100644
---- a/drivers/net/wireguard/allowedips.c
-+++ b/drivers/net/wireguard/allowedips.c
-@@ -48,11 +48,6 @@ static void push_rcu(struct allowedips_node **stack,
- 	}
- }
+ Documentation/admin-guide/kernel-parameters.txt      | 20 +++++++++++++-------
+ Documentation/admin-guide/sysctl/kernel.rst          |  3 ++-
+ arch/arm/configs/aspeed_g5_defconfig                 |  2 +-
+ kernel/configs/debug.config                          |  2 +-
+ kernel/hung_task.c                                   | 16 +++++++++++-----
+ lib/Kconfig.debug                                    | 10 ++++++----
+ tools/testing/selftests/wireguard/qemu/kernel.config |  2 +-
+ 7 files changed, 35 insertions(+), 20 deletions(-)
+
+diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+index a51ab46..7d9a8ee 100644
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -1992,14 +1992,20 @@
+ 			the added memory block itself do not be affected.
  
--static void node_free_rcu(struct rcu_head *rcu)
--{
--	kmem_cache_free(node_cache, container_of(rcu, struct allowedips_node, rcu));
--}
--
- static void root_free_rcu(struct rcu_head *rcu)
+ 	hung_task_panic=
+-			[KNL] Should the hung task detector generate panics.
+-			Format: 0 | 1
++			[KNL] Number of hung tasks to trigger kernel panic.
++			Format: <int>
++
++			Set this to the number of hung tasks that must be
++			detected before triggering a kernel panic.
++
++			0: don't panic
++			1: panic immediately on first hung task
++			N: panic after N hung tasks are detect
+ 
+-			A value of 1 instructs the kernel to panic when a
+-			hung task is detected. The default value is controlled
+-			by the CONFIG_BOOTPARAM_HUNG_TASK_PANIC build-time
+-			option. The value selected by this boot parameter can
+-			be changed later by the kernel.hung_task_panic sysctl.
++			The default value is controlled by the
++			CONFIG_BOOTPARAM_HUNG_TASK_PANIC build-time option. The value
++			selected by this boot parameter can be changed later by the
++			kernel.hung_task_panic sysctl.
+ 
+ 	hvc_iucv=	[S390]	Number of z/VM IUCV hypervisor console (HVC)
+ 				terminal devices. Valid values: 0..8
+diff --git a/Documentation/admin-guide/sysctl/kernel.rst b/Documentation/admin-guide/sysctl/kernel.rst
+index f3ee807..0a8dfab 100644
+--- a/Documentation/admin-guide/sysctl/kernel.rst
++++ b/Documentation/admin-guide/sysctl/kernel.rst
+@@ -397,7 +397,8 @@ a hung task is detected.
+ hung_task_panic
+ ===============
+ 
+-Controls the kernel's behavior when a hung task is detected.
++When set to a non-zero value, a kernel panic will be triggered if the
++number of detected hung tasks reaches this value
+ This file shows up if ``CONFIG_DETECT_HUNG_TASK`` is enabled.
+ 
+ = =================================================
+diff --git a/arch/arm/configs/aspeed_g5_defconfig b/arch/arm/configs/aspeed_g5_defconfig
+index 61cee1e..c3b0d5f 100644
+--- a/arch/arm/configs/aspeed_g5_defconfig
++++ b/arch/arm/configs/aspeed_g5_defconfig
+@@ -308,7 +308,7 @@ CONFIG_PANIC_ON_OOPS=y
+ CONFIG_PANIC_TIMEOUT=-1
+ CONFIG_SOFTLOCKUP_DETECTOR=y
+ CONFIG_BOOTPARAM_SOFTLOCKUP_PANIC=y
+-CONFIG_BOOTPARAM_HUNG_TASK_PANIC=y
++CONFIG_BOOTPARAM_HUNG_TASK_PANIC=1
+ CONFIG_WQ_WATCHDOG=y
+ # CONFIG_SCHED_DEBUG is not set
+ CONFIG_FUNCTION_TRACER=y
+diff --git a/kernel/configs/debug.config b/kernel/configs/debug.config
+index e81327d..9f6ab7d 100644
+--- a/kernel/configs/debug.config
++++ b/kernel/configs/debug.config
+@@ -83,7 +83,7 @@ CONFIG_SLUB_DEBUG_ON=y
+ #
+ # Debug Oops, Lockups and Hangs
+ #
+-# CONFIG_BOOTPARAM_HUNG_TASK_PANIC is not set
++CONFIG_BOOTPARAM_HUNG_TASK_PANIC=0
+ # CONFIG_BOOTPARAM_SOFTLOCKUP_PANIC is not set
+ CONFIG_DEBUG_ATOMIC_SLEEP=y
+ CONFIG_DETECT_HUNG_TASK=y
+diff --git a/kernel/hung_task.c b/kernel/hung_task.c
+index b2c1f14..3929ed9 100644
+--- a/kernel/hung_task.c
++++ b/kernel/hung_task.c
+@@ -81,7 +81,7 @@ static unsigned int __read_mostly sysctl_hung_task_all_cpu_backtrace;
+  * hung task is detected:
+  */
+ static unsigned int __read_mostly sysctl_hung_task_panic =
+-	IS_ENABLED(CONFIG_BOOTPARAM_HUNG_TASK_PANIC);
++	CONFIG_BOOTPARAM_HUNG_TASK_PANIC;
+ 
+ static int
+ hung_task_panic(struct notifier_block *this, unsigned long event, void *ptr)
+@@ -218,8 +218,11 @@ static inline void debug_show_blocker(struct task_struct *task, unsigned long ti
+ }
+ #endif
+ 
+-static void check_hung_task(struct task_struct *t, unsigned long timeout)
++static void check_hung_task(struct task_struct *t, unsigned long timeout,
++		unsigned long prev_detect_count)
  {
- 	struct allowedips_node *node, *stack[MAX_ALLOWEDIPS_DEPTH] = {
-@@ -271,13 +266,13 @@ static void remove_node(struct allowedips_node *node, struct mutex *lock)
- 	if (free_parent)
- 		child = rcu_dereference_protected(parent->bit[!(node->parent_bit_packed & 1)],
- 						  lockdep_is_held(lock));
--	call_rcu(&node->rcu, node_free_rcu);
-+	kfree_rcu(node, rcu);
- 	if (!free_parent)
++	unsigned long total_hung_task;
++
+ 	if (!task_is_hung(t, timeout))
  		return;
- 	if (child)
- 		child->parent_bit_packed = parent->parent_bit_packed;
- 	*(struct allowedips_node **)(parent->parent_bit_packed & ~3UL) = child;
--	call_rcu(&parent->rcu, node_free_rcu);
-+	kfree_rcu(parent, rcu);
- }
  
- static int remove(struct allowedips_node __rcu **trie, u8 bits, const u8 *key,
+@@ -229,9 +232,11 @@ static void check_hung_task(struct task_struct *t, unsigned long timeout)
+ 	 */
+ 	sysctl_hung_task_detect_count++;
+ 
++	total_hung_task = sysctl_hung_task_detect_count - prev_detect_count;
+ 	trace_sched_process_hang(t);
+ 
+-	if (sysctl_hung_task_panic) {
++	if (sysctl_hung_task_panic &&
++			(total_hung_task >= sysctl_hung_task_panic)) {
+ 		console_verbose();
+ 		hung_task_show_lock = true;
+ 		hung_task_call_panic = true;
+@@ -300,6 +305,7 @@ static void check_hung_uninterruptible_tasks(unsigned long timeout)
+ 	int max_count = sysctl_hung_task_check_count;
+ 	unsigned long last_break = jiffies;
+ 	struct task_struct *g, *t;
++	unsigned long prev_detect_count = sysctl_hung_task_detect_count;
+ 
+ 	/*
+ 	 * If the system crashed already then all bets are off,
+@@ -320,7 +326,7 @@ static void check_hung_uninterruptible_tasks(unsigned long timeout)
+ 			last_break = jiffies;
+ 		}
+ 
+-		check_hung_task(t, timeout);
++		check_hung_task(t, timeout, prev_detect_count);
+ 	}
+  unlock:
+ 	rcu_read_unlock();
+@@ -389,7 +395,7 @@ static const struct ctl_table hung_task_sysctls[] = {
+ 		.mode		= 0644,
+ 		.proc_handler	= proc_dointvec_minmax,
+ 		.extra1		= SYSCTL_ZERO,
+-		.extra2		= SYSCTL_ONE,
++		.extra2		= SYSCTL_INT_MAX,
+ 	},
+ 	{
+ 		.procname	= "hung_task_check_count",
+diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
+index 3034e294..077b9e4 100644
+--- a/lib/Kconfig.debug
++++ b/lib/Kconfig.debug
+@@ -1258,12 +1258,14 @@ config DEFAULT_HUNG_TASK_TIMEOUT
+ 	  Keeping the default should be fine in most cases.
+ 
+ config BOOTPARAM_HUNG_TASK_PANIC
+-	bool "Panic (Reboot) On Hung Tasks"
++	int "Number of hung tasks to trigger kernel panic"
+ 	depends on DETECT_HUNG_TASK
++	default 0
+ 	help
+-	  Say Y here to enable the kernel to panic on "hung tasks",
+-	  which are bugs that cause the kernel to leave a task stuck
+-	  in uninterruptible "D" state.
++	  The number of hung tasks must be detected to trigger kernel panic.
++
++	  - 0: Don't trigger panic
++	  - N: Panic when N hung tasks are detected
+ 
+ 	  The panic can be used in combination with panic_timeout,
+ 	  to cause the system to reboot automatically after a
+diff --git a/tools/testing/selftests/wireguard/qemu/kernel.config b/tools/testing/selftests/wireguard/qemu/kernel.config
+index 936b18b..0504c11 100644
+--- a/tools/testing/selftests/wireguard/qemu/kernel.config
++++ b/tools/testing/selftests/wireguard/qemu/kernel.config
+@@ -81,7 +81,7 @@ CONFIG_WQ_WATCHDOG=y
+ CONFIG_DETECT_HUNG_TASK=y
+ CONFIG_BOOTPARAM_HARDLOCKUP_PANIC=y
+ CONFIG_BOOTPARAM_SOFTLOCKUP_PANIC=y
+-CONFIG_BOOTPARAM_HUNG_TASK_PANIC=y
++CONFIG_BOOTPARAM_HUNG_TASK_PANIC=1
+ CONFIG_PANIC_TIMEOUT=-1
+ CONFIG_STACKTRACE=y
+ CONFIG_EARLY_PRINTK=y
 -- 
-2.36.1
+2.9.4
 
