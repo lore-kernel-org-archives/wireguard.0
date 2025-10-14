@@ -4,60 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C50ACCF34C1
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 14:59:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DBCDCF34C7
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 15:03:53 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7fe10cdc;
-	Tue, 18 Nov 2025 17:32:32 +0000 (UTC)
-Received: from baidu.com (mx20.baidu.com [111.202.115.85])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 739503c5
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 75d2bec1;
+	Tue, 18 Nov 2025 17:32:33 +0000 (UTC)
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com
+ [2a00:1450:4864:20::330])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3ce71e60
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 14 Oct 2025 05:38:33 +0000 (UTC)
-From: "Li,Rongqing" <lirongqing@baidu.com>
+ Tue, 14 Oct 2025 09:45:08 +0000 (UTC)
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-46e2826d5c6so30601455e9.1
+ for <wireguard@lists.zx2c4.com>; Tue, 14 Oct 2025 02:45:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=suse.com; s=google; t=1760435108; x=1761039908; darn=lists.zx2c4.com;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=R75CvrIgcbILYeZyEie2SvMudL4DW8xIUI8yCH+RsPE=;
+ b=XXYSntzQHlmsgAQw48QnaSBpxz6HdUw8EedQmGHxqbXfqcB4a/7xNt8P9yaW1puyoE
+ hU/EogbVUYqldZSLmlNkWWVNDtYMSP30rZjGu3oWtZ0M1ZSP8mZ/9wvyPdYmYrxtDBSR
+ t+W9QRFMlGsY7jQ/HfYIPHxKOqxgAGMwGsgtpV0oR9Puk4rbAovPoT1Wzd9QIfhlXeFT
+ h3zJ3u+nwQVJIZqJaXxFTk5jE3Bkly/tTwL1BfTuqK+udr1xs1CCnMP1iMi2/mpONP/U
+ VafNEzvcU9EHE+Cc6hIHKSgjjdFcz1l+GxHKs71zHluUoDDwgsJxXBRij2/32oLxiIB5
+ 1dhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1760435108; x=1761039908;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=R75CvrIgcbILYeZyEie2SvMudL4DW8xIUI8yCH+RsPE=;
+ b=CRyh8fdf6as93bW6mAJN4EUt2tG8Gx8zCcFRCgLFu63bnGks7UulEuyNRC+DLTKf31
+ ReXB3fam6oPCFiPAZQmDGy8ptf+zM2DQMsudsL/kXnhICMlzUudcDrfkE9JriR96JT2S
+ cvpbOCn4ZtsMKNWRyXy4L+s3QHLTRtHvSq36geGrXDtf2Mqh/7JnnqvS0emsoxIgO18U
+ +b8mHcP98jLG1IwoukskrcJWxlv0S65oL+953UmC22MCiSXE0r8g5BKw4PLZobZgbmSZ
+ BYeRn21giMjTrI+vuQTMV3NdC2qj398CSXN1J6eh+mSx82zGbjI8N/kbil6VTKmGzuKf
+ CJdg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUyeLCT3CtTeWUTGf104n/8xoa9XaL05MqONui3NCIMr1wwb4iGSdSquNQLdNQGkGML9Cpm/RIEguU=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YxwBc/zHw1RVd1zYfDlHU0/sE/uLahhWX+4LaaSBep4M0X95Yt3
+ R5OKUv9ZZegYVMjgRynIuUnLZC01x4A0K6kL/bb3KShqgCcwa/MpY2N23O9vxgzbdnY=
+X-Gm-Gg: ASbGncvw3BPrqJUoDI3MLgoSnJYeHou1+kaAisGHVBA+s3H7pGjJ2ao0dJfJgIy9Cp0
+ OZU98tzMD5g7FU/Zaf+ntCnwQyG2yIHd/7ocxispRoaMdedbIO2SteGTl19qriSJoFzfSeqQrKm
+ cdmt1kgdpjdkIczV4ddlVLSatwFzUEaTZrj76MrMHfvEY4XJ+jhK7qqPzVnaKaDyY0EGbP4RUaE
+ qV4Ql1sHDlvEIhwR2E66vFQmOKLDqxFZNdCR8vSbO1nHWMaXj9Ojdq+IH54o2kQpKa86bLxAp3B
+ Xw87HajmBQiTxGOkHCZ9zEBAhgv/oLkd8gDQhL/lAdL+dEYlZgRxpyvrHIWO1/lMamqyRz/MAi0
+ L9yxx1Fi7YRK9rD0TkBUzcqPJuFSLGTNppiO2PlqZt0i+xjhXZyy5E961fybCo1DLpndyiA==
+X-Google-Smtp-Source: AGHT+IFLMF/oRlSecQb1AgZUj9ViudEM8BAiQCOLkhiN8cHZAWDwJ7zBbTzbicn8TdmEii38ZLu7Sw==
+X-Received: by 2002:a05:600c:890d:b0:46e:32f7:98fc with SMTP id
+ 5b1f17b1804b1-46fa9af3656mr132535685e9.21.1760435107774; 
+ Tue, 14 Oct 2025 02:45:07 -0700 (PDT)
+Received: from pathway.suse.cz (nat2.prg.suse.com. [195.250.132.146])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46fb489ad27sm230711415e9.15.2025.10.14.02.45.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 14 Oct 2025 02:45:07 -0700 (PDT)
+Date: Tue, 14 Oct 2025 11:45:05 +0200
+From: Petr Mladek <pmladek@suse.com>
 To: Lance Yang <lance.yang@linux.dev>
-CC: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>,
- "linux-arm-kernel@lists.infradead.org"
- <linux-arm-kernel@lists.infradead.org>, "Liam R . Howlett"
- <Liam.Howlett@oracle.com>, "linux-doc@vger.kernel.org"
- <linux-doc@vger.kernel.org>, David Hildenbrand <david@redhat.com>, "Randy
- Dunlap" <rdunlap@infradead.org>, Stanislav Fomichev <sdf@fomichev.me>,
- "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>, "Andrew
- Jeffery" <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "Russell King" <linux@armlinux.org.uk>, Lorenzo Stoakes
- <lorenzo.stoakes@oracle.com>, Shuah Khan <shuah@kernel.org>, Steven Rostedt
- <rostedt@goodmis.org>, "Jonathan Corbet" <corbet@lwn.net>, Petr Mladek
- <pmladek@suse.com>, Joel Granados <joel.granados@kernel.org>, Andrew Morton
- <akpm@linux-foundation.org>, "Phil Auld" <pauld@redhat.com>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- "linux-kselftest@vger.kernel.org" <linux-kselftest@vger.kernel.org>, Masami
- Hiramatsu <mhiramat@kernel.org>, Jakub Kicinski <kuba@kernel.org>, Pawan
- Gupta <pawan.kumar.gupta@linux.intel.com>, Simon Horman <horms@kernel.org>,
- Anshuman Khandual <anshuman.khandual@arm.com>, Florian Westphal
- <fw@strlen.de>, "netdev@vger.kernel.org" <netdev@vger.kernel.org>, Kees Cook
- <kees@kernel.org>, Arnd Bergmann <arnd@arndb.de>, "Paul E . McKenney"
- <paulmck@kernel.org>, Feng Tang <feng.tang@linux.alibaba.com>, "Jason A .
- Donenfeld" <Jason@zx2c4.com>
-Subject: =?utf-8?B?UkU6IFvlpJbpg6jpgq7ku7ZdIFJlOiBbUEFUQ0hdW3YzXSBodW5nX3Rhc2s6?=
- =?utf-8?Q?_Panic_after_fixed_number_of_hung_tasks?=
-Thread-Topic: =?utf-8?B?W+WklumDqOmCruS7tl0gUmU6IFtQQVRDSF1bdjNdIGh1bmdfdGFzazogUGFu?=
- =?utf-8?Q?ic_after_fixed_number_of_hung_tasks?=
-Thread-Index: AQHcO26DBhE8v5YbxE+aupLwXa3Lo7TAmIIAgACIa3A=
-Date: Tue, 14 Oct 2025 05:33:07 +0000
-Message-ID: <884f179defbe482b9873912ce88350b5@baidu.com>
+Cc: lirongqing <lirongqing@baidu.com>, wireguard@lists.zx2c4.com,
+ linux-arm-kernel@lists.infradead.org,
+ "Liam R . Howlett" <Liam.Howlett@oracle.com>,
+ linux-doc@vger.kernel.org, David Hildenbrand <david@redhat.com>,
+ Randy Dunlap <rdunlap@infradead.org>,
+ Stanislav Fomichev <sdf@fomichev.me>, linux-aspeed@lists.ozlabs.org,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Russell King <linux@armlinux.org.uk>,
+ Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+ Shuah Khan <shuah@kernel.org>, Steven Rostedt <rostedt@goodmis.org>,
+ Jonathan Corbet <corbet@lwn.net>, Joel Granados <joel.granados@kernel.org>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Phil Auld <pauld@redhat.com>, linux-kernel@vger.kernel.org,
+ linux-kselftest@vger.kernel.org, Masami Hiramatsu <mhiramat@kernel.org>,
+ Jakub Kicinski <kuba@kernel.org>,
+ Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+ Simon Horman <horms@kernel.org>,
+ Anshuman Khandual <anshuman.khandual@arm.com>,
+ Florian Westphal <fw@strlen.de>, netdev@vger.kernel.org,
+ Kees Cook <kees@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+ "Paul E . McKenney" <paulmck@kernel.org>,
+ Feng Tang <feng.tang@linux.alibaba.com>,
+ "Jason A . Donenfeld" <Jason@zx2c4.com>
+Subject: Re: [PATCH][v3] hung_task: Panic after fixed number of hung tasks
+Message-ID: <aO4boXFaIb0_Wiif@pathway.suse.cz>
 References: <20251012115035.2169-1-lirongqing@baidu.com>
  <588c1935-835f-4cab-9679-f31c1e903a9a@linux.dev>
-In-Reply-To: <588c1935-835f-4cab-9679-f31c1e903a9a@linux.dev>
-Accept-Language: zh-CN, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.127.72.25]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-X-FEAS-Client-IP: 172.31.50.45
-X-FE-Policy-ID: 52:10:53:SYSTEM
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <588c1935-835f-4cab-9679-f31c1e903a9a@linux.dev>
 X-Mailman-Approved-At: Tue, 18 Nov 2025 17:23:16 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -73,177 +109,54 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-DQo+IA0KPiBJIG5vdGljZWQgdGhlIGltcGxlbWVudGF0aW9uIHBhbmljcyBvbmx5IHdoZW4gTiB0
-YXNrcyBhcmUgZGV0ZWN0ZWQgd2l0aGluIGENCj4gc2luZ2xlIHNjYW4sIGJlY2F1c2UgdG90YWxf
-aHVuZ190YXNrIGlzIHJlc2V0IGZvciBlYWNoDQo+IGNoZWNrX2h1bmdfdW5pbnRlcnJ1cHRpYmxl
-X3Rhc2tzKCkgcnVuLg0KPiANCj4gU28gc29tZSBzdWdnZXN0aW9ucyB0byBhbGlnbiB0aGUgZG9j
-dW1lbnRhdGlvbiB3aXRoIHRoZSBjb2RlJ3MgYmVoYXZpb3INCj4gYmVsb3cgOikNCj4gDQoNClRy
-dWUsIEkgd2lsbCBjaGFuZ2UgdGhlIGNvbW1lbnRzIGFzIHlvdXIgc3VnZ2VzdGlvbiwgdGhhbmtz
-DQoNCi1MaQ0KDQoNCj4gT24gMjAyNS8xMC8xMiAxOTo1MCwgbGlyb25ncWluZyB3cm90ZToNCj4g
-PiBGcm9tOiBMaSBSb25nUWluZyA8bGlyb25ncWluZ0BiYWlkdS5jb20+DQo+ID4NCj4gPiBDdXJy
-ZW50bHksIHdoZW4gJ2h1bmdfdGFza19wYW5pYycgaXMgZW5hYmxlZCwgdGhlIGtlcm5lbCBwYW5p
-Y3MNCj4gPiBpbW1lZGlhdGVseSB1cG9uIGRldGVjdGluZyB0aGUgZmlyc3QgaHVuZyB0YXNrLiBI
-b3dldmVyLCBzb21lIGh1bmcNCj4gPiB0YXNrcyBhcmUgdHJhbnNpZW50IGFuZCB0aGUgc3lzdGVt
-IGNhbiByZWNvdmVyLCB3aGlsZSBvdGhlcnMgYXJlDQo+ID4gcGVyc2lzdGVudCBhbmQgbWF5IGFj
-Y3VtdWxhdGUgcHJvZ3Jlc3NpdmVseS4NCj4gPg0KPiA+IFRoaXMgcGF0Y2ggZXh0ZW5kcyB0aGUg
-J2h1bmdfdGFza19wYW5pYycgc3lzY3RsIHRvIGFsbG93IHNwZWNpZnlpbmcNCj4gPiB0aGUgbnVt
-YmVyIG9mIGh1bmcgdGFza3MgdGhhdCBtdXN0IGJlIGRldGVjdGVkIGJlZm9yZSB0cmlnZ2VyaW5n
-IGENCj4gPiBrZXJuZWwgcGFuaWMuIFRoaXMgcHJvdmlkZXMgZmluZXIgY29udHJvbCBmb3IgZW52
-aXJvbm1lbnRzIHdoZXJlDQo+ID4gdHJhbnNpZW50IGhhbmdzIG1heSBvY2N1ciBidXQgcGVyc2lz
-dGVudCBoYW5ncyBzaG91bGQgc3RpbGwgYmUgZmF0YWwuDQo+ID4NCj4gPiBUaGUgc3lzY3RsIGNh
-biBiZSBzZXQgdG86DQo+ID4gLSAwOiBkaXNhYmxlZCAobmV2ZXIgcGFuaWMpDQo+ID4gLSAxOiBv
-cmlnaW5hbCBiZWhhdmlvciAocGFuaWMgb24gZmlyc3QgaHVuZyB0YXNrKQ0KPiA+IC0gTjogcGFu
-aWMgd2hlbiBOIGh1bmcgdGFza3MgYXJlIGRldGVjdGVkDQo+ID4NCj4gPiBUaGlzIG1haW50YWlu
-cyBiYWNrd2FyZCBjb21wYXRpYmlsaXR5IHdoaWxlIHByb3ZpZGluZyBtb3JlIGZsZXhpYmlsaXR5
-DQo+ID4gZm9yIGhhbmRsaW5nIGRpZmZlcmVudCBoYW5nIHNjZW5hcmlvcy4NCj4gPg0KPiA+IFNp
-Z25lZC1vZmYtYnk6IExpIFJvbmdRaW5nIDxsaXJvbmdxaW5nQGJhaWR1LmNvbT4NCj4gPiAtLS0N
-Cj4gPiBEaWZmIHdpdGggdjI6IG5vdCBhZGQgbmV3IHN5c2N0bCwgZXh0ZW5kIGh1bmdfdGFza19w
-YW5pYw0KPiA+DQo+ID4gICBEb2N1bWVudGF0aW9uL2FkbWluLWd1aWRlL2tlcm5lbC1wYXJhbWV0
-ZXJzLnR4dCAgICAgIHwgMjANCj4gKysrKysrKysrKysrKy0tLS0tLS0NCj4gPiAgIERvY3VtZW50
-YXRpb24vYWRtaW4tZ3VpZGUvc3lzY3RsL2tlcm5lbC5yc3QgICAgICAgICAgfCAgMyArKy0NCj4g
-PiAgIGFyY2gvYXJtL2NvbmZpZ3MvYXNwZWVkX2c1X2RlZmNvbmZpZyAgICAgICAgICAgICAgICAg
-fCAgMiArLQ0KPiA+ICAga2VybmVsL2NvbmZpZ3MvZGVidWcuY29uZmlnICAgICAgICAgICAgICAg
-ICAgICAgICAgICB8ICAyICstDQo+ID4gICBrZXJuZWwvaHVuZ190YXNrLmMgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgIHwgMTYNCj4gKysrKysrKysrKystLS0tLQ0KPiA+ICAgbGli
-L0tjb25maWcuZGVidWcgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8IDEwDQo+
-ICsrKysrKy0tLS0NCj4gPiAgIHRvb2xzL3Rlc3Rpbmcvc2VsZnRlc3RzL3dpcmVndWFyZC9xZW11
-L2tlcm5lbC5jb25maWcgfCAgMiArLQ0KPiA+ICAgNyBmaWxlcyBjaGFuZ2VkLCAzNSBpbnNlcnRp
-b25zKCspLCAyMCBkZWxldGlvbnMoLSkNCj4gPg0KPiA+IGRpZmYgLS1naXQgYS9Eb2N1bWVudGF0
-aW9uL2FkbWluLWd1aWRlL2tlcm5lbC1wYXJhbWV0ZXJzLnR4dA0KPiA+IGIvRG9jdW1lbnRhdGlv
-bi9hZG1pbi1ndWlkZS9rZXJuZWwtcGFyYW1ldGVycy50eHQNCj4gPiBpbmRleCBhNTFhYjQ2Li43
-ZDlhOGVlIDEwMDY0NA0KPiA+IC0tLSBhL0RvY3VtZW50YXRpb24vYWRtaW4tZ3VpZGUva2VybmVs
-LXBhcmFtZXRlcnMudHh0DQo+ID4gKysrIGIvRG9jdW1lbnRhdGlvbi9hZG1pbi1ndWlkZS9rZXJu
-ZWwtcGFyYW1ldGVycy50eHQNCj4gPiBAQCAtMTk5MiwxNCArMTk5MiwyMCBAQA0KPiA+ICAgCQkJ
-dGhlIGFkZGVkIG1lbW9yeSBibG9jayBpdHNlbGYgZG8gbm90IGJlIGFmZmVjdGVkLg0KPiA+DQo+
-ID4gICAJaHVuZ190YXNrX3BhbmljPQ0KPiA+IC0JCQlbS05MXSBTaG91bGQgdGhlIGh1bmcgdGFz
-ayBkZXRlY3RvciBnZW5lcmF0ZSBwYW5pY3MuDQo+ID4gLQkJCUZvcm1hdDogMCB8IDENCj4gPiAr
-CQkJW0tOTF0gTnVtYmVyIG9mIGh1bmcgdGFza3MgdG8gdHJpZ2dlciBrZXJuZWwgcGFuaWMuDQo+
-ID4gKwkJCUZvcm1hdDogPGludD4NCj4gPiArDQo+ID4gKwkJCVNldCB0aGlzIHRvIHRoZSBudW1i
-ZXIgb2YgaHVuZyB0YXNrcyB0aGF0IG11c3QgYmUNCj4gPiArCQkJZGV0ZWN0ZWQgYmVmb3JlIHRy
-aWdnZXJpbmcgYSBrZXJuZWwgcGFuaWMuDQo+ID4gKw0KPiA+ICsJCQkwOiBkb24ndCBwYW5pYw0K
-PiA+ICsJCQkxOiBwYW5pYyBpbW1lZGlhdGVseSBvbiBmaXJzdCBodW5nIHRhc2sNCj4gPiArCQkJ
-TjogcGFuaWMgYWZ0ZXIgTiBodW5nIHRhc2tzIGFyZSBkZXRlY3QNCj4gDQo+IFRoZSBkZXNjcmlw
-dGlvbiBzaG91bGQgYmUgbW9yZSBzcGVjaWZpYyA6KQ0KPiANCj4gTjogcGFuaWMgYWZ0ZXIgTiBo
-dW5nIHRhc2tzIGFyZSBkZXRlY3RlZCBpbiBhIHNpbmdsZSBzY2FuDQo+IA0KPiBXb3VsZCBpdCBi
-ZSBiZXR0ZXIgYW5kIGNsZWFuZXI/DQo+IA0KPiA+DQo+ID4gLQkJCUEgdmFsdWUgb2YgMSBpbnN0
-cnVjdHMgdGhlIGtlcm5lbCB0byBwYW5pYyB3aGVuIGENCj4gPiAtCQkJaHVuZyB0YXNrIGlzIGRl
-dGVjdGVkLiBUaGUgZGVmYXVsdCB2YWx1ZSBpcyBjb250cm9sbGVkDQo+ID4gLQkJCWJ5IHRoZSBD
-T05GSUdfQk9PVFBBUkFNX0hVTkdfVEFTS19QQU5JQyBidWlsZC10aW1lDQo+ID4gLQkJCW9wdGlv
-bi4gVGhlIHZhbHVlIHNlbGVjdGVkIGJ5IHRoaXMgYm9vdCBwYXJhbWV0ZXIgY2FuDQo+ID4gLQkJ
-CWJlIGNoYW5nZWQgbGF0ZXIgYnkgdGhlIGtlcm5lbC5odW5nX3Rhc2tfcGFuaWMgc3lzY3RsLg0K
-PiA+ICsJCQlUaGUgZGVmYXVsdCB2YWx1ZSBpcyBjb250cm9sbGVkIGJ5IHRoZQ0KPiA+ICsJCQlD
-T05GSUdfQk9PVFBBUkFNX0hVTkdfVEFTS19QQU5JQyBidWlsZC10aW1lIG9wdGlvbi4NCj4gVGhl
-IHZhbHVlDQo+ID4gKwkJCXNlbGVjdGVkIGJ5IHRoaXMgYm9vdCBwYXJhbWV0ZXIgY2FuIGJlIGNo
-YW5nZWQgbGF0ZXIgYnkgdGhlDQo+ID4gKwkJCWtlcm5lbC5odW5nX3Rhc2tfcGFuaWMgc3lzY3Rs
-Lg0KPiA+DQo+ID4gICAJaHZjX2l1Y3Y9CVtTMzkwXQlOdW1iZXIgb2Ygei9WTSBJVUNWIGh5cGVy
-dmlzb3IgY29uc29sZQ0KPiAoSFZDKQ0KPiA+ICAgCQkJCXRlcm1pbmFsIGRldmljZXMuIFZhbGlk
-IHZhbHVlczogMC4uOCBkaWZmIC0tZ2l0DQo+ID4gYS9Eb2N1bWVudGF0aW9uL2FkbWluLWd1aWRl
-L3N5c2N0bC9rZXJuZWwucnN0DQo+ID4gYi9Eb2N1bWVudGF0aW9uL2FkbWluLWd1aWRlL3N5c2N0
-bC9rZXJuZWwucnN0DQo+ID4gaW5kZXggZjNlZTgwNy4uMGE4ZGZhYiAxMDA2NDQNCj4gPiAtLS0g
-YS9Eb2N1bWVudGF0aW9uL2FkbWluLWd1aWRlL3N5c2N0bC9rZXJuZWwucnN0DQo+ID4gKysrIGIv
-RG9jdW1lbnRhdGlvbi9hZG1pbi1ndWlkZS9zeXNjdGwva2VybmVsLnJzdA0KPiA+IEBAIC0zOTcs
-NyArMzk3LDggQEAgYSBodW5nIHRhc2sgaXMgZGV0ZWN0ZWQuDQo+ID4gICBodW5nX3Rhc2tfcGFu
-aWMNCj4gPiAgID09PT09PT09PT09PT09PQ0KPiA+DQo+ID4gLUNvbnRyb2xzIHRoZSBrZXJuZWwn
-cyBiZWhhdmlvciB3aGVuIGEgaHVuZyB0YXNrIGlzIGRldGVjdGVkLg0KPiA+ICtXaGVuIHNldCB0
-byBhIG5vbi16ZXJvIHZhbHVlLCBhIGtlcm5lbCBwYW5pYyB3aWxsIGJlIHRyaWdnZXJlZCBpZiB0
-aGUNCj4gPiArbnVtYmVyIG9mIGRldGVjdGVkIGh1bmcgdGFza3MgcmVhY2hlcyB0aGlzIHZhbHVl
-DQo+IA0KPiBIbW0uLi4gdGhhdCBpcyBhbHNvIGFtYmlndW91cyAuLi4NCj4gDQo+ICtXaGVuIHNl
-dCB0byBhIG5vbi16ZXJvIHZhbHVlLCBhIGtlcm5lbCBwYW5pYyB3aWxsIGJlIHRyaWdnZXJlZCBp
-ZiB0aGUNCj4gK251bWJlciBvZiBodW5nIHRhc2tzIGZvdW5kIGR1cmluZyBhIHNpbmdsZSBzY2Fu
-IHJlYWNoZXMgdGhpcyB2YWx1ZS4NCj4gDQo+ID4gICBUaGlzIGZpbGUgc2hvd3MgdXAgaWYgYGBD
-T05GSUdfREVURUNUX0hVTkdfVEFTS2BgIGlzIGVuYWJsZWQuDQo+ID4NCj4gPiAgID0gPT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQ0KPiA+IGRpZmYgLS1n
-aXQgYS9hcmNoL2FybS9jb25maWdzL2FzcGVlZF9nNV9kZWZjb25maWcNCj4gPiBiL2FyY2gvYXJt
-L2NvbmZpZ3MvYXNwZWVkX2c1X2RlZmNvbmZpZw0KPiA+IGluZGV4IDYxY2VlMWUuLmMzYjBkNWYg
-MTAwNjQ0DQo+ID4gLS0tIGEvYXJjaC9hcm0vY29uZmlncy9hc3BlZWRfZzVfZGVmY29uZmlnDQo+
-ID4gKysrIGIvYXJjaC9hcm0vY29uZmlncy9hc3BlZWRfZzVfZGVmY29uZmlnDQo+ID4gQEAgLTMw
-OCw3ICszMDgsNyBAQCBDT05GSUdfUEFOSUNfT05fT09QUz15DQo+ID4gICBDT05GSUdfUEFOSUNf
-VElNRU9VVD0tMQ0KPiA+ICAgQ09ORklHX1NPRlRMT0NLVVBfREVURUNUT1I9eQ0KPiA+ICAgQ09O
-RklHX0JPT1RQQVJBTV9TT0ZUTE9DS1VQX1BBTklDPXkNCj4gPiAtQ09ORklHX0JPT1RQQVJBTV9I
-VU5HX1RBU0tfUEFOSUM9eQ0KPiA+ICtDT05GSUdfQk9PVFBBUkFNX0hVTkdfVEFTS19QQU5JQz0x
-DQo+ID4gICBDT05GSUdfV1FfV0FUQ0hET0c9eQ0KPiA+ICAgIyBDT05GSUdfU0NIRURfREVCVUcg
-aXMgbm90IHNldA0KPiA+ICAgQ09ORklHX0ZVTkNUSU9OX1RSQUNFUj15DQo+ID4gZGlmZiAtLWdp
-dCBhL2tlcm5lbC9jb25maWdzL2RlYnVnLmNvbmZpZyBiL2tlcm5lbC9jb25maWdzL2RlYnVnLmNv
-bmZpZw0KPiA+IGluZGV4IGU4MTMyN2QuLjlmNmFiN2QgMTAwNjQ0DQo+ID4gLS0tIGEva2VybmVs
-L2NvbmZpZ3MvZGVidWcuY29uZmlnDQo+ID4gKysrIGIva2VybmVsL2NvbmZpZ3MvZGVidWcuY29u
-ZmlnDQo+ID4gQEAgLTgzLDcgKzgzLDcgQEAgQ09ORklHX1NMVUJfREVCVUdfT049eQ0KPiA+ICAg
-Iw0KPiA+ICAgIyBEZWJ1ZyBPb3BzLCBMb2NrdXBzIGFuZCBIYW5ncw0KPiA+ICAgIw0KPiA+IC0j
-IENPTkZJR19CT09UUEFSQU1fSFVOR19UQVNLX1BBTklDIGlzIG5vdCBzZXQNCj4gPiArQ09ORklH
-X0JPT1RQQVJBTV9IVU5HX1RBU0tfUEFOSUM9MA0KPiA+ICAgIyBDT05GSUdfQk9PVFBBUkFNX1NP
-RlRMT0NLVVBfUEFOSUMgaXMgbm90IHNldA0KPiA+ICAgQ09ORklHX0RFQlVHX0FUT01JQ19TTEVF
-UD15DQo+ID4gICBDT05GSUdfREVURUNUX0hVTkdfVEFTSz15DQo+ID4gZGlmZiAtLWdpdCBhL2tl
-cm5lbC9odW5nX3Rhc2suYyBiL2tlcm5lbC9odW5nX3Rhc2suYyBpbmRleA0KPiA+IGIyYzFmMTQu
-LjM5MjllZDkgMTAwNjQ0DQo+ID4gLS0tIGEva2VybmVsL2h1bmdfdGFzay5jDQo+ID4gKysrIGIv
-a2VybmVsL2h1bmdfdGFzay5jDQo+ID4gQEAgLTgxLDcgKzgxLDcgQEAgc3RhdGljIHVuc2lnbmVk
-IGludCBfX3JlYWRfbW9zdGx5DQo+IHN5c2N0bF9odW5nX3Rhc2tfYWxsX2NwdV9iYWNrdHJhY2U7
-DQo+ID4gICAgKiBodW5nIHRhc2sgaXMgZGV0ZWN0ZWQ6DQo+ID4gICAgKi8NCj4gPiAgIHN0YXRp
-YyB1bnNpZ25lZCBpbnQgX19yZWFkX21vc3RseSBzeXNjdGxfaHVuZ190YXNrX3BhbmljID0NCj4g
-PiAtCUlTX0VOQUJMRUQoQ09ORklHX0JPT1RQQVJBTV9IVU5HX1RBU0tfUEFOSUMpOw0KPiA+ICsJ
-Q09ORklHX0JPT1RQQVJBTV9IVU5HX1RBU0tfUEFOSUM7DQo+ID4NCj4gPiAgIHN0YXRpYyBpbnQN
-Cj4gPiAgIGh1bmdfdGFza19wYW5pYyhzdHJ1Y3Qgbm90aWZpZXJfYmxvY2sgKnRoaXMsIHVuc2ln
-bmVkIGxvbmcgZXZlbnQsDQo+ID4gdm9pZCAqcHRyKSBAQCAtMjE4LDggKzIxOCwxMSBAQCBzdGF0
-aWMgaW5saW5lIHZvaWQNCj4gZGVidWdfc2hvd19ibG9ja2VyKHN0cnVjdCB0YXNrX3N0cnVjdCAq
-dGFzaywgdW5zaWduZWQgbG9uZyB0aQ0KPiA+ICAgfQ0KPiA+ICAgI2VuZGlmDQo+ID4NCj4gPiAt
-c3RhdGljIHZvaWQgY2hlY2tfaHVuZ190YXNrKHN0cnVjdCB0YXNrX3N0cnVjdCAqdCwgdW5zaWdu
-ZWQgbG9uZw0KPiA+IHRpbWVvdXQpDQo+ID4gK3N0YXRpYyB2b2lkIGNoZWNrX2h1bmdfdGFzayhz
-dHJ1Y3QgdGFza19zdHJ1Y3QgKnQsIHVuc2lnbmVkIGxvbmcgdGltZW91dCwNCj4gPiArCQl1bnNp
-Z25lZCBsb25nIHByZXZfZGV0ZWN0X2NvdW50KQ0KPiA+ICAgew0KPiA+ICsJdW5zaWduZWQgbG9u
-ZyB0b3RhbF9odW5nX3Rhc2s7DQo+ID4gKw0KPiA+ICAgCWlmICghdGFza19pc19odW5nKHQsIHRp
-bWVvdXQpKQ0KPiA+ICAgCQlyZXR1cm47DQo+ID4NCj4gPiBAQCAtMjI5LDkgKzIzMiwxMSBAQCBz
-dGF0aWMgdm9pZCBjaGVja19odW5nX3Rhc2soc3RydWN0IHRhc2tfc3RydWN0ICp0LA0KPiB1bnNp
-Z25lZCBsb25nIHRpbWVvdXQpDQo+ID4gICAJICovDQo+ID4gICAJc3lzY3RsX2h1bmdfdGFza19k
-ZXRlY3RfY291bnQrKzsNCj4gPg0KPiA+ICsJdG90YWxfaHVuZ190YXNrID0gc3lzY3RsX2h1bmdf
-dGFza19kZXRlY3RfY291bnQgLSBwcmV2X2RldGVjdF9jb3VudDsNCj4gPiAgIAl0cmFjZV9zY2hl
-ZF9wcm9jZXNzX2hhbmcodCk7DQo+ID4NCj4gPiAtCWlmIChzeXNjdGxfaHVuZ190YXNrX3Bhbmlj
-KSB7DQo+ID4gKwlpZiAoc3lzY3RsX2h1bmdfdGFza19wYW5pYyAmJg0KPiA+ICsJCQkodG90YWxf
-aHVuZ190YXNrID49IHN5c2N0bF9odW5nX3Rhc2tfcGFuaWMpKSB7DQo+ID4gICAJCWNvbnNvbGVf
-dmVyYm9zZSgpOw0KPiA+ICAgCQlodW5nX3Rhc2tfc2hvd19sb2NrID0gdHJ1ZTsNCj4gPiAgIAkJ
-aHVuZ190YXNrX2NhbGxfcGFuaWMgPSB0cnVlOw0KPiA+IEBAIC0zMDAsNiArMzA1LDcgQEAgc3Rh
-dGljIHZvaWQNCj4gY2hlY2tfaHVuZ191bmludGVycnVwdGlibGVfdGFza3ModW5zaWduZWQgbG9u
-ZyB0aW1lb3V0KQ0KPiA+ICAgCWludCBtYXhfY291bnQgPSBzeXNjdGxfaHVuZ190YXNrX2NoZWNr
-X2NvdW50Ow0KPiA+ICAgCXVuc2lnbmVkIGxvbmcgbGFzdF9icmVhayA9IGppZmZpZXM7DQo+ID4g
-ICAJc3RydWN0IHRhc2tfc3RydWN0ICpnLCAqdDsNCj4gPiArCXVuc2lnbmVkIGxvbmcgcHJldl9k
-ZXRlY3RfY291bnQgPSBzeXNjdGxfaHVuZ190YXNrX2RldGVjdF9jb3VudDsNCj4gPg0KPiA+ICAg
-CS8qDQo+ID4gICAJICogSWYgdGhlIHN5c3RlbSBjcmFzaGVkIGFscmVhZHkgdGhlbiBhbGwgYmV0
-cyBhcmUgb2ZmLCBAQCAtMzIwLDcNCj4gPiArMzI2LDcgQEAgc3RhdGljIHZvaWQgY2hlY2tfaHVu
-Z191bmludGVycnVwdGlibGVfdGFza3ModW5zaWduZWQgbG9uZw0KPiB0aW1lb3V0KQ0KPiA+ICAg
-CQkJbGFzdF9icmVhayA9IGppZmZpZXM7DQo+ID4gICAJCX0NCj4gPg0KPiA+IC0JCWNoZWNrX2h1
-bmdfdGFzayh0LCB0aW1lb3V0KTsNCj4gPiArCQljaGVja19odW5nX3Rhc2sodCwgdGltZW91dCwg
-cHJldl9kZXRlY3RfY291bnQpOw0KPiA+ICAgCX0NCj4gPiAgICB1bmxvY2s6DQo+ID4gICAJcmN1
-X3JlYWRfdW5sb2NrKCk7DQo+ID4gQEAgLTM4OSw3ICszOTUsNyBAQCBzdGF0aWMgY29uc3Qgc3Ry
-dWN0IGN0bF90YWJsZSBodW5nX3Rhc2tfc3lzY3Rsc1tdID0gew0KPiA+ICAgCQkubW9kZQkJPSAw
-NjQ0LA0KPiA+ICAgCQkucHJvY19oYW5kbGVyCT0gcHJvY19kb2ludHZlY19taW5tYXgsDQo+ID4g
-ICAJCS5leHRyYTEJCT0gU1lTQ1RMX1pFUk8sDQo+ID4gLQkJLmV4dHJhMgkJPSBTWVNDVExfT05F
-LA0KPiA+ICsJCS5leHRyYTIJCT0gU1lTQ1RMX0lOVF9NQVgsDQo+ID4gICAJfSwNCj4gPiAgIAl7
-DQo+ID4gICAJCS5wcm9jbmFtZQk9ICJodW5nX3Rhc2tfY2hlY2tfY291bnQiLA0KPiA+IGRpZmYg
-LS1naXQgYS9saWIvS2NvbmZpZy5kZWJ1ZyBiL2xpYi9LY29uZmlnLmRlYnVnIGluZGV4DQo+ID4g
-MzAzNGUyOTQuLjA3N2I5ZTQgMTAwNjQ0DQo+ID4gLS0tIGEvbGliL0tjb25maWcuZGVidWcNCj4g
-PiArKysgYi9saWIvS2NvbmZpZy5kZWJ1Zw0KPiA+IEBAIC0xMjU4LDEyICsxMjU4LDE0IEBAIGNv
-bmZpZyBERUZBVUxUX0hVTkdfVEFTS19USU1FT1VUDQo+ID4gICAJICBLZWVwaW5nIHRoZSBkZWZh
-dWx0IHNob3VsZCBiZSBmaW5lIGluIG1vc3QgY2FzZXMuDQo+ID4NCj4gPiAgIGNvbmZpZyBCT09U
-UEFSQU1fSFVOR19UQVNLX1BBTklDDQo+ID4gLQlib29sICJQYW5pYyAoUmVib290KSBPbiBIdW5n
-IFRhc2tzIg0KPiA+ICsJaW50ICJOdW1iZXIgb2YgaHVuZyB0YXNrcyB0byB0cmlnZ2VyIGtlcm5l
-bCBwYW5pYyINCj4gPiAgIAlkZXBlbmRzIG9uIERFVEVDVF9IVU5HX1RBU0sNCj4gPiArCWRlZmF1
-bHQgMA0KPiA+ICAgCWhlbHANCj4gPiAtCSAgU2F5IFkgaGVyZSB0byBlbmFibGUgdGhlIGtlcm5l
-bCB0byBwYW5pYyBvbiAiaHVuZyB0YXNrcyIsDQo+ID4gLQkgIHdoaWNoIGFyZSBidWdzIHRoYXQg
-Y2F1c2UgdGhlIGtlcm5lbCB0byBsZWF2ZSBhIHRhc2sgc3R1Y2sNCj4gPiAtCSAgaW4gdW5pbnRl
-cnJ1cHRpYmxlICJEIiBzdGF0ZS4NCj4gPiArCSAgVGhlIG51bWJlciBvZiBodW5nIHRhc2tzIG11
-c3QgYmUgZGV0ZWN0ZWQgdG8gdHJpZ2dlciBrZXJuZWwgcGFuaWMuDQo+ID4gKw0KPiA+ICsJICAt
-IDA6IERvbid0IHRyaWdnZXIgcGFuaWMNCj4gPiArCSAgLSBOOiBQYW5pYyB3aGVuIE4gaHVuZyB0
-YXNrcyBhcmUgZGV0ZWN0ZWQNCj4gDQo+ICsJICAtIE46IFBhbmljIHdoZW4gTiBodW5nIHRhc2tz
-IGFyZSBkZXRlY3RlZCBpbiBhIHNpbmdsZSBzY2FuDQo+IA0KPiBXaXRoIHRoZXNlIGRvY3VtZW50
-YXRpb24gY2hhbmdlcywgdGhpcyBwYXRjaCB3b3VsZCBhY2N1cmF0ZWx5IGRlc2NyaWJlIGl0cw0K
-PiBiZWhhdmlvciwgSU1ITy4NCj4gDQo+ID4NCj4gPiAgIAkgIFRoZSBwYW5pYyBjYW4gYmUgdXNl
-ZCBpbiBjb21iaW5hdGlvbiB3aXRoIHBhbmljX3RpbWVvdXQsDQo+ID4gICAJICB0byBjYXVzZSB0
-aGUgc3lzdGVtIHRvIHJlYm9vdCBhdXRvbWF0aWNhbGx5IGFmdGVyIGEgZGlmZiAtLWdpdA0KPiA+
-IGEvdG9vbHMvdGVzdGluZy9zZWxmdGVzdHMvd2lyZWd1YXJkL3FlbXUva2VybmVsLmNvbmZpZw0K
-PiA+IGIvdG9vbHMvdGVzdGluZy9zZWxmdGVzdHMvd2lyZWd1YXJkL3FlbXUva2VybmVsLmNvbmZp
-Zw0KPiA+IGluZGV4IDkzNmIxOGIuLjA1MDRjMTEgMTAwNjQ0DQo+ID4gLS0tIGEvdG9vbHMvdGVz
-dGluZy9zZWxmdGVzdHMvd2lyZWd1YXJkL3FlbXUva2VybmVsLmNvbmZpZw0KPiA+ICsrKyBiL3Rv
-b2xzL3Rlc3Rpbmcvc2VsZnRlc3RzL3dpcmVndWFyZC9xZW11L2tlcm5lbC5jb25maWcNCj4gPiBA
-QCAtODEsNyArODEsNyBAQCBDT05GSUdfV1FfV0FUQ0hET0c9eQ0KPiA+ICAgQ09ORklHX0RFVEVD
-VF9IVU5HX1RBU0s9eQ0KPiA+ICAgQ09ORklHX0JPT1RQQVJBTV9IQVJETE9DS1VQX1BBTklDPXkN
-Cj4gPiAgIENPTkZJR19CT09UUEFSQU1fU09GVExPQ0tVUF9QQU5JQz15DQo+ID4gLUNPTkZJR19C
-T09UUEFSQU1fSFVOR19UQVNLX1BBTklDPXkNCj4gPiArQ09ORklHX0JPT1RQQVJBTV9IVU5HX1RB
-U0tfUEFOSUM9MQ0KPiA+ICAgQ09ORklHX1BBTklDX1RJTUVPVVQ9LTENCj4gPiAgIENPTkZJR19T
-VEFDS1RSQUNFPXkNCj4gPiAgIENPTkZJR19FQVJMWV9QUklOVEs9eQ0KPiANCg0K
+On Tue 2025-10-14 13:23:58, Lance Yang wrote:
+> Thanks for the patch!
+> 
+> I noticed the implementation panics only when N tasks are detected
+> within a single scan, because total_hung_task is reset for each
+> check_hung_uninterruptible_tasks() run.
+
+Great catch!
+
+Does it make sense?
+Is is the intended behavior, please?
+
+> So some suggestions to align the documentation with the code's
+> behavior below :)
+
+> On 2025/10/12 19:50, lirongqing wrote:
+> > From: Li RongQing <lirongqing@baidu.com>
+> > 
+> > Currently, when 'hung_task_panic' is enabled, the kernel panics
+> > immediately upon detecting the first hung task. However, some hung
+> > tasks are transient and the system can recover, while others are
+> > persistent and may accumulate progressively.
+
+My understanding is that this patch wanted to do:
+
+   + report even temporary stalls
+   + panic only when the stall was much longer and likely persistent
+
+Which might make some sense. But the code does something else.
+
+> > --- a/kernel/hung_task.c
+> > +++ b/kernel/hung_task.c
+> > @@ -229,9 +232,11 @@ static void check_hung_task(struct task_struct *t, unsigned long timeout)
+> >   	 */
+> >   	sysctl_hung_task_detect_count++;
+> > +	total_hung_task = sysctl_hung_task_detect_count - prev_detect_count;
+> >   	trace_sched_process_hang(t);
+> > -	if (sysctl_hung_task_panic) {
+> > +	if (sysctl_hung_task_panic &&
+> > +			(total_hung_task >= sysctl_hung_task_panic)) {
+> >   		console_verbose();
+> >   		hung_task_show_lock = true;
+> >   		hung_task_call_panic = true;
+
+I would expect that this patch added another counter, similar to
+sysctl_hung_task_detect_count. It would be incremented only
+once per check when a hung task was detected. And it would
+be cleared (reset) when no hung task was found.
+
+Best Regards,
+Petr
