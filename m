@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D43EFCF34C3
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 14:59:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C50ACCF34C1
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 14:59:42 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1225dd04;
-	Tue, 18 Nov 2025 17:32:31 +0000 (UTC)
-Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com
- [91.218.175.173])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f81a71e1
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7fe10cdc;
+	Tue, 18 Nov 2025 17:32:32 +0000 (UTC)
+Received: from baidu.com (mx20.baidu.com [111.202.115.85])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 739503c5
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 14 Oct 2025 05:24:11 +0000 (UTC)
-Message-ID: <588c1935-835f-4cab-9679-f31c1e903a9a@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1760419449;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rpX3fKP+qE+Cx5wSUCGxJKl073ySrCz333lfcH4KD3U=;
- b=p8leib+/+Uzn8bRajg1xnIwVcJSrt3m0lLnVFEIkwQAkMvKJQmbU9EGJUvpUGsXfHbBKMz
- ViA1mGiVwlTmDegFHZtPQpjF1hQMZ/LGvEipWPUwAW24TAK7NbpWInZInaEKhsMcGnXez2
- /yS+HTRDNOUcLHOMcRQGei7svVjH4HY=
-Date: Tue, 14 Oct 2025 13:23:58 +0800
-MIME-Version: 1.0
-Subject: Re: [PATCH][v3] hung_task: Panic after fixed number of hung tasks
-Content-Language: en-US
-To: lirongqing <lirongqing@baidu.com>
+ Tue, 14 Oct 2025 05:38:33 +0000 (UTC)
+From: "Li,Rongqing" <lirongqing@baidu.com>
+To: Lance Yang <lance.yang@linux.dev>
+CC: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>,
+ "linux-arm-kernel@lists.infradead.org"
+ <linux-arm-kernel@lists.infradead.org>, "Liam R . Howlett"
+ <Liam.Howlett@oracle.com>, "linux-doc@vger.kernel.org"
+ <linux-doc@vger.kernel.org>, David Hildenbrand <david@redhat.com>, "Randy
+ Dunlap" <rdunlap@infradead.org>, Stanislav Fomichev <sdf@fomichev.me>,
+ "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>, "Andrew
+ Jeffery" <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "Russell King" <linux@armlinux.org.uk>, Lorenzo Stoakes
+ <lorenzo.stoakes@oracle.com>, Shuah Khan <shuah@kernel.org>, Steven Rostedt
+ <rostedt@goodmis.org>, "Jonathan Corbet" <corbet@lwn.net>, Petr Mladek
+ <pmladek@suse.com>, Joel Granados <joel.granados@kernel.org>, Andrew Morton
+ <akpm@linux-foundation.org>, "Phil Auld" <pauld@redhat.com>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "linux-kselftest@vger.kernel.org" <linux-kselftest@vger.kernel.org>, Masami
+ Hiramatsu <mhiramat@kernel.org>, Jakub Kicinski <kuba@kernel.org>, Pawan
+ Gupta <pawan.kumar.gupta@linux.intel.com>, Simon Horman <horms@kernel.org>,
+ Anshuman Khandual <anshuman.khandual@arm.com>, Florian Westphal
+ <fw@strlen.de>, "netdev@vger.kernel.org" <netdev@vger.kernel.org>, Kees Cook
+ <kees@kernel.org>, Arnd Bergmann <arnd@arndb.de>, "Paul E . McKenney"
+ <paulmck@kernel.org>, Feng Tang <feng.tang@linux.alibaba.com>, "Jason A .
+ Donenfeld" <Jason@zx2c4.com>
+Subject: =?utf-8?B?UkU6IFvlpJbpg6jpgq7ku7ZdIFJlOiBbUEFUQ0hdW3YzXSBodW5nX3Rhc2s6?=
+ =?utf-8?Q?_Panic_after_fixed_number_of_hung_tasks?=
+Thread-Topic: =?utf-8?B?W+WklumDqOmCruS7tl0gUmU6IFtQQVRDSF1bdjNdIGh1bmdfdGFzazogUGFu?=
+ =?utf-8?Q?ic_after_fixed_number_of_hung_tasks?=
+Thread-Index: AQHcO26DBhE8v5YbxE+aupLwXa3Lo7TAmIIAgACIa3A=
+Date: Tue, 14 Oct 2025 05:33:07 +0000
+Message-ID: <884f179defbe482b9873912ce88350b5@baidu.com>
 References: <20251012115035.2169-1-lirongqing@baidu.com>
-Cc: wireguard@lists.zx2c4.com, linux-arm-kernel@lists.infradead.org,
- "Liam R . Howlett" <Liam.Howlett@oracle.com>, linux-doc@vger.kernel.org,
- David Hildenbrand <david@redhat.com>, Randy Dunlap <rdunlap@infradead.org>,
- Stanislav Fomichev <sdf@fomichev.me>, linux-aspeed@lists.ozlabs.org,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Russell King <linux@armlinux.org.uk>,
- Lorenzo Stoakes <lorenzo.stoakes@oracle.com>, Shuah Khan <shuah@kernel.org>,
- Steven Rostedt <rostedt@goodmis.org>, Jonathan Corbet <corbet@lwn.net>,
- Petr Mladek <pmladek@suse.com>, Joel Granados <joel.granados@kernel.org>,
- Andrew Morton <akpm@linux-foundation.org>, Phil Auld <pauld@redhat.com>,
- linux-kernel@vger.kernel.org, linux-kselftest@vger.kernel.org,
- Masami Hiramatsu <mhiramat@kernel.org>, Jakub Kicinski <kuba@kernel.org>,
- Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
- Simon Horman <horms@kernel.org>,
- Anshuman Khandual <anshuman.khandual@arm.com>,
- Florian Westphal <fw@strlen.de>, netdev@vger.kernel.org,
- Kees Cook <kees@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
- "Paul E . McKenney" <paulmck@kernel.org>,
- Feng Tang <feng.tang@linux.alibaba.com>,
- "Jason A . Donenfeld" <Jason@zx2c4.com>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
- include these headers.
-From: Lance Yang <lance.yang@linux.dev>
-In-Reply-To: <20251012115035.2169-1-lirongqing@baidu.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+ <588c1935-835f-4cab-9679-f31c1e903a9a@linux.dev>
+In-Reply-To: <588c1935-835f-4cab-9679-f31c1e903a9a@linux.dev>
+Accept-Language: zh-CN, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.127.72.25]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-FEAS-Client-IP: 172.31.50.45
+X-FE-Policy-ID: 52:10:53:SYSTEM
 X-Mailman-Approved-At: Tue, 18 Nov 2025 17:23:16 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -74,239 +73,177 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Thanks for the patch!
-
-I noticed the implementation panics only when N tasks are detected
-within a single scan, because total_hung_task is reset for each
-check_hung_uninterruptible_tasks() run.
-
-So some suggestions to align the documentation with the code's
-behavior below :)
-
-On 2025/10/12 19:50, lirongqing wrote:
-> From: Li RongQing <lirongqing@baidu.com>
-> 
-> Currently, when 'hung_task_panic' is enabled, the kernel panics
-> immediately upon detecting the first hung task. However, some hung
-> tasks are transient and the system can recover, while others are
-> persistent and may accumulate progressively.
-> 
-> This patch extends the 'hung_task_panic' sysctl to allow specifying
-> the number of hung tasks that must be detected before triggering
-> a kernel panic. This provides finer control for environments where
-> transient hangs may occur but persistent hangs should still be fatal.
-> 
-> The sysctl can be set to:
-> - 0: disabled (never panic)
-> - 1: original behavior (panic on first hung task)
-> - N: panic when N hung tasks are detected
-> 
-> This maintains backward compatibility while providing more flexibility
-> for handling different hang scenarios.
-> 
-> Signed-off-by: Li RongQing <lirongqing@baidu.com>
-> ---
-> Diff with v2: not add new sysctl, extend hung_task_panic
-> 
->   Documentation/admin-guide/kernel-parameters.txt      | 20 +++++++++++++-------
->   Documentation/admin-guide/sysctl/kernel.rst          |  3 ++-
->   arch/arm/configs/aspeed_g5_defconfig                 |  2 +-
->   kernel/configs/debug.config                          |  2 +-
->   kernel/hung_task.c                                   | 16 +++++++++++-----
->   lib/Kconfig.debug                                    | 10 ++++++----
->   tools/testing/selftests/wireguard/qemu/kernel.config |  2 +-
->   7 files changed, 35 insertions(+), 20 deletions(-)
-> 
-> diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-> index a51ab46..7d9a8ee 100644
-> --- a/Documentation/admin-guide/kernel-parameters.txt
-> +++ b/Documentation/admin-guide/kernel-parameters.txt
-> @@ -1992,14 +1992,20 @@
->   			the added memory block itself do not be affected.
->   
->   	hung_task_panic=
-> -			[KNL] Should the hung task detector generate panics.
-> -			Format: 0 | 1
-> +			[KNL] Number of hung tasks to trigger kernel panic.
-> +			Format: <int>
-> +
-> +			Set this to the number of hung tasks that must be
-> +			detected before triggering a kernel panic.
-> +
-> +			0: don't panic
-> +			1: panic immediately on first hung task
-> +			N: panic after N hung tasks are detect
-
-The description should be more specific :)
-
-N: panic after N hung tasks are detected in a single scan
-
-Would it be better and cleaner?
-
->   
-> -			A value of 1 instructs the kernel to panic when a
-> -			hung task is detected. The default value is controlled
-> -			by the CONFIG_BOOTPARAM_HUNG_TASK_PANIC build-time
-> -			option. The value selected by this boot parameter can
-> -			be changed later by the kernel.hung_task_panic sysctl.
-> +			The default value is controlled by the
-> +			CONFIG_BOOTPARAM_HUNG_TASK_PANIC build-time option. The value
-> +			selected by this boot parameter can be changed later by the
-> +			kernel.hung_task_panic sysctl.
->   
->   	hvc_iucv=	[S390]	Number of z/VM IUCV hypervisor console (HVC)
->   				terminal devices. Valid values: 0..8
-> diff --git a/Documentation/admin-guide/sysctl/kernel.rst b/Documentation/admin-guide/sysctl/kernel.rst
-> index f3ee807..0a8dfab 100644
-> --- a/Documentation/admin-guide/sysctl/kernel.rst
-> +++ b/Documentation/admin-guide/sysctl/kernel.rst
-> @@ -397,7 +397,8 @@ a hung task is detected.
->   hung_task_panic
->   ===============
->   
-> -Controls the kernel's behavior when a hung task is detected.
-> +When set to a non-zero value, a kernel panic will be triggered if the
-> +number of detected hung tasks reaches this value
-
-Hmm... that is also ambiguous ...
-
-+When set to a non-zero value, a kernel panic will be triggered if the
-+number of hung tasks found during a single scan reaches this value.
-
->   This file shows up if ``CONFIG_DETECT_HUNG_TASK`` is enabled.
->   
->   = =================================================
-> diff --git a/arch/arm/configs/aspeed_g5_defconfig b/arch/arm/configs/aspeed_g5_defconfig
-> index 61cee1e..c3b0d5f 100644
-> --- a/arch/arm/configs/aspeed_g5_defconfig
-> +++ b/arch/arm/configs/aspeed_g5_defconfig
-> @@ -308,7 +308,7 @@ CONFIG_PANIC_ON_OOPS=y
->   CONFIG_PANIC_TIMEOUT=-1
->   CONFIG_SOFTLOCKUP_DETECTOR=y
->   CONFIG_BOOTPARAM_SOFTLOCKUP_PANIC=y
-> -CONFIG_BOOTPARAM_HUNG_TASK_PANIC=y
-> +CONFIG_BOOTPARAM_HUNG_TASK_PANIC=1
->   CONFIG_WQ_WATCHDOG=y
->   # CONFIG_SCHED_DEBUG is not set
->   CONFIG_FUNCTION_TRACER=y
-> diff --git a/kernel/configs/debug.config b/kernel/configs/debug.config
-> index e81327d..9f6ab7d 100644
-> --- a/kernel/configs/debug.config
-> +++ b/kernel/configs/debug.config
-> @@ -83,7 +83,7 @@ CONFIG_SLUB_DEBUG_ON=y
->   #
->   # Debug Oops, Lockups and Hangs
->   #
-> -# CONFIG_BOOTPARAM_HUNG_TASK_PANIC is not set
-> +CONFIG_BOOTPARAM_HUNG_TASK_PANIC=0
->   # CONFIG_BOOTPARAM_SOFTLOCKUP_PANIC is not set
->   CONFIG_DEBUG_ATOMIC_SLEEP=y
->   CONFIG_DETECT_HUNG_TASK=y
-> diff --git a/kernel/hung_task.c b/kernel/hung_task.c
-> index b2c1f14..3929ed9 100644
-> --- a/kernel/hung_task.c
-> +++ b/kernel/hung_task.c
-> @@ -81,7 +81,7 @@ static unsigned int __read_mostly sysctl_hung_task_all_cpu_backtrace;
->    * hung task is detected:
->    */
->   static unsigned int __read_mostly sysctl_hung_task_panic =
-> -	IS_ENABLED(CONFIG_BOOTPARAM_HUNG_TASK_PANIC);
-> +	CONFIG_BOOTPARAM_HUNG_TASK_PANIC;
->   
->   static int
->   hung_task_panic(struct notifier_block *this, unsigned long event, void *ptr)
-> @@ -218,8 +218,11 @@ static inline void debug_show_blocker(struct task_struct *task, unsigned long ti
->   }
->   #endif
->   
-> -static void check_hung_task(struct task_struct *t, unsigned long timeout)
-> +static void check_hung_task(struct task_struct *t, unsigned long timeout,
-> +		unsigned long prev_detect_count)
->   {
-> +	unsigned long total_hung_task;
-> +
->   	if (!task_is_hung(t, timeout))
->   		return;
->   
-> @@ -229,9 +232,11 @@ static void check_hung_task(struct task_struct *t, unsigned long timeout)
->   	 */
->   	sysctl_hung_task_detect_count++;
->   
-> +	total_hung_task = sysctl_hung_task_detect_count - prev_detect_count;
->   	trace_sched_process_hang(t);
->   
-> -	if (sysctl_hung_task_panic) {
-> +	if (sysctl_hung_task_panic &&
-> +			(total_hung_task >= sysctl_hung_task_panic)) {
->   		console_verbose();
->   		hung_task_show_lock = true;
->   		hung_task_call_panic = true;
-> @@ -300,6 +305,7 @@ static void check_hung_uninterruptible_tasks(unsigned long timeout)
->   	int max_count = sysctl_hung_task_check_count;
->   	unsigned long last_break = jiffies;
->   	struct task_struct *g, *t;
-> +	unsigned long prev_detect_count = sysctl_hung_task_detect_count;
->   
->   	/*
->   	 * If the system crashed already then all bets are off,
-> @@ -320,7 +326,7 @@ static void check_hung_uninterruptible_tasks(unsigned long timeout)
->   			last_break = jiffies;
->   		}
->   
-> -		check_hung_task(t, timeout);
-> +		check_hung_task(t, timeout, prev_detect_count);
->   	}
->    unlock:
->   	rcu_read_unlock();
-> @@ -389,7 +395,7 @@ static const struct ctl_table hung_task_sysctls[] = {
->   		.mode		= 0644,
->   		.proc_handler	= proc_dointvec_minmax,
->   		.extra1		= SYSCTL_ZERO,
-> -		.extra2		= SYSCTL_ONE,
-> +		.extra2		= SYSCTL_INT_MAX,
->   	},
->   	{
->   		.procname	= "hung_task_check_count",
-> diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-> index 3034e294..077b9e4 100644
-> --- a/lib/Kconfig.debug
-> +++ b/lib/Kconfig.debug
-> @@ -1258,12 +1258,14 @@ config DEFAULT_HUNG_TASK_TIMEOUT
->   	  Keeping the default should be fine in most cases.
->   
->   config BOOTPARAM_HUNG_TASK_PANIC
-> -	bool "Panic (Reboot) On Hung Tasks"
-> +	int "Number of hung tasks to trigger kernel panic"
->   	depends on DETECT_HUNG_TASK
-> +	default 0
->   	help
-> -	  Say Y here to enable the kernel to panic on "hung tasks",
-> -	  which are bugs that cause the kernel to leave a task stuck
-> -	  in uninterruptible "D" state.
-> +	  The number of hung tasks must be detected to trigger kernel panic.
-> +
-> +	  - 0: Don't trigger panic
-> +	  - N: Panic when N hung tasks are detected
-
-+	  - N: Panic when N hung tasks are detected in a single scan
-
-With these documentation changes, this patch would accurately describe 
-its behavior, IMHO.
-
->   
->   	  The panic can be used in combination with panic_timeout,
->   	  to cause the system to reboot automatically after a
-> diff --git a/tools/testing/selftests/wireguard/qemu/kernel.config b/tools/testing/selftests/wireguard/qemu/kernel.config
-> index 936b18b..0504c11 100644
-> --- a/tools/testing/selftests/wireguard/qemu/kernel.config
-> +++ b/tools/testing/selftests/wireguard/qemu/kernel.config
-> @@ -81,7 +81,7 @@ CONFIG_WQ_WATCHDOG=y
->   CONFIG_DETECT_HUNG_TASK=y
->   CONFIG_BOOTPARAM_HARDLOCKUP_PANIC=y
->   CONFIG_BOOTPARAM_SOFTLOCKUP_PANIC=y
-> -CONFIG_BOOTPARAM_HUNG_TASK_PANIC=y
-> +CONFIG_BOOTPARAM_HUNG_TASK_PANIC=1
->   CONFIG_PANIC_TIMEOUT=-1
->   CONFIG_STACKTRACE=y
->   CONFIG_EARLY_PRINTK=y
-
+DQo+IA0KPiBJIG5vdGljZWQgdGhlIGltcGxlbWVudGF0aW9uIHBhbmljcyBvbmx5IHdoZW4gTiB0
+YXNrcyBhcmUgZGV0ZWN0ZWQgd2l0aGluIGENCj4gc2luZ2xlIHNjYW4sIGJlY2F1c2UgdG90YWxf
+aHVuZ190YXNrIGlzIHJlc2V0IGZvciBlYWNoDQo+IGNoZWNrX2h1bmdfdW5pbnRlcnJ1cHRpYmxl
+X3Rhc2tzKCkgcnVuLg0KPiANCj4gU28gc29tZSBzdWdnZXN0aW9ucyB0byBhbGlnbiB0aGUgZG9j
+dW1lbnRhdGlvbiB3aXRoIHRoZSBjb2RlJ3MgYmVoYXZpb3INCj4gYmVsb3cgOikNCj4gDQoNClRy
+dWUsIEkgd2lsbCBjaGFuZ2UgdGhlIGNvbW1lbnRzIGFzIHlvdXIgc3VnZ2VzdGlvbiwgdGhhbmtz
+DQoNCi1MaQ0KDQoNCj4gT24gMjAyNS8xMC8xMiAxOTo1MCwgbGlyb25ncWluZyB3cm90ZToNCj4g
+PiBGcm9tOiBMaSBSb25nUWluZyA8bGlyb25ncWluZ0BiYWlkdS5jb20+DQo+ID4NCj4gPiBDdXJy
+ZW50bHksIHdoZW4gJ2h1bmdfdGFza19wYW5pYycgaXMgZW5hYmxlZCwgdGhlIGtlcm5lbCBwYW5p
+Y3MNCj4gPiBpbW1lZGlhdGVseSB1cG9uIGRldGVjdGluZyB0aGUgZmlyc3QgaHVuZyB0YXNrLiBI
+b3dldmVyLCBzb21lIGh1bmcNCj4gPiB0YXNrcyBhcmUgdHJhbnNpZW50IGFuZCB0aGUgc3lzdGVt
+IGNhbiByZWNvdmVyLCB3aGlsZSBvdGhlcnMgYXJlDQo+ID4gcGVyc2lzdGVudCBhbmQgbWF5IGFj
+Y3VtdWxhdGUgcHJvZ3Jlc3NpdmVseS4NCj4gPg0KPiA+IFRoaXMgcGF0Y2ggZXh0ZW5kcyB0aGUg
+J2h1bmdfdGFza19wYW5pYycgc3lzY3RsIHRvIGFsbG93IHNwZWNpZnlpbmcNCj4gPiB0aGUgbnVt
+YmVyIG9mIGh1bmcgdGFza3MgdGhhdCBtdXN0IGJlIGRldGVjdGVkIGJlZm9yZSB0cmlnZ2VyaW5n
+IGENCj4gPiBrZXJuZWwgcGFuaWMuIFRoaXMgcHJvdmlkZXMgZmluZXIgY29udHJvbCBmb3IgZW52
+aXJvbm1lbnRzIHdoZXJlDQo+ID4gdHJhbnNpZW50IGhhbmdzIG1heSBvY2N1ciBidXQgcGVyc2lz
+dGVudCBoYW5ncyBzaG91bGQgc3RpbGwgYmUgZmF0YWwuDQo+ID4NCj4gPiBUaGUgc3lzY3RsIGNh
+biBiZSBzZXQgdG86DQo+ID4gLSAwOiBkaXNhYmxlZCAobmV2ZXIgcGFuaWMpDQo+ID4gLSAxOiBv
+cmlnaW5hbCBiZWhhdmlvciAocGFuaWMgb24gZmlyc3QgaHVuZyB0YXNrKQ0KPiA+IC0gTjogcGFu
+aWMgd2hlbiBOIGh1bmcgdGFza3MgYXJlIGRldGVjdGVkDQo+ID4NCj4gPiBUaGlzIG1haW50YWlu
+cyBiYWNrd2FyZCBjb21wYXRpYmlsaXR5IHdoaWxlIHByb3ZpZGluZyBtb3JlIGZsZXhpYmlsaXR5
+DQo+ID4gZm9yIGhhbmRsaW5nIGRpZmZlcmVudCBoYW5nIHNjZW5hcmlvcy4NCj4gPg0KPiA+IFNp
+Z25lZC1vZmYtYnk6IExpIFJvbmdRaW5nIDxsaXJvbmdxaW5nQGJhaWR1LmNvbT4NCj4gPiAtLS0N
+Cj4gPiBEaWZmIHdpdGggdjI6IG5vdCBhZGQgbmV3IHN5c2N0bCwgZXh0ZW5kIGh1bmdfdGFza19w
+YW5pYw0KPiA+DQo+ID4gICBEb2N1bWVudGF0aW9uL2FkbWluLWd1aWRlL2tlcm5lbC1wYXJhbWV0
+ZXJzLnR4dCAgICAgIHwgMjANCj4gKysrKysrKysrKysrKy0tLS0tLS0NCj4gPiAgIERvY3VtZW50
+YXRpb24vYWRtaW4tZ3VpZGUvc3lzY3RsL2tlcm5lbC5yc3QgICAgICAgICAgfCAgMyArKy0NCj4g
+PiAgIGFyY2gvYXJtL2NvbmZpZ3MvYXNwZWVkX2c1X2RlZmNvbmZpZyAgICAgICAgICAgICAgICAg
+fCAgMiArLQ0KPiA+ICAga2VybmVsL2NvbmZpZ3MvZGVidWcuY29uZmlnICAgICAgICAgICAgICAg
+ICAgICAgICAgICB8ICAyICstDQo+ID4gICBrZXJuZWwvaHVuZ190YXNrLmMgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgIHwgMTYNCj4gKysrKysrKysrKystLS0tLQ0KPiA+ICAgbGli
+L0tjb25maWcuZGVidWcgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8IDEwDQo+
+ICsrKysrKy0tLS0NCj4gPiAgIHRvb2xzL3Rlc3Rpbmcvc2VsZnRlc3RzL3dpcmVndWFyZC9xZW11
+L2tlcm5lbC5jb25maWcgfCAgMiArLQ0KPiA+ICAgNyBmaWxlcyBjaGFuZ2VkLCAzNSBpbnNlcnRp
+b25zKCspLCAyMCBkZWxldGlvbnMoLSkNCj4gPg0KPiA+IGRpZmYgLS1naXQgYS9Eb2N1bWVudGF0
+aW9uL2FkbWluLWd1aWRlL2tlcm5lbC1wYXJhbWV0ZXJzLnR4dA0KPiA+IGIvRG9jdW1lbnRhdGlv
+bi9hZG1pbi1ndWlkZS9rZXJuZWwtcGFyYW1ldGVycy50eHQNCj4gPiBpbmRleCBhNTFhYjQ2Li43
+ZDlhOGVlIDEwMDY0NA0KPiA+IC0tLSBhL0RvY3VtZW50YXRpb24vYWRtaW4tZ3VpZGUva2VybmVs
+LXBhcmFtZXRlcnMudHh0DQo+ID4gKysrIGIvRG9jdW1lbnRhdGlvbi9hZG1pbi1ndWlkZS9rZXJu
+ZWwtcGFyYW1ldGVycy50eHQNCj4gPiBAQCAtMTk5MiwxNCArMTk5MiwyMCBAQA0KPiA+ICAgCQkJ
+dGhlIGFkZGVkIG1lbW9yeSBibG9jayBpdHNlbGYgZG8gbm90IGJlIGFmZmVjdGVkLg0KPiA+DQo+
+ID4gICAJaHVuZ190YXNrX3BhbmljPQ0KPiA+IC0JCQlbS05MXSBTaG91bGQgdGhlIGh1bmcgdGFz
+ayBkZXRlY3RvciBnZW5lcmF0ZSBwYW5pY3MuDQo+ID4gLQkJCUZvcm1hdDogMCB8IDENCj4gPiAr
+CQkJW0tOTF0gTnVtYmVyIG9mIGh1bmcgdGFza3MgdG8gdHJpZ2dlciBrZXJuZWwgcGFuaWMuDQo+
+ID4gKwkJCUZvcm1hdDogPGludD4NCj4gPiArDQo+ID4gKwkJCVNldCB0aGlzIHRvIHRoZSBudW1i
+ZXIgb2YgaHVuZyB0YXNrcyB0aGF0IG11c3QgYmUNCj4gPiArCQkJZGV0ZWN0ZWQgYmVmb3JlIHRy
+aWdnZXJpbmcgYSBrZXJuZWwgcGFuaWMuDQo+ID4gKw0KPiA+ICsJCQkwOiBkb24ndCBwYW5pYw0K
+PiA+ICsJCQkxOiBwYW5pYyBpbW1lZGlhdGVseSBvbiBmaXJzdCBodW5nIHRhc2sNCj4gPiArCQkJ
+TjogcGFuaWMgYWZ0ZXIgTiBodW5nIHRhc2tzIGFyZSBkZXRlY3QNCj4gDQo+IFRoZSBkZXNjcmlw
+dGlvbiBzaG91bGQgYmUgbW9yZSBzcGVjaWZpYyA6KQ0KPiANCj4gTjogcGFuaWMgYWZ0ZXIgTiBo
+dW5nIHRhc2tzIGFyZSBkZXRlY3RlZCBpbiBhIHNpbmdsZSBzY2FuDQo+IA0KPiBXb3VsZCBpdCBi
+ZSBiZXR0ZXIgYW5kIGNsZWFuZXI/DQo+IA0KPiA+DQo+ID4gLQkJCUEgdmFsdWUgb2YgMSBpbnN0
+cnVjdHMgdGhlIGtlcm5lbCB0byBwYW5pYyB3aGVuIGENCj4gPiAtCQkJaHVuZyB0YXNrIGlzIGRl
+dGVjdGVkLiBUaGUgZGVmYXVsdCB2YWx1ZSBpcyBjb250cm9sbGVkDQo+ID4gLQkJCWJ5IHRoZSBD
+T05GSUdfQk9PVFBBUkFNX0hVTkdfVEFTS19QQU5JQyBidWlsZC10aW1lDQo+ID4gLQkJCW9wdGlv
+bi4gVGhlIHZhbHVlIHNlbGVjdGVkIGJ5IHRoaXMgYm9vdCBwYXJhbWV0ZXIgY2FuDQo+ID4gLQkJ
+CWJlIGNoYW5nZWQgbGF0ZXIgYnkgdGhlIGtlcm5lbC5odW5nX3Rhc2tfcGFuaWMgc3lzY3RsLg0K
+PiA+ICsJCQlUaGUgZGVmYXVsdCB2YWx1ZSBpcyBjb250cm9sbGVkIGJ5IHRoZQ0KPiA+ICsJCQlD
+T05GSUdfQk9PVFBBUkFNX0hVTkdfVEFTS19QQU5JQyBidWlsZC10aW1lIG9wdGlvbi4NCj4gVGhl
+IHZhbHVlDQo+ID4gKwkJCXNlbGVjdGVkIGJ5IHRoaXMgYm9vdCBwYXJhbWV0ZXIgY2FuIGJlIGNo
+YW5nZWQgbGF0ZXIgYnkgdGhlDQo+ID4gKwkJCWtlcm5lbC5odW5nX3Rhc2tfcGFuaWMgc3lzY3Rs
+Lg0KPiA+DQo+ID4gICAJaHZjX2l1Y3Y9CVtTMzkwXQlOdW1iZXIgb2Ygei9WTSBJVUNWIGh5cGVy
+dmlzb3IgY29uc29sZQ0KPiAoSFZDKQ0KPiA+ICAgCQkJCXRlcm1pbmFsIGRldmljZXMuIFZhbGlk
+IHZhbHVlczogMC4uOCBkaWZmIC0tZ2l0DQo+ID4gYS9Eb2N1bWVudGF0aW9uL2FkbWluLWd1aWRl
+L3N5c2N0bC9rZXJuZWwucnN0DQo+ID4gYi9Eb2N1bWVudGF0aW9uL2FkbWluLWd1aWRlL3N5c2N0
+bC9rZXJuZWwucnN0DQo+ID4gaW5kZXggZjNlZTgwNy4uMGE4ZGZhYiAxMDA2NDQNCj4gPiAtLS0g
+YS9Eb2N1bWVudGF0aW9uL2FkbWluLWd1aWRlL3N5c2N0bC9rZXJuZWwucnN0DQo+ID4gKysrIGIv
+RG9jdW1lbnRhdGlvbi9hZG1pbi1ndWlkZS9zeXNjdGwva2VybmVsLnJzdA0KPiA+IEBAIC0zOTcs
+NyArMzk3LDggQEAgYSBodW5nIHRhc2sgaXMgZGV0ZWN0ZWQuDQo+ID4gICBodW5nX3Rhc2tfcGFu
+aWMNCj4gPiAgID09PT09PT09PT09PT09PQ0KPiA+DQo+ID4gLUNvbnRyb2xzIHRoZSBrZXJuZWwn
+cyBiZWhhdmlvciB3aGVuIGEgaHVuZyB0YXNrIGlzIGRldGVjdGVkLg0KPiA+ICtXaGVuIHNldCB0
+byBhIG5vbi16ZXJvIHZhbHVlLCBhIGtlcm5lbCBwYW5pYyB3aWxsIGJlIHRyaWdnZXJlZCBpZiB0
+aGUNCj4gPiArbnVtYmVyIG9mIGRldGVjdGVkIGh1bmcgdGFza3MgcmVhY2hlcyB0aGlzIHZhbHVl
+DQo+IA0KPiBIbW0uLi4gdGhhdCBpcyBhbHNvIGFtYmlndW91cyAuLi4NCj4gDQo+ICtXaGVuIHNl
+dCB0byBhIG5vbi16ZXJvIHZhbHVlLCBhIGtlcm5lbCBwYW5pYyB3aWxsIGJlIHRyaWdnZXJlZCBp
+ZiB0aGUNCj4gK251bWJlciBvZiBodW5nIHRhc2tzIGZvdW5kIGR1cmluZyBhIHNpbmdsZSBzY2Fu
+IHJlYWNoZXMgdGhpcyB2YWx1ZS4NCj4gDQo+ID4gICBUaGlzIGZpbGUgc2hvd3MgdXAgaWYgYGBD
+T05GSUdfREVURUNUX0hVTkdfVEFTS2BgIGlzIGVuYWJsZWQuDQo+ID4NCj4gPiAgID0gPT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQ0KPiA+IGRpZmYgLS1n
+aXQgYS9hcmNoL2FybS9jb25maWdzL2FzcGVlZF9nNV9kZWZjb25maWcNCj4gPiBiL2FyY2gvYXJt
+L2NvbmZpZ3MvYXNwZWVkX2c1X2RlZmNvbmZpZw0KPiA+IGluZGV4IDYxY2VlMWUuLmMzYjBkNWYg
+MTAwNjQ0DQo+ID4gLS0tIGEvYXJjaC9hcm0vY29uZmlncy9hc3BlZWRfZzVfZGVmY29uZmlnDQo+
+ID4gKysrIGIvYXJjaC9hcm0vY29uZmlncy9hc3BlZWRfZzVfZGVmY29uZmlnDQo+ID4gQEAgLTMw
+OCw3ICszMDgsNyBAQCBDT05GSUdfUEFOSUNfT05fT09QUz15DQo+ID4gICBDT05GSUdfUEFOSUNf
+VElNRU9VVD0tMQ0KPiA+ICAgQ09ORklHX1NPRlRMT0NLVVBfREVURUNUT1I9eQ0KPiA+ICAgQ09O
+RklHX0JPT1RQQVJBTV9TT0ZUTE9DS1VQX1BBTklDPXkNCj4gPiAtQ09ORklHX0JPT1RQQVJBTV9I
+VU5HX1RBU0tfUEFOSUM9eQ0KPiA+ICtDT05GSUdfQk9PVFBBUkFNX0hVTkdfVEFTS19QQU5JQz0x
+DQo+ID4gICBDT05GSUdfV1FfV0FUQ0hET0c9eQ0KPiA+ICAgIyBDT05GSUdfU0NIRURfREVCVUcg
+aXMgbm90IHNldA0KPiA+ICAgQ09ORklHX0ZVTkNUSU9OX1RSQUNFUj15DQo+ID4gZGlmZiAtLWdp
+dCBhL2tlcm5lbC9jb25maWdzL2RlYnVnLmNvbmZpZyBiL2tlcm5lbC9jb25maWdzL2RlYnVnLmNv
+bmZpZw0KPiA+IGluZGV4IGU4MTMyN2QuLjlmNmFiN2QgMTAwNjQ0DQo+ID4gLS0tIGEva2VybmVs
+L2NvbmZpZ3MvZGVidWcuY29uZmlnDQo+ID4gKysrIGIva2VybmVsL2NvbmZpZ3MvZGVidWcuY29u
+ZmlnDQo+ID4gQEAgLTgzLDcgKzgzLDcgQEAgQ09ORklHX1NMVUJfREVCVUdfT049eQ0KPiA+ICAg
+Iw0KPiA+ICAgIyBEZWJ1ZyBPb3BzLCBMb2NrdXBzIGFuZCBIYW5ncw0KPiA+ICAgIw0KPiA+IC0j
+IENPTkZJR19CT09UUEFSQU1fSFVOR19UQVNLX1BBTklDIGlzIG5vdCBzZXQNCj4gPiArQ09ORklH
+X0JPT1RQQVJBTV9IVU5HX1RBU0tfUEFOSUM9MA0KPiA+ICAgIyBDT05GSUdfQk9PVFBBUkFNX1NP
+RlRMT0NLVVBfUEFOSUMgaXMgbm90IHNldA0KPiA+ICAgQ09ORklHX0RFQlVHX0FUT01JQ19TTEVF
+UD15DQo+ID4gICBDT05GSUdfREVURUNUX0hVTkdfVEFTSz15DQo+ID4gZGlmZiAtLWdpdCBhL2tl
+cm5lbC9odW5nX3Rhc2suYyBiL2tlcm5lbC9odW5nX3Rhc2suYyBpbmRleA0KPiA+IGIyYzFmMTQu
+LjM5MjllZDkgMTAwNjQ0DQo+ID4gLS0tIGEva2VybmVsL2h1bmdfdGFzay5jDQo+ID4gKysrIGIv
+a2VybmVsL2h1bmdfdGFzay5jDQo+ID4gQEAgLTgxLDcgKzgxLDcgQEAgc3RhdGljIHVuc2lnbmVk
+IGludCBfX3JlYWRfbW9zdGx5DQo+IHN5c2N0bF9odW5nX3Rhc2tfYWxsX2NwdV9iYWNrdHJhY2U7
+DQo+ID4gICAgKiBodW5nIHRhc2sgaXMgZGV0ZWN0ZWQ6DQo+ID4gICAgKi8NCj4gPiAgIHN0YXRp
+YyB1bnNpZ25lZCBpbnQgX19yZWFkX21vc3RseSBzeXNjdGxfaHVuZ190YXNrX3BhbmljID0NCj4g
+PiAtCUlTX0VOQUJMRUQoQ09ORklHX0JPT1RQQVJBTV9IVU5HX1RBU0tfUEFOSUMpOw0KPiA+ICsJ
+Q09ORklHX0JPT1RQQVJBTV9IVU5HX1RBU0tfUEFOSUM7DQo+ID4NCj4gPiAgIHN0YXRpYyBpbnQN
+Cj4gPiAgIGh1bmdfdGFza19wYW5pYyhzdHJ1Y3Qgbm90aWZpZXJfYmxvY2sgKnRoaXMsIHVuc2ln
+bmVkIGxvbmcgZXZlbnQsDQo+ID4gdm9pZCAqcHRyKSBAQCAtMjE4LDggKzIxOCwxMSBAQCBzdGF0
+aWMgaW5saW5lIHZvaWQNCj4gZGVidWdfc2hvd19ibG9ja2VyKHN0cnVjdCB0YXNrX3N0cnVjdCAq
+dGFzaywgdW5zaWduZWQgbG9uZyB0aQ0KPiA+ICAgfQ0KPiA+ICAgI2VuZGlmDQo+ID4NCj4gPiAt
+c3RhdGljIHZvaWQgY2hlY2tfaHVuZ190YXNrKHN0cnVjdCB0YXNrX3N0cnVjdCAqdCwgdW5zaWdu
+ZWQgbG9uZw0KPiA+IHRpbWVvdXQpDQo+ID4gK3N0YXRpYyB2b2lkIGNoZWNrX2h1bmdfdGFzayhz
+dHJ1Y3QgdGFza19zdHJ1Y3QgKnQsIHVuc2lnbmVkIGxvbmcgdGltZW91dCwNCj4gPiArCQl1bnNp
+Z25lZCBsb25nIHByZXZfZGV0ZWN0X2NvdW50KQ0KPiA+ICAgew0KPiA+ICsJdW5zaWduZWQgbG9u
+ZyB0b3RhbF9odW5nX3Rhc2s7DQo+ID4gKw0KPiA+ICAgCWlmICghdGFza19pc19odW5nKHQsIHRp
+bWVvdXQpKQ0KPiA+ICAgCQlyZXR1cm47DQo+ID4NCj4gPiBAQCAtMjI5LDkgKzIzMiwxMSBAQCBz
+dGF0aWMgdm9pZCBjaGVja19odW5nX3Rhc2soc3RydWN0IHRhc2tfc3RydWN0ICp0LA0KPiB1bnNp
+Z25lZCBsb25nIHRpbWVvdXQpDQo+ID4gICAJICovDQo+ID4gICAJc3lzY3RsX2h1bmdfdGFza19k
+ZXRlY3RfY291bnQrKzsNCj4gPg0KPiA+ICsJdG90YWxfaHVuZ190YXNrID0gc3lzY3RsX2h1bmdf
+dGFza19kZXRlY3RfY291bnQgLSBwcmV2X2RldGVjdF9jb3VudDsNCj4gPiAgIAl0cmFjZV9zY2hl
+ZF9wcm9jZXNzX2hhbmcodCk7DQo+ID4NCj4gPiAtCWlmIChzeXNjdGxfaHVuZ190YXNrX3Bhbmlj
+KSB7DQo+ID4gKwlpZiAoc3lzY3RsX2h1bmdfdGFza19wYW5pYyAmJg0KPiA+ICsJCQkodG90YWxf
+aHVuZ190YXNrID49IHN5c2N0bF9odW5nX3Rhc2tfcGFuaWMpKSB7DQo+ID4gICAJCWNvbnNvbGVf
+dmVyYm9zZSgpOw0KPiA+ICAgCQlodW5nX3Rhc2tfc2hvd19sb2NrID0gdHJ1ZTsNCj4gPiAgIAkJ
+aHVuZ190YXNrX2NhbGxfcGFuaWMgPSB0cnVlOw0KPiA+IEBAIC0zMDAsNiArMzA1LDcgQEAgc3Rh
+dGljIHZvaWQNCj4gY2hlY2tfaHVuZ191bmludGVycnVwdGlibGVfdGFza3ModW5zaWduZWQgbG9u
+ZyB0aW1lb3V0KQ0KPiA+ICAgCWludCBtYXhfY291bnQgPSBzeXNjdGxfaHVuZ190YXNrX2NoZWNr
+X2NvdW50Ow0KPiA+ICAgCXVuc2lnbmVkIGxvbmcgbGFzdF9icmVhayA9IGppZmZpZXM7DQo+ID4g
+ICAJc3RydWN0IHRhc2tfc3RydWN0ICpnLCAqdDsNCj4gPiArCXVuc2lnbmVkIGxvbmcgcHJldl9k
+ZXRlY3RfY291bnQgPSBzeXNjdGxfaHVuZ190YXNrX2RldGVjdF9jb3VudDsNCj4gPg0KPiA+ICAg
+CS8qDQo+ID4gICAJICogSWYgdGhlIHN5c3RlbSBjcmFzaGVkIGFscmVhZHkgdGhlbiBhbGwgYmV0
+cyBhcmUgb2ZmLCBAQCAtMzIwLDcNCj4gPiArMzI2LDcgQEAgc3RhdGljIHZvaWQgY2hlY2tfaHVu
+Z191bmludGVycnVwdGlibGVfdGFza3ModW5zaWduZWQgbG9uZw0KPiB0aW1lb3V0KQ0KPiA+ICAg
+CQkJbGFzdF9icmVhayA9IGppZmZpZXM7DQo+ID4gICAJCX0NCj4gPg0KPiA+IC0JCWNoZWNrX2h1
+bmdfdGFzayh0LCB0aW1lb3V0KTsNCj4gPiArCQljaGVja19odW5nX3Rhc2sodCwgdGltZW91dCwg
+cHJldl9kZXRlY3RfY291bnQpOw0KPiA+ICAgCX0NCj4gPiAgICB1bmxvY2s6DQo+ID4gICAJcmN1
+X3JlYWRfdW5sb2NrKCk7DQo+ID4gQEAgLTM4OSw3ICszOTUsNyBAQCBzdGF0aWMgY29uc3Qgc3Ry
+dWN0IGN0bF90YWJsZSBodW5nX3Rhc2tfc3lzY3Rsc1tdID0gew0KPiA+ICAgCQkubW9kZQkJPSAw
+NjQ0LA0KPiA+ICAgCQkucHJvY19oYW5kbGVyCT0gcHJvY19kb2ludHZlY19taW5tYXgsDQo+ID4g
+ICAJCS5leHRyYTEJCT0gU1lTQ1RMX1pFUk8sDQo+ID4gLQkJLmV4dHJhMgkJPSBTWVNDVExfT05F
+LA0KPiA+ICsJCS5leHRyYTIJCT0gU1lTQ1RMX0lOVF9NQVgsDQo+ID4gICAJfSwNCj4gPiAgIAl7
+DQo+ID4gICAJCS5wcm9jbmFtZQk9ICJodW5nX3Rhc2tfY2hlY2tfY291bnQiLA0KPiA+IGRpZmYg
+LS1naXQgYS9saWIvS2NvbmZpZy5kZWJ1ZyBiL2xpYi9LY29uZmlnLmRlYnVnIGluZGV4DQo+ID4g
+MzAzNGUyOTQuLjA3N2I5ZTQgMTAwNjQ0DQo+ID4gLS0tIGEvbGliL0tjb25maWcuZGVidWcNCj4g
+PiArKysgYi9saWIvS2NvbmZpZy5kZWJ1Zw0KPiA+IEBAIC0xMjU4LDEyICsxMjU4LDE0IEBAIGNv
+bmZpZyBERUZBVUxUX0hVTkdfVEFTS19USU1FT1VUDQo+ID4gICAJICBLZWVwaW5nIHRoZSBkZWZh
+dWx0IHNob3VsZCBiZSBmaW5lIGluIG1vc3QgY2FzZXMuDQo+ID4NCj4gPiAgIGNvbmZpZyBCT09U
+UEFSQU1fSFVOR19UQVNLX1BBTklDDQo+ID4gLQlib29sICJQYW5pYyAoUmVib290KSBPbiBIdW5n
+IFRhc2tzIg0KPiA+ICsJaW50ICJOdW1iZXIgb2YgaHVuZyB0YXNrcyB0byB0cmlnZ2VyIGtlcm5l
+bCBwYW5pYyINCj4gPiAgIAlkZXBlbmRzIG9uIERFVEVDVF9IVU5HX1RBU0sNCj4gPiArCWRlZmF1
+bHQgMA0KPiA+ICAgCWhlbHANCj4gPiAtCSAgU2F5IFkgaGVyZSB0byBlbmFibGUgdGhlIGtlcm5l
+bCB0byBwYW5pYyBvbiAiaHVuZyB0YXNrcyIsDQo+ID4gLQkgIHdoaWNoIGFyZSBidWdzIHRoYXQg
+Y2F1c2UgdGhlIGtlcm5lbCB0byBsZWF2ZSBhIHRhc2sgc3R1Y2sNCj4gPiAtCSAgaW4gdW5pbnRl
+cnJ1cHRpYmxlICJEIiBzdGF0ZS4NCj4gPiArCSAgVGhlIG51bWJlciBvZiBodW5nIHRhc2tzIG11
+c3QgYmUgZGV0ZWN0ZWQgdG8gdHJpZ2dlciBrZXJuZWwgcGFuaWMuDQo+ID4gKw0KPiA+ICsJICAt
+IDA6IERvbid0IHRyaWdnZXIgcGFuaWMNCj4gPiArCSAgLSBOOiBQYW5pYyB3aGVuIE4gaHVuZyB0
+YXNrcyBhcmUgZGV0ZWN0ZWQNCj4gDQo+ICsJICAtIE46IFBhbmljIHdoZW4gTiBodW5nIHRhc2tz
+IGFyZSBkZXRlY3RlZCBpbiBhIHNpbmdsZSBzY2FuDQo+IA0KPiBXaXRoIHRoZXNlIGRvY3VtZW50
+YXRpb24gY2hhbmdlcywgdGhpcyBwYXRjaCB3b3VsZCBhY2N1cmF0ZWx5IGRlc2NyaWJlIGl0cw0K
+PiBiZWhhdmlvciwgSU1ITy4NCj4gDQo+ID4NCj4gPiAgIAkgIFRoZSBwYW5pYyBjYW4gYmUgdXNl
+ZCBpbiBjb21iaW5hdGlvbiB3aXRoIHBhbmljX3RpbWVvdXQsDQo+ID4gICAJICB0byBjYXVzZSB0
+aGUgc3lzdGVtIHRvIHJlYm9vdCBhdXRvbWF0aWNhbGx5IGFmdGVyIGEgZGlmZiAtLWdpdA0KPiA+
+IGEvdG9vbHMvdGVzdGluZy9zZWxmdGVzdHMvd2lyZWd1YXJkL3FlbXUva2VybmVsLmNvbmZpZw0K
+PiA+IGIvdG9vbHMvdGVzdGluZy9zZWxmdGVzdHMvd2lyZWd1YXJkL3FlbXUva2VybmVsLmNvbmZp
+Zw0KPiA+IGluZGV4IDkzNmIxOGIuLjA1MDRjMTEgMTAwNjQ0DQo+ID4gLS0tIGEvdG9vbHMvdGVz
+dGluZy9zZWxmdGVzdHMvd2lyZWd1YXJkL3FlbXUva2VybmVsLmNvbmZpZw0KPiA+ICsrKyBiL3Rv
+b2xzL3Rlc3Rpbmcvc2VsZnRlc3RzL3dpcmVndWFyZC9xZW11L2tlcm5lbC5jb25maWcNCj4gPiBA
+QCAtODEsNyArODEsNyBAQCBDT05GSUdfV1FfV0FUQ0hET0c9eQ0KPiA+ICAgQ09ORklHX0RFVEVD
+VF9IVU5HX1RBU0s9eQ0KPiA+ICAgQ09ORklHX0JPT1RQQVJBTV9IQVJETE9DS1VQX1BBTklDPXkN
+Cj4gPiAgIENPTkZJR19CT09UUEFSQU1fU09GVExPQ0tVUF9QQU5JQz15DQo+ID4gLUNPTkZJR19C
+T09UUEFSQU1fSFVOR19UQVNLX1BBTklDPXkNCj4gPiArQ09ORklHX0JPT1RQQVJBTV9IVU5HX1RB
+U0tfUEFOSUM9MQ0KPiA+ICAgQ09ORklHX1BBTklDX1RJTUVPVVQ9LTENCj4gPiAgIENPTkZJR19T
+VEFDS1RSQUNFPXkNCj4gPiAgIENPTkZJR19FQVJMWV9QUklOVEs9eQ0KPiANCg0K
