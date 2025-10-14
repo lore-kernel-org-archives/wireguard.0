@@ -4,81 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14BA8CF6481
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 21:44:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00E58CF6480
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 21:44:55 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7b70a587;
-	Tue, 18 Nov 2025 17:33:31 +0000 (UTC)
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com
- [2a00:1450:4864:20::42c])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4d312b13
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b2529e29;
+	Tue, 18 Nov 2025 17:33:34 +0000 (UTC)
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com
+ [2a00:1450:4864:20::32d])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3825d381
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 12 Sep 2025 12:08:55 +0000 (UTC)
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-3e249a4d605so1975677f8f.3
- for <wireguard@lists.zx2c4.com>; Fri, 12 Sep 2025 05:08:55 -0700 (PDT)
+ Tue, 14 Oct 2025 13:09:13 +0000 (UTC)
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-46e6c8bc46eso35310255e9.3
+ for <wireguard@lists.zx2c4.com>; Tue, 14 Oct 2025 06:09:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1757678935; x=1758283735; darn=lists.zx2c4.com;
- h=content-transfer-encoding:mime-version:user-agent:references
- :message-id:date:in-reply-to:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to;
- bh=qQoEkT9yk1hood4SLEOpVCocbVX58h+NyrULhtXcu48=;
- b=iSet14ALMImy0KpV6Bx4e0PEiW7tVfAGq3q6K57/pYBfhTjC/uYE7J3huzJmnPYOTf
- 3EqfcEzREsp4YKnyiA81yWDkynLg2nKnETSH7GPAdKZzGp53cwx8j8W7i24H+ObToLyL
- O9DxWMvNgWniZNAYcgJP2qv8ylceQ6hJi517HDEzv2X/aWN3WMLeklRfO2GTN+vZ74Gq
- yJ1HMAiY3x0JTHm+sHm9Cp/9RDQ9eGqCk0TUTSWZqNT251fVZ3W47f80zOMNcNxhXJfr
- A39pviLuHhs3Vzvgggbvvu3KhRIJPsTtr960gYHq/uL+3cvfjs98LEhO9mhqY4oGznEN
- 25uQ==
+ d=suse.com; s=google; t=1760447353; x=1761052153; darn=lists.zx2c4.com;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=XBmndkyEtmuH2zqfJVf2MipvEX2Eu2YJsa5R9Svl5+o=;
+ b=O1pNvqsSSQw8jXfn4VuQGdGCXjfx0wBhRip+NE/QiqU7bOmVm+Oi3ZRq8QYlKo5VLy
+ nsi7tWHRXnO+vot8aVGDIJPE9SxZdMibw6XVlh3FM541ckYCgV5LdAdQ6mvRMx1N46wV
+ YiCv+KfMY4Y+P2AOZl+1c4wUnaXYhY0NLuPULFyGbJAoJkRGog5JwuM75Ah21wJ74TiA
+ R1bkooh1M1w0h+11BftyfS+/nrvaBfaAuOPFMfEEWaKmleg4vFrEuC/ZK1wJYSC9hIP1
+ hNwn7D02Igjrq6FUCbCv5E0WVspy1EwoN237mudGY4ZV7HNBiuHOgNN4Rl9+JgT6bv2u
+ i7Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757678935; x=1758283735;
- h=content-transfer-encoding:mime-version:user-agent:references
- :message-id:date:in-reply-to:subject:cc:to:from:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=qQoEkT9yk1hood4SLEOpVCocbVX58h+NyrULhtXcu48=;
- b=ejSkFH4fgMKSsKTgqqUsIylJFUlREcz8UVAyv+tSI2fFdoj7CLmBo/dYC0b0c0YMeh
- zNY/d8A4V7NtOZ2DRf6x4WDtRTJZwbdRVM9zgj78TAfe6FRdmzZfzXPdl19vqmeCeWPD
- 1OlcTo8QnebmXsZRDZPRSO45UZn/9QzrkI5QfLhhp/YGGCTEG8pYlGp0EonT4qBdiK2l
- RgaeO4MLPrLF4Snb84fmybFZ2JV/KRxD+7DQIY6X7JcQMb2OTLqZ1HAbsh32qAUGNo4a
- ER6YuyL8Z+azF0CoPBt1seiXVcMH5Lz9sEpVbXNt5houp+rL/DUZ07Z7ljoVhAhLqA+t
- il6Q==
+ d=1e100.net; s=20230601; t=1760447353; x=1761052153;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XBmndkyEtmuH2zqfJVf2MipvEX2Eu2YJsa5R9Svl5+o=;
+ b=IqOsALxy6T8mOYR4lvsQU5+IlIUUQos0/kT86IXx2aX2rJDz6miVUJtnQWH8som5/h
+ TIFfLsWAw4K18fWIRsESQefXZ7H/SffFYlmCBLuBm8K+odVnQMvguSvNdWg2UxG8o9sL
+ immSuGBK5jSH/ePNYWd42/amRZb8Edj49LiyoXdveLcdAYnFWb+ag3qqdpma/lYi9s1i
+ oGpY2O9xdRx/gsoJ76pAPLZRZkMeOSzhNnyKhgIpkH8lFfyBKFMOnFJ67H2whwhszwFK
+ ZvWN2WG9OGnChM5QoE9kJ9RUGn8Sv+AUB1sSFYfOGTtaIVhYmDCMUkTTURsCpUl/nwBl
+ 9a8g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXLlQYyDx+L/gqglqvstjcW9UPnNNHQTDq2db/LbL/T6fQFamSc6R/j911+Sz4G87e36WhnXH2CiFs=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YyT/KFrn8LmxvTFwCFdqoFryXE0EaGQlgHFo14sQvTmIDvKfIRF
- vYtnHhUsuTOuRlM3SLON3LUuG1IJrumft/GGIQ+98nYmY3soiMwu44tlbPeTMQ==
-X-Gm-Gg: ASbGncvcEga4NyTfnB3d2Jk0XvH3dNx5NO4Dz0iWPYu5GFrBbHO+HvVw7BHMvjysVs/
- 5zzZkjEUHW3sIZZqm2lqLZ+QuO7wjeOfXxTDfuiNFz1ilCKtiOHKG5+2A2U2GF/OZMYyqQwoO3J
- 6ureOo+FG5tLq24U5JfEaV17iSsmDfDcuXqSay2soCsigsWezWWNjiuYlEE+QI86V3IkM4Usyj1
- LDcW3iQ8gHS4Py7D+T23vnsPMwg94FnVA4AJKQmsQxz/fuAU53CuunsUW8QsT4cHcPKPefdDrWH
- i8LigpbtG+s/YfurbIYN9sbp7fkjOK605cDXjc/3xQYA7PbV/lV/A2piIzUtP7lS8x95OKb2pns
- 1h2pa8gLTlTr6QMn5KpHzSynFNYR3EaBguQ==
-X-Google-Smtp-Source: AGHT+IGdPgp1eBnU7mdjQNbxPC0Ubxkk6H/dLId83PNwbuZGjICOtVkA1L5NSIQ5/V92tkMwWrjUnQ==
-X-Received: by 2002:a05:6000:402b:b0:3dc:eb5:503b with SMTP id
- ffacd0b85a97d-3e765a1607cmr2924754f8f.56.1757678935109; 
- Fri, 12 Sep 2025 05:08:55 -0700 (PDT)
-Received: from imac ([2a02:8010:60a0:0:18f9:fa9:c12a:ac60])
+ AJvYcCUUvj4QqxoFV3LSpRWHNnBV1avs5Fup/VpDCqHKGMLsRvkxuwBPI1/Vc2FIz0sv+OHTeESvwJhQHE4=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0Yz4civ8mau9JEMC3EBiLk0UlE+beCCn6hYa5E/8+8v6bLjIjtLA
+ zZeeic//yTq1Zs2ussEeRv5O0nRxgjVas63JMvhmG8l/aJig4p3pk/dWOzpbtn/kBs0=
+X-Gm-Gg: ASbGncu0RxHfKuWMrtW0T5+DDW3Ct0SdT3dK+Z6mM27D15k/4Cl5wys0YKR0zk7Ij02
+ fJXrHIYAGp/2ev7vbhVc0C6RKoBCqx/IxoMVqVlpBPdlnwOebftOL1VRA72cqs8XW9p/mtYLxyA
+ F8VJl/PzPyBKBCVw6VZRwxP3XCHAK2BGZwiO8mEHgOLSbSf1rHOdavkBLkij5TmaY7+wVDw2kEz
+ bSnPeDgm59Pcse7Z34JrkcyZEKuOpLO2Ah+/NXlrUky7lQ/qTVO+hx7LMUg9MoHjU97LS4BreLr
+ H1ZKITQqIZx40TnYTNeTg1gvm65lnslZEoDLPovkYFhFibcOF645bYdHTxM4OZ2ppByXepisx2v
+ /zwKdYcgdh4Hl4/BiHxMGMZFwe5MnokDv4IGw6Ke8u+es8nuJVzknN/Gdr6vDl3yp9BEBzw==
+X-Google-Smtp-Source: AGHT+IFGpYfRWYGhqIaSZxufyw3cU/D950Wt8EiMNsuJCAolvX6QytVu1nn4m6ZLSmt3VXgOJE+wuQ==
+X-Received: by 2002:a05:6000:43d4:20b0:426:ed9d:4072 with SMTP id
+ ffacd0b85a97d-426ed9d43d7mr1534097f8f.21.1760447352714; 
+ Tue, 14 Oct 2025 06:09:12 -0700 (PDT)
+Received: from pathway.suse.cz (nat2.prg.suse.com. [195.250.132.146])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e7607cd43csm6153099f8f.29.2025.09.12.05.08.54
+ ffacd0b85a97d-426ce5cf70fsm22846162f8f.27.2025.10.14.06.09.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Sep 2025 05:08:54 -0700 (PDT)
-From: Donald Hunter <donald.hunter@gmail.com>
-To: =?utf-8?Q?Asbj=C3=B8rn?= Sloth =?utf-8?Q?T=C3=B8nnesen?= <ast@fiberby.net>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,  "David S. Miller"
- <davem@davemloft.net>,  Eric Dumazet <edumazet@google.com>,  Jakub
- Kicinski <kuba@kernel.org>,  Paolo Abeni <pabeni@redhat.com>,  Simon
- Horman <horms@kernel.org>,  Jacob Keller <jacob.e.keller@intel.com>,
- Sabrina Dubroca <sd@queasysnail.net>,  wireguard@lists.zx2c4.com,
- netdev@vger.kernel.org,  linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next v3 11/13] tools: ynl: encode indexed-arrays
-In-Reply-To: <20250911200508.79341-12-ast@fiberby.net>
-Date: Fri, 12 Sep 2025 13:01:21 +0100
-Message-ID: <m2segrubfy.fsf@gmail.com>
-References: <20250911200508.79341-1-ast@fiberby.net>
- <20250911200508.79341-12-ast@fiberby.net>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ Tue, 14 Oct 2025 06:09:12 -0700 (PDT)
+Date: Tue, 14 Oct 2025 15:09:10 +0200
+From: Petr Mladek <pmladek@suse.com>
+To: "Li,Rongqing" <lirongqing@baidu.com>
+Cc: Lance Yang <lance.yang@linux.dev>,
+ "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>,
+ "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, 
+ "Liam R . Howlett" <Liam.Howlett@oracle.com>,
+ "linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
+ David Hildenbrand <david@redhat.com>, Randy Dunlap <rdunlap@infradead.org>,
+ Stanislav Fomichev <sdf@fomichev.me>,
+ "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Russell King <linux@armlinux.org.uk>,
+ Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+ Shuah Khan <shuah@kernel.org>, Steven Rostedt <rostedt@goodmis.org>,
+ Jonathan Corbet <corbet@lwn.net>, Joel Granados <joel.granados@kernel.org>,
+ Andrew Morton <akpm@linux-foundation.org>, Phil Auld <pauld@redhat.com>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "linux-kselftest@vger.kernel.org" <linux-kselftest@vger.kernel.org>,
+ Masami Hiramatsu <mhiramat@kernel.org>, Jakub Kicinski <kuba@kernel.org>,
+ Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+ Simon Horman <horms@kernel.org>,
+ Anshuman Khandual <anshuman.khandual@arm.com>,
+ Florian Westphal <fw@strlen.de>,
+ "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+ Kees Cook <kees@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+ "Paul E . McKenney" <paulmck@kernel.org>,
+ Feng Tang <feng.tang@linux.alibaba.com>,
+ "Jason A . Donenfeld" <Jason@zx2c4.com>
+Subject: Re: [????] Re: [PATCH][v3] hung_task: Panic after fixed number of
+ hung tasks
+Message-ID: <aO5Ldv4U8QSGgfog@pathway.suse.cz>
+References: <20251012115035.2169-1-lirongqing@baidu.com>
+ <588c1935-835f-4cab-9679-f31c1e903a9a@linux.dev>
+ <aO4boXFaIb0_Wiif@pathway.suse.cz>
+ <e3f7ddf68c2e42d7abf8643f34d84a18@baidu.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e3f7ddf68c2e42d7abf8643f34d84a18@baidu.com>
 X-Mailman-Approved-At: Tue, 18 Nov 2025 17:23:16 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -94,11 +115,72 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Asbj=C3=B8rn Sloth T=C3=B8nnesen <ast@fiberby.net> writes:
+On Tue 2025-10-14 10:49:53, Li,Rongqing wrote:
+> 
+> > On Tue 2025-10-14 13:23:58, Lance Yang wrote:
+> > > Thanks for the patch!
+> > >
+> > > I noticed the implementation panics only when N tasks are detected
+> > > within a single scan, because total_hung_task is reset for each
+> > > check_hung_uninterruptible_tasks() run.
+> > 
+> > Great catch!
+> > 
+> > Does it make sense?
+> > Is is the intended behavior, please?
+> > 
+> 
+> Yes, this is intended behavior
+> 
+> > > So some suggestions to align the documentation with the code's
+> > > behavior below :)
+> > 
+> > > On 2025/10/12 19:50, lirongqing wrote:
+> > > > From: Li RongQing <lirongqing@baidu.com>
+> > > >
+> > > > Currently, when 'hung_task_panic' is enabled, the kernel panics
+> > > > immediately upon detecting the first hung task. However, some hung
+> > > > tasks are transient and the system can recover, while others are
+> > > > persistent and may accumulate progressively.
+> > 
+> > My understanding is that this patch wanted to do:
+> > 
+> >    + report even temporary stalls
+> >    + panic only when the stall was much longer and likely persistent
+> > 
+> > Which might make some sense. But the code does something else.
+> > 
+> 
+> A single task hanging for an extended period may not be a critical
+> issue, as users might still log into the system to investigate.
+> However, if multiple tasks hang simultaneously-such as in cases
+> of I/O hangs caused by disk failures-it could prevent users from
+> logging in and become a serious problem, and a panic is expected.
 
-> This patch adds support for encoding indexed-array
-> attributes with sub-type nest in pyynl.
->
-> Signed-off-by: Asbj=C3=B8rn Sloth T=C3=B8nnesen <ast@fiberby.net>
+I see. This another approach and it makes sense as well.
+An this is much more clear description than the original text.
 
-Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
+I would also update the subject to something like:
+
+    hung_task: Panic when there are more than N hung tasks at the same time
+
+
+
+That said, I think that both approaches make sense.
+
+Your approach would trigger the panic when many processes are stuck.
+Note that it still might be a transient state. But I agree that
+the more stuck processes exist the more serious the problem
+likely is for the heath of the system.
+
+My approach would trigger panic when a single process hangs
+for a long time. It will trigger more likely only when the problem
+is persistent. The seriousness depends on which particular process
+get stuck.
+
+I am fine with your approach. Just please, make more clear that
+the number means the number of hung tasks at the same time.
+And mention the problems to login, ...
+
+Best Regards,
+Petr
