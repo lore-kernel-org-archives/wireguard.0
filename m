@@ -4,59 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADF87CF397B
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 17:17:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 672A6CF397D
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 17:17:08 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a6a68e5d;
-	Tue, 18 Nov 2025 17:32:41 +0000 (UTC)
-Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ace7a637
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id af6ba36d;
+	Tue, 18 Nov 2025 17:32:44 +0000 (UTC)
+Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f36af129
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 17 Oct 2025 05:17:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=codeconstruct.com.au; s=2022a; t=1760678273;
- bh=JPM4mlpiishQWeQFEupQtI0yWXJaRSHmeNe+WZxInAk=;
- h=Subject:From:To:Cc:Date:In-Reply-To:References;
- b=jPvbvixbXMKZqhbOdvGCGRfbQ6xz4XZW5OoEp834zvcbcUzeT0DEZQShCifFLvXH/
- 7VNXYSdU2G7KBQWNNJLvpdVm+M3neujB8Z53erIEdu1UJ2Ur/ZNsImsaJHlj4fM+hg
- pXJ6iktIeSvvkWXkQePecL2LJGSXwTBivc0u1kUyxGFPoHq8uPoFGCjZLd1T70h288
- XUtXbfrycVVCuJeeKaPuRXQTaJ2o8tU0V5LH3J2I97AhMweppeCmPHR8J6FZsKDRD8
- AXTsyoypYXqYM3OOtceSmolxJvsYijbhLEvWUBCtsx2wbK42Z7FgkrL++vG1zbFzKz
- wxyyk4y8wDU0A==
-Received: from [192.168.68.113] (unknown [180.150.112.213])
- by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 882AA766F5;
- Fri, 17 Oct 2025 13:17:46 +0800 (AWST)
-Message-ID: <57dffe112a461a218c7dab6bfc3b02967440cc77.camel@codeconstruct.com.au>
-Subject: Re: [PATCH][v4] hung_task: Panic when there are more than N hung
- tasks at the same time
-From: Andrew Jeffery <andrew@codeconstruct.com.au>
-To: lirongqing <lirongqing@baidu.com>, Andrew Morton
- <akpm@linux-foundation.org>,  Lance Yang <lance.yang@linux.dev>, Masami
- Hiramatsu <mhiramat@kernel.org>, linux-kernel@vger.kernel.org
-Cc: linux-doc@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- linux-aspeed@lists.ozlabs.org, wireguard@lists.zx2c4.com,
- netdev@vger.kernel.org, 	linux-kselftest@vger.kernel.org, Anshuman Khandual
- <anshuman.khandual@arm.com>,  Arnd Bergmann	 <arnd@arndb.de>, David
- Hildenbrand <david@redhat.com>, Florian Wesphal	 <fw@strlen.de>, Jakub
- Kacinski <kuba@kernel.org>, "Jason A . Donenfeld"	 <jason@zx2c4.com>, Joel
- Granados <joel.granados@kernel.org>, Joel Stanley	 <joel@jms.id.au>,
- Jonathan Corbet <corbet@lwn.net>, Kees Cook <kees@kernel.org>,  Liam
- Howlett <liam.howlett@oracle.com>, Lorenzo Stoakes
- <lorenzo.stoakes@oracle.com>, "Paul E . McKenney"	 <paulmck@kernel.org>,
- Pawan Gupta <pawan.kumar.gupta@linux.intel.com>, Petr Mladek
- <pmladek@suse.com>, Phil Auld <pauld@redhat.com>, Randy Dunlap
- <rdunlap@infradead.org>,  Russell King <linux@armlinux.org.uk>, Shuah Khan
- <shuah@kernel.org>, Simon Horman <horms@kernel.org>,  Stanislav Fomichev	
- <sdf@fomichev.me>, Steven Rostedt <rostedt@goodmis.org>
-Date: Fri, 17 Oct 2025 15:47:45 +1030
-In-Reply-To: <20251015063615.2632-1-lirongqing@baidu.com>
-References: <20251015063615.2632-1-lirongqing@baidu.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.1-1 
+ Wed, 29 Oct 2025 20:51:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
+ s=202008; t=1761771115;
+ bh=Q4r+8tw3iUlpircGyKS82M6l99VZlCjoo2D6/aMSs8Q=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=KiUgIivOJTjUw0ybQWEjWfjAGiYd+9bmrN9hgAkh8NvhP/L6mo562D6QvVpE8QjrB
+ Cq7OgHSOAKTWH50b8wy3631pAIf1AEEH1bsVVZH31wN/Jzx6dzAEBig8GtNajqRpGU
+ R6Wh7f8cxmgT0izV0p2tpSHK5eArk72Hvapqi9CG9+OQDyUH9Kskm6QAF4wcPH7Gry
+ 6KDpoy2Qt1WqY022Ykvt8uCieMQmS5lvN9SC6MaQcudQeGK84fK/WCuVME1HPwburj
+ r4ETTWdiyRPgr71EZCzauW8fNBD2OYpGYyXOsHddUkyivZ4pka/d7AHzalFLK4TJwp
+ dt1JnVySZcCdw==
+Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
+ by mail1.fiberby.net (Postfix) with ESMTPSA id 93211600C1;
+ Wed, 29 Oct 2025 20:51:54 +0000 (UTC)
+Received: by x201s (Postfix, from userid 1000)
+ id 13BA0204DBC; Wed, 29 Oct 2025 20:51:30 +0000 (UTC)
+From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>
+Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
+ Donald Hunter <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>,
+ Jacob Keller <jacob.e.keller@intel.com>,
+ Andrew Lunn <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com,
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH net-next v1 06/11] uapi: wireguard: move flag enums
+Date: Wed, 29 Oct 2025 20:51:14 +0000
+Message-ID: <20251029205123.286115-7-ast@fiberby.net>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251029205123.286115-1-ast@fiberby.net>
+References: <20251029205123.286115-1-ast@fiberby.net>
 MIME-Version: 1.0
-X-Mailman-Approved-At: Tue, 18 Nov 2025 17:23:16 +0000
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Mailman-Approved-At: Tue, 18 Nov 2025 17:23:15 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -71,67 +63,69 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, 2025-10-15 at 14:36 +0800, lirongqing wrote:
-> From: Li RongQing <lirongqing@baidu.com>
->=20
-> Currently, when 'hung_task_panic' is enabled, the kernel panics
-> immediately upon detecting the first hung task. However, some hung
-> tasks are transient and allow system recovery, while persistent hangs
-> should trigger a panic when accumulating beyond a threshold.
->=20
-> Extend the 'hung_task_panic' sysctl to accept a threshold value
-> specifying the number of hung tasks that must be detected before
-> triggering a kernel panic. This provides finer control for environments
-> where transient hangs may occur but persistent hangs should be fatal.
->=20
-> The sysctl now accepts:
-> - 0: don't panic (maintains original behavior)
-> - 1: panic on first hung task (maintains original behavior)
-> - N > 1: panic after N hung tasks are detected in a single scan
->=20
-> This maintains backward compatibility while providing flexibility for
-> different hang scenarios.
->=20
-> Signed-off-by: Li RongQing <lirongqing@baidu.com>
-> Cc: Andrew Jeffery <andrew@codeconstruct.com.au>
-> Cc: Anshuman Khandual <anshuman.khandual@arm.com>
-> Cc: Arnd Bergmann <arnd@arndb.de>
-> Cc: David Hildenbrand <david@redhat.com>
-> Cc: Florian Wesphal <fw@strlen.de>
-> Cc: Jakub Kacinski <kuba@kernel.org>
-> Cc: Jason A. Donenfeld <jason@zx2c4.com>
-> Cc: Joel Granados <joel.granados@kernel.org>
-> Cc: Joel Stanley <joel@jms.id.au>
-> Cc: Jonathan Corbet <corbet@lwn.net>
-> Cc: Kees Cook <kees@kernel.org>
-> Cc: Lance Yang <lance.yang@linux.dev>
-> Cc: Liam Howlett <liam.howlett@oracle.com>
-> Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-> Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-> Cc: "Paul E . McKenney" <paulmck@kernel.org>
-> Cc: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-> Cc: Petr Mladek <pmladek@suse.com>
-> Cc: Phil Auld <pauld@redhat.com>
-> Cc: Randy Dunlap <rdunlap@infradead.org>
-> Cc: Russell King <linux@armlinux.org.uk>
-> Cc: Shuah Khan <shuah@kernel.org>
-> Cc: Simon Horman <horms@kernel.org>
-> Cc: Stanislav Fomichev <sdf@fomichev.me>
-> Cc: Steven Rostedt <rostedt@goodmis.org>
-> ---
-> diff with v3: comments modification, suggested by Lance, Masami, Randy an=
-d Petr
-> diff with v2: do not add a new sysctl, extend hung_task_panic, suggested =
-by Kees Cook
->=20
-> =C2=A0Documentation/admin-guide/kernel-parameters.txt=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 | 20 +++++++++++++-------
-> =C2=A0Documentation/admin-guide/sysctl/kernel.rst=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 9 +++++----
-> =C2=A0arch/arm/configs/aspeed_g5_defconfig=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 =
-2 +-
+Move the wg*_flag enums, so that they are defined above the
+attribute set enums, as ynl-gen would place them.
 
-For the aspeed_g5_defconfig change:
+This is an incremental step towards adopting an UAPI header
+generated by ynl-gen. This is split out to keep the patches readable.
 
-Acked-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+This is a trivial patch with no behavioural changes intended.
+
+Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+---
+ include/uapi/linux/wireguard.h | 25 ++++++++++++++-----------
+ 1 file changed, 14 insertions(+), 11 deletions(-)
+
+diff --git a/include/uapi/linux/wireguard.h b/include/uapi/linux/wireguard.h
+index 3ebfffd61269a..a2815f4f29104 100644
+--- a/include/uapi/linux/wireguard.h
++++ b/include/uapi/linux/wireguard.h
+@@ -15,6 +15,20 @@ enum wgdevice_flag {
+ 	WGDEVICE_F_REPLACE_PEERS = 1U << 0,
+ 	__WGDEVICE_F_ALL = WGDEVICE_F_REPLACE_PEERS
+ };
++
++enum wgpeer_flag {
++	WGPEER_F_REMOVE_ME = 1U << 0,
++	WGPEER_F_REPLACE_ALLOWEDIPS = 1U << 1,
++	WGPEER_F_UPDATE_ONLY = 1U << 2,
++	__WGPEER_F_ALL = WGPEER_F_REMOVE_ME | WGPEER_F_REPLACE_ALLOWEDIPS |
++			 WGPEER_F_UPDATE_ONLY
++};
++
++enum wgallowedip_flag {
++	WGALLOWEDIP_F_REMOVE_ME = 1U << 0,
++	__WGALLOWEDIP_F_ALL = WGALLOWEDIP_F_REMOVE_ME
++};
++
+ enum wgdevice_attribute {
+ 	WGDEVICE_A_UNSPEC,
+ 	WGDEVICE_A_IFINDEX,
+@@ -29,13 +43,6 @@ enum wgdevice_attribute {
+ };
+ #define WGDEVICE_A_MAX (__WGDEVICE_A_LAST - 1)
+ 
+-enum wgpeer_flag {
+-	WGPEER_F_REMOVE_ME = 1U << 0,
+-	WGPEER_F_REPLACE_ALLOWEDIPS = 1U << 1,
+-	WGPEER_F_UPDATE_ONLY = 1U << 2,
+-	__WGPEER_F_ALL = WGPEER_F_REMOVE_ME | WGPEER_F_REPLACE_ALLOWEDIPS |
+-			 WGPEER_F_UPDATE_ONLY
+-};
+ enum wgpeer_attribute {
+ 	WGPEER_A_UNSPEC,
+ 	WGPEER_A_PUBLIC_KEY,
+@@ -52,10 +59,6 @@ enum wgpeer_attribute {
+ };
+ #define WGPEER_A_MAX (__WGPEER_A_LAST - 1)
+ 
+-enum wgallowedip_flag {
+-	WGALLOWEDIP_F_REMOVE_ME = 1U << 0,
+-	__WGALLOWEDIP_F_ALL = WGALLOWEDIP_F_REMOVE_ME
+-};
+ enum wgallowedip_attribute {
+ 	WGALLOWEDIP_A_UNSPEC,
+ 	WGALLOWEDIP_A_FAMILY,
+-- 
+2.51.0
+
