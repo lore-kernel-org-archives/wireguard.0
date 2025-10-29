@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1567CF3966
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 17:17:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E07FCF58C2
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 17:43:27 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id be87d0fa;
-	Tue, 18 Nov 2025 17:32:51 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c2ddd597;
+	Tue, 18 Nov 2025 17:32:52 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 91c41531
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1fddedca
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
  Wed, 29 Oct 2025 20:51:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
  s=202008; t=1761771115;
- bh=KV9UVgCkqouJnikGNIjL29VEwbmmtAbHwtbsaIvTk2s=;
- h=From:To:Cc:Subject:Date:From;
- b=FLF1GT7qr19AGWmGkFOlLhJpotsQeztnM/cvmXV8BDFjNK0Safqa2JBEE0NdZCC+2
- 7Z06qImjnZTVd+1WXnBm8YWJ/O3rU+R8oTqcPUR5B6OgKWH50S2XNwoXmQxfYxkNkp
- Ic7aPKA20q0BBGhXyJmsqswAMrwopq7AFQLvN3oYPQ8KPFRAZGsDL2FndquGJQOGvJ
- 0uGi8LSu5NoFsGkuU0sCQRTA0s11dCvOoyDCTXFjxlbxD8Z7iXKDBeyT+kjfWJJJ6p
- SqPVZMtpfT4W6OJvHyVu7HnxKRrtp/JonnYZA7IbEYCgwEtL4CgVyC8mmwMK9Mxz0J
- +CCtc277b24yQ==
+ bh=5pTRIlOaXCnvQr9a+6pDQBfAYdxnSC8s8hd2C76jPPg=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=LPmGxZIHaHnGFYdwh2l6dTCfrjKGbjSsnka3g6g+lfJDfRmt5oKwX9LYAcGdvnifw
+ +BCDmWXdwPgNPBe2FMouyIHrBVSxIV04jn6P9sbn0dKvuAMO8b/y5aQXXBHU6Am0By
+ cg0aumYWpAjrf1x94pC+MpitBBJ/he0OAlOwLqkbY/x8O0GUlDU/2XgJEuKxrtz0Ks
+ aqvYAkxetq8ut7xVZL1vWIA2JOqTPmj7IFklvMRA9amAum8zsxed3PuW3DYqw9laXr
+ gCYn7BnYGKTdiQBQTqhcrL1BtddjMOJnfyIlEDq/9cW31VWwdJkFIHWj4UPAA87Gpg
+ hd1KR52qqs6xQ==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id 43E3460115;
+ by mail1.fiberby.net (Postfix) with ESMTPSA id 3280E6010D;
  Wed, 29 Oct 2025 20:51:55 +0000 (UTC)
 Received: by x201s (Postfix, from userid 1000)
- id CDBD92021CC; Wed, 29 Oct 2025 20:51:29 +0000 (UTC)
+ id 264AB205025; Wed, 29 Oct 2025 20:51:30 +0000 (UTC)
 From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  "David S. Miller" <davem@davemloft.net>,
@@ -39,10 +39,12 @@ Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
  Jacob Keller <jacob.e.keller@intel.com>,
  Andrew Lunn <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v1 00/11] wireguard: netlink: ynl conversion
-Date: Wed, 29 Oct 2025 20:51:08 +0000
-Message-ID: <20251029205123.286115-1-ast@fiberby.net>
+Subject: [PATCH net-next v1 08/11] tools: ynl: add sample for wireguard
+Date: Wed, 29 Oct 2025 20:51:16 +0000
+Message-ID: <20251029205123.286115-9-ast@fiberby.net>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251029205123.286115-1-ast@fiberby.net>
+References: <20251029205123.286115-1-ast@fiberby.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -61,92 +63,255 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This series completes the implementation of YNL for wireguard,
-as previously announced[1].
+Add a sample application for wireguard, using the generated C library,
 
-This series consist of 5 parts:
-1) Patch 01-03 - Misc. changes
-2) Patch    04 - Add YNL specification for wireguard
-3) Patch 05-07 - Transition to a generated UAPI header
-4) Patch    08 - Adds a sample program for the generated C library
-5) Patch 09-11 - Transition to generated netlink policy code
+The main benefit of this is to exercise the generated library,
+which might be useful for future selftests.
 
-The main benefit of having a YNL specification is unlocked after the
-first 2 parts, the RFC version seems to already have spawned a new
-Rust netlink binding[2] using wireguard as it's main example.
+The UAPI header is copied to tools/include/uapi/, when the header
+changes ynl-gen will regenerate both copies.
 
-Part 3 and 5 validates that the specification is complete and aligned,
-the generated code might have a few warts, but they don't matter too
-much, and are mostly a transitional problem[3].
+Example:
+  $ make -C tools/net/ynl/lib
+  $ make -C tools/net/ynl/generated
+  $ make -C tools/net/ynl/samples wireguard
+  $ ./tools/net/ynl/samples/wireguard
+  usage: ./tools/net/ynl/samples/wireguard <ifindex|ifname>
+  $ sudo ./tools/net/ynl/samples/wireguard wg-test
+  Interface 3: wg-test
+      Peer 6adfb183a4a2c94a2f92dab5ade762a4788[...]:
+          Data: rx: 42 / tx: 42 bytes
+          Allowed IPs:
+              0.0.0.0/0
+              ::/0
 
-Part 4 is possible after part 2, but is ordered after part 3,
-as it needs to duplicate the UAPI header in tools/include.
-
-For the non-generated kernel C code the diff stat looks like this:
-
-$ git diff --stat net-next/main..wg-ynl include/ drivers/ \
-	':(exclude)*netlink_gen*'
- drivers/net/wireguard/Makefile  |   1 +
- drivers/net/wireguard/netlink.c |  70 +++---------
- include/uapi/linux/wireguard.h  | 190 ++++++--------------------------
- 3 files changed, 47 insertions(+), 214 deletions(-)
-
-[1] [PATCH net 0/4] tools: ynl-gen: misc fixes + wireguard ynl plan
-    https://lore.kernel.org/r/20250901145034.525518-1-ast@fiberby.net/
-
-[2] https://github.com/one-d-wide/netlink-bindings/
-
-[3] https://lore.kernel.org/r/20251014123201.6ecfd146@kernel.org/
-
+Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 ---
-v1:
-- Policy arguement to nla_parse_nested() changed to NULL (thanks Johannes).
-- Added attr-cnt-name to the spec, to reduce the diff a bit.
-- Refined the doc in the spec a bit.
-- Reword commit messages a bit.
-- Reordered the patches, and reduced the series from 14 to 11 patches.
-
-RFC: https://lore.kernel.org/r/20250904-wg-ynl-rfc@fiberby.net/
-
-diff -Naur a/sent/0904/b/0002-wireguard-netlink-validate-nested-arrays-in-policy.patch 0001-wireguard-netlink-validate-nested-arrays-in-policy.patch
-diff -Naur a/sent/0904/b/0001-wireguard-netlink-use-WG_KEY_LEN-in-policies.patch 0002-wireguard-netlink-use-WG_KEY_LEN-in-policies.patch
-diff -Naur a/sent/0904/b/0013-wireguard-netlink-enable-strict-genetlink-validation.patch 0003-wireguard-netlink-enable-strict-genetlink-validation.patch
-diff -Naur a/sent/0904/b/0003-netlink-specs-add-specification-for-wireguard.patch 0004-netlink-specs-add-specification-for-wireguard.patch
-
-
-
-
-
-Asbjørn Sloth Tønnesen (11):
-  wireguard: netlink: validate nested arrays in policy
-  wireguard: netlink: use WG_KEY_LEN in policies
-  wireguard: netlink: enable strict genetlink validation
-  netlink: specs: add specification for wireguard
-  uapi: wireguard: move enum wg_cmd
-  uapi: wireguard: move flag enums
-  uapi: wireguard: generate header with ynl-gen
-  tools: ynl: add sample for wireguard
-  wireguard: netlink: convert to split ops
-  wireguard: netlink: rename netlink handlers
-  wireguard: netlink: generate netlink code
-
- Documentation/netlink/specs/wireguard.yaml | 307 +++++++++++++++++++++
- MAINTAINERS                                |   3 +
- drivers/net/wireguard/Makefile             |   1 +
- drivers/net/wireguard/netlink.c            |  70 +----
- drivers/net/wireguard/netlink_gen.c        |  77 ++++++
- drivers/net/wireguard/netlink_gen.h        |  29 ++
- include/uapi/linux/wireguard.h             | 190 +++----------
- tools/include/uapi/linux/wireguard.h       |  79 ++++++
- tools/net/ynl/samples/.gitignore           |   1 +
- tools/net/ynl/samples/wireguard.c          | 104 +++++++
- 10 files changed, 647 insertions(+), 214 deletions(-)
- create mode 100644 Documentation/netlink/specs/wireguard.yaml
- create mode 100644 drivers/net/wireguard/netlink_gen.c
- create mode 100644 drivers/net/wireguard/netlink_gen.h
+ MAINTAINERS                          |   2 +
+ tools/include/uapi/linux/wireguard.h |  79 ++++++++++++++++++++
+ tools/net/ynl/samples/.gitignore     |   1 +
+ tools/net/ynl/samples/wireguard.c    | 104 +++++++++++++++++++++++++++
+ 4 files changed, 186 insertions(+)
  create mode 100644 tools/include/uapi/linux/wireguard.h
  create mode 100644 tools/net/ynl/samples/wireguard.c
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 1bceeb4f5d122..e7ec4cb4d044f 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -27632,6 +27632,8 @@ L:	netdev@vger.kernel.org
+ S:	Maintained
+ F:	Documentation/netlink/specs/wireguard.yaml
+ F:	drivers/net/wireguard/
++F:	tools/include/uapi/linux/wireguard.h
++F:	tools/net/ynl/samples/wireguard.c
+ F:	tools/testing/selftests/wireguard/
+ 
+ WISTRON LAPTOP BUTTON DRIVER
+diff --git a/tools/include/uapi/linux/wireguard.h b/tools/include/uapi/linux/wireguard.h
+new file mode 100644
+index 0000000000000..dc3924d0c5524
+--- /dev/null
++++ b/tools/include/uapi/linux/wireguard.h
+@@ -0,0 +1,79 @@
++/* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-3-Clause) */
++/* Do not edit directly, auto-generated from: */
++/*	Documentation/netlink/specs/wireguard.yaml */
++/* YNL-GEN uapi header */
++
++#ifndef _UAPI_LINUX_WIREGUARD_H
++#define _UAPI_LINUX_WIREGUARD_H
++
++#define WG_GENL_NAME	"wireguard"
++#define WG_GENL_VERSION	1
++
++#define WG_KEY_LEN	32
++
++enum wgdevice_flag {
++	WGDEVICE_F_REPLACE_PEERS = 1,
++};
++
++enum wgpeer_flag {
++	WGPEER_F_REMOVE_ME = 1,
++	WGPEER_F_REPLACE_ALLOWEDIPS = 2,
++	WGPEER_F_UPDATE_ONLY = 4,
++};
++
++enum wgallowedip_flag {
++	WGALLOWEDIP_F_REMOVE_ME = 1,
++};
++
++enum wgdevice_attribute {
++	WGDEVICE_A_UNSPEC,
++	WGDEVICE_A_IFINDEX,
++	WGDEVICE_A_IFNAME,
++	WGDEVICE_A_PRIVATE_KEY,
++	WGDEVICE_A_PUBLIC_KEY,
++	WGDEVICE_A_FLAGS,
++	WGDEVICE_A_LISTEN_PORT,
++	WGDEVICE_A_FWMARK,
++	WGDEVICE_A_PEERS,
++
++	__WGDEVICE_A_LAST
++};
++#define WGDEVICE_A_MAX (__WGDEVICE_A_LAST - 1)
++
++enum wgpeer_attribute {
++	WGPEER_A_UNSPEC,
++	WGPEER_A_PUBLIC_KEY,
++	WGPEER_A_PRESHARED_KEY,
++	WGPEER_A_FLAGS,
++	WGPEER_A_ENDPOINT,
++	WGPEER_A_PERSISTENT_KEEPALIVE_INTERVAL,
++	WGPEER_A_LAST_HANDSHAKE_TIME,
++	WGPEER_A_RX_BYTES,
++	WGPEER_A_TX_BYTES,
++	WGPEER_A_ALLOWEDIPS,
++	WGPEER_A_PROTOCOL_VERSION,
++
++	__WGPEER_A_LAST
++};
++#define WGPEER_A_MAX (__WGPEER_A_LAST - 1)
++
++enum wgallowedip_attribute {
++	WGALLOWEDIP_A_UNSPEC,
++	WGALLOWEDIP_A_FAMILY,
++	WGALLOWEDIP_A_IPADDR,
++	WGALLOWEDIP_A_CIDR_MASK,
++	WGALLOWEDIP_A_FLAGS,
++
++	__WGALLOWEDIP_A_LAST
++};
++#define WGALLOWEDIP_A_MAX (__WGALLOWEDIP_A_LAST - 1)
++
++enum wg_cmd {
++	WG_CMD_GET_DEVICE,
++	WG_CMD_SET_DEVICE,
++
++	__WG_CMD_MAX
++};
++#define WG_CMD_MAX (__WG_CMD_MAX - 1)
++
++#endif /* _UAPI_LINUX_WIREGUARD_H */
+diff --git a/tools/net/ynl/samples/.gitignore b/tools/net/ynl/samples/.gitignore
+index 7f5fca7682d74..09c61e4c18cd4 100644
+--- a/tools/net/ynl/samples/.gitignore
++++ b/tools/net/ynl/samples/.gitignore
+@@ -7,3 +7,4 @@ rt-addr
+ rt-link
+ rt-route
+ tc
++wireguard
+diff --git a/tools/net/ynl/samples/wireguard.c b/tools/net/ynl/samples/wireguard.c
+new file mode 100644
+index 0000000000000..43f3551eb101a
+--- /dev/null
++++ b/tools/net/ynl/samples/wireguard.c
+@@ -0,0 +1,104 @@
++// SPDX-License-Identifier: GPL-2.0
++#include <arpa/inet.h>
++#include <string.h>
++#include <stdio.h>
++#include <errno.h>
++#include <ynl.h>
++
++#include "wireguard-user.h"
++
++static void print_allowed_ip(const struct wireguard_wgallowedip *aip)
++{
++	char addr_out[INET6_ADDRSTRLEN];
++
++	if (!inet_ntop(aip->family, aip->ipaddr, addr_out, sizeof(addr_out))) {
++		addr_out[0] = '?';
++		addr_out[1] = '\0';
++	}
++	printf("\t\t\t%s/%u\n", addr_out, aip->cidr_mask);
++}
++
++/* Only printing public key in this demo. For better key formatting,
++ * use the constant-time implementation as found in wireguard-tools.
++ */
++static void print_peer_header(const struct wireguard_wgpeer *peer)
++{
++	unsigned int i;
++	uint8_t *key = peer->public_key;
++	unsigned int len = peer->_len.public_key;
++
++	if (len != 32)
++		return;
++	printf("\tPeer ");
++	for (i = 0; i < len; i++)
++		printf("%02x", key[i]);
++	printf(":\n");
++}
++
++static void print_peer(const struct wireguard_wgpeer *peer)
++{
++	unsigned int i;
++
++	print_peer_header(peer);
++	printf("\t\tData: rx: %llu / tx: %llu bytes\n",
++	       peer->rx_bytes, peer->tx_bytes);
++	printf("\t\tAllowed IPs:\n");
++	for (i = 0; i < peer->_count.allowedips; i++)
++		print_allowed_ip(&peer->allowedips[i]);
++}
++
++static void build_request(struct wireguard_get_device_req *req, char *arg)
++{
++	char *endptr;
++	int ifindex;
++
++	ifindex = strtol(arg, &endptr, 0);
++	if (endptr != arg + strlen(arg) || errno != 0)
++		ifindex = 0;
++	if (ifindex > 0)
++		wireguard_get_device_req_set_ifindex(req, ifindex);
++	else
++		wireguard_get_device_req_set_ifname(req, arg);
++}
++
++int main(int argc, char **argv)
++{
++	struct wireguard_get_device_list *devs;
++	struct wireguard_get_device_req *req;
++	struct ynl_sock *ys;
++
++	if (argc < 2) {
++		fprintf(stderr, "usage: %s <ifindex|ifname>\n", argv[0]);
++		return 1;
++	}
++
++	req = wireguard_get_device_req_alloc();
++	build_request(req, argv[1]);
++
++	ys = ynl_sock_create(&ynl_wireguard_family, NULL);
++	if (!ys)
++		return 2;
++
++	devs = wireguard_get_device_dump(ys, req);
++	if (!devs)
++		goto err_close;
++
++	ynl_dump_foreach(devs, d) {
++		unsigned int i;
++
++		printf("Interface %d: %s\n", d->ifindex, d->ifname);
++		for (i = 0; i < d->_count.peers; i++)
++			print_peer(&d->peers[i]);
++	}
++	wireguard_get_device_list_free(devs);
++	wireguard_get_device_req_free(req);
++	ynl_sock_destroy(ys);
++
++	return 0;
++
++err_close:
++	fprintf(stderr, "YNL (%d): %s\n", ys->err.code, ys->err.msg);
++	wireguard_get_device_req_free(req);
++	ynl_sock_destroy(ys);
++	return 3;
++}
 -- 
 2.51.0
 
