@@ -4,71 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B6E4CF3966
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 17:17:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C482CF397F
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 17:17:09 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 28d29af8;
-	Tue, 18 Nov 2025 17:32:43 +0000 (UTC)
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com
- [2607:f8b0:4864:20::1031])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 38677d9d
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 86835f67;
+	Tue, 18 Nov 2025 17:32:44 +0000 (UTC)
+Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b81388da
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 21 Oct 2025 17:49:50 +0000 (UTC)
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-33d28dbced5so4877449a91.2
- for <wireguard@lists.zx2c4.com>; Tue, 21 Oct 2025 10:49:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1761068988; x=1761673788; darn=lists.zx2c4.com;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+q8Os3QV4AiQnNKQL40uNK7bo4U73YgmtqjVFwNJYtk=;
- b=IjRdXjeQ0wWi/ewTsOYXaYOJzD2ymHrdSbqVUekjYIMtALxQeq9k3auc7ZAO7ygW/2
- h52sqHKkdXFI9/rTaR+BLmWYmb+/mRG0unnuD6iJ07oO/TNhNzPP1L/Ne/1eKbZLH7ov
- smMMxndZndTDA+3uVh03CfXRMkoGoElF4qvhlGA9HDHUjzuBK2VfA/5dJYHvMqn6BBEm
- lgLXek8PjutyHHhYS1hAeCJvO3OMNMzvH7pcLlrDdZA7IDq+JGyVboYBb3/7UXcm0+aR
- M3dllzatvFBgFIp8E8wmVa4L9e6Q4CMuRKdqUM+9csLRiTnRoqAaCKf3i3qczPXAeh55
- OW2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1761068988; x=1761673788;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+q8Os3QV4AiQnNKQL40uNK7bo4U73YgmtqjVFwNJYtk=;
- b=E4qZmWCVUTb/68xgU/Rr8r7osGspNpH9wEbAuDG45h/e7PJLKmCYWEwA1X83f8dHH2
- EaV10qJbj/4jsd2SEV9ju5CWJLg5+32sKMK/OrIqDh3Dkyo2Fgv8xSxid96r38NSNRt+
- gwqYemQXdlS2baHFCh+pnXkEhhwf7DLXgYZKLaYxS4OmtPbOLFIpiaqpoz3eMaZaogi7
- bfy/W+gsEm0V3ovgFag6hvEPD56LgLou9FfdhgguTAT+B4oJH8zBtAiYso/LTT/Kq/9c
- DyxAqX3qSDNgyWAZJhxLPRq2svVTR9q7BfReyMSdQL9kokXDkzTxleSH2fginYF7V5q5
- IBpA==
-X-Gm-Message-State: AOJu0YxQfQ/tqdUTl5dhpxmwvvZqMPHkPp9pL1F8J6Z0HSR91B6taJL1
- enFWxaXvqfPphAOhTTAHRfsUKZyKY91PRozMas4aVBUy1IIb8CMqK564L4D4S/qgLDo80XJawcV
- m95tbRfaMPSl8zQ/f3lElFWSuRetow+4=
-X-Gm-Gg: ASbGncsdKQfYkn6rLbzSaexuzlAO7BRezEMO1fwoFR6/4PkQpVOQOFc0nvihqLRWy9/
- fGpcUpc/7QXsdmXkTJxfju41vjcr8SRZAGU7XgYwsrUZfS1aJDNBYF6RJ5OwOAtT3Fl3NyXVE/B
- MgrlMi+h2Vgkf6o19LQQZAYsjRgARh3vKJwJgzrsVc8+5Nwy/3MrM5vEQarYj843CTfPUKzlqmF
- k19lWYLF2951nVSgRqGeaxm4N0FmS50jL/bl4ceeKcISHDaT9hydoNK+wox6X2mi78v
-X-Google-Smtp-Source: AGHT+IGOXQgu6lQWhFyf+t/CSA1diNM3SwVxnFnjh0utUblYzFhYLfjlWfGOvy2Gt+AOFXij58+2eNPtcHopEifHSlY=
-X-Received: by 2002:a17:90b:3d87:b0:33b:b020:595e with SMTP id
- 98e67ed59e1d1-33bcf8f78cfmr21160963a91.25.1761068988525; Tue, 21 Oct 2025
- 10:49:48 -0700 (PDT)
+ Wed, 29 Oct 2025 20:51:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
+ s=202008; t=1761771114;
+ bh=g2SHB4PnH0hDBL3b9a+DJ5x0q3Pv/jEP1n8tR7d2V6g=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=pmJj1ycpmKtHzpuaS1Syo9qelDfSFgfrgwobHNVASfEdcJ8H/eX17sCxMsFEs27Yc
+ 3SaPAEMpcBEtc9dclSVsQ2Qa1Wsbx/C5qGeoxr3yiqHdpG12SiPQxKQDXmOzPs4V73
+ vBR8U6kkr6Bzprptt1K9kOiIvU3Y/rLyPxIDHq8IXlvxrBnsHKVdo9a7KrR6VheDk3
+ mHFht4+EQhPwzXj7wOXOL4y+Tt9oO8q+teBrM+z62xsxfHiQj2kUZcCXtWp4dBTWUn
+ kDksKJJABgUJ+/UMYa1zp8zyGQsJTcJ+kVQp835FotPWrIMXdGesYFYd/tU9IBIukg
+ 1dAP34jR2wEoA==
+Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
+ by mail1.fiberby.net (Postfix) with ESMTPSA id 906316000C;
+ Wed, 29 Oct 2025 20:51:54 +0000 (UTC)
+Received: by x201s (Postfix, from userid 1000)
+ id 43652205372; Wed, 29 Oct 2025 20:51:30 +0000 (UTC)
+From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>
+Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
+ Donald Hunter <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>,
+ Jacob Keller <jacob.e.keller@intel.com>,
+ Andrew Lunn <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com,
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH net-next v1 11/11] wireguard: netlink: generate netlink code
+Date: Wed, 29 Oct 2025 20:51:19 +0000
+Message-ID: <20251029205123.286115-12-ast@fiberby.net>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251029205123.286115-1-ast@fiberby.net>
+References: <20251029205123.286115-1-ast@fiberby.net>
 MIME-Version: 1.0
-References: <CAHaCkmc_CrwBRj-Gji_td9S19oPg9U9-n8B4u8yTR4sPm9Vx7Q@mail.gmail.com>
-In-Reply-To: <CAHaCkmc_CrwBRj-Gji_td9S19oPg9U9-n8B4u8yTR4sPm9Vx7Q@mail.gmail.com>
-From: Andrii Nakryiko <andrii.nakryiko@gmail.com>
-Date: Tue, 21 Oct 2025 10:49:36 -0700
-X-Gm-Features: AS18NWAsfq3fhmrRaxV6XHiZww58Xefxp9cRzg3SYFrj93L49T-WggbE-aYzrZs
-Message-ID: <CAEf4BzaKhqx+5O6k7i5naAxAhpPxBuWgy=ryFwkLzGROJxQbgw@mail.gmail.com>
-Subject: Re: [PATCH] Fix up 'make versioncheck' issues
-To: Jesper Juhl <jesperjuhl76@gmail.com>
-Cc: wireguard@lists.zx2c4.com, linux-kselftest@vger.kernel.org, 
- netdev@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Alexei Starovoitov <ast@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>, 
- Andrii Nakryiko <andrii@kernel.org>, "Jason A. Donenfeld" <Jason@zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailman-Approved-At: Tue, 18 Nov 2025 17:23:16 +0000
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Mailman-Approved-At: Tue, 18 Nov 2025 17:23:15 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -83,57 +63,268 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, Oct 20, 2025 at 7:09=E2=80=AFPM Jesper Juhl <jesperjuhl76@gmail.com=
-> wrote:
->
-> From d2e411b4cd37b1936a30d130e2b21e37e62e0cfb Mon Sep 17 00:00:00 2001
-> From: Jesper Juhl <jesperjuhl76@gmail.com>
-> Date: Tue, 21 Oct 2025 03:51:21 +0200
-> Subject: [PATCH] [PATCH] Fix up 'make versioncheck' issues
->
-> 'make versioncheck' currently flags a few files that don't need to
-> needs it but doesn't include it. This patch fixes that up.
->
-> Signed-Off-By: Jesper Juhl <jesperjuhl76@gmail.com>
-> ---
-> samples/bpf/spintest.bpf.c                                | 1 -
-> tools/lib/bpf/bpf_helpers.h                               | 2 ++
-> tools/testing/selftests/bpf/progs/dev_cgroup.c            | 1 -
-> tools/testing/selftests/bpf/progs/netcnt_prog.c           | 2 --
-> tools/testing/selftests/bpf/progs/test_map_lock.c         | 1 -
-> tools/testing/selftests/bpf/progs/test_send_signal_kern.c | 1 -
-> tools/testing/selftests/bpf/progs/test_spin_lock.c        | 1 -
-> tools/testing/selftests/bpf/progs/test_tcp_estats.c       | 1 -
-> tools/testing/selftests/wireguard/qemu/init.c             | 1 -
-> 9 files changed, 2 insertions(+), 9 deletions(-)
->
-> diff --git a/samples/bpf/spintest.bpf.c b/samples/bpf/spintest.bpf.c
-> index cba5a9d507831..6278f6d0b731f 100644
-> --- a/samples/bpf/spintest.bpf.c
-> +++ b/samples/bpf/spintest.bpf.c
-> @@ -5,7 +5,6 @@
->  * License as published by the Free Software Foundation.
->  */
-> #include "vmlinux.h"
-> -#include <linux/version.h>
-> #include <bpf/bpf_helpers.h>
-> #include <bpf/bpf_tracing.h>
->
-> diff --git a/tools/lib/bpf/bpf_helpers.h b/tools/lib/bpf/bpf_helpers.h
-> index 80c0285406561..393ce1063a977 100644
-> --- a/tools/lib/bpf/bpf_helpers.h
-> +++ b/tools/lib/bpf/bpf_helpers.h
-> @@ -2,6 +2,8 @@
-> #ifndef __BPF_HELPERS__
-> #define __BPF_HELPERS__
->
-> +#include <linux/version.h>
-> +
+This patch adopts netlink policy and command definitions as
+generated by ynl-gen, thus completing the conversion to YNL.
 
-this is libbpf's public API header, we are not adding linux/version.h
-here. Linux version on which something was built has nothing to do
-with the version of Linux on which the BPF program is actually
-running. And BPF programs are most of the time intentionally Linux
-version-agnostic.
+Given that the old and new policy is functionally identical, and
+just moved to a new file, then it serves to verify that the policy
+in the spec in identical to the previous policy code.
 
-[...]
+No behavioural changes intended.
+
+Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+---
+ drivers/net/wireguard/Makefile      |  1 +
+ drivers/net/wireguard/netlink.c     | 62 +++--------------------
+ drivers/net/wireguard/netlink_gen.c | 77 +++++++++++++++++++++++++++++
+ drivers/net/wireguard/netlink_gen.h | 29 +++++++++++
+ 4 files changed, 114 insertions(+), 55 deletions(-)
+ create mode 100644 drivers/net/wireguard/netlink_gen.c
+ create mode 100644 drivers/net/wireguard/netlink_gen.h
+
+diff --git a/drivers/net/wireguard/Makefile b/drivers/net/wireguard/Makefile
+index dbe1f8514efc3..ae4b479cddbda 100644
+--- a/drivers/net/wireguard/Makefile
++++ b/drivers/net/wireguard/Makefile
+@@ -14,4 +14,5 @@ wireguard-y += allowedips.o
+ wireguard-y += ratelimiter.o
+ wireguard-y += cookie.o
+ wireguard-y += netlink.o
++wireguard-y += netlink_gen.o
+ obj-$(CONFIG_WIREGUARD) := wireguard.o
+diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlink.c
+index 3595349448b2c..6a7e522e3a78e 100644
+--- a/drivers/net/wireguard/netlink.c
++++ b/drivers/net/wireguard/netlink.c
+@@ -9,6 +9,7 @@
+ #include "socket.h"
+ #include "queueing.h"
+ #include "messages.h"
++#include "netlink_gen.h"
+ 
+ #include <uapi/linux/wireguard.h>
+ 
+@@ -19,37 +20,6 @@
+ 
+ static struct genl_family genl_family;
+ 
+-static const struct nla_policy device_policy[WGDEVICE_A_MAX + 1] = {
+-	[WGDEVICE_A_IFINDEX]		= { .type = NLA_U32 },
+-	[WGDEVICE_A_IFNAME]		= { .type = NLA_NUL_STRING, .len = IFNAMSIZ - 1 },
+-	[WGDEVICE_A_PRIVATE_KEY]	= NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
+-	[WGDEVICE_A_PUBLIC_KEY]		= NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
+-	[WGDEVICE_A_FLAGS]		= NLA_POLICY_MASK(NLA_U32, 0x1),
+-	[WGDEVICE_A_LISTEN_PORT]	= { .type = NLA_U16 },
+-	[WGDEVICE_A_FWMARK]		= { .type = NLA_U32 },
+-	[WGDEVICE_A_PEERS]		= NLA_POLICY_NESTED_ARRAY(peer_policy),
+-};
+-
+-static const struct nla_policy peer_policy[WGPEER_A_MAX + 1] = {
+-	[WGPEER_A_PUBLIC_KEY]				= NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
+-	[WGPEER_A_PRESHARED_KEY]			= NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
+-	[WGPEER_A_FLAGS]				= NLA_POLICY_MASK(NLA_U32, 0x7),
+-	[WGPEER_A_ENDPOINT]				= NLA_POLICY_MIN_LEN(sizeof(struct sockaddr)),
+-	[WGPEER_A_PERSISTENT_KEEPALIVE_INTERVAL]	= { .type = NLA_U16 },
+-	[WGPEER_A_LAST_HANDSHAKE_TIME]			= NLA_POLICY_EXACT_LEN(sizeof(struct __kernel_timespec)),
+-	[WGPEER_A_RX_BYTES]				= { .type = NLA_U64 },
+-	[WGPEER_A_TX_BYTES]				= { .type = NLA_U64 },
+-	[WGPEER_A_ALLOWEDIPS]				= NLA_POLICY_NESTED_ARRAY(allowedip_policy),
+-	[WGPEER_A_PROTOCOL_VERSION]			= { .type = NLA_U32 }
+-};
+-
+-static const struct nla_policy allowedip_policy[WGALLOWEDIP_A_MAX + 1] = {
+-	[WGALLOWEDIP_A_FAMILY]		= { .type = NLA_U16 },
+-	[WGALLOWEDIP_A_IPADDR]		= NLA_POLICY_MIN_LEN(sizeof(struct in_addr)),
+-	[WGALLOWEDIP_A_CIDR_MASK]	= { .type = NLA_U8 },
+-	[WGALLOWEDIP_A_FLAGS]		= NLA_POLICY_MASK(NLA_U32, 0x1),
+-};
+-
+ static struct wg_device *lookup_interface(struct nlattr **attrs,
+ 					  struct sk_buff *skb)
+ {
+@@ -197,7 +167,7 @@ get_peer(struct wg_peer *peer, struct sk_buff *skb, struct dump_ctx *ctx)
+ 	return -EMSGSIZE;
+ }
+ 
+-static int wireguard_nl_get_device_start(struct netlink_callback *cb)
++int wireguard_nl_get_device_start(struct netlink_callback *cb)
+ {
+ 	struct wg_device *wg;
+ 
+@@ -208,8 +178,8 @@ static int wireguard_nl_get_device_start(struct netlink_callback *cb)
+ 	return 0;
+ }
+ 
+-static int wireguard_nl_get_device_dumpit(struct sk_buff *skb,
+-					  struct netlink_callback *cb)
++int wireguard_nl_get_device_dumpit(struct sk_buff *skb,
++				   struct netlink_callback *cb)
+ {
+ 	struct wg_peer *peer, *next_peer_cursor;
+ 	struct dump_ctx *ctx = DUMP_CTX(cb);
+@@ -303,7 +273,7 @@ static int wireguard_nl_get_device_dumpit(struct sk_buff *skb,
+ 	 */
+ }
+ 
+-static int wireguard_nl_get_device_done(struct netlink_callback *cb)
++int wireguard_nl_get_device_done(struct netlink_callback *cb)
+ {
+ 	struct dump_ctx *ctx = DUMP_CTX(cb);
+ 
+@@ -501,8 +471,8 @@ static int set_peer(struct wg_device *wg, struct nlattr **attrs)
+ 	return ret;
+ }
+ 
+-static int wireguard_nl_set_device_doit(struct sk_buff *skb,
+-					struct genl_info *info)
++int wireguard_nl_set_device_doit(struct sk_buff *skb,
++				 struct genl_info *info)
+ {
+ 	struct wg_device *wg = lookup_interface(info->attrs, skb);
+ 	u32 flags = 0;
+@@ -616,24 +586,6 @@ static int wireguard_nl_set_device_doit(struct sk_buff *skb,
+ 	return ret;
+ }
+ 
+-static const struct genl_split_ops wireguard_nl_ops[] = {
+-	{
+-		.cmd = WG_CMD_GET_DEVICE,
+-		.start = wireguard_nl_get_device_start,
+-		.dumpit = wireguard_nl_get_device_dumpit,
+-		.done = wireguard_nl_get_device_done,
+-		.policy = device_policy,
+-		.maxattr = WGDEVICE_A_PEERS,
+-		.flags = GENL_UNS_ADMIN_PERM | GENL_CMD_CAP_DUMP,
+-	}, {
+-		.cmd = WG_CMD_SET_DEVICE,
+-		.doit = wireguard_nl_set_device_doit,
+-		.policy = device_policy,
+-		.maxattr = WGDEVICE_A_PEERS,
+-		.flags = GENL_UNS_ADMIN_PERM | GENL_CMD_CAP_DO,
+-	}
+-};
+-
+ static struct genl_family genl_family __ro_after_init = {
+ 	.split_ops = wireguard_nl_ops,
+ 	.n_split_ops = ARRAY_SIZE(wireguard_nl_ops),
+diff --git a/drivers/net/wireguard/netlink_gen.c b/drivers/net/wireguard/netlink_gen.c
+new file mode 100644
+index 0000000000000..f95fa133778f1
+--- /dev/null
++++ b/drivers/net/wireguard/netlink_gen.c
+@@ -0,0 +1,77 @@
++// SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-3-Clause)
++/* Do not edit directly, auto-generated from: */
++/*	Documentation/netlink/specs/wireguard.yaml */
++/* YNL-GEN kernel source */
++
++#include <net/netlink.h>
++#include <net/genetlink.h>
++
++#include "netlink_gen.h"
++
++#include <uapi/linux/wireguard.h>
++#include <linux/time_types.h>
++
++/* Common nested types */
++const struct nla_policy wireguard_wgallowedip_nl_policy[WGALLOWEDIP_A_FLAGS + 1] = {
++	[WGALLOWEDIP_A_FAMILY] = { .type = NLA_U16, },
++	[WGALLOWEDIP_A_IPADDR] = NLA_POLICY_MIN_LEN(4),
++	[WGALLOWEDIP_A_CIDR_MASK] = { .type = NLA_U8, },
++	[WGALLOWEDIP_A_FLAGS] = NLA_POLICY_MASK(NLA_U32, 0x1),
++};
++
++const struct nla_policy wireguard_wgpeer_nl_policy[WGPEER_A_PROTOCOL_VERSION + 1] = {
++	[WGPEER_A_PUBLIC_KEY] = NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
++	[WGPEER_A_PRESHARED_KEY] = NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
++	[WGPEER_A_FLAGS] = NLA_POLICY_MASK(NLA_U32, 0x7),
++	[WGPEER_A_ENDPOINT] = NLA_POLICY_MIN_LEN(16),
++	[WGPEER_A_PERSISTENT_KEEPALIVE_INTERVAL] = { .type = NLA_U16, },
++	[WGPEER_A_LAST_HANDSHAKE_TIME] = NLA_POLICY_EXACT_LEN(16),
++	[WGPEER_A_RX_BYTES] = { .type = NLA_U64, },
++	[WGPEER_A_TX_BYTES] = { .type = NLA_U64, },
++	[WGPEER_A_ALLOWEDIPS] = NLA_POLICY_NESTED_ARRAY(wireguard_wgallowedip_nl_policy),
++	[WGPEER_A_PROTOCOL_VERSION] = { .type = NLA_U32, },
++};
++
++/* WG_CMD_GET_DEVICE - dump */
++static const struct nla_policy wireguard_get_device_nl_policy[WGDEVICE_A_PEERS + 1] = {
++	[WGDEVICE_A_IFINDEX] = { .type = NLA_U32, },
++	[WGDEVICE_A_IFNAME] = { .type = NLA_NUL_STRING, .len = 15, },
++	[WGDEVICE_A_PRIVATE_KEY] = NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
++	[WGDEVICE_A_PUBLIC_KEY] = NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
++	[WGDEVICE_A_FLAGS] = NLA_POLICY_MASK(NLA_U32, 0x1),
++	[WGDEVICE_A_LISTEN_PORT] = { .type = NLA_U16, },
++	[WGDEVICE_A_FWMARK] = { .type = NLA_U32, },
++	[WGDEVICE_A_PEERS] = NLA_POLICY_NESTED_ARRAY(wireguard_wgpeer_nl_policy),
++};
++
++/* WG_CMD_SET_DEVICE - do */
++static const struct nla_policy wireguard_set_device_nl_policy[WGDEVICE_A_PEERS + 1] = {
++	[WGDEVICE_A_IFINDEX] = { .type = NLA_U32, },
++	[WGDEVICE_A_IFNAME] = { .type = NLA_NUL_STRING, .len = 15, },
++	[WGDEVICE_A_PRIVATE_KEY] = NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
++	[WGDEVICE_A_PUBLIC_KEY] = NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
++	[WGDEVICE_A_FLAGS] = NLA_POLICY_MASK(NLA_U32, 0x1),
++	[WGDEVICE_A_LISTEN_PORT] = { .type = NLA_U16, },
++	[WGDEVICE_A_FWMARK] = { .type = NLA_U32, },
++	[WGDEVICE_A_PEERS] = NLA_POLICY_NESTED_ARRAY(wireguard_wgpeer_nl_policy),
++};
++
++/* Ops table for wireguard */
++const struct genl_split_ops wireguard_nl_ops[2] = {
++	{
++		.cmd		= WG_CMD_GET_DEVICE,
++		.start		= wireguard_nl_get_device_start,
++		.dumpit		= wireguard_nl_get_device_dumpit,
++		.done		= wireguard_nl_get_device_done,
++		.policy		= wireguard_get_device_nl_policy,
++		.maxattr	= WGDEVICE_A_PEERS,
++		.flags		= GENL_UNS_ADMIN_PERM | GENL_CMD_CAP_DUMP,
++	},
++	{
++		.cmd		= WG_CMD_SET_DEVICE,
++		.doit		= wireguard_nl_set_device_doit,
++		.policy		= wireguard_set_device_nl_policy,
++		.maxattr	= WGDEVICE_A_PEERS,
++		.flags		= GENL_UNS_ADMIN_PERM | GENL_CMD_CAP_DO,
++	},
++};
+diff --git a/drivers/net/wireguard/netlink_gen.h b/drivers/net/wireguard/netlink_gen.h
+new file mode 100644
+index 0000000000000..e635b1f5f0df5
+--- /dev/null
++++ b/drivers/net/wireguard/netlink_gen.h
+@@ -0,0 +1,29 @@
++/* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-3-Clause) */
++/* Do not edit directly, auto-generated from: */
++/*	Documentation/netlink/specs/wireguard.yaml */
++/* YNL-GEN kernel header */
++
++#ifndef _LINUX_WIREGUARD_GEN_H
++#define _LINUX_WIREGUARD_GEN_H
++
++#include <net/netlink.h>
++#include <net/genetlink.h>
++
++#include <uapi/linux/wireguard.h>
++#include <linux/time_types.h>
++
++/* Common nested types */
++extern const struct nla_policy wireguard_wgallowedip_nl_policy[WGALLOWEDIP_A_FLAGS + 1];
++extern const struct nla_policy wireguard_wgpeer_nl_policy[WGPEER_A_PROTOCOL_VERSION + 1];
++
++/* Ops table for wireguard */
++extern const struct genl_split_ops wireguard_nl_ops[2];
++
++int wireguard_nl_get_device_start(struct netlink_callback *cb);
++int wireguard_nl_get_device_done(struct netlink_callback *cb);
++
++int wireguard_nl_get_device_dumpit(struct sk_buff *skb,
++				   struct netlink_callback *cb);
++int wireguard_nl_set_device_doit(struct sk_buff *skb, struct genl_info *info);
++
++#endif /* _LINUX_WIREGUARD_GEN_H */
+-- 
+2.51.0
+
