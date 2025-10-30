@@ -4,50 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 329FFCF58C5
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11862CF58C2
 	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 17:43:31 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cf014f99;
-	Tue, 18 Nov 2025 17:32:56 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 26dd928b;
+	Tue, 18 Nov 2025 17:32:57 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 17d82345
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 72565d59
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 29 Oct 2025 20:51:58 +0000 (UTC)
+ Thu, 30 Oct 2025 09:46:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
- s=202008; t=1761771115;
- bh=mX+KG0ZtH0kO1gXWijdTLszb6v8mn2Wja2ffLzJnjLg=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=KDsxah+rRwlKMsodyDSr+4mRXhhscZjUxpem7mEGEPvake452XOBKxnXggACCFacq
- soOuGFk1dyAUB0ucxBis28tzLw0XQ73ni0Qzr4Xcaf/5qQdlw9GtJJ8WWdUHnSOcvv
- E3uq+aF4xmgiYIZ+sHYqVySPsrAAvm6IDNNwqL+0ZlezSv2GnDrrkVqXDzTCLqy5RX
- ivF8ykOYQHpxCF69DuTdfttiylODAETVSVcVPoSGrjunCBTJB4dpGJVLcPm7dXHU3J
- 7EXwM97p4+vMOMQzEYlUa8uA7AlsRNbugrQVxIRxv3Tg22Ey7gnqPbxOn3CszI5ya6
- x38SluZQG4+pQ==
+ s=202008; t=1761817597;
+ bh=blAzx4uEJP53BDG/8DrX8nI2p4iLjnpZLefLr7MozMU=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+ b=mi+RgVcZPPquTxgQAIIu24Hrb+IbAuotd0mc2iERVk6Q2Lv0htkI3uaOkxMsFsnvN
+ Y050MQCaPqBjBVG0Y23LunRj23dRRkf16k9Ni8cky+2pskVO/4me9/neuIZcsRsnxi
+ kNyzv8fmlyogZEnE+tvvTcAgSrk140GXwbafYlORxy9Ahx7d45BXuNDoXHCFlPYOFH
+ TGvj9oCiuHYuzRwpMrzYbo7WgAToOTeSR4xguTB9A8F9r97OvnJOmGHS3Ik562cZzx
+ fV/1AA0zBX5IN6rwIWEdP+NWU2xRqob8rI7zLov8vMlzJERKKFLQR4Dl0KDZMpkVmg
+ Kkj4ilyCEOEJQ==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id 3CD646010F;
- Wed, 29 Oct 2025 20:51:55 +0000 (UTC)
-Received: by x201s (Postfix, from userid 1000)
- id E00B9202A39; Wed, 29 Oct 2025 20:51:29 +0000 (UTC)
-From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>
-Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
- Donald Hunter <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>,
- Jacob Keller <jacob.e.keller@intel.com>,
- Andrew Lunn <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com,
- netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v1 02/11] wireguard: netlink: use WG_KEY_LEN in
- policies
-Date: Wed, 29 Oct 2025 20:51:10 +0000
-Message-ID: <20251029205123.286115-3-ast@fiberby.net>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251029205123.286115-1-ast@fiberby.net>
-References: <20251029205123.286115-1-ast@fiberby.net>
+ by mail1.fiberby.net (Postfix) with ESMTPSA id 0FE406000C;
+ Thu, 30 Oct 2025 09:46:33 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+ by x201s (Postfix) with ESMTP id 3ED7A201247;
+ Thu, 30 Oct 2025 09:46:25 +0000 (UTC)
+Message-ID: <52e4619e-d018-4395-a94a-499ff7fd918d@fiberby.net>
+Date: Thu, 30 Oct 2025 09:46:24 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v1 01/11] wireguard: netlink: validate nested
+ arrays in policy
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>
+Cc: Donald Hunter <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>, 
+ Jacob Keller <jacob.e.keller@intel.com>, Andrew Lunn
+ <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20251029205123.286115-1-ast@fiberby.net>
+ <20251029205123.286115-2-ast@fiberby.net>
+Content-Language: en-US
+From: =?UTF-8?Q?Asbj=C3=B8rn_Sloth_T=C3=B8nnesen?= <ast@fiberby.net>
+In-Reply-To: <20251029205123.286115-2-ast@fiberby.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Tue, 18 Nov 2025 17:23:15 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -64,64 +65,33 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-When converting the netlink policies to YNL, then the constants
-used in the policy has to be visible to user-space.
+On 10/29/25 8:51 PM, Asbjørn Sloth Tønnesen wrote:
+> diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlink.c
+> index 67f962eb8b46d..9bc76e1bcba2d 100644
+> --- a/drivers/net/wireguard/netlink.c
+> +++ b/drivers/net/wireguard/netlink.c
+> @@ -27,7 +27,7 @@ static const struct nla_policy device_policy[WGDEVICE_A_MAX + 1] = {
+>   	[WGDEVICE_A_FLAGS]		= NLA_POLICY_MASK(NLA_U32, __WGDEVICE_F_ALL),
+>   	[WGDEVICE_A_LISTEN_PORT]	= { .type = NLA_U16 },
+>   	[WGDEVICE_A_FWMARK]		= { .type = NLA_U32 },
+> -	[WGDEVICE_A_PEERS]		= { .type = NLA_NESTED }
+> +	[WGDEVICE_A_PEERS]		= NLA_POLICY_NESTED_ARRAY(peer_policy),
+>   };
+>   
+>   static const struct nla_policy peer_policy[WGPEER_A_MAX + 1] = {
+> @@ -39,7 +39,7 @@ static const struct nla_policy peer_policy[WGPEER_A_MAX + 1] = {
+>   	[WGPEER_A_LAST_HANDSHAKE_TIME]			= NLA_POLICY_EXACT_LEN(sizeof(struct __kernel_timespec)),
+>   	[WGPEER_A_RX_BYTES]				= { .type = NLA_U64 },
+>   	[WGPEER_A_TX_BYTES]				= { .type = NLA_U64 },
+> -	[WGPEER_A_ALLOWEDIPS]				= { .type = NLA_NESTED },
+> +	[WGPEER_A_ALLOWEDIPS]				= NLA_POLICY_NESTED_ARRAY(allowedip_policy),
+>   	[WGPEER_A_PROTOCOL_VERSION]			= { .type = NLA_U32 }
+>   };
 
-As NOISE_*_KEY_LEN isn't visible for userspace, then change the
-policy to use WG_KEY_LEN, as is also documented in the UAPI header:
+Oops, I messed this patch up.
 
-$ grep WG_KEY_LEN include/uapi/linux/wireguard.h
- *    WGDEVICE_A_PRIVATE_KEY: NLA_EXACT_LEN, len WG_KEY_LEN
- *    WGDEVICE_A_PUBLIC_KEY: NLA_EXACT_LEN, len WG_KEY_LEN
- *            WGPEER_A_PUBLIC_KEY: NLA_EXACT_LEN, len WG_KEY_LEN
- *            WGPEER_A_PRESHARED_KEY: NLA_EXACT_LEN, len WG_KEY_LEN
- [...]
+I will add forward declarations in v2, which will be removed again once the policy code is generated,
+as that will be less messy than reordering the policies.
 
-Add a couple of BUILD_BUG_ON() to ensure that they stay in sync.
-
-No behavioural changes intended.
-
-Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
----
- drivers/net/wireguard/netlink.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlink.c
-index 9bc76e1bcba2d..d36e94220d2c3 100644
---- a/drivers/net/wireguard/netlink.c
-+++ b/drivers/net/wireguard/netlink.c
-@@ -22,8 +22,8 @@ static struct genl_family genl_family;
- static const struct nla_policy device_policy[WGDEVICE_A_MAX + 1] = {
- 	[WGDEVICE_A_IFINDEX]		= { .type = NLA_U32 },
- 	[WGDEVICE_A_IFNAME]		= { .type = NLA_NUL_STRING, .len = IFNAMSIZ - 1 },
--	[WGDEVICE_A_PRIVATE_KEY]	= NLA_POLICY_EXACT_LEN(NOISE_PUBLIC_KEY_LEN),
--	[WGDEVICE_A_PUBLIC_KEY]		= NLA_POLICY_EXACT_LEN(NOISE_PUBLIC_KEY_LEN),
-+	[WGDEVICE_A_PRIVATE_KEY]	= NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
-+	[WGDEVICE_A_PUBLIC_KEY]		= NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
- 	[WGDEVICE_A_FLAGS]		= NLA_POLICY_MASK(NLA_U32, __WGDEVICE_F_ALL),
- 	[WGDEVICE_A_LISTEN_PORT]	= { .type = NLA_U16 },
- 	[WGDEVICE_A_FWMARK]		= { .type = NLA_U32 },
-@@ -31,8 +31,8 @@ static const struct nla_policy device_policy[WGDEVICE_A_MAX + 1] = {
- };
- 
- static const struct nla_policy peer_policy[WGPEER_A_MAX + 1] = {
--	[WGPEER_A_PUBLIC_KEY]				= NLA_POLICY_EXACT_LEN(NOISE_PUBLIC_KEY_LEN),
--	[WGPEER_A_PRESHARED_KEY]			= NLA_POLICY_EXACT_LEN(NOISE_SYMMETRIC_KEY_LEN),
-+	[WGPEER_A_PUBLIC_KEY]				= NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
-+	[WGPEER_A_PRESHARED_KEY]			= NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
- 	[WGPEER_A_FLAGS]				= NLA_POLICY_MASK(NLA_U32, __WGPEER_F_ALL),
- 	[WGPEER_A_ENDPOINT]				= NLA_POLICY_MIN_LEN(sizeof(struct sockaddr)),
- 	[WGPEER_A_PERSISTENT_KEEPALIVE_INTERVAL]	= { .type = NLA_U16 },
-@@ -642,6 +642,9 @@ static struct genl_family genl_family __ro_after_init = {
- 
- int __init wg_genetlink_init(void)
- {
-+	BUILD_BUG_ON(WG_KEY_LEN != NOISE_PUBLIC_KEY_LEN);
-+	BUILD_BUG_ON(WG_KEY_LEN != NOISE_SYMMETRIC_KEY_LEN);
-+
- 	return genl_register_family(&genl_family);
- }
- 
 -- 
-2.51.0
-
+pw-bot: changes-requested
