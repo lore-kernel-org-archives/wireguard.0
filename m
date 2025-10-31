@@ -4,35 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8546ACCF9FE
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Oct 2025 19:13:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42731CCF9FE
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 31 Oct 2025 13:14:46 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id af6539cd;
-	Thu, 30 Oct 2025 19:13:27 +0000 (UTC)
-Received: from mail.asbjorn.biz (mail.asbjorn.biz [194.165.56.46])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7caa1e3d
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 11f71555;
+	Fri, 31 Oct 2025 13:14:45 +0000 (UTC)
+Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com
+ [2607:f8b0:4864:20::12d])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f6906d48
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Oct 2025 19:13:23 +0000 (UTC)
-Received: from x201s (space.labitat.dk [45.145.93.0])
- by mail.asbjorn.biz (Postfix) with ESMTPSA id EF3421C0142A;
- Thu, 30 Oct 2025 19:13:22 +0000 (UTC)
-Received: by x201s (Postfix, from userid 1000)
- id DBB2020308B; Thu, 30 Oct 2025 19:13:15 +0000 (UTC)
-From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <wireguard@asbjorn.st>
-To: "Jason A . Donenfeld" <Jason@zx2c4.com>
-Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <wireguard@asbjorn.st>,
- wireguard@lists.zx2c4.com
-Subject: [PATCH wireguard-tools v2 2/2] ipc: linux: remove user-space device
- filtering
-Date: Thu, 30 Oct 2025 19:13:02 +0000
-Message-ID: <20251030191305.800464-3-wireguard@asbjorn.st>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251030191305.800464-1-wireguard@asbjorn.st>
-References: <20251030191305.800464-1-wireguard@asbjorn.st>
+ Fri, 31 Oct 2025 13:14:43 +0000 (UTC)
+Received: by mail-il1-x12d.google.com with SMTP id
+ e9e14a558f8ab-430cadec5deso20675465ab.1
+ for <wireguard@lists.zx2c4.com>; Fri, 31 Oct 2025 06:14:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1761916482; x=1762521282; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=WHSXt+n2A0K4UuF+l0kY9c5fW/J6PA7UnobYNkySiwA=;
+ b=D7JR4H6zyyrZ1C/Y1kIM8m29Nh0hEOMe8C/ozX8Yv+f9Cksmh2WV4VdfJIrhI5JPSV
+ gayzQjkA+0yDvezfmiMnSXjrW9yhid9jVM5e1ZwLUznKXn6ZleaJgdbq7MdEhtoj2dm4
+ aSrXJGZNVDodfVmwITJbujCaDd+E179cG55xiUx6JMN8jVUVOSnLbEHAKaywbSiZaMUQ
+ b6RRsNdVbSzvdPxyp7iDlgD2qTJuBY1Z50frQYdcBLy95worMeu6lEqx3aae5wajUi8O
+ 6ckDWq5TY9agHBrk69MgH1V6lyEl+uwOTmT4SbcobzeNsETfKpV/6V9qO12lcVH4VyRN
+ LDyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1761916482; x=1762521282;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=WHSXt+n2A0K4UuF+l0kY9c5fW/J6PA7UnobYNkySiwA=;
+ b=wRBYGd2mFFfRazC/+GAv+lzhHNpbPOU+y9Jgg6T6KdCixFydd4vLEJyRRwPBKgyEnT
+ qdvNx/ayW7H0qOFtpyPxPh0jJej8AFM2vQoFd5D2OUAeVMeXICD3r/N86N6XW/dOiDYq
+ xd8isBfF+afl+piDdA1HuztZtYZK5hMZifSz2T5IPv44wnkGpvu7QDsrnuK04muoi+Ku
+ LrEu3qT9eTrAkUK0pCUVcQMPvx47XtPVCDSGdVza58yUCdPKfiuoe4LsP4G6RwAL9H4p
+ p9iqk8K4M9DR9YJK5V+CQpeoMCouqQzMvw45FatZRiFMx6lVlaZ2Gocl3xgJUumI1eeA
+ fRFw==
+X-Gm-Message-State: AOJu0Yx/uOsoI4B3bEE0KELqbtZ7TSBBTEAN9odADMoiBI09D+ldkJgJ
+ 2qORyCjL+muO5KMNPsenCueoJFLMMjECIKJNvMQEVglPLa3BR5lRDCHAWQEpafSxEvJ1NA/taNP
+ B869ioiB5XJYUA2XStZG7h75lpSHGSXI7TTc+
+X-Gm-Gg: ASbGncsf3UQVypBIVxo/StD12k+qvuNYsn+rC/eK9bhfxWqZvpM62DGIfgaGHEgTYBD
+ outB1Nlh4M8U7so71a7q00fpU9oMYJVrMED83s9zCIySiMOf2ALPFeiGFYTU/msiyp3N9H6x1+3
+ 0G+JVa7ihlngrPYo9AmDm0/VlUT5jCKFj55/DeN/TAOi3VLlIEdrMdC3Ebf1+9i9fj70JSsk6qb
+ bxsdR2UYVK7JKXcztS/jwW6SP1PMNCHB2AcuvtstdD+vnK7h52uf+VPkD99gg==
+X-Google-Smtp-Source: AGHT+IGAWA3kZl9y793CT7XU1JMKLElHkjU5g1yZjJTIqpYDCEovk8yJ2EoWlAPJh3BNwcvyK+GEmaptLVgFaoc2s6I=
+X-Received: by 2002:a05:6e02:1d9d:b0:42d:86f3:a2d1 with SMTP id
+ e9e14a558f8ab-4330d1c9dc2mr52392915ab.25.1761916481635; Fri, 31 Oct 2025
+ 06:14:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <CAA+FdXqkOP3rxOOdVY6Q28g7eDsmqkwg38PzZ+rKbdG8DZs0KA@mail.gmail.com>
+ <d19c02a02c61469499c5f8183ce0f079@rozman.si>
+In-Reply-To: <d19c02a02c61469499c5f8183ce0f079@rozman.si>
+From: Anthony Paul <anthonypaul@gmail.com>
+Date: Fri, 31 Oct 2025 10:44:14 -0230
+X-Gm-Features: AWmQ_blHPJNCAuCM5CVaYWHzbfi28G6SA8yYaNSxCzW85MSoEZxxqEs85TO6gAo
+Message-ID: <CAA+FdXoVKcB4pZmjK02shnEZcQuYL86iLJGB10ngk_4mc0Rruw@mail.gmail.com>
+Subject: Re: Crash on Windows ARM64 when Import and potential fix
+To: Simon Rozman <simon@rozman.si>
+Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -47,56 +80,37 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-As devices are now filtered kernel-side, then we can remove
-the code for filtering in user-space.
+Hi Simon.
 
-This breaks device listing for kernels earlier than Linux v4.6.
+WG for arm64 windows still has all the issues with the file selection
+stuff...  Any way you could get this patch pushed through?  Anything I
+can do to help?
 
-Signed-off-by: Asbjørn Sloth Tønnesen <wireguard@asbjorn.st>
----
- src/ipc-linux.h | 16 ++--------------
- 1 file changed, 2 insertions(+), 14 deletions(-)
+Thanks,
+Anthony
 
-diff --git a/src/ipc-linux.h b/src/ipc-linux.h
-index c56fede..45bb55c 100644
---- a/src/ipc-linux.h
-+++ b/src/ipc-linux.h
-@@ -29,25 +29,13 @@
- 
- struct interface {
- 	const char *name;
--	bool is_wireguard;
- };
- 
--static int parse_linkinfo(const struct nlattr *attr, void *data)
--{
--	struct interface *interface = data;
--
--	if (mnl_attr_get_type(attr) == IFLA_INFO_KIND && !strcmp(WG_GENL_NAME, mnl_attr_get_str(attr)))
--		interface->is_wireguard = true;
--	return MNL_CB_OK;
--}
--
- static int parse_infomsg(const struct nlattr *attr, void *data)
- {
- 	struct interface *interface = data;
- 
--	if (mnl_attr_get_type(attr) == IFLA_LINKINFO)
--		return mnl_attr_parse_nested(attr, parse_linkinfo, data);
--	else if (mnl_attr_get_type(attr) == IFLA_IFNAME)
-+	if (mnl_attr_get_type(attr) == IFLA_IFNAME)
- 		interface->name = mnl_attr_get_str(attr);
- 	return MNL_CB_OK;
- }
-@@ -61,7 +49,7 @@ static int read_devices_cb(const struct nlmsghdr *nlh, void *data)
- 	ret = mnl_attr_parse(nlh, sizeof(struct ifinfomsg), parse_infomsg, &interface);
- 	if (ret != MNL_CB_OK)
- 		return ret;
--	if (interface.name && interface.is_wireguard)
-+	if (interface.name)
- 		ret = string_list_add(list, interface.name);
- 	if (ret < 0)
- 		return ret;
--- 
-2.51.0
 
+On Wed, May 21, 2025 at 4:55=E2=80=AFAM Simon Rozman <simon@rozman.si> wrot=
+e:
+>
+> Hi,
+>
+> > There are numerous reports that the import function causes a crash on
+> > Windows Arm64.  (I believe it is actually the file selector that causes
+> > the crash)
+> >
+> > https://www.reddit.com/r/WireGuard/comments/kwqnb5/wireguard_client_cra=
+s
+> > hes_when_trying_to_add/
+> >
+>
+> Thanks for reaching out.
+>
+> We already have a patch for this in the wireguard-windows repo:
+> https://git.zx2c4.com/wireguard-windows/commit/?id=3D8e6558eba6665b51de35=
+779bffa46803dbc4c10d
+>
+> It is pending review and official release.
+>
+> Best regards,
+> Simon
