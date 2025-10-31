@@ -4,51 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11862CF58C2
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 17:43:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C871CF58C3
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 17:48:07 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 26dd928b;
-	Tue, 18 Nov 2025 17:32:57 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3dbb59b1;
+	Tue, 18 Nov 2025 17:32:58 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 72565d59
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 70237394
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Oct 2025 09:46:38 +0000 (UTC)
+ Fri, 31 Oct 2025 16:07:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
- s=202008; t=1761817597;
- bh=blAzx4uEJP53BDG/8DrX8nI2p4iLjnpZLefLr7MozMU=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=mi+RgVcZPPquTxgQAIIu24Hrb+IbAuotd0mc2iERVk6Q2Lv0htkI3uaOkxMsFsnvN
- Y050MQCaPqBjBVG0Y23LunRj23dRRkf16k9Ni8cky+2pskVO/4me9/neuIZcsRsnxi
- kNyzv8fmlyogZEnE+tvvTcAgSrk140GXwbafYlORxy9Ahx7d45BXuNDoXHCFlPYOFH
- TGvj9oCiuHYuzRwpMrzYbo7WgAToOTeSR4xguTB9A8F9r97OvnJOmGHS3Ik562cZzx
- fV/1AA0zBX5IN6rwIWEdP+NWU2xRqob8rI7zLov8vMlzJERKKFLQR4Dl0KDZMpkVmg
- Kkj4ilyCEOEJQ==
+ s=202008; t=1761926832;
+ bh=YQJUnsmW/CpWEgmK3N+u6W8kdpnHxb0S8BW2/AM7o54=;
+ h=From:To:Cc:Subject:Date:From;
+ b=VhupijfHTF6C0jBHpVwE5Dd8dXVQo0nvyxfXFIzquQ7CxrsG/lnCoArlAZNTfF4QG
+ 8YUleFwSSLC0/l4AyevaHnJBjl4IYhI0yXlq8m76KzWaR/yJIjgURsU4/mnWx7BMmE
+ GocxhgQaWe+pwkWBCIHLGY6DBM1IkY0GtOIrzoXaM08f8VusiM8whzn52jSvScQAW5
+ 7DhAVnSoy76c+PqiE+oSDNLTbRxW4zFadXz05Dh7hlhKBM6QiX93IQnG+8zSMpi+Ry
+ 1G9RluBTI089zLMIYY24Xc7Dc5zq+TZbbTTRFXgo4RCFMdyrqcfgrfxCXxQOWdM9DC
+ LwMkT2jHt0mPg==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id 0FE406000C;
- Thu, 30 Oct 2025 09:46:33 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1])
- by x201s (Postfix) with ESMTP id 3ED7A201247;
- Thu, 30 Oct 2025 09:46:25 +0000 (UTC)
-Message-ID: <52e4619e-d018-4395-a94a-499ff7fd918d@fiberby.net>
-Date: Thu, 30 Oct 2025 09:46:24 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v1 01/11] wireguard: netlink: validate nested
- arrays in policy
+ by mail1.fiberby.net (Postfix) with ESMTPSA id 969C160104;
+ Fri, 31 Oct 2025 16:07:11 +0000 (UTC)
+Received: by x201s (Postfix, from userid 1000)
+ id 861D72021E1; Fri, 31 Oct 2025 16:05:41 +0000 (UTC)
+From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>
-Cc: Donald Hunter <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>, 
- Jacob Keller <jacob.e.keller@intel.com>, Andrew Lunn
- <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20251029205123.286115-1-ast@fiberby.net>
- <20251029205123.286115-2-ast@fiberby.net>
-Content-Language: en-US
-From: =?UTF-8?Q?Asbj=C3=B8rn_Sloth_T=C3=B8nnesen?= <ast@fiberby.net>
-In-Reply-To: <20251029205123.286115-2-ast@fiberby.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>
+Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
+ Donald Hunter <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>,
+ Jacob Keller <jacob.e.keller@intel.com>,
+ Andrew Lunn <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com,
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH net-next v2 00/11] wireguard: netlink: ynl conversion
+Date: Fri, 31 Oct 2025 16:05:26 +0000
+Message-ID: <20251031160539.1701943-1-ast@fiberby.net>
+X-Mailer: git-send-email 2.51.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Tue, 18 Nov 2025 17:23:15 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -65,33 +61,86 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 10/29/25 8:51 PM, Asbjørn Sloth Tønnesen wrote:
-> diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlink.c
-> index 67f962eb8b46d..9bc76e1bcba2d 100644
-> --- a/drivers/net/wireguard/netlink.c
-> +++ b/drivers/net/wireguard/netlink.c
-> @@ -27,7 +27,7 @@ static const struct nla_policy device_policy[WGDEVICE_A_MAX + 1] = {
->   	[WGDEVICE_A_FLAGS]		= NLA_POLICY_MASK(NLA_U32, __WGDEVICE_F_ALL),
->   	[WGDEVICE_A_LISTEN_PORT]	= { .type = NLA_U16 },
->   	[WGDEVICE_A_FWMARK]		= { .type = NLA_U32 },
-> -	[WGDEVICE_A_PEERS]		= { .type = NLA_NESTED }
-> +	[WGDEVICE_A_PEERS]		= NLA_POLICY_NESTED_ARRAY(peer_policy),
->   };
->   
->   static const struct nla_policy peer_policy[WGPEER_A_MAX + 1] = {
-> @@ -39,7 +39,7 @@ static const struct nla_policy peer_policy[WGPEER_A_MAX + 1] = {
->   	[WGPEER_A_LAST_HANDSHAKE_TIME]			= NLA_POLICY_EXACT_LEN(sizeof(struct __kernel_timespec)),
->   	[WGPEER_A_RX_BYTES]				= { .type = NLA_U64 },
->   	[WGPEER_A_TX_BYTES]				= { .type = NLA_U64 },
-> -	[WGPEER_A_ALLOWEDIPS]				= { .type = NLA_NESTED },
-> +	[WGPEER_A_ALLOWEDIPS]				= NLA_POLICY_NESTED_ARRAY(allowedip_policy),
->   	[WGPEER_A_PROTOCOL_VERSION]			= { .type = NLA_U32 }
->   };
+This series completes the implementation of YNL for wireguard,
+as previously announced[1].
 
-Oops, I messed this patch up.
+This series consist of 5 parts:
+1) Patch 01-03 - Misc. changes
+2) Patch    04 - Add YNL specification for wireguard
+3) Patch 05-07 - Transition to a generated UAPI header
+4) Patch    08 - Adds a sample program for the generated C library
+5) Patch 09-11 - Transition to generated netlink policy code
 
-I will add forward declarations in v2, which will be removed again once the policy code is generated,
-as that will be less messy than reordering the policies.
+The main benefit of having a YNL specification is unlocked after the
+first 2 parts, the RFC version seems to already have spawned a new
+Rust netlink binding[2] using wireguard as it's main example.
+
+Part 3 and 5 validates that the specification is complete and aligned,
+the generated code might have a few warts, but they don't matter too
+much, and are mostly a transitional problem[3].
+
+Part 4 is possible after part 2, but is ordered after part 3,
+as it needs to duplicate the UAPI header in tools/include.
+
+For the non-generated kernel C code the diff stat looks like this:
+
+$ git diff --stat net-next/main..wg-ynl include/ drivers/ \
+	':(exclude)*netlink_gen*'
+ drivers/net/wireguard/Makefile  |   1 +
+ drivers/net/wireguard/netlink.c |  70 +++---------
+ include/uapi/linux/wireguard.h  | 190 ++++++--------------------------
+ 3 files changed, 47 insertions(+), 214 deletions(-)
+
+[1] [PATCH net 0/4] tools: ynl-gen: misc fixes + wireguard ynl plan
+    https://lore.kernel.org/r/20250901145034.525518-1-ast@fiberby.net/
+
+[2] https://github.com/one-d-wide/netlink-bindings/
+
+[3] https://lore.kernel.org/r/20251014123201.6ecfd146@kernel.org/
+
+---
+v2:
+- Add missing forward declaration
+
+v1: https://lore.kernel.org/r/20251029205123.286115-1-ast@fiberby.net/
+- Policy arguement to nla_parse_nested() changed to NULL (thanks Johannes).
+- Added attr-cnt-name to the spec, to reduce the diff a bit.
+- Refined the doc in the spec a bit.
+- Reword commit messages a bit.
+- Reordered the patches, and reduced the series from 14 to 11 patches.
+
+RFC: https://lore.kernel.org/r/20250904-wg-ynl-rfc@fiberby.net/
+
+Asbjørn Sloth Tønnesen (11):
+  wireguard: netlink: validate nested arrays in policy
+  wireguard: netlink: use WG_KEY_LEN in policies
+  wireguard: netlink: enable strict genetlink validation
+  netlink: specs: add specification for wireguard
+  uapi: wireguard: move enum wg_cmd
+  uapi: wireguard: move flag enums
+  uapi: wireguard: generate header with ynl-gen
+  tools: ynl: add sample for wireguard
+  wireguard: netlink: convert to split ops
+  wireguard: netlink: rename netlink handlers
+  wireguard: netlink: generate netlink code
+
+ Documentation/netlink/specs/wireguard.yaml | 307 +++++++++++++++++++++
+ MAINTAINERS                                |   3 +
+ drivers/net/wireguard/Makefile             |   1 +
+ drivers/net/wireguard/netlink.c            |  70 +----
+ drivers/net/wireguard/netlink_gen.c        |  77 ++++++
+ drivers/net/wireguard/netlink_gen.h        |  29 ++
+ include/uapi/linux/wireguard.h             | 190 +++----------
+ tools/include/uapi/linux/wireguard.h       |  79 ++++++
+ tools/net/ynl/samples/.gitignore           |   1 +
+ tools/net/ynl/samples/wireguard.c          | 104 +++++++
+ 10 files changed, 647 insertions(+), 214 deletions(-)
+ create mode 100644 Documentation/netlink/specs/wireguard.yaml
+ create mode 100644 drivers/net/wireguard/netlink_gen.c
+ create mode 100644 drivers/net/wireguard/netlink_gen.h
+ create mode 100644 tools/include/uapi/linux/wireguard.h
+ create mode 100644 tools/net/ynl/samples/wireguard.c
 
 -- 
-pw-bot: changes-requested
+2.51.0
+
