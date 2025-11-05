@@ -4,50 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6797CCF9F8
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 31 Oct 2025 13:23:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29B7FCCF9E3
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  5 Nov 2025 03:08:02 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d61122d0;
-	Fri, 31 Oct 2025 13:21:14 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 03ec36df;
+	Wed, 5 Nov 2025 03:08:01 +0000 (UTC)
 Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ec67b24d
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3c0f7e65
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Fri, 31 Oct 2025 13:21:13 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Wed, 5 Nov 2025 03:07:59 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id AC14860053;
- Fri, 31 Oct 2025 13:21:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3936C4CEE7;
- Fri, 31 Oct 2025 13:21:10 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="ZaHraHty"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1761916869;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=+TBrrmDVWfZjrDT5nkv2n9oSojYsS2zzFgNPyf4h0yM=;
- b=ZaHraHty0xvbCodAPSScDP8QV2yIJXRQlHeC4gA1wXZkzc/FKrtA14JRxmn7bWoBFofwwt
- EvazBgfszkoJIh2Vo3cXzY4hUVlxaZISp47vrx30y2wam8L3OZ8AqTQ7LAYLR91Mj6gf8k
- SRjxSrAcISK+YBVc+hAD9nr/vO1Nw0Y=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b1e87ff9
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Fri, 31 Oct 2025 13:21:08 +0000 (UTC)
-Date: Fri, 31 Oct 2025 14:21:05 +0100
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Anthony Paul <anthonypaul@gmail.com>
-Cc: Simon Rozman <simon@rozman.si>,
- "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-Subject: Re: Crash on Windows ARM64 when Import and potential fix
-Message-ID: <aQS3wRmL74-E3mTg@zx2c4.com>
-References: <CAA+FdXqkOP3rxOOdVY6Q28g7eDsmqkwg38PzZ+rKbdG8DZs0KA@mail.gmail.com>
- <d19c02a02c61469499c5f8183ce0f079@rozman.si>
- <CAA+FdXoVKcB4pZmjK02shnEZcQuYL86iLJGB10ngk_4mc0Rruw@mail.gmail.com>
+ by tor.source.kernel.org (Postfix) with ESMTP id 548966020B;
+ Wed,  5 Nov 2025 03:07:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D520C4CEF7;
+ Wed,  5 Nov 2025 03:07:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1762312078;
+ bh=WyTGsD4E/mKC5sFVMFInPi8p9SP3Y+rnsjGRYMHi9hY=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=NtsVwsWoZ5tgOigU54/r9qKEc0sjpJ/Cmr7m5hdDFZyAUFyPkMxNm8cY140u1LnCK
+ aIsI8EUYfQ/hDBcd60r7vxTHzgUQ3cMoNpFsN3Ed+4jMA1c46eLgVMz4qMC2pEZ8ae
+ bJOm8x4klgHzstv3N0z/Fb45AbK/F+EoNBuD+WDKF1JYz0I7o9Day69N1nL4LLaD2P
+ D6A9LkbWVUIxo09l5t/40QXqq4lHN2jhnnNtv594LG7PiORv7ok0ka56d/swDIse2L
+ CKzHbnbuaFRqJnABR3l3N+i0UWkSeQpfxaEHGiCUKlr7LvRhQ+28PGtCeSl3X1GnYD
+ wjaqJCVMPWWcA==
+Date: Tue, 4 Nov 2025 19:07:56 -0800
+From: Jakub Kicinski <kuba@kernel.org>
+To: =?UTF-8?B?QXNiasO4cm4=?= Sloth =?UTF-8?B?VMO4bm5lc2Vu?= <ast@fiberby.net>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, "David S. Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Paolo Abeni
+ <pabeni@redhat.com>, Donald Hunter <donald.hunter@gmail.com>, Simon Horman
+ <horms@kernel.org>, Jacob Keller <jacob.e.keller@intel.com>, Andrew Lunn
+ <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net-next v2 04/11] netlink: specs: add specification for
+ wireguard
+Message-ID: <20251104190756.3a69dc2b@kernel.org>
+In-Reply-To: <20251031160539.1701943-5-ast@fiberby.net>
+References: <20251031160539.1701943-1-ast@fiberby.net>
+ <20251031160539.1701943-5-ast@fiberby.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAA+FdXoVKcB4pZmjK02shnEZcQuYL86iLJGB10ngk_4mc0Rruw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -62,13 +60,15 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Fri, Oct 31, 2025 at 10:44:14AM -0230, Anthony Paul wrote:
-> Hi Simon.
-> 
-> WG for arm64 windows still has all the issues with the file selection
-> stuff...  Any way you could get this patch pushed through?  Anything I
-> can do to help?
+On Fri, 31 Oct 2025 16:05:30 +0000 Asbj=C3=B8rn Sloth T=C3=B8nnesen wrote:
+> +        name: flags
+> +        doc: |
+> +          ``0`` or ``WGDEVICE_F_REPLACE_PEERS`` if all current peers
+> +          should be removed prior to adding the list below.
+> +        type: u32
+> +        enum: wgdevice-flags
+> +        checks:
+> +          flags-mask: wgdevice-flags
 
-I'm in the process of rebuilding my Windows rig so that I can resume
-development of this.
-
+The checks: should not be necessary if the enum is specified and it is
+itself of type: flags.
