@@ -4,41 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8937BEF06E1
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Feb 2026 18:50:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EF4BEF06E9
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Feb 2026 18:50:54 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6d11fa3f;
-	Sun, 8 Feb 2026 17:17:18 +0000 (UTC)
-Received: from perseverance.encs.concordia.ca (perseverance.encs.concordia.ca
- [132.205.96.94])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f1202e28
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 46509fae;
+	Sun, 8 Feb 2026 17:17:17 +0000 (UTC)
+Received: from kurisu.lahfa.xyz (kurisu.lahfa.xyz [163.172.69.160])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id bd18f317
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 10 Dec 2025 14:48:29 +0000 (UTC)
-X-Scanned-By: MIMEDefang 3.1 on perseverance.encs.concordia.ca at 2025-12-10
- 09:48:29 EST
-Received: from frostbite.encs.concordia.ca (frostbite.encs.concordia.ca
- [132.205.47.172] port 58004)
- by perseverance.encs.concordia.ca (envelope-from pmn@encs.concordia.ca)
- (8.17.1/8.17.1) with ESMTP id 5BAEmSMx023412
- for <wireguard@lists.zx2c4.com>; Wed, 10 Dec 2025 09:48:29 -0500
-DKIM-Filter: OpenDKIM Filter v2.11.0 perseverance.encs.concordia.ca
- 5BAEmSMx023412
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=encs.concordia.ca;
- s=perseverance-2024; t=1765378109;
- bh=SWOVGWMSdQAlftO4RMw4H6mfi/+BaQZbEUPmwLSqpmA=;
- h=Date:From:To:Subject:From;
- b=lTO7dhhfFE9Vm2EU7dDbx6OeO37yArWzFFE0QwGDobDRBe9nhD2Ph3gZuiK5dLRRr
- YEaD8PDMpqT/5XebK5xDhc8phfVDzY5j3bjonvSxyAzOLqdn2+8MlFOx3oA0BN54zG
- K+j2Qnottv7Fsghm7vFzslUfewTEHKVRWcTob4LE=
-Received: by frostbite.encs.concordia.ca (Postfix, from userid 60092)
- id CE1D035A3779; Wed, 10 Dec 2025 09:48:28 -0500 (EST)
-Date: Wed, 10 Dec 2025 09:48:28 -0500
-From: Paymon <paymon@encs.concordia.ca>
+ Wed, 12 Nov 2025 15:22:35 +0000 (UTC)
+Date: Wed, 12 Nov 2025 16:22:32 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lahfa.xyz; s=kurisu;
+ t=1762960955;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type;
+ bh=s1CC+YwjTX3Ne/1gC71656+qi2LHr36oGPNS5YzDluc=;
+ b=XNnA1Xac3KoVxpEmywgRGY7EYvx+v8f63aLc05LQNisqbwDNaCVXT2PPmj53uwFYXALvkc
+ BDg5JrExkvbvPAFT/8FEEhJ8eXW9g/1Oux8w13Xwt6hA6gBYt1+AF2UUSPA0rtHtZGTSIh
+ iRmcwwuCUquoYWnr/FxXPY79f+xMh0c=
+From: Ryan Lahfa <ryan@lahfa.xyz>
 To: wireguard@lists.zx2c4.com
-Subject: plugging into wireguard clients
-Message-ID: <3a43yktovcw425zm7lexmqsysj35skly7f7emftcyirbwarkus@gocmz2oxt4l2>
+Subject: Mechanisms to offload/move the static ECDH calculations?
+Message-ID: <mlnbxw7dbai4ylygtmh3b7rsyjsvxik3esgmyv3h5564tk577a@asilqkkntebk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 X-Mailman-Approved-At: Sun, 08 Feb 2026 17:17:13 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -55,35 +45,62 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-hello,
+Thank you for WireGuard, it is an amazing tool.
 
-posted a version of this earlier on #wireguard, posting here for those who
-missed it? hope it is in good form.
+These last months, I have been pondering how to integrate WireGuard with
+the classical hardening of trapping the private key material in a device
+and rendering it "unextractable" (modulo classical attacks on TPM2,
+security keys, you name it.)
 
-> i'm pushing our organisation to use wireguard for vpn and the show stopper is
-> compliance. what they use at the moment is fortinet and the main feature the
-> windows admins are asking for is the compliance. what they care about is
-> mainly the os version of the staff's own devices atm.
->
-> one question i have is, do you know of any open source solution for this?
-> (besides tailscale of course)
+As I understand it, WireGuard exploits the private key to do an ECDH and
+immediately continue the protocol without the static private key until a
+reconnection.
 
-> i have looked into implementing it myself and the main issue is the windows
-> platform, i'm unfamiliar with their package/distributing dance.
->
-> nevertheless, i had a brief look into wireguard-windows and first thing i
-> notices was `supportedOS` in manifest.xml
->
-> one idea would be to repackage and distribute wireguard-windows, with the old
-> version of os removed from that manifest file plus a logic that kicks in and
-> onboard the user. i.e. authenticate them to the backend, generate a pair of
-> keys for them and exchange it to the backend etc.
->
-> i wonder what you think about this? in particular, any suggestion as to where
-> would be a good entry point for this?
-> i see fetcher has some comments related to intunes (not so much familiar with
-> that), is that a good place to start?
+I wonder if the *kernel* WireGuard implementation could offer means to
+offload this specific ECDH calculation to userspace, what would be the
+conditions or the reasons not to pursue such a thing. I am aware that
+the userspace implementations can do that, but I find them less
+interesting than the kernel implementation (proper forward secrecy,
+formally verified cryptography usage, etc.).
 
+If such a capability was offered via a Netlink message or anything,
+userspace programs could prepare the ECDH result by calling into
+userspace APIs to "secure devices", e.g. PKCS#11 for TPM2/security keys
+or more specialized APIs. I considered the possibility to do PKCS#11
+inside the kernel and I guess this is a non-starter due to the
+complexity of this ecosystem and the danger it represents.
+
+I realize that offloading the ECDH calculation to the userspace might be
+dangerous and not constitute anymore what WireGuard(R) stands for, I am
+interested to hear more about the vision around this.
+
+Additionally, I understand that another way to go about this problem is
+simply to forego the need to store the private key materiel in a secure
+device by having it rotate regularly enough, which is the path that has
+been taken by various software that works on the top of WireGuard and
+provide some control plane distributing keys and so on. Unfortunately,
+this requires *additional* infrastructure and this creates more SPOF
+risks, in the context of building disaster recovery infrastructure, it
+is often desireable to have break-the-glass private keys that can log in
+even if the SSO/OIDC/control plane thing is down. It would be awesome if
+that key could be stored in a "secure device" with the adequate policy
+controls. Even more awesome: it would exist in native kernel WireGuard
+and userspace could provide the hooks to make it this available out of
+the box.
+
+So this is really my question:
+
+Is there any principled reason the in-kernel WireGuard implementation
+must compute the static ECDH in-kernel?
+  
+If not, would the WireGuard developers accept an API that lets userspace
+supply the precomputed ECDH outputs for the handshake
+initiation/response?
+
+If the answer is yes, I think the next questions will revolve around on
+the design, what are the guarantees that must be uphold, consequences
+about the ratelimit engine, etc.
+
+Kind regards,
 -- 
-
-               Paymon
+Ryan Lahfa
