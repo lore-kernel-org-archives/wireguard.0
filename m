@@ -4,53 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07C73CF6485
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 22:17:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 339A4CF6486
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 22:24:31 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 913ed478;
-	Tue, 18 Nov 2025 22:24:25 +0000 (UTC)
-Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c8a01742
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4df57357;
+	Tue, 18 Nov 2025 22:52:00 +0000 (UTC)
+Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3eb6aeb2
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 18 Nov 2025 22:24:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
- s=202008; t=1763504661;
- bh=d1hsAgUp0S7O3xktC/JjGyw+tK5U6MXAFsvdNg7H1Fw=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=ZCgSaFVxD9ry+FnSAey6z6hm1/tnZHSDSLHMcRa4lA8s4xygB5rCB6eomM8Lo1+qP
- duleYI5sfJopH8+Ajy+n4DMCpv9cFPyxX/qpQgp6kbEQkZd2x0z3Ddf9PV/G1N2lom
- fJbqAbABR7pskYTMacqq9XKLjAn5hTU58EzI6orDYdIiTcmDLOqPF+mOVp5mzVjuWI
- qCtB/r/slfjDc59fiFbBxi15j3x4ga67P33LQq6UqVTH2/cpoP8906ttYBCVC707+C
- jSYYmfX4DDkRGz5kTKFEwf6TxqVhaHKZ2OFLcaR1LOl7zJXTdyp0Ri6iQln6IZY+/D
- 6FKhOZvKFYK2w==
-Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id 9437B600FC;
- Tue, 18 Nov 2025 22:24:20 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1])
- by x201s (Postfix) with ESMTP id 5F27620187F;
- Tue, 18 Nov 2025 22:23:13 +0000 (UTC)
-Message-ID: <d2e84a2b-74cd-44a1-97a6-a10ece7b4c5f@fiberby.net>
-Date: Tue, 18 Nov 2025 22:23:12 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v3 11/11] wireguard: netlink: generate netlink
- code
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Jakub Kicinski <kuba@kernel.org>, 
- Donald Hunter <donald.hunter@gmail.com>
-Cc: "David S. Miller" <davem@davemloft.net>,
+ Tue, 18 Nov 2025 22:51:50 +0000 (UTC)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id 2DB7D600C4;
+ Tue, 18 Nov 2025 22:51:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9234C116D0;
+ Tue, 18 Nov 2025 22:51:46 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="qEgXLP2w"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1763506303;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=S07VNy/zEM63OV3uJY0CtmcySAf2auNYU/AgFnxHr/0=;
+ b=qEgXLP2weHRZDEvKAEhq+kBI2v6LxD6X+Py/fVfEkrwIfKw2gWQzyKg/0OnWTw60xmA5L9
+ iumVgcRHZg4eTsfNQL9CtnJYPnWrQ3xTTzJAr0CJ7tr7jQF/I1dE2377wOyDK872zHUlZa
+ WS/0zBoUIvmim9YZkFpXq9VTb/nE440=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 23a19fe4
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Tue, 18 Nov 2025 22:51:42 +0000 (UTC)
+Date: Tue, 18 Nov 2025 23:51:37 +0100
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: =?utf-8?Q?Asbj=C3=B8rn_Sloth_T=C3=B8nnesen?= <ast@fiberby.net>
+Cc: Jakub Kicinski <kuba@kernel.org>, Donald Hunter <donald.hunter@gmail.com>,
+ "David S. Miller" <davem@davemloft.net>,
  Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
  Simon Horman <horms@kernel.org>, Jacob Keller <jacob.e.keller@intel.com>,
  Andrew Lunn <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
  Jordan Rife <jordan@jrife.io>
+Subject: Re: [PATCH net-next v3 11/11] wireguard: netlink: generate netlink
+ code
+Message-ID: <aRz4eVCjw_JUXki6@zx2c4.com>
 References: <20251105183223.89913-1-ast@fiberby.net>
- <20251105183223.89913-12-ast@fiberby.net> <aRyNiLGTbUfjNWCa@zx2c4.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Asbj=C3=B8rn_Sloth_T=C3=B8nnesen?= <ast@fiberby.net>
-In-Reply-To: <aRyNiLGTbUfjNWCa@zx2c4.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <20251105183223.89913-12-ast@fiberby.net>
+ <aRyNiLGTbUfjNWCa@zx2c4.com>
+ <d2e84a2b-74cd-44a1-97a6-a10ece7b4c5f@fiberby.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <d2e84a2b-74cd-44a1-97a6-a10ece7b4c5f@fiberby.net>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -65,49 +71,49 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 11/18/25 3:15 PM, Jason A. Donenfeld wrote:
-> On Wed, Nov 05, 2025 at 06:32:20PM +0000, Asbjørn Sloth Tønnesen wrote:
->>   drivers/net/wireguard/netlink_gen.c | 77 +++++++++++++++++++++++++++++
->>   drivers/net/wireguard/netlink_gen.h | 29 +++++++++++
->>   create mode 100644 drivers/net/wireguard/netlink_gen.c
->>   create mode 100644 drivers/net/wireguard/netlink_gen.h
->> +#include "netlink_gen.h"
->> +// SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-3-Clause)
->> +/* Do not edit directly, auto-generated from: */
->> +/*	Documentation/netlink/specs/wireguard.yaml */
->> +/* YNL-GEN kernel source */
+On Tue, Nov 18, 2025 at 10:23:12PM +0000, Asbjørn Sloth Tønnesen wrote:
+> On 11/18/25 3:15 PM, Jason A. Donenfeld wrote:
+> > On Wed, Nov 05, 2025 at 06:32:20PM +0000, Asbjørn Sloth Tønnesen wrote:
+> >>   drivers/net/wireguard/netlink_gen.c | 77 +++++++++++++++++++++++++++++
+> >>   drivers/net/wireguard/netlink_gen.h | 29 +++++++++++
+> >>   create mode 100644 drivers/net/wireguard/netlink_gen.c
+> >>   create mode 100644 drivers/net/wireguard/netlink_gen.h
+> >> +#include "netlink_gen.h"
+> >> +// SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-3-Clause)
+> >> +/* Do not edit directly, auto-generated from: */
+> >> +/*	Documentation/netlink/specs/wireguard.yaml */
+> >> +/* YNL-GEN kernel source */
+> > 
+> > Similar to what's happening in the tools/ynl/samples build system,
+> > instead of statically generating this, can you have this be generated at
+> > build time, and placed into a generated/ folder that doesn't get checked
+> > into git? I don't see the purpose of having to manually keep this in
+> > check?
+> > 
+> > (And if for some reason, you refuse to do that, it'd be very nice if the
+> >   DO NOT EDIT header of the file also had the command that generated it,
+> >   in case I need to regenerate it later and can't remember how it was
+> >   done, because I didn't do it the first time, etc. Go's generated files
+> >   usually follow this pattern.
+> > 
+> >   But anyway, I think I'd prefer, if it's possible, to just have this
+> >   generated at compile time.)
 > 
-> Similar to what's happening in the tools/ynl/samples build system,
-> instead of statically generating this, can you have this be generated at
-> build time, and placed into a generated/ folder that doesn't get checked
-> into git? I don't see the purpose of having to manually keep this in
-> check?
+> The main value in having the generated kernel code in git, is that it can't
+> change accidentally, which makes it easy for patchwork to catch if output
+> changes without being a part of the commit.
 > 
-> (And if for some reason, you refuse to do that, it'd be very nice if the
->   DO NOT EDIT header of the file also had the command that generated it,
->   in case I need to regenerate it later and can't remember how it was
->   done, because I didn't do it the first time, etc. Go's generated files
->   usually follow this pattern.
-> 
->   But anyway, I think I'd prefer, if it's possible, to just have this
->   generated at compile time.)
+> I will leave it up to Donald and Jakub, if they want to allow these files to
+> be generated on-the-fly.
 
-The main value in having the generated kernel code in git, is that it can't
-change accidentally, which makes it easy for patchwork to catch if output
-changes without being a part of the commit.
+I mean, there is *tons* of generated code in the kernel. This is how it
+works. And you *want the output to change when the tool changes*. That's
+literally the point. It would be like if you wanted to check in all the
+.o files, in case the compiler started generating different output, or
+if you wanted the objtool output or anything else to be checked in. And
+sheerly from a git perspective, it seems outrageous to touch a zillion
+files every time the ynl code changes. Rather, the fact that it's
+generated on the fly ensures that the ynl generator stays correctly
+implemented. It's the best way to keep that code from rotting.
 
-I will leave it up to Donald and Jakub, if they want to allow these files to
-be generated on-the-fly.
-
-Alternatively, the generated files could be put under YNL in MAINTAINERS, so you
-only maintain the spec, but not the generated output files.
-
-I agree that there could be a note in the header about how to re-generate
-the files, or just a link to the doc:
-
-https://docs.kernel.org/userspace-api/netlink/intro-specs.html#generating-kernel-code
-
-The easy to use regeneration tool is ynl-regen:
-./tools/net/ynl/ynl-regen.sh                           # skip if output is newer than yaml
-./tools/net/ynl/ynl-regen.sh -f                        # force, when working on ynl
-./tools/net/ynl/ynl-regen.sh -p drivers/net/wireguard  # run on a subdir
+Jason
