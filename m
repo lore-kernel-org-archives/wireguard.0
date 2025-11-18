@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25A36CF6481
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 21:54:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06C22CF6482
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 21:54:39 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1fc9bbc1;
-	Tue, 18 Nov 2025 17:33:44 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7b51a498;
+	Tue, 18 Nov 2025 17:33:45 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d1d45889
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 09b6ac40
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 18 Nov 2025 12:10:33 +0000 (UTC)
+ Tue, 18 Nov 2025 17:16:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
- s=202008; t=1763467832;
- bh=PW0Ba5WBdUEev84fiTtUqYn0ryT2ZNpF7ayFuhtjL1E=;
- h=Date:From:Subject:To:Cc:References:In-Reply-To:From;
- b=jRJJFAjyqBKS/RnfxoMguDUCD6xe+wdqKLpm2XZorwT9u9bZQ02JqFPayIsHPBbOa
- l3Dia30mG2TQjhWHBKy7OW2BegUOvVSbWK3MoHlzO/eF5fHQ4Ubq4H4utnubyJnA6q
- +AspxsamqIAovqOXhKZGXT5PODs9NTgLDsAciXRZ3/5f4xOmrYC++3b0dAa5DWSgvm
- LNDuaP9vLbuUFbFTETaydUZEnIt03LHieUGbhXy68Cs4bBUubPutTV/f5BazCobX7K
- s3n9Nz6CmpZB3qshSYZ+UcLXLna5cJH6PbgXssuM0pdqtLTvIkC4R2wAWcJrhuXZGO
- zso4sjzdcMu9w==
+ s=202008; t=1763486205;
+ bh=HhJcusgK4gBGdJeJoNSwYRT1qkaAQlNrgbmsRu5oSFs=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+ b=KI5buituNFxmPC1Ezzluw4+/nkc/uuapbnCZVH3CP3sYH0GDSpuiUUDDagz1lr3s3
+ 4tA7yx2+KtPXaVRtJmup/psjBjRI3wlAFp11m+dldHlfJYLpU9YQVSTDWZruJEuLQ+
+ AcWrSI7+tb3VRte7/WSuJ01dC5EQGbc7M3Byzdmpq5Ejz1IxSpNPhPQvxyPhh+sCH5
+ CP8HphNNflhH62kP7i7jd+8JhiyPgBEsgUqD22/wA6owtOHUgHaIvcZnp9ggdylxXE
+ h9KLd3LeaCs3cyRaCsry3miMNMaGIlqUnWb0qtJdDu/+ethufv+uesjBCkQMLr6ycH
+ v2wEOP6kBs8zw==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id 2A2CD600C1;
- Tue, 18 Nov 2025 12:10:31 +0000 (UTC)
+ by mail1.fiberby.net (Postfix) with ESMTPSA id BD11A600FC;
+ Tue, 18 Nov 2025 17:16:44 +0000 (UTC)
 Received: from [127.0.0.1] (localhost [127.0.0.1])
- by x201s (Postfix) with ESMTP id 03A0B203E83;
- Tue, 18 Nov 2025 12:08:20 +0000 (UTC)
-Message-ID: <f21458b6-f169-4cd3-bd1b-16255c78d6cd@fiberby.net>
-Date: Tue, 18 Nov 2025 12:08:20 +0000
+ by x201s (Postfix) with ESMTP id 591372017A4;
+ Tue, 18 Nov 2025 17:16:12 +0000 (UTC)
+Message-ID: <29155dac-97c4-4213-8db5-194d9109050e@fiberby.net>
+Date: Tue, 18 Nov 2025 17:16:12 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: =?UTF-8?Q?Asbj=C3=B8rn_Sloth_T=C3=B8nnesen?= <ast@fiberby.net>
-Subject: Re: [PATCH net-next v3 04/11] netlink: specs: add specification for
- wireguard
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Jakub Kicinski <kuba@kernel.org>
+Subject: Re: [PATCH net-next v3 08/11] tools: ynl: add sample for wireguard
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Cc: "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
- Donald Hunter <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>,
- Jacob Keller <jacob.e.keller@intel.com>, Andrew Lunn
- <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, Jordan Rife <jordan@jrife.io>
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>, Donald Hunter <donald.hunter@gmail.com>,
+ Simon Horman <horms@kernel.org>, Jacob Keller <jacob.e.keller@intel.com>,
+ Andrew Lunn <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com,
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Jordan Rife <jordan@jrife.io>
 References: <20251105183223.89913-1-ast@fiberby.net>
- <20251105183223.89913-5-ast@fiberby.net> <aRvWzC8qz3iXDAb3@zx2c4.com>
+ <20251105183223.89913-9-ast@fiberby.net> <aRyO2mvToYf4yuwY@zx2c4.com>
 Content-Language: en-US
-In-Reply-To: <aRvWzC8qz3iXDAb3@zx2c4.com>
+From: =?UTF-8?Q?Asbj=C3=B8rn_Sloth_T=C3=B8nnesen?= <ast@fiberby.net>
+In-Reply-To: <aRyO2mvToYf4yuwY@zx2c4.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Tue, 18 Nov 2025 17:23:15 +0000
@@ -65,115 +65,51 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Jason,
-
-Thanks for the review.
-
-On 11/18/25 2:15 AM, Jason A. Donenfeld wrote:
-> On Wed, Nov 05, 2025 at 06:32:13PM +0000, Asbjørn Sloth Tønnesen wrote:
->> +name: wireguard
->> +protocol: genetlink-legacy
+On 11/18/25 3:20 PM, Jason A. Donenfeld wrote:
+> On Wed, Nov 05, 2025 at 06:32:17PM +0000, Asbjørn Sloth Tønnesen wrote:
+>> +CFLAGS_wireguard:=$(call get_hdr_inc,_LINUX_WIREGUARD_H,wireguard.h) \
+>> +	-D _WG_UAPI_WIREGUARD_H # alternate pre-YNL guard
 > 
-> I'll need to do my own reading, I guess, but what is going on with this
-> "legacy" business? Is there some newer genetlink that falls outside of
-> versioning?
+> I don't totally grok what's going on here. As I understand it, this
+> makefile creates `wireguard-user.h` in the generated/ include path,
+> which has all the various netlink wrapper declarations. And then this
+> also references, somehow, include/uapi/linux/wireguard.h, for the constants.
+> For some reason, you're then defining _WG_UAPI_WIREGUARD_H here, so that
+> wireguard.h from /usr/include doesn't clash. But also, why would it?
+> Isn't this just a matter of placing $(src)/include/uapi earlier in the
+> include file path?
 
-There's a few reasons why the stricter genetlink doesn't fit:
-- Less flexible with C naming (breaking UAPI).
-- Doesn't allow C struct types.
+The aim is to use the generated in-tree header, while avoiding making a
+copy, and avoiding the system header.
 
-diff -Naur Documentation/netlink/genetlink{,-legacy}.yaml
->> +c-family-name: wg-genl-name
->> +c-version-name: wg-genl-version
->> +max-by-define: true
->> +
->> +definitions:
->> +  -
->> +    name-prefix: wg-
-> 
-> There's lots of control over the C output here. Why can't there also be
-> a top-level c-function-prefix attribute, so that patch 10/11 is
-> unnecessary? Stack traces for wireguard all include wg_; why pollute
-> this with the new "wireguard_" ones?
+As an example then in tools/net/ynl/generated/Makefile:
 
-It could also be just "c-prefix".
+%-user.o: %-user.c %-user.h
+         @echo -e "\tCC $@"
+         @$(COMPILE.c) $(CFLAGS_$*) -o $@ $<
 
-Jakub, WDYT?
+Where for the "wireguard-user.o" target, then "$(CFLAGS_$*)" expands to
+"$CFLAGS_wireguard".
 
->> +        doc: The index is set as ``0`` in ``DUMP``, and unused in ``DO``.
-> 
-> I think get/set might match the operations better than the underlying
-> netlink verbs? This is a doc comment specific to getting and setting.
+CFLAGS_wireguard has two parts the normal one similar to the other families,
+and a transitional extra guard.
 
-Sure, I could change that. Originally opted for the C-style, as I kept the
-C-style from your original text in the rest of the doc comments.
+The header guard in the old UAPI header is "_WG_UAPI_WIREGUARD_H".
+The header guard in the new UAPI header in-tree is "_UAPI_LINUX_WIREGUARD_H".
+The header guard in the new UAPI header in-system is "_LINUX_WIREGUARD_H".
 
-> On the other hand, maybe that's an implementation detail and doesn't
-> need to be specified? Or if you think rigidity is important, we should
-> specify 0 in both directions and then validate it to ensure userspace
-> sends 0 (all userspaces currently do).
+Linux uapi headers are installed using scripts/headers_install.sh, which
+transforms the headers slightly, one of these transformations is to alter
+the header guard, stripping the _UAPI in the beginning of the guard.
 
-As is, the YNL-based clients are taking advantage of it not being validated.
-Changing that would require adding some new YNL type properties.
-See this series[1] for my earlier attempt to extend YNL in this area.
+So "get_hdr_inc=-D$(1) -include $(UAPI_PATH)/linux/$(2)" does:
+1) Defines the in-system guard
+2) Includes the in-tree header
 
-[1] https://lore.kernel.org/r/20251022182701.250897-1-ast@fiberby.net/
+The purpose of defining the in-system guard is disable the include in
+the code, as it's header guard is already defined.
 
-The modern way would be to use multi-attrs, but I don't think it's worth it
-to transition, you mainly save a few bytes of overhead.
-
-WGDEVICE_A_IFINDEX
-WGDEVICE_A_PEERS2: NLA_NESTED
-   WGPEER_A_PUBLIC_KEY
-   [..]
-   WGPEER_A_ALLOWEDIPS2: NLA_NESTED
-     WGALLOWEDIP_A_FAMILY
-     [..]
-   WGPEER_A_ALLOWEDIPS2: NLA_NESTED
-     WGALLOWEDIP_A_FAMILY
-     [..]
-WGDEVICE_A_PEERS2: NLA_NESTED
-   [..]
-
->> +        The kernel will then return several messages (``NLM_F_MULTI``).
->> +        It is possible that all of the allowed IPs of a single peer
->> +        will not fit within a single netlink message. In that case, the
->> +        same peer will be written in the following message, except it will
->> +        only contain ``WGPEER_A_PUBLIC_KEY`` and ``WGPEER_A_ALLOWEDIPS``.
->> +        This may occur several times in a row for the same peer.
->> +        It is then up to the receiver to coalesce adjacent peers.
->> +        Likewise, it is possible that all peers will not fit within a
->> +        single message.
->> +        So, subsequent peers will be sent in following messages,
->> +        except those will only contain ``WGDEVICE_A_IFNAME`` and
->> +        ``WGDEVICE_A_PEERS``. It is then up to the receiver to coalesce
->> +        these messages to form the complete list of peers.
-> 
-> There's an extra line break before the "So," that wasn't there in the
-> original.
-
-It's collapsed when rendered, added them to reduce diff stat for future changes.
-A new paragraph in .rst requires a double line break, but I can remove them.
-
->> +        While this command does accept the other ``WGDEVICE_A_*``
->> +        attributes, for compatibility reasons, but they are ignored
->> +        by this command, and should not be used in requests.
-> 
-> Either "While" or ", but" but not both.
-> 
-> However, can we actually just make this strict? No userspaces send
-> random attributes in a GET. Nothing should break.
-
-I agree that nothing should break, just tried to avoid changing UAPI in the
-spec commit, but by moving the split ops conversion patch, then I can eliminate
-this before adding the spec.
-
->> +      dump:
->> +        pre: wireguard-nl-get-device-start
->> +        post: wireguard-nl-get-device-done
-> 
-> Oh, or, the wg_ prefix can be defined here (instead of wireguard_, per
-> my 10/11 comment above).
-
-The key here is the missing ones, I renamed these for alignment with
-doit and dumpit which can't be customized at this time.
+I added the extra transitional define of the old UAPI guard, so that
+it also works on systems with the old header installed in /usr.
+This extra line can be removed in a few releases, when we don't care
+about compiling these tools on a system with the old header installed.
