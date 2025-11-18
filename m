@@ -4,44 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53372CEBF61
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 02:15:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B243CEDDA7
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 15:07:30 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7580f717;
-	Tue, 18 Nov 2025 02:15:49 +0000 (UTC)
-Received: from tor.source.kernel.org (tor.source.kernel.org
- [2600:3c04:e001:324:0:1991:8:25])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 34e98ade
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 99bf83d0;
+	Tue, 18 Nov 2025 15:07:29 +0000 (UTC)
+Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e6d71f74
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 18 Nov 2025 02:15:47 +0000 (UTC)
+ Tue, 18 Nov 2025 15:07:26 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 2473B601BC;
- Tue, 18 Nov 2025 02:15:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E98F6C2BCAF;
- Tue, 18 Nov 2025 02:15:43 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 2002443C8F;
+ Tue, 18 Nov 2025 15:07:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A02DC19421;
+ Tue, 18 Nov 2025 15:07:22 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
  dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="cc//lk20"
+ header.b="jgKbMy0G"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1763432141;
+ t=1763478441;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gfz0UjOBMmcUqWNnTqjj9EBSwyFMf+bo3hE+lHocPPE=;
- b=cc//lk20U6O3MMGi1X5Wf3VXksQA8ANosKjcfNV1B1nkdMRFeIoNKTghxiUkk++DOU+FsM
- WUeLIRuWq58C1iTs+jKVOsSbrRUCcawXj/q4M8u1hCcKNSK66Ur266bxOthWFZCBAIW1ZI
- Hw2Pg0hIfMbxI25GIKdGtHlcEEFOpjA=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 31daa250
+ bh=53GxV1m13oe/UtuCSpAIXdwfKKfevX1hM7SglRWeFhg=;
+ b=jgKbMy0GRSj2r+dK8VJmSIG/2/gxb49bq2aKGNSF2CYuwt21WNR9y1pJLu+mdh5xWpXWJx
+ UmLdIKXt6MwZD7bfwYcHbTpNQUln9sh3jkL8NPgTK0Y/3nquvgge0UNLZp92FvXOMjCMoB
+ TlQObx//+1GE5yoIUWhkjVWI/VbvdCQ=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b78eff9f
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Tue, 18 Nov 2025 02:15:41 +0000 (UTC)
-Date: Tue, 18 Nov 2025 03:15:40 +0100
+ Tue, 18 Nov 2025 15:07:20 +0000 (UTC)
+Date: Tue, 18 Nov 2025 16:07:15 +0100
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 To: =?utf-8?Q?Asbj=C3=B8rn_Sloth_T=C3=B8nnesen?= <ast@fiberby.net>
-Cc: "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+Cc: Jakub Kicinski <kuba@kernel.org>, "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
  Donald Hunter <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>,
  Jacob Keller <jacob.e.keller@intel.com>,
  Andrew Lunn <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com,
@@ -49,14 +47,16 @@ Cc: "David S. Miller" <davem@davemloft.net>,
  Jordan Rife <jordan@jrife.io>
 Subject: Re: [PATCH net-next v3 04/11] netlink: specs: add specification for
  wireguard
-Message-ID: <aRvWzC8qz3iXDAb3@zx2c4.com>
+Message-ID: <aRyLoy2iqbkUipZW@zx2c4.com>
 References: <20251105183223.89913-1-ast@fiberby.net>
  <20251105183223.89913-5-ast@fiberby.net>
+ <aRvWzC8qz3iXDAb3@zx2c4.com>
+ <f21458b6-f169-4cd3-bd1b-16255c78d6cd@fiberby.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251105183223.89913-5-ast@fiberby.net>
+In-Reply-To: <f21458b6-f169-4cd3-bd1b-16255c78d6cd@fiberby.net>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -71,99 +71,98 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, Nov 05, 2025 at 06:32:13PM +0000, Asbjørn Sloth Tønnesen wrote:
-> +name: wireguard
-> +protocol: genetlink-legacy
+Hi Asbjørn,
 
-I'll need to do my own reading, I guess, but what is going on with this
-"legacy" business? Is there some newer genetlink that falls outside of
-versioning?
+On Tue, Nov 18, 2025 at 12:08:20PM +0000, Asbjørn Sloth Tønnesen wrote:
+> > I'll need to do my own reading, I guess, but what is going on with this
+> > "legacy" business? Is there some newer genetlink that falls outside of
+> > versioning?
+> 
+> There's a few reasons why the stricter genetlink doesn't fit:
+> - Less flexible with C naming (breaking UAPI).
+> - Doesn't allow C struct types.
+> 
+> diff -Naur Documentation/netlink/genetlink{,-legacy}.yaml
 
-> +c-family-name: wg-genl-name
-> +c-version-name: wg-genl-version
-> +max-by-define: true
-> +
-> +definitions:
-> +  -
-> +    name-prefix: wg-
+Oh, thanks, useful diff. So the protocol didn't change, persay, but the
+non-legacy one just firms up some of the floppiness of what was done
+before. Makes sense.
 
-There's lots of control over the C output here. Why can't there also be
-a top-level c-function-prefix attribute, so that patch 10/11 is
-unnecessary? Stack traces for wireguard all include wg_; why pollute
-this with the new "wireguard_" ones?
+> > There's lots of control over the C output here. Why can't there also be
+> > a top-level c-function-prefix attribute, so that patch 10/11 is
+> > unnecessary? Stack traces for wireguard all include wg_; why pollute
+> > this with the new "wireguard_" ones?
+> 
+> It could also be just "c-prefix".
 
-> +        doc: The index is set as ``0`` in ``DUMP``, and unused in ``DO``.
+Works for me.
 
-I think get/set might match the operations better than the underlying
-netlink verbs? This is a doc comment specific to getting and setting.
+> >> +      dump:
+> >> +        pre: wireguard-nl-get-device-start
+> >> +        post: wireguard-nl-get-device-done
+> > 
+> > Oh, or, the wg_ prefix can be defined here (instead of wireguard_, per
+> > my 10/11 comment above).
+> 
+> The key here is the missing ones, I renamed these for alignment with
+> doit and dumpit which can't be customized at this time.
 
-On the other hand, maybe that's an implementation detail and doesn't
-need to be specified? Or if you think rigidity is important, we should
-specify 0 in both directions and then validate it to ensure userspace
-sends 0 (all userspaces currently do).
+Oh, interesting. So actually, the c-prefix thing would let you ditch
+this too, and it'd be more consistent.
 
-> +        The kernel will then return several messages (``NLM_F_MULTI``).
-> +        It is possible that all of the allowed IPs of a single peer
-> +        will not fit within a single netlink message. In that case, the
-> +        same peer will be written in the following message, except it will
-> +        only contain ``WGPEER_A_PUBLIC_KEY`` and ``WGPEER_A_ALLOWEDIPS``.
-> +        This may occur several times in a row for the same peer.
-> +        It is then up to the receiver to coalesce adjacent peers.
-> +        Likewise, it is possible that all peers will not fit within a
-> +        single message.
-> +        So, subsequent peers will be sent in following messages,
-> +        except those will only contain ``WGDEVICE_A_IFNAME`` and
-> +        ``WGDEVICE_A_PEERS``. It is then up to the receiver to coalesce
-> +        these messages to form the complete list of peers.
+> > On the other hand, maybe that's an implementation detail and doesn't
+> > need to be specified? Or if you think rigidity is important, we should
+> > specify 0 in both directions and then validate it to ensure userspace
+> > sends 0 (all userspaces currently do).
+> 
+> As is, the YNL-based clients are taking advantage of it not being validated.
+> Changing that would require adding some new YNL type properties.
+> See this series[1] for my earlier attempt to extend YNL in this area.
+> 
+> [1] https://lore.kernel.org/r/20251022182701.250897-1-ast@fiberby.net/
+> 
+> The modern way would be to use multi-attrs, but I don't think it's worth it
+> to transition, you mainly save a few bytes of overhead.
 
-There's an extra line break before the "So," that wasn't there in the
-original.
+Oh, huh, interesting. In libmnl, this parameter is referred to as "type"
+instead of index, so it was natural to stick 0 there. It looks like so
+does Go's netlink library, but in wgctrl-go, Matt stuck index there.
 
+So... darn. We're stuck with this being poorly defined. I guess we can
+have as the text something like:
 
-> +        While this command does accept the other ``WGDEVICE_A_*``
-> +        attributes, for compatibility reasons, but they are ignored
-> +        by this command, and should not be used in requests.
+    The index/type parameter is unused on SET_DEVICE operations and is zero on GET_DEVICE operations.
 
-Either "While" or ", but" but not both.
+> WGDEVICE_A_IFINDEX
+> WGDEVICE_A_PEERS2: NLA_NESTED
+>    WGPEER_A_PUBLIC_KEY
+>    [..]
+>    WGPEER_A_ALLOWEDIPS2: NLA_NESTED
+>      WGALLOWEDIP_A_FAMILY
+>      [..]
+>    WGPEER_A_ALLOWEDIPS2: NLA_NESTED
+>      WGALLOWEDIP_A_FAMILY
+>      [..]
+> WGDEVICE_A_PEERS2: NLA_NESTED
+>    [..]
 
-However, can we actually just make this strict? No userspaces send
-random attributes in a GET. Nothing should break.
+Def not worth it. But good to know about for future protocols.
 
-> +      dump:
-> +        pre: wireguard-nl-get-device-start
-> +        post: wireguard-nl-get-device-done
+> >> +        While this command does accept the other ``WGDEVICE_A_*``
+> >> +        attributes, for compatibility reasons, but they are ignored
+> >> +        by this command, and should not be used in requests.
+> > 
+> > Either "While" or ", but" but not both.
+> > 
+> > However, can we actually just make this strict? No userspaces send
+> > random attributes in a GET. Nothing should break.
+> 
+> I agree that nothing should break, just tried to avoid changing UAPI in the
+> spec commit, but by moving the split ops conversion patch, then I can eliminate
+> this before adding the spec.
 
-Oh, or, the wg_ prefix can be defined here (instead of wireguard_, per
-my 10/11 comment above).
+Okay, great, let's do that.
 
-> +        # request only uses ifindex | ifname, but keep .maxattr as is
-> +        request: &all-attrs
-> +          attributes:
-> +            - ifindex
-> +            - ifname
-> +            - private-key
-> +            - public-key
-> +            - flags
-> +            - listen-port
-> +            - fwmark
-> +            - peers
-
-As mentioned earlier, maybe this can be reduced to ifindex+ifname.
-
-> +        It is possible that the amount of configuration data exceeds that
-> +        of the maximum message length accepted by the kernel.
-> +        In that case, several messages should be sent one after another,
-> +        with each successive one filling in information not contained in
-> +        the prior.
-> +        Note that if ``WGDEVICE_F_REPLACE_PEERS`` is specified in the first
-> +        message, it probably should not be specified in fragments that come
-> +        after, so that the list of peers is only cleared the first time but
-> +        appended after.
-> +        Likewise for peers, if ``WGPEER_F_REPLACE_ALLOWEDIPS`` is specified
-> +        in the first message of a peer, it likely should not be specified
-> +        in subsequent fragments.
-
-More odd linebreaks added. Either it's a new paragraph or it isn't. Keep
-this how it was before?
+Thanks a bunch.
 
 Jason
