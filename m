@@ -4,51 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35432CE8D6B
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 00:57:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53372CEBF61
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 02:15:51 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 68b53c54;
-	Tue, 18 Nov 2025 00:57:07 +0000 (UTC)
-Received: from sea.source.kernel.org (sea.source.kernel.org
- [2600:3c0a:e001:78e:0:1991:8:25])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 642b7f9a
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7580f717;
+	Tue, 18 Nov 2025 02:15:49 +0000 (UTC)
+Received: from tor.source.kernel.org (tor.source.kernel.org
+ [2600:3c04:e001:324:0:1991:8:25])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 34e98ade
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 18 Nov 2025 00:57:05 +0000 (UTC)
+ Tue, 18 Nov 2025 02:15:47 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 3D672416BB;
- Tue, 18 Nov 2025 00:57:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BD5CC4AF0D;
- Tue, 18 Nov 2025 00:57:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1763427422;
- bh=Il89Mbvnt1csqkwQE2r+nkLyEwaXm5iNU4OXO4fn4Bw=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=o5fOMss99Y9LXK4WJw/FKdUw944OfO8aHJDlcaV9p22ErvbZ20Zhf+iNxGRb8OjOY
- H22PxwvwYo77HXlSNgO1D1CIJHAUukrXjnwC6/Ic2PRzOrEK+yM5RY2CzDtVe9INXy
- h6g38JwySY4jKbR3eNWhrkJD2BlOVkJ4bZv7TaGlQPaIJ8H99SZ/zVnVf0CH7YuiO7
- alWN2/mpVofoQ+Sva9LSsHkUWFX4m66glTgqni8X3mwnfczuQCADp/kxFmL4ctTrlF
- fgoiIOIGt1yP8O3bkv+iLQoft2/004dzwaVk/gV0sbqbeE/sHUr7FfMPOy3XkIv3kl
- MqukLPfKQ907A==
-Date: Mon, 17 Nov 2025 16:56:59 -0800
-From: Jakub Kicinski <kuba@kernel.org>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: =?UTF-8?B?QXNiasO4cm4=?= Sloth =?UTF-8?B?VMO4bm5lc2Vu?=
- <ast@fiberby.net>, "David S. Miller" <davem@davemloft.net>, Eric Dumazet
- <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>, Donald Hunter
- <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>, Jacob Keller
- <jacob.e.keller@intel.com>, Andrew Lunn <andrew+netdev@lunn.ch>,
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, Jordan Rife <jordan@jrife.io>
-Subject: Re: [PATCH net-next v3 00/11] wireguard: netlink: ynl conversion
-Message-ID: <20251117165659.2dfd369e@kernel.org>
-In-Reply-To: <aRvBOWHU5Zow65HD@zx2c4.com>
+ by tor.source.kernel.org (Postfix) with ESMTP id 2473B601BC;
+ Tue, 18 Nov 2025 02:15:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E98F6C2BCAF;
+ Tue, 18 Nov 2025 02:15:43 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="cc//lk20"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1763432141;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=gfz0UjOBMmcUqWNnTqjj9EBSwyFMf+bo3hE+lHocPPE=;
+ b=cc//lk20U6O3MMGi1X5Wf3VXksQA8ANosKjcfNV1B1nkdMRFeIoNKTghxiUkk++DOU+FsM
+ WUeLIRuWq58C1iTs+jKVOsSbrRUCcawXj/q4M8u1hCcKNSK66Ur266bxOthWFZCBAIW1ZI
+ Hw2Pg0hIfMbxI25GIKdGtHlcEEFOpjA=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 31daa250
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Tue, 18 Nov 2025 02:15:41 +0000 (UTC)
+Date: Tue, 18 Nov 2025 03:15:40 +0100
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: =?utf-8?Q?Asbj=C3=B8rn_Sloth_T=C3=B8nnesen?= <ast@fiberby.net>
+Cc: "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Donald Hunter <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>,
+ Jacob Keller <jacob.e.keller@intel.com>,
+ Andrew Lunn <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com,
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Jordan Rife <jordan@jrife.io>
+Subject: Re: [PATCH net-next v3 04/11] netlink: specs: add specification for
+ wireguard
+Message-ID: <aRvWzC8qz3iXDAb3@zx2c4.com>
 References: <20251105183223.89913-1-ast@fiberby.net>
- <20251110180746.4074a9ca@kernel.org> <aRQGIhazVqTdS2R_@zx2c4.com>
- <20251117161439.1dedf4b6@kernel.org> <aRvBOWHU5Zow65HD@zx2c4.com>
+ <20251105183223.89913-5-ast@fiberby.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251105183223.89913-5-ast@fiberby.net>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -63,19 +71,99 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Tue, 18 Nov 2025 01:43:37 +0100 Jason A. Donenfeld wrote:
-> On Mon, Nov 17, 2025 at 04:14:39PM -0800, Jakub Kicinski wrote:
-> > On Wed, 12 Nov 2025 04:59:30 +0100 Jason A. Donenfeld wrote:  
-> > > Reviewing it this week. Thanks for bumping this in my queue.  
-> > 
-> > Sadness. We wait a week and no review materializes. I think the patches
-> > are fine so I'll apply them shortly. The expected patch review SLA for
-> > netdev sub-maintainers is 24h (excluding weekends and holidays)
-> > https://docs.kernel.org/next/maintainer/feature-and-driver-maintainers.html  
-> 
-> Sadness indeed. I've had some urgent matters come up, but this is now
-> top of the stack, and I've given it a quick preliminary pass. I'd
-> planned to take this through my wg tree.
+On Wed, Nov 05, 2025 at 06:32:13PM +0000, Asbjørn Sloth Tønnesen wrote:
+> +name: wireguard
+> +protocol: genetlink-legacy
 
-Alright, I haven't pushed out yet, so let me drop these.
-Looking forward to seeing them in a PR..
+I'll need to do my own reading, I guess, but what is going on with this
+"legacy" business? Is there some newer genetlink that falls outside of
+versioning?
+
+> +c-family-name: wg-genl-name
+> +c-version-name: wg-genl-version
+> +max-by-define: true
+> +
+> +definitions:
+> +  -
+> +    name-prefix: wg-
+
+There's lots of control over the C output here. Why can't there also be
+a top-level c-function-prefix attribute, so that patch 10/11 is
+unnecessary? Stack traces for wireguard all include wg_; why pollute
+this with the new "wireguard_" ones?
+
+> +        doc: The index is set as ``0`` in ``DUMP``, and unused in ``DO``.
+
+I think get/set might match the operations better than the underlying
+netlink verbs? This is a doc comment specific to getting and setting.
+
+On the other hand, maybe that's an implementation detail and doesn't
+need to be specified? Or if you think rigidity is important, we should
+specify 0 in both directions and then validate it to ensure userspace
+sends 0 (all userspaces currently do).
+
+> +        The kernel will then return several messages (``NLM_F_MULTI``).
+> +        It is possible that all of the allowed IPs of a single peer
+> +        will not fit within a single netlink message. In that case, the
+> +        same peer will be written in the following message, except it will
+> +        only contain ``WGPEER_A_PUBLIC_KEY`` and ``WGPEER_A_ALLOWEDIPS``.
+> +        This may occur several times in a row for the same peer.
+> +        It is then up to the receiver to coalesce adjacent peers.
+> +        Likewise, it is possible that all peers will not fit within a
+> +        single message.
+> +        So, subsequent peers will be sent in following messages,
+> +        except those will only contain ``WGDEVICE_A_IFNAME`` and
+> +        ``WGDEVICE_A_PEERS``. It is then up to the receiver to coalesce
+> +        these messages to form the complete list of peers.
+
+There's an extra line break before the "So," that wasn't there in the
+original.
+
+
+> +        While this command does accept the other ``WGDEVICE_A_*``
+> +        attributes, for compatibility reasons, but they are ignored
+> +        by this command, and should not be used in requests.
+
+Either "While" or ", but" but not both.
+
+However, can we actually just make this strict? No userspaces send
+random attributes in a GET. Nothing should break.
+
+> +      dump:
+> +        pre: wireguard-nl-get-device-start
+> +        post: wireguard-nl-get-device-done
+
+Oh, or, the wg_ prefix can be defined here (instead of wireguard_, per
+my 10/11 comment above).
+
+> +        # request only uses ifindex | ifname, but keep .maxattr as is
+> +        request: &all-attrs
+> +          attributes:
+> +            - ifindex
+> +            - ifname
+> +            - private-key
+> +            - public-key
+> +            - flags
+> +            - listen-port
+> +            - fwmark
+> +            - peers
+
+As mentioned earlier, maybe this can be reduced to ifindex+ifname.
+
+> +        It is possible that the amount of configuration data exceeds that
+> +        of the maximum message length accepted by the kernel.
+> +        In that case, several messages should be sent one after another,
+> +        with each successive one filling in information not contained in
+> +        the prior.
+> +        Note that if ``WGDEVICE_F_REPLACE_PEERS`` is specified in the first
+> +        message, it probably should not be specified in fragments that come
+> +        after, so that the list of peers is only cleared the first time but
+> +        appended after.
+> +        Likewise for peers, if ``WGPEER_F_REPLACE_ALLOWEDIPS`` is specified
+> +        in the first message of a peer, it likely should not be specified
+> +        in subsequent fragments.
+
+More odd linebreaks added. Either it's a new paragraph or it isn't. Keep
+this how it was before?
+
+Jason
