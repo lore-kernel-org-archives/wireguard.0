@@ -4,50 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A1EFCEBF92
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 00:14:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E1E2CEBF61
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 00:43:49 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b7b66de2;
-	Tue, 18 Nov 2025 00:14:47 +0000 (UTC)
-Received: from tor.source.kernel.org (tor.source.kernel.org
- [2600:3c04:e001:324:0:1991:8:25])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8e559004
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4c02ead1;
+	Tue, 18 Nov 2025 00:43:47 +0000 (UTC)
+Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5d413683
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 18 Nov 2025 00:14:45 +0000 (UTC)
+ Tue, 18 Nov 2025 00:43:45 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id A2E0160258;
- Tue, 18 Nov 2025 00:14:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2EA2C4AF17;
- Tue, 18 Nov 2025 00:14:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1763424883;
- bh=eYXQMSeFcZ+u+ZKvoXphlDHsDa+DwPrWrlI1Op91Rd0=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=Wkgr9+h0j9JVyiANP7SA1+ZnJTkYChA9p/F04dLjes126EfDcYm7XSKTh229CPgU+
- y7Oo3SrIKMmaIq1SeFB0nCu79tcIhiI3jlukolxTVN530tgF9hC9JIwewMMIutl0/5
- RxYGOENJHVgoPcrd5X+HKYF01uUXbyPzLnlneRtgDbCU2X+ECQ0dJDDz3WHkq/R1oq
- pB0AO1iUBOlYS3ICN+awOXETe2qjzdmxz33W6GVfOZc7oFfmOQcNf8RWUAjkREQnks
- tKfaQ1ihuwBZAQJ7TlLUn6mkYQOVfcywrhKj9An3cRpDG89VDGfOPVwdbPy2B+xdSW
- s+Dm9PeQIGt5Q==
-Date: Mon, 17 Nov 2025 16:14:39 -0800
-From: Jakub Kicinski <kuba@kernel.org>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: =?UTF-8?B?QXNiasO4cm4=?= Sloth =?UTF-8?B?VMO4bm5lc2Vu?=
- <ast@fiberby.net>, "David S. Miller" <davem@davemloft.net>, Eric Dumazet
- <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>, Donald Hunter
- <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>, Jacob Keller
- <jacob.e.keller@intel.com>, Andrew Lunn <andrew+netdev@lunn.ch>,
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, Jordan Rife <jordan@jrife.io>
+ by tor.source.kernel.org (Postfix) with ESMTP id 23E89601D3;
+ Tue, 18 Nov 2025 00:43:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9EE0C4AF0B;
+ Tue, 18 Nov 2025 00:43:41 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="CU1lcHAw"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1763426619;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=oMKGQwFbGC9Wgvpt95lJSohz33kV6/eDvcxgRAGJqo4=;
+ b=CU1lcHAw6UsM6Q+HRcXQtoEbcZhSu18KtHBPqbJPvGkTDLoWjBAy8nsXs0lUYN0t3oVtMg
+ YOGsAFcA3K0X2oEsFZ7qPwf8+eEUJbzcQkwO/Z5WATh6nMwnRhEERF3d4On8k8rGeFPGjI
+ +YmDW4bMHRgLmepFDiQ0xiFQGFha7W0=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 239c5921
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Tue, 18 Nov 2025 00:43:38 +0000 (UTC)
+Date: Tue, 18 Nov 2025 01:43:37 +0100
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Jakub Kicinski <kuba@kernel.org>
+Cc: =?utf-8?Q?Asbj=C3=B8rn_Sloth_T=C3=B8nnesen?= <ast@fiberby.net>,
+ "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+ Donald Hunter <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>,
+ Jacob Keller <jacob.e.keller@intel.com>,
+ Andrew Lunn <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com,
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Jordan Rife <jordan@jrife.io>
 Subject: Re: [PATCH net-next v3 00/11] wireguard: netlink: ynl conversion
-Message-ID: <20251117161439.1dedf4b6@kernel.org>
-In-Reply-To: <aRQGIhazVqTdS2R_@zx2c4.com>
+Message-ID: <aRvBOWHU5Zow65HD@zx2c4.com>
 References: <20251105183223.89913-1-ast@fiberby.net>
  <20251110180746.4074a9ca@kernel.org> <aRQGIhazVqTdS2R_@zx2c4.com>
+ <20251117161439.1dedf4b6@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251117161439.1dedf4b6@kernel.org>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -62,39 +70,45 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, 12 Nov 2025 04:59:30 +0100 Jason A. Donenfeld wrote:
-> On Mon, Nov 10, 2025 at 06:07:46PM -0800, Jakub Kicinski wrote:
-> > On Wed,  5 Nov 2025 18:32:09 +0000 Asbj=C3=B8rn Sloth T=C3=B8nnesen wro=
-te: =20
-> > > This series completes the implementation of YNL for wireguard,
-> > > as previously announced[1].
-> > >=20
-> > > This series consist of 5 parts:
-> > > 1) Patch 01-03 - Misc. changes
-> > > 2) Patch    04 - Add YNL specification for wireguard
-> > > 3) Patch 05-07 - Transition to a generated UAPI header
-> > > 4) Patch    08 - Adds a sample program for the generated C library
-> > > 5) Patch 09-11 - Transition to generated netlink policy code
-> > >=20
-> > > The main benefit of having a YNL specification is unlocked after the
-> > > first 2 parts, the RFC version seems to already have spawned a new
-> > > Rust netlink binding[2] using wireguard as it's main example.
-> > >=20
-> > > Part 3 and 5 validates that the specification is complete and aligned,
-> > > the generated code might have a few warts, but they don't matter too
-> > > much, and are mostly a transitional problem[3].
-> > >=20
-> > > Part 4 is possible after part 2, but is ordered after part 3,
-> > > as it needs to duplicate the UAPI header in tools/include. =20
-> >=20
-> > These LGTM, now.
-> >=20
-> > Jason what's your feeling here? AFAICT the changes to the wg code
-> > are quite minor now.  =20
->=20
-> Reviewing it this week. Thanks for bumping this in my queue.
+On Mon, Nov 17, 2025 at 04:14:39PM -0800, Jakub Kicinski wrote:
+> On Wed, 12 Nov 2025 04:59:30 +0100 Jason A. Donenfeld wrote:
+> > On Mon, Nov 10, 2025 at 06:07:46PM -0800, Jakub Kicinski wrote:
+> > > On Wed,  5 Nov 2025 18:32:09 +0000 Asbjørn Sloth Tønnesen wrote:  
+> > > > This series completes the implementation of YNL for wireguard,
+> > > > as previously announced[1].
+> > > > 
+> > > > This series consist of 5 parts:
+> > > > 1) Patch 01-03 - Misc. changes
+> > > > 2) Patch    04 - Add YNL specification for wireguard
+> > > > 3) Patch 05-07 - Transition to a generated UAPI header
+> > > > 4) Patch    08 - Adds a sample program for the generated C library
+> > > > 5) Patch 09-11 - Transition to generated netlink policy code
+> > > > 
+> > > > The main benefit of having a YNL specification is unlocked after the
+> > > > first 2 parts, the RFC version seems to already have spawned a new
+> > > > Rust netlink binding[2] using wireguard as it's main example.
+> > > > 
+> > > > Part 3 and 5 validates that the specification is complete and aligned,
+> > > > the generated code might have a few warts, but they don't matter too
+> > > > much, and are mostly a transitional problem[3].
+> > > > 
+> > > > Part 4 is possible after part 2, but is ordered after part 3,
+> > > > as it needs to duplicate the UAPI header in tools/include.  
+> > > 
+> > > These LGTM, now.
+> > > 
+> > > Jason what's your feeling here? AFAICT the changes to the wg code
+> > > are quite minor now.   
+> > 
+> > Reviewing it this week. Thanks for bumping this in my queue.
+> 
+> Sadness. We wait a week and no review materializes. I think the patches
+> are fine so I'll apply them shortly. The expected patch review SLA for
+> netdev sub-maintainers is 24h (excluding weekends and holidays)
+> https://docs.kernel.org/next/maintainer/feature-and-driver-maintainers.html
 
-Sadness. We wait a week and no review materializes. I think the patches
-are fine so I'll apply them shortly. The expected patch review SLA for
-netdev sub-maintainers is 24h (excluding weekends and holidays)
-https://docs.kernel.org/next/maintainer/feature-and-driver-maintainers.html
+Sadness indeed. I've had some urgent matters come up, but this is now
+top of the stack, and I've given it a quick preliminary pass. I'd
+planned to take this through my wg tree.
+
+Jason
