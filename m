@@ -4,53 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06C22CF6482
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 21:54:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9025CF6484
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 22:10:08 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7b51a498;
-	Tue, 18 Nov 2025 17:33:45 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9a40a9ab;
+	Tue, 18 Nov 2025 22:00:40 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 09b6ac40
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 63100e6e
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 18 Nov 2025 17:16:46 +0000 (UTC)
+ Tue, 18 Nov 2025 22:00:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
- s=202008; t=1763486205;
- bh=HhJcusgK4gBGdJeJoNSwYRT1qkaAQlNrgbmsRu5oSFs=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=KI5buituNFxmPC1Ezzluw4+/nkc/uuapbnCZVH3CP3sYH0GDSpuiUUDDagz1lr3s3
- 4tA7yx2+KtPXaVRtJmup/psjBjRI3wlAFp11m+dldHlfJYLpU9YQVSTDWZruJEuLQ+
- AcWrSI7+tb3VRte7/WSuJ01dC5EQGbc7M3Byzdmpq5Ejz1IxSpNPhPQvxyPhh+sCH5
- CP8HphNNflhH62kP7i7jd+8JhiyPgBEsgUqD22/wA6owtOHUgHaIvcZnp9ggdylxXE
- h9KLd3LeaCs3cyRaCsry3miMNMaGIlqUnWb0qtJdDu/+ethufv+uesjBCkQMLr6ycH
- v2wEOP6kBs8zw==
+ s=202008; t=1763503234;
+ bh=wSq9nkMhOrqUYoM5UqOfCd2cKo+gg7tNC4z9SKtDj4w=;
+ h=Date:From:Subject:To:Cc:References:In-Reply-To:From;
+ b=dYjl3/bQdM0hW+WrDre6UuCHpWvPcVo/N42mZ2IbStpO4QvSci5Ph6N9dQgKFFkGJ
+ 8C7K1ZKVcZ3ExJDzp9oFaf8cvNgWNhyTy5zE+r68cUm2Z0m5TESm91JCBZ3Mi9VplQ
+ CN2tzNF93bpSV6MXB3SC9pYrAEwS5wzejbgWJF8xWTRthN09fTeFYP9wXjOQ2tftQV
+ b7IAxDrGOPXepLM+GcfiT2I7f/N0x41X3KGIZUAjfH/8j8nfiAjMUhJz29W92WpTor
+ vgD/W0QBpHhsgfd8FRcNi0rsjPFTrK1/3Fw90sOzufW2xiPpPE7rRaHjHOdAKcM0kJ
+ aUb1YMmVFc/Dg==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id BD11A600FC;
- Tue, 18 Nov 2025 17:16:44 +0000 (UTC)
+ by mail1.fiberby.net (Postfix) with ESMTPSA id 46794600FC;
+ Tue, 18 Nov 2025 22:00:34 +0000 (UTC)
 Received: from [127.0.0.1] (localhost [127.0.0.1])
- by x201s (Postfix) with ESMTP id 591372017A4;
- Tue, 18 Nov 2025 17:16:12 +0000 (UTC)
-Message-ID: <29155dac-97c4-4213-8db5-194d9109050e@fiberby.net>
-Date: Tue, 18 Nov 2025 17:16:12 +0000
+ by x201s (Postfix) with ESMTP id D2457203EA5;
+ Tue, 18 Nov 2025 21:59:45 +0000 (UTC)
+Message-ID: <9871bdc7-774d-4e35-be5f-02d45063d317@fiberby.net>
+Date: Tue, 18 Nov 2025 21:59:45 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v3 08/11] tools: ynl: add sample for wireguard
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, Donald Hunter <donald.hunter@gmail.com>,
- Simon Horman <horms@kernel.org>, Jacob Keller <jacob.e.keller@intel.com>,
- Andrew Lunn <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com,
- netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
- Jordan Rife <jordan@jrife.io>
-References: <20251105183223.89913-1-ast@fiberby.net>
- <20251105183223.89913-9-ast@fiberby.net> <aRyO2mvToYf4yuwY@zx2c4.com>
-Content-Language: en-US
 From: =?UTF-8?Q?Asbj=C3=B8rn_Sloth_T=C3=B8nnesen?= <ast@fiberby.net>
-In-Reply-To: <aRyO2mvToYf4yuwY@zx2c4.com>
+Subject: Re: [PATCH net-next v3 04/11] netlink: specs: add specification for
+ wireguard
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Jakub Kicinski <kuba@kernel.org>
+Cc: "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+ Donald Hunter <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>,
+ Jacob Keller <jacob.e.keller@intel.com>, Andrew Lunn
+ <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Jordan Rife <jordan@jrife.io>
+References: <20251105183223.89913-1-ast@fiberby.net>
+ <20251105183223.89913-5-ast@fiberby.net> <aRvWzC8qz3iXDAb3@zx2c4.com>
+ <f21458b6-f169-4cd3-bd1b-16255c78d6cd@fiberby.net>
+ <aRyLoy2iqbkUipZW@zx2c4.com>
+Content-Language: en-US
+In-Reply-To: <aRyLoy2iqbkUipZW@zx2c4.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Mailman-Approved-At: Tue, 18 Nov 2025 17:23:15 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -65,51 +66,44 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 11/18/25 3:20 PM, Jason A. Donenfeld wrote:
-> On Wed, Nov 05, 2025 at 06:32:17PM +0000, Asbjørn Sloth Tønnesen wrote:
->> +CFLAGS_wireguard:=$(call get_hdr_inc,_LINUX_WIREGUARD_H,wireguard.h) \
->> +	-D _WG_UAPI_WIREGUARD_H # alternate pre-YNL guard
+On 11/18/25 3:07 PM, Jason A. Donenfeld wrote:
+> On Tue, Nov 18, 2025 at 12:08:20PM +0000, Asbjørn Sloth Tønnesen wrote:
+>>> There's lots of control over the C output here. Why can't there also be
+>>> a top-level c-function-prefix attribute, so that patch 10/11 is
+>>> unnecessary? Stack traces for wireguard all include wg_; why pollute
+>>> this with the new "wireguard_" ones?
+>>
+>> It could also be just "c-prefix".
 > 
-> I don't totally grok what's going on here. As I understand it, this
-> makefile creates `wireguard-user.h` in the generated/ include path,
-> which has all the various netlink wrapper declarations. And then this
-> also references, somehow, include/uapi/linux/wireguard.h, for the constants.
-> For some reason, you're then defining _WG_UAPI_WIREGUARD_H here, so that
-> wireguard.h from /usr/include doesn't clash. But also, why would it?
-> Isn't this just a matter of placing $(src)/include/uapi earlier in the
-> include file path?
+> Works for me.
 
-The aim is to use the generated in-tree header, while avoiding making a
-copy, and avoiding the system header.
+Unfortunately, it isn't that simple.
 
-As an example then in tools/net/ynl/generated/Makefile:
+The functions are defined as:
+name = c_lower(f"{family.ident_name}-nl-{op_name}-doit")
+name = c_lower(f"{family.ident_name}-nl-{op_name}-dumpit")
+and
+name = c_lower(f"{family.ident_name}-nl-{op_name}-{op_mode}it")
 
-%-user.o: %-user.c %-user.h
-         @echo -e "\tCC $@"
-         @$(COMPILE.c) $(CFLAGS_$*) -o $@ $<
+The "c-prefix" would replace "family.ident_name" aka. "wireguard",
+but the "-nl-" would remain, which isn't in the current naming.
 
-Where for the "wireguard-user.o" target, then "$(CFLAGS_$*)" expands to
-"$CFLAGS_wireguard".
+So "c-function-prefix" or something might work better.
 
-CFLAGS_wireguard has two parts the normal one similar to the other families,
-and a transitional extra guard.
+My idea with "c-prefix" was to also cover the family and version defines,
+but they are eg. WG_GENL_NAME where the default would be *_FAMILY_NAME.
 
-The header guard in the old UAPI header is "_WG_UAPI_WIREGUARD_H".
-The header guard in the new UAPI header in-tree is "_UAPI_LINUX_WIREGUARD_H".
-The header guard in the new UAPI header in-system is "_LINUX_WIREGUARD_H".
+>>>> +      dump:
+>>>> +        pre: wireguard-nl-get-device-start
+>>>> +        post: wireguard-nl-get-device-done
+>>>
+>>> Oh, or, the wg_ prefix can be defined here (instead of wireguard_, per
+>>> my 10/11 comment above).
+>>
+>> The key here is the missing ones, I renamed these for alignment with
+>> doit and dumpit which can't be customized at this time.
+> 
+> Oh, interesting. So actually, the c-prefix thing would let you ditch
+> this too, and it'd be more consistent.
 
-Linux uapi headers are installed using scripts/headers_install.sh, which
-transforms the headers slightly, one of these transformations is to alter
-the header guard, stripping the _UAPI in the beginning of the guard.
-
-So "get_hdr_inc=-D$(1) -include $(UAPI_PATH)/linux/$(2)" does:
-1) Defines the in-system guard
-2) Includes the in-tree header
-
-The purpose of defining the in-system guard is disable the include in
-the code, as it's header guard is already defined.
-
-I added the extra transitional define of the old UAPI guard, so that
-it also works on systems with the old header installed in /usr.
-This extra line can be removed in a few releases, when we don't care
-about compiling these tools on a system with the old header installed.
+The pre and post still needs to be defined as they aren't used by default.
