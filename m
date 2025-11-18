@@ -4,59 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B243CEDDA7
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 15:07:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BCBACEBF97
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Nov 2025 15:18:50 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 99bf83d0;
-	Tue, 18 Nov 2025 15:07:29 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 98e4a6e9;
+	Tue, 18 Nov 2025 15:10:52 +0000 (UTC)
 Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e6d71f74
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 17fe6257
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 18 Nov 2025 15:07:26 +0000 (UTC)
+ Tue, 18 Nov 2025 15:10:47 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 2002443C8F;
- Tue, 18 Nov 2025 15:07:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A02DC19421;
- Tue, 18 Nov 2025 15:07:22 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id B026F42E3A;
+ Tue, 18 Nov 2025 15:10:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5358EC4CEF1;
+ Tue, 18 Nov 2025 15:10:44 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
  dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="jgKbMy0G"
+ header.b="ObMcE+Wc"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1763478441;
+ t=1763478643;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=53GxV1m13oe/UtuCSpAIXdwfKKfevX1hM7SglRWeFhg=;
- b=jgKbMy0GRSj2r+dK8VJmSIG/2/gxb49bq2aKGNSF2CYuwt21WNR9y1pJLu+mdh5xWpXWJx
- UmLdIKXt6MwZD7bfwYcHbTpNQUln9sh3jkL8NPgTK0Y/3nquvgge0UNLZp92FvXOMjCMoB
- TlQObx//+1GE5yoIUWhkjVWI/VbvdCQ=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b78eff9f
+ bh=I4ZAvaDIfOpeTa+ScGOOgn3wH8JMo1YWOHKnqA1nTLs=;
+ b=ObMcE+Wcz5k0RO4HPxm+Hz+vuF+mVBl3UJBldu6R3p3eO13EXBp9OZaFdmZQD3Z9YWRhtn
+ 4gRbUc+QC+lOKKsLUj7tO7oci2GZQ3SYPzpcF8wCjEyrxMiYMbLZ8pMHTQwUv1pbCZDLmE
+ hw+zk7cWDgiHcb+LMpifznD9s6o5BrI=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7448ac8e
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Tue, 18 Nov 2025 15:07:20 +0000 (UTC)
-Date: Tue, 18 Nov 2025 16:07:15 +0100
+ Tue, 18 Nov 2025 15:10:42 +0000 (UTC)
+Date: Tue, 18 Nov 2025 16:10:40 +0100
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 To: =?utf-8?Q?Asbj=C3=B8rn_Sloth_T=C3=B8nnesen?= <ast@fiberby.net>
-Cc: Jakub Kicinski <kuba@kernel.org>, "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+Cc: "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
  Donald Hunter <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>,
  Jacob Keller <jacob.e.keller@intel.com>,
  Andrew Lunn <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
  Jordan Rife <jordan@jrife.io>
-Subject: Re: [PATCH net-next v3 04/11] netlink: specs: add specification for
- wireguard
-Message-ID: <aRyLoy2iqbkUipZW@zx2c4.com>
+Subject: Re: [PATCH net-next v3 06/11] uapi: wireguard: move flag enums
+Message-ID: <aRyMcF3tg563bQTP@zx2c4.com>
 References: <20251105183223.89913-1-ast@fiberby.net>
- <20251105183223.89913-5-ast@fiberby.net>
- <aRvWzC8qz3iXDAb3@zx2c4.com>
- <f21458b6-f169-4cd3-bd1b-16255c78d6cd@fiberby.net>
+ <20251105183223.89913-7-ast@fiberby.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <f21458b6-f169-4cd3-bd1b-16255c78d6cd@fiberby.net>
+In-Reply-To: <20251105183223.89913-7-ast@fiberby.net>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -71,98 +69,14 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Asbjørn,
-
-On Tue, Nov 18, 2025 at 12:08:20PM +0000, Asbjørn Sloth Tønnesen wrote:
-> > I'll need to do my own reading, I guess, but what is going on with this
-> > "legacy" business? Is there some newer genetlink that falls outside of
-> > versioning?
+On Wed, Nov 05, 2025 at 06:32:15PM +0000, Asbjørn Sloth Tønnesen wrote:
+> Move the wg*_flag enums, so that they are defined above the
+> attribute set enums, as ynl-gen would place them.
 > 
-> There's a few reasons why the stricter genetlink doesn't fit:
-> - Less flexible with C naming (breaking UAPI).
-> - Doesn't allow C struct types.
+> This is an incremental step towards adopting an UAPI header
+> generated by ynl-gen. This is split out to keep the patches readable.
 > 
-> diff -Naur Documentation/netlink/genetlink{,-legacy}.yaml
+> This is a trivial patch with no behavioural changes intended.
 
-Oh, thanks, useful diff. So the protocol didn't change, persay, but the
-non-legacy one just firms up some of the floppiness of what was done
-before. Makes sense.
-
-> > There's lots of control over the C output here. Why can't there also be
-> > a top-level c-function-prefix attribute, so that patch 10/11 is
-> > unnecessary? Stack traces for wireguard all include wg_; why pollute
-> > this with the new "wireguard_" ones?
-> 
-> It could also be just "c-prefix".
-
-Works for me.
-
-> >> +      dump:
-> >> +        pre: wireguard-nl-get-device-start
-> >> +        post: wireguard-nl-get-device-done
-> > 
-> > Oh, or, the wg_ prefix can be defined here (instead of wireguard_, per
-> > my 10/11 comment above).
-> 
-> The key here is the missing ones, I renamed these for alignment with
-> doit and dumpit which can't be customized at this time.
-
-Oh, interesting. So actually, the c-prefix thing would let you ditch
-this too, and it'd be more consistent.
-
-> > On the other hand, maybe that's an implementation detail and doesn't
-> > need to be specified? Or if you think rigidity is important, we should
-> > specify 0 in both directions and then validate it to ensure userspace
-> > sends 0 (all userspaces currently do).
-> 
-> As is, the YNL-based clients are taking advantage of it not being validated.
-> Changing that would require adding some new YNL type properties.
-> See this series[1] for my earlier attempt to extend YNL in this area.
-> 
-> [1] https://lore.kernel.org/r/20251022182701.250897-1-ast@fiberby.net/
-> 
-> The modern way would be to use multi-attrs, but I don't think it's worth it
-> to transition, you mainly save a few bytes of overhead.
-
-Oh, huh, interesting. In libmnl, this parameter is referred to as "type"
-instead of index, so it was natural to stick 0 there. It looks like so
-does Go's netlink library, but in wgctrl-go, Matt stuck index there.
-
-So... darn. We're stuck with this being poorly defined. I guess we can
-have as the text something like:
-
-    The index/type parameter is unused on SET_DEVICE operations and is zero on GET_DEVICE operations.
-
-> WGDEVICE_A_IFINDEX
-> WGDEVICE_A_PEERS2: NLA_NESTED
->    WGPEER_A_PUBLIC_KEY
->    [..]
->    WGPEER_A_ALLOWEDIPS2: NLA_NESTED
->      WGALLOWEDIP_A_FAMILY
->      [..]
->    WGPEER_A_ALLOWEDIPS2: NLA_NESTED
->      WGALLOWEDIP_A_FAMILY
->      [..]
-> WGDEVICE_A_PEERS2: NLA_NESTED
->    [..]
-
-Def not worth it. But good to know about for future protocols.
-
-> >> +        While this command does accept the other ``WGDEVICE_A_*``
-> >> +        attributes, for compatibility reasons, but they are ignored
-> >> +        by this command, and should not be used in requests.
-> > 
-> > Either "While" or ", but" but not both.
-> > 
-> > However, can we actually just make this strict? No userspaces send
-> > random attributes in a GET. Nothing should break.
-> 
-> I agree that nothing should break, just tried to avoid changing UAPI in the
-> spec commit, but by moving the split ops conversion patch, then I can eliminate
-> this before adding the spec.
-
-Okay, great, let's do that.
-
-Thanks a bunch.
-
-Jason
+Can we call the subject of this commit `wireguard: uapi: ...`, and same
+for the other one?
