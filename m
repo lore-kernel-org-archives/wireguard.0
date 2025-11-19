@@ -4,32 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7707ECF6489
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 23:07:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 716B4CF648B
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Nov 2025 23:07:49 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 50ae0c8f;
-	Wed, 19 Nov 2025 00:50:37 +0000 (UTC)
-Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c0d64a6f
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id de272f33;
+	Wed, 19 Nov 2025 00:53:23 +0000 (UTC)
+Received: from sea.source.kernel.org (sea.source.kernel.org
+ [2600:3c0a:e001:78e:0:1991:8:25])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8436e6fb
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 19 Nov 2025 00:50:34 +0000 (UTC)
+ Wed, 19 Nov 2025 00:53:21 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 331D144028;
- Wed, 19 Nov 2025 00:50:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9576CC2BCB4;
- Wed, 19 Nov 2025 00:50:30 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 3D5E3435E3;
+ Wed, 19 Nov 2025 00:53:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63956C4AF12;
+ Wed, 19 Nov 2025 00:53:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1763513431;
- bh=aDNZQ3grOmvLo0XdWNIfUDJpL88GIHWAlZqtP83f/5g=;
+ s=k20201202; t=1763513598;
+ bh=kdl2WMZWDlCFrdcyuc2+LdLt928k5GOWuRvxrCpd7Qs=;
  h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=ERlSWBDPFOjY1XAU3/jkzN6ZvXBXZGEhxPAG0oyRHp0rraobLHZUcXNkOGEz3e/SJ
- h6R2bDfOjl5HVcAZsQfNXfNGmc/Husck/1uicI8qHFirFhJvacJQxOBJn0yuu3MM+5
- u9z7Rw07NFcfpfsAqPTc0apXo0lC8AJTYnbdKtOSaNKof3dtuJeQP0F5uE4GVPgx1h
- gSYewrnKv/zV8sP/iXVJjAVuM4DFb+Lew1hqEvw9xau+qw7FjLy8eroVWKvjtOFNJl
- PTA/XWSaYuInInpQOeicOnVzJRcCIwbN97NWhTe1hSeLD9Z+PW7t9lxmOdoOMqtZ9f
- FNlMsCzmP00eQ==
-Date: Tue, 18 Nov 2025 16:50:28 -0800
+ b=h1I0qSAlaTPipkby0PxQ0loeTlahBMxd7/rnsKdgRuk+VHiS7HXvaEHVhyHVca+6Q
+ gK5ocBk5/HjBSAgycwE4HoCUGQPe1YMU/43LPrHdUXMiNwPwq9hNf0pqtm39yLF995
+ yVEzh/l86WZSDGC3gBQw35bu6inN4T+tdlqQze6fWKPybXDtZm6rxaULRDoGBvBEid
+ mCw5b+tNJXGe9809w+o1jSCjEmuouudo0woEH0t+d370DTjKikeu9g/ESD0WT6VLm1
+ //RSrJ2fcJXROmBje6cuMVZQ85/y+uAjr9RyFO6foluu8DJ2OnWhA3/suepo7yDaoy
+ wQIsKgSmTVMzQ==
+Date: Tue, 18 Nov 2025 16:53:15 -0800
 From: Jakub Kicinski <kuba@kernel.org>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Cc: =?UTF-8?B?QXNiasO4cm4=?= Sloth =?UTF-8?B?VMO4bm5lc2Vu?=
@@ -39,17 +40,13 @@ Cc: =?UTF-8?B?QXNiasO4cm4=?= Sloth =?UTF-8?B?VMO4bm5lc2Vu?=
  <jacob.e.keller@intel.com>, Andrew Lunn <andrew+netdev@lunn.ch>,
  wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
  linux-kernel@vger.kernel.org, Jordan Rife <jordan@jrife.io>
-Subject: Re: [PATCH net-next v3 04/11] netlink: specs: add specification for
- wireguard
-Message-ID: <20251118165028.4e43ee01@kernel.org>
-In-Reply-To: <aRz4rs1IpohQpgWf@zx2c4.com>
+Subject: Re: [PATCH net-next v3 07/11] uapi: wireguard: generate header with
+ ynl-gen
+Message-ID: <20251118165315.281a21ca@kernel.org>
+In-Reply-To: <aRyOAYuWZE440WQ4@zx2c4.com>
 References: <20251105183223.89913-1-ast@fiberby.net>
- <20251105183223.89913-5-ast@fiberby.net>
- <aRvWzC8qz3iXDAb3@zx2c4.com>
- <f21458b6-f169-4cd3-bd1b-16255c78d6cd@fiberby.net>
- <aRyLoy2iqbkUipZW@zx2c4.com>
- <9871bdc7-774d-4e35-be5f-02d45063d317@fiberby.net>
- <aRz4rs1IpohQpgWf@zx2c4.com>
+ <20251105183223.89913-8-ast@fiberby.net>
+ <aRyOAYuWZE440WQ4@zx2c4.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
@@ -67,15 +64,33 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Tue, 18 Nov 2025 23:52:30 +0100 Jason A. Donenfeld wrote:
-> On Tue, Nov 18, 2025 at 09:59:45PM +0000, Asbj=C3=B8rn Sloth T=C3=B8nnese=
+On Tue, 18 Nov 2025 16:17:21 +0100 Jason A. Donenfeld wrote:
+> On Wed, Nov 05, 2025 at 06:32:16PM +0000, Asbj=C3=B8rn Sloth T=C3=B8nnese=
 n wrote:
-> > So "c-function-prefix" or something might work better. =20
+> > Use ynl-gen to generate the UAPI header for wireguard.
+> > diff --git a/include/uapi/linux/wireguard.h b/include/uapi/linux/wiregu=
+ard.h
+> > index a2815f4f2910..dc3924d0c552 100644
+> > --- a/include/uapi/linux/wireguard.h
+> > +++ b/include/uapi/linux/wireguard.h
+> > @@ -1,32 +1,28 @@
+> > -/* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) OR MIT */
+> > -/*
+> > - * Copyright (C) 2015-2019 Jason A. Donenfeld <Jason@zx2c4.com>. All R=
+ights Reserved.
+> > - */
+> > +/* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-=
+3-Clause) */
+> > +/* Do not edit directly, auto-generated from: */
+> > +/*	Documentation/netlink/specs/wireguard.yaml */
+> > +/* YNL-GEN uapi header */ =20
 >=20
-> Also fine with me. I'd just like consistent function naming, one way or
-> another.
+> Same desire here -- can this get auto generated at compile time (or in
+> headers_install time).
 
-IIUC we're talking about the prefix for the kernel C codegen?
-Feels a bit like a one-off feature to me, but if we care deeply about
-it let's add it as a CLI param to the codegen. I don't think it's
-necessary to include this in the YAML spec.
+IMHO generating uAPI on the fly has more downsides than benefits.
+For one thing people grepping the code and looking and lxr will
+never find the definition. All the user space code in tools/ is
+generated at build time, but the amount of kernel code we generate
+is not significant at this stage. Not significant enough to complicate
+everyone's life..
