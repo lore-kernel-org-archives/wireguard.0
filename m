@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D321FCF64A0
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 20 Nov 2025 00:55:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 552E6CF64A0
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 20 Nov 2025 00:57:50 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2fcd77ce;
-	Thu, 20 Nov 2025 00:55:00 +0000 (UTC)
-Received: from sea.source.kernel.org (sea.source.kernel.org
- [2600:3c0a:e001:78e:0:1991:8:25])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0d785fef
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e86b580e;
+	Thu, 20 Nov 2025 00:55:57 +0000 (UTC)
+Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 40f1a5f3
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 20 Nov 2025 00:54:58 +0000 (UTC)
+ Thu, 20 Nov 2025 00:55:55 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 1AB0B429FF;
- Thu, 20 Nov 2025 00:54:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFAFAC4CEF5;
- Thu, 20 Nov 2025 00:54:54 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 345A560174;
+ Thu, 20 Nov 2025 00:55:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A554EC4CEF5;
+ Thu, 20 Nov 2025 00:55:52 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
  dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="YjwsnnoZ"
+ header.b="isUTSwDq"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1763600093;
+ t=1763600151;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=nMOmny8d8deudNAgvKqA5B6ZSfjuWQary3xMXoxOMW0=;
- b=YjwsnnoZ/Qs/xgonwxaFwi7W5/6A3KZjh1E6M/wVCndmJvrPt2DtS4er7b6cOas4Z8lbUW
- 5D5okw/FU3nqyStAZMQI6hJJAgx2SGKkqTN9BYbpLZokiq+riAwOY1lNkjcfdHMYoKoGpo
- 1wOApy/x7JzLigkc/uPs6BiGe1PCU80=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id eadb20d2
+ bh=3WInqmEFbDY/RNTxo/ojAG1xVSL8xc4rSolc9zgV/Ec=;
+ b=isUTSwDqz/O9aQIVXmq8x3m8Q17M+ZNH3Boeq+6dsokl2bXo1wXUizy8q9SUvf26ogkeS2
+ vG6I9VH+DYdi9Cpg1Bba1VglO3Eqc71p6ffGMtgdmda3nh1pYVQgErf0vfKsymgh/N7Wz7
+ +R9bONq8+sgufWODyOZxyWhUEa9Eozc=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3c48548b
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Thu, 20 Nov 2025 00:54:52 +0000 (UTC)
-Date: Thu, 20 Nov 2025 01:54:47 +0100
+ Thu, 20 Nov 2025 00:55:50 +0000 (UTC)
+Date: Thu, 20 Nov 2025 01:55:46 +0100
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 To: Jakub Kicinski <kuba@kernel.org>
 Cc: =?utf-8?Q?Asbj=C3=B8rn_Sloth_T=C3=B8nnesen?= <ast@fiberby.net>,
- Donald Hunter <donald.hunter@gmail.com>,
  "David S. Miller" <davem@davemloft.net>,
  Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
- Simon Horman <horms@kernel.org>, Jacob Keller <jacob.e.keller@intel.com>,
+ Donald Hunter <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>,
+ Jacob Keller <jacob.e.keller@intel.com>,
  Andrew Lunn <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
  Jordan Rife <jordan@jrife.io>
-Subject: Re: [PATCH net-next v3 11/11] wireguard: netlink: generate netlink
- code
-Message-ID: <aR5m174O7pklKrMR@zx2c4.com>
+Subject: Re: [PATCH net-next v3 07/11] uapi: wireguard: generate header with
+ ynl-gen
+Message-ID: <aR5nEnP2PWJ7G7yp@zx2c4.com>
 References: <20251105183223.89913-1-ast@fiberby.net>
- <20251105183223.89913-12-ast@fiberby.net>
- <aRyNiLGTbUfjNWCa@zx2c4.com>
- <d2e84a2b-74cd-44a1-97a6-a10ece7b4c5f@fiberby.net>
- <aRz4eVCjw_JUXki6@zx2c4.com> <20251118170045.0c2e24f7@kernel.org>
+ <20251105183223.89913-8-ast@fiberby.net>
+ <aRyOAYuWZE440WQ4@zx2c4.com> <20251118165315.281a21ca@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251118170045.0c2e24f7@kernel.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251118165315.281a21ca@kernel.org>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -72,35 +71,34 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Tue, Nov 18, 2025 at 05:00:45PM -0800, Jakub Kicinski wrote:
-> On Tue, 18 Nov 2025 23:51:37 +0100 Jason A. Donenfeld wrote:
-> > I mean, there is *tons* of generated code in the kernel. This is how it
-> > works. And you *want the output to change when the tool changes*. That's
-> > literally the point. It would be like if you wanted to check in all the
-> > .o files, in case the compiler started generating different output, or
-> > if you wanted the objtool output or anything else to be checked in. And
-> > sheerly from a git perspective, it seems outrageous to touch a zillion
-> > files every time the ynl code changes. Rather, the fact that it's
-> > generated on the fly ensures that the ynl generator stays correctly
-> > implemented. It's the best way to keep that code from rotting.
+On Tue, Nov 18, 2025 at 04:53:15PM -0800, Jakub Kicinski wrote:
+> On Tue, 18 Nov 2025 16:17:21 +0100 Jason A. Donenfeld wrote:
+> > On Wed, Nov 05, 2025 at 06:32:16PM +0000, Asbjørn Sloth Tønnesen wrote:
+> > > Use ynl-gen to generate the UAPI header for wireguard.
+> > > diff --git a/include/uapi/linux/wireguard.h b/include/uapi/linux/wireguard.h
+> > > index a2815f4f2910..dc3924d0c552 100644
+> > > --- a/include/uapi/linux/wireguard.h
+> > > +++ b/include/uapi/linux/wireguard.h
+> > > @@ -1,32 +1,28 @@
+> > > -/* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) OR MIT */
+> > > -/*
+> > > - * Copyright (C) 2015-2019 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
+> > > - */
+> > > +/* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-3-Clause) */
+> > > +/* Do not edit directly, auto-generated from: */
+> > > +/*	Documentation/netlink/specs/wireguard.yaml */
+> > > +/* YNL-GEN uapi header */  
+> > 
+> > Same desire here -- can this get auto generated at compile time (or in
+> > headers_install time).
 > 
-> CI checks validate that the files are up to date.
-> There has been no churn to the kernel side of the generated code.
-> Let's be practical.
+> IMHO generating uAPI on the fly has more downsides than benefits.
+> For one thing people grepping the code and looking and lxr will
+> never find the definition. All the user space code in tools/ is
+> generated at build time, but the amount of kernel code we generate
+> is not significant at this stage. Not significant enough to complicate
+> everyone's life..
 
-Okay, it sounds like neither of you want to do this. Darn. I really hate
-having generated artifacts laying around that can be created efficiently
-at compile time. But okay, so it goes. I guess we'll do that.
-
-I would like to ask two things, then, which may or may not be possible:
-
-1) Can we put this in drivers/net/wireguard/generated/netlink.{c.h}
-   And then in the Makefile, do `wireguard-y += netlink.o generated/netlink.o`
-   on one line like that. I prefer this to keeping it in the same
-   directory with the awkward -gen suffix.
-
-2) In the header of each generated file, automatically write out the
-   command that was used to generate it. Here's an example of this good
-   habit from Go: https://github.com/golang/go/blob/master/src/syscall/zsyscall_linux_amd64.go
-
-Jason
+I was thinking that doing this automatically at compile-time or
+install-time would be _less_ complicated, not more, since everything
+would be kept in sync automatically and such. But alright, so be it.
