@@ -4,79 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9082CF6497
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 20 Nov 2025 00:19:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D321FCF64A0
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 20 Nov 2025 00:55:02 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 25a1f693;
-	Wed, 19 Nov 2025 20:01:59 +0000 (UTC)
-Received: from tor.source.kernel.org (tor.source.kernel.org
- [2600:3c04:e001:324:0:1991:8:25])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3aab7933
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2fcd77ce;
+	Thu, 20 Nov 2025 00:55:00 +0000 (UTC)
+Received: from sea.source.kernel.org (sea.source.kernel.org
+ [2600:3c0a:e001:78e:0:1991:8:25])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0d785fef
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 19 Nov 2025 20:01:50 +0000 (UTC)
+ Thu, 20 Nov 2025 00:54:58 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 6B0B76011E
- for <wireguard@lists.zx2c4.com>; Wed, 19 Nov 2025 20:01:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB237C4CEF5
- for <wireguard@lists.zx2c4.com>; Wed, 19 Nov 2025 20:01:48 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 1AB0B429FF;
+ Thu, 20 Nov 2025 00:54:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFAFAC4CEF5;
+ Thu, 20 Nov 2025 00:54:54 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
  dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="FSh8cnju"
+ header.b="YjwsnnoZ"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1763582505;
+ t=1763600093;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aD7b8TcgRMmO1CAUcyDsShEJadk1xG3qrQTC8wGE1S8=;
- b=FSh8cnjuro3G/nOPstCDrm7vXz1jROY88vuM/crsROP4SOTRRM7X6vEPUwS/IIr7t/snkj
- kbpVsx9TyN+1UDzRegwewnBVjTUJ6XDt1FPoCvQKiVFWm7STrgG+C3o7txeCKnrf1CzPLD
- kXa8pSpy+XI5+kHBke011N78TcoxLe0=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id fe136c68
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 19 Nov 2025 20:01:45 +0000 (UTC)
-Received: by mail-oo1-f52.google.com with SMTP id
- 006d021491bc7-656bb297e31so21244eaf.0
- for <wireguard@lists.zx2c4.com>; Wed, 19 Nov 2025 12:01:45 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCW/FRYg0CYTXYIAPhYp6L8RI5tpi4znuwVMhqK9RJm9QeYbDpkMd5eyH2VYQtQUh9S2HBtH1HkHP/k=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YwtUU6U0q+mSzrJsqB8Dtgh8ht0zaj8ypUBXZjPNjGFF5ZN+UUz
- xki1ageTpfcEtkeh/6P+oqaZAwdRIbANhZ5oKn6uQEafMg+RixsoBDqs/Scry+AZTIFoJxilpsv
- i8Tr4JJzPJDWYxaZCvL6ihim/Nwty/rE=
-X-Google-Smtp-Source: AGHT+IGx+a53yU4H/nb0fEWsNKD8FC5saE55qDH6g7ph/RauN+KSj2eyR88v5e2yxkC+qq9i75TwrlsXLmHnRcdiaFY=
-X-Received: by 2002:a05:6820:2005:b0:657:6678:1b48 with SMTP id
- 006d021491bc7-65784a21b97mr39172eaf.3.1763582503276; Wed, 19 Nov 2025
- 12:01:43 -0800 (PST)
-MIME-Version: 1.0
-References: <20251105183223.89913-1-ast@fiberby.net>
- <20251105183223.89913-5-ast@fiberby.net>
- <aRvWzC8qz3iXDAb3@zx2c4.com>
- <f21458b6-f169-4cd3-bd1b-16255c78d6cd@fiberby.net>
- <aRyLoy2iqbkUipZW@zx2c4.com>
- <9871bdc7-774d-4e35-be5f-02d45063d317@fiberby.net>
- <aRz4rs1IpohQpgWf@zx2c4.com> <20251118165028.4e43ee01@kernel.org>
- <f4d147da-3299-4ae7-b11e-b4309625e2c9@fiberby.net>
- <CAHmME9rzr8EGkTy3TduTXK45-w1CwEYnRLX=SjkAqo1CTTgVHA@mail.gmail.com>
- <36bdb7f1-fb64-44b5-8848-6c3a8d37b88d@fiberby.net>
-In-Reply-To: <36bdb7f1-fb64-44b5-8848-6c3a8d37b88d@fiberby.net>
+ bh=nMOmny8d8deudNAgvKqA5B6ZSfjuWQary3xMXoxOMW0=;
+ b=YjwsnnoZ/Qs/xgonwxaFwi7W5/6A3KZjh1E6M/wVCndmJvrPt2DtS4er7b6cOas4Z8lbUW
+ 5D5okw/FU3nqyStAZMQI6hJJAgx2SGKkqTN9BYbpLZokiq+riAwOY1lNkjcfdHMYoKoGpo
+ 1wOApy/x7JzLigkc/uPs6BiGe1PCU80=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id eadb20d2
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Thu, 20 Nov 2025 00:54:52 +0000 (UTC)
+Date: Thu, 20 Nov 2025 01:54:47 +0100
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 19 Nov 2025 21:01:32 +0100
-X-Gmail-Original-Message-ID: <CAHmME9roZ3EJfqXh1Avf1JZv+V+uGVgwCboZ+rV8M8-XOTA07Q@mail.gmail.com>
-X-Gm-Features: AWmQ_bkebx_ZL4YfTCdBoJIcoTVanhzI5wlwILMAbN4mRIEpB9tqH4kbQS7YgJ8
-Message-ID: <CAHmME9roZ3EJfqXh1Avf1JZv+V+uGVgwCboZ+rV8M8-XOTA07Q@mail.gmail.com>
-Subject: Re: [PATCH net-next v3 04/11] netlink: specs: add specification for
- wireguard
-To: =?UTF-8?B?QXNiasO4cm4gU2xvdGggVMO4bm5lc2Vu?= <ast@fiberby.net>
-Cc: Jakub Kicinski <kuba@kernel.org>, Donald Hunter <donald.hunter@gmail.com>, 
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Paolo Abeni <pabeni@redhat.com>, Simon Horman <horms@kernel.org>, 
- Jacob Keller <jacob.e.keller@intel.com>, Andrew Lunn <andrew+netdev@lunn.ch>, 
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Jordan Rife <jordan@jrife.io>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: Jakub Kicinski <kuba@kernel.org>
+Cc: =?utf-8?Q?Asbj=C3=B8rn_Sloth_T=C3=B8nnesen?= <ast@fiberby.net>,
+ Donald Hunter <donald.hunter@gmail.com>,
+ "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+ Simon Horman <horms@kernel.org>, Jacob Keller <jacob.e.keller@intel.com>,
+ Andrew Lunn <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com,
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Jordan Rife <jordan@jrife.io>
+Subject: Re: [PATCH net-next v3 11/11] wireguard: netlink: generate netlink
+ code
+Message-ID: <aR5m174O7pklKrMR@zx2c4.com>
+References: <20251105183223.89913-1-ast@fiberby.net>
+ <20251105183223.89913-12-ast@fiberby.net>
+ <aRyNiLGTbUfjNWCa@zx2c4.com>
+ <d2e84a2b-74cd-44a1-97a6-a10ece7b4c5f@fiberby.net>
+ <aRz4eVCjw_JUXki6@zx2c4.com> <20251118170045.0c2e24f7@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251118170045.0c2e24f7@kernel.org>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -91,31 +72,35 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, Nov 19, 2025 at 8:47=E2=80=AFPM Asbj=C3=B8rn Sloth T=C3=B8nnesen <a=
-st@fiberby.net> wrote:
->
-> On 11/19/25 7:22 PM, Jason A. Donenfeld wrote:
-> > On Wed, Nov 19, 2025 at 8:20=E2=80=AFPM Asbj=C3=B8rn Sloth T=C3=B8nnese=
-n <ast@fiberby.net> wrote:
-> >> B) Add a "operations"->"function-prefix" in YAML, only one funtion get=
-s renamed.
-> >>
-> >>      wg_get_device_start(), wg_get_device_dump() and wg_get_device_don=
-e() keep
-> >>      their names, while wg_set_device() gets renamed to wg_set_device_=
-doit().
-> >>
-> >>      This compliments the existing "name-prefix" (which is used for th=
-e UAPI enum names).
-> >>
-> >>      Documentation/netlink/genetlink-legacy.yaml |  6 ++++++
-> >>      tools/net/ynl/pyynl/ynl_gen_c.py            | 13 +++++++++----
-> >>      2 files changed, 15 insertions(+), 4 deletions(-)
-> >>
-> >> Jason, would option B work for you?
-> >
-> > So just wg_set_device() -> wg_set_device_doit()?
->
-> Sorry, no, wg_get_device_dump{,it} too.
+On Tue, Nov 18, 2025 at 05:00:45PM -0800, Jakub Kicinski wrote:
+> On Tue, 18 Nov 2025 23:51:37 +0100 Jason A. Donenfeld wrote:
+> > I mean, there is *tons* of generated code in the kernel. This is how it
+> > works. And you *want the output to change when the tool changes*. That's
+> > literally the point. It would be like if you wanted to check in all the
+> > .o files, in case the compiler started generating different output, or
+> > if you wanted the objtool output or anything else to be checked in. And
+> > sheerly from a git perspective, it seems outrageous to touch a zillion
+> > files every time the ynl code changes. Rather, the fact that it's
+> > generated on the fly ensures that the ynl generator stays correctly
+> > implemented. It's the best way to keep that code from rotting.
+> 
+> CI checks validate that the files are up to date.
+> There has been no churn to the kernel side of the generated code.
+> Let's be practical.
 
-Fine by me.
+Okay, it sounds like neither of you want to do this. Darn. I really hate
+having generated artifacts laying around that can be created efficiently
+at compile time. But okay, so it goes. I guess we'll do that.
+
+I would like to ask two things, then, which may or may not be possible:
+
+1) Can we put this in drivers/net/wireguard/generated/netlink.{c.h}
+   And then in the Makefile, do `wireguard-y += netlink.o generated/netlink.o`
+   on one line like that. I prefer this to keeping it in the same
+   directory with the awkward -gen suffix.
+
+2) In the header of each generated file, automatically write out the
+   command that was used to generate it. Here's an example of this good
+   habit from Go: https://github.com/golang/go/blob/master/src/syscall/zsyscall_linux_amd64.go
+
+Jason
