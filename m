@@ -4,59 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 552E6CF64A0
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 20 Nov 2025 00:57:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D53A8CF64A6
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 20 Nov 2025 02:28:11 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e86b580e;
-	Thu, 20 Nov 2025 00:55:57 +0000 (UTC)
-Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 40f1a5f3
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6a16f660;
+	Thu, 20 Nov 2025 02:27:34 +0000 (UTC)
+Received: from sea.source.kernel.org (sea.source.kernel.org
+ [2600:3c0a:e001:78e:0:1991:8:25])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 32923be9
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 20 Nov 2025 00:55:55 +0000 (UTC)
+ Thu, 20 Nov 2025 02:27:31 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 345A560174;
- Thu, 20 Nov 2025 00:55:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A554EC4CEF5;
- Thu, 20 Nov 2025 00:55:52 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="isUTSwDq"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1763600151;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3WInqmEFbDY/RNTxo/ojAG1xVSL8xc4rSolc9zgV/Ec=;
- b=isUTSwDqz/O9aQIVXmq8x3m8Q17M+ZNH3Boeq+6dsokl2bXo1wXUizy8q9SUvf26ogkeS2
- vG6I9VH+DYdi9Cpg1Bba1VglO3Eqc71p6ffGMtgdmda3nh1pYVQgErf0vfKsymgh/N7Wz7
- +R9bONq8+sgufWODyOZxyWhUEa9Eozc=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3c48548b
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Thu, 20 Nov 2025 00:55:50 +0000 (UTC)
-Date: Thu, 20 Nov 2025 01:55:46 +0100
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: =?utf-8?Q?Asbj=C3=B8rn_Sloth_T=C3=B8nnesen?= <ast@fiberby.net>,
- "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
- Donald Hunter <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>,
- Jacob Keller <jacob.e.keller@intel.com>,
- Andrew Lunn <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com,
- netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
- Jordan Rife <jordan@jrife.io>
-Subject: Re: [PATCH net-next v3 07/11] uapi: wireguard: generate header with
- ynl-gen
-Message-ID: <aR5nEnP2PWJ7G7yp@zx2c4.com>
+ by sea.source.kernel.org (Postfix) with ESMTP id 4520A42DA5;
+ Thu, 20 Nov 2025 02:27:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9759EC4CEF5;
+ Thu, 20 Nov 2025 02:27:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1763605649;
+ bh=3Y9kcr0znSxvhLSXbAv9R4vrY6lksgh6vjh7lHpAmqQ=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=Fybc5y8l1gtATaBEOY7OJPh0GFTtycn9xzKEMr3NmAWOYviVz9j9wfZRgpLIkuqB7
+ mB2ni2I0KNZVR/ykS42Fo6ZcR881qwhp6AbuT82aW1BVT4faDiso3MbNqNkj/wvnt6
+ I2iJtRtoa/dk32MkHRi0xQ3dVtwFmC7CnQjN06GrVhAiy4x+eLejomZWnz0A/8ZuM1
+ ybqYNzeD2xuzTj0bUpvOO7ToIGoGqCgzqV4k8VwAaRG8VOgcKadsbAbasPtI6Qcm7f
+ UNqRHsQpsn7mACglxL0WoqdUz0bfMHaDWi+/Jy8Y9GuHAeSEsyuOCOqsF7dCAO8gcr
+ 7nExsR/K1SLtg==
+Date: Wed, 19 Nov 2025 18:27:27 -0800
+From: Jakub Kicinski <kuba@kernel.org>
+To: =?UTF-8?B?QXNiasO4cm4=?= Sloth =?UTF-8?B?VMO4bm5lc2Vu?= <ast@fiberby.net>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, Donald Hunter
+ <donald.hunter@gmail.com>, "David S. Miller" <davem@davemloft.net>, Eric
+ Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>, Simon
+ Horman <horms@kernel.org>, Jacob Keller <jacob.e.keller@intel.com>, Andrew
+ Lunn <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com,
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org, Jordan Rife
+ <jordan@jrife.io>
+Subject: Re: [PATCH net-next v3 04/11] netlink: specs: add specification for
+ wireguard
+Message-ID: <20251119182727.612321f8@kernel.org>
+In-Reply-To: <f4d147da-3299-4ae7-b11e-b4309625e2c9@fiberby.net>
 References: <20251105183223.89913-1-ast@fiberby.net>
- <20251105183223.89913-8-ast@fiberby.net>
- <aRyOAYuWZE440WQ4@zx2c4.com> <20251118165315.281a21ca@kernel.org>
+ <20251105183223.89913-5-ast@fiberby.net>
+ <aRvWzC8qz3iXDAb3@zx2c4.com>
+ <f21458b6-f169-4cd3-bd1b-16255c78d6cd@fiberby.net>
+ <aRyLoy2iqbkUipZW@zx2c4.com>
+ <9871bdc7-774d-4e35-be5f-02d45063d317@fiberby.net>
+ <aRz4rs1IpohQpgWf@zx2c4.com> <20251118165028.4e43ee01@kernel.org>
+ <f4d147da-3299-4ae7-b11e-b4309625e2c9@fiberby.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251118165315.281a21ca@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -71,34 +69,25 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Tue, Nov 18, 2025 at 04:53:15PM -0800, Jakub Kicinski wrote:
-> On Tue, 18 Nov 2025 16:17:21 +0100 Jason A. Donenfeld wrote:
-> > On Wed, Nov 05, 2025 at 06:32:16PM +0000, Asbjørn Sloth Tønnesen wrote:
-> > > Use ynl-gen to generate the UAPI header for wireguard.
-> > > diff --git a/include/uapi/linux/wireguard.h b/include/uapi/linux/wireguard.h
-> > > index a2815f4f2910..dc3924d0c552 100644
-> > > --- a/include/uapi/linux/wireguard.h
-> > > +++ b/include/uapi/linux/wireguard.h
-> > > @@ -1,32 +1,28 @@
-> > > -/* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) OR MIT */
-> > > -/*
-> > > - * Copyright (C) 2015-2019 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-> > > - */
-> > > +/* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-3-Clause) */
-> > > +/* Do not edit directly, auto-generated from: */
-> > > +/*	Documentation/netlink/specs/wireguard.yaml */
-> > > +/* YNL-GEN uapi header */  
-> > 
-> > Same desire here -- can this get auto generated at compile time (or in
-> > headers_install time).
-> 
-> IMHO generating uAPI on the fly has more downsides than benefits.
-> For one thing people grepping the code and looking and lxr will
-> never find the definition. All the user space code in tools/ is
-> generated at build time, but the amount of kernel code we generate
-> is not significant at this stage. Not significant enough to complicate
-> everyone's life..
+On Wed, 19 Nov 2025 19:19:28 +0000 Asbj=C3=B8rn Sloth T=C3=B8nnesen wrote:
+> >> Also fine with me. I'd just like consistent function naming, one way or
+> >> another. =20
+> >=20
+> > IIUC we're talking about the prefix for the kernel C codegen?
+> > Feels a bit like a one-off feature to me, but if we care deeply about
+> > it let's add it as a CLI param to the codegen. I don't think it's
+> > necessary to include this in the YAML spec. =20
+>=20
+> IIUC then adding it as a CLI param is more work, and just moves family de=
+tails
+> to ynl-regen, might as well skip the CLI param then and hack it in the co=
+degen.
+>=20
+> Before posting any new patches, I would like to get consensus on this.
 
-I was thinking that doing this automatically at compile-time or
-install-time would be _less_ complicated, not more, since everything
-would be kept in sync automatically and such. But alright, so be it.
+The reason other C naming tunables exist (for legacy families!)
+is because we need to give enough hints to C code gen to be able
+to use existing kernel uAPI headers.
+
+Random "naming preferences" do not belong in the spec. The spec=20
+is primarily for user space, and it's used by 4 languages already.
