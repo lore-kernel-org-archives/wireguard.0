@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F00E6D1118A
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 26 Nov 2025 17:41:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0908D1118C
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 26 Nov 2025 17:41:44 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8f0ac303;
-	Wed, 26 Nov 2025 17:36:33 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b4174414;
+	Wed, 26 Nov 2025 17:36:36 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ed78157a
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 067276f0
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 26 Nov 2025 17:36:26 +0000 (UTC)
+ Wed, 26 Nov 2025 17:36:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
  s=202008; t=1764178585;
- bh=xKTj7/TE/z85ArmR4Vca47HnLxzTKqLA2q4OR9Y6LCE=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=RTZ19DRDXSyxSvAUi7rvgF3QHRsTsJs0uqFaklIezDi6FfYrE/9tbm51qZgsn8sG/
- nAO2oo5hyUvwvPc8NODO2H6L2NxwvT92tWHqtAwZTyqq5lMxn10dI15Hbqz14+i5Dg
- wXoei3mD+lqPPgFnw4kiXSrE59iW3zKelUd68mBZ7oZ0q4ob3HCWTpNMwpLWQ4c6oo
- XjwgRtMdBbDlGklE4xOVD+sUMYQdOKokcwjjRa2GEABmabr5I6E44coiiQCvcfuKxC
- F9h0iNJYlcVnHf1gUmHdu1DavdmeZZ/ESr9SMnwHUc7WcpCzc522zqxTda5KDosqM6
- j2P5BOhOFzjow==
+ bh=4bpyYL4L6gz/OKVZlnX7lgUv1PqQBtx9ZM60vTVrZcQ=;
+ h=From:To:Cc:Subject:Date:From;
+ b=Su4mr0Wtr+9gSNdIKygw2WgcVQbyq21L665npJhtCEcDg2Y6CsdUtdhhYLEX0RMRr
+ ho5xOsAoaEQ8zkw4zzVxiBU2dkVaJBY8ChztPKmNkdXzFalxnyL8Sq8CxO+38M4TK8
+ tQ1mGBlemkXnEa2/I/l6Iol6ijI12HNiGhiPIabtwCKXj3EsZQos1yp+O6ay0nA1Qg
+ juxexsHSw7K04wy3CxeUm7ltTNNUj+XzpXL9Rfs8zErLAYNXrXFx0+AZvf3W8Ht/KO
+ Ufpmxyk63Scr7q/LhQ27HwrIuadbQ/DFxn2QmVy3andTnG35sfmL20FIyGr7cBHL89
+ tGgZR0ZpOOMjQ==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id 1DAEF600FC;
- Wed, 26 Nov 2025 17:36:24 +0000 (UTC)
+ by mail1.fiberby.net (Postfix) with ESMTPSA id 35D0F60103;
+ Wed, 26 Nov 2025 17:36:25 +0000 (UTC)
 Received: by x201s (Postfix, from userid 1000)
- id D57D1203E76; Wed, 26 Nov 2025 17:35:52 +0000 (UTC)
+ id BA42C201DE3; Wed, 26 Nov 2025 17:35:48 +0000 (UTC)
 From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
@@ -39,13 +39,10 @@ Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
  Andrew Lunn <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
  Jordan Rife <jordan@jrife.io>
-Subject: [PATCH wireguard v4 08/10] wireguard: uapi: generate header with
- ynl-gen
-Date: Wed, 26 Nov 2025 17:35:40 +0000
-Message-ID: <20251126173546.57681-9-ast@fiberby.net>
+Subject: [PATCH wireguard v4 00/10] wireguard: netlink: ynl conversion
+Date: Wed, 26 Nov 2025 17:35:32 +0000
+Message-ID: <20251126173546.57681-1-ast@fiberby.net>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251126173546.57681-1-ast@fiberby.net>
-References: <20251126173546.57681-1-ast@fiberby.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -63,142 +60,104 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Use ynl-gen to generate the UAPI header for WireGuard.
+This series completes the implementation of YNL for WireGuard,
+as previously announced[1].
 
-The cosmetic changes in this patch confirms that the spec is aligned
-with the implementation. By using the generated version, it ensures
-that they stay in sync.
+This series consist of 5 parts:
+1) Patch 01-04 - Misc. changes
+2) Patch    05 - Add YNL specification for wireguard
+3) Patch 06-08 - Transition to a generated UAPI header
+4) Patch    09 - Adds a sample program for the generated C library
+5) Patch    10 - Transition to generated netlink policy code
 
-Changes in the generated header:
-* Trivial header guard rename.
-* Trivial white space changes.
-* Trivial comment changes.
-* Precompute bitflags in ynl-gen (see [1]).
-* Drop __*_F_ALL constants (see [1]).
+The main benefit of having a YNL specification is unlocked after the
+first 2 parts, the RFC version seems to already have spawned a new
+Rust netlink binding[2] using wireguard as it's main example.
 
-[1] https://lore.kernel.org/r/20251014123201.6ecfd146@kernel.org/
+Part 3 and 5 validates that the specification is complete and aligned,
+the generated code might have a few warts, but they don't matter too
+much, and are mostly a transitional problem[3].
 
-No behavioural changes intended.
+Part 4 is possible after part 2, but is ordered after part 3,
+as it would otherwise have to update the header guard in Makefile.deps.
 
-Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+For the UAPI and non-generated kernel C code the diff stat looks like this:
+
+$ git diff --stat wg-devel..wg-ynl include/ drivers/ \
+	':(exclude)*generated/*'
+ drivers/net/wireguard/Makefile  |   2 +-
+ drivers/net/wireguard/netlink.c |  67 +++---------
+ include/uapi/linux/wireguard.h  | 191 ++++++--------------------------
+ 3 files changed, 46 insertions(+), 214 deletions(-)
+
+[1] [PATCH net 0/4] tools: ynl-gen: misc fixes + wireguard ynl plan
+    https://lore.kernel.org/r/20250901145034.525518-1-ast@fiberby.net/
+[2] https://github.com/one-d-wide/netlink-bindings/
+[3] https://lore.kernel.org/r/20251014123201.6ecfd146@kernel.org/
+
 ---
- drivers/net/wireguard/netlink.c |  6 +++---
- include/uapi/linux/wireguard.h  | 38 ++++++++++++++++-----------------
- 2 files changed, 22 insertions(+), 22 deletions(-)
+v4:
+- Thanks Jason and Jakub for all the feedback.
+- Old patch 03 has been accepted into Jason's tree.
+- Old patch 09 split_ops conversion has been moved to new 03.
+- Old patch 10 function renaming was merged into old patch 11 (new 10).
+- Patch 04 has been added to adjust .maxattr for GET_DEVICE.
+- The old patches 04-08 and 11 was renumbered to patch 05-10.
+- Changes to the spec:
+  - Re-wrap the documentation lines in the spec.
+  - Reword the index/type documentation.
+  - get-device now have a more strict request attribute list.
+  - The pre/post functions now avoids renaming.
+- Changes to patch 10 (was 10+11):
+  - The generated kernel code now uses YNL-ARG --function-prefix,
+    to reduce the function renaming.
+  - The generated files have been moved to their own sub-directory.
+- The commit messages have in general been tweaked a bit.
 
-diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlink.c
-index c2d0576e96f5f..0ce0bda8c1ce8 100644
---- a/drivers/net/wireguard/netlink.c
-+++ b/drivers/net/wireguard/netlink.c
-@@ -26,7 +26,7 @@ static const struct nla_policy device_policy[WGDEVICE_A_MAX + 1] = {
- 	[WGDEVICE_A_IFNAME]		= { .type = NLA_NUL_STRING, .len = IFNAMSIZ - 1 },
- 	[WGDEVICE_A_PRIVATE_KEY]	= NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
- 	[WGDEVICE_A_PUBLIC_KEY]		= NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
--	[WGDEVICE_A_FLAGS]		= NLA_POLICY_MASK(NLA_U32, __WGDEVICE_F_ALL),
-+	[WGDEVICE_A_FLAGS]		= NLA_POLICY_MASK(NLA_U32, 0x1),
- 	[WGDEVICE_A_LISTEN_PORT]	= { .type = NLA_U16 },
- 	[WGDEVICE_A_FWMARK]		= { .type = NLA_U32 },
- 	[WGDEVICE_A_PEERS]		= NLA_POLICY_NESTED_ARRAY(peer_policy),
-@@ -35,7 +35,7 @@ static const struct nla_policy device_policy[WGDEVICE_A_MAX + 1] = {
- static const struct nla_policy peer_policy[WGPEER_A_MAX + 1] = {
- 	[WGPEER_A_PUBLIC_KEY]				= NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
- 	[WGPEER_A_PRESHARED_KEY]			= NLA_POLICY_EXACT_LEN(WG_KEY_LEN),
--	[WGPEER_A_FLAGS]				= NLA_POLICY_MASK(NLA_U32, __WGPEER_F_ALL),
-+	[WGPEER_A_FLAGS]				= NLA_POLICY_MASK(NLA_U32, 0x7),
- 	[WGPEER_A_ENDPOINT]				= NLA_POLICY_MIN_LEN(sizeof(struct sockaddr)),
- 	[WGPEER_A_PERSISTENT_KEEPALIVE_INTERVAL]	= { .type = NLA_U16 },
- 	[WGPEER_A_LAST_HANDSHAKE_TIME]			= NLA_POLICY_EXACT_LEN(sizeof(struct __kernel_timespec)),
-@@ -49,7 +49,7 @@ static const struct nla_policy allowedip_policy[WGALLOWEDIP_A_MAX + 1] = {
- 	[WGALLOWEDIP_A_FAMILY]		= { .type = NLA_U16 },
- 	[WGALLOWEDIP_A_IPADDR]		= NLA_POLICY_MIN_LEN(sizeof(struct in_addr)),
- 	[WGALLOWEDIP_A_CIDR_MASK]	= { .type = NLA_U8 },
--	[WGALLOWEDIP_A_FLAGS]		= NLA_POLICY_MASK(NLA_U32, __WGALLOWEDIP_F_ALL),
-+	[WGALLOWEDIP_A_FLAGS]		= NLA_POLICY_MASK(NLA_U32, 0x1),
- };
- 
- static struct wg_device *lookup_interface(struct nlattr **attrs,
-diff --git a/include/uapi/linux/wireguard.h b/include/uapi/linux/wireguard.h
-index a2815f4f29104..a100b9715b083 100644
---- a/include/uapi/linux/wireguard.h
-+++ b/include/uapi/linux/wireguard.h
-@@ -1,32 +1,29 @@
--/* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) OR MIT */
--/*
-- * Copyright (C) 2015-2019 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-- */
-+/* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-3-Clause) */
-+/* Do not edit directly, auto-generated from: */
-+/*	Documentation/netlink/specs/wireguard.yaml */
-+/* YNL-GEN uapi header */
-+/* To regenerate run: tools/net/ynl/ynl-regen.sh */
- 
--#ifndef _WG_UAPI_WIREGUARD_H
--#define _WG_UAPI_WIREGUARD_H
-+#ifndef _UAPI_LINUX_WIREGUARD_H
-+#define _UAPI_LINUX_WIREGUARD_H
- 
--#define WG_GENL_NAME "wireguard"
--#define WG_GENL_VERSION 1
-+#define WG_GENL_NAME	"wireguard"
-+#define WG_GENL_VERSION	1
- 
--#define WG_KEY_LEN 32
-+#define WG_KEY_LEN	32
- 
- enum wgdevice_flag {
--	WGDEVICE_F_REPLACE_PEERS = 1U << 0,
--	__WGDEVICE_F_ALL = WGDEVICE_F_REPLACE_PEERS
-+	WGDEVICE_F_REPLACE_PEERS = 1,
- };
- 
- enum wgpeer_flag {
--	WGPEER_F_REMOVE_ME = 1U << 0,
--	WGPEER_F_REPLACE_ALLOWEDIPS = 1U << 1,
--	WGPEER_F_UPDATE_ONLY = 1U << 2,
--	__WGPEER_F_ALL = WGPEER_F_REMOVE_ME | WGPEER_F_REPLACE_ALLOWEDIPS |
--			 WGPEER_F_UPDATE_ONLY
-+	WGPEER_F_REMOVE_ME = 1,
-+	WGPEER_F_REPLACE_ALLOWEDIPS = 2,
-+	WGPEER_F_UPDATE_ONLY = 4,
- };
- 
- enum wgallowedip_flag {
--	WGALLOWEDIP_F_REMOVE_ME = 1U << 0,
--	__WGALLOWEDIP_F_ALL = WGALLOWEDIP_F_REMOVE_ME
-+	WGALLOWEDIP_F_REMOVE_ME = 1,
- };
- 
- enum wgdevice_attribute {
-@@ -39,6 +36,7 @@ enum wgdevice_attribute {
- 	WGDEVICE_A_LISTEN_PORT,
- 	WGDEVICE_A_FWMARK,
- 	WGDEVICE_A_PEERS,
-+
- 	__WGDEVICE_A_LAST
- };
- #define WGDEVICE_A_MAX (__WGDEVICE_A_LAST - 1)
-@@ -55,6 +53,7 @@ enum wgpeer_attribute {
- 	WGPEER_A_TX_BYTES,
- 	WGPEER_A_ALLOWEDIPS,
- 	WGPEER_A_PROTOCOL_VERSION,
-+
- 	__WGPEER_A_LAST
- };
- #define WGPEER_A_MAX (__WGPEER_A_LAST - 1)
-@@ -65,6 +64,7 @@ enum wgallowedip_attribute {
- 	WGALLOWEDIP_A_IPADDR,
- 	WGALLOWEDIP_A_CIDR_MASK,
- 	WGALLOWEDIP_A_FLAGS,
-+
- 	__WGALLOWEDIP_A_LAST
- };
- #define WGALLOWEDIP_A_MAX (__WGALLOWEDIP_A_LAST - 1)
-@@ -77,4 +77,4 @@ enum wg_cmd {
- };
- #define WG_CMD_MAX (__WG_CMD_MAX - 1)
- 
--#endif /* _WG_UAPI_WIREGUARD_H */
-+#endif /* _UAPI_LINUX_WIREGUARD_H */
+v3: https://lore.kernel.org/r/20251105183223.89913-1-ast@fiberby.net/
+- Spec: Make flags-mask checks implicit (thanks Jakub).
+- Sample: Add header to Makefile.deps, and avoid copy (thanks Jakub).
+
+v2: https://lore.kernel.org/r/20251031160539.1701943-1-ast@fiberby.net/
+- Add missing forward declaration
+
+v1: https://lore.kernel.org/r/20251029205123.286115-1-ast@fiberby.net/
+- Policy arguement to nla_parse_nested() changed to NULL (thanks Johannes).
+- Added attr-cnt-name to the spec, to reduce the diff a bit.
+- Refined the doc in the spec a bit.
+- Reword commit messages a bit.
+- Reordered the patches, and reduced the series from 14 to 11 patches.
+
+RFC: https://lore.kernel.org/r/20250904-wg-ynl-rfc@fiberby.net/
+
+Asbjørn Sloth Tønnesen (10):
+  wireguard: netlink: validate nested arrays in policy
+  wireguard: netlink: use WG_KEY_LEN in policies
+  wireguard: netlink: convert to split ops
+  wireguard: netlink: lower .maxattr for WG_CMD_GET_DEVICE
+  netlink: specs: add specification for wireguard
+  wireguard: uapi: move enum wg_cmd
+  wireguard: uapi: move flag enums
+  wireguard: uapi: generate header with ynl-gen
+  tools: ynl: add sample for wireguard
+  wireguard: netlink: generate netlink code
+
+ Documentation/netlink/specs/wireguard.yaml | 298 +++++++++++++++++++++
+ MAINTAINERS                                |   2 +
+ drivers/net/wireguard/Makefile             |   2 +-
+ drivers/net/wireguard/generated/netlink.c  |  73 +++++
+ drivers/net/wireguard/generated/netlink.h  |  30 +++
+ drivers/net/wireguard/netlink.c            |  67 +----
+ include/uapi/linux/wireguard.h             | 191 +++----------
+ tools/net/ynl/Makefile.deps                |   2 +
+ tools/net/ynl/samples/.gitignore           |   1 +
+ tools/net/ynl/samples/wireguard.c          | 104 +++++++
+ 10 files changed, 556 insertions(+), 214 deletions(-)
+ create mode 100644 Documentation/netlink/specs/wireguard.yaml
+ create mode 100644 drivers/net/wireguard/generated/netlink.c
+ create mode 100644 drivers/net/wireguard/generated/netlink.h
+ create mode 100644 tools/net/ynl/samples/wireguard.c
+
 -- 
 2.51.0
 
