@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B64ED1118E
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 26 Nov 2025 17:41:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54CEED1118C
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 26 Nov 2025 17:43:21 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1381d336;
-	Wed, 26 Nov 2025 17:36:47 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a8e54747;
+	Wed, 26 Nov 2025 17:36:48 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9e097354
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6e5858d8
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 26 Nov 2025 17:36:28 +0000 (UTC)
+ Wed, 26 Nov 2025 17:36:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
  s=202008; t=1764178585;
- bh=FYLtqNMpFxR+mpsT+mbyaqJuN9Po8ME7GneCTwYMrs0=;
+ bh=Q4Z3868li/A6eo5IRbSWBw0t5W/8hZllqn00nGowgW0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=N1xYHHvQtMOPQcvaEiX9X9CIPWOrVphyDkAVig+MVK7eS0o/xPlHlRIDExiqyb2s1
- b3GPJltsdtE4iy3Q0o/sMKd/msdF86i6FsmbZeo2jT4oHvo5hHY2xjynIavYb8Hg3X
- lyBs+jZSV38OZQkN3XYHBqkH6ZzuMrYP4t92c4sUXhrcZd5VpNJY9fjhEuSCr0XqkF
- TOxPhX4Ibom0aZQO9BQvHAXBI9vmAg0h3fFgKLrCcus98JPYcN4ydXruqNKxjDAaJb
- N39Nj1sdEk3CUCWi9hyG1y3RUXD1ickPJRnhJQ2C9KT3Iz5eQCsKbdBR8ff/1G6plp
- mzSwIIqgVCVlw==
+ b=VFfT63/ph1wB57vgLEqoDxil+r+c6Z08EeLhSUQ4Mvfk4X31y8n0CW8zVtdLCuJyC
+ 5lyCCrUG5ybGLd+tbPxR5OpFzXEhFE7LdP0ZR14jQYnm+FWyDYjDwiWuIB++aaR9Pm
+ K+TWIFZY0E98RCCjJUKFkASStPApH14ZsA7xZ8bC5aK/mJ9TVK3Phe/z6+Tr6PUEdr
+ P0redFdjRLzc/WOpIXnA7H9jlsyQloRJ2tWA/cCJQafpxgjUp0Z1HwTRZxcbapvnMP
+ KUAN8jIEYcpHRn2/ur7qtJ2ywvk4Ub3GXNtW0yVdVFJXz5TuOhf7zlG8VBxQQOqVJw
+ p4BwI8KAo+/KQ==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id A17316010E;
+ by mail1.fiberby.net (Postfix) with ESMTPSA id A590360112;
  Wed, 26 Nov 2025 17:36:25 +0000 (UTC)
 Received: by x201s (Postfix, from userid 1000)
- id E40B9203866; Wed, 26 Nov 2025 17:35:51 +0000 (UTC)
+ id EFB392032B7; Wed, 26 Nov 2025 17:35:50 +0000 (UTC)
 From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
@@ -39,9 +39,10 @@ Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
  Andrew Lunn <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com,
  netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
  Jordan Rife <jordan@jrife.io>
-Subject: [PATCH wireguard v4 06/10] wireguard: uapi: move enum wg_cmd
-Date: Wed, 26 Nov 2025 17:35:38 +0000
-Message-ID: <20251126173546.57681-7-ast@fiberby.net>
+Subject: [PATCH wireguard v4 04/10] wireguard: netlink: lower .maxattr for
+ WG_CMD_GET_DEVICE
+Date: Wed, 26 Nov 2025 17:35:36 +0000
+Message-ID: <20251126173546.57681-5-ast@fiberby.net>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251126173546.57681-1-ast@fiberby.net>
 References: <20251126173546.57681-1-ast@fiberby.net>
@@ -62,50 +63,46 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This patch moves enum wg_cmd to the end of the file, where ynl-gen
-would generate it.
+Previously .maxattr was shared for both WG_CMD_GET_DEVICE and
+WG_CMD_SET_DEVICE. Now that it is split, then we can lower it
+for WG_CMD_GET_DEVICE to follow the documentation which defines
+.maxattr as WGDEVICE_A_IFNAME for WG_CMD_GET_DEVICE.
 
-This is an incremental step towards adopting an UAPI header generated
-by ynl-gen. This is split out to keep the patches readable.
+$ grep -hC5 'one but not both of:' include/uapi/linux/wireguard.h
+ * WG_CMD_GET_DEVICE
+ * -----------------
+ *
+ * May only be called via NLM_F_REQUEST | NLM_F_DUMP. The command
+ * should contain one but not both of:
+ *
+ *    WGDEVICE_A_IFINDEX: NLA_U32
+ *    WGDEVICE_A_IFNAME: NLA_NUL_STRING, maxlen IFNAMSIZ - 1
+ *
+ * The kernel will then return several messages [...]
 
-This is a trivial patch with no behavioural changes intended.
+While other attributes weren't rejected previously, the consensus
+is that nobody sends those attributes, so nothing should break.
 
+Link: https://lore.kernel.org/r/aRyLoy2iqbkUipZW@zx2c4.com/
+Suggested-by: Jason A. Donenfeld <Jason@zx2c4.com>
 Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 ---
- include/uapi/linux/wireguard.h | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/net/wireguard/netlink.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/uapi/linux/wireguard.h b/include/uapi/linux/wireguard.h
-index dee4401e0b5df..3ebfffd61269a 100644
---- a/include/uapi/linux/wireguard.h
-+++ b/include/uapi/linux/wireguard.h
-@@ -11,13 +11,6 @@
- 
- #define WG_KEY_LEN 32
- 
--enum wg_cmd {
--	WG_CMD_GET_DEVICE,
--	WG_CMD_SET_DEVICE,
--	__WG_CMD_MAX
--};
--#define WG_CMD_MAX (__WG_CMD_MAX - 1)
--
- enum wgdevice_flag {
- 	WGDEVICE_F_REPLACE_PEERS = 1U << 0,
- 	__WGDEVICE_F_ALL = WGDEVICE_F_REPLACE_PEERS
-@@ -73,4 +66,12 @@ enum wgallowedip_attribute {
- };
- #define WGALLOWEDIP_A_MAX (__WGALLOWEDIP_A_LAST - 1)
- 
-+enum wg_cmd {
-+	WG_CMD_GET_DEVICE,
-+	WG_CMD_SET_DEVICE,
-+
-+	__WG_CMD_MAX
-+};
-+#define WG_CMD_MAX (__WG_CMD_MAX - 1)
-+
- #endif /* _WG_UAPI_WIREGUARD_H */
+diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlink.c
+index e7efe5f8465dc..c2d0576e96f5f 100644
+--- a/drivers/net/wireguard/netlink.c
++++ b/drivers/net/wireguard/netlink.c
+@@ -623,7 +623,7 @@ static const struct genl_split_ops wireguard_nl_ops[] = {
+ 		.dumpit = wg_get_device_dump,
+ 		.done = wg_get_device_done,
+ 		.policy = device_policy,
+-		.maxattr = WGDEVICE_A_PEERS,
++		.maxattr = WGDEVICE_A_IFNAME,
+ 		.flags = GENL_UNS_ADMIN_PERM | GENL_CMD_CAP_DUMP,
+ 	}, {
+ 		.cmd = WG_CMD_SET_DEVICE,
 -- 
 2.51.0
 
