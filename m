@@ -4,66 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE4FAD1118B
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 26 Nov 2025 18:02:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2B68D111A8
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 30 Nov 2025 10:08:38 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f81146ad;
-	Wed, 26 Nov 2025 17:58:22 +0000 (UTC)
-Received: from tor.source.kernel.org (tor.source.kernel.org
- [2600:3c04:e001:324:0:1991:8:25])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e35654d2
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 44824734;
+	Sun, 30 Nov 2025 10:08:36 +0000 (UTC)
+Received: from mail-il1-f198.google.com (mail-il1-f198.google.com
+ [209.85.166.198])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ae9daa4f
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 26 Nov 2025 17:58:20 +0000 (UTC)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 420DC6023C
- for <wireguard@lists.zx2c4.com>; Wed, 26 Nov 2025 17:58:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B54F6C4CEF7
- for <wireguard@lists.zx2c4.com>; Wed, 26 Nov 2025 17:58:18 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="DTCqk4om"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1764179894;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=nk9iQUV0XsLI6d4//k6AYsJtSmW0aX1ARpzLYKj/qY0=;
- b=DTCqk4omXMj2cWOY0qmFomZdtktz5bhvzvMUYlO+Ty6TP8jdPuJ7pzeGUhloLx3+Lo4WgK
- 9ceavxfabYJnqVAHR5Cyix2QoLNGrabSVTuIJb9b0h4T7k7nBq5mkdC2BJUde8+3aeOGWf
- bwxbbmQxCvhU1Jzbj8c2I1I6m9exP2Q=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e3623ca8
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 26 Nov 2025 17:58:14 +0000 (UTC)
-Received: by mail-oa1-f47.google.com with SMTP id
- 586e51a60fabf-3ec6c10a295so4879fac.0
- for <wireguard@lists.zx2c4.com>; Wed, 26 Nov 2025 09:58:13 -0800 (PST)
+ Sun, 30 Nov 2025 10:08:29 +0000 (UTC)
+Received: by mail-il1-f198.google.com with SMTP id
+ e9e14a558f8ab-43322b98837so31004395ab.2
+ for <wireguard@lists.zx2c4.com>; Sun, 30 Nov 2025 02:08:29 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764497308; x=1765102108;
+ h=to:from:subject:message-id:date:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=3K7iySWhM+gptBsgtkO6TcPNFoLX5PLzUL4vKtYMqUs=;
+ b=Ars3ove5nPAauLhdPKQg33Nf89fZ7Q4AEQ7kCqD6UZHg1IrtVFGw+J4Mh1zw3Etkyt
+ wR7jBuOeZgrNtsJWWnGePwoHrBdTjYLHKtYOET+OMuvFeZX7jWpb1ShpCvCguantaQyV
+ KzYiDytrf8imNZ3KHDcofvpxEeJQ5WBsktpSd4luTcx5a9StAnqADKamu70TkRZ+GuZH
+ ++8SR/7vvErJNMce6tW6yYuV8E9HmSATNkpxwKf9oucANTg4330PvXSlJdezcFRz4GqA
+ mDW8XmclmrLOXJpjxgenbRHmJX7HxFYPeGtJvB8zdqL9ijNL5+DHXWQ8FkDv8449H5lB
+ fT+g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW/CXJ0InWH4Fsz87MX80D3ZRWbB04qam60dM2h3Zm/SYreU2+Kx09kEj+mSlj8sUIFoTEvclu4vGU=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YyLIySpWzli+hyiCejK/5YAjh97tH/lNcF0DoDARooI9RP9UwsT
- 2/mV/geG0nT7orAX0CJpD6KUddPL7efD9lCe3HjDnAIZNpbXiS1sJBHUvJauUbx4LSi3D/bWn4E
- Wt5LfsyBf3RL9LxbBKjUFn2/sG54WjPY=
-X-Google-Smtp-Source: AGHT+IFTtQij18X9rcId8/xM3J3CLodhdl0o6d2Ojf4LIqtOBzWRLO3KWhny/Isr7a2DmvXJwy9ays14CPzzN+VmW4k=
-X-Received: by 2002:a05:6808:4f67:b0:450:c58d:8c3a with SMTP id
- 5614622812f47-45112d13fd4mr5903134b6e.46.1764179892530; Wed, 26 Nov 2025
- 09:58:12 -0800 (PST)
+ AJvYcCUQXISDtLmqZT/N8t5hXg6QYB9jv5Z11rEuW/gx2i5Y2RXF4XRduA3GoKNC/O5A72S2S0VQM/ECB1I=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YyWVb7ITPq1FPTvLOaOWFkb+UJKPakxt3kTBiQ5K5zOILJRTYFL
+ RDRMEVjCOd2oMhi2mQnzKoe7n0ilESELaQda+ee++uecwB1J2d7iOUGF44V8qy5hy6ncCX6hl6I
+ YZ+P6VZRKDp+meLGVc7qdsHHrsnstcmaSEgvgbAPIJbEa7MdnCIhC1+B9JNU=
+X-Google-Smtp-Source: AGHT+IEZOvXzBnfn5kCmG7tBaPdSbl1HhHQmIhzvCcPizYRrA2D9o7Z8iohxFoCO9ICBJWh9KbH2hZd1+6vxpqC/dIbr+T232sfZ
 MIME-Version: 1.0
-References: <20251126173546.57681-1-ast@fiberby.net>
-In-Reply-To: <20251126173546.57681-1-ast@fiberby.net>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 26 Nov 2025 18:58:01 +0100
-X-Gmail-Original-Message-ID: <CAHmME9ptkYkEygY-BmCduqySToOL1mvZnrCrgFM2bBQrNmh71g@mail.gmail.com>
-X-Gm-Features: AWmQ_bn4ajbqmMw4PaZ5c9-r1uz0ZNO5-beD-38rcNCG5zkfeRd9Ch8PwgaqHr8
-Message-ID: <CAHmME9ptkYkEygY-BmCduqySToOL1mvZnrCrgFM2bBQrNmh71g@mail.gmail.com>
-Subject: Re: [PATCH wireguard v4 00/10] wireguard: netlink: ynl conversion
-To: =?UTF-8?B?QXNiasO4cm4gU2xvdGggVMO4bm5lc2Vu?= <ast@fiberby.net>
-Cc: "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
- Donald Hunter <donald.hunter@gmail.com>, Simon Horman <horms@kernel.org>, 
- Jacob Keller <jacob.e.keller@intel.com>, Andrew Lunn <andrew+netdev@lunn.ch>, 
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Jordan Rife <jordan@jrife.io>
+X-Received: by 2002:a05:6e02:b25:b0:42d:878b:6e40 with SMTP id
+ e9e14a558f8ab-435b986a6a0mr204507785ab.13.1764497308584; Sun, 30 Nov 2025
+ 02:08:28 -0800 (PST)
+Date: Sun, 30 Nov 2025 02:08:28 -0800
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <692c179c.a70a0220.d98e3.016b.GAE@google.com>
+Subject: [syzbot] Monthly wireguard report (Nov 2025)
+From: syzbot <syzbot+list5b2674f0cf5d03097358@syzkaller.appspotmail.com>
+To: Jason@zx2c4.com, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
+ syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -79,13 +62,34 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Asbjorn,
+Hello wireguard maintainers/developers,
 
-Thank you for this! I've merged this to the wireguard devel tree, and
-I'll send this up to net-next after letting it cook there for a little
-while.
+This is a 31-day syzbot report for the wireguard subsystem.
+All related reports/information can be found at:
+https://syzkaller.appspot.com/upstream/s/wireguard
 
-I really appreciate all the work you've put into this and the large
-amounts of feedback you've incorporated.
+During the period, 0 new issues were detected and 0 were fixed.
+In total, 3 issues are still open and 20 have already been fixed.
 
-Jason
+Some of the still happening issues:
+
+Ref Crashes Repro Title
+<1> 687     No    INFO: task hung in netdev_run_todo (4)
+                  https://syzkaller.appspot.com/bug?extid=894cca71fa925aabfdb2
+<2> 375     Yes   INFO: task hung in wg_netns_pre_exit (5)
+                  https://syzkaller.appspot.com/bug?extid=f2fbf7478a35a94c8b7c
+<3> 138     Yes   INFO: task hung in wg_destruct (2)
+                  https://syzkaller.appspot.com/bug?extid=7da6c19dc528c2ebc612
+
+---
+This report is generated by a bot. It may contain errors.
+See https://goo.gl/tpsmEJ for more information about syzbot.
+syzbot engineers can be reached at syzkaller@googlegroups.com.
+
+To disable reminders for individual bugs, reply with the following command:
+#syz set <Ref> no-reminders
+
+To change bug's subsystems, reply with:
+#syz set <Ref> subsystems: new-subsystem
+
+You may send multiple commands in a single email message.
