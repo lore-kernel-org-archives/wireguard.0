@@ -4,57 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2392FEF06EB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DBE2EF06E3
 	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Feb 2026 17:13:22 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id adf92a67;
-	Sun, 8 Feb 2026 17:10:32 +0000 (UTC)
-Received: from outbound.ms.icloud.com
- (p-west3-cluster2-host12-snip4-5.eps.apple.com [57.103.74.98])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9f7327b5
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d3a9c38f;
+	Sun, 8 Feb 2026 17:10:30 +0000 (UTC)
+Received: from newmail.megaweb.it (newmail.megaweb.it [2a0b:aa80::110])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f27202e8
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Sat, 13 Dec 2025 18:42:24 +0000 (UTC)
-Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-3a-100-percent-3 (Postfix) with ESMTPS id
- C8CE91800304; Sat, 13 Dec 2025 18:42:21 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai;
- bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
- h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To:x-icloud-hme;
- b=V35NMJmIARI9XKVlocY02o5sfEniJWcbbS5Mfqq8iT3IOqyFEQmju0tAbA2AiIPt181AvDACAynDNgHBM7wdXI+2kdmHwzwTjhvJjqkjb+artd950QOzugvleIiwyno0TgKSW3S//OwZ7XekajzSifzK9Av5u90cUMXwzwzPn9O6O+V8Cf+6PtNqqU3V2/J8H6Fp/V4utnyOQ2Ir2NguvM+hXneVRL+6+8SGS+2K8O+hEwMQmUFZmGexk10uy2DmYBnVZ+/h3lZYi7haEF/l+ZyYopz2Rdj8e0f2llUnZG0dB6cwTYZg8CwewkLLI5vD+gErsuKZTChKbOZ99ff1RA==
-Received: from smtpclient.apple (unknown [17.57.154.37])
- by p00-icloudmta-asmtp-us-west-3a-100-percent-3 (Postfix) with ESMTPSA id
- 44CC61800316; Sat, 13 Dec 2025 18:42:19 +0000 (UTC)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-From: caveeman.caveman.11@icloud.com
-Mime-Version: 1.0 (1.0)
-Date: Sat, 13 Dec 2025 19:42:09 +0100
-Subject: Re: wg-quick: Separate files for interface and peer definitions?
-Message-Id: <F3A97234-B50F-49EF-B734-D03A5A36CD66@icloud.com>
+ for <wireguard@lists.zx2c4.com>; Mon, 1 Dec 2025 08:57:55 +0000 (UTC)
+Received: from [192.168.7.14] (unknown [77.242.176.100])
+ (Authenticated sender: cristiano.deana@drt.cittastudi.org)
+ by newmail.megaweb.it (Postfix) with ESMTPSA id A35C0286989
+ for <wireguard@lists.zx2c4.com>; Mon, 01 Dec 2025 09:57:54 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.10.3 newmail.megaweb.it A35C0286989
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=megaweb.it;
+ s=default; t=1764579474;
+ bh=4yVgareDAABvVt6DsVvRKP8yJiuscaF8EWHMT9zARtk=;
+ h=Date:To:From:Subject;
+ b=CcZIlI+VfVyMr3JJHzAvKDbRQT7FRxw9xNhXXe2f1IKg78IHsrz0sCPVw+XFGSOR0
+ apefs3QRY2lJ//UgCyOIwwZH0m1rrwoX/UYUJ3xAofBYq82evJT3KaRiCN0sWqLZ1E
+ yKYkqRl+p8ADR0jX5bedq1Y6xUwICb2p5c5K7cH0=
+Message-ID: <b03a0aaf-1042-412c-9728-c679c658360d@megaweb.it>
+Date: Mon, 1 Dec 2025 09:57:54 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 To: wireguard@lists.zx2c4.com
-X-Mailer: iPhone Mail (23B5044l)
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjEzMDE2NiBTYWx0ZWRfX8iahjKN3iPOz
- 7cM/+K4m3ADH4S4w5FqxzlO0dewA4Z4LsM+CbJrzertjUkeo56g9yxJO6PTtpcvdOiM2hrrLWfp
- Hb4WA3jbglVf/92gGr8im5OMsr+weKMk5bq4fxizbAI9/r+IPHcEObId4WJd3CJ5BKcoAUMFw73
- jXuDrRNpy+s9TCOJUUJQ9S10OvSb4fxlr+PxODZYZK5j3zGzR637WeQxNcvfpeYW1nNnib4TWaN
- tYKIDqlcYoN/aHVQUPIm+9EPiJw6g1dYfrsT28PZFdwZeVBT8RUSJTW18KNgKQVDnqnO3UfZDaE
- 92g7w0R8SWrTBhdih5X
-X-Proofpoint-GUID: 7dTgZ-qXKfcjzhTmP1prVslq-VtTAmko
-X-Proofpoint-ORIG-GUID: 7dTgZ-qXKfcjzhTmP1prVslq-VtTAmko
-X-Authority-Info: v=2.4 cv=E93AZKdl c=1 sm=1 tr=0 ts=693db38e cx=c_apl:c_pps
- a=qkKslKyYc0ctBTeLUVfTFg==:117 a=kj9zAlcOel0A:10 a=wP3pNCr1ah4A:10
- a=x7bEGLp0ZPQA:10 a=Tb_nXx7jEfYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=tclcd6dtLQvEqt9_mmAA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-13_03,2025-12-11_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- adultscore=0 malwarescore=0 phishscore=0 mlxlogscore=665 suspectscore=0
- mlxscore=0 spamscore=0 clxscore=1011 classifier=spam authscore=0 adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512130166
-X-JNJ: AAAAAAABIHEjAWzCaRiC8PR/IdR2ZlmlVqHxBPGJUSzihSHfvI1CEligkyDPLghd+CoflOZOcCIX2i+I7l9de9seV0N9Aj4Jf5DlUZMUQsCeDb2dp6+QEkUreq0RfdRjSz8zYxVMVpf56Jjnlt6fPD+/VzagFo7ZriakmDEvqEb/OnTN0OqLArmGakXXQQXPqabzEf5b5JEJIoG19ElN0bbjMogUB+9HiU++EX1VYGyQHPZXvB3RRrI2upg7GmW7A4EOcjinhXzrdEu72io1oHPo+1x5dLZMDtmygG3D0IzdNT0Nd0Y3JgPHLICLldmTFJok1DM9U/hiK1K/7KLyhYvkDgLcTg9SbsuPzBH99H+2LRuv+RsMPHiX01CMwlQPbyqcksUcVnIR7ACev0bsGWITFK7JvPUxS+pcPDBJWylSlY8oKkcVQ65eivESw2O8SSOr8XeiCFSG4mcdH9Rp6qP4su15vUqJEDKB1jXcrFbWEuIXJLrRliXLA5yCxe9/ONDP+G5Sbn9+vEnJHHUwiblz+8gV9LM+oYkAbMOD9V2m6Wbs+qA40z5x7m34aKAn+o4h8h/aCWXq3Im8MJzmd26RaYp46ge9fG6VfQ==
-X-Apple-Category-Label: MTgyNjkyODk1NDU6JGNhdGVnb3J5JF9QZXJzb25hbCw=
+Content-Language: it
+From: Cristiano Deana <cristiano.deana@megaweb.it>
+Subject: wg-quick: changes in freebsd
+Autocrypt: addr=cristiano.deana@megaweb.it; keydata=
+ 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
+ Q3lx5TBUM7DKhoZ5tB4XyQrGg+zDkb1kwa55t0Q=
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Mailman-Approved-At: Sun, 08 Feb 2026 17:10:11 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -70,4 +84,25 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+Hi,
+
+in FreeBSD 15 `ifconfig' command required a specific netmask when assign 
+an IP, but wg-quick extract (and save to .conf file) only the address, 
+without mask.
+
+I just wrote a little patch (that's not my job, maybe awful) to save 
+$address/$mask to $INTERFACE.conf:
+
+# diff freebsd.bash /usr/local/bin/wg-quick
+347,348c347,349
+<       { read -r _; while read -r _ _ _ address _; do
+<               new_config+="Address = $address"$'\n'
+---
+ >       { read -r _; while read -r _ _ network address _; do
+ >               mask=$(echo "$network" | awk -F / '{print $2}')
+ >               new_config+="Address = $address/$mask"$'\n'
+
+Feel free to point me the correct way to submit a patch request, thank you.
+
+Cris
 
