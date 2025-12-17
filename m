@@ -4,75 +4,25 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56F84EF06E4
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Feb 2026 18:13:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38509EF06EA
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Feb 2026 18:13:17 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a40798f5;
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3deba636;
 	Sun, 8 Feb 2026 17:13:05 +0000 (UTC)
-Received: from fhigh-a5-smtp.messagingengine.com
- (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ed9beb3e
+Received: from mx1.net9.cf (mx1.net9.cf [2a04:dd00:23:4::10])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b461a0a8
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 12 Sep 2025 15:28:51 +0000 (UTC)
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 385AD1400431;
- Fri, 12 Sep 2025 11:28:50 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
- by phl-compute-04.internal (MEProxy); Fri, 12 Sep 2025 11:28:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=6f.io; h=cc:cc
- :content-transfer-encoding:content-type:date:date:from:from
- :in-reply-to:message-id:mime-version:reply-to:subject:subject:to
- :to; s=fm2; t=1757690930; x=1757777330; bh=8xP/ZS6EgFKAqwo/R0Ifw
- BYV4jVedRIyCCEKQh1W9E0=; b=Skma1bPGy7/H6ohLz/9Jlggu6mmSyquIL15a4
- ajDjaoH3h35+pbgaDTCrcn8ywIzcHPpTSHh892ZlcKV9c4e3HOoVgKnzaB30WLX+
- wUDIDxOBeSdOmourb96Qrlr67cKiE3Acev5rPoNemgAVmElxpeXyqgwxHYIQnE58
- x/Zba2ZuLa8vPHaXw2Hz+w7eOayehjHzFnQecVSwLVpkkoa3XqTQ15MRXslzrkys
- RtZ6+dMERnda2JGcdGypS9V5FJc4A77rJPG2Ppdm46waexhGlXAnXgHA1Xd/JAcF
- vflU7nKWhaw4e/ptBOQg9n9gucEFluYiCpOsADozrSs6WQ9Nw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:message-id:mime-version:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
- 1757690930; x=1757777330; bh=8xP/ZS6EgFKAqwo/R0IfwBYV4jVedRIyCCE
- KQh1W9E0=; b=G0eBY7RE+VeNdYX3Xm/p1Uu68N8WBoHcm1D8KQKqoZyqcMwp4Tw
- 6pUmaQ57FnTi2GFe5TK3lb8LPYhRUYdEjThJ/mcsauTOC6EUi/Oo5+RQPtHdbA96
- cZ1KLRlNOSBSVTkRmqdPzWEPToDm5RiEdqHrelI4WaAZNeQaKrljvdXAuBOf4yqh
- SM9pzObdTXaHLrry67485Ilj5vPjmITe6baOgSJnmjGvg/pan0XVgXS1WbBo4URJ
- zNtxFlQ4xuTpSIZt/eprC0fcLmjKeDR1Brs3qFzlB4inao5tKwTVYL3Z0cjcCytQ
- OcBL8uDoIfUtXkzlztJEWmcl4R2a6TRe0Zg==
-X-ME-Sender: <xms:MTzEaGd53dxuMLpYTegSamTA6HwmystgA8s9Ykp_-JQk4OzbO_oNFQ>
- <xme:MTzEaAYxnHYBI-LopinCZY2FjKzjWmC1FuJjP4Px1bYLSOcmy4T6a0bGRMj6wwX6D
- zkzVXbdM5bq0uU2E5g>
-X-ME-Received: <xmr:MTzEaJWM7mEPjsSSKsOBsoQVl3rIoh9vZHR03QtuXcxP1NTDIrmfTzfu2rqD7AbNiA-PJ23c5g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvleegudcutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
- ihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkofgggfestdekredtredttd
- enucfhrhhomhepvfhhohhmrghsucghrgihuceothhhohhmrghsseeifhdrihhoqeenucgg
- tffrrghtthgvrhhnpefgfeehieeigeekfeegfeelkedtgeffvddugfekuddtteevffeule
- ehueegfeefjeenucffohhmrghinhepghhordguvghvnecuvehluhhsthgvrhfuihiivgep
- tdenucfrrghrrghmpehmrghilhhfrhhomhepthhhohhmrghsseeifhdrihhopdhnsggprh
- gtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeifihhrvghguhgr
- rhgusehlihhsthhsrdiigidvtgegrdgtohhmpdhrtghpthhtohepthhhohhmrghsseeifh
- drihho
-X-ME-Proxy: <xmx:MTzEaCg3Ar7VagAwkYLLpV7fJnNtGponp2dpHvjKfkAqKfmJlmRyog>
- <xmx:MTzEaHVX9wp9aa8gPrA9eTY1VKpgy98JqZ7TKZ--rU1GMA60UCK_rg>
- <xmx:MTzEaJMNVNXvT_KYSEni1GAJWuMDFzmXwNmU9AOxeXLy1-Ns7xfKzA>
- <xmx:MTzEaDbRUQj5lVaqzwRM5B_mlKXDpqMXo1LGV-sg3SYbUMhDsVjgVQ>
- <xmx:MjzEaHC2XgxuMnWqKGLZCseA6G27T8BCEYdUBboloYKU4oopsc9D7PRt>
-Feedback-ID: i008149c3:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 12 Sep 2025 11:28:49 -0400 (EDT)
-From: Thomas Way <thomas@6f.io>
+ Wed, 17 Dec 2025 19:02:55 +0000 (UTC)
+Received: from u34 by mx1.net9.cf with local (@Mail Server)
+ (envelope-from <u34@net9.cf>) id 1vVwnX-00000000SGY-0Y3U
+ for wireguard@lists.zx2c4.com; Wed, 17 Dec 2025 19:02:55 +0000
+Date: Wed, 17 Dec 2025 19:02:55 +0000
 To: wireguard@lists.zx2c4.com
-Cc: Thomas Way <thomas@6f.io>
-Subject: [PATCH] device: use gomaxprocs for device worker count
-Date: Fri, 12 Sep 2025 16:28:44 +0100
-Message-ID: <20250912152844.1128614-1-thomas@6f.io>
-X-Mailer: git-send-email 2.51.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Subject: A minor patch for wg.8 manual page
+User-Agent: s-nail v14.9.25
+Message-Id: <E1vVwnX-00000000SGY-0Y3U@mx1.net9.cf>
+From: u34@net9.cf
 X-Mailman-Approved-At: Sun, 08 Feb 2026 17:12:58 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -88,43 +38,42 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-wireguard-go currently creates a worker for each logical CPU available
-on the host, which can be problematic in containerised environments
-where the actual number of logical CPUs available may be significantly
-less. Many modern server CPUs have hundreds of logical CPUs, and
-containers often have a limit of at most 1-4. Such a large disparity can
-cause significant performance degradation, and increase both CPU
-throttling and latency.
-
-The Go runtime has recently been updated to be aware of container CPU limits
-to solve this.
-
-https://go.dev/blog/container-aware-gomaxprocs
-
-Using GOMAXPROCS(0) instead of NumCPU means that fewer workers will be
-started in environments which can't make use of them, and should improve
-the performance of wireguard-go. Regardless, it seems like the sensible
-thing to do in-case the main program manually sets GOMAXPROCS to a value
-other than NumCPU.
-
-Signed-off-by: Thomas Way <thomas@6f.io>
----
- device/device.go | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/device/device.go b/device/device.go
-index 6854ed8..5c04913 100644
---- a/device/device.go
-+++ b/device/device.go
-@@ -308,7 +308,7 @@ func NewDevice(tunDevice tun.Device, bind conn.Bind, logger *Logger) *Device {
+The wg.8 manual page CONFIGURATION FILE FORMAT EXAMPLE section has a comment
+about comments in the configuration file.
+Since
+1. I think such a comment belong to the CONFIGURATION FILE FORMAT section.
+2. The example in the CONFIGURATION FILE FORMAT EXAMPLE section has no comments 
+I propose
+--- a/wg.8	2025-12-17 18:34:56.023484459 +0000
++++ b/wg.8	2025-12-17 18:51:04.271960383 +0000
+@@ -132,6 +132,7 @@
+ The configuration file format is based on \fIINI\fP. There are two top level sections
+ -- \fIInterface\fP and \fIPeer\fP. Multiple \fIPeer\fP sections may be specified, but
+ only one \fIInterface\fP section may be specified.
++Characters after and including a '#' are considered comments and are thus ignored.
  
- 	// start workers
+ .P
+ The \fIInterface\fP section may contain the following fields:
+@@ -177,17 +178,20 @@
  
--	cpus := runtime.NumCPU()
-+	cpus := runtime.GOMAXPROCS(0)
- 	device.state.stopping.Wait()
- 	device.queue.encryption.wg.Add(cpus) // One for each RoutineHandshake
- 	for i := 0; i < cpus; i++ {
--- 
-2.51.0
-
+ .SH CONFIGURATION FILE FORMAT EXAMPLE
+ This example may be used as a model for writing configuration files, following an
+-INI-like syntax. Characters after and including a '#' are considered comments and
+-are thus ignored.
++INI-like syntax. 
+ 
+     [Interface]
+ .br
++    # A comment: only one [Interface] section may be specified.
++.br
+     PrivateKey = yAnz5TF+lXXJte14tji3zlMNq+hd2rYUIgJBgB3fBmk=
+ .br
+     ListenPort = 51820
+ .br
+     
+ .br
++    # A comment: multiple [Peer] sections may be specified.
++.br
+     [Peer]
+ .br
+     PublicKey = xTIBA5rboUvnH4htodjb6e697QjLERt1NAB4mZqp8Dg=
