@@ -4,71 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DBE2EF06E3
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Feb 2026 17:13:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FBFFEF06E1
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Feb 2026 17:13:23 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d3a9c38f;
-	Sun, 8 Feb 2026 17:10:30 +0000 (UTC)
-Received: from newmail.megaweb.it (newmail.megaweb.it [2a0b:aa80::110])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f27202e8
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 59108ef7;
+	Sun, 8 Feb 2026 17:10:34 +0000 (UTC)
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com
+ [2a00:1450:4864:20::232])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b5ee829c
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 1 Dec 2025 08:57:55 +0000 (UTC)
-Received: from [192.168.7.14] (unknown [77.242.176.100])
- (Authenticated sender: cristiano.deana@drt.cittastudi.org)
- by newmail.megaweb.it (Postfix) with ESMTPSA id A35C0286989
- for <wireguard@lists.zx2c4.com>; Mon, 01 Dec 2025 09:57:54 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 newmail.megaweb.it A35C0286989
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=megaweb.it;
- s=default; t=1764579474;
- bh=4yVgareDAABvVt6DsVvRKP8yJiuscaF8EWHMT9zARtk=;
- h=Date:To:From:Subject;
- b=CcZIlI+VfVyMr3JJHzAvKDbRQT7FRxw9xNhXXe2f1IKg78IHsrz0sCPVw+XFGSOR0
- apefs3QRY2lJ//UgCyOIwwZH0m1rrwoX/UYUJ3xAofBYq82evJT3KaRiCN0sWqLZ1E
- yKYkqRl+p8ADR0jX5bedq1Y6xUwICb2p5c5K7cH0=
-Message-ID: <b03a0aaf-1042-412c-9728-c679c658360d@megaweb.it>
-Date: Mon, 1 Dec 2025 09:57:54 +0100
+ for <wireguard@lists.zx2c4.com>; Thu, 1 Jan 2026 19:37:01 +0000 (UTC)
+Received: by mail-lj1-x232.google.com with SMTP id
+ 38308e7fff4ca-37fcec29834so99030791fa.0
+ for <wireguard@lists.zx2c4.com>; Thu, 01 Jan 2026 11:37:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1767296220; x=1767901020; darn=lists.zx2c4.com;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=cUPpVLkBPMXGoiuNbXetOJzdk8onkGU7mXksu1apeVg=;
+ b=h2+PVWLP7PwZOXeN31rTtvqtMgvpWSSB8gZmF9H2OjMIpYTKjjsbk7kUUDILTkhuOL
+ 1Napph9T03Y2cDVFJ07FZ3seBI77B+cIq1VcsfPrJ45/StYFvk6HIpBYNFT52MN6htK+
+ kLUg+zOgaCBRpH48UBiai82oldVBfxI+W7kpwEBfl5nNIK3x3xL9utdwfqvj5UwsbK4G
+ HfUI8iO2IFl3b7ca6Lc1DgR56NJfdrMfQNdLCius0yR/oZSHgH66/G95p6jbWC5vrJQh
+ WPek522bM4ExHvC+SGJyqxPknspwNmyiggYHXrexxeWpH2rO5zYc+cr6oyVm/B3oJyWT
+ ZWOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1767296220; x=1767901020;
+ h=to:subject:message-id:date:from:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=cUPpVLkBPMXGoiuNbXetOJzdk8onkGU7mXksu1apeVg=;
+ b=CJ7NNztNPDym5huI144FjcyL+3fwbUGsQrsB8uKHgpDN6Af3WUOdRbXRT3fLFtkptl
+ yG+Uwufh/qRQJ0SFixssjJzQbWtnQZcRVIFHKpbOLVu5FXD232Vi+HAJR/pXWFp/6qqt
+ 78BjhbNDafm3gWUwvrj2cx98nGfb67imJIRt8m38EsHQvy+D7EF7kTeb5LnODNltEash
+ GzMVqetsmIiSnJzjRxy5od4StN7/NPpfyj3fDictec5P7c6/b/3i9CS9frvh66zp9VLu
+ WsOf41ufeudoupt2Mzt8n/24O1v/zcqS0jKnHeh1S5mXKjOxec8mvFAv1qk0mcCT9EnR
+ sPkA==
+X-Gm-Message-State: AOJu0YyfOtn4evvYHpnJW0UfQPEYJFKk+OTZUrOyQ+PC9SkyoBMVDvQa
+ 25GSE7Ar5PIM0Wfae8XiTXE17mPv0JoSEPwYKq6E/nZWr3FVxBROn26xY1bgPgr53zH1hsJPN2N
+ bLkKAp041D9+a74OtXEgvPAT36oFsVGQAak29
+X-Gm-Gg: AY/fxX5VOrRBQZo/9FFPLlfJsWQShtU4Pe4EjbKLZGBSxZFTvE8dg6X5jvHlSFqWtGG
+ CStT+jtFu6DSYU8Dem5ljkSO1ySbxsGmHjU3SMOPl+ECnA4cpmjY9V8dnke7OvUNO56D/ciKu9s
+ HT7Gzc3STVzSnVXRs7iDnRVe6GcdLlDXgcD+GT11yrrQDEwrXUVNHlfSidxjQDEqGJnolccGdW0
+ dqsdu+ZuzHhR4u7U3RBch6UBQ5p64slkEG9+EDdEjpZcgP3QTLCOzEjrultnS5ezB2V1m8=
+X-Google-Smtp-Source: AGHT+IEFYn0GHZUkILm8Vm3WS201g3expm61TKdHTcMROqvDzNnVLGfBjLOyuACJFnE7U3rZi8Ss2shws7SQLsrym9s=
+X-Received: by 2002:a2e:bc07:0:b0:37b:aafa:5af6 with SMTP id
+ 38308e7fff4ca-381215a0df0mr110810601fa.16.1767296220048; Thu, 01 Jan 2026
+ 11:37:00 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+From: Bryant Eadon <bryant.eadon@gmail.com>
+Date: Thu, 1 Jan 2026 11:36:48 -0800
+X-Gm-Features: AQt7F2p7AA7OcD5SSEP-MgtRByk5ZqFElRvUDEsDN_2GCa3BTS9_cisLKvO6LTM
+Message-ID: <CANDT8hHFj9z9vTraCFhJkebaydggZcD_8WA14Ta9aV3BH8-tkg@mail.gmail.com>
+Subject: [wireguard-apple] macOS: link-local multicast (mDNS) bypasses tunnel
+ despite AllowedIPs = ::/0
 To: wireguard@lists.zx2c4.com
-Content-Language: it
-From: Cristiano Deana <cristiano.deana@megaweb.it>
-Subject: wg-quick: changes in freebsd
-Autocrypt: addr=cristiano.deana@megaweb.it; keydata=
- xsDNBGZNlqkBDADSlSfXszJQv31Oik2XzZzMF2pqzvVa6eEIbY8VRYIYvyvEWOl9GmMttNBR
- ieJvOEm1QaXidTYao1oKLQWQUVvOKR81UMz7xf38J0XIuEZf/hlTvJC/7iJUVKGl3V+CcoL1
- 5847Z8qN6tvjD44zmwtr8rAT4h8BfEkuf49gpn3DUT8N63qyyjl30k1YzB4nldAuydAyrGKM
- XeAkDLCIIKRkJLZw9Z5yX+ZW70xAx2iYFsXHEb1XUsL6W1LEohRuHxkLecB8lVVS1QEDsEl/
- QezQo9ix5w1hkCkymnVCp5cLoYlGqGKGlBCEGOiPoEOIP9cCwM9kWkJIbPyj3CAE2MWucVyo
- eaeU8CZSNv7dK9IxModjNM2XQRLytBJZooajQ4oiqwJciVr7Yvt210pEl2RJ4hZ1auTOv2eO
- jfE79phFcgjCDvMlz2qgn0E/ct0gAN5CBy0nlbVChDdq+KOTbC5htuHqM9C9pVvBcc9BV2vI
- UwgR90djJPDDQWdAUfiAUkEAEQEAAc0sQ3Jpc3RpYW5vIERlYW5hIDxjcmlzdGlhbm8uZGVh
- bmFAbWVnYXdlYi5pdD7CwQ0EEwEIADcWIQTWQVhYJdXh3CxmMIjqMwOUHWxXvAUCZk2WqgUJ
- CWYBgAIbAwQLCQgHBRUICQoLBRYCAwEAAAoJEOozA5QdbFe8kCUMAMVD3D5xulyzW95NWaX+
- +avqeAoZojlTlzl3jSIoeNS1AFB6O5Eh+hWyf0/kYDP3NqupGDwl8LOqPsnHbcWeDcrnbbDO
- mOedDSkbfhku3OZ5VQR1xEnRo0EJ6+NkX3gLqh7011HywNHkZdE0dUccis17Ktf+lH4PdHU/
- LIPrgay7gswWbJZ6jwKjH0VMRH66icAw5gQDWIQKbR60FPOq1BBILw0kk58D5WeopTljJXTc
- Ejszuw41KUR00HcctfarQ0lAKnwSdLlDNqiBrR4N5CYAwRWNdLSbqExuQe8tbxBbp3dhNXKL
- ojit82NGFb9o4DyCsucWOAvkGili1TR5I90ZsZDaoVimwWcd1mjf3aHQUJ8WsfintY3uBJvZ
- WLOeEjwDb+gsibDhbQcDboKNuflqWEUykbMe0fc8AN76PJ/P4UXW9X45fyypegIDPHWtH92U
- Ae9Tgc79bofxP9p1p3+EiKGSX2DpD6J1bh0V7u5wvAWnW5PDs6/1MUu+R8zA1c7AzQRmTZaq
- AQwA9nmOy3lxrUMhuxL8kUT6Iqj0Hifbwvwq4fsI0olErFfnVxHorLcXcsf7oNNByMQiNhJl
- LfcQH+vSJ5dhyyrfuY+oxENnBMC0wiq73FXBVlHdgLIrwhKlGB4dhVy8vBuEmlWBJqNABPEW
- 2Nk6BE4xVmSO0Zu6YJz8x7XY5RL6xqjGL/7BxY4x2KWdHmlSOEqzmvGn46zBdBQ31gZp/6CC
- EaGmbZACzhytD+phb1YSewti0pCq+f1OuHecwQnfA7ubaLR3yBHZvZuJBBiLJ1pt0LeOyDv7
- r7GtuL0VQLBjTyFpmtwH2yDAO+T34j28B4O5KszACr4qSWe6risSj30jEo1WdTKPtAJkcj+P
- EgmP/sQyWuMT9TjAZaAiNzNt+znLDhsSIizsv++ZMAuNtFkmybwuM13ciF0Ja7KidhnqH3lJ
- b6IDc+nmyoZ351MO38jk1kTEsflpStEEI2uLPZHpgdHbDHEh2wZpYUOrzcX7uFKevjypIRd5
- cMwz7QKj+uTBABEBAAHCwPwEGAEIACYWIQTWQVhYJdXh3CxmMIjqMwOUHWxXvAUCZk2WqwUJ
- CWYBgAIbDAAKCRDqMwOUHWxXvNRIC/47ZL8K7gl/ayzcx+magSp7sT3pbNSK1VkfIQoJ4o9j
- eRQCueXdosstJY+gXBJYep7K3/1SJWR7r4Rx4diKbuvTtkgH2kiPf7cRM8KyNQgirzC6bNgY
- Z384WZFPDg1ID0ZZP0kXuwM/hvE+QpWRFVOnM5DDN3NZzADv07ARxgjXHB3BJlxRcG8REA/F
- Y2KYVd5DX1Vqhc+zXIFxJPT44Oaipi1156GkYdCzbRHcAw0kwI70XcWKDIz1xn8c65yYu62r
- pkl5SJBnGMF49NdM7ulfxt0YBQqrg2CZrjfxpJbCFMi34ZueRcOF9RCCYxUQefqJXmoneUAs
- P/sypyuzhuCyMh2Cb+GWKUag0Qi2IFKWRoy/wRmr6hVfEAlUn86/Lv1dfi+Jk9H+m2pKntIq
- TOz4Wah2SMkLrhwzbnqUeyXBIrurz3oEH3SXRhYBPBY18hY8ncPV9Br3CurSE6rR1J1t6MQf
- Q3lx5TBUM7DKhoZ5tB4XyQrGg+zDkb1kwa55t0Q=
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="UTF-8"
 X-Mailman-Approved-At: Sun, 08 Feb 2026 17:10:11 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -84,25 +74,97 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+Hello,
 
-in FreeBSD 15 `ifconfig' command required a specific netmask when assign 
-an IP, but wg-quick extract (and save to .conf file) only the address, 
-without mask.
+I'd like to report a privacy concern with the macOS WireGuard GUI app
+where link-local multicast traffic egresses the physical interface
+even when the tunnel is configured to capture all traffic.
 
-I just wrote a little patch (that's not my job, maybe awful) to save 
-$address/$mask to $INTERFACE.conf:
+Environment:
+- macOS 14.x (Sonoma)
+- WireGuard for macOS (App Store, current version is 1.0.16)
+- Full-tunnel configuration
 
-# diff freebsd.bash /usr/local/bin/wg-quick
-347,348c347,349
-<       { read -r _; while read -r _ _ _ address _; do
-<               new_config+="Address = $address"$'\n'
----
- >       { read -r _; while read -r _ _ network address _; do
- >               mask=$(echo "$network" | awk -F / '{print $2}')
- >               new_config+="Address = $address/$mask"$'\n'
+Client configuration:
 
-Feel free to point me the correct way to submit a patch request, thank you.
+  [Interface]
+  PrivateKey = <redacted>
+  Address = 10.10.91.2/32, fd96:e7c9:fb3f:91::2/128
+  DNS = 10.10.0.1, fd96:e7c9:fb3f::1
 
-Cris
+  [Peer]
+  PublicKey = <redacted>
+  Endpoint = <redacted>:51820
+  AllowedIPs = 0.0.0.0/0, ::/0
+  PersistentKeepalive = 25
 
+Observed behavior:
+
+With the tunnel active, packet capture on the physical interface (en0)
+shows mDNS queries being transmitted outside the tunnel:
+
+- IPv4 mDNS to 224.0.0.251:5353
+- IPv6 mDNS to ff02::fb:5353
+
+Services observed leaking include _googlecast._tcp.local,
+_airplay._tcp.local, _spotify-connect._tcp.local, and
+_companion-link._tcp.local.
+
+Meanwhile, "curl -4 ifconfig.me" correctly returns the VPN exit IP,
+confirming the tunnel is functional for unicast traffic.
+
+Privacy implications:
+
+Users configuring AllowedIPs = 0.0.0.0/0, ::/0 reasonably expect all
+traffic to traverse the tunnel. However, link-local multicast reveals:
+
+1. The client's presence on the local network
+2. The client's link-local IPv4/IPv6 addresses
+3. Services the client is attempting to discover
+4. Device fingerprinting via mDNS query patterns
+
+This is particularly relevant when using WireGuard on untrusted
+networks (hotels, cafes, airports) where the privacy expectation is
+highest.
+
+Root cause (suspected):
+
+macOS's mDNSResponder (probably?) binds directly to interfaces and
+uses link-local
+multicast addresses (224.0.0.0/24, ff02::/16) which are special-cased
+by the network stack and don't follow the routing table. Since
+WireGuard is a Layer 3 tunnel, it cannot capture Layer 2 multicast
+without explicit firewall rules.
+
+A workaround does not appear to be available in the GUI app.
+
+On Linux or with wg-quick, this could be mitigated via PostUp rules:
+
+  PostUp = iptables -I OUTPUT -o %i -d 224.0.0.0/24 -j DROP
+  PostUp = ip6tables -I OUTPUT -o %i -d ff02::/16 -j DROP
+
+Or on macOS with pf:
+
+  block drop quick on en0 proto udp from any to 224.0.0.251 port 5353
+  block drop quick on en0 proto udp from any to ff02::fb port 5353
+
+However, the macOS GUI app does not support PostUp/PostDown hooks,
+leaving users without a native solution.
+
+Request/Questions:
+
+1. Is this behavior considered expected given WireGuard's Layer 3 design?
+2. Would the macOS app consider adding an option to block link-local
+   multicast on non-tunnel interfaces when a full-tunnel configuration
+   is active?
+3. Alternatively, could PostUp/PostDown support be added to the macOS
+   GUI app?
+4. Would the macOS app consider routing the multicast traffic ?
+5. Is there other missing traffic which is NOT handled by the IPV4 /
+IPV6 config line :  "0.0.0.0/0" and/or "::/0" ?
+
+I have pcap files available if useful for analysis.
+
+
+Thank you,
+Bryant
