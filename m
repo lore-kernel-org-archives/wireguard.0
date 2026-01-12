@@ -4,38 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DE73EF06E9
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Feb 2026 18:13:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 164C8EF06E3
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Feb 2026 18:13:18 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5e4704c3;
-	Sun, 8 Feb 2026 17:13:07 +0000 (UTC)
-Received: from out-182.mta0.migadu.com (out-182.mta0.migadu.com
- [2001:41d0:1004:224b::b6])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9be864f6
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a5402677;
+	Sun, 8 Feb 2026 17:13:09 +0000 (UTC)
+Received: from out-188.mta0.migadu.com (out-188.mta0.migadu.com
+ [91.218.175.188])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 769652a5
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 9 Jan 2026 14:41:33 +0000 (UTC)
-MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xn--sb-lka.org;
- s=key1; t=1767969692;
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 12 Jan 2026 11:42:24 +0000 (UTC)
+Message-ID: <e500a519-8277-4ddc-be7c-529b64b24860@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1768218141;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=nHe/jC5ej17ekDM9xfeuFx/1Sd3+SMmX/MN2TEYqgpE=;
- b=RWO/IYicDzpwuS3u599l0APFQdoTt/oghQU9pQC9x/eLSiJbHcGzfJ7w3LtGPWj8p3Lccv
- 8SOLW3rxfzUpBdlJSF7qzgMDJbhiikJuJVDgxBNFosbH039pANdI/uICdmg4s4hqupgJER
- gSdGAx2SneCFE7TDKxBzJUoDIVhbJf50GwXjqbNASrVg/b8PMIH5F4+mlAn/Y6CZiv9WEl
- I1JiQnuXH5xFAbQPRZ4iBQE/R/Aoi8xa01MGmkvQos98prcEE7IAzgaPkEfkhiWlxiuJeA
- ORoQJPEb2QmnrizwPCLqiCP/gnwMXjISXg8rjXEfI94onf0o6qBP6Dosi4vLcg==
-Date: Fri, 09 Jan 2026 14:41:31 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tkpHsuvE6V8Bk7Pqpm7Lok7WPhoO3vgdm1OBWx3Et7o=;
+ b=lV/Q/faMYufFVo58zKJkIRqEafbT+KpNpulx33db8hdn6J4sI1BWiWOosUf6Ek/cCRBIhO
+ KU9bhvsHMYKsn+fdylQwyFXHyi5w0X61+ohFK6XC7nvYu5pGLrGcavFqRxf0SDTOhENyR8
+ tRwZyKGE09xb+1e6XCUHMbGgRSSiehM=
+Date: Mon, 12 Jan 2026 11:41:35 +0000
+MIME-Version: 1.0
+Subject: Re: [PATCH v2] wireguard: allowedips: Use kfree_rcu() instead of
+ call_rcu()
+To: Fushuai Wang <fushuai.wang@linux.dev>, wangfushuai@baidu.com
+Cc: Jason@zx2c4.com, andrew+netdev@lunn.ch, davem@davemloft.net,
+ edumazet@google.com, kuba@kernel.org, linux-kernel@vger.kernel.org,
+ netdev@vger.kernel.org, pabeni@redhat.com, wireguard@lists.zx2c4.com
+References: <20251005133936.32667-1-wangfushuai@baidu.com>
+ <20260112031021.81853-1-fushuai.wang@linux.dev>
+Content-Language: en-US
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
  include these headers.
-From: "Nicolai S" <wg@xn--sb-lka.org>
-Message-ID: <e37fde7db37eec624d87e6c9d18a5e94d791c387@xn--sb-lka.org>
-TLS-Required: No
-Subject: wg-quick: Add flag `WG_QUICK_PREFER_USERSPACE_IMPLEMENTATION`
-To: wireguard@lists.zx2c4.com
+From: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+In-Reply-To: <20260112031021.81853-1-fushuai.wang@linux.dev>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Migadu-Flow: FLOW_OUT
 X-Mailman-Approved-At: Sun, 08 Feb 2026 17:12:58 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -52,49 +59,14 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-While developing a userspace implementation of wireguard, or if users hav=
-e
-special requirements for which implementation of wg to use, etc, it would=
- be
-nice to be able to force `wg-quick` to use `WG_QUICK_USERSPACE_IMPLEMENTA=
-TION`.
+On 12/01/2026 03:10, Fushuai Wang wrote:
+>> Replace call_rcu() + kmem_cache_free() with kfree_rcu() to simplify
+>> the code and reduce function size.
+> 
+> Gentle ping.
 
-But currently, if your kernel supports wireguard, then `wg-quick` will ig=
-nore
-the `WG_QUICK_USERSPACE_IMPLEMENTATION` environment variable (on linux).
-
-This patch introduces `WG_QUICK_PREFER_USERSPACE_IMPLEMENTATION` to get `=
-wg-quick`
-to use the userspace implementation.
-
-Note that `darwin.bash` already prefers `WG_QUICK_USERSPACE_IMPLEMENTATIO=
-N` if set.
-
-If we instead want the darwin behavior in `linux.bash` then I suggest mer=
-ging
-this patch: https://lists.zx2c4.com/pipermail/wireguard/2025-March/008773=
-.html
-
-Signed-off-by: Nicolai S=C3=B8borg <wg @ xn--sb-lka.org>
----
- src/wg-quick/linux.bash   | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletions(-)
-
-diff --git a/src/wg-quick/linux.bash b/src/wg-quick/linux.bash
-index 34fa5f9..be867d5 100755
---- a/src/wg-quick/linux.bash
-+++ b/src/wg-quick/linux.bash
-@@ -88,7 +88,10 @@ auto_su() {
-=20
-=20add_if() {
- 	local ret
--	if ! cmd ip link add dev "$INTERFACE" type wireguard; then
-+	if [[ -n "$WG_QUICK_PREFER_USERSPACE_IMPLEMENTATION" ]]; then
-+		echo "[!] Forcing userspace implementation." >&2
-+		cmd "${WG_QUICK_USERSPACE_IMPLEMENTATION:-wireguard-go}" "$INTERFACE"
-+	elif ! cmd ip link add dev "$INTERFACE" type wireguard; then
- 		ret=3D$?
- 		[[ -e /sys/module/wireguard ]] || ! command -v "${WG_QUICK_USERSPACE_I=
-MPLEMENTATION:-wireguard-go}" >/dev/null && exit $ret
- 		echo "[!] Missing WireGuard kernel module. Falling back to slow usersp=
-ace implementation." >&2
+I believe you have to resend the patch as it's not going to be
+automatically re-evaluated. And you have to rebase it on top of current
+net-next. While preparing new patch, please add clear indentification of
+the target tree, the subject should look like "[PATCH net-next v3] ..."
+in your case.
