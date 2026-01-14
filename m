@@ -4,51 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3366D232C3
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  8 Jan 2026 22:43:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C158ED31A0F
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 14 Jan 2026 05:45:54 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8b9e69f1;
-	Thu, 8 Jan 2026 22:43:26 +0000 (UTC)
-Received: from mail-ot1-f78.google.com (mail-ot1-f78.google.com
- [209.85.210.78])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d28f5f07
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 817ebebd;
+	Wed, 14 Jan 2026 05:45:52 +0000 (UTC)
+Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com
+ [2607:f8b0:4864:20::112c])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9742e7a6
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 8 Jan 2026 22:43:25 +0000 (UTC)
-Received: by mail-ot1-f78.google.com with SMTP id
- 46e09a7af769-7c72ccd60f5so873895a34.0
- for <wireguard@lists.zx2c4.com>; Thu, 08 Jan 2026 14:43:24 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 14 Jan 2026 05:45:46 +0000 (UTC)
+Received: by mail-yw1-x112c.google.com with SMTP id
+ 00721157ae682-78fc174ada4so77666727b3.2
+ for <wireguard@lists.zx2c4.com>; Tue, 13 Jan 2026 21:45:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1768369545; x=1768974345; darn=lists.zx2c4.com;
+ h=autocrypt:content-language:to:subject:from:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=nNoed+9iicsaSf3Jlg27FsRma+e98lRf4MBhHl799J4=;
+ b=XFJF/mYXmIzqXxxaJl0r8GEcNGga3IkRH2h2+eTyg12bEEIFpu5VbIv2WVror/WuOI
+ 23pKTQXOyhFLjBd7Ioviahf36QDQb49x35pT8fAbk3zUSEPVjkaxVMm99vEPdKMcy0J7
+ EauPE8bFB0Q10u7j6J7V+GxTPvyigPHYSsoDz/mpnRT19B6cdeAp3z4vfhHSRQxbwGmg
+ l3CzWqCgXtjEdkxfSSZSOdksgOP4x9KIC646SHROuFMydauri+J4OzsyoZ7rQ5W4ZO4v
+ LUR6RNt6GX9EDJI3ei44NpcpNlSF1rmuBBsv/3gjNQM1PKzs+7cxrNlZUyI4DC9Ga02v
+ Dk5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1767912203; x=1768517003;
- h=to:from:subject:message-id:date:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=9TiEK9HPqCMHBDhTZnOlClVfYIrH5v0N+vhwn/LE/jA=;
- b=IQJkr/H53WAnDeY3NIJe6u6WJ67cPtuZ5CyE/3RckZtt9BOFPHUQUDkrabx1izbeFA
- YN6xiB1UWq/ntAQ2AgSBwBkzOBWoSBwPHqGolWsfK9E/oDDnwNQtF7RXR+A33q0Z6QIM
- uRUAOit9Oiqw1OVFbXCtqSuRzjKgi7vjZWiX2QcTZmLUTisT+HHXEFfyjdKkZa3jiEc6
- +/vsBeqOlKQszB1FlNmGouTTAwhFgD0jXY/zvtMx611pMdK5R8lAmEeQPcLSfsox8U5j
- YTqXUQBEA6jDqA7XZ3o7uexLf03ohUJvX1S+YgvRSLVUInjLpZ30fWmyIdgLUOlKtdWm
- rxeA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXayINqU3CsMR8D5Yxp3Zy9cb7ERSDEpFkg57ryEeZ1KEh0PI6m6cp8dobjgydoko5VwJBNMccToEg=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YxYiQ8UJ0uMm77G2CtPzfp0iAKU8YGd9Qqx9WP2GF74P6BscRvI
- QBOFmpCU0dEEgP6XoD0hrAUmJa0cR9WQgfMludsE2ekmmLmnt4g7tGTylblI2m3LDiCWHEO8YE4
- k4R0e9Jhpez72PW9z4q8pEQuEsIBxtXdjoee+OhcQv3ty2Lngmz/OhmNjCUI=
-X-Google-Smtp-Source: AGHT+IE8xjXTGeRVle2y1n9kyRhHQ27tNqGnF+vOObwYB1W2n6IDOLJRU7eiCCGS9BqZQrPHgusDY97H9CLlxWdaDI/Zw6baX5hM
+ d=1e100.net; s=20230601; t=1768369545; x=1768974345;
+ h=autocrypt:content-language:to:subject:from:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=nNoed+9iicsaSf3Jlg27FsRma+e98lRf4MBhHl799J4=;
+ b=h4fB2PrI4HVNG4L8oDVKq85kQMaEQLCCw4XQh+lWgb5EbbE2v92JCFp79t/qOp0u1V
+ Vbq8PKoLGr2hYpb2Q032tTSn6nW1IHuG7di5HWkBtc7pkrzOSBO9ACbdOqSoNdbx9g8f
+ 3LNF3IxFWxNZJjzio+WPRgromRxjMcENEm/jffW60Mr0RBCW6CVxlJc5JUQujv4058FA
+ sq7GzixqWWlhnETfChBp1/CMwKNlM8AbZE2r78yVb7MruYIlmZnS95/fxCBHM1kJJ6GI
+ ACPBIrw9b/gyOSG386o5Ja0SS0LvH8mmUk6OfRMZ341sZ46V6PkTo/AYvPSxkokxV7OM
+ Yhnw==
+X-Gm-Message-State: AOJu0YwFqmkrUe18SfNt4VCu15MzQKZoMsZa3Y+6BoER0hWO/YZVMnhF
+ RJLkXoY0GhQHDNRuyoalFIZK7oKcHoCWtHonqcDhMjUkjHNOLWCHzdpeHbCTPQ==
+X-Gm-Gg: AY/fxX7J6bPLdQSemJ2XXhi800zy0vB7ntP0U53/ZgS1foRlG7C4eml//sFeCR0laKl
+ MKvwibypuhxBhi6V0/JgfuUhKYkVDYLQ2mls0htg2tLNcDGhWHpCAnoqBLHae3LoB+ui/AYWqtu
+ QD7TcVVE1ZJ2VHAuoaG0vW0tLbEKw43oH2vRE0FIwg51TKNxacOZAt5w47ZroGMmRx5mpKQkqYI
+ ZOa27/wWnnV5DSc5oOF7xATLkdATB/2jrqXBVgJXR53aS6K1JeitvB7orBTn3e2rzvEK99y6Xxb
+ rj2obTDIZJeTOMct9ZDFLbCD/OYIDTVowEtNu1eYGjXXjle+Tl9P0OplxDSTYj8gxO8uyy3KVp8
+ EmD0t38Od3f6q+5JtoorTVMp/OMq3l2gf/2nqzugQ50LtSb5FwO2GVW5m5LF3Lzqla2au9KRgJ4
+ IK2Yu8n8tSKPHw42VOgUH+Wut8tTjRTugBAAq/GY0CdkoiRAiT9nB8cl/QzFUJe5AHHA4nxQw+D
+ IrpFg6wN4zJEZDHKVClWbL3BWiu0g==
+X-Received: by 2002:a05:690e:14c4:b0:640:d119:d339 with SMTP id
+ 956f58d0204a3-64901aba071mr1332186d50.33.1768369545301; 
+ Tue, 13 Jan 2026 21:45:45 -0800 (PST)
+Received: from [10.138.34.110]
+ (h69-131-215-163.cncrtn.broadband.dynamic.tds.net. [69.131.215.163])
+ by smtp.gmail.com with ESMTPSA id
+ 956f58d0204a3-6470d7f7c04sm10194131d50.2.2026.01.13.21.45.43
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 13 Jan 2026 21:45:44 -0800 (PST)
+Message-ID: <aed97fd8-28ca-4a29-bbbe-28ac31744c35@gmail.com>
+Date: Wed, 14 Jan 2026 00:45:38 -0500
 MIME-Version: 1.0
-X-Received: by 2002:a05:6820:60b:b0:65f:bad:789c with SMTP id
- 006d021491bc7-65f54f670d5mr3384227eaf.58.1767912203538; Thu, 08 Jan 2026
- 14:43:23 -0800 (PST)
-Date: Thu, 08 Jan 2026 14:43:23 -0800
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <6960330b.050a0220.1c677c.03a9.GAE@google.com>
-Subject: [syzbot] [wireguard?] WARNING in stub_timer
-From: syzbot <syzbot+19e796f043fe3be7b76a@syzkaller.appspotmail.com>
-To: Jason@zx2c4.com, andrew+netdev@lunn.ch, davem@davemloft.net, 
- edumazet@google.com, kuba@kernel.org, linux-kernel@vger.kernel.org, 
- netdev@vger.kernel.org, pabeni@redhat.com, syzkaller-bugs@googlegroups.com, 
- wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+From: Demi Marie Obenour <demiobenour@gmail.com>
+Subject: Plans for post-quantum security?
+To: wireguard@lists.zx2c4.com
+Content-Language: en-US
+Autocrypt: addr=demiobenour@gmail.com; keydata=
+ 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
+ +MYSfkEjBz0E8CLOcAw7JIwAaeBT
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------zwwvQ8U5gq4n5Ri96rlgXQiv"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -63,131 +129,250 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------zwwvQ8U5gq4n5Ri96rlgXQiv
+Content-Type: multipart/mixed; boundary="------------g87XwKOIH0ivVvSk3kXzvV8o";
+ protected-headers="v1"
+Message-ID: <aed97fd8-28ca-4a29-bbbe-28ac31744c35@gmail.com>
+Date: Wed, 14 Jan 2026 00:45:38 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Demi Marie Obenour <demiobenour@gmail.com>
+Subject: Plans for post-quantum security?
+To: wireguard@lists.zx2c4.com
+Content-Language: en-US
+Autocrypt: addr=demiobenour@gmail.com; keydata=
+ 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
+ +MYSfkEjBz0E8CLOcAw7JIwAaeBT
 
-syzbot found the following issue on:
+--------------g87XwKOIH0ivVvSk3kXzvV8o
+Content-Type: multipart/mixed; boundary="------------UEHOJR07fZuA5jaQmZQSJU3Y"
 
-HEAD commit:    54e82e93ca93 Merge tag 'core_urgent_for_v6.19_rc4' of git:..
-git tree:       upstream
-console output: https://syzkaller.appspot.com/x/log.txt?x=1022ee22580000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=513255d80ab78f2b
-dashboard link: https://syzkaller.appspot.com/bug?extid=19e796f043fe3be7b76a
-compiler:       Debian clang version 20.1.8 (++20250708063551+0c9f909b7976-1~exp1~20250708183702.136), Debian LLD 20.1.8
+--------------UEHOJR07fZuA5jaQmZQSJU3Y
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Unfortunately, I don't have any reproducer for this issue yet.
+Are there plans to make WireGuard post-quantum secure?  Post-quantum
+cryptography is actually faster than X25519, and it is the default
+in browsers and many libraries now [1].  It is also the default in
+OpenSSH, which warns if it is not in use.
 
-Downloadable assets:
-disk image (non-bootable): https://storage.googleapis.com/syzbot-assets/d900f083ada3/non_bootable_disk-54e82e93.raw.xz
-vmlinux: https://storage.googleapis.com/syzbot-assets/f3befb5f53a4/vmlinux-54e82e93.xz
-kernel image: https://storage.googleapis.com/syzbot-assets/92820ca1dbd8/bzImage-54e82e93.xz
+There is an academic paper [2] with a post-quantum VPN based on
+WireGuard, but to keep the handshake packets inside the IPv6 MTU,
+they had to make trade-offs:
 
-IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+19e796f043fe3be7b76a@syzkaller.appspotmail.com
+1. The key-encapsulation mechanism used for forward secrecy
+   is a modified version of Saber that is only secure against
+   chosen-plaintext attack, not chosen-ciphertext attack.  This is
+   (hopefully) sufficient for the task here, but this might take
+   careful analysis to prove.  It also isn't standardized anywhere
+   I am aware of.
 
-------------[ cut here ]------------
-WARNING: kernel/time/timer.c:716 at stub_timer+0xa/0x20 kernel/time/timer.c:716, CPU#0: kworker/0:1/10
-Modules linked in:
-CPU: 0 UID: 0 PID: 10 Comm: kworker/0:1 Not tainted syzkaller #0 PREEMPT(full) 
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-Workqueue: events_power_efficient wg_ratelimiter_gc_entries
-RIP: 0010:stub_timer+0xa/0x20 kernel/time/timer.c:716
-Code: 0f 94 c0 5b 41 5e e9 05 73 b0 09 cc 0f 1f 40 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3 0f 1e fa e8 27 fa 12 00 90 <0f> 0b 90 c3 cc cc cc cc cc 66 66 66 66 2e 0f 1f 84 00 00 00 00 00
-RSP: 0018:ffffc90000007c98 EFLAGS: 00010246
-RAX: ffffffff81ae0d39 RBX: 0000000000000101 RCX: ffff88801bef0000
-RDX: 0000000000000100 RSI: ffffffff8bc095c0 RDI: ffffc9000db0f1c0
-RBP: ffffc90000007d90 R08: ffffffff8f824677 R09: 1ffffffff1f048ce
-R10: dffffc0000000000 R11: ffffffff81ae0d30 R12: 0000000000000000
-R13: ffffc9000db0f1c0 R14: 1ffff92000000f98 R15: 0000000000000001
-FS:  0000000000000000(0000) GS:ffff88808d414000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f2cc5528910 CR3: 00000000377e7000 CR4: 0000000000352ef0
-Call Trace:
- <IRQ>
- call_timer_fn+0x16e/0x590 kernel/time/timer.c:1748
- expire_timers kernel/time/timer.c:1799 [inline]
- __run_timers kernel/time/timer.c:2373 [inline]
- __run_timer_base+0x61a/0x860 kernel/time/timer.c:2385
- run_timer_base kernel/time/timer.c:2394 [inline]
- run_timer_softirq+0xb7/0x180 kernel/time/timer.c:2404
- handle_softirqs+0x22b/0x7c0 kernel/softirq.c:622
- __do_softirq kernel/softirq.c:656 [inline]
- invoke_softirq kernel/softirq.c:496 [inline]
- __irq_exit_rcu+0x60/0x150 kernel/softirq.c:723
- irq_exit_rcu+0x9/0x30 kernel/softirq.c:739
- instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1056 [inline]
- sysvec_apic_timer_interrupt+0xa6/0xc0 arch/x86/kernel/apic/apic.c:1056
- </IRQ>
- <TASK>
- asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:697
-RIP: 0010:lock_release+0x2d8/0x3b0 kernel/locking/lockdep.c:5893
-Code: e4 e2 10 00 00 00 00 eb b5 e8 84 7f bd 09 f7 c3 00 02 00 00 74 b9 65 48 8b 05 74 9e e2 10 48 3b 44 24 28 75 44 fb 48 83 c4 30 <5b> 41 5c 41 5d 41 5e 41 5f 5d e9 59 5e c0 09 cc 48 8d 3d 11 6d e7
-RSP: 0018:ffffc900001c79e0 EFLAGS: 00000282
-RAX: f62d7e25cf48d100 RBX: 0000000000000283 RCX: 0000000080000001
-RDX: 0000000000000002 RSI: ffffffff8d97c93e RDI: ffffffff8bc095e0
-RBP: ffff88801bef0b80 R08: 0000000000000003 R09: 0000000000000004
-R10: dffffc0000000000 R11: fffff52000038f34 R12: 0000000000000002
-R13: 0000000000000002 R14: ffffffff8ea6eef8 R15: ffff88801bef0000
- __raw_spin_unlock include/linux/spinlock_api_smp.h:141 [inline]
- _raw_spin_unlock+0x16/0x50 kernel/locking/spinlock.c:186
- spin_unlock include/linux/spinlock.h:391 [inline]
- wg_ratelimiter_gc_entries+0x384/0x450 drivers/net/wireguard/ratelimiter.c:76
- process_one_work kernel/workqueue.c:3257 [inline]
- process_scheduled_works+0xad1/0x1770 kernel/workqueue.c:3340
- worker_thread+0x8a0/0xda0 kernel/workqueue.c:3421
- kthread+0x711/0x8a0 kernel/kthread.c:463
- ret_from_fork+0x510/0xa50 arch/x86/kernel/process.c:158
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246
- </TASK>
-----------------
-Code disassembly (best guess):
-   0:	e4 e2                	in     $0xe2,%al
-   2:	10 00                	adc    %al,(%rax)
-   4:	00 00                	add    %al,(%rax)
-   6:	00 eb                	add    %ch,%bl
-   8:	b5 e8                	mov    $0xe8,%ch
-   a:	84 7f bd             	test   %bh,-0x43(%rdi)
-   d:	09 f7                	or     %esi,%edi
-   f:	c3                   	ret
-  10:	00 02                	add    %al,(%rdx)
-  12:	00 00                	add    %al,(%rax)
-  14:	74 b9                	je     0xffffffcf
-  16:	65 48 8b 05 74 9e e2 	mov    %gs:0x10e29e74(%rip),%rax        # 0x10e29e92
-  1d:	10
-  1e:	48 3b 44 24 28       	cmp    0x28(%rsp),%rax
-  23:	75 44                	jne    0x69
-  25:	fb                   	sti
-  26:	48 83 c4 30          	add    $0x30,%rsp
-* 2a:	5b                   	pop    %rbx <-- trapping instruction
-  2b:	41 5c                	pop    %r12
-  2d:	41 5d                	pop    %r13
-  2f:	41 5e                	pop    %r14
-  31:	41 5f                	pop    %r15
-  33:	5d                   	pop    %rbp
-  34:	e9 59 5e c0 09       	jmp    0x9c05e92
-  39:	cc                   	int3
-  3a:	48                   	rex.W
-  3b:	8d                   	.byte 0x8d
-  3c:	3d                   	.byte 0x3d
-  3d:	11 6d e7             	adc    %ebp,-0x19(%rbp)
+2. Classic McEliece is used for long-term asymmetric keys.  It has
+   small ciphertexts, but massive public keys.
+
+I have some thoughts of my own, but first I'd like to know if there are
+any plans from the developers and if suggestions would be appreciated.
+I'd like to not need to switch to IPsec!
+
+Of course, one can always repeatedly update the PresharedKey
+field using a daemon running in userspace, but this loses some of
+WireGuard's advantages.  It is also tricky to do without having to
+send traffic outside the tunnel, and it only rekeys so long as the
+daemon keeps running.
+
+[1]: https://developers.cloudflare.com/ssl/post-quantum-cryptography/pqc-=
+support/
+[2]: https://eprint.iacr.org/2020/379.pdf
+--=20
+Sincerely,
+Demi Marie Obenour (she/her/hers)
 
 
----
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
+--------------UEHOJR07fZuA5jaQmZQSJU3Y
+Content-Type: application/pgp-keys; name="OpenPGP_0xB288B55FFF9C22C1.asc"
+Content-Disposition: attachment; filename="OpenPGP_0xB288B55FFF9C22C1.asc"
+Content-Description: OpenPGP public key
+Content-Transfer-Encoding: quoted-printable
 
-syzbot will keep track of this issue. See:
-https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
+-----BEGIN PGP PUBLIC KEY BLOCK-----
 
-If the report is already addressed, let syzbot know by replying with:
-#syz fix: exact-commit-title
+xsFNBFp+A0oBEADffj6anl9/BHhUSxGTICeVl2tob7hPDdhHNgPR4C8xlYt5q49y
+B+l2nipdaq+4Gk6FZfqC825TKl7eRpUjMriwle4r3R0ydSIGcy4M6eb0IcxmuPYf
+bWpr/si88QKgyGSVZ7GeNW1UnzTdhYHuFlk8dBSmB1fzhEYEk0RcJqg4AKoq6/3/
+UorR+FaSuVwT7rqzGrTlscnTDlPWgRzrQ3jssesI7sZLm82E3pJSgaUoCdCOlL7M
+MPCJwI8JpPlBedRpe9tfVyfu3euTPLPxwcV3L/cfWPGSL4PofBtB8NUU6QwYiQ9H
+zx4xOyn67zW73/G0Q2vPPRst8LBDqlxLjbtx/WLR6h3nBc3eyuZ+q62HS1pJ5EvU
+T1vjyJ1ySrqtUXWQ4XlZyoEFUfpJxJoN0A9HCxmHGVckzTRl5FMWo8TCniHynNXs
+BtDQbabt7aNEOaAJdE7to0AH3T/Bvwzcp0ZJtBk0EM6YeMLtotUut7h2Bkg1b//r
+6bTBswMBXVJ5H44Qf0+eKeUg7whSC9qpYOzzrm7+0r9F5u3qF8ZTx55TJc2g656C
+9a1P1MYVysLvkLvS4H+crmxA/i08Tc1h+x9RRvqba4lSzZ6/Tmt60DPM5Sc4R0nS
+m9BBff0Nm0bSNRS8InXdO1Aq3362QKX2NOwcL5YaStwODNyZUqF7izjK4QARAQAB
+zTxEZW1pIE9iZW5vdXIgKElUTCBFbWFpbCBLZXkpIDxhdGhlbmFAaW52aXNpYmxl
+dGhpbmdzbGFiLmNvbT7CwY4EEwEIADgWIQR2h02fEza6IlkHHHGyiLVf/5wiwQUC
+X6YJvQIbAwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgAAKCRCyiLVf/5wiwWRhD/0Y
+R+YYC5Kduv/2LBgQJIygMsFiRHbR4+tWXuTFqgrxxFSlMktZ6gQrQCWe38WnOXkB
+oY6n/5lSJdfnuGd2UagZ/9dkaGMUkqt+5WshLFly4BnP7pSsWReKgMP7etRTwn3S
+zk1OwFx2lzY1EnnconPLfPBc6rWG2moA6l0WX+3WNR1B1ndqpl2hPSjT2jUCBWDV
+rGOUSX7r5f1WgtBeNYnEXPBCUUM51pFGESmfHIXQrqFDA7nBNiIVFDJTmQzuEqIy
+Jl67pKNgooij5mKzRhFKHfjLRAH4mmWZlB9UjDStAfFBAoDFHwd1HL5VQCNQdqEc
+/9lZDApqWuCPadZN+pGouqLysesIYsNxUhJ7dtWOWHl0vs7/3qkWmWun/2uOJMQh
+ra2u8nA9g91FbOobWqjrDd6x3ZJoGQf4zLqjmn/P514gb697788e573WN/MpQ5XI
+Fl7aM2d6/GJiq6LC9T2gSUW4rbPBiqOCeiUx7Kd/sVm41p9TOA7fEG4bYddCfDsN
+xaQJH6VRK3NOuBUGeL+iQEVF5Xs6Yp+U+jwvv2M5Lel3EqAYo5xXTx4ls0xaxDCu
+fudcAh8CMMqx3fguSb7Mi31WlnZpk0fDuWQVNKyDP7lYpwc4nCCGNKCj622ZSocH
+AcQmX28L8pJdLYacv9pU3jPy4fHcQYvmTavTqowGnM08RGVtaSBNYXJpZSBPYmVu
+b3VyIChsb3ZlciBvZiBjb2RpbmcpIDxkZW1pb2Jlbm91ckBnbWFpbC5jb20+wsF4
+BBMBAgAiBQJafgNKAhsDBgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAAKCRCyiLVf
+/5wiwYa/EACv8a2+MMou9cSCNoZBQaU+fTmyzft9hUE+0d5W2UY1RY3OsjFIzm9R
+/4SVccfsqOYLEo+S0vQMIIIqFEq3FCpXXwPzyimotps05VA8U3Bd7yseojFygOgK
+sAMOAee2RCaDDOnoJue01dfZMzzHPO/TVdp3OvnpWipfv5G1Xg96rwbhMLE3tg6N
+xwAHa31Bv4/Xq8CJOoIWvx6fcmZQpz01/lSvsYn0KrfEbTKkuUf0vM9JrCTCP2oz
+VNN5BYzqaq2M4r+jmSyeXLim922VOWqGkUEQ85BSEemqrRS06IU6NtEMsF8EWt/b
+hWjk/9GDKTcnpdJHTrMxTspExBiNrvpI2t+YPU5B/dJJAUxvmhFrbSIbdB8umBZs
+I3AMYrEmpAbh5x7jEjoskUC7uN3o9vpg1oCLS2ePDLtAtyBtbHnkA4xGD7ar8mem
+xpH9lY/i+sC6CyyIUWcUDnnagKyJP0m9ks0GLsTeOCA0bft2XA6rD6aaCnMUsndT
+ctrab42CV5XypjmC4U1rPJ8JQJUh1/3P48/8sMH+3krxpJ06KNWNFaUbaMTGiltZ
+7x9DngklSYrX0T+2G4kVXNmjaljwkoLahwLla2gUWwBSyofXdqyhQdwZsp01KXNQ
+UCyT/Pg+aDcm/E7OMV3d4lf7g/CSxiX2GSEe6BlhSz+Lmd7ZJ3g32M1ARGVtaSBN
+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
+EtJuZYM5blWncBOJCoWMnBEcTEo/viU3GgcVRw=3D=3D
+=3Dx94R
+-----END PGP PUBLIC KEY BLOCK-----
 
-If you want to overwrite report's subsystems, reply with:
-#syz set subsystems: new-subsystem
-(See the list of subsystem names on the web dashboard)
+--------------UEHOJR07fZuA5jaQmZQSJU3Y--
 
-If the report is a duplicate of another one, reply with:
-#syz dup: exact-subject-of-another-report
+--------------g87XwKOIH0ivVvSk3kXzvV8o--
 
-If you want to undo deduplication, reply with:
-#syz undup
+--------------zwwvQ8U5gq4n5Ri96rlgXQiv
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEopQtqVJW1aeuo9/sszaHOrMp8lMFAmlnLYQACgkQszaHOrMp
+8lONEA/+LjvEibrMpIIaofyLgVa+cPR46wthFp5oO1y3xEv+2siNRuBEVIpue6ne
+PxEKEnWdzblOXXgUc7JM+F4+pFLo7SQ1HMpNM3vVkbCFiFoGGlyuzouAYBOFZnGY
+5zxiB2iAXOfE4bH5JPJCxv8ZGwwMT7WgtnxVrnEKX4eCfEpr2lvVYk8nTKT/HgWm
+7sVh3HzmfDgUtn/hhG9tp5UrCgq5wBl+2U8bnNqTOZKjwonIo4/qzwB2T7FMO4Ir
+v+A71kRdj6Wp5RvVqpJJVNJNqHI9uB5QVaKKistF/jw0rt0d+JHr9Jrm8KGlS5aW
+CGpVvWnY0i+05u1IU8vy5ys5ubCRetLdz+WUYFUm8TIL2NaG62Gs5/IAjEU/xP8b
+crjuuKdFhQ7715T0jU3su1Zx71WpEXMbVGmG5GEthM9PnfmtFAUwhkObKwar5Xpf
+CZMWX0DPgotuWqCyrwzVoQmdmTnGIokQa42qZmafCZeAWQRPCpv6hkFYPn15Op0X
+leyGfU9jwtw++9fbSDr8NU+rHpT3SvywLBqr6wMoc8T5Jxzs18UwyCIOs5022hqC
+fpLYmoOj4Abssrb+tlxh9UOWGE2z337TN3Ry8Zbw9YCqqMsfpaarB1DT79ncuAyJ
+IEtK8Cz06gvvKcZD+KKuCfwH3VUWyp6EDDwu576k6GIo/cGFwsg=
+=ZjcP
+-----END PGP SIGNATURE-----
+
+--------------zwwvQ8U5gq4n5Ri96rlgXQiv--
