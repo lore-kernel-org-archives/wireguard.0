@@ -4,113 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E647D3CC9F
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 15 Jan 2026 08:12:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91BA5D41149
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 15 Jan 2026 09:15:53 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1ca3103d;
-	Thu, 15 Jan 2026 08:12:24 +0000 (UTC)
-Received: from gmmr-3.centrum.cz (gmmr-3.centrum.cz [2a00:da80:0:502::8])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6217d737
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 10560af9;
+	Thu, 15 Jan 2026 09:15:51 +0000 (UTC)
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com
+ [2607:f8b0:4864:20::82a])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id edc0f74a
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 15 Jan 2026 08:12:21 +0000 (UTC)
-Received: from gmmr-3.centrum.cz (localhost [127.0.0.1])
- by gmmr-3.centrum.cz (Postfix) with ESMTP id E7882205F87A
- for <wireguard@lists.zx2c4.com>; Thu, 15 Jan 2026 09:12:20 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=atlas.cz; s=mail;
- t=1768464740; bh=8xs4Ur+iyrRIuci3J+LzFqMJp6PbKveiLreGF9YV6j8=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=PzX+Io4WQTvytOktzlWe8zZStzEvkGKY9E5an3T2xojbmYzqOc8dKrmF5Yc8nFoyL
- 9WsjJ1Fso/HOLad3FPdu1GTYKPxUbUXU1mxYwI/sZ+bF/ymyL93xa3a5Gct0GXtMCD
- Cx4cuPtzfJqoTK9mWHikSAeEgT9+TlxHD62r1/Js=
-Received: from antispam102.centrum.cz (antispam102.cent [10.30.208.102])
- by gmmr-3.centrum.cz (Postfix) with ESMTP id E4E5520445DC
- for <wireguard@lists.zx2c4.com>; Thu, 15 Jan 2026 09:12:20 +0100 (CET)
-X-CSE-ConnectionGUID: JIz2WijUQpieEWqCpfKtUg==
-X-CSE-MsgGUID: SVgMl3xhSHqvlnkbrVU6cg==
-X-ThreatScanner-Verdict: Negative
-X-IPAS-Result: =?us-ascii?q?A2H/BwBCoGhp/0vj/y5agQkJi1GRd1WLIoY1gSCEAYZhg?=
- =?us-ascii?q?WsPAQEBAQEBAQEBCVEEAQGFBwKMdic4EwECBAEBAQEDAgMBAQEBAQEBAQEBA?=
- =?us-ascii?q?QsBAQYBAQEBAQEGBgECgR2GCVOCW4QIAQUjBFIQCw0BCgICJgICVgaDFYI6A?=
- =?us-ascii?q?TmuY38zGgJl3HcCgSVigSwVgQouiFMBhH5xhHhCgg2EPz6EDgESAYN8gmkEg?=
- =?us-ascii?q?iKBDoFFik6IAVJ4HANZLAFVExcLBwWBI0MDgQYjSwUtHYEjIR0XEx9YGwcFE?=
- =?us-ascii?q?yOBHAYbBhwSAgMBAgI6UwyBdgICBIIQe4IBD4cQgQAFLm8aDiICQzUDC209N?=
- =?us-ascii?q?xQbBJV7gRMgG8ZggxyBCoROnSQzg3EBlAsDkmsumFipQYFRLoEPcDMiMIMjU?=
- =?us-ascii?q?RnSLoEzAgcLAQEDCYI7j2OBSwEB?=
-IronPort-PHdr: A9a23:GzdngRAVN7V5rxfn4nOgUyQUC0UY04WdBeb1wqQuh78GSKm/5ZOqZ
- BWZua4xygeRFtyBtq8fw8Pt8IneGkU4qa6bt34DdJEeHzQksu4x2yEGPouuJHa/EsTXaTcnF
- t9JTl5v8iLzG0FUHMHjew+a+SXqvnYdFRrlKAV6OPn+FJLMgMSrzeCy/IDYbxlViDanbr5/I
- hq7oR/NusUKjoduN7g9xxvJr3ZGZu9b2X5mKVWPkhnz4cu94IRt+DlKtfI78M5AX6T6f6AmQ
- rFdET8rLWM76tD1uBfaVQeB6WMSXWoPnhdWDAbL8Qn2UZjtvCT0sOp9wzSaMtbtTb8oQzSi7
- rxkRwHuhSwaKjM26mDXish3jKJGvBKsogF0zoDIbI2JMvd1Y6XQds4YS2VcRMZcTyJPDIOiY
- YYREuQPPuhYoIbhqFQTrxSzHhWsCP/1xzNUmnP6wa833uI8Gg/GxgwgGNcOvWzOotrrKKcSS
- /2+w6bSwjXFcfZW2ir25Y/SfRA7ovGDR7dwftDLyUQ0DQzFklGQppb+Pz+PyusMsnGW4ux9X
- u2gl2ApsRt+oiSzxsgykInJgJoYxk3Y+Chlz4s4J9+1RVNmbdOmH5VduSGXOop5TM4sTW9lp
- ig0xLIGtJKmYiUG1ZQqyh7fZfCbcoWG7BbuWPiRLDp+mXlre6q/ig69/EWh0OHwSMm53VZQo
- iZbjNXBtGoB2h7T58SfVPdx40ms1SyR2wzN9u1IO144mKXHJ5I7xrM9l5weulnZECDsgkX5l
- qqWe10h+uiv9uvofK3rpoSZN49okgH+NbkumtCnDeQ4LAcOW2+b9Pyz1L3m5EH5W7BKjuEuk
- qXErZzWP9gUqbC/Aw9JyIYj9hO/Ay2639UZhXUHLVRFdwybj4XxNFzDIer0Aem/jlmsijtn2
- e7KM7/7DpjPLnXPiLLhcqx8605Yxgoz19df55dMB74bOvLzWVX+tNnCAR8jKAG72frnCNFn2
- YMFQ26AHq6YPLvIsVCU/uIvP/WMZIgNtTfzMfcl4fHujXEkmV8GfampwIEYaHGjE/t9OUqZY
- GfjgsobHWgWuQo+SfTmiEeeXj5Le3ayQ6U86ykmB428E4fMWIWtjaec0yihAJ1ZeGVGClSLE
- Xfma4WIQfEMZzyOIsN5iDwLSaChS5M91RGprAL11adoLvfR+iICtJPsysR16vbclRE18jx0A
- MCd3H+XQ25omWMIQic63Lpjrkxl1leDza94juRbFdxO/PxGSBw3NZ3CwOxgDdD9RAbBcs2OS
- Fa8TdWqGSsxQc4pw98Sf0Z9HM2vjh7e3yqxA78ViqaEBJ0u/qPSxXfxIcl9xm3C1KkgiVkmX
- 8ROOXe7iaFh6QjfH5TJnFmBl6a2aaQc2zbA9HmZwmWTvUFYVRR8UavbUn8CYUvWt8r25kXBT
- 7+pErknNgpBycifKqpFcNHmkEtJROn7NNTEf22xg3uwBQqPxr6UYovqen8d0zvSCEgZiQ8T5
- 2uJOBM6BieguGLeECduGUjuYkLj7+VxtHy2QlUowAGNak1tz6C19QINhfyAV/MT2aoJtz0nq
- zppBlaywdzXB92GpwV/YKVTfM0y4Elc2GLdqgx9OJqgI7p+iV4eIExLuBbM3hZqAM1jkMMrq
- mgpzUImKr+S2XtCeime0JS2PafYfDrc5heqPpbbxkuW7t+QWaRHvP0iqFzmtRuBH1Ym+m4h2
- MsDgCjU3YnDEAdHCcG5aU0w7RUv/9nn
-IronPort-Data: A9a23:KRK5N6NKSab0qJ/vrR0WlsFynXyQoLVcMsEvi/4bfWQNrUoqgWcHm
- GMXCz+FPPmLMDbzedB3Pojg8xhTscDSxtNkT3M5pCpnJ55oRWspJjg7wmPYZX76whjrFRo/h
- ykmQoCeaphyFDmF/03F3oHJ9RFUzbuPSqf3FNnKMyVwQR4MYCo6gHqPocZg6mJTqYb/WVrlV
- e/a+ZWFZgf8gmMsawr41orawP9RlKWv0N8nlgNmDRx7lAe2v2UYCpsZOZawIxPQKqFIHvS3T
- vr017qw+GXU5X8FUrtJRZ6mGqGiaue60Tmm0hK6aYD76vRxjnBaPpIACRYpQRw/ZwOhxIktl
- YoX5fRcfi9yVkHEsLx1vxC1iEiSN4UekFPMCSDXXcB+UyQq2pYjqhljJBheAGEWxgp4KUNv5
- 6YnKTIwVwiCis+J2ZmjRMpwu8t2eaEHPKtH0p1h5T7cSO0jXYiaGuPB6NlExio1wMtcdRrcT
- 5ZHL2AyMVKaOUIJZQp/5JEWxY9EglH2aT5RrVuPjaMr52HIigdjuFToGIOJIoHRHJoIwi50o
- Er9wWvcBkoKNOe/0CSB9HGmnNHywyj0Ddd6+LqQs6QCbEeo7nMaDhIYSEC7vPC4okS3Wt5Cb
- UcT/0IGoaEs+UmDQtDjUhi8p3CY+BgRR7J4HuEn7Qifx7b87AGeCWwJCDVGbbQOt9I8TBQp2
- 0WPktevAiZg2JWbVGmd676V6yy7Pyc9KW4EeD9CQQYbi/H9qY0yi1TBQ9pkCqOzjdrdHTD23
- iDMoCUg750MjNQG2Liy51zvhzO3uoOPXB5v7VmRVWWghitwYoK/apPr71XH4fteBIKESF/Ht
- 3hss9CX5u0IDLmXmSCNSflLF7asj96BMTvBkRtsEoMn+jCF5XGuZ8ZT7St4KUMvNdwLERfvb
- VPftB15+pBeJj2pYLVxbob3DN4lpYDCHM/iUNjGfoBFPt56cwrvwc11TRLOmTqwzQ52y/55Z
- srznduQMEv2wJ9PlFKeL9rxG5dymkjSGUu7qUjH8ima
-IronPort-HdrOrdr: A9a23:2bgCWKt2UQHsy+T32PlbOIEF7skDYdV00zEX/kB9WHVpmwKj+P
- xGuM5rsCMc6QxhOk3I9urrBEDtex7hHNtOkO0s1NSZLWrbUQmTTb2KhLGKq1bd8m/FltK1vp
- 0PT0ERMrHNMWQ=
-X-Talos-CUID: =?us-ascii?q?9a23=3AylOexGqUfdOXsIpV1xSkjbzmUeIEYCfizXXtGle?=
- =?us-ascii?q?5BEtWUZaNR3yMxawxxg=3D=3D?=
-X-Talos-MUID: =?us-ascii?q?9a23=3AOTmOVA8+3PYVdYCLRGzlJd2Qf/xW7IGqU1ANqrU?=
- =?us-ascii?q?fpc2CNiZqBQrDhzviFw=3D=3D?=
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-AV: E=Sophos;i="6.21,226,1763420400"; d="scan'208";a="140531754"
-Received: from unknown (HELO gm-smtp11.centrum.cz) ([46.255.227.75])
- by antispam102.centrum.cz with ESMTP; 15 Jan 2026 09:12:14 +0100
-Received: from arkam (ip-213-220-240-96.bb.vodafone.cz [213.220.240.96])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by gm-smtp11.centrum.cz (Postfix) with ESMTPSA id 077331004FFCE;
- Thu, 15 Jan 2026 09:12:14 +0100 (CET)
-Date: Thu, 15 Jan 2026 09:12:13 +0100
-From: Petr =?utf-8?B?VmFuxJtr?= <arkamar@atlas.cz>
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: fushuai.wang@linux.dev, andrew+netdev@lunn.ch, netdev@vger.kernel.org,
- edumazet@google.com, pabeni@redhat.com,
- linux-kernel@vger.kernel.org, davem@davemloft.net,
- vadim.fedorenko@linux.dev, Jason@zx2c4.com,
- wireguard@lists.zx2c4.com, wangfushuai@baidu.com
-Subject: Re: [net-next, v3] wireguard: allowedips: Use kfree_rcu() instead of
- call_rcu()
-Message-ID: <202611581213-aWihXdQpdnhXv606-arkamar@atlas.cz>
-References: <20260112130633.25563-1-fushuai.wang@linux.dev>
- <20260115033237.1545400-1-kuba@kernel.org>
+ Thu, 15 Jan 2026 09:15:49 +0000 (UTC)
+Received: by mail-qt1-x82a.google.com with SMTP id
+ d75a77b69052e-5014453a0faso6763371cf.1
+ for <wireguard@lists.zx2c4.com>; Thu, 15 Jan 2026 01:15:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1768468548; x=1769073348; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1LJoalJ/bPq/SwT2K8wCn2gybGfkpq32wbnQ3LM3Vlc=;
+ b=kcZwnRpIs5A4CimlY7XKW7biPJcgjWXRi7zAihLP1ltzYwOiwXY+NadkETZ55+jJeu
+ lMAQpH8QuC9y6871+Z0SlK4cRLD4S4XTVRasyrgldahrPtQerJ9fIFPivbybrP+LOnq4
+ n1aWQTImRiklGT1uzclpH3GBZpuOJepcu4TDrJkRjSJrnAxAGIN2UcQZM/t/El2rHu/G
+ /Af1NMXquv8HHRXTdhwJH8VS9pYrcJWTXhTxvmljpZNkSgz0wSobqulPRxytgMnWCBaY
+ leTw5WIEM9R1lvihxYMnVMthEWy6y86387aa1MJTyfGi6gY81r/NbLQPhJqW7MHLjiQz
+ YsNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768468548; x=1769073348;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=1LJoalJ/bPq/SwT2K8wCn2gybGfkpq32wbnQ3LM3Vlc=;
+ b=xEvmpqftegShpCIxfMZJ6SbST0XeQ86H4hVSDFkvsSCTP/Unp7YHC2tkHm5f2v0w/O
+ u51+ifHP4MOHWK9793BGpwIO04FpIwliXzPADliGRFP+kubVuBWgr08Qd9yPp8MTqKjb
+ kmnND01XSr0Iq4/t2F2Sk+Ar+dSXrEs+zvIjwEJ2ubC1IoTqralO1y9Ga13+EIwLOaer
+ tFRV3nny65keraWspq2f/VDe3kQfH34laIKZ9YAf4yFVYc7y5sImn+YuGIMZJ6W3Ee3x
+ F+T0pfOiZ/1V6215AOSIgAWjLUArJrMTLKOT2Mk9ouQze9sPgqca7vDxzRcHFqTuszVU
+ LyZg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXB3BHVF4G36JkIBM21QMyFVF+ygEZi5zrNJFdudHufrkuJAw3nNL+UNZWvinBWYm9RkcK1UW4VF5k=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0Yz7jPrCfAckJK67ikuL/8yXXIe48zCkwLUv49nmCJhB8aPDfGCJ
+ ELMLYgT+x3nrwnQJT3/5x0b5tHhLcrcJN2ul7cFBLlEzRdQkKBNHLnY84oBkHfA8FMG5Rxmf2xE
+ 3xsXbcXixZZiK9NT+h+GeAgij6GplLo7j1s7v2dRH
+X-Gm-Gg: AY/fxX7Jk8OuqtL1QH58bnZXJZQoGAl/igzvdo20BagH3PI1ObzPkbg7sfILbe4WTKZ
+ aKEb0O8F6DTI0jV+j1qcXZbLHFYVGodz063URBk2bcB+GUpp2uhB1z6AQB3YaLQxsSgur2AxcMb
+ +q65cGtllhSefIqvqcRFwZeWXYAKG5BHNfZl8cUzpzxNksuPYjt9Ly1CWGbd8egTYixYPFwwMvN
+ 3LlSVxQkBTkXhaArHQIMCgbm9T6rSP8MuF/erbS1jVQvElZr/ITk6omweDcU6xlC5GvTg==
+X-Received: by 2002:a05:622a:199b:b0:502:9bdc:57e1 with SMTP id
+ d75a77b69052e-5029bdc598cmr6774851cf.2.1768468548067; Thu, 15 Jan 2026
+ 01:15:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260115033237.1545400-1-kuba@kernel.org>
+References: <20260115033237.1545400-1-kuba@kernel.org>
+ <20260115051221.68054-1-fushuai.wang@linux.dev>
+In-Reply-To: <20260115051221.68054-1-fushuai.wang@linux.dev>
+From: Eric Dumazet <edumazet@google.com>
+Date: Thu, 15 Jan 2026 10:15:36 +0100
+X-Gm-Features: AZwV_QhTCMDKh5q0J0qjsf9QjxWK4VZqifJza4JSZzX25aIAu0asXhhTMuuhlKY
+Message-ID: <CANn89iKfuXjqKsn+xB6bpGOaqM7pN4ZcRJ=2KJg4WY76ArYXhQ@mail.gmail.com>
+Subject: Re: [PATCH net-next v3] wireguard: allowedips: Use kfree_rcu()
+ instead of call_rcu()
+To: Fushuai Wang <fushuai.wang@linux.dev>
+Cc: kuba@kernel.org, Jason@zx2c4.com, andrew+netdev@lunn.ch, 
+ davem@davemloft.net, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
+ pabeni@redhat.com, vadim.fedorenko@linux.dev, wangfushuai@baidu.com, 
+ wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -125,16 +85,51 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Jakub,
+On Thu, Jan 15, 2026 at 6:12=E2=80=AFAM Fushuai Wang <fushuai.wang@linux.de=
+v> wrote:
+>
+> >> @@ -271,13 +266,13 @@ static void remove_node(struct allowedips_node *=
+node, struct mutex *lock)
+> >>      if (free_parent)
+> >>              child =3D rcu_dereference_protected(parent->bit[!(node->p=
+arent_bit_packed & 1)],
+> >>                                                lockdep_is_held(lock));
+> >> -    call_rcu(&node->rcu, node_free_rcu);
+> >> +    kfree_rcu(node, rcu);
+> >
+> > Does wg_allowedips_slab_uninit() need to be updated to use
+> > kvfree_rcu_barrier() instead of rcu_barrier()?
+> >
+> > When CONFIG_KVFREE_RCU_BATCHED is enabled (the default), kfree_rcu()
+> > uses a batched mechanism that queues work via queue_rcu_work(). The
+> > rcu_barrier() call waits for RCU callbacks to complete, but these
+> > callbacks only queue the actual free to a workqueue via rcu_work_rcufn(=
+).
+> > The workqueue work that calls kvfree() may still be pending after
+> > rcu_barrier() returns.
+> >
+> > The existing cleanup path is:
+> >   wg_allowedips_slab_uninit() -> rcu_barrier() -> kmem_cache_destroy()
+> >
+> > With kfree_rcu(), this sequence could destroy the slab cache while
+> > kfree_rcu_work() still has pending frees queued. The proper barrier for
+> > kfree_rcu() is kvfree_rcu_barrier() which also calls flush_rcu_work()
+> > on all pending batches.
+>
+> We do not need to add an explict kvfree_rcu_barrier(), becasue the commit
+> 6c6c47b063b5 ("mm, slab: call kvfree_rcu_barrier() from kmem_cache_destro=
+y()")
+> already does it.
 
-Minor side note: I noticed a small typo in the AI review foreword. I
-assume this is part of a template:
+It was doing it, but got replaced recently with a plain rcu_barrier()
 
-On Wed, Jan 14, 2026 at 07:32:37PM -0800, Jakub Kicinski wrote:
-> This is an AI-generated review of your patch. The human sending this
-> email has considered the AI review valid, or at least pausible.
-                                                        ^~~~~~~~
-pausible -> plausible
+commit 0f35040de59371ad542b915d7b91176c9910dadc
+Author: Harry Yoo <harry.yoo@oracle.com>
+Date:   Mon Dec 8 00:41:47 2025 +0900
 
-Best,
-Petr
+    mm/slab: introduce kvfree_rcu_barrier_on_cache() for cache destruction
+
+We would like explicit +2 from mm _and_ rcu experts on this wireguard patch=
+.
+
+Thank you.
