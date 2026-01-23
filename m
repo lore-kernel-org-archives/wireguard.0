@@ -4,44 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22578EF06E3
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Feb 2026 17:21:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25F5FEF06E3
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Feb 2026 18:13:09 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f167e1b5;
-	Sun, 8 Feb 2026 17:10:40 +0000 (UTC)
-Received: from out-171.mta0.migadu.com (out-171.mta0.migadu.com
- [2001:41d0:1004:224b::ab])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 442a13e8
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f2a2901f;
+	Sun, 8 Feb 2026 17:10:45 +0000 (UTC)
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com
+ [2a00:1450:4864:20::235])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e0120f3d
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 15 Jan 2026 05:12:39 +0000 (UTC)
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
- include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1768453959;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Uqs9U/83nmbmyG5rORjd6RhV9BLTO6XkyhyTLqEtIPI=;
- b=ft7+OiKmZSln0rUGSulTMpwBOK0SEf2j8L/gFLCN5kTbvOEqrZVeVvGpZLhhSpeaj8ldvC
- cOvs605VONB1EjnuLgaUdPvIp6RQe/sDpkx+HcIt6quKykO3peqZBkGBwAAH+3jYX8h8Bp
- tNWz9xMhlwdxBVVimlWxgDg85uoLZbc=
-From: Fushuai Wang <fushuai.wang@linux.dev>
-To: kuba@kernel.org
-Cc: Jason@zx2c4.com, andrew+netdev@lunn.ch, davem@davemloft.net,
- edumazet@google.com, fushuai.wang@linux.dev, linux-kernel@vger.kernel.org,
- netdev@vger.kernel.org, pabeni@redhat.com, vadim.fedorenko@linux.dev,
- wangfushuai@baidu.com, wireguard@lists.zx2c4.com
-Subject: Re: [PATCH net-next v3] wireguard: allowedips: Use kfree_rcu()
- instead of call_rcu()
-Date: Thu, 15 Jan 2026 13:12:21 +0800
-Message-Id: <20260115051221.68054-1-fushuai.wang@linux.dev>
-In-Reply-To: <20260115033237.1545400-1-kuba@kernel.org>
-References: <20260115033237.1545400-1-kuba@kernel.org>
+ Fri, 23 Jan 2026 19:34:30 +0000 (UTC)
+Received: by mail-lj1-x235.google.com with SMTP id
+ 38308e7fff4ca-385cfc572f1so22578701fa.3
+ for <wireguard@lists.zx2c4.com>; Fri, 23 Jan 2026 11:34:30 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769196870; cv=none;
+ d=google.com; s=arc-20240605;
+ b=TcgmnNwhazXAJ5jg7ZGEtsaDdnFnp3v9mWK1ieDB8UoUNYc6jhVg9JCRl+VQBRtae0
+ ggGs1cC+6h493nySUakSVzSUs7doE+E3xAQox/WN1tLh+mfNxBBbvpXzyKiNKBqA+3tD
+ fV04PrYQwlY9ampia96yhyKsPKQz5uFZTEdXqNUTN+wVzzLFlRNnCzQ9QszAtb9o6bsu
+ y72/9c7g2X8k+h1mclWFVPhsnOl6IpFOyRqjUNksc9MRDwiZc9kEXnFHjeJown/cmOKo
+ 4t0PL9TDGfVzB2bY2/uG3+w4QqF38nqJrEXOW3Y7UwJ6lP+hOaJIjyl0UoOkQ9LZHONH
+ emmQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=xFaIQ+T2jQkKgpPEGaGzvi/PsYDlZY+QqtTeemyyzJ0=;
+ fh=1CsOgAxkj0tSFTO0bRovl0wQS24+EZdEApJbdc/Xo54=;
+ b=a34ecE82v0G0VWrG3ogB/zuQeRJY/9ajhY4xA8uMDrfTqDCHceefZ6bxCKUoyah5l0
+ Id69UpsOYfTRNYFMddXWfq4GKfFyZBULPatBfMyxFCDLsYqzT+zV6Z5eP94qI9W0eGF5
+ xT0aUSB7cmXjGpoREzx2UwNd9KMvta5yd/xiFKxiI/ZE9IJdKJzuZDdSDuWhCKCSgOAC
+ ZSEvVDPwEzv/CZ+TBrpQdq87jpry/tQhKKHVN+4lawSXWUJFQNokR73D8YQgqD62PMOk
+ hMYXkqSFJLKZdS8S+EVsEumuZy1cHCspgToZqFgu8gg89hj3U/fUmpdDWRtvVSDNce+p
+ 2tQA==; darn=lists.zx2c4.com
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1769196870; x=1769801670; darn=lists.zx2c4.com;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=xFaIQ+T2jQkKgpPEGaGzvi/PsYDlZY+QqtTeemyyzJ0=;
+ b=iiIesmIeyLni54s8X1OPy6E+s0zOMseYWf86vg1MHUXpMtMqPOfn11dmgy26RdAH6W
+ AOGvDlIzGBA5AGM9lWfwrr8j41q3a3TA9ugVAuPpY04tbLGnK4BL6VgU0Yxlkc/CRJVA
+ 0WUteZbG1OWvKjnyZqMU5qmHFzAtY0mS/YpKHNo2OyzRXEp31ONu2nNu7bSjpvIgLnUt
+ 63psXlEWLePNfjYzjO0UeevRer+gIjzRPXxqsZ1HYrOklgbo+rky3zN7Eb6DF6epnUxJ
+ A6mDpT2hEOpz+5/X72yFhRk2d9G9OrZpAZ3+am3vfJqZTtgItdhBO52itFs49NdZjC/g
+ jzzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769196870; x=1769801670;
+ h=to:subject:message-id:date:from:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=xFaIQ+T2jQkKgpPEGaGzvi/PsYDlZY+QqtTeemyyzJ0=;
+ b=PrR/pTqwASntLI4koE6fEwkXWmXF4iAilXbWWZ7EgzKHR8ralcL/Ycy+hegm5H6bz2
+ F1bVINqoooGKRs8KYjzx7bBEsqIVaydknbpT2nKfbuUKXv/cBhIk1KhM5/w/OgV3Gi6I
+ YDPYPvrB/03+Xqoufa0uswzq1jCSpLi6EqhaFobLt+iuucOosfxNSVBXY3mNLTxaMxpe
+ tAWOzEu+cCM9iV1EJMJepHqIGH0tv2997OiONJM7MZAHbs8bGqi4nKgVnHyAiHfiorEc
+ VpvLKMVfliBZqKuS930ICTxgQ+Leqrwkygeh+3DjxVlRSvTBdDzFmptd392cjt7MaMvs
+ 1drg==
+X-Gm-Message-State: AOJu0YyIAbNOPbfhzZy2d1aNnJRMLmBMNtXXOu5Kw+mMjecAqk36mC8e
+ 5O4elod8TdaRsy8J3zDZEFN4Odwp5bGvt6zff4d0RdIoNNnqCfGbMN7zFc+IsxLPyvcxNUEoZwz
+ 4Odyc0K4+cjJyguylt6hZKc93eOQYz6RSY389
+X-Gm-Gg: AZuq6aLsmT5CwV46l0DpUdZghjeOKCVnOVeY7LQ9nuupQHhfAsroirtjLJQfmhnoFrv
+ gGJowKKgDsbhSIXeEZleV9aJQVg+fx21WWbQOge2E5uxgazYD7460K3qgKa7GfanI7xQMtAq5bR
+ CLOdVrs8eZ5RFHcwYT2nwPqJTfuqFJZhkxwHJe2ClvBVT/1jY65jgobOPd53vCAwjtGNZt6rPY1
+ biSnfV96vb6ORAkm/I4TFkTPv8O5sA5vIZYkWG40k0FdxYK7DDQC5Tp5t5bnJDZUpm5umXMf14e
+ sbfsfv63mQjj44Lf62C+1fOc
+X-Received: by 2002:a2e:9b04:0:b0:37e:884f:b6b4 with SMTP id
+ 38308e7fff4ca-385d9f95115mr11199641fa.26.1769196869514; Fri, 23 Jan 2026
+ 11:34:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+From: Oded Katz <katz.oded@gmail.com>
+Date: Fri, 23 Jan 2026 11:34:17 -0800
+X-Gm-Features: AZwV_Qj--fSq4jDbOjnHA3wdBofNDCZzfXiT8C1IM5xWEvLECBfHvQaabKUojOI
+Message-ID: <CAApnxP0OicCUvxYo41sK8AnK=bxqR+qE2BTxFmE5cJbSyOJrBQ@mail.gmail.com>
+Subject: I want to report an issue I found with your example (send ring buffer
+ get corrupted)
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/mixed; boundary="000000000000f238b70649133e6d"
 X-Mailman-Approved-At: Sun, 08 Feb 2026 17:10:11 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -57,35 +95,122 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
->> @@ -271,13 +266,13 @@ static void remove_node(struct allowedips_node *node, struct mutex *lock)
->>  	if (free_parent)
->>  		child = rcu_dereference_protected(parent->bit[!(node->parent_bit_packed & 1)],
->>  						  lockdep_is_held(lock));
->> -	call_rcu(&node->rcu, node_free_rcu);
->> +	kfree_rcu(node, rcu);
-> 
-> Does wg_allowedips_slab_uninit() need to be updated to use
-> kvfree_rcu_barrier() instead of rcu_barrier()?
-> 
-> When CONFIG_KVFREE_RCU_BATCHED is enabled (the default), kfree_rcu()
-> uses a batched mechanism that queues work via queue_rcu_work(). The
-> rcu_barrier() call waits for RCU callbacks to complete, but these
-> callbacks only queue the actual free to a workqueue via rcu_work_rcufn().
-> The workqueue work that calls kvfree() may still be pending after
-> rcu_barrier() returns.
-> 
-> The existing cleanup path is:
->   wg_allowedips_slab_uninit() -> rcu_barrier() -> kmem_cache_destroy()
-> 
-> With kfree_rcu(), this sequence could destroy the slab cache while
-> kfree_rcu_work() still has pending frees queued. The proper barrier for
-> kfree_rcu() is kvfree_rcu_barrier() which also calls flush_rcu_work()
-> on all pending batches.
+--000000000000f238b70649133e6d
+Content-Type: text/plain; charset="UTF-8"
 
-We do not need to add an explict kvfree_rcu_barrier(), becasue the commit
-6c6c47b063b5 ("mm, slab: call kvfree_rcu_barrier() from kmem_cache_destroy()")
-already does it.
+Hi,we were trying to integrate `wintun` into our product and while
+testing we found an issue with upload of high UDP throughput on
+multiple sockets. initially we thought it may be related to our
+integration. but we managed to find the same issue in your example
+code.we tried to do some debugging on the example, but it seems like
+the corruption is on the driver side.
+the way to reproduce this issue- run the example
+- run the `send_udp.py` (the attached python script) on 2 different
+command terminals
+   - `send_udp.py 10.6.7.8 5201 1450`
+   - `send_udp.py 10.6.7.8 5201 1400`after some time the
+`WintunReceivePacket` returns NULL and `GetLastError()` return 13
+(`ERROR_INVALID_DATA`)
+many thank,
+and I hope you can help us.
+btw: in the meantime, I'll try to see if I can contribute myself with a fix
+Oded
 
----
-Regards,
-WANG
+--000000000000f238b70649133e6d
+Content-Type: text/x-python-script; charset="US-ASCII"; name="send_udp.py"
+Content-Disposition: attachment; filename="send_udp.py"
+Content-Transfer-Encoding: base64
+Content-ID: <f_mkra4mcw0>
+X-Attachment-Id: f_mkra4mcw0
+
+IyEvdXNyL2Jpbi9lbnYgcHl0aG9uMw0KDQoiIiINCkEgUHl0aG9uIHNjcmlwdCB0byBzZW5kIGEg
+Y29udGludW91cyBzdHJlYW0gb2YgVURQIHBhY2tldHMgdG8gYSBzcGVjaWZpZWQNCmhvc3QgYW5k
+IHBvcnQuDQoNCkl0IHByaW50cyB0aGUgbnVtYmVyIG9mIHBhY2tldHMgc2VudCBldmVyeSBzZWNv
+bmQuDQoNClRoZSBmaXJzdCA0IGJ5dGVzIG9mIHRoZSBwYXlsb2FkIGNvbnRhaW4gYSBwYWNrZXQg
+Y291bnRlciAobGl0dGxlLWVuZGlhbikuDQpUaGUgcmVtYWluaW5nIDYwIGJ5dGVzIGFyZSBmaWxs
+ZWQgd2l0aCB0aGUgY2hhcmFjdGVyICdhJy4NCg0KVXNhZ2U6DQogICAgcHl0aG9uIHNlbmRfdWRw
+X2Zsb29kLnB5IDxhZGRyZXNzPiA8cG9ydD4NCg0KRXhhbXBsZToNCiAgICBweXRob24gc2VuZF91
+ZHBfZmxvb2QucHkgMTI3LjAuMC4xIDgwODANCiIiIg0KDQppbXBvcnQgc29ja2V0DQppbXBvcnQg
+YXJncGFyc2UNCmltcG9ydCBzeXMNCmltcG9ydCB0aW1lDQoNCmRlZiBtYWluKCk6DQogICAgIyAt
+LS0gMS4gU2V0IHVwIHRoZSBjb21tYW5kLWxpbmUgYXJndW1lbnQgcGFyc2VyIC0tLQ0KICAgIHBh
+cnNlciA9IGFyZ3BhcnNlLkFyZ3VtZW50UGFyc2VyKA0KICAgICAgICBkZXNjcmlwdGlvbj0iU2Vu
+ZCBhIGNvbnRpbnVvdXMgVURQIHBhY2tldCBzdHJlYW0uIiwNCiAgICAgICAgZm9ybWF0dGVyX2Ns
+YXNzPWFyZ3BhcnNlLlJhd0Rlc2NyaXB0aW9uSGVscEZvcm1hdHRlciwNCiAgICAgICAgZXBpbG9n
+PSJFeGFtcGxlOlxuICBweXRob24gc2VuZF91ZHBfZmxvb2QucHkgMTI3LjAuMC4xIDgwODAiDQog
+ICAgKQ0KICAgIA0KICAgIHBhcnNlci5hZGRfYXJndW1lbnQoImFkZHJlc3MiLCANCiAgICAgICAg
+ICAgICAgICAgICAgICAgIGhlbHA9IlRoZSBkZXN0aW5hdGlvbiBJUCBhZGRyZXNzIG9yIGhvc3Ru
+YW1lIChlLmcuLCAxMjcuMC4wLjEpIikNCiAgICANCiAgICBwYXJzZXIuYWRkX2FyZ3VtZW50KCJw
+b3J0IiwgDQogICAgICAgICAgICAgICAgICAgICAgICB0eXBlPWludCwgDQogICAgICAgICAgICAg
+ICAgICAgICAgICBoZWxwPSJUaGUgZGVzdGluYXRpb24gcG9ydCAoZS5nLiwgODA4MCkiKQ0KDQog
+ICAgcGFyc2VyLmFkZF9hcmd1bWVudCgibGVuIiwgDQogICAgICAgICAgICAgICAgICAgICAgICB0
+eXBlPWludCwgDQogICAgICAgICAgICAgICAgICAgICAgICBoZWxwPSJUaGUgcGFkZGluZyBsZW4g
+KGUuZy4sIDYwLTEzNTApIikNCiAgICANCiAgICBhcmdzID0gcGFyc2VyLnBhcnNlX2FyZ3MoKQ0K
+DQogICAgIyAtLS0gMi4gQ3JlYXRlIHRoZSBwYWNrZXQgZGF0YSAocGFkZGluZykgLS0tDQogICAg
+IyBXZSBjcmVhdGUgdGhlIDYwLWJ5dGUgcGFkZGluZyBvbmNlLCBhcyBpdCBuZXZlciBjaGFuZ2Vz
+Lg0KICAgIHBheWxvYWRfcGFkZGluZyA9IChiJ2EnICogYXJncy5sZW4pDQogICAgZGVzdGluYXRp
+b24gPSAoYXJncy5hZGRyZXNzLCBhcmdzLnBvcnQpDQogICAgDQogICAgcHJpbnQoZiJUYXJnZXQ6
+ICAgICB7YXJncy5hZGRyZXNzfTp7YXJncy5wb3J0fSIpDQogICAgcHJpbnQoZiJQYXlsb2FkOiAg
+ICB7YXJncy5sZW4gKyA0fSBieXRlcyAoNC1ieXRlIGNvdW50ZXIgKyB7YXJncy5sZW59ICdhJ3Mp
+IikNCiAgICBwcmludCgiLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tIikNCiAgICAN
+CiAgICAjIA0KICAgIHByaW50KGYiU3RhcnRpbmcgY29udGludW91cyBzZW5kLiBQcmVzcyBDdHJs
+K0MgdG8gc3RvcC4iKQ0KDQogICAgIyBTdGF0aXN0aWNzIGNvdW50ZXJzDQogICAgcGFja2V0c19p
+bl9pbnRlcnZhbCA9IDANCiAgICB0b3RhbF9wYWNrZXRzX3NlbnQgPSAwICMgVGhpcyB3aWxsIGJl
+IG91ciBwYWNrZXQgY291bnRlcg0KICAgIA0KICAgICMgVXNlIHRpbWUubW9ub3RvbmljKCkgZm9y
+IHN0YWJsZSB0aW1lIGludGVydmFsIG1lYXN1cmVtZW50cw0KICAgIHN0YXJ0X3RpbWUgPSB0aW1l
+Lm1vbm90b25pYygpDQogICAgbGFzdF9wcmludF90aW1lID0gc3RhcnRfdGltZQ0KDQogICAgdHJ5
+Og0KICAgICAgICAjIENyZWF0ZSBhIFVEUCBzb2NrZXQNCiAgICAgICAgd2l0aCBzb2NrZXQuc29j
+a2V0KHNvY2tldC5BRl9JTkVULCBzb2NrZXQuU09DS19ER1JBTSkgYXMgczoNCiAgICAgICAgICAg
+IA0KICAgICAgICAgICAgIyAtLS0gMy4gTWFpbiBTZW5kIExvb3AgLS0tDQogICAgICAgICAgICB3
+aGlsZSBUcnVlOg0KICAgICAgICAgICAgICAgIA0KICAgICAgICAgICAgICAgICMgLS0tIENyZWF0
+ZSB0aGUgcGF5bG9hZCBmb3IgKnRoaXMqIHBhY2tldCAtLS0NCiAgICAgICAgICAgICAgICAjIENv
+bnZlcnQgdGhlIGNvdW50ZXIgdG8gNCBieXRlcywgbGl0dGxlLWVuZGlhbg0KICAgICAgICAgICAg
+ICAgIGNvdW50ZXJfYnl0ZXMgPSB0b3RhbF9wYWNrZXRzX3NlbnQudG9fYnl0ZXMoNCwgJ2xpdHRs
+ZScpDQogICAgICAgICAgICAgICAgDQogICAgICAgICAgICAgICAgIyBDb21iaW5lIHRoZSBjb3Vu
+dGVyIGFuZCB0aGUgcGFkZGluZw0KICAgICAgICAgICAgICAgIHBheWxvYWRfYnl0ZXMgPSBwYXls
+b2FkX3BhZGRpbmcgKyBjb3VudGVyX2J5dGVzDQogICAgICAgICAgICAgICAgDQogICAgICAgICAg
+ICAgICAgIyBTZW5kIHRoZSBwYWNrZXQNCiAgICAgICAgICAgICAgICBzLnNlbmR0byhwYXlsb2Fk
+X2J5dGVzLCBkZXN0aW5hdGlvbikNCiAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAj
+IEluY3JlbWVudCBjb3VudGVycw0KICAgICAgICAgICAgICAgIHBhY2tldHNfaW5faW50ZXJ2YWwg
+Kz0gMQ0KICAgICAgICAgICAgICAgIHRvdGFsX3BhY2tldHNfc2VudCArPSAxDQoNCiAgICAgICAg
+ICAgICAgICAjIC0tLSA0LiBTdGF0aXN0aWNzIExvb3AgLS0tDQogICAgICAgICAgICAgICAgY3Vy
+cmVudF90aW1lID0gdGltZS5tb25vdG9uaWMoKQ0KICAgICAgICAgICAgICAgIGVsYXBzZWRfc2lu
+Y2VfbGFzdCA9IGN1cnJlbnRfdGltZSAtIGxhc3RfcHJpbnRfdGltZQ0KDQogICAgICAgICAgICAg
+ICAgIyBDaGVjayBpZiAxLjAgc2Vjb25kIGhhcyBwYXNzZWQNCiAgICAgICAgICAgICAgICBpZiBl
+bGFwc2VkX3NpbmNlX2xhc3QgPj0gMS4wOg0KICAgICAgICAgICAgICAgICAgICAjIENhbGN1bGF0
+ZSB0aGUgcmF0ZSBmb3IgdGhpcyBpbnRlcnZhbA0KICAgICAgICAgICAgICAgICAgICByYXRlID0g
+cGFja2V0c19pbl9pbnRlcnZhbCAvIGVsYXBzZWRfc2luY2VfbGFzdA0KICAgICAgICAgICAgICAg
+ICAgICANCiAgICAgICAgICAgICAgICAgICAgIyBQcmludCBzdGF0cyAocHBzID0gcGFja2V0cyBw
+ZXIgc2Vjb25kKQ0KICAgICAgICAgICAgICAgICAgICAjIFdlIHVzZSBmLXN0cmluZ3Mgd2l0aCA6
+PjEwLCB0byByaWdodC1hbGlnbiB0aGUgcGFja2V0IGNvdW50DQogICAgICAgICAgICAgICAgICAg
+ICMgYW5kIDosLjBmIHRvIGZvcm1hdCB0aGUgcmF0ZSB3aXRoIGNvbW1hcyBhbmQgbm8gZGVjaW1h
+bHMuDQogICAgICAgICAgICAgICAgICAgIHByaW50KGYiU2VudCB7cGFja2V0c19pbl9pbnRlcnZh
+bDo+MTAsfSBwYWNrZXRzLiAoUmF0ZToge3JhdGU6LC4wZn0gcHBzLCB7KHBhY2tldHNfaW5faW50
+ZXJ2YWwgKiAoYXJncy5sZW4gKyA0ICsgMjgpICogOCAvIDEwMDAgLyAxMDAwKTosLjNmfSBNYml0
+L3NlYykiKQ0KICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgIyBSZXNl
+dCBmb3IgdGhlIG5leHQgaW50ZXJ2YWwNCiAgICAgICAgICAgICAgICAgICAgcGFja2V0c19pbl9p
+bnRlcnZhbCA9IDANCiAgICAgICAgICAgICAgICAgICAgbGFzdF9wcmludF90aW1lID0gY3VycmVu
+dF90aW1lDQogICAgDQogICAgZXhjZXB0IEtleWJvYXJkSW50ZXJydXB0Og0KICAgICAgICAjIC0t
+LSA1LiBIYW5kbGUgQ3RybCtDIC0tLQ0KICAgICAgICBwcmludCgiXG4tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0iKQ0KICAgICAgICBwcmludCgiU3RvcHBpbmcuLi4iKQ0KICAgICAg
+ICANCiAgICAgICAgIyBQcmludCBmaW5hbCBzdW1tYXJ5IHN0YXRpc3RpY3MNCiAgICAgICAgZW5k
+X3RpbWUgPSB0aW1lLm1vbm90b25pYygpDQogICAgICAgIHRvdGFsX3RpbWUgPSBlbmRfdGltZSAt
+IHN0YXJ0X3RpbWUNCiAgICAgICAgDQogICAgICAgIGlmIHRvdGFsX3RpbWUgPiAwOg0KICAgICAg
+ICAgICAgYXZnX3JhdGUgPSB0b3RhbF9wYWNrZXRzX3NlbnQgLyB0b3RhbF90aW1lDQogICAgICAg
+ICAgICBwcmludChmIlNlbnQgYSB0b3RhbCBvZiB7dG90YWxfcGFja2V0c19zZW50Om59IHBhY2tl
+dHMgaW4ge3RvdGFsX3RpbWU6LjJmfSBzZWNvbmRzLiIpDQogICAgICAgICAgICBwcmludChmIkF2
+ZXJhZ2UgcmF0ZToge2F2Z19yYXRlOiwuMGZ9IHBwcywgeyhhdmdfcmF0ZSAqIChhcmdzLmxlbiAr
+IDQgKyAyOCkgKiA4IC8gMTAwMCAvIDEwMDApOiwuM2Z9IE1iaXQvc2VjIikNCiAgICAgICAgICAg
+ICAgICAgICAgDQogICAgICAgIGVsc2U6DQogICAgICAgICAgICBwcmludCgiU2VudCAwIHBhY2tl
+dHMuIikNCiAgICAgICAgc3lzLmV4aXQoMCkNCiAgICAgICAgDQogICAgZXhjZXB0IHNvY2tldC5n
+YWllcnJvciBhcyBlOg0KICAgICAgICBwcmludChmIlxuRXJyb3I6IEhvc3RuYW1lICd7YXJncy5h
+ZGRyZXNzfScgY291bGQgbm90IGJlIHJlc29sdmVkLiIsIGZpbGU9c3lzLnN0ZGVycikNCiAgICAg
+ICAgcHJpbnQoZiJEZXRhaWxzOiB7ZX0iLCBmaWxlPXN5cy5zdGRlcnIpDQogICAgICAgIHN5cy5l
+eGl0KDEpDQogICAgZXhjZXB0IChzb2NrZXQuZXJyb3IsIE9TRXJyb3IpIGFzIGU6DQogICAgICAg
+IHByaW50KGYiXG5FcnJvcjogQ291bGQgbm90IHNlbmQgcGFja2V0LiIsIGZpbGU9c3lzLnN0ZGVy
+cikNCiAgICAgICAgcHJpbnQoZiJEZXRhaWxzOiB7ZX0iLCBmaWxlPXN5cy5zdGRlcnIpDQogICAg
+ICAgIHN5cy5leGl0KDEpDQogICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOg0KICAgICAgICBwcmlu
+dChmIlxuQW4gdW5leHBlY3RlZCBlcnJvciBvY2N1cnJlZDoiLCBmaWxlPXN5cy5zdGRlcnIpDQog
+ICAgICAgIHByaW50KGYiRGV0YWlsczoge2V9IiwgZmlsZT1zeXMuc3RkZXJyKQ0KICAgICAgICBz
+eXMuZXhpdCgxKQ0KDQoNCmlmIF9fbmFtZV9fID09ICJfX21haW5fXyI6DQogICAgbWFpbigpDQog
+ICAgDQo=
+--000000000000f238b70649133e6d--
