@@ -4,48 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DCFBEA811C
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Feb 2026 13:49:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BE59EA811B
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Feb 2026 13:49:45 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fd4879ab;
-	Tue, 10 Feb 2026 13:49:43 +0000 (UTC)
-Received: from ojstrica.amebis.si (ojstrica.amebis.si [93.103.235.91])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6959ba67
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 77d7153c;
+	Tue, 10 Feb 2026 13:49:45 +0000 (UTC)
+Received: from mailout02.platinum-mail.de (mailout02.platinum-mail.de
+ [2a0a:4cc0:0:fc1:b5ed:8d94:185a:b8db])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 09134fd8
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 9 Feb 2026 12:02:41 +0000 (UTC)
-Received: from ojstrica.amebis.doma (localhost [IPv6:::1])
- by ojstrica.amebis.si (Postfix) with ESMTP id 274E530E994B
- for <wireguard@lists.zx2c4.com>; Mon, 09 Feb 2026 13:02:36 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amebis.si; s=mail;
- t=1770638556;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=a/jfS4V6n+nt9vmqK9eDZEYYGQjGZcnL6+JsR1vpvXA=;
- b=QuhYcCsuYqOa91fDOuR5FIfeqlA8adhXHneiLJ/sBLZk7E/wEIwJHWmyH/Ex5MQSuq0cva
- NSuosd9Mej3n7PFXnEe+Q4tNhQwVQUAYCBmcUxDUjyzPF5s7w4A2VlcwZrmO5/W+QQ6lGo
- QjLMQaMswohy8bkWJCaaQ0hLuwwqww8=
-Received: from [IPV6:2a01:260:4101:1464:b1f6:258:7cda:4522]
- ([2a01:260:4101:1464:b1f6:258:7cda:4522])
- by ojstrica.amebis.doma with ESMTPSA id RQVLCdzMiWlrfjcAkOztjA
- (envelope-from <simon.rozman@amebis.si>)
- for <wireguard@lists.zx2c4.com>; Mon, 09 Feb 2026 13:02:36 +0100
-Message-ID: <8f88f226-031c-4aea-a71a-bf4a143b292b@amebis.si>
-Date: Mon, 9 Feb 2026 13:02:36 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Fwd: I want to report an issue I found with your example (send
- ring buffer get corrupted)
-Content-Language: en-US, sl
-To: wireguard@lists.zx2c4.com
-References: <CAApnxP0OicCUvxYo41sK8AnK=bxqR+qE2BTxFmE5cJbSyOJrBQ@mail.gmail.com>
- <CAApnxP1yjyM0ZjtHXHf8WHrsc0XtwbuwMfeSYPnZm_q19R26mA@mail.gmail.com>
-From: Simon Rozman <simon.rozman@amebis.si>
-Organization: Amebis
-In-Reply-To: <CAApnxP1yjyM0ZjtHXHf8WHrsc0XtwbuwMfeSYPnZm_q19R26mA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 10 Feb 2026 13:45:15 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mailout02.platinum-mail.de (Mail Service) with ESMTPS id 54E869A29EC
+ for <wireguard@lists.zx2c4.com>; Tue, 10 Feb 2026 13:45:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; d=achill.org; s=mail; c=relaxed/simple;
+ t=1770731115; h=date:message-id:subject:from:to;
+ bh=30YWCCywsFqXOCapORxeWZBaKqh2fHSzSHefbvGyRtg=;
+ b=qR2OTLE3EUKcEeFSq90w4ms2kucSx+SaP6PkgJCDDEMAJiO1S7g9mjnpDK88SZCfH/vtM++vecu
+ MVsdmKqcLzKPC3T7BodGZUlTBo0boDfc8ZRq4vjBEBAhtsoOsO6fzUxDX8ZQj/RXNWFihb9VFcKGh
+ Plhho+YX51ZboB1x8Ng65kxZ/3c+qXsm9c6zFUp/DAFeFm9554n+/jSlE1JuABTuE9bIDO1x0pMUy
+ 8nFQwBVT49BWcLVMhsQvIrXJjvtAQlp1wqU1Z0fvNu27D1ayLA/HjIj6BOa44zjDGLV7TzgBqW54k
+ bTiX2lqf5h8wtcdx1DhmeEF5RZ6iHn2ki4/w==
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 10 Feb 2026 14:45:14 +0100
+Message-Id: <DGBBSJYQAMQM.1CU0U4FRNSAQE@achill.org>
+Cc: "Jason A . Donenfeld" <Jason@zx2c4.com>
+Subject: Re: Arch Linux - out of date?!
+From: "Achill Gilgenast" <achill@achill.org>
+To: "Christian Hesse" <list@eworm.de>, <wireguard@lists.zx2c4.com>
+X-Greeting: Hi mom! Look, I'm in somebodys mail client!
+X-Mailer: aerc 0.21.0
+References: <20260210143016.0144acf1@leda.eworm.net>
+In-Reply-To: <20260210143016.0144acf1@leda.eworm.net>
+Content-Type: text/plain; charset=utf-8
 X-Mailman-Approved-At: Tue, 10 Feb 2026 13:49:38 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -61,39 +57,24 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi, Oded!
+On Tue Feb 10, 2026 at 2:30 PM CET, Christian Hesse wrote:
+> Hello everybody,
+>
+> for some time already I am annoyed by mails clogging my input regarding
+> wireguard-tools for Arch Linux being out of date. Obviously this is not t=
+rue,
+> I built the package the day of release. [0]
+>
+> Now found the install page mentioning the package being out-of date... [1=
+]
+> What goes wrong and how to fix that?
+>
+> [0] https://archlinux.org/packages/extra/x86_64/wireguard-tools/
+> [1] https://www.wireguard.com/install/#arch-module-tools
 
-Reviewing your issue closely, I may have found the cause. I have queued 
-a proposal to fix it here: 
-https://git.zx2c4.com/wintun/commit/driver/wintun.c?id=8814f660310c30a9297fc640c844c4ab6f27e5d7
+Hi, Alpine dev here. The same issue is also for Alpine Linux. It has
+been up-to-date for a long while, yet people are spamming out-of-date
+email to Natanael.
 
-However, I need to reinstall my testing environment to test and confirm 
-it working.
-
-Lep pozdrav | Best regards,
-Simon Rozman
-Amebis, d. o. o., Kamnik
-
-On 4. 2. 2026 19.19, Oded Katz wrote:
-> Hi,
-> 
-> I'm reposting this one as I didn't get any response.
-> 
-> We were trying to integrate `wintun` into our product and while
-> testing we found an issue with upload of high UDP throughput on
-> multiple sockets. initially we thought it may be related to our
-> integration. but we managed to find the same issue in your example
-> code.we tried to do some debugging on the example, but it seems like
-> the corruption is on the driver side.
-> the way to reproduce this issue- run the example
-> - run the `send_udp.py` (the attached python script) on 2 different
-> command terminals
->     - `send_udp.py 10.6.7.8 5201 1450`
->     - `send_udp.py 10.6.7.8 5201 1400`after some time the
-> `WintunReceivePacket` returns NULL and `GetLastError()` return 13
-> (`ERROR_INVALID_DATA`)
-> many thanks,
-> and I hope you can help us.
-> btw: in the meantime, I'll try to see if I can contribute myself with a fix
-> Oded
-
+I could find no website development source or something, where this
+behavior could be improved.=
