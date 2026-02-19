@@ -4,73 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B60D9E9A05F
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 19 Feb 2026 19:33:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FF5DE9A05E
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 19 Feb 2026 19:33:05 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9b6c5b5b;
-	Thu, 19 Feb 2026 19:33:09 +0000 (UTC)
-Received: from mail-dl1-x122c.google.com (mail-dl1-x122c.google.com
- [2607:f8b0:4864:20::122c])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 71050984
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e0cd0448;
+	Thu, 19 Feb 2026 19:33:04 +0000 (UTC)
+Received: from mail-dy1-x132d.google.com (mail-dy1-x132d.google.com
+ [2607:f8b0:4864:20::132d])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id dc89c5f9
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 19 Feb 2026 19:33:06 +0000 (UTC)
-Received: by mail-dl1-x122c.google.com with SMTP id
- a92af1059eb24-12721cd256bso1438917c88.1
- for <wireguard@lists.zx2c4.com>; Thu, 19 Feb 2026 11:33:06 -0800 (PST)
+ Thu, 19 Feb 2026 19:33:02 +0000 (UTC)
+Received: by mail-dy1-x132d.google.com with SMTP id
+ 5a478bee46e88-2baaceb4613so1211015eec.0
+ for <wireguard@lists.zx2c4.com>; Thu, 19 Feb 2026 11:33:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771529584; x=1772134384; darn=lists.zx2c4.com;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fT2OJIeXnwXuGXBIo/Ie5aW16K2jaCbcdksAD5JWxhI=;
- b=OVCAQ32OLsq8JXEbEghOvlOnsItFVqNjW8S1GOYKNWjCoI2tMxUtBg76zT8lmCAV2p
- oHPtaU3eb5rOtnO/xTeI8KS1vUwKhqJnbsHBo6NPQOMr6gxKnp4/TUZrzEvLCEmCQuVp
- xmDyYQAn5XJdQDl9s6Ur+8sjAYEemE2XwgyGXL5VSQ5xWoIDEtUEf2mea1mcbPHIfz6u
- zkSj1EkSI0C8fBypgyyIY8nQpZRsG6zeVflGSuuYjFfcLmE0AV09iedQAv+ugz7iVoYC
- m3X/Ne5fXRSIJ195SqK7p0/CSDO28z0S4eMtwARfT2xmBnghxRWSJ8lE95R7cdOV1b3q
- 16hA==
+ d=gmail.com; s=20230601; t=1771529580; x=1772134380; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=hdqmPv1RDtZiCee6HQCOtrYm5SdHAjjXFXFyp+Yc/Po=;
+ b=NWEi0PRZoohBTA2iSQa5LHQRT95xx3UNtXQOHz1gILgjBPc44y6ZD2UGeZaEnvocxT
+ AqpxPr1QIA+CvoysVfCrtmFRQQhU2F9Uu8EVymAhsvKMr/5nyRfqs8V+sseIIZ5Cn1Su
+ oSc9RmrE+cj5v+AaWFG6W14MaF/YafVUoomkMReIC0hM3Bn8cERv9cemRNVy7kst5TT3
+ ytEMtLL5FM0QwERh3vPBXVHSMku8Wq8Xgh/I24HPv4n/2bpkFKtbCRJy4T0VqZw7I0qR
+ O794rqwXHYAwLpWkyf/fU4ezK8OzqfoeGo6+c6ZmawOzVxOmCIhUsBZzY+Ht/Yv+/GeH
+ iWog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771529584; x=1772134384;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=fT2OJIeXnwXuGXBIo/Ie5aW16K2jaCbcdksAD5JWxhI=;
- b=bDNdcPnfCtZE2wVGGc1IUyUT7jCM1g4xKshd+dDVjT7UE4w9tozccTdF9FEVoo5Gtd
- wCo2B9W05Gh7L5fr4nGQ14caMg9tWUKld6KHYtO4ltDEYsalZ09TKIi/bJp5+92x8U+l
- QIStUa3mTSTY4nPtPX71Yydx+2NNAgqjclMFr0JdSJ8OWbFAFR6TLjWp3LBls1KDrSPF
- R7QWBZK7SLhAbcvJgUrnYFdxH0TajYBANGpdY48Fp6Mytmerqg0lV+nXRtzbaA0IFkET
- E+laaI+kTEM9Auhb+LJi00XjnXDQ6ZiPGsOI7zc8vnEqtthgdUrnUPNNZwVvsYXSa5Pc
- Gw3A==
-X-Gm-Message-State: AOJu0YxycPBjTKzzefKuEq+4cDl2V0CpXt1+aMMrhE0KgsvHYuydB5eE
- 7ibdrsfu5aahBiinGCKebYc53OwprQIVY3qT4lapnFnv8Hzx8IyQe6QQoWtglw==
-X-Gm-Gg: AZuq6aLLOcMx6LAAyOniDKp1Ev0eSWy5QEfr7arEf4Vgach5KVJBMM74z7b3OVcUG33
- 8xSJVqaNleWNEvjXjnYY4RUxK9/hWSfCu7munUvlmaKy/f9pCd3oz+6wz7a6KVSBk2ISkaGqADN
- ANVRFMP89eNTQrNDFUpB2L39lFf0EO4BW4OZWYKahoPKuDl8ybi3YbvV1lf+58G+Fpg5QF4uPnr
- PmCjBo0Kdn8VZH4cmUD5/B40lrq+lo6NLe9+GF+zqd4zNurFLBvRSGoRyj/vMSvCDN4/jhdNZUQ
- BSygNLpxOr3VuvtkFPzMkWhkCPbaDxyJgRxogAbObcfCWvsKOfQiikY1ezgxxYZLJa5I+UO5rnn
- 7b9h2jW7jWaoxt5Dg8dcJfJXWLFYCmW/PLoMocqQi9VS2OlM47Ae8sM4UiXF3SdIrGki6jPfszl
- G/frPXO9ywnIe1Xaz4DMzo9WsoeTAQipX0hVbRWEfXSAVaxUNYsyU=
-X-Received: by 2002:a05:7022:fa2:b0:11a:4016:4491 with SMTP id
- a92af1059eb24-12741bc8651mr9702228c88.24.1771529583448; 
- Thu, 19 Feb 2026 11:33:03 -0800 (PST)
+ d=1e100.net; s=20230601; t=1771529580; x=1772134380;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hdqmPv1RDtZiCee6HQCOtrYm5SdHAjjXFXFyp+Yc/Po=;
+ b=JRoi5F1Z5JjkEqksquDHGJlgJ66S2KHMjx+eZ4JwoPsgvTAx3K5K0H1peTZMsrjhOu
+ eR0/Qw6ChKa2NKEqVJeBwJD9Y9eW5RCJrQU0Cb4vXm57BLhUXVCWVN3pYKI365r7ZUK6
+ DpkrcWUg2az4frWQ9oCPNAEVDUF18DyCgH++z0Vcu4MWpEZJJ6ABOaPwFq32UAehyJmx
+ dpNTooqNsrCdnQ+pmal9lDI/bgxvJfO1FjVxsGTeH1OpM0vztZ4gd+9QrypYh89Ekb2A
+ 374yoqcyQdbm7HuQMo+8e5oxx6PJ25Se1vFIqkx/csrl9py6OTuHTNMoO3RzSU6xXeIs
+ 5Rmw==
+X-Gm-Message-State: AOJu0YzSVxp/GTBH6ZCaApA5Cnp2NshSL/RCppRNF6tELXU8rZkpp2/G
+ t1X1zcQ2DXl2R8Qg6NYBBCh9+qG3lXGhOlVVDEQdBywjNqLV/2Jag3dl1ILmGg==
+X-Gm-Gg: AZuq6aJz+uggBqetKvQ/ap+RsKI7wg+NvtENr8mpgxBbwDlG6Li32p08HIa5lTRgXi0
+ YPSZzvA6b2asswV2Fd7VSSNvy52X1y+pAAIfA4VdCE59P0qm8DQVkG9JhpIctOVXUP5e9UW6jkD
+ JA00kn2g0RwxwmihKLcTej/cRgBkFpUQpFj5o/XE89MiUnhKIgcy0f5X9tYpRUddY8EEZ5KzseP
+ gCJ//ax8s/95jSvHnpeQ+bfwXiTUgyNeAR+7XRMduIFGJ+99pxJF5GuPYRHaAvXDXpgJmkNli0E
+ eZBFf4qh2ZV/YNpbGHp6n17a8RMWpofPBclB8wJ12wIyf7t8H8pnCRO4+gcPR8fKj3zvdaxERpL
+ dEc5xWx3+pdQCcKpkPCw/VApoV/XjS0N7A/rkhxsjf02NSqAvQAuUS7q4MbFvxHqhvK+/KIF7yO
+ j2jiii4fmB5cV7WUoObcykJHqZyJ/DEMWsYeu8ulVSXKA1+iEKhxw=
+X-Received: by 2002:a05:7301:4083:b0:2ba:a080:61c9 with SMTP id
+ 5a478bee46e88-2bd607e6c75mr1076315eec.10.1771529579828; 
+ Thu, 19 Feb 2026 11:32:59 -0800 (PST)
 Received: from localhost.localdomain ([2601:645:0:cdeb:78c6:1ab4:b276:9a4a])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2bacb415dddsm25046851eec.0.2026.02.19.11.33.02
+ 5a478bee46e88-2bacb415dddsm25046851eec.0.2026.02.19.11.32.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Feb 2026 11:33:03 -0800 (PST)
+ Thu, 19 Feb 2026 11:32:59 -0800 (PST)
 From: odedkatz <katz.oded@gmail.com>
 To: wireguard@lists.zx2c4.com
 Cc: odedk@twingate.com,
 	odedkatz <katz.oded@gmail.com>
-Subject: [PATCH 1/1] in order to prevent buffer overrun (which was observed
- while sending multiple high throughput UDP streams from different threads) I
- move the driver spinlock to protect Ring buffer Head.
-Date: Thu, 19 Feb 2026 11:32:55 -0800
-Message-ID: <20260219193255.14334-2-katz.oded@gmail.com>
+Subject: [PATCH 0/1] This PR fixes a critical race condition in the Wintun
+ driver that causes ring buffer overruns
+Date: Thu, 19 Feb 2026 11:32:54 -0800
+Message-ID: <20260219193255.14334-1-katz.oded@gmail.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260219193255.14334-1-katz.oded@gmail.com>
-References: <20260219193255.14334-1-katz.oded@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -87,44 +83,44 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-    I observed that the Ring->Head was taken and manipulated later on with just a `ReadULongAcquire` which isn't OK when 2 are trying to manipulate it later on based on the same received value.
----
+** Description **
+This PR fixes a critical race condition in the Wintun driver that causes ring buffer overruns when multiple UDP senders operate in parallel. The issue occurred because multiple threads could read the same Ring->Head value without synchronization, leading to concurrent modifications that corrupted the ring buffer and resulted in ERROR_INVALID_DATA errors.
+
+** Changes **
+Extended the critical section in TunSendNetBufferLists by moving spinlock acquisition before reading Ring->Head, ensuring atomic read-modify-write operations on the ring buffer state
+Fixed the lock release timing in TunReturnNetBufferLists to occur after updating Ring->Head, ensuring consistency between the active NBL list and ring buffer head pointer
+
+** History **
+the issue was reported to wireguard
+
+```
+We were trying to integrate `wintun` into our product and while
+testing we found an issue with upload of high UDP throughput on
+multiple sockets. initially we thought it may be related to our
+integration. but we managed to find the same issue in your example
+code.we tried to do some debugging on the example, but it seems like
+the corruption is on the driver side.
+the way to reproduce this issue- run the example
+- run the `send_udp.py` (the attached python script) on 2 different
+command terminals
+   - `send_udp.py 10.6.7.8 5201 1450`
+   - `send_udp.py 10.6.7.8 5201 1400`after some time the
+`WintunReceivePacket` returns NULL and `GetLastError()` return 13
+(`ERROR_INVALID_DATA`)
+many thanks,
+```
+
+a fix was provided by wireguard with [this commit](https://git.zx2c4.com/wintun/commit/driver/wintun.c?id=8814f660310c30a9297fc640c844c4ab6f27e5d7), but it didn't solve the issue.
+
+
+odedkatz (1):
+  in order to prevent buffer overrun (which was observed while sending
+    multiple high throughput UDP streams from different threads) I move
+    the driver spinlock to protect Ring buffer Head.
+
  driver/wintun.c | 11 ++++++-----
  1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/driver/wintun.c b/driver/wintun.c
-index d1f3b9f..65cd97e 100644
---- a/driver/wintun.c
-+++ b/driver/wintun.c
-@@ -284,13 +284,14 @@ TunSendNetBufferLists(
-     TUN_RING *Ring = Ctx->Device.Send.Ring;
-     ULONG RingCapacity = Ctx->Device.Send.Capacity;
- 
-+    KLOCK_QUEUE_HANDLE LockHandle;
-+    KeAcquireInStackQueuedSpinLock(&Ctx->Device.Send.Lock, &LockHandle);
-     /* Allocate space for packets in the ring. */
-     ULONG RingHead = ReadULongAcquire(&Ring->Head);
--    if (Status = NDIS_STATUS_ADAPTER_NOT_READY, RingHead >= RingCapacity)
-+    if (Status = NDIS_STATUS_ADAPTER_NOT_READY, RingHead >= RingCapacity) {
-+        KeReleaseInStackQueuedSpinLock(&LockHandle);
-         goto skipNbl;
--
--    KLOCK_QUEUE_HANDLE LockHandle;
--    KeAcquireInStackQueuedSpinLock(&Ctx->Device.Send.Lock, &LockHandle);
-+    }
- 
-     ULONG RingTail = Ctx->Device.Send.RingTail;
-     ASSERT(RingTail < RingCapacity);
-@@ -419,8 +420,8 @@ TunReturnNetBufferLists(NDIS_HANDLE MiniportAdapterContext, PNET_BUFFER_LIST Net
-             Ctx->Device.Receive.ActiveNbls.Head = NET_BUFFER_LIST_NEXT_NBL_EX(CompletedNbl);
-             if (!Ctx->Device.Receive.ActiveNbls.Head)
-                 KeSetEvent(&Ctx->Device.Receive.ActiveNbls.Empty, IO_NO_INCREMENT, FALSE);
--            KeReleaseInStackQueuedSpinLock(&LockHandle);
-             WriteULongRelease(&Ring->Head, TunNblGetOffset(CompletedNbl));
-+            KeReleaseInStackQueuedSpinLock(&LockHandle);
-             const MDL *TargetMdl = Ctx->Device.Receive.Mdl;
-             for (MDL *Mdl = NET_BUFFER_FIRST_MDL(NET_BUFFER_LIST_FIRST_NB(CompletedNbl)); Mdl; Mdl = Mdl->Next)
-             {
 -- 
 2.43.0
 
