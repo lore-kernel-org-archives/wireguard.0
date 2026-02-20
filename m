@@ -4,71 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FF5DE9A05E
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 19 Feb 2026 19:33:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE8E4C54F5F
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 20 Feb 2026 07:28:26 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e0cd0448;
-	Thu, 19 Feb 2026 19:33:04 +0000 (UTC)
-Received: from mail-dy1-x132d.google.com (mail-dy1-x132d.google.com
- [2607:f8b0:4864:20::132d])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id dc89c5f9
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a3e5c7cf;
+	Fri, 20 Feb 2026 07:28:24 +0000 (UTC)
+Received: from ojstrica.amebis.si (ojstrica.amebis.si [93.103.235.91])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 19c26af3
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 19 Feb 2026 19:33:02 +0000 (UTC)
-Received: by mail-dy1-x132d.google.com with SMTP id
- 5a478bee46e88-2baaceb4613so1211015eec.0
- for <wireguard@lists.zx2c4.com>; Thu, 19 Feb 2026 11:33:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771529580; x=1772134380; darn=lists.zx2c4.com;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=hdqmPv1RDtZiCee6HQCOtrYm5SdHAjjXFXFyp+Yc/Po=;
- b=NWEi0PRZoohBTA2iSQa5LHQRT95xx3UNtXQOHz1gILgjBPc44y6ZD2UGeZaEnvocxT
- AqpxPr1QIA+CvoysVfCrtmFRQQhU2F9Uu8EVymAhsvKMr/5nyRfqs8V+sseIIZ5Cn1Su
- oSc9RmrE+cj5v+AaWFG6W14MaF/YafVUoomkMReIC0hM3Bn8cERv9cemRNVy7kst5TT3
- ytEMtLL5FM0QwERh3vPBXVHSMku8Wq8Xgh/I24HPv4n/2bpkFKtbCRJy4T0VqZw7I0qR
- O794rqwXHYAwLpWkyf/fU4ezK8OzqfoeGo6+c6ZmawOzVxOmCIhUsBZzY+Ht/Yv+/GeH
- iWog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771529580; x=1772134380;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hdqmPv1RDtZiCee6HQCOtrYm5SdHAjjXFXFyp+Yc/Po=;
- b=JRoi5F1Z5JjkEqksquDHGJlgJ66S2KHMjx+eZ4JwoPsgvTAx3K5K0H1peTZMsrjhOu
- eR0/Qw6ChKa2NKEqVJeBwJD9Y9eW5RCJrQU0Cb4vXm57BLhUXVCWVN3pYKI365r7ZUK6
- DpkrcWUg2az4frWQ9oCPNAEVDUF18DyCgH++z0Vcu4MWpEZJJ6ABOaPwFq32UAehyJmx
- dpNTooqNsrCdnQ+pmal9lDI/bgxvJfO1FjVxsGTeH1OpM0vztZ4gd+9QrypYh89Ekb2A
- 374yoqcyQdbm7HuQMo+8e5oxx6PJ25Se1vFIqkx/csrl9py6OTuHTNMoO3RzSU6xXeIs
- 5Rmw==
-X-Gm-Message-State: AOJu0YzSVxp/GTBH6ZCaApA5Cnp2NshSL/RCppRNF6tELXU8rZkpp2/G
- t1X1zcQ2DXl2R8Qg6NYBBCh9+qG3lXGhOlVVDEQdBywjNqLV/2Jag3dl1ILmGg==
-X-Gm-Gg: AZuq6aJz+uggBqetKvQ/ap+RsKI7wg+NvtENr8mpgxBbwDlG6Li32p08HIa5lTRgXi0
- YPSZzvA6b2asswV2Fd7VSSNvy52X1y+pAAIfA4VdCE59P0qm8DQVkG9JhpIctOVXUP5e9UW6jkD
- JA00kn2g0RwxwmihKLcTej/cRgBkFpUQpFj5o/XE89MiUnhKIgcy0f5X9tYpRUddY8EEZ5KzseP
- gCJ//ax8s/95jSvHnpeQ+bfwXiTUgyNeAR+7XRMduIFGJ+99pxJF5GuPYRHaAvXDXpgJmkNli0E
- eZBFf4qh2ZV/YNpbGHp6n17a8RMWpofPBclB8wJ12wIyf7t8H8pnCRO4+gcPR8fKj3zvdaxERpL
- dEc5xWx3+pdQCcKpkPCw/VApoV/XjS0N7A/rkhxsjf02NSqAvQAuUS7q4MbFvxHqhvK+/KIF7yO
- j2jiii4fmB5cV7WUoObcykJHqZyJ/DEMWsYeu8ulVSXKA1+iEKhxw=
-X-Received: by 2002:a05:7301:4083:b0:2ba:a080:61c9 with SMTP id
- 5a478bee46e88-2bd607e6c75mr1076315eec.10.1771529579828; 
- Thu, 19 Feb 2026 11:32:59 -0800 (PST)
-Received: from localhost.localdomain ([2601:645:0:cdeb:78c6:1ab4:b276:9a4a])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2bacb415dddsm25046851eec.0.2026.02.19.11.32.59
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Feb 2026 11:32:59 -0800 (PST)
-From: odedkatz <katz.oded@gmail.com>
-To: wireguard@lists.zx2c4.com
-Cc: odedk@twingate.com,
-	odedkatz <katz.oded@gmail.com>
-Subject: [PATCH 0/1] This PR fixes a critical race condition in the Wintun
- driver that causes ring buffer overruns
-Date: Thu, 19 Feb 2026 11:32:54 -0800
-Message-ID: <20260219193255.14334-1-katz.oded@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ Fri, 20 Feb 2026 07:28:23 +0000 (UTC)
+Received: from ojstrica.amebis.doma (localhost [IPv6:::1])
+ by ojstrica.amebis.si (Postfix) with ESMTP id 45C7F30E9957;
+ Fri, 20 Feb 2026 08:28:22 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amebis.si; s=mail;
+ t=1771572502;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=f3ep67H+w26KUBseVukCBampb7DDZVJEliGYFlZKGmE=;
+ b=YUJyCza0f/jy0RwaqHNtVpoQXzimb3WR7II4eSjBib9GIXYqedp8cHCxAOVHQAadv2gNtl
+ 6kqo4XgTLi14BE0nyFeha1V9RCER5lhLL3udvrA7O0PXLuVKYR6zQ7hV4ez5xJzs+01UzE
+ yLFo5VTuM9r6SdLPtCGX1rdEVImYKBg=
+Received: from [IPV6:2a01:260:4101:1464:7d19:4e6b:3fba:c880]
+ ([2a01:260:4101:1464:7d19:4e6b:3fba:c880])
+ by ojstrica.amebis.doma with ESMTPSA id bwt4DhYNmGkQ0BoAkOztjA
+ (envelope-from <simon.rozman@amebis.si>); Fri, 20 Feb 2026 08:28:22 +0100
+Message-ID: <8e797830-9851-47f3-8e10-4126e295b4b9@amebis.si>
+Date: Fri, 20 Feb 2026 08:28:22 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/1] in order to prevent buffer overrun (which was
+ observed while sending multiple high throughput UDP streams from different
+ threads) I move the driver spinlock to protect Ring buffer Head.
+Content-Language: en-US, sl
+To: odedkatz <katz.oded@gmail.com>, wireguard@lists.zx2c4.com
+Cc: odedk@twingate.com
+References: <20260219193255.14334-1-katz.oded@gmail.com>
+ <20260219193255.14334-2-katz.oded@gmail.com>
+From: Simon Rozman <simon.rozman@amebis.si>
+Organization: Amebis
+In-Reply-To: <20260219193255.14334-2-katz.oded@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -83,44 +62,68 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-** Description **
-This PR fixes a critical race condition in the Wintun driver that causes ring buffer overruns when multiple UDP senders operate in parallel. The issue occurred because multiple threads could read the same Ring->Head value without synchronization, leading to concurrent modifications that corrupted the ring buffer and resulted in ERROR_INVALID_DATA errors.
+Hi, Oded!
 
-** Changes **
-Extended the critical section in TunSendNetBufferLists by moving spinlock acquisition before reading Ring->Head, ensuring atomic read-modify-write operations on the ring buffer state
-Fixed the lock release timing in TunReturnNetBufferLists to occur after updating Ring->Head, ensuring consistency between the active NBL list and ring buffer head pointer
+First and foremost, thank you very much for taking time to look into 
+this and troubleshoot it.
 
-** History **
-the issue was reported to wireguard
+It was believed, that ReadULongAcquire() and WriteULongRelease() alone 
+provide atomic manipulation with Ring->Head on all modern platforms. 
+Hence, these calls were made outside the spinlock, to squeeze an extra 
+micrometer of performance.
 
-```
-We were trying to integrate `wintun` into our product and while
-testing we found an issue with upload of high UDP throughput on
-multiple sockets. initially we thought it may be related to our
-integration. but we managed to find the same issue in your example
-code.we tried to do some debugging on the example, but it seems like
-the corruption is on the driver side.
-the way to reproduce this issue- run the example
-- run the `send_udp.py` (the attached python script) on 2 different
-command terminals
-   - `send_udp.py 10.6.7.8 5201 1450`
-   - `send_udp.py 10.6.7.8 5201 1400`after some time the
-`WintunReceivePacket` returns NULL and `GetLastError()` return 13
-(`ERROR_INVALID_DATA`)
-many thanks,
-```
+I could not directly apply your patch to the wintun repo, since it does 
+not follow our code style, commit message conventions and is not 
+Signed-off-by you.
 
-a fix was provided by wireguard with [this commit](https://git.zx2c4.com/wintun/commit/driver/wintun.c?id=8814f660310c30a9297fc640c844c4ab6f27e5d7), but it didn't solve the issue.
+However, it would have been a terrible waste of your research if your 
+contribution wouldn't get into wintun, so I reworked your PR and applied 
+it here: 
+https://git.zx2c4.com/wintun/commit/?id=607c181ea9fa0036d23598038e6019ad54db5ce4
 
+Please, stay tuned for an official WHQL-signed release.
 
-odedkatz (1):
-  in order to prevent buffer overrun (which was observed while sending
-    multiple high throughput UDP streams from different threads) I move
-    the driver spinlock to protect Ring buffer Head.
+Lep pozdrav | Best regards,
+Simon Rozman
+Amebis, d. o. o., Kamnik
 
- driver/wintun.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
-
--- 
-2.43.0
+On 19. 2. 2026 20.32, odedkatz wrote:
+>      I observed that the Ring->Head was taken and manipulated later on with just a `ReadULongAcquire` which isn't OK when 2 are trying to manipulate it later on based on the same received value.
+> ---
+>   driver/wintun.c | 11 ++++++-----
+>   1 file changed, 6 insertions(+), 5 deletions(-)
+> 
+> diff --git a/driver/wintun.c b/driver/wintun.c
+> index d1f3b9f..65cd97e 100644
+> --- a/driver/wintun.c
+> +++ b/driver/wintun.c
+> @@ -284,13 +284,14 @@ TunSendNetBufferLists(
+>       TUN_RING *Ring = Ctx->Device.Send.Ring;
+>       ULONG RingCapacity = Ctx->Device.Send.Capacity;
+>   
+> +    KLOCK_QUEUE_HANDLE LockHandle;
+> +    KeAcquireInStackQueuedSpinLock(&Ctx->Device.Send.Lock, &LockHandle);
+>       /* Allocate space for packets in the ring. */
+>       ULONG RingHead = ReadULongAcquire(&Ring->Head);
+> -    if (Status = NDIS_STATUS_ADAPTER_NOT_READY, RingHead >= RingCapacity)
+> +    if (Status = NDIS_STATUS_ADAPTER_NOT_READY, RingHead >= RingCapacity) {
+> +        KeReleaseInStackQueuedSpinLock(&LockHandle);
+>           goto skipNbl;
+> -
+> -    KLOCK_QUEUE_HANDLE LockHandle;
+> -    KeAcquireInStackQueuedSpinLock(&Ctx->Device.Send.Lock, &LockHandle);
+> +    }
+>   
+>       ULONG RingTail = Ctx->Device.Send.RingTail;
+>       ASSERT(RingTail < RingCapacity);
+> @@ -419,8 +420,8 @@ TunReturnNetBufferLists(NDIS_HANDLE MiniportAdapterContext, PNET_BUFFER_LIST Net
+>               Ctx->Device.Receive.ActiveNbls.Head = NET_BUFFER_LIST_NEXT_NBL_EX(CompletedNbl);
+>               if (!Ctx->Device.Receive.ActiveNbls.Head)
+>                   KeSetEvent(&Ctx->Device.Receive.ActiveNbls.Empty, IO_NO_INCREMENT, FALSE);
+> -            KeReleaseInStackQueuedSpinLock(&LockHandle);
+>               WriteULongRelease(&Ring->Head, TunNblGetOffset(CompletedNbl));
+> +            KeReleaseInStackQueuedSpinLock(&LockHandle);
+>               const MDL *TargetMdl = Ctx->Device.Receive.Mdl;
+>               for (MDL *Mdl = NET_BUFFER_FIRST_MDL(NET_BUFFER_LIST_FIRST_NB(CompletedNbl)); Mdl; Mdl = Mdl->Next)
+>               {
 
