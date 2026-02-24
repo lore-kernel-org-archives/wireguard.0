@@ -4,74 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79599F55425
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 24 Feb 2026 23:42:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD44DF55431
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 24 Feb 2026 23:50:43 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 5d1a660b;
-	Tue, 24 Feb 2026 23:42:58 +0000 (UTC)
-Received: from mail-dl1-x122c.google.com (mail-dl1-x122c.google.com
- [2607:f8b0:4864:20::122c])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 4d93f736
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 0acc289b;
+	Tue, 24 Feb 2026 23:47:25 +0000 (UTC)
+Received: from mail-dy1-x1331.google.com (mail-dy1-x1331.google.com
+ [2607:f8b0:4864:20::1331])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 217db692
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 24 Feb 2026 23:42:55 +0000 (UTC)
-Received: by mail-dl1-x122c.google.com with SMTP id
- a92af1059eb24-1275750cfc7so1527796c88.0
- for <wireguard@lists.zx2c4.com>; Tue, 24 Feb 2026 15:42:55 -0800 (PST)
+ Tue, 24 Feb 2026 23:47:23 +0000 (UTC)
+Received: by mail-dy1-x1331.google.com with SMTP id
+ 5a478bee46e88-2bdb17511aaso1127816eec.0
+ for <wireguard@lists.zx2c4.com>; Tue, 24 Feb 2026 15:47:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1771976573; x=1772581373; darn=lists.zx2c4.com;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/EyDnmdrynS5criMy9WhvBOJwfjb2d2/OIAaPmk1XEc=;
- b=idHRTD4h2i6fW4637Qug7hJ3PWxRh/va9C9VAGWyWriEnYDBO+c4oyItClAI/XrwAy
- +MuS0e2glXBZdBko1BtT1QBnEbuGMri7mwe8MEnBM5t+o1tni0K0/pXFMhfVtGs+AF+P
- mGY2CzbMMdeTsUqRMwLwqFlg0gcEIa8gYYveisCNdSVVE5S5rbSqXmKfj/9HrGBFapgD
- tJZOdqjvsSuJxUonBEB/wlV7asNaIWAnrnTyHO6YT8wf6/NcWtfs8TLkR/Gf9SAdx4K/
- mF58x9yb9oeoUyEFEYRShewAJ2Xns3SbCxKMVkh1/LoT8g0bP0IweF2Paa2fhj0UHZ0T
- X2yA==
+ d=gmail.com; s=20230601; t=1771976841; x=1772581641; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=5Q9jC8hQHZLYqfskpFddPX8DxFBU62Nx+t39vy6gr/c=;
+ b=QDdYawn91ER6FXtpi7Bwy/TbJWr4GjYDXdLGczykaXCgAS4mzMcy8sUVaORIUuYxVi
+ UFYi9hM8inwbgF7qEM/5IOEAj5WBs8EgRrnENEmSC8j7jKIJezGTAWHjuDkjhzkyADMD
+ Y4G5IS/s+D3OZ/ot6DnSIGab+N9ss16auZliOWyQnwXk235C2qms10061y1QUwxgPJSN
+ +5m/NkY/8F6Ne+aGVT/FA2RdxX/1t/EuIPWQkSrrC9VqOUlah3FmQV+qhKvoYImIlaAJ
+ V7uG1tBH92F1sQAbwBB0b3QnWqtzPi6I4eihLW+LnCjFDIopGm4+A2aKgKg4bEH2SSor
+ 2Oww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771976573; x=1772581373;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=/EyDnmdrynS5criMy9WhvBOJwfjb2d2/OIAaPmk1XEc=;
- b=lp9vtpAN8e+5uHnFQNHgzrwLNzktnkvNxSksDHBOyiuTADcJIr9C7l+ZbJnYbzQTjA
- bXsUYvos88GRBVc9b+B+JFCO2z8aXqcq6L3o+lJjhvcWpmfcLjeP8hxew3dMvyPts4v/
- KoN2VLAeWZlVIiPQbONU9jYd/cuDiBVL0tvYhFaSARPSDaAB9NT9PgfiuzQV6R2iJavj
- U+wapKnwuVkriSyLfZG3qnO7Qsbq72AffL/scxjuTmrSJ/3FP6FYaYv40jjBiQ0micGc
- KNlc11nUTAEQUI0AGCGEjQtN6Yddv6sKthj3IUxHmwsQTxNJTl6YMqdRtP1GDuboVM4u
- +WJw==
-X-Gm-Message-State: AOJu0YxMLo5coaWEk7kmOs6pvkSDN9rNPRohtCeuygv67YDH3S24hb0Y
- QLSdr5SLdEkqjoOBWvMX4wv8tfhsbAro+SAZpcawMW4GrDgzdXCUNv47b11Igakf
-X-Gm-Gg: ATEYQzyqfdpwWoFjums32BEn1m5Gz+y7RPDIBJ8bf4PV9/W4ZrqqbJKY9Jt9J7OjB6V
- kXFfVL6GS2sP49kNIj0IA3uFomGlOfVXX4470g9sBki3Vccj/3VppcCs4CcoS1Dp4LDEhuZoLlH
- k2WLMCflZtfk7mgZ7Ylihj/MyRyRQB+UfIieAsg45pufRErXVr/Ji+uDv2Uj77scr67Ij70ALjB
- L7Hp9e2kGw65b7/6UFTdv2hpi4k6KaPdJru+Vl4ihi3rEkQNmq5WLSWOhXgA10Z1IwcbQkfiOzi
- kiwL8C7R4F9vm/6/ejmu590By5oR28J9TAwqEjAfHPzZx0wSoGKdro8z8X/hdR0KzE4k52r8wud
- 2BHO8Unz68oC9vMW95Y3oII4R6cYtxaiONiPnUv0BznSxUuPCy1PmzSCGJeuKId6QcQr1Bn0d4K
- 2LW3eChXnGePmetpP5BUYD4hgZGxhT4E+ywkuG5EPHL4vYoXk4+p4=
-X-Received: by 2002:a05:7022:4584:b0:122:2f4:b24b with SMTP id
- a92af1059eb24-1276ad1a72bmr6047478c88.25.1771976573316; 
- Tue, 24 Feb 2026 15:42:53 -0800 (PST)
+ d=1e100.net; s=20230601; t=1771976841; x=1772581641;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5Q9jC8hQHZLYqfskpFddPX8DxFBU62Nx+t39vy6gr/c=;
+ b=E6LNw6ypVmSBIfClg4ruOeteH/ZTdh9t8qHUMkf0V+2YnDrTwoiFnZRkLmq6E0YL99
+ iqLRQmUiYchFbq02g4hdKxnc4/FiapTErn1aDAjFCoXsQVuHOj1ijsWp8oJn/WRtCGDq
+ m7h5g9RqgUrFRUHbffoTNqkJfwoVeGm+mfWrQobm81Ck4mzTQTGAptJAxRz6X2r1VJhu
+ 2DpANfYEXnxJeXuY2i1519qiG9Ny18DProW1BCnRt/R/tiq6bl15rnIbBJJUFnleNG7q
+ MgEqq5PgH7wMSKaEYIY3oO02YhDRLOsIq71My6bdMjfxHVNfLvURPJtdyRcmaEy5V6ZS
+ vg6Q==
+X-Gm-Message-State: AOJu0YyB1JjYK6g/1NtmnDyASua2fWGdC/kboSuuoV+fF2g6ClEWlR0e
+ 5eXa7s1OcgDswbk91o6D/7pYBKXOg2ZuCRcF4xRgN6aLDNNxZpoH/5FeV26/m6y8
+X-Gm-Gg: ATEYQzyBwTFXnUZc5+Ea9kBVwbZxM1h+mN6gtM/tAznQP9o4BHG08DJe3hxWv/6EoWs
+ OVbVZNOdbFI4Y8ycWEFjy58d3yt/7otW/R4gzVLMzOEl6LtDR04h6xw3WoCtDYqFN1MI5eiJ0M2
+ J7xBQlsBGewTMyMITCldp5JIWhQpBKlwuEvqcJNYGHU5/hr3yt41O8GzoyLX62Q4G1Vl/N75NT5
+ SSQHv7ElVGJZR8CIDnZNt4pBtLsn3v31jqIOIYZhfJzSoMp6wDzKkr+QFdupGV2m0BRR6OP5Hrf
+ toijADhABeABCFCruG3AZyuUD3mh8IJJTgDC3QvO8bWHAEGyNgPhqVFXq8jHfedB3oBQxxE1b7W
+ VdoNHBbrkio5/hbFIkLSDrr9xKaGjVY3aOJlSYLGVOqbAxpf4h5Sn8sZvhKAKtKwEDbD3R4ErrV
+ hNl8Lre4H3xdOnv/wM+Wstt65sMGTibuiT5GydXqQyZQAItip6vhxQIsaez422bQ==
+X-Received: by 2002:a05:693c:25c7:b0:2ba:a1a5:b5b1 with SMTP id
+ 5a478bee46e88-2bd7b9efc61mr5486060eec.7.1771976840504; 
+ Tue, 24 Feb 2026 15:47:20 -0800 (PST)
 Received: from localhost.localdomain ([2601:645:0:cdeb:3db4:7690:94b4:8ccb])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1276af2ea06sm14038099c88.7.2026.02.24.15.42.52
+ 5a478bee46e88-2bd7dc167b2sm7607985eec.28.2026.02.24.15.47.19
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 24 Feb 2026 15:42:52 -0800 (PST)
+ Tue, 24 Feb 2026 15:47:20 -0800 (PST)
 From: odedkatz <katz.oded@gmail.com>
 To: wireguard@lists.zx2c4.com
 Cc: odedk@twingate.com,
 	alexey@twingate.com,
 	odedkatz <katz.oded@gmail.com>
-Subject: [PATCH 1/1] remove the condition on possibly stale variable
- (Session->Descriptor.Receive.Ring->Alertable) for Setting TailMoved event
-Date: Tue, 24 Feb 2026 15:42:46 -0800
-Message-ID: <20260224234246.16021-2-katz.oded@gmail.com>
+Subject: [PATCH 0/1] wintun driver get stalled for few sec until another
+ packet is being sent -- approach 2
+Date: Tue, 24 Feb 2026 15:47:16 -0800
+Message-ID: <20260224234717.16883-1-katz.oded@gmail.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260224234246.16021-1-katz.oded@gmail.com>
-References: <20260224234246.16021-1-katz.oded@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -87,25 +85,22 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-otherwise wintun driver just holds on the event until something wakes it up (see here)[https://github.com/Twingate/wintun/blob/6bfc34a60aa944149fdc7e9cddb191e9a8b6ec1a/driver/twintun.c#L487-L488]
----
- api/session.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+## Problem
+High-speed TCP uploads stall for 4-5 seconds when the sender and receiver are close (~1ms RTT). The root cause is a missed-wakeup race in the Receive ring's Alertable/Tail signaling protocol between the userspace API (WintunSendPacket) and the kernel0 consumer thread (TunProcessReceiveData).
 
-diff --git a/api/session.c b/api/session.c
-index ab96c64..dcaeb25 100644
---- a/api/session.c
-+++ b/api/session.c
-@@ -302,8 +302,7 @@ WintunSendPacket(TUN_SESSION *Session, const BYTE *Packet)
-     if (Session->Descriptor.Receive.Ring->Tail != Session->Receive.TailRelease)
-     {
-         WriteULongRelease(&Session->Descriptor.Receive.Ring->Tail, Session->Receive.TailRelease);
--        if (ReadAcquire(&Session->Descriptor.Receive.Ring->Alertable))
--            SetEvent(Session->Descriptor.Receive.TailMoved);
-+        SetEvent(Session->Descriptor.Receive.TailMoved);
-     }
-     LeaveCriticalSection(&Session->Receive.Lock);
- }
+On x86-64, WriteRelease/ReadAcquire provide acquire-release semantics but do not emit MFENCE — the only instruction that prevents store-load reordering (the one reordering x86 permits). Both cores can simultaneously observe stale values of the other's store, causing the userspace to skip SetEvent while the driver enters KeWaitForMultipleObjects indefinitely.
+
+The driver sleeps until a TCP retransmission (RTO ~1s + exponential backoff) coincidentally wins the race, producing the observed 4-5 second stalls.
+
+## Fix
+Insert MemoryBarrier() between each store-load pair on both sides. This guarantees that at least one side always sees the other's store, eliminating the missed wakeup. The Alertable optimization (avoiding SetEvent syscalls when the driver is actively spinning) is fully preserved.
+Alexey Lapuka (1):
+  Fix missed-wakeup race in ring buffer Alertable signaling
+
+ api/session.c   | 1 +
+ driver/wintun.c | 1 +
+ 2 files changed, 2 insertions(+)
+
 -- 
 2.43.0
 
