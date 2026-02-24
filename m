@@ -4,55 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF009E9B250
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 24 Feb 2026 12:08:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35599E9B258
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 24 Feb 2026 12:27:36 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 534c5058;
-	Tue, 24 Feb 2026 12:07:58 +0000 (UTC)
-Received: from mx.mylinuxtime.de (mx.mylinuxtime.de [46.4.70.188])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 7fb73e1a
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 94876a2c;
+	Tue, 24 Feb 2026 12:27:35 +0000 (UTC)
+Received: from tor.source.kernel.org (tor.source.kernel.org
+ [2600:3c04:e001:324:0:1991:8:25])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id c0a1a6d0
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 24 Feb 2026 12:07:52 +0000 (UTC)
-Received: from leda.eworm.net (unknown [135.136.19.167])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mx.mylinuxtime.de (Postfix) with ESMTPSA id B9B562FFEF4;
- Tue, 24 Feb 2026 13:07:51 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx.mylinuxtime.de B9B562FFEF4
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=eworm.de; s=mail;
- t=1771934871; bh=N8ywbY+3mbJrn5XBtLt9cMNxqJ6vO/Y2n5RRp1uQsuM=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References;
- b=kIx1HHspDyJtwjz2TXE9jQq4Pa9vVHQVgxeqyynq2To6GqFe/oqW/pd2ndBr/ofmB
- cBwCGf1oTeIFgYp2FC3zgLFprvQDzQcpZOUTDvLotceZIyXr7brPxQjh+93eNle9ku
- S8UYt+J53x62ravg0ey2t5im4A/QMZV1ZgIu0Roc=
-Authentication-Results: mx.mylinuxtime.de;
- auth=pass smtp.auth=mail@eworm.de smtp.mailfrom=list@eworm.de
-Date: Tue, 24 Feb 2026 13:07:51 +0100
-From: Christian Hesse <list@eworm.de>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: wireguard@lists.zx2c4.com
-Subject: Re: Arch Linux - out of date?!
-Message-ID: <20260224130751.1faee59a@leda.eworm.net>
-In-Reply-To: <CAHmME9pf=TNw6S6HB48q3NKhHzNLAo4qxH64Y7i8Lgg6etFCsg@mail.gmail.com>
+ Tue, 24 Feb 2026 12:27:32 +0000 (UTC)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id C78BB61119
+ for <wireguard@lists.zx2c4.com>; Tue, 24 Feb 2026 12:27:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DD6BC19424
+ for <wireguard@lists.zx2c4.com>; Tue, 24 Feb 2026 12:27:30 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="KMr3ACpW"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1771936047;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=uvHGPBZ9wHt1aP1fErTokF7rhsEBKYC6Lp0tzx6T2xc=;
+ b=KMr3ACpWgXgVGz1VZqIkSk+TFkb6t1e3iXBJnBirr5mLj0Ehi8ZefRA29q5VlN1WT8gyK9
+ VgnX97fVPxgRJ9oMIiLUensZqsQFTiUi0P0tSuVSY6GPD0VfmCqoOMjuHm3hnBicKTrRfT
+ 8VNmszDXbNR15PAeP2hNUuc8HikZr74=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e4bde68f
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 24 Feb 2026 12:27:27 +0000 (UTC)
+Received: by mail-ot1-f52.google.com with SMTP id
+ 46e09a7af769-7d55b97f358so1061343a34.3
+ for <wireguard@lists.zx2c4.com>; Tue, 24 Feb 2026 04:27:27 -0800 (PST)
+X-Gm-Message-State: AOJu0Yy2WOfvg5bDdWVMyN7/uIBfLpH4O6+qg22xgis2vQGz5Jk83hv1
+ boNdbTzOlqzxiYCi3KJSpa/Rrlm7lROYG7mFWk6PwobI1czku7JIqcbYEuw4baqbu4eXP1XaBw5
+ SADjhLQEN/Efn3UsBEvFkc7tQzLRAMg4=
+X-Received: by 2002:a05:6830:6d09:b0:7d1:956f:355f with SMTP id
+ 46e09a7af769-7d52be3f19amr8125292a34.9.1771936046676; Tue, 24 Feb 2026
+ 04:27:26 -0800 (PST)
+MIME-Version: 1.0
 References: <20260210143016.0144acf1@leda.eworm.net>
  <20260224115254.761df5a9@leda.eworm.net>
  <CAHmME9pf=TNw6S6HB48q3NKhHzNLAo4qxH64Y7i8Lgg6etFCsg@mail.gmail.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-pc-linux-gnu)
-X-Face: %O:rCSk<c"<MpJ:yn<>HSKf7^4uF|FD$9$I0}g$nbnS1{DYPvs#:,~e`).mzj\$P9]V!WCveE/XdbL,L!{)6v%x4<jA|JaB-SKm74~Wa1m;
- |\QFlOg>\Bt!b#{; dS&h"7l=ow'^({02!2%XOugod|u*mYBVm-OS:VpZ"ZrRA4[Q&zye,^j;
- ftj!Hxx\1@; LM)Pz)|B%1#sfF; s; ,N?*K*^)
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAGFBMVEUZFRFENy6KVTKEd23CiGHeqofJvrX4+vdHgItOAAAACXBIWXMAAA3XAAAN1wFCKJt4AAACUklEQVQ4y2VUTZeqMAxNxXG2Io5uGd64L35unbF9ax0b3OLxgFs4PcLff0lBHeb1QIq5uelNCEJNq/TIFGyeC+iugH0WJr+B1MvzWASpuP4CYHOB0VfoDdddwA7OIFQIEHjXDiCtV5e9QX0WMu8AG0mB7g7WP4GqeqVdsi4vv/5kFBvaF/zD7zDquL4DxbrDGDyAsgNYOsJOYzth4Q9ZF6iLV+6TLAT1pi2kuvgAtZxSjoG8cL+8vIn251uoe1OOEWwbIPU04gHsmMsoxyyhYsD2FdIigF1yxaVbBuSOCAlCoX324I7wNMhrO1bhOLsRoA6DC6wQ5eQiSG5BiWQfM4gN+uItQTRDMaJUhVbGyKWCuaaUGSVFVKpl4PdoDn3yY8J+YxQxyhlHfoYOyPgyDcO+cSQK6Bvabjcy2nwRo3pxgA8jslnCuYw23ESOzHAPYwo4ITNQMaOO+RGPEGhSlPEZBh2jmBEjQ5cKbxmr0ruAe/WCriUxW76I8T3h7vqY5VR5wXLdERodg2rHEzdxxk5KpXTL4FwnarvndKM5/MWDY5CuBBdQ+3/0ivsUJHicuHd+Xh3jOdBL+FjSGq4SPCwco+orpWlERRTNo7BHCvbNXFVSIQMp+P5QsIL9upmr8kMTUOfxEHoanwzKRcNAe76WbjBwex/RkdHu48xT5YqP70DaMOhBcTHmAVDxLaBdle93oJy1QKFUh2GXT4am+YH/GGel1CeI98GdMXsytjCKIq/9cMrlgxFCROv+3/BU1fijNpcVD6DxE8VfLBaxUGr1D5usgDYdjwiPAAAAAElFTkSuQmCC
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/Wtzz0ug1K6jmSE8cf.p74pT";
- protocol="application/pgp-signature"; micalg=pgp-sha512
-X-Spamd-Bar: /
-X-Spamd-Result: default: False [0.00 / 15.00]
-X-Rspamd-Server: mx
-X-Rspamd-Queue-Id: B9B562FFEF4
-X-Stat-Signature: crtowzbhk6ezo88ehjdgc6xdtsd4wnur
-X-Rspamd-Action: no action
+ <20260224130751.1faee59a@leda.eworm.net>
+In-Reply-To: <20260224130751.1faee59a@leda.eworm.net>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 24 Feb 2026 13:27:14 +0100
+X-Gmail-Original-Message-ID: <CAHmME9pnCLQCp=6=25fnV1jJcNQMeyrAaxLWTmAEOjDff-FkVw@mail.gmail.com>
+X-Gm-Features: AaiRm514ai_4QVWOxurGS2uBzfw53GfZmll-LHqL4GQjfhME2UhBla-yaPuqOH4
+Message-ID: <CAHmME9pnCLQCp=6=25fnV1jJcNQMeyrAaxLWTmAEOjDff-FkVw@mail.gmail.com>
+Subject: Re: Arch Linux - out of date?!
+To: Christian Hesse <list@eworm.de>
+Cc: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -67,62 +76,79 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---Sig_/Wtzz0ug1K6jmSE8cf.p74pT
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-"Jason A. Donenfeld" <Jason@zx2c4.com> on Tue, 2026/02/24 11:57:
-> On Tue, Feb 24, 2026 at 11:53=E2=80=AFAM Christian Hesse <list@eworm.de> =
-wrote:
-> >
-> > Christian Hesse <list@eworm.de> on Tue, 2026/02/10 14:30: =20
-> > > Hello everybody,
+On Tue, Feb 24, 2026 at 1:07=E2=80=AFPM Christian Hesse <list@eworm.de> wro=
+te:
+>
+> "Jason A. Donenfeld" <Jason@zx2c4.com> on Tue, 2026/02/24 11:57:
+> > On Tue, Feb 24, 2026 at 11:53=E2=80=AFAM Christian Hesse <list@eworm.de=
+> wrote:
 > > >
-> > > for some time already I am annoyed by mails clogging my input regardi=
-ng
-> > > wireguard-tools for Arch Linux being out of date. Obviously this is n=
-ot
-> > > true, I built the package the day of release. [0]
+> > > Christian Hesse <list@eworm.de> on Tue, 2026/02/10 14:30:
+> > > > Hello everybody,
+> > > >
+> > > > for some time already I am annoyed by mails clogging my input regar=
+ding
+> > > > wireguard-tools for Arch Linux being out of date. Obviously this is=
+ not
+> > > > true, I built the package the day of release. [0]
+> > > >
+> > > > Now found the install page mentioning the package being out-of date=
+...
+> > > > [1] What goes wrong and how to fix that?
+> > > >
+> > > > [0] https://archlinux.org/packages/extra/x86_64/wireguard-tools/
+> > > > [1] https://www.wireguard.com/install/#arch-module-tools
 > > >
-> > > Now found the install page mentioning the package being out-of date...
-> > > [1] What goes wrong and how to fix that?
+> > > Ping... I would like to see this resolved.
 > > >
-> > > [0] https://archlinux.org/packages/extra/x86_64/wireguard-tools/
-> > > [1] https://www.wireguard.com/install/#arch-module-tools =20
+> > > Alternatively I will set up my mail server to forward these mails to =
+you
+> > > personally, Jason.
 > >
-> > Ping... I would like to see this resolved.
+> > Hehe.
 > >
-> > Alternatively I will set up my mail server to forward these mails to you
-> > personally, Jason. =20
->=20
-> Hehe.
->=20
-> In the midst of a big infrastructure refresh (as perhaps you've
-> noticed), so this is certainly in the queue there. Sorry about this.
+> > In the midst of a big infrastructure refresh (as perhaps you've
+> > noticed), so this is certainly in the queue there. Sorry about this.
+>
+> Ok, will wait patiently then. Just wanted to make sure this is not lost. =
+:)
+>
+> Is the code available in git anywhere? I could have a look myself then.
 
-Ok, will wait patiently then. Just wanted to make sure this is not lost. :)
+I sorted out the arch and alpine ones, but there are still a bunch of
+others that are out of date or broken. For alpine I had to work around
+anubis (by using a curl useragent).
 
-Is the code available in git anywhere? I could have a look myself then.
---=20
-main(a){char*c=3D/*    Schoene Gruesse                         */"B?IJj;MEH"
-"CX:;",b;for(a/*    Best regards             my address:    */=3D0;b=3Dc[a+=
-+];)
-putchar(b-1/(/*    Chris            cc -ox -xc - && ./x    */b/42*2-3)*42);}
+The code isn't online, but maybe it should be. It's just a bash script
+that fetches webpages and executes a regex. The arch ones are:
 
---Sig_/Wtzz0ug1K6jmSE8cf.p74pT
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
+check \
+       tools \
+       "Arch" \
+       "mail@eworm.de" \
+       "https://gitlab.archlinux.org/archlinux/packaging/packages/wireguard=
+-tools/-/raw/main/PKGBUILD?ref_type=3Dheads"
+\
+       'pkgver=3D([0-9.]+)' &
+check \
+       linuxcompat \
+       "Arch" \
+       "mail@eworm.de" \
+       "https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=3Dwireguard=
+-dkms"
+\
+       'pkgver=3D([0-9.]+)' &
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEXHmveYAHrRp+prOviUUh18yA9HYFAmmdlJcACgkQiUUh18yA
-9HanQAgAsu3fmpeZG/JjkWxyRQulfHJsr7aDEYv8ciD9QwYz7g7HmpJ4yl1gBeyS
-BAV8DbKRla4C0pp/DekWOmqbSDVK/W6ZzGl1ghrYYpKmkYJpUrJ8+K/dxp3fA54O
-75o/lAoT/oRJHdfrsB2q1VlBOyMjGC29PpuWSc0tl3j1BokiJM3Y11dNG+cO5kbw
-JHUZOzObde52drZk3oF8L6821f6KR5BIjza/dLAttdi4ItOW2RajW7bRAcLSVZcv
-2+8fXwTqjQwFZuwXR0WOD6YLhVy47PqLT3csX819SdHGvQn74qVrOMGJ3AjzSPPt
-OzvBkGO9j3+4/K0SPaPeMkEN2BfAjw==
-=gqMP
------END PGP SIGNATURE-----
-
---Sig_/Wtzz0ug1K6jmSE8cf.p74pT--
+check() {
+       local type=3D"$1"
+       local expected=3D"version_$1"
+       expected=3D"${!expected}"
+       local name=3D"$2"
+       local email=3D"$3"
+       local text=3D"$(curl -L -A "curl/8.18.0
+($RANDOM$RANDOM$RANDOM$RANDOM)" -s "$4")"
+       [[ $text =3D~ $5 ]] && local version=3D"${BASH_REMATCH[1]}" ||
+local version=3D"unknown"
+       [[ $version =3D=3D "$expected" ]] && local uptodate=3D"true" || loca=
+l
+uptodate=3D"false"
