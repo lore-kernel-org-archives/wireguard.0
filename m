@@ -4,41 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24378F0181F
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  6 Mar 2026 10:07:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4190EA8524
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Mar 2026 14:56:27 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id a980b9a7;
-	Fri, 6 Mar 2026 10:05:19 +0000 (UTC)
-Received: from mail.stormshield.eu (mail.stormshield.eu [91.212.116.25])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id b43ac4af
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 6 Mar 2026 10:05:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stormshield.eu;
- s=signer3; t=1772791515; h=From:Subject:Date:Message-ID:To:MIME-Version
- :Content-Type:Content-Transfer-Encoding:In-Reply-To:References; bh=asHij+
- mP9v9kTzlb73bNRjAOg+wdul5slRqiHryp8kc=; b=K55l2EXcbrP3f+5voLcyOm7VqxHPeVi
- +bvL7mFyi/ACnLYV5inNKCYjp3YJYG1pYmSfUtM4F6Vo9ijO28Nj5dvbd/R50F3NMReBiKSk6
- LkCyqcSxaHZIV27buOa7jN9L8yd1AzpgKlEOx99RskMW0F41KypWL6xPRybpEOWGJhMiWguPf
- t+qYzhfDaoo7BdB9vuBtn9cMowwd9y/w9575cNwKXfsvNacXNFpdj6FUF+AGw7WLUyqj3WFKL
- j+yfukOjVsRjt7EsnX3EAqAZvP3s5JzExbMoRnUG4fAXIfOku/lzYjPfNbYu2TDsf+2zrG7ic
- KdYqM1b0h5hPwjzIBVA==;
-From: Jean-Alexandre CHRONE <Jean-Alexandre.CHRONE@stormshield.eu>
-To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-Subject: RE: [PATCH] api: use mutex when removing instance on close adapter
-Thread-Topic: [PATCH] api: use mutex when removing instance on close adapter
-Thread-Index: AdyUURyQPtPZzF+zT3OzBGeUYupgWQY/nwYw
-Date: Fri, 6 Mar 2026 10:05:15 +0000
-Message-ID: <2bc053cc1dcc4f87973c9a84826e49b9@stormshield.eu>
-References: <7ef930c54a4b4aa5bd3ecd9cf01fe12a@stormshield.eu>
-In-Reply-To: <7ef930c54a4b4aa5bd3ecd9cf01fe12a@stormshield.eu>
-Accept-Language: fr-FR, en-US
-Content-Language: fr-FR
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id aa406ace;
+	Sun, 8 Mar 2026 14:56:25 +0000 (UTC)
+Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com
+ [209.85.161.71])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id fbf59796
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Sun, 8 Mar 2026 14:56:23 +0000 (UTC)
+Received: by mail-oo1-f71.google.com with SMTP id
+ 006d021491bc7-67ba8d8546cso15336566eaf.1
+ for <wireguard@lists.zx2c4.com>; Sun, 08 Mar 2026 07:56:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772981781; x=1773586581;
+ h=to:from:subject:message-id:in-reply-to:date:mime-version
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RwKum3eaGpxlRXiKO+ocszJG7j17Yg5sHhgYN1V6OMw=;
+ b=MYKjgKjAjospOM8AgHTkXzGkp9qMX0klFxZVEr53djSO6PV36WLEmOPsaJ77oxTXIx
+ eyRYE4rwV6RfOOYV+wz3iQBhGioxp7PBouAnxlZVR/+P7/QYIYLRW/Mm60swC/BUdApd
+ jeRHOSvmttrNIbj+oA4Q0sn3GJLkS6pAMb20+a/IMRYwzx5cVVYql4XYkJ+9c3zjEMUr
+ OQp89xBmeYJZ9LXixW4AEPHGTu6JK6PcdFd6yxfHks7RvkvNDXKQqMS0T822fFrRjx3x
+ HhFcCjh0A9N0dUrg2s+XC7/WFWXP3kwnN72bknurkFtjJNPoADVVI3F1WJWPr4LKCgqZ
+ k4wA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV8VqeLRh90e8MFO8/pqngKTYNS3WmEt+zce/sm4QS/+ULSI5wcL66KIte9FKhpWcjTIOkZB6hrwhI=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YzhmiavfrWu99pnXv5hthFHFjAfti3E0Jbw40H4YHwhIzmN2JX5
+ hJOS5e+IVQyXxupf5P1XiNwurCQpZgjnVKZdgWEe1hAl8KnQelULgBBU5rEDt/CiLyrvjfp0xnB
+ dK7wN4XIdfiLaZbM/kDqzzgOKOcuRzm2HPWzsdfRH0ClE89m7gWHvYKdb8w0=
 MIME-Version: 1.0
-X-DKIM-Signer: DkimX (v3.70.370)
+X-Received: by 2002:a05:6820:820:b0:67b:b33c:48d7 with SMTP id
+ 006d021491bc7-67bb33c4a70mr483102eaf.65.1772981781716; Sun, 08 Mar 2026
+ 07:56:21 -0700 (PDT)
+Date: Sun, 08 Mar 2026 07:56:21 -0700
+In-Reply-To: <66f49736.050a0220.211276.0036.GAE@google.com>
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <69ad8e15.050a0220.310d8.000d.GAE@google.com>
+Subject: Re: [syzbot] [wireguard?] INFO: task hung in wg_netns_pre_exit (5)
+From: syzbot <syzbot+f2fbf7478a35a94c8b7c@syzkaller.appspotmail.com>
+To: Jason@zx2c4.com, andrew+netdev@lunn.ch, andrew@lunn.ch, andrii@kernel.org, 
+ ast@kernel.org, bp@alien8.de, dave.hansen@linux.intel.com, 
+ davem@davemloft.net, edumazet@google.com, hpa@zytor.com, jason@zx2c4.com, 
+ kuba@kernel.org, linux-kernel@vger.kernel.org, mingo@redhat.com, 
+ netdev@vger.kernel.org, pabeni@redhat.com, sdf@google.com, 
+ syzkaller-bugs@googlegroups.com, tglx@linutronix.de, 
+ wireguard@lists.zx2c4.com, x86@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -53,64 +66,64 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,=20
+syzbot has found a reproducer for the following issue on:
 
-Did anyone have the same issue as mentioned in the earlier message?=20
-We encountered it any time we had to reset an adapter multiple times in a s=
-hort lapse of time.
+HEAD commit:    c113d5e32678 Merge branch 'net-spacemit-a-few-error-handli..
+git tree:       net
+console output: https://syzkaller.appspot.com/x/log.txt?x=13a4875a580000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=779072223d02a312
+dashboard link: https://syzkaller.appspot.com/bug?extid=f2fbf7478a35a94c8b7c
+compiler:       Debian clang version 21.1.8 (++20251221033036+2078da43e25a-1~exp1~20251221153213.50), Debian LLD 21.1.8
+syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=10cf3fe6580000
+C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=16b5c8ba580000
 
-Best Regards,
-Jean-Alexandre
+Downloadable assets:
+disk image: https://storage.googleapis.com/syzbot-assets/a1a0aa684791/disk-c113d5e3.raw.xz
+vmlinux: https://storage.googleapis.com/syzbot-assets/6d0461aed5ba/vmlinux-c113d5e3.xz
+kernel image: https://storage.googleapis.com/syzbot-assets/05b26502bb1f/bzImage-c113d5e3.xz
 
------Original message-----
+The issue was bisected to:
 
-From 298267d3ead7110880a5dc0f5d0e8822600d30c0 Mon Sep 17 00:00:00 2001
-From: "jean-alexandre.chrone" <jean-alexandre.chrone@stormshield.eu>
-Date: Mon, 2 Feb 2026 15:24:12 +0100
-Subject: [PATCH] api: use mutex when removing instance on close adapter
+commit d4dfc5700e867b22ab94f960f9a9972696a637d5
+Author: Andrii Nakryiko <andrii@kernel.org>
+Date:   Tue Mar 19 23:38:49 2024 +0000
 
-on successive create and close there might be some error logged
+    bpf: pass whole link instead of prog when triggering raw tracepoint
+
+bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=17ccbc58580000
+final oops:     https://syzkaller.appspot.com/x/report.txt?x=142cbc58580000
+console output: https://syzkaller.appspot.com/x/log.txt?x=102cbc58580000
+
+IMPORTANT: if you fix the issue, please add the following tag to the commit:
+Reported-by: syzbot+f2fbf7478a35a94c8b7c@syzkaller.appspotmail.com
+Fixes: d4dfc5700e86 ("bpf: pass whole link instead of prog when triggering raw tracepoint")
+
+INFO: task kworker/u8:7:1016 blocked for more than 143 seconds.
+      Not tainted syzkaller #0
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+task:kworker/u8:7    state:D stack:25664 pid:1016  tgid:1016  ppid:2      task_flags:0x4208060 flags:0x00080000
+Workqueue: netns cleanup_net
+Call Trace:
+ <TASK>
+ context_switch kernel/sched/core.c:5295 [inline]
+ __schedule+0x15dd/0x52d0 kernel/sched/core.c:6908
+ __schedule_loop kernel/sched/core.c:6990 [inline]
+ schedule+0x164/0x360 kernel/sched/core.c:7005
+ schedule_preempt_disabled+0x13/0x30 kernel/sched/core.c:7062
+ __mutex_lock_common kernel/locking/mutex.c:692 [inline]
+ __mutex_lock+0x7fe/0x1300 kernel/locking/mutex.c:776
+ wg_netns_pre_exit+0x1c/0x200 drivers/net/wireguard/device.c:419
+ ops_pre_exit_list net/core/net_namespace.c:161 [inline]
+ ops_undo_list+0x187/0x940 net/core/net_namespace.c:234
+ cleanup_net+0x56b/0x800 net/core/net_namespace.c:704
+ process_one_work kernel/workqueue.c:3275 [inline]
+ process_scheduled_works+0xb02/0x1830 kernel/workqueue.c:3358
+ worker_thread+0xa50/0xfc0 kernel/workqueue.c:3439
+ kthread+0x388/0x470 kernel/kthread.c:436
+ ret_from_fork+0x51e/0xb90 arch/x86/kernel/process.c:158
+
+
 ---
- api/adapter.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
-
-diff --git a/api/adapter.c b/api/adapter.c index 0dd8c42..042645c 100644
---- a/api/adapter.c
-+++ b/api/adapter.c
-@@ -158,7 +158,8 @@ VOID AdapterCleanupOrphanedDevices(VOID)
-             continue;
-         }
-         ULONG Status, Code;
--        if (CM_Get_DevNode_Status(&Status, &Code, DevInfoData.DevInst, 0) =
-=3D=3D CR_SUCCESS && !(Status & DN_HAS_PROBLEM))
-+        CONFIGRET Ret =3D CM_Get_DevNode_Status(&Status, &Code, DevInfoDat=
-a.DevInst, 0);
-+        if ((Ret =3D=3D CR_SUCCESS && !(Status & DN_HAS_PROBLEM)) || Ret =
-=3D=3D=20
-+ CR_NO_SUCH_DEVNODE)
-             continue;
-=20
-         DEVPROPTYPE PropType;
-@@ -195,8 +196,16 @@ WintunCloseAdapter(WINTUN_ADAPTER *Adapter)
-         SwDeviceClose(Adapter->SwDevice);
-     if (Adapter->DevInfo)
-     {
-+        HANDLE DeviceInstallationMutex =3D NamespaceTakeDeviceInstallation=
-Mutex();
-+        if (DeviceInstallationMutex =3D=3D NULL)
-+            LOG_LAST_ERROR(L"Failed to take device installation=20
-+ mutex");
-+
-         if (!AdapterRemoveInstance(Adapter->DevInfo, &Adapter->DevInfoData=
-))
-             LOG_LAST_ERROR(L"Failed to remove adapter when closing");
-+
-+        if (DeviceInstallationMutex !=3D NULL)
-+            NamespaceReleaseMutex(DeviceInstallationMutex);
-+
-         SetupDiDestroyDeviceInfoList(Adapter->DevInfo);
-     }
-     Free(Adapter);
---
-2.52.0.windows.1
-
+If you want syzbot to run the reproducer, reply with:
+#syz test: git://repo/address.git branch-or-commit-hash
+If you attach or paste a git patch, syzbot will apply it before testing.
