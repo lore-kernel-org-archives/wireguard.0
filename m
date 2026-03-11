@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4190EA8524
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Mar 2026 14:56:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1433A103E2F0
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 11 Mar 2026 22:59:54 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id aa406ace;
-	Sun, 8 Mar 2026 14:56:25 +0000 (UTC)
-Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com
- [209.85.161.71])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id fbf59796
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 29155752;
+	Wed, 11 Mar 2026 22:59:53 +0000 (UTC)
+Received: from sea.source.kernel.org (sea.source.kernel.org
+ [2600:3c0a:e001:78e:0:1991:8:25])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 7ef9d456
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 8 Mar 2026 14:56:23 +0000 (UTC)
-Received: by mail-oo1-f71.google.com with SMTP id
- 006d021491bc7-67ba8d8546cso15336566eaf.1
- for <wireguard@lists.zx2c4.com>; Sun, 08 Mar 2026 07:56:22 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772981781; x=1773586581;
- h=to:from:subject:message-id:in-reply-to:date:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RwKum3eaGpxlRXiKO+ocszJG7j17Yg5sHhgYN1V6OMw=;
- b=MYKjgKjAjospOM8AgHTkXzGkp9qMX0klFxZVEr53djSO6PV36WLEmOPsaJ77oxTXIx
- eyRYE4rwV6RfOOYV+wz3iQBhGioxp7PBouAnxlZVR/+P7/QYIYLRW/Mm60swC/BUdApd
- jeRHOSvmttrNIbj+oA4Q0sn3GJLkS6pAMb20+a/IMRYwzx5cVVYql4XYkJ+9c3zjEMUr
- OQp89xBmeYJZ9LXixW4AEPHGTu6JK6PcdFd6yxfHks7RvkvNDXKQqMS0T822fFrRjx3x
- HhFcCjh0A9N0dUrg2s+XC7/WFWXP3kwnN72bknurkFtjJNPoADVVI3F1WJWPr4LKCgqZ
- k4wA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV8VqeLRh90e8MFO8/pqngKTYNS3WmEt+zce/sm4QS/+ULSI5wcL66KIte9FKhpWcjTIOkZB6hrwhI=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YzhmiavfrWu99pnXv5hthFHFjAfti3E0Jbw40H4YHwhIzmN2JX5
- hJOS5e+IVQyXxupf5P1XiNwurCQpZgjnVKZdgWEe1hAl8KnQelULgBBU5rEDt/CiLyrvjfp0xnB
- dK7wN4XIdfiLaZbM/kDqzzgOKOcuRzm2HPWzsdfRH0ClE89m7gWHvYKdb8w0=
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 11 Mar 2026 22:59:51 +0000 (UTC)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id 8E22A4437B;
+ Wed, 11 Mar 2026 22:59:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D74BC4CEF7;
+ Wed, 11 Mar 2026 22:59:48 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="iPW66n68"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1773269986;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=sy9Zwi13LYATgziwqUdxkmcUUvo4YWLt3PnTjZqv2kU=;
+ b=iPW66n681C3YfmXx7ixB8/OrfAekPxh3on8GyzOtfLEK9ERUeqP97ANsFieKJuiggi0OL/
+ ZEKhcnxAr1G3bDC2FMsLccPsa5EutyzUajshYbVVJSOx7yenan38j1p6QCncIIEzREpXtl
+ shQs6PHduTQNOyGqfmHnGSQbbUzW9cM=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 6f2398e4
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Wed, 11 Mar 2026 22:59:46 +0000 (UTC)
+Date: Wed, 11 Mar 2026 23:59:43 +0100
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Valentin Spreckels <valentin@spreckels.dev>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
+ "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH wireguard] wireguard: prevent ipv6 addrconf via
+ IFF_NO_ADDRCONF flag
+Message-ID: <abHz3xcsLhIPc_Jn@zx2c4.com>
+References: <20260208170545.31942-1-valentin@spreckels.dev>
 MIME-Version: 1.0
-X-Received: by 2002:a05:6820:820:b0:67b:b33c:48d7 with SMTP id
- 006d021491bc7-67bb33c4a70mr483102eaf.65.1772981781716; Sun, 08 Mar 2026
- 07:56:21 -0700 (PDT)
-Date: Sun, 08 Mar 2026 07:56:21 -0700
-In-Reply-To: <66f49736.050a0220.211276.0036.GAE@google.com>
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <69ad8e15.050a0220.310d8.000d.GAE@google.com>
-Subject: Re: [syzbot] [wireguard?] INFO: task hung in wg_netns_pre_exit (5)
-From: syzbot <syzbot+f2fbf7478a35a94c8b7c@syzkaller.appspotmail.com>
-To: Jason@zx2c4.com, andrew+netdev@lunn.ch, andrew@lunn.ch, andrii@kernel.org, 
- ast@kernel.org, bp@alien8.de, dave.hansen@linux.intel.com, 
- davem@davemloft.net, edumazet@google.com, hpa@zytor.com, jason@zx2c4.com, 
- kuba@kernel.org, linux-kernel@vger.kernel.org, mingo@redhat.com, 
- netdev@vger.kernel.org, pabeni@redhat.com, sdf@google.com, 
- syzkaller-bugs@googlegroups.com, tglx@linutronix.de, 
- wireguard@lists.zx2c4.com, x86@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260208170545.31942-1-valentin@spreckels.dev>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -66,64 +66,16 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-syzbot has found a reproducer for the following issue on:
+Hi Valentin,
 
-HEAD commit:    c113d5e32678 Merge branch 'net-spacemit-a-few-error-handli..
-git tree:       net
-console output: https://syzkaller.appspot.com/x/log.txt?x=13a4875a580000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=779072223d02a312
-dashboard link: https://syzkaller.appspot.com/bug?extid=f2fbf7478a35a94c8b7c
-compiler:       Debian clang version 21.1.8 (++20251221033036+2078da43e25a-1~exp1~20251221153213.50), Debian LLD 21.1.8
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=10cf3fe6580000
-C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=16b5c8ba580000
+On Sun, Feb 08, 2026 at 06:05:45PM +0100, Valentin Spreckels wrote:
+> Use the flag introduced in commit 8a321cf7becc6 ("net: add
+> IFF_NO_ADDRCONF and use it in bonding to prevent ipv6 addrconf")
+> instead of mangling the addr_gen_mode to prevent ipv6 addrconf.
 
-Downloadable assets:
-disk image: https://storage.googleapis.com/syzbot-assets/a1a0aa684791/disk-c113d5e3.raw.xz
-vmlinux: https://storage.googleapis.com/syzbot-assets/6d0461aed5ba/vmlinux-c113d5e3.xz
-kernel image: https://storage.googleapis.com/syzbot-assets/05b26502bb1f/bzImage-c113d5e3.xz
+Can you give some more context here? Why was IFF_NO_ADDRCONF added when
+the IN6_ADDR_GEN_MODE_NONE method has been working fine? What's the
+difference between these approaches? I don't doubt that your patch is
+correct, but I would like to better understand this.
 
-The issue was bisected to:
-
-commit d4dfc5700e867b22ab94f960f9a9972696a637d5
-Author: Andrii Nakryiko <andrii@kernel.org>
-Date:   Tue Mar 19 23:38:49 2024 +0000
-
-    bpf: pass whole link instead of prog when triggering raw tracepoint
-
-bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=17ccbc58580000
-final oops:     https://syzkaller.appspot.com/x/report.txt?x=142cbc58580000
-console output: https://syzkaller.appspot.com/x/log.txt?x=102cbc58580000
-
-IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+f2fbf7478a35a94c8b7c@syzkaller.appspotmail.com
-Fixes: d4dfc5700e86 ("bpf: pass whole link instead of prog when triggering raw tracepoint")
-
-INFO: task kworker/u8:7:1016 blocked for more than 143 seconds.
-      Not tainted syzkaller #0
-"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-task:kworker/u8:7    state:D stack:25664 pid:1016  tgid:1016  ppid:2      task_flags:0x4208060 flags:0x00080000
-Workqueue: netns cleanup_net
-Call Trace:
- <TASK>
- context_switch kernel/sched/core.c:5295 [inline]
- __schedule+0x15dd/0x52d0 kernel/sched/core.c:6908
- __schedule_loop kernel/sched/core.c:6990 [inline]
- schedule+0x164/0x360 kernel/sched/core.c:7005
- schedule_preempt_disabled+0x13/0x30 kernel/sched/core.c:7062
- __mutex_lock_common kernel/locking/mutex.c:692 [inline]
- __mutex_lock+0x7fe/0x1300 kernel/locking/mutex.c:776
- wg_netns_pre_exit+0x1c/0x200 drivers/net/wireguard/device.c:419
- ops_pre_exit_list net/core/net_namespace.c:161 [inline]
- ops_undo_list+0x187/0x940 net/core/net_namespace.c:234
- cleanup_net+0x56b/0x800 net/core/net_namespace.c:704
- process_one_work kernel/workqueue.c:3275 [inline]
- process_scheduled_works+0xb02/0x1830 kernel/workqueue.c:3358
- worker_thread+0xa50/0xfc0 kernel/workqueue.c:3439
- kthread+0x388/0x470 kernel/kthread.c:436
- ret_from_fork+0x51e/0xb90 arch/x86/kernel/process.c:158
-
-
----
-If you want syzbot to run the reproducer, reply with:
-#syz test: git://repo/address.git branch-or-commit-hash
-If you attach or paste a git patch, syzbot will apply it before testing.
+Jason
