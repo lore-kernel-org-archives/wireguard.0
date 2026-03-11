@@ -4,54 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1433A103E2F0
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 11 Mar 2026 22:59:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A748F103E2EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 11 Mar 2026 23:04:47 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 29155752;
-	Wed, 11 Mar 2026 22:59:53 +0000 (UTC)
-Received: from sea.source.kernel.org (sea.source.kernel.org
- [2600:3c0a:e001:78e:0:1991:8:25])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 7ef9d456
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id ab60d7e6;
+	Wed, 11 Mar 2026 23:03:00 +0000 (UTC)
+Received: from tor.source.kernel.org (tor.source.kernel.org
+ [2600:3c04:e001:324:0:1991:8:25])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 157842b6
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 11 Mar 2026 22:59:51 +0000 (UTC)
+ Wed, 11 Mar 2026 23:02:58 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 8E22A4437B;
- Wed, 11 Mar 2026 22:59:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D74BC4CEF7;
- Wed, 11 Mar 2026 22:59:48 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 9931560137;
+ Wed, 11 Mar 2026 23:02:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA7E8C4CEF7;
+ Wed, 11 Mar 2026 23:02:55 +0000 (UTC)
 Authentication-Results: smtp.kernel.org;
  dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="iPW66n68"
+ header.b="j0nuOHwp"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1773269986;
+ t=1773270174;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sy9Zwi13LYATgziwqUdxkmcUUvo4YWLt3PnTjZqv2kU=;
- b=iPW66n681C3YfmXx7ixB8/OrfAekPxh3on8GyzOtfLEK9ERUeqP97ANsFieKJuiggi0OL/
- ZEKhcnxAr1G3bDC2FMsLccPsa5EutyzUajshYbVVJSOx7yenan38j1p6QCncIIEzREpXtl
- shQs6PHduTQNOyGqfmHnGSQbbUzW9cM=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 6f2398e4
+ bh=jiY5KDNvnWfx9XWdYS3zxMraFINB/RAoBpCgRdditRs=;
+ b=j0nuOHwpgwpT/5eiA2N8L0FqEH4u8bSHIxOm/SwzTMqT46SyDXqFh6IH4faybEPH0d8ogM
+ B0pc0978/LDE8TbWY1ojgaEHcCoz98F4la6eIf/9jqgKRUiMyrjcAPLQqY2yLeWSEpxY/y
+ ZF3f5rZdkjsD1BoB6QXSp6BApkbezqI=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e8f30663
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Wed, 11 Mar 2026 22:59:46 +0000 (UTC)
-Date: Wed, 11 Mar 2026 23:59:43 +0100
+ Wed, 11 Mar 2026 23:02:54 +0000 (UTC)
+Date: Thu, 12 Mar 2026 00:02:52 +0100
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Valentin Spreckels <valentin@spreckels.dev>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
- "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH wireguard] wireguard: prevent ipv6 addrconf via
- IFF_NO_ADDRCONF flag
-Message-ID: <abHz3xcsLhIPc_Jn@zx2c4.com>
-References: <20260208170545.31942-1-valentin@spreckels.dev>
+To: =?utf-8?Q?Asbj=C3=B8rn_Sloth_T=C3=B8nnesen?= <ast@fiberby.net>
+Cc: wireguard@lists.zx2c4.com
+Subject: Re: [PATCH wireguard-tools v3 0/3] ipc: linux: kernel-side netdevice
+ filtering
+Message-ID: <abH0nBlQmggFAFt7@zx2c4.com>
+References: <20260130191058.5123-1-ast@fiberby.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260208170545.31942-1-valentin@spreckels.dev>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260130191058.5123-1-ast@fiberby.net>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -66,16 +63,29 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Valentin,
+On Fri, Jan 30, 2026 at 07:10:52PM +0000, Asbjørn Sloth Tønnesen wrote:
+> Move device filtering to the kernel, thereby reducing netlink traffic.
+> 
+> The first patch request kernel-side filtering.
+> 
+> The second patch requests that the kernel doesn't include statistics
+> in netdevice dumps.
+> 
+> The third patch removes the old filtering code, as an
+> additional step, which breaks on earlier than Linux v4.6.
+> 
+> I assume that a dependency on Linux v4.6+ is acceptable for wg-tools
+> now, as wireguard-linux-compat haven't been updated for 3 years.
 
-On Sun, Feb 08, 2026 at 06:05:45PM +0100, Valentin Spreckels wrote:
-> Use the flag introduced in commit 8a321cf7becc6 ("net: add
-> IFF_NO_ADDRCONF and use it in bonding to prevent ipv6 addrconf")
-> instead of mangling the addr_gen_mode to prevent ipv6 addrconf.
+Interesting series. If I'm going to apply this, I'm going to apply it,
+and so the ifdefs you've added won't matter much; this will still break
+wireguard-linux-compat. But maybe it's time to do so. So if you're up
+for sending a v4, just do it like there's no yesterday.
 
-Can you give some more context here? Why was IFF_NO_ADDRCONF added when
-the IN6_ADDR_GEN_MODE_NONE method has been working fine? What's the
-difference between these approaches? I don't doubt that your patch is
-correct, but I would like to better understand this.
+Also, does this filtering need to also be added to the embeddable c
+library contrib code?
+
+Thanks for this patch. I'll start thinking seriously about
+wireguard-linux-compat sunsetting.
 
 Jason
