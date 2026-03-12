@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4D0F106ACEC
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Mar 2026 21:44:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A569D106ACF1
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Mar 2026 21:44:49 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 58a4ed23;
-	Thu, 12 Mar 2026 21:44:48 +0000 (UTC)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id a039539f;
+	Thu, 12 Mar 2026 21:44:49 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id d34db598
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id b4c118a5
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
  Thu, 12 Mar 2026 21:44:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
  s=202008; t=1773351877;
- bh=9xpEXLvULOnKPuz3XIM5lWsHgqHw7na6cIWmA+57y70=;
+ bh=S6H/FBN3h0HnzHc+JzuILWfzw288s51nqdlzRfSCthc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=NEFXrLuInlhbKGKJkzCbJkEFQh8DgVrZ4kuW5JMwJdFcHfcqUSu7YFy5tgDyS9hDW
- RRWhA+gZsLFUGkXXzDDrWF7zDSZqiZYIfH4iWo/PWH31JqXc+Im6QaI+Ywg6gV/84/
- Zu9zyYw23H+Gf6238jn4UlvzNrGJgD3nGDS2Z87Qy3wGjufA0WdKuur86mjAkHT0aP
- DPuO4aFyJO8cttm/U7t9JXrFYa6DduUILqF6LuapMIi6rX5T/ATVtJaBRvh1CNWKmR
- Di7VUjqrQ2fl3oAbUX2E1h2ebwv4dWmyYqNZ4Ic5MmeC0r5n8aMTI36ob+nvZAo4sq
- 3pSZ904lBPOEw==
+ b=WeQ928TfAaaU4UBdflc19B2kGLYfAEiqxBQaatJEwecGhd3ZcpgkQ9sBQm88+B7gB
+ qH2YlZ6ejhPpz5R4JLt3uM+IbkxNo1zfAcIzylAl+Ec2PoCjLekWrA803XDP3xu3s+
+ 0KQ/A3q2/QIEQTcUBFOESwdd0c2KuR5gCgNMS4R+CL4obSieJdL8dJYxxXGBsxXyRy
+ vi0gPpktY0wLNa6Ym4gwZvSdQwrUTgw/XR/I6SmrMS4lVlIB0GVyKFrvwSbLSlGtDG
+ 6P/FX/Vk27aK5kSwXWWXKqnUlTz8v6x3XvXNogudSnlM7jRZjY/N4R3ACMFlO+2vTh
+ TCQyKmPASlnIQ==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id 623B6600BF;
+ by mail1.fiberby.net (Postfix) with ESMTPSA id 7119A600C1;
  Thu, 12 Mar 2026 21:44:37 +0000 (UTC)
 Received: by x201s (Postfix, from userid 1000)
- id ABD4A202A16; Thu, 12 Mar 2026 21:44:21 +0000 (UTC)
+ id 4AA0D2028E2; Thu, 12 Mar 2026 21:44:21 +0000 (UTC)
 From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
 To: "Jason A . Donenfeld" <Jason@zx2c4.com>
 Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
  wireguard@lists.zx2c4.com
-Subject: [PATCH wireguard-tools v4 3/3] ipc: linux: skip statistics on
- netdevice listing
-Date: Thu, 12 Mar 2026 21:44:01 +0000
-Message-ID: <20260312214405.589127-4-ast@fiberby.net>
+Subject: [PATCH wireguard-tools v4 2/3] ipc: linux: remove user-space
+ netdevice filtering
+Date: Thu, 12 Mar 2026 21:44:00 +0000
+Message-ID: <20260312214405.589127-3-ast@fiberby.net>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312214405.589127-1-ast@fiberby.net>
 References: <20260312214405.589127-1-ast@fiberby.net>
@@ -57,53 +57,101 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Gathering interface statistics can be a relatively expensive operation
-on certain systems as it requires iterating over all the cpus.
+Since the devices are now filtered kernel-side, we can remove
+the code for filtering in user-space.
 
-This patch instructs the kernel to not include netdevice statistics,
-in the netdevice listing.
-
-Kernel-side support for this was added in Linux v4.4 in commit
-d5566fd72ec1 ("rtnetlink: RTEXT_FILTER_SKIP_STATS support to avoid
-dumping inet/inet6 stats"), this saves 368 bytes of statistics.
-
-In the Linux v6.19 commit 105bae321862 ("rtnetlink: honor
-RTEXT_FILTER_SKIP_STATS in IFLA_STATS"), it is expanded to skip more
-statistics bringing the savings to 800 bytes per netdevice.
+This breaks device listing for kernels earlier than Linux v4.6,
+device-specific commands will continue to work.
 
 Despite the subject prefix, this patch also applies to the
 embeddable C library, so the two implementations stay in sync.
 
 Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 ---
- contrib/embeddable-wg-library/wireguard.c | 1 +
- src/ipc-linux.h                           | 1 +
- 2 files changed, 2 insertions(+)
+ contrib/embeddable-wg-library/wireguard.c | 16 ++--------------
+ src/ipc-linux.h                           | 16 ++--------------
+ 2 files changed, 4 insertions(+), 28 deletions(-)
 
 diff --git a/contrib/embeddable-wg-library/wireguard.c b/contrib/embeddable-wg-library/wireguard.c
-index eff441b..686cd3a 100644
+index 7ac0d6c..eff441b 100644
 --- a/contrib/embeddable-wg-library/wireguard.c
 +++ b/contrib/embeddable-wg-library/wireguard.c
-@@ -957,6 +957,7 @@ static int fetch_device_names(struct string_list *list)
- 	nlh->nlmsg_seq = seq;
- 	ifm = mnl_nlmsg_put_extra_header(nlh, sizeof(*ifm));
- 	ifm->ifi_family = AF_UNSPEC;
-+	mnl_attr_put_u32(nlh, IFLA_EXT_MASK, RTEXT_FILTER_SKIP_STATS);
+@@ -892,25 +892,13 @@ static int string_list_add(struct string_list *list, const char *str)
  
- 	linkinfo_nest = mnl_attr_nest_start(nlh, IFLA_LINKINFO);
- 	mnl_attr_put_strz(nlh, IFLA_INFO_KIND, WG_GENL_NAME);
+ struct interface {
+ 	const char *name;
+-	bool is_wireguard;
+ };
+ 
+-static int parse_linkinfo(const struct nlattr *attr, void *data)
+-{
+-	struct interface *interface = data;
+-
+-	if (mnl_attr_get_type(attr) == IFLA_INFO_KIND && !strcmp(WG_GENL_NAME, mnl_attr_get_str(attr)))
+-		interface->is_wireguard = true;
+-	return MNL_CB_OK;
+-}
+-
+ static int parse_infomsg(const struct nlattr *attr, void *data)
+ {
+ 	struct interface *interface = data;
+ 
+-	if (mnl_attr_get_type(attr) == IFLA_LINKINFO)
+-		return mnl_attr_parse_nested(attr, parse_linkinfo, data);
+-	else if (mnl_attr_get_type(attr) == IFLA_IFNAME)
++	if (mnl_attr_get_type(attr) == IFLA_IFNAME)
+ 		interface->name = mnl_attr_get_str(attr);
+ 	return MNL_CB_OK;
+ }
+@@ -924,7 +912,7 @@ static int read_devices_cb(const struct nlmsghdr *nlh, void *data)
+ 	ret = mnl_attr_parse(nlh, sizeof(struct ifinfomsg), parse_infomsg, &interface);
+ 	if (ret != MNL_CB_OK)
+ 		return ret;
+-	if (interface.name && interface.is_wireguard)
++	if (interface.name)
+ 		ret = string_list_add(list, interface.name);
+ 	if (ret < 0)
+ 		return ret;
 diff --git a/src/ipc-linux.h b/src/ipc-linux.h
-index 45bb55c..791eb84 100644
+index c56fede..45bb55c 100644
 --- a/src/ipc-linux.h
 +++ b/src/ipc-linux.h
-@@ -94,6 +94,7 @@ static int kernel_get_wireguard_interfaces(struct string_list *list)
- 	nlh->nlmsg_seq = seq;
- 	ifm = mnl_nlmsg_put_extra_header(nlh, sizeof(*ifm));
- 	ifm->ifi_family = AF_UNSPEC;
-+	mnl_attr_put_u32(nlh, IFLA_EXT_MASK, RTEXT_FILTER_SKIP_STATS);
+@@ -29,25 +29,13 @@
  
- 	linkinfo_nest = mnl_attr_nest_start(nlh, IFLA_LINKINFO);
- 	mnl_attr_put_strz(nlh, IFLA_INFO_KIND, WG_GENL_NAME);
+ struct interface {
+ 	const char *name;
+-	bool is_wireguard;
+ };
+ 
+-static int parse_linkinfo(const struct nlattr *attr, void *data)
+-{
+-	struct interface *interface = data;
+-
+-	if (mnl_attr_get_type(attr) == IFLA_INFO_KIND && !strcmp(WG_GENL_NAME, mnl_attr_get_str(attr)))
+-		interface->is_wireguard = true;
+-	return MNL_CB_OK;
+-}
+-
+ static int parse_infomsg(const struct nlattr *attr, void *data)
+ {
+ 	struct interface *interface = data;
+ 
+-	if (mnl_attr_get_type(attr) == IFLA_LINKINFO)
+-		return mnl_attr_parse_nested(attr, parse_linkinfo, data);
+-	else if (mnl_attr_get_type(attr) == IFLA_IFNAME)
++	if (mnl_attr_get_type(attr) == IFLA_IFNAME)
+ 		interface->name = mnl_attr_get_str(attr);
+ 	return MNL_CB_OK;
+ }
+@@ -61,7 +49,7 @@ static int read_devices_cb(const struct nlmsghdr *nlh, void *data)
+ 	ret = mnl_attr_parse(nlh, sizeof(struct ifinfomsg), parse_infomsg, &interface);
+ 	if (ret != MNL_CB_OK)
+ 		return ret;
+-	if (interface.name && interface.is_wireguard)
++	if (interface.name)
+ 		ret = string_list_add(list, interface.name);
+ 	if (ret < 0)
+ 		return ret;
 -- 
 2.53.0
 
