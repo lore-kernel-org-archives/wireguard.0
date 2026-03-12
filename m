@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6157106ACEE
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Mar 2026 21:44:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4D0F106ACEC
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Mar 2026 21:44:48 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id f436a991;
-	Thu, 12 Mar 2026 21:44:46 +0000 (UTC)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 58a4ed23;
+	Thu, 12 Mar 2026 21:44:48 +0000 (UTC)
 Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 08e23ae7
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id d34db598
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
  Thu, 12 Mar 2026 21:44:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
  s=202008; t=1773351877;
- bh=rgWAIQk0thXBLObYbgJRD6jXe739ylGLKwWMHGlZXFs=;
+ bh=9xpEXLvULOnKPuz3XIM5lWsHgqHw7na6cIWmA+57y70=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=EhZ57ICYlpVFZydYU4y1OMj15Xk4Vhwg++odFUnrhIBKgFNCJpLiAlaBTEBWk0Nx2
- W8wivyRlFkTSKR/g90B5vrQ1g+lgICzp9PmUjo5++r8XmXhlgUpaWWNj3aTOkAa9hK
- 0sDmAhJT1yubsh+shR0TMc6G3yxsK427PWIJYMd/KqbqIWFPmXPH0T1lS355FEXgTc
- cwv2K5yOhwpQe8jD0J3nki0Ow5DLxvRfZw09poofEhCPvE8ljNVHwbwdZTkXnnIEUb
- Rno5cqNVPir1skOMGU6KF9UYFDmhM6Rb6vcReUHDqKvq5nlouKwnvBr/XrsmF/igS8
- vWEyYMcLIHM2g==
+ b=NEFXrLuInlhbKGKJkzCbJkEFQh8DgVrZ4kuW5JMwJdFcHfcqUSu7YFy5tgDyS9hDW
+ RRWhA+gZsLFUGkXXzDDrWF7zDSZqiZYIfH4iWo/PWH31JqXc+Im6QaI+Ywg6gV/84/
+ Zu9zyYw23H+Gf6238jn4UlvzNrGJgD3nGDS2Z87Qy3wGjufA0WdKuur86mjAkHT0aP
+ DPuO4aFyJO8cttm/U7t9JXrFYa6DduUILqF6LuapMIi6rX5T/ATVtJaBRvh1CNWKmR
+ Di7VUjqrQ2fl3oAbUX2E1h2ebwv4dWmyYqNZ4Ic5MmeC0r5n8aMTI36ob+nvZAo4sq
+ 3pSZ904lBPOEw==
 Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
- by mail1.fiberby.net (Postfix) with ESMTPSA id 7454A600FC;
+ by mail1.fiberby.net (Postfix) with ESMTPSA id 623B6600BF;
  Thu, 12 Mar 2026 21:44:37 +0000 (UTC)
 Received: by x201s (Postfix, from userid 1000)
- id AEF84202015; Thu, 12 Mar 2026 21:44:20 +0000 (UTC)
+ id ABD4A202A16; Thu, 12 Mar 2026 21:44:21 +0000 (UTC)
 From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
 To: "Jason A . Donenfeld" <Jason@zx2c4.com>
 Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
  wireguard@lists.zx2c4.com
-Subject: [PATCH wireguard-tools v4 1/3] ipc: linux: filter netdevices
- kernel-side
-Date: Thu, 12 Mar 2026 21:43:59 +0000
-Message-ID: <20260312214405.589127-2-ast@fiberby.net>
+Subject: [PATCH wireguard-tools v4 3/3] ipc: linux: skip statistics on
+ netdevice listing
+Date: Thu, 12 Mar 2026 21:44:01 +0000
+Message-ID: <20260312214405.589127-4-ast@fiberby.net>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312214405.589127-1-ast@fiberby.net>
 References: <20260312214405.589127-1-ast@fiberby.net>
@@ -57,85 +57,53 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Tell the kernel that we are only interested in wireguard netdevices,
-so the kernel don't have to dump all the other netdevices.
+Gathering interface statistics can be a relatively expensive operation
+on certain systems as it requires iterating over all the cpus.
 
-Kernel-side support for this was added in Linux v4.6 in
-commit dc599f76c22b ("net: Add support for filtering link dump by
-master device and kind").
+This patch instructs the kernel to not include netdevice statistics,
+in the netdevice listing.
 
-Tested with 10000 netdevices (common with ISP BNG setups), and a
-single wireguard netdevice.
+Kernel-side support for this was added in Linux v4.4 in commit
+d5566fd72ec1 ("rtnetlink: RTEXT_FILTER_SKIP_STATS support to avoid
+dumping inet/inet6 stats"), this saves 368 bytes of statistics.
 
-Baseline:
-  # time ./src/wg show
-  real    0m0.342s
-  user    0m0.013s
-  sys     0m0.290s
-
-With patch:
-  # time ./src/wg show
-  real    0m0.006s
-  user    0m0.000s
-  sys     0m0.005s
+In the Linux v6.19 commit 105bae321862 ("rtnetlink: honor
+RTEXT_FILTER_SKIP_STATS in IFLA_STATS"), it is expanded to skip more
+statistics bringing the savings to 800 bytes per netdevice.
 
 Despite the subject prefix, this patch also applies to the
 embeddable C library, so the two implementations stay in sync.
 
 Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 ---
- contrib/embeddable-wg-library/wireguard.c | 6 ++++++
- src/ipc-linux.h                           | 6 ++++++
- 2 files changed, 12 insertions(+)
+ contrib/embeddable-wg-library/wireguard.c | 1 +
+ src/ipc-linux.h                           | 1 +
+ 2 files changed, 2 insertions(+)
 
 diff --git a/contrib/embeddable-wg-library/wireguard.c b/contrib/embeddable-wg-library/wireguard.c
-index 4941549..7ac0d6c 100644
+index eff441b..686cd3a 100644
 --- a/contrib/embeddable-wg-library/wireguard.c
 +++ b/contrib/embeddable-wg-library/wireguard.c
-@@ -943,6 +943,7 @@ static int fetch_device_names(struct string_list *list)
- 	int ret = 0;
- 	struct nlmsghdr *nlh;
- 	struct ifinfomsg *ifm;
-+	struct nlattr *linkinfo_nest;
- 
- 	ret = -ENOMEM;
- 	rtnl_buffer = calloc(mnl_ideal_socket_buffer_size(), 1);
-@@ -968,6 +969,11 @@ static int fetch_device_names(struct string_list *list)
+@@ -957,6 +957,7 @@ static int fetch_device_names(struct string_list *list)
  	nlh->nlmsg_seq = seq;
  	ifm = mnl_nlmsg_put_extra_header(nlh, sizeof(*ifm));
  	ifm->ifi_family = AF_UNSPEC;
-+
-+	linkinfo_nest = mnl_attr_nest_start(nlh, IFLA_LINKINFO);
-+	mnl_attr_put_strz(nlh, IFLA_INFO_KIND, WG_GENL_NAME);
-+	mnl_attr_nest_end(nlh, linkinfo_nest);
-+
- 	message_len = nlh->nlmsg_len;
++	mnl_attr_put_u32(nlh, IFLA_EXT_MASK, RTEXT_FILTER_SKIP_STATS);
  
- 	if (mnl_socket_sendto(nl, rtnl_buffer, message_len) < 0) {
+ 	linkinfo_nest = mnl_attr_nest_start(nlh, IFLA_LINKINFO);
+ 	mnl_attr_put_strz(nlh, IFLA_INFO_KIND, WG_GENL_NAME);
 diff --git a/src/ipc-linux.h b/src/ipc-linux.h
-index 01247f1..c56fede 100644
+index 45bb55c..791eb84 100644
 --- a/src/ipc-linux.h
 +++ b/src/ipc-linux.h
-@@ -80,6 +80,7 @@ static int kernel_get_wireguard_interfaces(struct string_list *list)
- 	int ret = 0;
- 	struct nlmsghdr *nlh;
- 	struct ifinfomsg *ifm;
-+	struct nlattr *linkinfo_nest;
- 
- 	ret = -ENOMEM;
- 	rtnl_buffer = calloc(SOCKET_BUFFER_SIZE, 1);
-@@ -105,6 +106,11 @@ static int kernel_get_wireguard_interfaces(struct string_list *list)
+@@ -94,6 +94,7 @@ static int kernel_get_wireguard_interfaces(struct string_list *list)
  	nlh->nlmsg_seq = seq;
  	ifm = mnl_nlmsg_put_extra_header(nlh, sizeof(*ifm));
  	ifm->ifi_family = AF_UNSPEC;
-+
-+	linkinfo_nest = mnl_attr_nest_start(nlh, IFLA_LINKINFO);
-+	mnl_attr_put_strz(nlh, IFLA_INFO_KIND, WG_GENL_NAME);
-+	mnl_attr_nest_end(nlh, linkinfo_nest);
-+
- 	message_len = nlh->nlmsg_len;
++	mnl_attr_put_u32(nlh, IFLA_EXT_MASK, RTEXT_FILTER_SKIP_STATS);
  
- 	if (mnl_socket_sendto(nl, rtnl_buffer, message_len) < 0) {
+ 	linkinfo_nest = mnl_attr_nest_start(nlh, IFLA_LINKINFO);
+ 	mnl_attr_put_strz(nlh, IFLA_INFO_KIND, WG_GENL_NAME);
 -- 
 2.53.0
 
