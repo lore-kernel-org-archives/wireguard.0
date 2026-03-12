@@ -4,84 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03B811067020
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Mar 2026 13:49:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3187106ACEE
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Mar 2026 21:44:43 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id bf0824e3;
-	Thu, 12 Mar 2026 13:49:03 +0000 (UTC)
-Received: from tor.source.kernel.org (tor.source.kernel.org
- [2600:3c04:e001:324:0:1991:8:25])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 9a32128a
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id ab5598fc;
+	Thu, 12 Mar 2026 21:44:41 +0000 (UTC)
+Received: from mail1.fiberby.net (mail1.fiberby.net [193.104.135.124])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id d2c5a451
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 12 Mar 2026 13:49:00 +0000 (UTC)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id AF00160141;
- Thu, 12 Mar 2026 13:48:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1211C4CEF7;
- Thu, 12 Mar 2026 13:48:54 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="Vbza1ZoZ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1773323333;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=cGQoGI0iD9IPU4MUwC9OugDLG8y8kJybLkuwslOCZHA=;
- b=Vbza1ZoZ3MQ4b2ykXY2DyqS4C6Ur7UHx9qiWIc/vFh778HfoElPE2RxbHwwtYDWBWz5kTd
- GgqrRtZHwWKcuZxBSTueiwWRWvj2d75BQlYdE8HJs5S7vd9FutLk/Ei4er761vtUbva2iY
- m5uliyiKx+1wocBBtZVjNBVv6c6GbN0=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 780e6e40
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Thu, 12 Mar 2026 13:48:53 +0000 (UTC)
-Date: Thu, 12 Mar 2026 14:48:48 +0100
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Fernando Fernandez Mancera <fmancera@suse.de>
-Cc: netdev@vger.kernel.org, rbm@suse.com, Jason Gunthorpe <jgg@ziepe.ca>,
- Leon Romanovsky <leon@kernel.org>, Zhu Yanjun <zyjzyj2000@gmail.com>,
- Saeed Mahameed <saeedm@nvidia.com>,
- Tariq Toukan <tariqt@nvidia.com>, Mark Bloch <mbloch@nvidia.com>,
- Andrew Lunn <andrew+netdev@lunn.ch>,
- "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Boris Pismenny <borisp@nvidia.com>,
- Ido Schimmel <idosch@nvidia.com>, Petr Machata <petrm@nvidia.com>,
- Simon Horman <horms@kernel.org>, Edward Cree <ecree.xilinx@gmail.com>,
- Pablo Neira Ayuso <pablo@netfilter.org>,
- Harald Welte <laforge@gnumonks.org>,
- Antonio Quartulli <antonio@openvpn.net>,
- Sabrina Dubroca <sd@queasysnail.net>,
- Oliver Neukum <oliver@neukum.org>, David Ahern <dsahern@kernel.org>,
- Stanislav Yakovlev <stas.yakovlev@gmail.com>,
- Nikolay Aleksandrov <razor@blackwall.org>,
- Parav Pandit <parav@nvidia.com>, Edward Srouji <edwards@nvidia.com>,
- Vlad Dumitrescu <vdumitrescu@nvidia.com>,
- Kees Cook <kees@kernel.org>, Jianbo Liu <jianbol@nvidia.com>,
- Gal Pressman <gal@nvidia.com>, Guillaume Nault <gnault@redhat.com>,
- Cosmin Ratiu <cratiu@nvidia.com>, Carolina Jubran <cjubran@nvidia.com>,
- Alexandre Cassen <acassen@corp.free.fr>,
- Stanislav Fomichev <sdf@fomichev.me>,
- "open list:INFINIBAND SUBSYSTEM" <linux-rdma@vger.kernel.org>,
- open list <linux-kernel@vger.kernel.org>,
- "open list:NETRONOME ETHERNET DRIVERS" <oss-drivers@corigine.com>,
- "open list:SFC NETWORK DRIVER" <linux-net-drivers@amd.com>,
- "open list:GTP (GPRS Tunneling Protocol)" <osmocom-net-gprs@lists.osmocom.org>,
- "open list:USB CDC ETHERNET DRIVER" <linux-usb@vger.kernel.org>,
- "open list:WIREGUARD SECURE NETWORK TUNNEL" <wireguard@lists.zx2c4.com>,
- "open list:INTEL PRO/WIRELESS 2100, 2200BG,
- 2915ABG NETWOR..." <linux-wireless@vger.kernel.org>, 
- "open list:ETHERNET BRIDGE" <bridge@lists.linux.dev>
-Subject: Re: [PATCH 05/10 net-next v2] drivers: net: drop ipv6_stub usage and
- use direct function calls
-Message-ID: <abLEQMx6mPM4vL4t@zx2c4.com>
-References: <20260310153506.5181-1-fmancera@suse.de>
- <20260310153506.5181-6-fmancera@suse.de>
+ Thu, 12 Mar 2026 21:44:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fiberby.net;
+ s=202008; t=1773351877;
+ bh=Z+QbvAI46HYH/IvoK5SofvBAx57Gkh77cVsq2YdY0X0=;
+ h=From:To:Cc:Subject:Date:From;
+ b=LWvnvNoCDD15NLT4zihV+GUyKksU1taPuSmbyubsNjabUots7alOIO+Y8dYrLJmAN
+ +VeNC0T3tQRohhcCKRuC2b5TSEWPGPn8urH4ShIR80LbS+LQ1wQIJC509NfdyKo4+E
+ YDiau1vrN/SURA/kudgWu2XaDnvv8470QBQ0xBiwlzClX2r5Eio2lJdkXyCXjGwgen
+ 0zN5ExZuy/xZ/m2lBxYknJPm9JhZitpuWLiQGV81pivmQK/nUXZDvXgV7iJkf51Wx7
+ +cZTryyXjgh37IcR40BFC5D4JcLYyrANUe7qj6la3KB83FrdLg1zZJgzcz7mJjE+T2
+ EhqEIRXGgakOw==
+Received: from x201s (193-104-135-243.ip4.fiberby.net [193.104.135.243])
+ by mail1.fiberby.net (Postfix) with ESMTPSA id 387666000C;
+ Thu, 12 Mar 2026 21:44:37 +0000 (UTC)
+Received: by x201s (Postfix, from userid 1000)
+ id 15496201F62; Thu, 12 Mar 2026 21:44:20 +0000 (UTC)
+From: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>
+To: "Jason A . Donenfeld" <Jason@zx2c4.com>
+Cc: =?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
+ wireguard@lists.zx2c4.com
+Subject: [PATCH wireguard-tools v4 0/3] ipc: linux: kernel-side netdevice
+ filtering
+Date: Thu, 12 Mar 2026 21:43:58 +0000
+Message-ID: <20260312214405.589127-1-ast@fiberby.net>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260310153506.5181-6-fmancera@suse.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -96,24 +55,46 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Tue, Mar 10, 2026 at 04:34:28PM +0100, Fernando Fernandez Mancera wrote:
-> diff --git a/drivers/net/wireguard/socket.c b/drivers/net/wireguard/socket.c
-> index 253488f8c00f..c362c78d908e 100644
-> --- a/drivers/net/wireguard/socket.c
-> +++ b/drivers/net/wireguard/socket.c
-> @@ -136,8 +136,7 @@ static int send6(struct wg_device *wg, struct sk_buff *skb,
->  			if (cache)
->  				dst_cache_reset(cache);
->  		}
-> -		dst = ipv6_stub->ipv6_dst_lookup_flow(sock_net(sock), sock, &fl,
-> -						      NULL);
-> +		dst = ip6_dst_lookup_flow(sock_net(sock), sock, &fl, NULL);
->  		if (IS_ERR(dst)) {
->  			ret = PTR_ERR(dst);
->  			net_dbg_ratelimited("%s: No route to %pISpfsc, error %d\n",
+Move device filtering to the kernel, thereby reducing netlink traffic.
 
-Rest in peace, stub.
+The first patch request kernel-side filtering.
 
-For the WireGuard part,
+The second patch removes the old filtering code, as an
+additional step, which breaks on earlier than Linux v4.6.
 
-    Reviewed-by: Jason A. Donenfeld <Jason@zx2c4.com>
+The third patch requests that the kernel doesn't include statistics
+in netdevice dumps.
+
+This bumps the minimum supported Linux kernel version to v4.6.
+
+---
+Changes:
+v4:
+- Remove #ifdef RTEXT_FILTER_SKIP_STATS.
+- Sync changes to the embeddable C library.
+- Now that Linux v4.6+ is fine, swap the order of patch 2 and 3.
+- Dusted of the commit messages a bit.
+
+v3: https://lists.zx2c4.com/pipermail/wireguard/2026-January/009471.html
+- Added patch to set RTEXT_FILTER_SKIP_STATS
+- Re-worked commit messages a bit.
+
+v2: https://lists.zx2c4.com/pipermail/wireguard/2025-October/009080.html
+- Added info about kernel-support to commit message
+- Added another patch, for removing client-side filtering
+
+v1: https://lists.zx2c4.com/pipermail/wireguard/2025-September/009004.html
+
+
+Asbjørn Sloth Tønnesen (3):
+  ipc: linux: filter netdevices kernel-side
+  ipc: linux: remove user-space netdevice filtering
+  ipc: linux: skip statistics on netdevice listing
+
+ contrib/embeddable-wg-library/wireguard.c | 23 +++++++++--------------
+ src/ipc-linux.h                           | 23 +++++++++--------------
+ 2 files changed, 18 insertions(+), 28 deletions(-)
+
+-- 
+2.53.0
+
