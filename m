@@ -4,49 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85F221091926
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 19 Mar 2026 21:35:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAC9F109446F
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 21 Mar 2026 19:20:57 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id d552f45c;
-	Thu, 19 Mar 2026 21:35:25 +0000 (UTC)
-Received: from mail-oa1-f71.google.com (mail-oa1-f71.google.com
- [209.85.160.71])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 297b6d7d
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id ffde9b51;
+	Sat, 21 Mar 2026 19:20:55 +0000 (UTC)
+Received: from secundus.vsp.im (secundus.vsp.im [37.120.170.112])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 53cfe334
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 19 Mar 2026 21:35:23 +0000 (UTC)
-Received: by mail-oa1-f71.google.com with SMTP id
- 586e51a60fabf-4170823763cso11954248fac.3
- for <wireguard@lists.zx2c4.com>; Thu, 19 Mar 2026 14:35:22 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773956121; x=1774560921;
- h=to:from:subject:message-id:date:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=3kW5Cqd4AXaqbTURFAM4xTX11VPZxMsl0NOSLCzZeb8=;
- b=KN94erZSVPQ8M+4W3FshfPCaNXF4eHQPGrrIlmOBbhDX2jmutq4PjvAYKX2a5SIqIe
- l4NeZNFH6Muwa44cl0XEOpz8s7HU9FoXu/2IBrVhD9ElWVHdErxsFpbhNm9CqwvgyKBx
- 4gOrmRfXyyvpgRdjemL0fQZ73iGyw6wH+VVmugZbhYrg8LJkuUqUgi4hEIHqFGZ9QOAK
- 4LzfeQyEaEgHwIyR2AcTv3UMr8d1jWZwTqgKVJw7FTnVcLCfOJH1o6FqF5lbzyIN9TZa
- sQeDbrLdt/KhKDE8FQIswHK92fxYZdUVlISbDDXxy7vWQuqri4F2nDw+QxvMB2ogo3n6
- 9Mtw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWHSu29hd0QqaB6I+hb8VE/ZXc+p5mKpxB/qYmrfI8545pyxqA3yH5wnMuW+ruZJ4+PdU0kyXvpURQ=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0Yxfm0IOOtvPmqLiNnd6iJFJ/21NxQS/qc+2eLlrdz6Z7dU/6zFR
- H71iqoYbrJxrl7bzsKS7QCW4BR1Vd1ruzGeJe15eb04VqdBzvQN2t3PG2fUjIWljEXg1kRE/F4d
- bZFW5QBWOPhz5zataTurA0cqgHXNeeVfHkjGPQm/ziMfIOIuRZQAKP/tNvwY=
+ Sat, 21 Mar 2026 19:20:54 +0000 (UTC)
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/simple; d=spreckels.dev;
+ i=@spreckels.dev; q=dns/txt; s=s20260208e; t=1774120853; h=message-id
+ : date : mime-version : from : subject : to : cc : references :
+ in-reply-to : content-type : content-transfer-encoding : from;
+ bh=zFkWy8J377R/4AcVMLoKJMS8w6SguvdsB0mx8OERXuY=;
+ b=98h88JpPkfnmgT0843H5R+353PZyIE+mgK2sD9ysb6GFT0RlZHhhBCPlJBpvBrHOcnQNG
+ YYu2p4XkPm7GsxMBw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=spreckels.dev;
+ i=@spreckels.dev; q=dns/txt; s=s20260208r; t=1774120853; h=message-id
+ : date : mime-version : from : subject : to : cc : references :
+ in-reply-to : content-type : content-transfer-encoding : from;
+ bh=zFkWy8J377R/4AcVMLoKJMS8w6SguvdsB0mx8OERXuY=;
+ b=ORptu2oomriETGtc8uO2mbetSXWU+FNjm/6cOJjPNJATdKs04Y1xIhTg0IOKli5I5Lvm0
+ YA2bYjylVuYPplqD+j87E8RjuGNpOQGqs0o72mHNk4+ik3A7yAMB2HewYe26Q/iWvmL7m+W
+ 8S23mTbK/spkiUZcDNK77FPor9JjvlBm5EvRDDFuucMmIzCbL8Tb193WSqwbfSTtCMuI6/3
+ VnsO7lgxyhCDinUTJRLZPix2rvsvQUGrun1+xTbJCMV5gzj98lz0jTdo14DAi8yn+KrAsYU
+ QTWxmBlMuE1gaUPljGTt/128uIcgvt3XUk6ESKO41ThCTaPGELPklwjXHn0w==
+Received: from [IPV6:2001:9e8:fb2a:e501:845:1723:955a:996f] (unknown
+ [IPv6:2001:9e8:fb2a:e501:845:1723:955a:996f])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by secundus.vsp.im (Postfix) with ESMTPSA id 9D9C7FF9EE;
+ Sat, 21 Mar 2026 20:20:53 +0100 (CET)
+Message-ID: <c486b63c-521f-4972-80bf-ebb2bfe04724@spreckels.dev>
+Date: Sat, 21 Mar 2026 20:20:53 +0100
 MIME-Version: 1.0
-X-Received: by 2002:a05:6820:2f12:b0:67c:25b9:d366 with SMTP id
- 006d021491bc7-67c25b9db1emr31379eaf.42.1773956121616; Thu, 19 Mar 2026
- 14:35:21 -0700 (PDT)
-Date: Thu, 19 Mar 2026 14:35:21 -0700
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <69bc6c19.050a0220.3bf4de.0000.GAE@google.com>
-Subject: [syzbot] Monthly wireguard report (Mar 2026)
-From: syzbot <syzbot+listb2717bb6410baba389f7@syzkaller.appspotmail.com>
-To: Jason@zx2c4.com, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
- syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+From: Valentin Spreckels <valentin@spreckels.dev>
+Subject: Re: [PATCH wireguard] wireguard: prevent ipv6 addrconf via
+ IFF_NO_ADDRCONF flag
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20260208170545.31942-1-valentin@spreckels.dev>
+ <abHz3xcsLhIPc_Jn@zx2c4.com>
+Content-Language: de-DE, en-GB
+In-Reply-To: <abHz3xcsLhIPc_Jn@zx2c4.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -61,34 +71,35 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello wireguard maintainers/developers,
+Hi Jason,
 
-This is a 31-day syzbot report for the wireguard subsystem.
-All related reports/information can be found at:
-https://syzkaller.appspot.com/upstream/s/wireguard
+On 11/03/2026 23:59, Jason A. Donenfeld wrote:
+> Hi Valentin,
+> 
+> On Sun, Feb 08, 2026 at 06:05:45PM +0100, Valentin Spreckels wrote:
+>> Use the flag introduced in commit 8a321cf7becc6 ("net: add
+>> IFF_NO_ADDRCONF and use it in bonding to prevent ipv6 addrconf")
+>> instead of mangling the addr_gen_mode to prevent ipv6 addrconf.
+> 
+> Can you give some more context here? Why was IFF_NO_ADDRCONF added when
+> the IN6_ADDR_GEN_MODE_NONE method has been working fine? What's the
+> difference between these approaches? I don't doubt that your patch is
+> correct, but I would like to better understand this.
 
-During the period, 1 new issues were detected and 0 were fixed.
-In total, 3 issues are still open and 20 have already been fixed.
+Only wireguard configures addr_gen_mode inside the kernel, otherwise it 
+is only set by userspace; userspace is also able to overwrite the 
+IFF_NO_ADDRCONF set by wireguard.
 
-Some of the still happening issues:
+Commit 8a321cf7becc ("net: add IFF_NO_ADDRCONF and use it in bonding to 
+prevent ipv6 addrconf") introduces the private interface flag 
+IFF_NO_ADDRCONF, which isn't accessible by userspace.
 
-Ref Crashes Repro Title
-<1> 787     No    INFO: task hung in netdev_run_todo (4)
-                  https://syzkaller.appspot.com/bug?extid=894cca71fa925aabfdb2
-<2> 391     Yes   INFO: task hung in wg_netns_pre_exit (5)
-                  https://syzkaller.appspot.com/bug?extid=f2fbf7478a35a94c8b7c
-<3> 1       No    KCSAN: data-race in wg_expired_retransmit_handshake / wg_packet_send_queued_handshake_initiation (4)
-                  https://syzkaller.appspot.com/bug?extid=4ca9a7b9d61b76d0177c
+Thus use the IFF_NO_ADDRCONF flag in wireguard.
 
----
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
 
-To disable reminders for individual bugs, reply with the following command:
-#syz set <Ref> no-reminders
+Does that answer your questions? If yes, I will submit a v2 with this as 
+commit message.
 
-To change bug's subsystems, reply with:
-#syz set <Ref> subsystems: new-subsystem
+Best regards
 
-You may send multiple commands in a single email message.
+Valentin
