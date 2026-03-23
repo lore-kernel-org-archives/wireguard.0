@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAC9F109446F
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 21 Mar 2026 19:20:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3094AF483D5
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 23 Mar 2026 17:09:49 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id ffde9b51;
-	Sat, 21 Mar 2026 19:20:55 +0000 (UTC)
-Received: from secundus.vsp.im (secundus.vsp.im [37.120.170.112])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 53cfe334
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 7259f861;
+	Mon, 23 Mar 2026 17:09:48 +0000 (UTC)
+Received: from sea.source.kernel.org (sea.source.kernel.org
+ [2600:3c0a:e001:78e:0:1991:8:25])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 79c36da5
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 21 Mar 2026 19:20:54 +0000 (UTC)
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/simple; d=spreckels.dev;
- i=@spreckels.dev; q=dns/txt; s=s20260208e; t=1774120853; h=message-id
- : date : mime-version : from : subject : to : cc : references :
- in-reply-to : content-type : content-transfer-encoding : from;
- bh=zFkWy8J377R/4AcVMLoKJMS8w6SguvdsB0mx8OERXuY=;
- b=98h88JpPkfnmgT0843H5R+353PZyIE+mgK2sD9ysb6GFT0RlZHhhBCPlJBpvBrHOcnQNG
- YYu2p4XkPm7GsxMBw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=spreckels.dev;
- i=@spreckels.dev; q=dns/txt; s=s20260208r; t=1774120853; h=message-id
- : date : mime-version : from : subject : to : cc : references :
- in-reply-to : content-type : content-transfer-encoding : from;
- bh=zFkWy8J377R/4AcVMLoKJMS8w6SguvdsB0mx8OERXuY=;
- b=ORptu2oomriETGtc8uO2mbetSXWU+FNjm/6cOJjPNJATdKs04Y1xIhTg0IOKli5I5Lvm0
- YA2bYjylVuYPplqD+j87E8RjuGNpOQGqs0o72mHNk4+ik3A7yAMB2HewYe26Q/iWvmL7m+W
- 8S23mTbK/spkiUZcDNK77FPor9JjvlBm5EvRDDFuucMmIzCbL8Tb193WSqwbfSTtCMuI6/3
- VnsO7lgxyhCDinUTJRLZPix2rvsvQUGrun1+xTbJCMV5gzj98lz0jTdo14DAi8yn+KrAsYU
- QTWxmBlMuE1gaUPljGTt/128uIcgvt3XUk6ESKO41ThCTaPGELPklwjXHn0w==
-Received: from [IPV6:2001:9e8:fb2a:e501:845:1723:955a:996f] (unknown
- [IPv6:2001:9e8:fb2a:e501:845:1723:955a:996f])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by secundus.vsp.im (Postfix) with ESMTPSA id 9D9C7FF9EE;
- Sat, 21 Mar 2026 20:20:53 +0100 (CET)
-Message-ID: <c486b63c-521f-4972-80bf-ebb2bfe04724@spreckels.dev>
-Date: Sat, 21 Mar 2026 20:20:53 +0100
+ Mon, 23 Mar 2026 17:09:44 +0000 (UTC)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id B16DF44013
+ for <wireguard@lists.zx2c4.com>; Mon, 23 Mar 2026 17:09:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D4C4C4CEF7
+ for <wireguard@lists.zx2c4.com>; Mon, 23 Mar 2026 17:09:42 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="arj7Digb"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1774285780;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=gzGx2Bq45p4KoUso/dPHj4RpiGRdbSb0iwb9R4aM2DM=;
+ b=arj7Digb3ti69chumsX6uU7xC37pmfNMsbdfBNQvBTW9YkP+ZBJ1wvKRUeMHPBX0jP6Vyd
+ IBYqviTKiHL2f3RuSE8yYSs/gz3/bnDouGlo9RAp//xGfDqu2AjhzvMcPVdlTtHArgqOLn
+ Gl1G53YH0ErWCiiX3jfVJVD78a9nqJU=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7602241d
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 23 Mar 2026 17:09:39 +0000 (UTC)
+Received: by mail-ot1-f47.google.com with SMTP id
+ 46e09a7af769-7d750eeaec3so1266963a34.0
+ for <wireguard@lists.zx2c4.com>; Mon, 23 Mar 2026 10:09:38 -0700 (PDT)
+X-Gm-Message-State: AOJu0YxoTJmENmGqWKL59YKtYiOp66f8UNbtINxzzVoy8+6drVQUpOCs
+ T48BHOBgnv/Bb33h6Q0gf22+m5LzlbrnNKEPn0hD88Rx0kJPAvNSTON2JB1wC7lzPj1/dNvETp7
+ gjgVlk/qiXyQS/ANxB/S2yyU77QTaidI=
+X-Received: by 2002:a05:6870:8996:b0:417:31f3:5def with SMTP id
+ 586e51a60fabf-41c112b5cbamr7954976fac.32.1774285778105; Mon, 23 Mar 2026
+ 10:09:38 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Valentin Spreckels <valentin@spreckels.dev>
-Subject: Re: [PATCH wireguard] wireguard: prevent ipv6 addrconf via
- IFF_NO_ADDRCONF flag
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller"
- <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260208170545.31942-1-valentin@spreckels.dev>
- <abHz3xcsLhIPc_Jn@zx2c4.com>
-Content-Language: de-DE, en-GB
-In-Reply-To: <abHz3xcsLhIPc_Jn@zx2c4.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 23 Mar 2026 18:09:26 +0100
+X-Gmail-Original-Message-ID: <CAHmME9q4gC3Ag4hW0ERTkZNi6VMv1-qMExO6+OfOKYZ5rC4mgg@mail.gmail.com>
+X-Gm-Features: AQROBzAxV7nnTpzgPH0vu7uUCZ4JH5zcmefvUMk7xZ5WszkgrS-HRmtnuOesfjU
+Message-ID: <CAHmME9q4gC3Ag4hW0ERTkZNi6VMv1-qMExO6+OfOKYZ5rC4mgg@mail.gmail.com>
+Subject: Sunsetting support for old Windows versions
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Cc: Simon Rozman <simon@rozman.si>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -71,35 +70,71 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Jason,
+Hey everyone,
 
-On 11/03/2026 23:59, Jason A. Donenfeld wrote:
-> Hi Valentin,
-> 
-> On Sun, Feb 08, 2026 at 06:05:45PM +0100, Valentin Spreckels wrote:
->> Use the flag introduced in commit 8a321cf7becc6 ("net: add
->> IFF_NO_ADDRCONF and use it in bonding to prevent ipv6 addrconf")
->> instead of mangling the addr_gen_mode to prevent ipv6 addrconf.
-> 
-> Can you give some more context here? Why was IFF_NO_ADDRCONF added when
-> the IN6_ADDR_GEN_MODE_NONE method has been working fine? What's the
-> difference between these approaches? I don't doubt that your patch is
-> correct, but I would like to better understand this.
+The time has finally come. Future releases of WireGuard for Windows
+will support Windows =E2=89=A510 and Windows Server =E2=89=A52016.
 
-Only wireguard configures addr_gen_mode inside the kernel, otherwise it 
-is only set by userspace; userspace is also able to overwrite the 
-IFF_NO_ADDRCONF set by wireguard.
+With Windows 10 first released to manufacturing on July 15, 2015,
+that's supporting an operating system that's 3,904 days old, as
+opposed to supporting an operating system that's 6,088 days old.
+Nonetheless, supporting an OS that's over 10 years old is still a long
+time, even if it's not an OS that's over 16 years old.
 
-Commit 8a321cf7becc ("net: add IFF_NO_ADDRCONF and use it in bonding to 
-prevent ipv6 addrconf") introduces the private interface flag 
-IFF_NO_ADDRCONF, which isn't accessible by userspace.
+I must admit, however, that I am a bit sad about this. After coding up
+[1] this dialog box for the installer, I felt a few pangs of sadness
+when testing it for the first time on Windows 7 and seeing the tragic
+result: https://data.zx2c4.com/bye-bye-wg-win7.png . But it was a
+familiar feeling. For, long ago, I'd already watched the beauty of
+Windows fall to pieces. To me, Windows 2000 is the most beautiful of
+Windows operating systems. Yes, we can all ogle at the engineering
+marvel that was NT 3.51. But Windows 2000 really elevated that whole
+vision to perfection, and was also the pinnacle of the classic UI
+design. I can't think of a classier OS released since. Though, I must
+say, it was Windows XP that captured my heart and formed the basis of
+my childhood, the new style and all; I would switch between classic
+theme and the XP theme frequently, and later flirted a bit with the
+MCE themes. It was just a very nice OS, had everything one could want,
+a great suite of software, really good stability, ever widening
+hardware support, sane and consistent interfaces. It came
+pre-installed on my Dell Inspiron 8100 and I loved it. At some point I
+switched to running Linux on my laptop, but would still sneak down to
+the family computer to fiddle around with Windows development on our
+XP machine. I could go on and on. Then Vista was released, and it was
+annoying and introduced inconsistencies, which Windows 7 tried to
+smooth out and succeeded to some degree, but it was just never the
+same to me. And we all remember what happened next with 8, 8.1, 10,
+and 11.
 
-Thus use the IFF_NO_ADDRCONF flag in wireguard.
+So, it's sad to make this change, but it's far less sad than what
+already happened in the Windows world post 2000 and post XP.
 
+On the plus side, this has enabled a lot of significant cleanups
+throughout the code, and will be yielding more and more as this
+process continues. Windows programming is as fun as ever -- arguably
+more fun, as the archaeological dumpster heap of historic Microsoft
+APIs, each one filled with a unique history and competing corporate
+and technical vision of operating system futurism, only ever gets
+deeper to dive in. So I'm relatively happy to make this change, even
+if somewhat wistful about it.
 
-Does that answer your questions? If yes, I will submit a v2 with this as 
-commit message.
+I had first asked the mailing list whether this was acceptable in 2020
+and then again in 2021. Fast forward 5 years and the ecosystem has
+changed a lot, and our upstream dependencies have similarly dropped
+support. I realize this leaves the still-technically-supported Server
+2012 and 2012R2 out in the cold, but 8 and 8.1 haven't been supported
+in two years, and I think most realistic users have similarly dropped
+the corresponding server editions. In other words, I don't anticipate
+any real fallout. However, I know that Windows 7 and Server 2008 and
+2008R2 users are usually pretty committed to their ways and can be
+vocal. So, by all means pipe up to sing an elegy if you'd like. But
+we're moving forward with the sunsetting.
 
-Best regards
+I hope this all seems reasonable enough. Let's pour one out for
+Blackcomb/Vienna, and while we're at it, for Whistler long before
+that.
 
-Valentin
+Jason
+
+[1] https://git.zx2c4.com/wireguard-windows/tree/installer/customactions.c#=
+n101
