@@ -4,55 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11283F34C5E
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 13 Apr 2026 15:01:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 005BEF34C5E
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 13 Apr 2026 15:16:44 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id f883731c;
-	Mon, 13 Apr 2026 15:01:18 +0000 (UTC)
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 2a298b5c
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 372703bb;
+	Mon, 13 Apr 2026 15:14:32 +0000 (UTC)
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com
+ [2607:f8b0:4864:20::32e])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 2735e3ed
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 13 Apr 2026 15:01:14 +0000 (UTC)
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-354c44bf176so4376521a91.0
- for <wireguard@lists.zx2c4.com>; Mon, 13 Apr 2026 08:01:14 -0700 (PDT)
+ Tue, 31 Mar 2026 00:45:09 +0000 (UTC)
+Received: by mail-ot1-x32e.google.com with SMTP id
+ 46e09a7af769-7d9bba96f7dso2728518a34.1
+ for <wireguard@lists.zx2c4.com>; Mon, 30 Mar 2026 17:45:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1774917908; x=1775522708; darn=lists.zx2c4.com;
+ h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+ :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+ :reply-to; bh=mdV7saOUjIDAHAVu162wvni1KJ8JIN4P9J1aBuMdPl8=;
+ b=pCQfOlXv6ZfDxX6rbQbCpgdvmFK1CvAGiGIQzQPElRuL0T/9nXxSRL8yg+Su+OP8Ah
+ VWNInvB32fhAtYg80yUIToC0uMcm7M+S4egVVUcz1iPMTuOPC2xsR5en83kE0UYi1rUq
+ S3AAj50NSbFs/K2KnmkrWc9CGVKog7cwy6WRx1qK/l5B3/S6E0+dl5SRCHjAv+Ev7lEs
+ 7fsZyv+vgE606PvXmVbg4McA0cbRAd/cq1BElQs0sDpLIy3FmSCtAnEpmjNoryAfeTgB
+ aHsADc7Dl4LArYrwoJtkpxZd5VbDzCeLjGhGt7T4xDWK0SshMRtGpXar/KHwSUH35Uj6
+ lLtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776092473; x=1776697273;
- h=cc:to:from:subject:message-id:in-reply-to:date:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AlSroUvQLnPQy/vliop0r/9IQklxRKU38FSvvT0IkJU=;
- b=UlEv+/dKQreXgLg2WzdhP8i6pj2rW0Yi6y4qB1GD70v9NfQWDzcEcIbe0E3hk5aT3h
- PP/hm8EujXejr3dwcSaWtg4P8vpZEfWoWOapmKtCo2zKRF1IHdoX4L4/BvLPoOjWd9y2
- lJi9YRIQxXiatK69AYk/Y28EG/LW2btNJwxTpBIRsKVy2Z3ZY4fir3K/iWu1sp+w7MOS
- 8k5ApHlWjTRWd7/bpy41MYf4+bH45LsCPrm/PxHKqGuZzR7eSJjM+YMgw45GNcWNDTbP
- WuCs6I5LwWr7zKjO3rmJwBivDe9kz3JGvWxDMsVtv+U9nhmTpgncmRTahbEpWUp0XEMZ
- AwjQ==
+ d=1e100.net; s=20251104; t=1774917908; x=1775522708;
+ h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+ :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=mdV7saOUjIDAHAVu162wvni1KJ8JIN4P9J1aBuMdPl8=;
+ b=PttYpBBrpB3IDOahTLLjhlkWuh94d8Q6qjejcq4Q7vX6hzLq7VCSqRt8mo2DUSIqe9
+ 6QcybOlmPfXjkfT43ngmpVgSEB7BXmEhXfC/8YGqrgUJiij1ZPsWujenOWaSj8BEIwBB
+ rjUXegXfZfJtX3sJoQMjCtMmXYuPtu414tKYIDfFPXccU6FS2BWi7DaBotS0d6R+nZwv
+ 5Dc0CSzTC9I4ASKIOEq+dIViHvrxYTBVGlZYE7EIZBrQRv6gSLeu9ht6mueOEslEymmC
+ T+99ds6dHf5tpRvKBICLjHyRnGXMKQccQTqtujhCOFMDDbvLbmfcSwhXLy11ErwESZa7
+ +ZtA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/HuDceVKIwqywjIxMGyou2b/DzL4QqJoVjEBnzEKQXOlMtn/FPNetR0kH4ztz4yv7vlj2CZXmnTQM=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0YwT/cudZH+bfL41Vpb5U66Pp33KCCyeveA0wk0Hf7MMGI//iJtK
- QPqdoZQmgtBdnH2tQg5VxAnZ8lFlonumkZ7mKxagKeVgDwo6y+8WQMgFGzU/Ujm1Jj9bvFdWB8b
- 3kl2XYB+fsPK1OxSyUMf0XueX9rQfXstwod/yonRfzTTDccv7uPahe4wj3W8=
-MIME-Version: 1.0
-X-Received: by 2002:a17:90b:28c4:b0:35f:b69d:7292 with SMTP id
- 98e67ed59e1d1-35fb69d7632mr3809862a91.15.1776092472566; Mon, 13 Apr 2026
- 08:01:12 -0700 (PDT)
-Date: Mon, 13 Apr 2026 08:01:12 -0700
-In-Reply-To: <20260413150024.1003490-1-shardul.b@mpiricsoftware.com>
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <69dd0538.a00a0220.468cb.0049.GAE@google.com>
-Subject: Re: [PATCH] wireguard: device: use exit_rtnl callback instead of
- manual rtnl_lock in pre_exit
-From: syzbot <syzbot@syzkaller.appspotmail.com>
-To: shardul.b@mpiricsoftware.com
-Cc: andrew@lunn.ch, davem@davemloft.net, edumazet@google.com, janak@mpiric.us, 
- jason@zx2c4.com, kalpan.jani@mpiricsoftware.com, kuba@kernel.org, 
- kuniyu@google.com, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
- pabeni@redhat.com, shardul.b@mpiricsoftware.com, shardulsb08@gmail.com, 
- wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+ AJvYcCVCvEdGBgv1Z0T2hV0x16Q6SlilcZNAqkKluN0IgTtCgE0t4dGD54TVIvHDj1vCEuSJbXje+MAI8Vg=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YyWnNvZh3W5iRQcLMbvWB9ehGvUDT8cDb2cvIRkWyJ7D8+Ab5Ar
+ D8zycKv56UeQ4zuGpwGQzCEzipk12nqs1ZnUbfx8amQmQvl30dXXZhNh
+X-Gm-Gg: ATEYQzxqmgrDQtTI6wh/IK9XaqPdfDeno7RAGHFEIhqPsKlRlCp/vfyatm/WwFP6KnS
+ uJjIR/kdHLjGqRp/z41SPPOrHY2dsjLTD255JSSV1eDhhaszKVL5uzunv+5M7x5iZnTKK2J2TqR
+ gKMIqC4KKiflDg0AqM9PzPViUUP841MUvSZTo/2YuGGefq4ezbDNrx3K5XlqkFeNQ2VqhpwzbWV
+ FgGkmfB7MZCZ+bIhVfqYsSH1Akkl4ad4UgG0Yb61eSkf8MHPno8KsUkgukHXpbFXwVkFZStWONL
+ WPxonXf6ciOPI4HF6bR2+WKwRFQI/6KmOk+YXl4VyKYCkltNsWUqaLTNQG1A1xu1atH/FikL0lx
+ KIX8dXQQS4KmP4Xt5Yg3naZasn5MCH6hE0NVkwxCkMfhGL3FZimj/s7EHTPo63bH0VMLL26SE7r
+ NEpuJIpzFzwKl8etk0se0d3jTuET2esKc1KRG5TaTUwqPATy62XA4i98fIfpvnoJ/jBkg4jXl/i
+ Li81g==
+X-Received: by 2002:a05:6820:20e:b0:67e:3e27:8575 with SMTP id
+ 006d021491bc7-67e3e278735mr887522eaf.50.1774917908015; 
+ Mon, 30 Mar 2026 17:45:08 -0700 (PDT)
+Received: from smtpclient.apple ([2600:381:6705:e5f:ad55:112f:ba58:2819])
+ by smtp.gmail.com with ESMTPSA id
+ 006d021491bc7-67e231ad680sm5683946eaf.10.2026.03.30.17.45.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 30 Mar 2026 17:45:06 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ryan Appel <ryan.appel.333@gmail.com>
+Mime-Version: 1.0 (1.0)
+Subject: Re: Kernel ML-KEM implementation plans
+Date: Mon, 30 Mar 2026 19:44:55 -0500
+Message-Id: <7507DE2E-1507-4D03-B6EF-9C139BBF34F8@gmail.com>
+References: <20260331001358.GA5190@sol>
+Cc: linux-crypto@vger.kernel.org, wireguard@lists.zx2c4.com,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>
+In-Reply-To: <20260331001358.GA5190@sol>
+To: Eric Biggers <ebiggers@kernel.org>
+X-Mailer: iPhone Mail (23D8133)
+X-Mailman-Approved-At: Mon, 13 Apr 2026 15:14:30 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -67,69 +89,46 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-> wg_netns_pre_exit() manually acquires rtnl_lock() inside the
-> pernet .pre_exit callback.  This causes a hung task when another
-> thread holds rtnl_mutex - the cleanup_net workqueue (or the
-> setup_net failure rollback path) blocks indefinitely in
-> wg_netns_pre_exit() waiting to acquire the lock.
->
-> Convert to .exit_rtnl, introduced in commit 7a60d91c690b ("net:
-> Add ->exit_rtnl() hook to struct pernet_operations."), where the
-> framework already holds RTNL and batches all callbacks under a
-> single rtnl_lock()/rtnl_unlock() pair, eliminating the contention
-> window.
->
-> The rcu_assign_pointer(wg->creating_net, NULL) is safe to move
-> from .pre_exit to .exit_rtnl (which runs after synchronize_rcu())
-> because all RCU readers of creating_net either use maybe_get_net()
-> - which returns NULL for a dying namespace with zero refcount - or
-> access net->user_ns which remains valid throughout the entire
-> ops_undo_list sequence.
->
-> Reported-by: syzbot+pFBD3bslSSshiJCd3rxy@syzkaller.appspotmail.com
-> Closes: https://syzkaller.appspot.com/bug?id=cb64c22a492202ca929e18262fdb8cb89e635c70
-> Signed-off-by: Shardul Bankar <shardul.b@mpiricsoftware.com>
-> ---
->  drivers/net/wireguard/device.c | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
->
-> diff --git a/drivers/net/wireguard/device.c b/drivers/net/wireguard/device.c
-> index 46a71ec36af8..eb854c5294a3 100644
-> --- a/drivers/net/wireguard/device.c
-> +++ b/drivers/net/wireguard/device.c
-> @@ -411,12 +411,11 @@ static struct rtnl_link_ops link_ops __read_mostly = {
->  	.newlink		= wg_newlink,
->  };
->  
-> -static void wg_netns_pre_exit(struct net *net)
-> +static void wg_netns_exit_rtnl(struct net *net, struct list_head *dev_kill_list)
->  {
->  	struct wg_device *wg;
->  	struct wg_peer *peer;
->  
-> -	rtnl_lock();
->  	list_for_each_entry(wg, &device_list, device_list) {
->  		if (rcu_access_pointer(wg->creating_net) == net) {
->  			pr_debug("%s: Creating namespace exiting\n", wg->dev->name);
-> @@ -429,11 +428,10 @@ static void wg_netns_pre_exit(struct net *net)
->  			mutex_unlock(&wg->device_update_lock);
->  		}
->  	}
-> -	rtnl_unlock();
->  }
->  
->  static struct pernet_operations pernet_ops = {
-> -	.pre_exit = wg_netns_pre_exit
-> +	.exit_rtnl = wg_netns_exit_rtnl
->  };
->  
->  int __init wg_device_init(void)
-> -- 
-> 2.34.1
->
+WireGuard was my big implementation user. I also know that VMware uses the k=
+ernel crypto space for many of its crypto operations. I do not know when the=
+y will want ML-KEM and if they will want it only within BoringCrypto or Open=
+SSL, but if there is need for it in the market before it can be developed th=
+en that makes sense.=20
 
-I see the command but can't find the corresponding bug.
-The email is sent to  syzbot+HASH@syzkaller.appspotmail.com address
-but the HASH does not correspond to any known bug.
-Please double check the address.
 
+Thank you,
+    Ryan Appel
+
+> On Mar 30, 2026, at 7:15=E2=80=AFPM, Eric Biggers <ebiggers@kernel.org> wr=
+ote:
+>=20
+> =EF=BB=BFOn Mon, Mar 30, 2026 at 06:41:46PM -0500, Ryan Appel wrote:
+>> Hello all,
+>>=20
+>> Looking through the mail archives I see no information on an
+>> implementation of ML-KEM that has been planned, except for leancrypto
+>> attempting to make a Key-Agreement Scheme a Key-Encapsulation
+>> Mechanism.
+>>=20
+>> Is there a plan to implement a KEM interface at this point? Is this
+>> something that needs support?  How could someone contribute to this?
+>=20
+> We don't add new algorithms preemptively, but rather only when an
+> in-kernel user comes along.  Otherwise there's a risk that the code will
+> never be used.
+>=20
+> Do you have a specific in-kernel user in mind?  I haven't actually heard
+> anyone specifically say they need ML-KEM in the kernel yet.
+>=20
+> I guess the obvious use case would be WireGuard.  But that would require
+> a new WireGuard protocol version that replaces X25519 with something
+> like X25519MLKEM768.  It's going to be up to the WireGuard author
+> (Jason) to decide whether that's in the roadmap for WireGuard.
+>=20
+> Also maybe Bluetooth, though it seems the spec for that is yet to be
+> defined?
+>=20
+> Anyway, point is, before it makes sense to consider possible
+> implementation strategies, there needs to be a plan to actually use it.
+>=20
+> - Eric
