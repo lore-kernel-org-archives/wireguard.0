@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 754C71061B28
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 31 Mar 2026 00:15:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E425C1061B28
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 31 Mar 2026 01:12:50 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id c1e28472;
-	Tue, 31 Mar 2026 00:15:11 +0000 (UTC)
-Received: from tor.source.kernel.org (tor.source.kernel.org
- [2600:3c04:e001:324:0:1991:8:25])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 774f4662
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 2b09b22e;
+	Tue, 31 Mar 2026 01:12:49 +0000 (UTC)
+Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 76d63ee8
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 31 Mar 2026 00:15:10 +0000 (UTC)
+ Tue, 31 Mar 2026 01:12:45 +0000 (UTC)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 03D526013A;
- Tue, 31 Mar 2026 00:15:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F9FAC4CEF7;
- Tue, 31 Mar 2026 00:15:08 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id CF10C40377;
+ Tue, 31 Mar 2026 01:12:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9165FC4CEF7;
+ Tue, 31 Mar 2026 01:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1774916108;
- bh=4XJyboVsJ0yxu/uemond9OcSUwty3Aslvd4eyEfsYYw=;
+ s=k20201202; t=1774919563;
+ bh=iCfC32gPCOq3jfIEnZRFSUBxARxVZ4ChIy/597rHi84=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=KbBr2qa+9arONncmAT3Z/UmnTPAAtoutZuZnz+oKNBaNyiO/fB6iCief90yoyGyWh
- 8EPbOxsRu75NFxSrnBXZStxNZDGxeFmZwqeemW2bo+OlOTgmXXnmSrd0G0RHyyiPNv
- +/b+5tpQtA2di0wYkobF1w9HONy9V/H79WpNzUK0KDSUp+IlblUhfFEqnd02PNHSls
- L4XMFUSiMosMaS1SPNOT87j/uxLNJ/fhF7R4XSyUk9vGR1Q0E+0dLrVFBpUNmT1ytd
- yuTDXqdkcO6rUHnomYuAicWrGULoJ6ti81XDJImo9eYPVhOMNyTJdBAko3ph58xLj2
- mkYHOGTd1407w==
-Date: Mon, 30 Mar 2026 17:13:58 -0700
+ b=WaZ2UQdK/SNt4rlJZJ2QJQnScNiPJJZPTE6s4sEv2QaN+SXcJiHKlIDYpbrgpaMzM
+ WB9Us2Ejcc4+WWb+NDeusT/wSYGNDZbyakla24p2ZADDJ5sB5kDUE50oxQYqX3K28F
+ 3vHcPNNFvoblgKyP4QKYYDW9BMUiRmvJ6ntWQytwShEWOA8zxJQ6ziF8HloS0igUsZ
+ /v8VIww1IEHPKHj3nGfcRiL+xxkNWTz6y2XenMNkMbiVpW6bU9UN0BCzPGT9OVE5sx
+ 7pBxRvKg7zNZjHbSczCTKJ438sprrcCZvHkCyyjxN0/eXpEEQ536d5UmymmQjQvDFW
+ ql+h1lqba+mag==
+Date: Mon, 30 Mar 2026 18:11:33 -0700
 From: Eric Biggers <ebiggers@kernel.org>
 To: Ryan Appel <ryan.appel.333@gmail.com>
 Cc: linux-crypto@vger.kernel.org, wireguard@lists.zx2c4.com,
  "Jason A. Donenfeld" <Jason@zx2c4.com>
 Subject: Re: Kernel ML-KEM implementation plans
-Message-ID: <20260331001358.GA5190@sol>
-References: <5F9ACD7A-F3B8-463A-A00E-28F68819A66C@gmail.com>
+Message-ID: <20260331011133.GB5190@sol>
+References: <20260331001358.GA5190@sol>
+ <7507DE2E-1507-4D03-B6EF-9C139BBF34F8@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <5F9ACD7A-F3B8-463A-A00E-28F68819A66C@gmail.com>
+In-Reply-To: <7507DE2E-1507-4D03-B6EF-9C139BBF34F8@gmail.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -56,33 +56,27 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, Mar 30, 2026 at 06:41:46PM -0500, Ryan Appel wrote:
-> Hello all, 
-> 
-> Looking through the mail archives I see no information on an
-> implementation of ML-KEM that has been planned, except for leancrypto
-> attempting to make a Key-Agreement Scheme a Key-Encapsulation
-> Mechanism.
-> 
-> Is there a plan to implement a KEM interface at this point? Is this
-> something that needs support?  How could someone contribute to this?
+On Mon, Mar 30, 2026 at 07:44:55PM -0500, Ryan Appel wrote:
+> WireGuard was my big implementation user.
 
-We don't add new algorithms preemptively, but rather only when an
-in-kernel user comes along.  Otherwise there's a risk that the code will
-never be used.
+Any more details on this?  Googling for research papers shows that there
+have indeed been several proposals for quantum-resistant WireGuard.  But
+some use algorithms other than ML-KEM.  Others don't modify the kernel
+code but rather do the key establishment in userspace.  I haven't looked
+into the details, but it also sounds like it's not as simple as swapping
+out the algorithm, either.
 
-Do you have a specific in-kernel user in mind?  I haven't actually heard
-anyone specifically say they need ML-KEM in the kernel yet.
+I think step 1 is work out some plan with the WireGuard folks.  Which
+may or may not turn out to involve in-kernel ML-KEM.
 
-I guess the obvious use case would be WireGuard.  But that would require
-a new WireGuard protocol version that replaces X25519 with something
-like X25519MLKEM768.  It's going to be up to the WireGuard author
-(Jason) to decide whether that's in the roadmap for WireGuard.
+> I also know that VMware uses the kernel crypto space for many of its
+> crypto operations.  I do not know when they will want ML-KEM and if
+> they will want it only within BoringCrypto or OpenSSL, but if there is
+> need for it in the market before it can be developed then that makes
+> sense.
 
-Also maybe Bluetooth, though it seems the spec for that is yet to be
-defined?
-
-Anyway, point is, before it makes sense to consider possible
-implementation strategies, there needs to be a plan to actually use it.
+That code isn't upstream though, right?  So even if hypothetically they
+(will?) need ML-KEM in the kernel (for what?), that doesn't count for
+upstream purposes.
 
 - Eric
