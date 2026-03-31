@@ -4,82 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66EEB10AB82E
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 26 Mar 2026 23:12:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 754C71061B28
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 31 Mar 2026 00:15:13 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 982b4f8e;
-	Thu, 26 Mar 2026 23:12:18 +0000 (UTC)
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com
- [2a00:1450:4864:20::334])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id ac80c276
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id c1e28472;
+	Tue, 31 Mar 2026 00:15:11 +0000 (UTC)
+Received: from tor.source.kernel.org (tor.source.kernel.org
+ [2600:3c04:e001:324:0:1991:8:25])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 774f4662
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 26 Mar 2026 20:18:38 +0000 (UTC)
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4853c1ca73aso14049095e9.2
- for <wireguard@lists.zx2c4.com>; Thu, 26 Mar 2026 13:18:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1774556318; x=1775161118; darn=lists.zx2c4.com;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Xycnlm/h8VsaAluVGkMfR2izvoHRISt/YiMCwALMUO4=;
- b=HelIFM5TS5ntZT1Bh2XpfEXvCc+Eror5OSXqVY0VmVYCqCgFHYnvpdIzteeLRok2fS
- k4xASMzd5gZLulxWeU38Mu3ePE4cRnKb+Yk8aZm1XaW5aEIa7upe8sTxVuz+OCo/yb+y
- hME2w8I/uerhEdzUMME+PbPxSItJ4vSou0aHx+E8NGLZKC5UNQ4C8ZuCNXB097hMJVZG
- iiQU8rNs8DSR1YLGT4XoK/Acm5FpXCPhccHEun6VSUZ+wnuGoHWegw+gec3efwqNQkUq
- 7KTcy3OkZyJzPizISDZn2ogK6HIAYAExXuDm8xg+2RyCAFcjekHHNMO0pfBriL/YJ/rV
- zdOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774556318; x=1775161118;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Xycnlm/h8VsaAluVGkMfR2izvoHRISt/YiMCwALMUO4=;
- b=pri+I2xvvtRngwj+5CN0WE6WmsnddzfAzDRRyukTs91O9+lJ1LB8SnRMN6zkwH/fE+
- f5InRenb9fjAl+qzAfQ7KrFWQO6GK4AgYvSwLs2WKRTloSz5BM6kH1zbixfANs7C9xFd
- fgekp9WRC2ovueiPWGNLeTvXz8+eaPOszSRWo5mA0KzG+svvr/vtvWheRzKhO0paEG9m
- btHEV0vSPNGJl+sdPKHe74qjpiqTO2pcEDWb8x7mLpWwPIL84nn32NmpVJysQWsfGWm6
- zaKgYVlfQELFHxwCGt20h2h234XxCkxdIsnDngX/PRZ1AtBz+89XrhRdAa/5nLPYJp7p
- mw8A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVjDqUZyTWumqJcN2M+fyn4K0Wj6erPj1u8ytuqn7Sj/s7dG6RBVYrX9WWExTmGt3Q0YzuDfbH1LfQ=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0Yw8xBeN+eY0uOoXGsRMhYxiGvU14S3YMmDk56/M96sR2qBTiVxi
- bq6fiWra06Bri8uHXz05tDJqZ+AL4qRLCQjCLGBp9s4trt/91BIxAcPc
-X-Gm-Gg: ATEYQzwDlm/uCCMOBfv9CWSUe9XWgjC3qGMjlXpMW1bj47SkLpIaPbyqt7TfXCwVqBz
- uv48jNn7qywmOsR7SK/iX9/UUw6EWEsuH1ZZWG1joajNXTotXdHIaLTlhxBd4cE18YHx7Nw5jQh
- rwb7YL+iff0+A9AUwlYmmzTeYVMJDVhx9JNs8s+VdpNqZ51+JX63ccyjHhoXc1t3ig/w09/LBGa
- 73CD1iyr3NGkjNxJ9T3P1Fjq4Nt5s+tIfSJWUvIPiZWgr4IYreH+P+n7YqVdudLCI14AseNKcVS
- EQBggTUSDKON2wuQWyrjjcftRjXfnaLtBn2Cwi7CGGRNgPofjLpHtnz8loCgjxf/YJ1BNRPATkv
- wuGfxZPW37v65a6ZohUfS3IEcZ5J/kQfbxlfHnPDrcMEAWutz122sr0EGdUPvkOdruAzP1IQ2us
- fAsEFMOpbTMUViZhoyF6Huc60COh1cWnk11tVis0fPKkCzVZd6NPMUSF+46nEq+gBL2uUAYZvHq
- xCPhcWsiwA5
-X-Received: by 2002:a05:600c:8708:b0:483:b505:9db7 with SMTP id
- 5b1f17b1804b1-48727f1b5f1mr442955e9.32.1774556317978; 
- Thu, 26 Mar 2026 13:18:37 -0700 (PDT)
-Received: from snowdrop.snailnet.com (82-69-66-36.dsl.in-addr.zen.co.uk.
- [82.69.66.36]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48725d9acb9sm3330475e9.1.2026.03.26.13.18.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Mar 2026 13:18:37 -0700 (PDT)
-From: david.laight.linux@gmail.com
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Shuah Khan <shuah@kernel.org>,
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: David Laight <david.laight.linux@gmail.com>,
- Masami Hiramatsu <mhiramat@kernel.org>, Petr Mladek <pmladek@suse.com>,
- Rasmus Villemoes <linux@rasmusvillemoes.dk>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- Steven Rostedt <rostedt@goodmis.org>,
- Sergey Senozhatsky <senozhatsky@chromium.org>,
- Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH next] wireguard: selftests: Remove spurious precision from
- banner printf
-Date: Thu, 26 Mar 2026 20:18:36 +0000
-Message-Id: <20260326201836.3957-1-david.laight.linux@gmail.com>
-X-Mailer: git-send-email 2.39.5
+ Tue, 31 Mar 2026 00:15:10 +0000 (UTC)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id 03D526013A;
+ Tue, 31 Mar 2026 00:15:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F9FAC4CEF7;
+ Tue, 31 Mar 2026 00:15:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1774916108;
+ bh=4XJyboVsJ0yxu/uemond9OcSUwty3Aslvd4eyEfsYYw=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=KbBr2qa+9arONncmAT3Z/UmnTPAAtoutZuZnz+oKNBaNyiO/fB6iCief90yoyGyWh
+ 8EPbOxsRu75NFxSrnBXZStxNZDGxeFmZwqeemW2bo+OlOTgmXXnmSrd0G0RHyyiPNv
+ +/b+5tpQtA2di0wYkobF1w9HONy9V/H79WpNzUK0KDSUp+IlblUhfFEqnd02PNHSls
+ L4XMFUSiMosMaS1SPNOT87j/uxLNJ/fhF7R4XSyUk9vGR1Q0E+0dLrVFBpUNmT1ytd
+ yuTDXqdkcO6rUHnomYuAicWrGULoJ6ti81XDJImo9eYPVhOMNyTJdBAko3ph58xLj2
+ mkYHOGTd1407w==
+Date: Mon, 30 Mar 2026 17:13:58 -0700
+From: Eric Biggers <ebiggers@kernel.org>
+To: Ryan Appel <ryan.appel.333@gmail.com>
+Cc: linux-crypto@vger.kernel.org, wireguard@lists.zx2c4.com,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: Re: Kernel ML-KEM implementation plans
+Message-ID: <20260331001358.GA5190@sol>
+References: <5F9ACD7A-F3B8-463A-A00E-28F68819A66C@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Mailman-Approved-At: Thu, 26 Mar 2026 23:12:16 +0000
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5F9ACD7A-F3B8-463A-A00E-28F68819A66C@gmail.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -94,30 +56,33 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-From: David Laight <david.laight.linux@gmail.com>
+On Mon, Mar 30, 2026 at 06:41:46PM -0500, Ryan Appel wrote:
+> Hello all, 
+> 
+> Looking through the mail archives I see no information on an
+> implementation of ML-KEM that has been planned, except for leancrypto
+> attempting to make a Key-Agreement Scheme a Key-Encapsulation
+> Mechanism.
+> 
+> Is there a plan to implement a KEM interface at this point? Is this
+> something that needs support?  How could someone contribute to this?
 
-Change ("%*.s", len, "") to ("%*s", len, "").
-The former is equivalent to "%*.0s" but is really a typing mistake.
-No actual change to the output.
+We don't add new algorithms preemptively, but rather only when an
+in-kernel user comes along.  Otherwise there's a risk that the code will
+never be used.
 
-Signed-off-by: David Laight <david.laight.linux@gmail.com>
----
- tools/testing/selftests/wireguard/qemu/init.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Do you have a specific in-kernel user in mind?  I haven't actually heard
+anyone specifically say they need ML-KEM in the kernel yet.
 
-diff --git a/tools/testing/selftests/wireguard/qemu/init.c b/tools/testing/selftests/wireguard/qemu/init.c
-index 3e49924dd77e..c87570494d30 100644
---- a/tools/testing/selftests/wireguard/qemu/init.c
-+++ b/tools/testing/selftests/wireguard/qemu/init.c
-@@ -53,7 +53,7 @@ static void print_banner(void)
- 		panic("uname");
- 
- 	len = strlen("    WireGuard Test Suite on       ") + strlen(utsname.sysname) + strlen(utsname.release) + strlen(utsname.machine);
--	printf("\x1b[45m\x1b[33m\x1b[1m%*.s\x1b[0m\n\x1b[45m\x1b[33m\x1b[1m    WireGuard Test Suite on %s %s %s    \x1b[0m\n\x1b[45m\x1b[33m\x1b[1m%*.s\x1b[0m\n\n", len, "", utsname.sysname, utsname.release, utsname.machine, len, "");
-+	printf("\x1b[45m\x1b[33m\x1b[1m%*s\x1b[0m\n\x1b[45m\x1b[33m\x1b[1m    WireGuard Test Suite on %s %s %s    \x1b[0m\n\x1b[45m\x1b[33m\x1b[1m%*s\x1b[0m\n\n", len, "", utsname.sysname, utsname.release, utsname.machine, len, "");
- }
- 
- static void seed_rng(void)
--- 
-2.39.5
+I guess the obvious use case would be WireGuard.  But that would require
+a new WireGuard protocol version that replaces X25519 with something
+like X25519MLKEM768.  It's going to be up to the WireGuard author
+(Jason) to decide whether that's in the roadmap for WireGuard.
 
+Also maybe Bluetooth, though it seems the spec for that is yet to be
+defined?
+
+Anyway, point is, before it makes sense to consider possible
+implementation strategies, there needs to be a plan to actually use it.
+
+- Eric
