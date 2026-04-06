@@ -4,43 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A92E10F92FB
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 31 Mar 2026 20:15:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37407F46C66
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  6 Apr 2026 18:27:20 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id af78e2eb;
-	Tue, 31 Mar 2026 20:15:09 +0000 (UTC)
-Received: from mout-p-102.mailbox.org (mout-p-102.mailbox.org
- [2001:67c:2050:0:465::102])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 61db09b0
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 5311fc8c;
+	Mon, 6 Apr 2026 18:27:19 +0000 (UTC)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 37bf6511
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 31 Mar 2026 20:15:05 +0000 (UTC)
-Received: from smtp102.mailbox.org (smtp102.mailbox.org [10.196.197.102])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4flfVZ70Mrz9vVg
- for <wireguard@lists.zx2c4.com>; Tue, 31 Mar 2026 22:15:02 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aparcar.org; s=MBO0001;
- t=1774988103;
+ for <wireguard@lists.zx2c4.com>; Mon, 6 Apr 2026 18:27:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1775500034;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=ip+udzEQ6iHlnMvn7ZJCuJ+onh3YlumB2uoETfhd1AI=;
- b=x4sw+ubeN9/KhqFqT7J1LOjLgH8uMZfqkq0+ycSG5d6ZVImce6t5Nyg5QRB8zSQaErzn1n
- VtCicJyYp4Sck2pTi4CvK+s8UFD1TdehSLMGNjREqFWPpe7odAyTMQ6Vij7zNi97+Ja59t
- T5MHQlb3FWrIN49BHPCsP8bDYNQAr9izj9N9PkaWtX2WN6Bfk7QQGmmsack0O82NParHrT
- mcd7mU2t1vFvuRaO5ZpZnpr9DsKwg3tn8NdSW9nRXGpgEPMINhFOPfT5jEFRBducLIy0Ub
- pTg2MafuyEFOHFZYdpWe0LjVwm1KDDnrYp8OrxqSI/dSFRVDlQGjLS00xLmZjA==
-From: Paul Spooren <mail@aparcar.org>
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0
-Subject: Export noise primitives for additional "chain key ratcheting"
-Message-Id: <9E8ACE91-126B-41BD-BCE2-8B54DCE78B97@aparcar.org>
-Date: Tue, 31 Mar 2026 22:14:51 +0200
-To: wireguard@lists.zx2c4.com
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=H7BsInlarCMN8zA1RQxRw+Ig9z8XXGHcBKSW9n2S1Is=;
+ b=Z/Kb+WU7vzNg6qn4FoxcROV6IEwnjv6Wz89/iiVBRJezj/iG8mQ1VpEZsGBd+wD/mazkD/
+ SSgPUdGefXgIjrzg0eTp3nBVY/xMvGQWUJeSxn6IFXNHUkh3yytjCDRR449CYAcnIi7/uI
+ hpCCqA7puE78nQvUa+6IlkWApilDftc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-224-r8TzPp-HNKKLa3gfD47CAA-1; Mon,
+ 06 Apr 2026 14:27:12 -0400
+X-MC-Unique: r8TzPp-HNKKLa3gfD47CAA-1
+X-Mimecast-MFC-AGG-ID: r8TzPp-HNKKLa3gfD47CAA_1775500030
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0AA4618002E5; Mon,  6 Apr 2026 18:27:10 +0000 (UTC)
+Received: from cleech-thinkpadt14sgen2i.rmtusor.csb (unknown [10.2.16.34])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with SMTP
+ id 5B5F7300019F; Mon,  6 Apr 2026 18:27:08 +0000 (UTC)
+Date: Mon, 6 Apr 2026 11:27:07 -0700
+From: Chris Leech <cleech@redhat.com>
+To: Eric Biggers <ebiggers@kernel.org>
+Cc: Ryan Appel <ryan.appel.333@gmail.com>, linux-crypto@vger.kernel.org, 
+ wireguard@lists.zx2c4.com, "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: Re: Kernel ML-KEM implementation plans
+Message-ID: <20260406-e1d94afb79556186f06749f4@redhat.com>
+References: <5F9ACD7A-F3B8-463A-A00E-28F68819A66C@gmail.com>
+ <20260331001358.GA5190@sol>
+MIME-Version: 1.0
+In-Reply-To: <20260331001358.GA5190@sol>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Mimecast-MFC-PROC-ID: c1b5UWGelnoy8V-JSshX8huz0EDpxt7ph5u6UAYCvcM_1775500030
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -55,48 +70,38 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+On Mon, Mar 30, 2026 at 05:13:58PM -0700, Eric Biggers wrote:
+> On Mon, Mar 30, 2026 at 06:41:46PM -0500, Ryan Appel wrote:
+> > Hello all, 
+> > 
+> > Looking through the mail archives I see no information on an
+> > implementation of ML-KEM that has been planned, except for leancrypto
+> > attempting to make a Key-Agreement Scheme a Key-Encapsulation
+> > Mechanism.
+> > 
+> > Is there a plan to implement a KEM interface at this point? Is this
+> > something that needs support?  How could someone contribute to this?
+> 
+> We don't add new algorithms preemptively, but rather only when an
+> in-kernel user comes along.  Otherwise there's a risk that the code will
+> never be used.
+> 
+> Do you have a specific in-kernel user in mind?  I haven't actually heard
+> anyone specifically say they need ML-KEM in the kernel yet.
+> 
+> I guess the obvious use case would be WireGuard.  But that would require
+> a new WireGuard protocol version that replaces X25519 with something
+> like X25519MLKEM768.  It's going to be up to the WireGuard author
+> (Jason) to decide whether that's in the roadmap for WireGuard.
+> 
+> Also maybe Bluetooth, though it seems the spec for that is yet to be
+> defined?
+> 
+> Anyway, point is, before it makes sense to consider possible
+> implementation strategies, there needs to be a plan to actually use it.
 
-I=E2=80=99m looking into hardening WireGuard against quantum computers, =
-specifically how to extend the Noise-based handshake.=20
+The NVMe fabrics authentication protocol will need a PQC replacement for
+it's FFDHE use. There is not a specification update for that yet.
 
-A bit of background, while PSK injection with external daemons for =
-forward secrecy, exists, that=E2=80=99s extra software running, exposing =
-extra ports etc. Modifying a Rust/Go implementation is easier than the =
-Kernel, but my background is running things on WiFi routers, so Kernel =
-is preferred. That said, I=E2=80=99d like to extend the current =
-WireGuard message format and attach PQC without exceeding the IPv6 MTU =
-of 1280 bytes. In literature I don=E2=80=99t find definitive a PQC =
-handshake standard, however combining ML-KEM512 for forward secrecy and =
-McEliece460896 for static long-term keys does exist in practice[1] and =
-fits into WireGuard init and response messages. Alternatively, sntrup653 =
-could be used for forward secrecy without PQ authentication, similar to =
-Signal's PQXDH[2]. Possibly new primitives/schemes are developed, with =
-smaller public keys and ciphertexts.=20
+- Chris
 
-Just today I read an email about ML-KEM and the Kernel; none of these =
-cryptographic primitives are (to my knowledge) part of the Linux Kernel, =
-making a =E2=80=9Cnew=E2=80=9D protocol version of WireGuard more =
-difficult to implement and further out in the future.
-
-I wondered if WireGuard could export some of the noise primitives like =
-mix_hash and mix_key to allow =E2=80=9Cone way=E2=80=9D (ratchet) =
-modifications of the chaining key and =E2=80=9Cappend only" bytes to the =
-outgoing packet (PQ pubkey, ciphertext). After appending bytes, =
-WireGuard takes over again and calculates the MAC, proceeding as usual. =
-The "ratcheting=E2=80=9D Kernel module would work similar to the =
-existing PSK approach, it adds additional data to the chaining key, =
-however it can=E2=80=99t downgrade it (except crashing the Kernel). =
-Another approach could be to add netlink handling for an active daemon, =
-this would at least reduce the open ports and network complexity.=20
-
-Yet another way to have PQ WireGuard could be to produce one's own =
-modules like WolfGuard did the recently[3] with AES/FIPS, however I =
-thought to ask anyway.
-
-Thanks,
-Paul
-
-[1]: https://rosenpass.eu/docs/rosenpass-project/whitepaper/
-[2]: https://signal.org/docs/specifications/pqxdh/
-[3]: https://github.com/wolfSSL/wolfGuard=
