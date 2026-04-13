@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A498EF34C5C
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 13 Apr 2026 15:16:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DA6BF34C65
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 13 Apr 2026 15:16:47 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 745a6f6e;
-	Mon, 13 Apr 2026 15:14:35 +0000 (UTC)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 5e0de97c;
+	Mon, 13 Apr 2026 15:14:36 +0000 (UTC)
 Received: from sender4-of-o54.zoho.com (sender4-of-o54.zoho.com
  [136.143.188.54])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id e3cee38a
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 98324a13
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 13 Apr 2026 15:00:50 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; t=1776092436; cv=none; 
+ Mon, 13 Apr 2026 15:13:11 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; t=1776093166; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=HCp6CLPPNiSF3liA/4Omngty6B+ulEsF/QWqJxYRu//l1jXcaWZ9LC1YTCmjOUbnQJMG+uRfXf5A/On1ZjxSc6y2V8Fsbf2BNAbN8kcZWTiVqkNJgE4n4+2Lfdt9R/K4/BKV26E42jQLqjQmVWTVS/T+1hNCD3hf/UTV7XjhCbI=
+ b=UtphPp+bIt9ThAtBwH6uWaW/nMLbDjNM6tAFvar1CxpaxHsachqbAA1i69jM8iowo7L1Y3d4eE0QpmukhrX9JnWu9H5ARycQV2rX/Po0/K5S14GVezkyRinzQaB/E1wUGZfkrRmnLuLgs2uINNCDQ1ULudXG2iOX98qNdqGa7hE=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1776092436;
+ s=zohoarc; t=1776093166;
  h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=GuZMQ4obIZBfLwzT7dBWa+wWhBwlSjqniuDoLorhniA=; 
- b=MALNYq6UMVrL7xvAfa4S10qJeShDwfzUqQ5AsieDixZ88vYxoH++3ZbjSLZDxaJH6S1Ob6hHkFowFHapAAXjxuvplb8P0rB9TVNLV0Qt5LG8WirWszTPRxLp9RowvH6k14zx9qFjB6K4pBeQIRpGt1nl1E/AA9l7dqrwA6fP+ek=
+ bh=wa0q4a7PiAQyVCNBqTWlZ1ZqIne3iaPUk2uPQB9BgB0=; 
+ b=e56jQ20sirdlgEjzzCoFpju8SXRMNRxoEVOStkf/0jZDrsQEN2HbVosk5LJoOdoAVXBDlT4W6CYWzqsxCjdKW2n0wXYhBDc/9hd+2It3j60aU7ZVhbsM6PN+hTphBQP0Xxag1aCk6jmdY/KirXwh6DMKrgvyFvBzRuuvQQ/Wahk=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=mpiricsoftware.com;
  spf=pass  smtp.mailfrom=shardul.b@mpiricsoftware.com;
  dmarc=pass header.from=<shardul.b@mpiricsoftware.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1776092436; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1776093166; 
  s=mpiric; d=mpiricsoftware.com; i=shardul.b@mpiricsoftware.com;
  h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-Id:Message-Id:MIME-Version:Content-Transfer-Encoding:Reply-To;
- bh=GuZMQ4obIZBfLwzT7dBWa+wWhBwlSjqniuDoLorhniA=;
- b=tWPem7+rKELSJXTTak1d3EXPm64tq4CR6L0Zd812NuRFVzaQ4a20fYi+zDA5TCVi
- qMgCGK6eVNzkocaCR6aUBCzKhigMyYI42+Ai1wLk/jSF6DzhHCGh8UZaFtahiUlvwAh
- D1mLVgTucRxliLj+/Cxh2FDxEmQJBmxtgVYjVTQI=
-Received: by mx.zohomail.com with SMTPS id 1776092434400296.8841184266247;
- Mon, 13 Apr 2026 08:00:34 -0700 (PDT)
+ bh=wa0q4a7PiAQyVCNBqTWlZ1ZqIne3iaPUk2uPQB9BgB0=;
+ b=lmbYu6ukFjOJNASb8fCK37CzpxIpUB1RmdeMZQ2hWUlcJxPlNDEmudp1uxRJV5Ia
+ 4ziK0IPisLqCfYww0u15WYugSTFlWq16UH5edyTJWRc4lwAYPMbC8dSg4kwtHi3NCN/
+ sxxllJmSWeu5lCc1d+q7w6vjRNWuNiwtzbh5WDk4=
+Received: by mx.zohomail.com with SMTPS id 177609316273486.24045386352475;
+ Mon, 13 Apr 2026 08:12:42 -0700 (PDT)
 From: Shardul Bankar <shardul.b@mpiricsoftware.com>
 To: Jason@zx2c4.com,
 	kuniyu@google.com
@@ -44,11 +44,11 @@ Cc: andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com,
  netdev@vger.kernel.org, linux-kernel@vger.kernel.org, janak@mpiric.us,
  kalpan.jani@mpiricsoftware.com, shardulsb08@gmail.com,
  Shardul Bankar <shardul.b@mpiricsoftware.com>,
- syzbot+pFBD3bslSSshiJCd3rxy@syzkaller.appspotmail.com
-Subject: [PATCH] wireguard: device: use exit_rtnl callback instead of manual
- rtnl_lock in pre_exit
-Date: Mon, 13 Apr 2026 20:30:24 +0530
-Message-Id: <20260413150024.1003490-1-shardul.b@mpiricsoftware.com>
+ syzbot+f2fbf7478a35a94c8b7c@syzkaller.appspotmail.com
+Subject: [PATCH v2] wireguard: device: use exit_rtnl callback instead of
+ manual rtnl_lock in pre_exit
+Date: Mon, 13 Apr 2026 20:42:32 +0530
+Message-Id: <20260413151232.1004611-1-shardul.b@mpiricsoftware.com>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -87,10 +87,12 @@ because all RCU readers of creating_net either use maybe_get_net()
 access net->user_ns which remains valid throughout the entire
 ops_undo_list sequence.
 
-Reported-by: syzbot+pFBD3bslSSshiJCd3rxy@syzkaller.appspotmail.com
+Reported-by: syzbot+f2fbf7478a35a94c8b7c@syzkaller.appspotmail.com
 Closes: https://syzkaller.appspot.com/bug?id=cb64c22a492202ca929e18262fdb8cb89e635c70
 Signed-off-by: Shardul Bankar <shardul.b@mpiricsoftware.com>
 ---
+v2: Fix incorrect Reported-by email address
+
  drivers/net/wireguard/device.c | 6 ++----
  1 file changed, 2 insertions(+), 4 deletions(-)
 
