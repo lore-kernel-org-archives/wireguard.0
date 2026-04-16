@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEC5BF433D9
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 16 Apr 2026 02:18:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 828D9F433DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 16 Apr 2026 02:18:38 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id c4eef6a2;
-	Thu, 16 Apr 2026 02:18:35 +0000 (UTC)
-Received: from mail-dl1-x1235.google.com (mail-dl1-x1235.google.com
- [2607:f8b0:4864:20::1235])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 731b2b13
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id ad2d532d;
+	Thu, 16 Apr 2026 02:18:37 +0000 (UTC)
+Received: from mail-dl1-x1233.google.com (mail-dl1-x1233.google.com
+ [2607:f8b0:4864:20::1233])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 5c768015
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 15 Apr 2026 12:52:12 +0000 (UTC)
-Received: by mail-dl1-x1235.google.com with SMTP id
- a92af1059eb24-12c42a23c8eso5226703c88.1
- for <wireguard@lists.zx2c4.com>; Wed, 15 Apr 2026 05:52:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776257530; cv=none;
+ Thu, 16 Apr 2026 00:37:53 +0000 (UTC)
+Received: by mail-dl1-x1233.google.com with SMTP id
+ a92af1059eb24-12c19d23b19so8974841c88.0
+ for <wireguard@lists.zx2c4.com>; Wed, 15 Apr 2026 17:37:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776299871; cv=none;
  d=google.com; s=arc-20240605;
- b=XVzg1I6LQ0lc0eDJtPRW4hXAFMeyg6lnsEXMPz8MBmmlXWCIM0zDtyCq3qLXahtc6+
- nPE676s1HmewikoBUSqI05aOgetKAl4P77B5myPl1Lfan/zE4kK3nn83kXLeSWKF05S9
- jJexlS1eNghFNXa6kJzBKqgZAxzU4TW0kc4ww6m9IoOY4Gmck4t1RAU877q6hlpO2RY4
- a0B2RXpQseH5b7nwBGol4JEVHjqCkSptuxk2cThBdijN0lJbpqtQ+C8KZqM/JhIpIzw0
- nOCTIKsS58vxEBS/CppcUJqoL0qgT50w0z8wG87DXL3SGJxZp3oqGXyVlcHSO0koJIpr
- aamw==
+ b=OjE0b5Abgxt6seDnS57w9GRUNsKrtD8BZcX0Lhn3caGcbDTyYBSw9l5p9zM1De3yy6
+ 7ekxeAIqNjnOTKxi3CQkh4jIWdWeYu6klDjI0etQQ96CSrbGmHDwWZ5vJkyOvPx5OYSr
+ gDDv2xtkhL/nIhaevOR7tQkB8f+1pHZ3eQitkjN8w6nmOwphgMpBXLlmpTiKR2lfLEJk
+ 34Qf6gFFkZ7H2X2WWpHdMAnR7UIr4K6NQIELjdwzOtMrpCNCy8UUkAA3Vq1azicLydL5
+ mhXdaYYpz+S0e3kpKRkxhf7eAlGapd//X/OaP6hTgLTmg7Pzv3w7jQC7PRma5RGCxTxj
+ 4XTA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=MGuTgalYWaN1DBCwDRYJmH73jaVps05FJtvsG5AuhlU=;
+ bh=xGSNXCuAsXPGg6XVXTgLLyC4fgmt2k54etxGdRdBYK0=;
  fh=1CsOgAxkj0tSFTO0bRovl0wQS24+EZdEApJbdc/Xo54=;
- b=ZPZuH6AwAzG89rjZ4ZQvq+rvAbb+HCxxCu5AqVV/HR4xstzce/MRpg8QG+7UdXd4MY
- uj4665e5pqGE+bPmtRUtKLz04leL7hRnEIZIjc1Dqq1JSe23Sk2tiZoALliQ9/sGlwBF
- 9RA/RoNjLHvSpgHARnwDw3cx//3twenRyoa0sqWzGkFzSgBOrZzWE9L5KhNW+gqV2DnL
- oGKrQhmPiY7Cr4ABGbsCK7Pr5OYANn0GiVDNG6uAF86OyyoBS+1VJy3BWuW/fKO6uJwe
- SVhQX0poJBRlrFtg3tDISncWkRmk1Ht/MAeTluwzxXq1KSR21S4OeXtDwgP49fNCue4S
- EVcQ==; darn=lists.zx2c4.com
+ b=JhKAw+q8BeXqBJr/77Lq0YvpFEJ4zudFzgUWcbsXLROh9XAnZ35zYPBXMDwqBSvxvG
+ ya879+/Ydu9Tl6akEwXq966ShZldN9GQcXrXyWpA07mbe+6UILSgigUaFDG2wDNkD11l
+ nVmnkC4iKPzOmqkeHHHplOOGEWJpoYgyU5iHFjBoqhg00+JH0EmFbgMEFRlDO3yZtn1/
+ uQ/Oey7FJ7g5KS10NtjkBHaMenCMP7MkOuNXX+e+xUBU3Qlo8m2WbOgcer+p7XXZeR7L
+ KRXkB3gCybfgvSaf15cePlm9hxlyL6yIk8+SZqPUFstDTLgFkohyextcQVNqUruA80t4
+ P6ug==; darn=lists.zx2c4.com
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1776257530; x=1776862330; darn=lists.zx2c4.com;
+ d=gmail.com; s=20251104; t=1776299871; x=1776904671; darn=lists.zx2c4.com;
  h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
  :date:message-id:reply-to;
- bh=MGuTgalYWaN1DBCwDRYJmH73jaVps05FJtvsG5AuhlU=;
- b=smM3xOEDa2XEohZeEb661K11eprsnMI26yuouwLEQc5DqgrrK2dbiJP4HVWKeRYejf
- YrUNL7I7Qzh8mrFghBAqzSwEDGbUdSDMKfz8NF0Ruta73cD9CynqA37QS5mtFAfKdTQM
- Hp7bZlo5iP3SmEyB8xpnrpoP4+2xW0E0ZqWj1cHi/9XouP0tZ3GShVse+UTJYQrV8IdR
- NXsnEAa8Xkcq38t7edVx47gt3Zv31HfJZsJpnugRONi4KIZt4Gznmau6UW1KcrtyBVNa
- U5UeDIz6FnUuRbCGrnYBHNoyp71p2EZ7UDybeQhV2OoaAJ7xO7ZD8hHwZDFfX98q32Dr
- SuFw==
+ bh=xGSNXCuAsXPGg6XVXTgLLyC4fgmt2k54etxGdRdBYK0=;
+ b=A/irMdvWbjdUqLns+D1QgSBxtL2fYNlKz2QAGjA9e+xYDiqSHDMeQCjpBc9KQD9HUh
+ /WM03Bz8SFNN95bm4npsnj5proP/Z5XRp9dEsaG0Cr/dn1u5jOYoxId2dz/hYNGj3zka
+ e3R2HHa3FQqbdWToJM8/p/MRzFhodRwTAHW/upesZinhnx+R08SI+wmJeugftAIKZ/RV
+ 2Zbdpoyjbm96Rvvl2RCC2K7QJjhE2OnnMrRZybaX/U92P8TmINcFd0x7GObXgI44RUFT
+ bBxUx2RdJbMVG3GHaFenr5Ozm87Cv1jzkwMyN4vKtVT4ZhtiTauLnCD9m/ZPMdSqlvCw
+ 4tHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776257530; x=1776862330;
+ d=1e100.net; s=20251104; t=1776299871; x=1776904671;
  h=to:subject:message-id:date:from:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MGuTgalYWaN1DBCwDRYJmH73jaVps05FJtvsG5AuhlU=;
- b=ITlFCkiKxoVx6Ds+US6XEUA6M/gsgmjGea5aRZdd23GbEcGJQZXqqieqaVTcN2e1/P
- +GQFd0ihYS0dihJIzkWWMcRUrCnpvdhaxVPns40Ft+j656MJ8p0wyf+oeYGBnWaWhjF4
- 6ap7zDzpVMEdUsCqmJz+/pF0aIlwOmgtvGZ+ddjtcoVCZHmJHgLlvKsmPJEW0fFjU5OX
- xy8HdFahSDQ9gur5RJUMmxWFbmGGT04rsytzXOIXGyGPm5owU88x8cnlRhkaDBDVoJr4
- JFF9wJaOtr0gVlgJw+jxZBDwskq063Bz5t+DmjHOYsEK0hQejK5I9RRRMSvfm1brcbEp
- gNGw==
-X-Gm-Message-State: AOJu0YxoD7wL5KSQT0h2VrTqURsIU5ef2BwgDRrCgH7MvBGDui5sHkZl
- UZAHj6VVXQWrDRROKBXk8bg5S+TH7mPM5oPjZMh+CYSq3q7lGMarmqUpNli8vhUwcAFsEdRvLbH
- zAKGECmVu1RLO8isFbFLVJnnNKCvhmRtjd37mwgo=
-X-Gm-Gg: AeBDievmceDdOSrY1A+j5tZRHn0nEdWcYRkuW+yoGQDz+dJE1oYQyT9pGxOw/iCqeDC
- cFD/MhP6nHLE2FIUeumjt+2YeI31UNa98A3EM/W8pI1BHg3IWuOB1XOl38/QrdUkQs5ygxWjH7K
- aiedviI3CPLj7Ap/gceM2CBHezp5IYGKbCrpTZaTGzdBNOMs00MTpRbkN3lgRQFoy83Y+91cYby
- pM6X3sZPIKIRN+qXr1f5GXVRDngl7Basi8z726o1yQm4qMU1TxsdzfXOlyYhcFJB4Zog/Z303ly
- nzpbDFndD/gePPYtOQ==
-X-Received: by 2002:a05:7022:122:b0:128:d6c3:9b18 with SMTP id
- a92af1059eb24-12c34e8a1e2mr11135859c88.3.1776257529922; Wed, 15 Apr 2026
- 05:52:09 -0700 (PDT)
+ bh=xGSNXCuAsXPGg6XVXTgLLyC4fgmt2k54etxGdRdBYK0=;
+ b=I58bhXcYE27QBQXHIOC71giAl5Jeczzk2MXMhaoG5E/YCt3JDg0uwQFhbqSxTwjza9
+ gDCv5o1U8HZqFQfKXBCRGPve9txY/Zh5+tWxcEVBXn/oFuslsv+5Ccv0AOqtHxlOWmS3
+ 2SAB1KtKjOoa4u0l+UMMnXtAQ1oQszqAUfdz7F7rub906w/l2pCWRac6C23BhqlXzJ8Z
+ lYs/smdIP5FWpn5gs6uRt4rmSuDrJN1ruGe3wNOWUUPfamc9XG81WxD8mXdJ/158lUVd
+ WHHZKp1ucQqE1cBxMCjRCQ1R8tVpmbULvFGgEroaCrywTdJm/BArdyqpZmS3LBfYK7CF
+ cuxA==
+X-Gm-Message-State: AOJu0Ywvf8MweKcoOQAgApgrxP44/Wk8lxhdlYJDHQ230x7WdoNKY11R
+ sOVZIq/5nCIkAbAawVS+aPDeKSuBTILC2s5dqtVz0gl5E5Xq06748bx2+vMjm1gKkGcc0z9NSz9
+ TRnRlB0A54HNIsfizDwho3rpk4V1SuFX+I96lQO0=
+X-Gm-Gg: AeBDievkRa3tYXqu7+qqQFTmmDtuqWonZnNOYdjGG9lVdkhwLp3nlgqvhzcT4WjsIuM
+ OZqos6ZQtGyyr2VspfkRhM5ilhZpsyNivSDnZYK0p/Xmv3xBtSN4Fe1jSDUVmbTppzXGCJ4TjT6
+ /0hKVDcK1evRh35k9caggcNDyV3Skq+TAFCYKuAU6bVz3sQcK6TUl14CVNmr38Aicqb59RqPOlC
+ kE2rhdI4j8AOyLVUF6CTHeGU3Hjm5Mu9otpaz3FrMHryhaTlPPvGC/RB2/COTlTo71LFACGlVze
+ pYtZCpw=
+X-Received: by 2002:a05:7022:5f04:b0:12c:4928:e57a with SMTP id
+ a92af1059eb24-12c4928e793mr4811419c88.5.1776299871125; Wed, 15 Apr 2026
+ 17:37:51 -0700 (PDT)
 MIME-Version: 1.0
 From: =?UTF-8?B?7Jik7ZWc7JuF?= <oho790114@gmail.com>
-Date: Wed, 15 Apr 2026 21:51:58 +0900
-X-Gm-Features: AQROBzAzx7VZ80cRI627839i-Z6-EMcFnn8otFDNyCUJ5J2Klg9itCEH82aJDUU
-Message-ID: <CABJHARC2Kx8vwB_ytq0PgKw2WUkY3GxfP3t+mgtQPC0oTAGF_A@mail.gmail.com>
-Subject: WireGuard Windows 0.6.1 regression after recent update (tunnels lost
- & import failure)
+Date: Thu, 16 Apr 2026 09:37:39 +0900
+X-Gm-Features: AQROBzAryGUw7HgVTnT5NaO5coGrWULo9-GAW9OwQVL7WGgb_shbV_n0T6RXt0k
+Message-ID: <CABJHARCjTJ+T43++SkTam0RiHKvgxGqQJfAeGOOcF65SWCH5yA@mail.gmail.com>
+Subject: WireGuard Windows 0.6.1 - Timeline of issues (tunnels lost & import
+ still broken)
 To: wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
 X-Mailman-Approved-At: Thu, 16 Apr 2026 02:18:32 +0000
@@ -97,31 +97,34 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 Hello,
 
-I am reporting a critical issue with WireGuard on Windows (version 0.6.1).
+I would like to report a clear timeline of issues observed with
+WireGuard for Windows (version 0.6.1).
 
-We have observed that this issue started occurring consistently after
-recent updates (approximately 1 days ago).
+April 14:
+- After updating, all existing tunnels disappeared
+- Importing new tunnels failed
+  - ZIP files were not visible
+  - "*.*" filter did not help
+  - Drag and drop did not work
 
-Before that, some systems updated to 0.6.1 without problems, but now
-the issue occurs 100% of the time after updating.
+April 16:
+- Existing tunnels no longer disappear after update (possibly improved)
+- However, importing new tunnels is still not working
+  - ZIP files are still not visible in the import dialog
+  - "*.*" filter does not work
+  - Drag and drop still fails
 
-Issues observed:
+At this point:
+- It is unclear whether the tunnel disappearance issue is fully fixed or not
+- The import issue remains critical and consistently reproducible
 
-1) Existing tunnels are lost after update
-- Previously configured tunnels disappear
-- Configurations folder appears empty
+Impact:
+- Users cannot add new tunnels after installation or update
+- This is affecting a production VPN service with multiple users
 
-2) Cannot import new tunnels
-- ZIP and config files are not visible in the import dialog
-- Even using "*.*" filter, files do not appear
-- Files definitely exist in the selected folder
-
-This is affecting multiple users in a production environment.
-
-It seems that something may have changed recently in the update
-package or behavior, even though the version number remains 0.6.1.
-
-Please confirm if there has been any recent change or if this is a
-known regression.
+Please confirm:
+- Whether there was a recent change in the update package
+- Whether the import issue is a known bug
+- When a fix can be expected
 
 Thank you.
