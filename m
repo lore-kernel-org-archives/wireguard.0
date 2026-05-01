@@ -4,51 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6C5AFF885E
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 27 Apr 2026 09:11:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8642CCFA13
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  1 May 2026 13:31:17 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 47ab86e0;
-	Mon, 27 Apr 2026 09:11:43 +0000 (UTC)
-Received: from mail-oo1-f79.google.com (mail-oo1-f79.google.com
- [209.85.161.79])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 70898fc0
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id b417d9e0;
+	Fri, 1 May 2026 13:31:16 +0000 (UTC)
+Received: from mail-4319.protonmail.ch (mail-4319.protonmail.ch [185.70.43.19])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id b9fde321
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 27 Apr 2026 09:11:37 +0000 (UTC)
-Received: by mail-oo1-f79.google.com with SMTP id
- 006d021491bc7-66308f16ea1so14117639eaf.2
- for <wireguard@lists.zx2c4.com>; Mon, 27 Apr 2026 02:11:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777281096; x=1777885896;
- h=to:from:subject:message-id:date:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=fRbHymEEuW4nprtI7xydCrsOs1BoNisyMJ7+fr5JkqA=;
- b=MmklNSDjhxoaz48Uzb3PAu+bXoFXr9nCSHrTFai0ByiOuEWqpig48FGI1p+z52mHbp
- qNJxbdhn4ZduxWJPtYCZ0b7C7H4aF1x9GtF1dQmQhHm85m+2G6qFCjQHe9aJeqFXmXil
- bh4y61IsnFhlt5pfEkFSkQ2ZBf0Ne7IttI6bbQRAj5Qi26F8mJm69kvfTUZiz3CERnmz
- x7kcQjgzaG+9lc3KL1TC2sWesUFgWATnUd+XpW3DCE7mQhFoZipWdN1dttWUYc0dndlS
- AhUYaBXwDaMSMXJbT32nSkXzXjJuYxajwuDSja2KCx0cUlo6N8AU3TwIPIB+JspwNyBr
- n16g==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9JcHCl0w+CpAoJ/SMmXquVLWbuBSTeJCAei2tt6K/sbw5Svux79GKrT5RZ251CbBShmEckoXUGqwA=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0Yysgn2FGWbkvsoFzAhP2W5Yz2HXuA4/oR+RuOTZVfQnX80vAv62
- Eo8OArYMnzHmT6DuvtMjml3fotRQVqlfV5LoV6gVeFoM1DAWd/gCtBKHHd0727XWvPD2ZpnwiGi
- RT/tQKAmelh0vQr9uMRDdmeeRUozaSmHYyxJZL0JKHFqrMgOtkCGqzy3og+Y=
+ for <wireguard@lists.zx2c4.com>; Fri, 1 May 2026 13:31:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+ s=protonmail; t=1777642273; x=1777901473;
+ bh=Gp3W95R1WkY6QRcunIamhHGRojT6wNbDiR1bqC8NrX4=;
+ h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+ Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+ b=ZN/5kZr55qZGHWyQH9znGnGOEsOyiqSo5kzINSLU9+iattZGGwA+K0MArtY5EeDHl
+ HR9Nuictp6N7uX2kLjsmhr0F+rCg8lhLazmlTAQsWxvMt0KWi1B+OUNkQZTSgr5wWl
+ JeW4gSQgknc46pf8znRz7MF0qaFsVoOg9JwvZtm9Ry+MyRpqv6z/UnlRM3trlGedwp
+ UgZF4ZRekPhMxyEk96HuZT6BoqfxQ39S48jgaT8g1m40VP085KBiu0I6fH8GFCKBse
+ xyisF0eGYFg0vzJ2mQY3AZD321BopDpA8OwKfk+6vWjmvuMKNA54o2rnwpX5Z28clH
+ ouz0Z1z+fJtSA==
+Date: Fri, 01 May 2026 13:31:08 +0000
+To: wireguard@lists.zx2c4.com
+From: Sybil Isabel Dorsett <sybdorsett@proton.me>
+Subject: [PATCH v2] wg-quick: add SocketNamespace for UDP socket netns
+Message-ID: <20260501133048.3630-1-sybdorsett@proton.me>
+Feedback-ID: 131381098:user:proton
+X-Pm-Message-ID: 57267123ff3c127eb500b1fbcbd9a2ec16e62437
 MIME-Version: 1.0
-X-Received: by 2002:a05:6820:1842:b0:684:bf61:ed2b with SMTP id
- 006d021491bc7-69462e1d490mr24387470eaf.14.1777281096245; Mon, 27 Apr 2026
- 02:11:36 -0700 (PDT)
-Date: Mon, 27 Apr 2026 02:11:36 -0700
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <69ef2848.170a0220.11de9.001b.GAE@google.com>
-Subject: [syzbot] [wireguard?] BUG: soft lockup in wg_packet_decrypt_worker
-From: syzbot <syzbot+27a6e390f71f14f4fecf@syzkaller.appspotmail.com>
-To: Jason@zx2c4.com, andrew+netdev@lunn.ch, davem@davemloft.net, 
- edumazet@google.com, kuba@kernel.org, linux-kernel@vger.kernel.org, 
- netdev@vger.kernel.org, pabeni@redhat.com, syzkaller-bugs@googlegroups.com, 
- wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -63,299 +48,249 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
+wg-quick cannot express WireGuard's supported deployment model in
+which the UDP socket resides in a different network namespace than
+the interface. This model is documented and used in practice for
+cases such as keeping routing policy and tunnel endpoints in separate
+namespaces (e.g. container or policy isolation setups). Achieving this
+today requires reimplementing substantial parts of wg-quick externally,
+including interface lifecycle, address assignment, routing, and
+teardown.
 
-syzbot found the following issue on:
+Add a SocketNamespace option to select the network namespace in which
+the WireGuard UDP socket is created, while keeping the interface in
+the invoking namespace. Create the interface in the target namespace
+so that sockets are bound there, then move it back to the caller's
+namespace before executing PreUp hooks.
 
-HEAD commit:    897d54018cc9 Merge tag 'fbdev-for-7.1-rc1-2' of git://git...
-git tree:       https://kernel.googlesource.com/pub/scm/linux/kernel/git/torvalds/linux master
-console output: https://syzkaller.appspot.com/x/log.txt?x=10470ff6580000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=4e88e1f2f0b02f59
-dashboard link: https://syzkaller.appspot.com/bug?extid=27a6e390f71f14f4fecf
-compiler:       aarch64-linux-gnu-gcc (Debian 14.2.0-19) 14.2.0, GNU ld (GNU Binutils for Debian) 2.44
-userspace arch: arm
+Limit the scope to selecting the socket namespace only, without
+introducing general network namespace management, persistent state,
+or changes to default behavior.
 
-Unfortunately, I don't have any reproducer for this issue yet.
+Document SocketNamespace in the man page and update highlighters.
 
-Downloadable assets:
-disk image (non-bootable): https://storage.googleapis.com/syzbot-assets/fa3fbcfdac58/non_bootable_disk-897d5401.raw.xz
-vmlinux: https://storage.googleapis.com/syzbot-assets/abfbe0527fdf/vmlinux-897d5401.xz
-kernel image: https://storage.googleapis.com/syzbot-assets/43fbdcd1dbf2/zImage-897d5401.xz
-
-IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+27a6e390f71f14f4fecf@syzkaller.appspotmail.com
-
-watchdog: BUG: soft lockup - CPU#1 stuck for 22s! [kworker/1:3:20255]
-Modules linked in:
-irq event stamp: 104395
-hardirqs last  enabled at (104394): [<ffff8000857d18b0>] irqentry_exit_to_kernel_mode_after_preempt include/linux/irq-entry-common.h:515 [inline]
-hardirqs last  enabled at (104394): [<ffff8000857d18b0>] arm64_exit_to_kernel_mode+0x50/0xc0 arch/arm64/kernel/entry-common.c:62
-hardirqs last disabled at (104395): [<ffff8000857d5578>] __el1_irq arch/arm64/kernel/entry-common.c:493 [inline]
-hardirqs last disabled at (104395): [<ffff8000857d5578>] el1_interrupt+0x28/0x60 arch/arm64/kernel/entry-common.c:509
-softirqs last  enabled at (99688): [<ffff8000828b6d94>] spin_unlock_bh include/linux/spinlock.h:396 [inline]
-softirqs last  enabled at (99688): [<ffff8000828b6d94>] ptr_ring_consume_bh include/linux/ptr_ring.h:377 [inline]
-softirqs last  enabled at (99688): [<ffff8000828b6d94>] wg_packet_decrypt_worker+0x248/0x3a0 drivers/net/wireguard/receive.c:499
-softirqs last disabled at (99692): [<ffff8000828b6bb4>] spin_lock_bh include/linux/spinlock.h:348 [inline]
-softirqs last disabled at (99692): [<ffff8000828b6bb4>] ptr_ring_consume_bh include/linux/ptr_ring.h:375 [inline]
-softirqs last disabled at (99692): [<ffff8000828b6bb4>] wg_packet_decrypt_worker+0x68/0x3a0 drivers/net/wireguard/receive.c:499
-CPU: 1 UID: 0 PID: 20255 Comm: kworker/1:3 Tainted: G             L      syzkaller #0 PREEMPT 
-Tainted: [L]=SOFTLOCKUP
-Hardware name: linux,dummy-virt (DT)
-Workqueue: wg-crypt-wg0 wg_packet_decrypt_worker
-pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : memory_is_poisoned_n mm/kasan/generic.c:141 [inline]
-pc : memory_is_poisoned mm/kasan/generic.c:172 [inline]
-pc : check_region_inline mm/kasan/generic.c:191 [inline]
-pc : kasan_check_range+0x38/0x1b4 mm/kasan/generic.c:200
-lr : __kasan_check_read+0x20/0x2c mm/kasan/shadow.c:31
-sp : ffff8000a19478c0
-x29: ffff8000a19478c0 x28: ffff80008766bed0 x27: 0000000000000000
-x26: 1fffe00003374a09 x25: 1fffe00003374a0b x24: ffff000019ba5058
-x23: 0000000000000000 x22: 1ffff00014328f20 x21: 1ffff00014328f3c
-x20: 0000000000000000 x19: ffff000019ba5048 x18: 0000000000000000
-x17: 0000000000000000 x16: 0000000000000001 x15: 0000000012224261
-x14: 0000000000000001 x13: ffff800089e7c8d8 x12: ffff600003374a0a
-x11: 1fffe00003374a09 x10: ffff600003374a09 x9 : dfff800000000000
-x8 : ffff000019ba5048 x7 : 0000000000000001 x6 : ffff600003374a09
-x5 : ffff000019ba5048 x4 : ffff000000000000 x3 : ffff8000857fe9b0
-x2 : 0000000000000000 x1 : 0000000000000001 x0 : 0000000000000001
-Call trace:
- check_region_inline mm/kasan/generic.c:188 [inline] (P)
- kasan_check_range+0x38/0x1b4 mm/kasan/generic.c:200 (P)
- queued_spin_lock_slowpath+0x610/0xf80 kernel/locking/qspinlock.c:197
- queued_spin_lock include/asm-generic/qspinlock.h:114 [inline]
- do_raw_spin_lock+0x258/0x308 kernel/locking/spinlock_debug.c:116
- __raw_spin_lock_bh include/linux/spinlock_api_smp.h:151 [inline]
- _raw_spin_lock_bh+0x58/0x68 kernel/locking/spinlock.c:182
- spin_lock_bh include/linux/spinlock.h:348 [inline]
- ptr_ring_consume_bh include/linux/ptr_ring.h:375 [inline]
- wg_packet_decrypt_worker+0x68/0x3a0 drivers/net/wireguard/receive.c:499
- process_one_work+0x810/0x1b1c kernel/workqueue.c:3302
- process_scheduled_works kernel/workqueue.c:3385 [inline]
- worker_thread+0x42c/0xc90 kernel/workqueue.c:3466
- kthread+0x2f0/0x388 kernel/kthread.c:436
- ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:858
-Sending NMI from CPU 1 to CPUs 0:
-NMI backtrace for cpu 0
-CPU: 0 UID: 0 PID: 19280 Comm: kworker/0:7 Tainted: G             L      syzkaller #0 PREEMPT 
-Tainted: [L]=SOFTLOCKUP
-Hardware name: linux,dummy-virt (DT)
-Workqueue: wg-crypt-wg0 wg_packet_decrypt_worker
-pstate: 10000005 (nzcV daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : __daif_local_irq_restore arch/arm64/include/asm/irqflags.h:176 [inline]
-pc : arch_local_irq_restore arch/arm64/include/asm/irqflags.h:195 [inline]
-pc : lock_release+0x39c/0x424 kernel/locking/lockdep.c:5892
-lr : lockdep_recursion_finish kernel/locking/lockdep.c:470 [inline]
-lr : lock_release+0x37c/0x424 kernel/locking/lockdep.c:5891
-sp : ffff8000a1eb7a40
-x29: ffff8000a1eb7a50 x28: ffff00003f7678f0 x27: ffff000019ba50c0
-x26: ffff600003374a19 x25: 1fffe00003374a18 x24: 0000000000000000
-x23: ffff000012db5640 x22: ffff000012db61c0 x21: ffff8000828b6c88
-x20: ffff000019ba5060 x19: ffff800087612208 x18: 0000000000000000
-x17: 0000000000000000 x16: 0000000000000000 x15: ffff80008766f6e8
-x14: 1ffff00010ecdedd x13: ffff800089e7c8d8 x12: ffff7000143d6f41
-x11: 1ffff000143d6f40 x10: ffff7000143d6f40 x9 : dfff800000000000
-x8 : 0000000000000003 x7 : 0000000000000001 x6 : 00000000000003e0
-x5 : 0000000000000000 x4 : 0000000000000000 x3 : 1fffe000025b6ac9
-x2 : 0000000000000000 x1 : ffff7fffe29a8000 x0 : 00000000000000c0
-Call trace:
- __daif_local_irq_restore arch/arm64/include/asm/irqflags.h:175 [inline] (P)
- arch_local_irq_restore arch/arm64/include/asm/irqflags.h:195 [inline] (P)
- lock_release+0x39c/0x424 kernel/locking/lockdep.c:5892 (P)
- __raw_spin_unlock_bh include/linux/spinlock_api_smp.h:194 [inline]
- _raw_spin_unlock_bh+0x28/0x54 kernel/locking/spinlock.c:214
- spin_unlock_bh include/linux/spinlock.h:396 [inline]
- ptr_ring_consume_bh include/linux/ptr_ring.h:377 [inline]
- wg_packet_decrypt_worker+0x13c/0x3a0 drivers/net/wireguard/receive.c:499
- process_one_work+0x810/0x1b1c kernel/workqueue.c:3302
- process_scheduled_works kernel/workqueue.c:3385 [inline]
- worker_thread+0x42c/0xc90 kernel/workqueue.c:3466
- kthread+0x2f0/0x388 kernel/kthread.c:436
- ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:858
-BUG: workqueue lockup - pool cpus=0 node=0 flags=0x0 nice=0 stuck for 33s!
-Showing busy workqueues and worker pools:
-workqueue events: flags=0x100
-  pwq 2: cpus=0 node=0 flags=0x0 nice=0 active=4 refcnt=5
-    pending: nsim_dev_hwstats_traffic_work, 2*psi_avgs_work, vmstat_shepherd
-  pwq 6: cpus=1 node=0 flags=0x0 nice=0 active=10 refcnt=11
-    pending: 9*nsim_dev_hwstats_traffic_work, psi_avgs_work
-workqueue events_unbound: flags=0x2
-  pwq 8: cpus=0-1 flags=0x4 nice=0 active=1 refcnt=2
-    in-flight: 16479:call_usermodehelper_exec_work for 42s
-workqueue events_unbound: flags=0x2
-  pwq 8: cpus=0-1 flags=0x4 nice=0 active=5 refcnt=6
-    pending: 5*nsim_dev_trap_report_work
-  pwq 8: cpus=0-1 flags=0x4 nice=0 active=5 refcnt=6
-    pending: 5*nsim_dev_trap_report_work
-workqueue events_power_efficient: flags=0x182
-  pwq 8: cpus=0-1 flags=0x4 nice=0 active=2 refcnt=3
-    pending: neigh_managed_work, wg_ratelimiter_gc_entries
-  pwq 8: cpus=0-1 flags=0x4 nice=0 active=4 refcnt=5
-    pending: neigh_periodic_work, gc_worker, neigh_periodic_work, neigh_managed_work
-workqueue mm_percpu_wq: flags=0x108
-  pwq 2: cpus=0 node=0 flags=0x0 nice=0 active=1 refcnt=2
-    pending: vmstat_update
-  pwq 6: cpus=1 node=0 flags=0x0 nice=0 active=1 refcnt=2
-    pending: vmstat_update
-workqueue writeback: flags=0x4a
-  pwq 8: cpus=0-1 flags=0x4 nice=0 active=1 refcnt=2
-    in-flight: 10400:wb_workfn for 33s
-workqueue kblockd: flags=0x118
-  pwq 7: cpus=1 node=0 flags=0x0 nice=-20 active=2 refcnt=3
-    pending: blk_mq_timeout_work, blk_mq_requeue_work
-workqueue ipv6_addrconf: flags=0x6000a
-  pwq 8: cpus=0-1 flags=0x4 nice=0 active=1 refcnt=6
-    pending: addrconf_verify_work
-    inactive: 2*addrconf_verify_work
-workqueue wg-kex-wg0: flags=0x6
-  pwq 8: cpus=0-1 flags=0x4 nice=0 active=1 refcnt=2
-    pending: wg_packet_handshake_send_worker
-workqueue wg-crypt-wg0: flags=0x128
-  pwq 2: cpus=0 node=0 flags=0x0 nice=0 active=1 refcnt=2
-    in-flight: 19280:wg_packet_decrypt_worker for 33s
-  pwq 6: cpus=1 node=0 flags=0x0 nice=0 active=2 refcnt=3
-    in-flight: 20255:wg_packet_decrypt_worker for 33s
-    pending: wg_packet_encrypt_worker
-workqueue wg-crypt-wg1: flags=0x128
-  pwq 6: cpus=1 node=0 flags=0x0 nice=0 active=1 refcnt=2
-    pending: wg_packet_encrypt_worker
-workqueue wg-kex-wg2: flags=0x6
-  pwq 8: cpus=0-1 flags=0x4 nice=0 active=1 refcnt=2
-    pending: wg_packet_handshake_send_worker
-  pwq 8: cpus=0-1 flags=0x4 nice=0 active=1 refcnt=2
-    pending: wg_packet_handshake_send_worker
-workqueue wg-crypt-wg2: flags=0x128
-  pwq 6: cpus=1 node=0 flags=0x0 nice=0 active=1 refcnt=2
-    pending: wg_packet_encrypt_worker
-workqueue wg-kex-wg0: flags=0x6
-  pwq 8: cpus=0-1 flags=0x4 nice=0 active=1 refcnt=2
-    pending: wg_packet_handshake_send_worker
-  pwq 8: cpus=0-1 flags=0x4 nice=0 active=1 refcnt=2
-    pending: wg_packet_handshake_send_worker
-workqueue wg-kex-wg1: flags=0x6
-  pwq 8: cpus=0-1 flags=0x4 nice=0 active=1 refcnt=2
-    pending: wg_packet_handshake_send_worker
-  pwq 8: cpus=0-1 flags=0x4 nice=0 active=1 refcnt=2
-    pending: wg_packet_handshake_send_worker
-workqueue wg-kex-wg2: flags=0x6
-  pwq 8: cpus=0-1 flags=0x4 nice=0 active=2 refcnt=3
-    pending: 2*wg_packet_handshake_send_worker
-workqueue wg-kex-wg0: flags=0x6
-  pwq 8: cpus=0-1 flags=0x4 nice=0 active=3 refcnt=4
-    in-flight: 15424:wg_packet_handshake_send_worker for 33s ,20263:wg_packet_handshake_send_worker for 33s
-    pending: wg_packet_handshake_send_worker
-workqueue wg-kex-wg1: flags=0x6
-  pwq 8: cpus=0-1 flags=0x4 nice=0 active=1 refcnt=2
-    pending: wg_packet_handshake_send_worker
-  pwq 8: cpus=0-1 flags=0x4 nice=0 active=1 refcnt=2
-    pending: wg_packet_handshake_send_worker
-workqueue wg-kex-wg2: flags=0x6
-  pwq 8: cpus=0-1 flags=0x4 nice=0 active=1 refcnt=2
-    pending: wg_packet_handshake_send_worker
-  pwq 8: cpus=0-1 flags=0x4 nice=0 active=2 refcnt=3
-    in-flight: 17220:wg_packet_handshake_send_worker for 33s
-    pending: wg_packet_handshake_send_worker
-workqueue wg-kex-wg0: flags=0x6
-  pwq 8: cpus=0-1 flags=0x4 nice=0 active=1 refcnt=2
-    pending: wg_packet_handshake_send_worker
-workqueue wg-crypt-wg0: flags=0x128
-  pwq 2: cpus=0 node=0 flags=0x0 nice=0 active=1 refcnt=2
-    pending: wg_packet_decrypt_worker
-  pwq 6: cpus=1 node=0 flags=0x0 nice=0 active=1 refcnt=2
-    pending: wg_packet_encrypt_worker
-workqueue wg-kex-wg1: flags=0x6
-  pwq 8: cpus=0-1 flags=0x4 nice=0 active=1 refcnt=2
-    pending: wg_packet_handshake_send_worker
-workqueue wg-crypt-wg1: flags=0x128
-  pwq 2: cpus=0 node=0 flags=0x0 nice=0 active=1 refcnt=2
-    pending: wg_packet_encrypt_worker
-  pwq 6: cpus=1 node=0 flags=0x0 nice=0 active=1 refcnt=2
-    pending: wg_packet_encrypt_worker
-workqueue wg-kex-wg2: flags=0x6
-  pwq 8: cpus=0-1 flags=0x4 nice=0 active=1 refcnt=2
-    pending: wg_packet_handshake_send_worker
-workqueue wg-crypt-wg2: flags=0x128
-  pwq 6: cpus=1 node=0 flags=0x0 nice=0 active=1 refcnt=2
-    pending: wg_packet_encrypt_worker
-workqueue wg-crypt-wg0: flags=0x128
-  pwq 2: cpus=0 node=0 flags=0x0 nice=0 active=1 refcnt=2
-    pending: wg_packet_encrypt_worker
-  pwq 6: cpus=1 node=0 flags=0x0 nice=0 active=2 refcnt=3
-    pending: wg_packet_decrypt_worker, wg_packet_encrypt_worker
-workqueue wg-crypt-wg1: flags=0x128
-  pwq 2: cpus=0 node=0 flags=0x0 nice=0 active=1 refcnt=2
-    pending: wg_packet_encrypt_worker
-  pwq 6: cpus=1 node=0 flags=0x0 nice=0 active=1 refcnt=2
-    pending: wg_packet_encrypt_worker
-workqueue wg-crypt-wg2: flags=0x128
-  pwq 2: cpus=0 node=0 flags=0x0 nice=0 active=1 refcnt=2
-    pending: wg_packet_encrypt_worker
-  pwq 6: cpus=1 node=0 flags=0x0 nice=0 active=1 refcnt=2
-    pending: wg_packet_encrypt_worker
-workqueue krds_cp_wq#1/0: flags=0x20002
-  pwq 8: cpus=0-1 flags=0x4 nice=0 active=1 refcnt=4
-    pending: rds_connect_worker
-workqueue krds_cp_wq#2/0: flags=0x20002
-  pwq 8: cpus=0-1 flags=0x4 nice=0 active=1 refcnt=4
-    pending: rds_connect_worker
-pool 2: cpus=0 node=0 flags=0x0 nice=0 hung=33s workers=7 idle: 20317 20625 17368 18803 20184 16642
-pool 6: cpus=1 node=0 flags=0x0 nice=0 hung=33s workers=6 idle: 20316 15747 16513 18710 19225
-pool 8: cpus=0-1 flags=0x4 nice=0 hung=0s workers=13 idle: 15591 8052 14588 7215 11940 15432 19121
-Showing backtraces of busy workers in stalled worker pools:
-pool 2:
-task:kworker/0:7     state:R  running task     stack:0     pid:19280 tgid:19280 ppid:2      task_flags:0x4208060 flags:0x00000012
-Workqueue: wg-crypt-wg0 wg_packet_decrypt_worker
-Call trace:
- show_stack+0x18/0x24 arch/arm64/kernel/stacktrace.c:499 (C)
- sched_show_task kernel/sched/core.c:8139 [inline]
- sched_show_task+0x454/0x5e0 kernel/sched/core.c:8114
- show_cpu_pool_busy_workers kernel/workqueue.c:7674 [inline]
- show_cpu_pools_busy_workers kernel/workqueue.c:7693 [inline]
- wq_watchdog_timer_fn+0x840/0x870 kernel/workqueue.c:7809
- call_timer_fn+0x1b8/0xaa0 kernel/time/timer.c:1748
- expire_timers kernel/time/timer.c:1799 [inline]
- __run_timers+0x8bc/0xb30 kernel/time/timer.c:2374
- __run_timer_base kernel/time/timer.c:2386 [inline]
- __run_timer_base kernel/time/timer.c:2378 [inline]
- run_timer_base+0x110/0x180 kernel/time/timer.c:2395
- run_timer_softirq+0x24/0x50 kernel/time/timer.c:2406
- handle_softirqs+0x2dc/0x1050 kernel/softirq.c:622
- __do_softirq+0x14/0x20 kernel/softirq.c:656
- ____do_softirq+0x10/0x20 arch/arm64/kernel/irq.c:68
- call_on_irq_stack+0x30/0x48 arch/arm64/kernel/entry.S:889
- do_softirq_own_stack+0x1c/0x40 arch/arm64/kernel/irq.c:73
- do_softirq kernel/softirq.c:523 [inline]
- do_softirq+0x12c/0x15c kernel/softirq.c:510
- __local_bh_enable_ip+0x408/0x4a0 kernel/softirq.c:450
- __raw_spin_unlock_bh include/linux/spinlock_api_smp.h:196 [inline]
- _raw_spin_unlock_bh+0x44/0x54 kernel/locking/spinlock.c:214
- spin_unlock_bh include/linux/spinlock.h:396 [inline]
- ptr_ring_consume_bh include/linux/ptr_ring.h:377 [inline]
- wg_packet_decrypt_worker+0x13c/0x3a0 drivers/net/wireguard/receive.c:499
- process_one_work+0x810/0x1b1c kernel/workqueue.c:3302
- process_scheduled_works kernel/workqueue.c:3385 [inline]
- worker_thread+0x42c/0xc90 kernel/workqueue.c:3466
- kthread+0x2f0/0x388 kernel/kthread.c:436
- ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:858
-
-
+Signed-off-by: Sybil Isabel Dorsett <sybdorsett@proton.me>
 ---
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
+v2:
+- Resend for visibility; no functional changes
+- Clarify commit message
 
-syzbot will keep track of this issue. See:
-https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
+Reference (earlier discussion on mailing list):
+- https://lists.zx2c4.com/pipermail/wireguard/2020-March/005143.html
 
-If the report is already addressed, let syzbot know by replying with:
-#syz fix: exact-commit-title
+Implementation notes:
+- Limit scope to socket namespace only (no general netns management)
+- Return the interface to the caller namespace before hook execution
+- Use PID-based netns targeting instead of fixed namespace IDs
+- Ensure userspace fallback (wireguard-go) runs in SocketNamespace,
+  preserving socket placement
+- Prevent namespace errors from triggering kernel/userspace fallback
+  paths
 
-If you want to overwrite report's subsystems, reply with:
-#syz set subsystems: new-subsystem
-(See the list of subsystem names on the web dashboard)
+ contrib/highlighter/gui/highlight.cpp |  1 +
+ contrib/highlighter/highlight.c       |  1 +
+ contrib/highlighter/highlighter.c     | 23 +++++++++++++++++++++++
+ contrib/highlighter/highlighter.h     |  1 +
+ src/man/wg-quick.8                    |  5 +++++
+ src/wg-quick/linux.bash               | 15 ++++++++++++---
+ 6 files changed, 43 insertions(+), 3 deletions(-)
 
-If the report is a duplicate of another one, reply with:
-#syz dup: exact-subject-of-another-report
+diff --git a/contrib/highlighter/gui/highlight.cpp b/contrib/highlighter/gu=
+i/highlight.cpp
+index a95857b..7c4e4ac 100644
+--- a/contrib/highlighter/gui/highlight.cpp
++++ b/contrib/highlighter/gui/highlight.cpp
+@@ -25,6 +25,7 @@ static QColor colormap[] =3D {
+ =09[HighlightDelimiter] =3D QColor("#7aa6da"),
+ #ifndef MOBILE_WGQUICK_SUBSET
+ =09[HighlightTable] =3D QColor("#c397d8"),
++=09[HighlightSocketNamespace] =3D QColor("#c397d8"),
+ =09[HighlightFwMark] =3D QColor("#c397d8"),
+ =09[HighlightSaveConfig] =3D QColor("#c397d8"),
+ =09[HighlightCmd] =3D QColor("#969896"),
+diff --git a/contrib/highlighter/highlight.c b/contrib/highlighter/highligh=
+t.c
+index 8dc0d49..a18f039 100644
+--- a/contrib/highlighter/highlight.c
++++ b/contrib/highlighter/highlight.c
+@@ -51,6 +51,7 @@ static const char *colormap[] =3D {
+ =09[HighlightDelimiter] =3D TERMINAL_FG_CYAN,
+ #ifndef MOBILE_WGQUICK_SUBSET
+ =09[HighlightTable] =3D TERMINAL_FG_BLUE,
++=09[HighlightSocketNamespace] =3D TERMINAL_FG_BLUE,
+ =09[HighlightFwMark] =3D TERMINAL_FG_BLUE,
+ =09[HighlightSaveConfig] =3D TERMINAL_FG_BLUE,
+ =09[HighlightCmd] =3D TERMINAL_FG_WHITE,
+diff --git a/contrib/highlighter/highlighter.c b/contrib/highlighter/highli=
+ghter.c
+index 3c34f1c..5264ac9 100644
+--- a/contrib/highlighter/highlighter.c
++++ b/contrib/highlighter/highlighter.c
+@@ -223,6 +223,24 @@ static bool is_valid_persistentkeepalive(string_span_t=
+ s)
+=20
+ #ifndef MOBILE_WGQUICK_SUBSET
+=20
++static bool is_valid_filename(string_span_t s)
++{
++=09if (s.len > 128 || !s.len)
++=09=09return false;
++=09if (s.len =3D=3D 1 && s.s[0] =3D=3D '.')
++=09=09return false;
++=09if (s.len =3D=3D 2 && s.s[0] =3D=3D '.' && s.s[1] =3D=3D '.')
++=09=09return false;
++=09if (s.s[0] =3D=3D '-')
++=09=09return false;
++=09for (size_t i =3D 0; i < s.len; ++i) {
++=09=09if (!is_alphabet(s.s[i]) && !is_decimal(s.s[i]) &&
++=09=09    s.s[i] !=3D '_' && s.s[i] !=3D '-' && s.s[i] !=3D '.')
++=09=09=09return false;
++=09}
++=09return true;
++}
++
+ static bool is_valid_fwmark(string_span_t s)
+ {
+ =09if (is_same(s, "off"))
+@@ -345,6 +363,7 @@ enum field {
+ =09DNS,
+ =09MTU,
+ #ifndef MOBILE_WGQUICK_SUBSET
++=09SocketNamespace,
+ =09FwMark,
+ =09Table,
+ =09PreUp, PostUp, PreDown, PostDown,
+@@ -384,6 +403,7 @@ static enum field get_field(string_span_t s)
+ =09check_enum(Endpoint);
+ =09check_enum(PersistentKeepalive);
+ #ifndef MOBILE_WGQUICK_SUBSET
++=09check_enum(SocketNamespace);
+ =09check_enum(FwMark);
+ =09check_enum(Table);
+ =09check_enum(PreUp);
+@@ -526,6 +546,9 @@ static void highlight_value(struct highlight_span_array=
+ *ret, const string_span_
+ =09case SaveConfig:
+ =09=09append_highlight_span(ret, parent.s, s, is_valid_saveconfig(s) ? Hig=
+hlightSaveConfig : HighlightError);
+ =09=09break;
++=09case SocketNamespace:
++=09=09append_highlight_span(ret, parent.s, s, is_valid_filename(s) ? Highl=
+ightSocketNamespace : HighlightError);
++=09=09break;
+ =09case FwMark:
+ =09=09append_highlight_span(ret, parent.s, s, is_valid_fwmark(s) ? Highlig=
+htFwMark : HighlightError);
+ =09=09break;
+diff --git a/contrib/highlighter/highlighter.h b/contrib/highlighter/highli=
+ghter.h
+index ecbce00..d7d6600 100644
+--- a/contrib/highlighter/highlighter.h
++++ b/contrib/highlighter/highlighter.h
+@@ -21,6 +21,7 @@ enum highlight_type {
+ =09HighlightDelimiter,
+ #ifndef MOBILE_WGQUICK_SUBSET
+ =09HighlightTable,
++=09HighlightSocketNamespace,
+ =09HighlightFwMark,
+ =09HighlightSaveConfig,
+ =09HighlightCmd,
+diff --git a/src/man/wg-quick.8 b/src/man/wg-quick.8
+index bc9e145..1a7c9a6 100644
+--- a/src/man/wg-quick.8
++++ b/src/man/wg-quick.8
+@@ -102,6 +102,11 @@ the commands are executed in order.
+ SaveConfig \(em if set to `true', the configuration is saved from the curr=
+ent state of the
+ interface upon shutdown. Any changes made to the configuration file before=
+ the
+ interface is removed will therefore be overwritten.
++.IP \(bu
++SocketNamespace \(em the name of an existing network namespace (netns)
++in which the interface's UDP sockets are created. If specified, the interf=
+ace
++is first added to that netns, then moved to the invoking process's native =
+netns
++before any other interface settings are applied.
+=20
+ .P
+ Recommended \fIINTERFACE\fP names include `wg0' or `wgvpn0' or even `wgmgm=
+tlan0'.
+diff --git a/src/wg-quick/linux.bash b/src/wg-quick/linux.bash
+index 18e266c..1349d70 100755
+--- a/src/wg-quick/linux.bash
++++ b/src/wg-quick/linux.bash
+@@ -13,6 +13,7 @@ export PATH=3D"${SELF%/*}:$PATH"
+=20
+ WG_CONFIG=3D""
+ INTERFACE=3D""
++SOCKET_NAMESPACE=3D""
+ ADDRESSES=3D( )
+ MTU=3D""
+ DNS=3D( )
+@@ -56,6 +57,7 @@ parse_options() {
+ =09=09[[ $key =3D=3D "[Interface]" ]] && interface_section=3D1
+ =09=09if [[ $interface_section -eq 1 ]]; then
+ =09=09=09case "$key" in
++=09=09=09SocketNamespace) SOCKET_NAMESPACE=3D"$value"; continue ;;
+ =09=09=09Address) ADDRESSES+=3D( ${value//,/ } ); continue ;;
+ =09=09=09MTU) MTU=3D"$value"; continue ;;
+ =09=09=09DNS) for v in ${value//,/ }; do
+@@ -88,12 +90,14 @@ auto_su() {
+=20
+ add_if() {
+ =09local ret
+-=09if ! cmd ip link add dev "$INTERFACE" type wireguard; then
++=09trap 'cmd "${netns_exec[@]}" ip link delete dev "$INTERFACE"; exit' INT=
+ TERM EXIT
++=09if ! cmd "${netns_exec[@]}" ip link add dev "$INTERFACE" type wireguard=
+; then
+ =09=09ret=3D$?
+ =09=09[[ -e /sys/module/wireguard ]] || ! command -v "${WG_QUICK_USERSPACE=
+_IMPLEMENTATION:-wireguard-go}" >/dev/null && exit $ret
+ =09=09echo "[!] Missing WireGuard kernel module. Falling back to slow user=
+space implementation." >&2
+-=09=09cmd "${WG_QUICK_USERSPACE_IMPLEMENTATION:-wireguard-go}" "$INTERFACE=
+"
++=09=09cmd "${netns_exec[@]}" "${WG_QUICK_USERSPACE_IMPLEMENTATION:-wiregua=
+rd-go}" "$INTERFACE"
+ =09fi
++=09[[ -z "$SOCKET_NAMESPACE" ]] || cmd "${netns_exec[@]}" ip link set "$IN=
+TERFACE" netns $$
+ }
+=20
+ del_if() {
+@@ -256,6 +260,7 @@ save_config() {
+ =09local old_umask new_config current_config address cmd
+ =09[[ $(ip -all -brief address show dev "$INTERFACE") =3D~ ^$INTERFACE\ +\=
+ [A-Z]+\ +(.+)$ ]] || true
+ =09new_config=3D$'[Interface]\n'
++=09[[ -z "$SOCKET_NAMESPACE" ]] || new_config+=3D"SocketNamespace =3D $SOC=
+KET_NAMESPACE"$'\n'
+ =09for address in ${BASH_REMATCH[1]}; do
+ =09=09new_config+=3D"Address =3D $address"$'\n'
+ =09done
+@@ -326,9 +331,13 @@ cmd_usage() {
+=20
+ cmd_up() {
+ =09local i
++=09local netns_exec=3D()
++=09[[ -z "$SOCKET_NAMESPACE" ]] || netns_exec=3D(ip netns exec "$SOCKET_NA=
+MESPACE")
++=09"${netns_exec[@]}" true || die "Network namespace '${SOCKET_NAMESPACE:-=
+<unset>}' does not exist"
+ =09[[ -z $(ip link show dev "$INTERFACE" 2>/dev/null) ]] || die "\`$INTERF=
+ACE' already exists"
+-=09trap 'del_if; exit' INT TERM EXIT
++=09[[ -z $("${netns_exec[@]}" ip link show dev "$INTERFACE" 2>/dev/null) ]=
+] || die "\`$INTERFACE' already exists in network namespace '${SOCKET_NAMES=
+PACE:-<unset>}'"
+ =09add_if
++=09trap 'del_if; exit' INT TERM EXIT
+ =09execute_hooks "${PRE_UP[@]}"
+ =09set_config
+ =09for i in "${ADDRESSES[@]}"; do
+--=20
+2.39.5
 
-If you want to undo deduplication, reply with:
-#syz undup
+
