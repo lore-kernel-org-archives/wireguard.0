@@ -4,132 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33055CD3427
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 10 May 2026 20:10:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ADF9CD4840
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 10 May 2026 20:10:53 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id b30f97ab;
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id d8d4fc50;
 	Sun, 10 May 2026 20:10:52 +0000 (UTC)
-Received: from BL0PR03CU003.outbound.protection.outlook.com
- (mail-eastusazolkn19012021.outbound.protection.outlook.com [52.103.11.21])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 6d6e1b83
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com
+ [2607:f8b0:4864:20::42e])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 00bba382
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 26 Apr 2026 04:50:56 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Q1fIu2LVdNYQhw7hOKqgCHL/bLkI/3mEHdI2Uko85MkJcQB6pMf4BWO7gmRJG4TfPf7Zr4L3TpRvx1STUxs3pHNmaVv/UjTS4RYyz9XZKMx31pAJ9mkrLZvkYG8Sj0eAgmyK4P1OgniWBg9OvMWWrkZ1xDvCGXKLc4ujhTlJRsI4BYfyGHeAxC6gTn42/i7MtMs80W6wvWGfkHQJ8REEOqqrXms15pBRll1mKn515QRCO+BKHHwdwz6xUb9rPwpkVsMpAIFvngN/GYnk6DijksirULqt0bpv0RWpcXDRDDYQOQVY6imhYnl/NY4C5fSOS3R6gXtW5wMshJZ+7qmG/g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WO3Oveb1PrIAAvLGhV3v2kWgI6ezdkZBb3d/EzbtUnI=;
- b=jL2wcTyJYt025G3CUwVlJPpq2nvcq3Hb172by9sIPDvxV4jennjqjBvQip7fmTBN2KUhV55I/3drb88Sssvh4veUsKuG9epnt8lZ5frFK15NgCLDQwSriMxBpKJu+jRzTf6pJRWgtxyrzYDPnpUe0socSee4Wun0kVusdnIBvYL8UUpXsMUu5MdOmME8p2IMRxI94AnOkuy9oL5w4RkBbp/3jYjEntw956EiuZAFBa7xmaEBENfVd0yMEwJTbcBPC9ii9lefVpUoieWOuZQzku3wLv36dFCdChEYcf6367lrXC42s6JSnompdAsw+CEDHNJa236bJo7TtpitUSyy7Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=WO3Oveb1PrIAAvLGhV3v2kWgI6ezdkZBb3d/EzbtUnI=;
- b=HZCrbY8fny6vZzonD2pXQtLE9mN3WnY6vBRqDVnDjWxgBLG1dGdJGg6VGzTe2qVIOHFU95EYuOSj/VrH7KXahNzNoUtUt4nYAF+cx51ik6b9CQlx29ZJCiqAAydgBv/MomLJ5O0X3uvrEYNeFXWdAYtVu55mSfaFtOUsfHLCfPeVKjGlLwQCcukFwjDIeQwIx9rd1yS/dSbmFrgXbr1gwKHKX49t0GgKTyFM10AzsEOgMH34QIbUNgFGfqqtjQinE8NE2/w+imrAIUn+/vkugzWCxP6nPsNf3TS7aOFqSAHKZqocnB4/qbAMQ9CFSs5TCPfDxX7QUCJUlOmCUc9qbA==
-Received: from LV5PR01MB994148.prod.exchangelabs.com (2603:10b6:408:35d::8) by
- PH0PR01MB7270.prod.exchangelabs.com (2603:10b6:510:108::7) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9846.25; Sun, 26 Apr 2026 04:50:52 +0000
-Received: from LV5PR01MB994148.prod.exchangelabs.com
- ([fe80::3cdd:3f63:acf:ece4]) by LV5PR01MB994148.prod.exchangelabs.com
- ([fe80::3cdd:3f63:acf:ece4%6]) with mapi id 15.20.9846.025; Sun, 26 Apr 2026
- 04:50:52 +0000
-Message-ID: <LV5PR01MB9941488AF3542FDC61728406C8D2292@LV5PR01MB994148.prod.exchangelabs.com>
-Subject: Re: WireGuard obfuscation & active probing: staying virtuous under
- pressure
-From: Ian Chen <free122448@hotmail.com>
-To: Leonid Evdokimov <leon@darkk.net.ru>, wireguard@lists.zx2c4.com
-Date: Sun, 26 Apr 2026 12:50:46 +0800
-In-Reply-To: <1fa035ae8cbcf09df9bd196228f5a3d6cc1a6faa.camel@hotmail.com>
-References: <CAB-U=tBRwE+CkfF4XF1C9yiYLRLzHQsnXdEeVR=bs9jqCAwwYw@mail.gmail.com>
- <1fa035ae8cbcf09df9bd196228f5a3d6cc1a6faa.camel@hotmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.1 
-X-ClientProxiedBy: PH7P220CA0021.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:510:326::32) To LV5PR01MB994148.prod.exchangelabs.com
- (2603:10b6:408:35d::8)
-X-Microsoft-Original-Message-ID: <828f543ccb7319fb505aa691342507cb9788323a.camel@hotmail.com>
+ Sun, 10 May 2026 19:58:21 +0000 (UTC)
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-8353c9f24d2so1805893b3a.3
+ for <wireguard@lists.zx2c4.com>; Sun, 10 May 2026 12:58:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1778443099; x=1779047899; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=S7wJFKucUX3d/+ADYmhzufx79kwTNxWL7CF9uiOkzC8=;
+ b=jag6QE0F3nziKYktcjXq3qBqw+eXd7/s4bQvlKgTZwdoj3/oJlUdyfBRe9g7OjQA9p
+ fFrH64COniPfoPrWNdo8JB+WO6z6fonyYgcgyWzAlBXCXPClDwaKnr89XayQh9PkgZ+D
+ fS/JcrkA2sPuReQ5/0T85m2fEVyPSnuh2jmlnNyrfiqbcxnsxOfgQDcSyMXCSjQzl94X
+ BcPYihyXbGvCoczEUMP23sBJz+6AnIy5HqxYS6u3V/PeRYE/ud+akKv3rkqugagoMkpk
+ gYHzl0ttRJAbPJHLZjvyEknSCj/EJUjJdZZozV9g1ZBGOJgjcUXEYKyKr1g1AI9UrjUX
+ bQpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778443099; x=1779047899;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=S7wJFKucUX3d/+ADYmhzufx79kwTNxWL7CF9uiOkzC8=;
+ b=lTS6N5KsUy1XVBxd7TyGEB762KwgnSQchL0owvJ0vEiMPVUOTFixodXStgiQlTBKe0
+ P0jrdewVj2zPZer/kRq0BeKZYjEQb/VUzyfqWJ6nj7tsLZbZhYxGv78jIaQlbU36hLRT
+ u0pRSQxWoY746UIupPWoFKtM1w/Z5FP4kK3/A/Cu6p1V3jVLyn8XrKXNgh6qkVxO49Cy
+ CUIdLFCpIh0ZZ/1R1LkyHzS7f9Uy19BvbtsmepXQI0NxZfxUDZu0npPVy7tkdprhBPHz
+ JNRSL6jQ9DtOtjFml9KRLrZu/v773FvLkX0imcIh/pCzWttKtfL22oqIZZZv1dTL3TyM
+ gJYw==
+X-Gm-Message-State: AOJu0YyjoJTk/cLEwPMNDCy9m9afZjgQSIk5rB7xTogenw/t06aH3HN2
+ LdmUmJ1z5dQ7HWMsN95/l6ZYWFFG73uba//A3gClBtKZwnneUen0qtU5TEeSZw==
+X-Gm-Gg: Acq92OEAo6Y4wYgJhx7m1IeBs55zlpuIrz4yKXn7t+ranTKs2S3W1jj5jmOtFnqVapS
+ SGN4fCJQoRLpJdSSeq5qenLPRvjYS8AaiqyJYquWSKA/eF7DXc5DInTvhe/rQWW1wfBBKSKKjzK
+ NaH8MWEE+g+IaR6bQHo6c8wow81RvCmoaQDdiTCFS+oTUHPZ8t8k6vl5NCK1E4+ZgcLhP7vCc+5
+ xp5FfhkBr0gowOZcLCBsYG4/1+zinEDmEixhI1TG4jkPUxmLkZ9eFAT1B4Qel/qAIDlic3jOedH
+ PD8qb04fNzZsiIE6DfMPit5EdgHbHR7DzWLuIywdsQSnujsuXPcEc5uCQVEDQPjqCqACwyKuEIX
+ rP9U+va07CW84oUov0ekTQ+PrHzFt0d32V7tykMqZiEEMK+kqzB82fP48rW2+xJwA4sknePic1i
+ ERHQwdfS8HzeiC3+AXHW3mGvDRONHApWkov1W177mt2nOUInRw59UFt6v8+nhg89IqYiz2z0ZEA
+ myP2sStxKBS
+X-Received: by 2002:a05:6a00:3016:b0:837:e9cc:d46e with SMTP id
+ d2e1a72fcca58-83a5c2b8a09mr19600997b3a.21.1778443099084; 
+ Sun, 10 May 2026 12:58:19 -0700 (PDT)
+Received: from llm.sabharwals.net ([2601:600:9180:73af:642:1aff:fe98:f167])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-8396563f11csm22656860b3a.3.2026.05.10.12.58.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 10 May 2026 12:58:18 -0700 (PDT)
+From: Mukul Sabharwal <mjsabby@gmail.com>
+To: wireguard@lists.zx2c4.com
+Cc: Jason@zx2c4.com,
+	Mukul Sabharwal <mjsabby@gmail.com>
+Subject: [PATCH wireguard-go] conn: allow StdNetBind to bind to specific host
+ addresses
+Date: Sun, 10 May 2026 19:58:10 +0000
+Message-ID: <20260510195810.192447-1-mjsabby@gmail.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV5PR01MB994148:EE_|PH0PR01MB7270:EE_
-X-MS-Office365-Filtering-Correlation-Id: 37ac3b7c-7b8e-4872-ad1f-08dea34f6468
-X-Microsoft-Antispam: BCL:0;
- ARA:14566002|41001999006|25031999004|19110799012|15080799012|8060799015|23021999003|5072599009|51005399006|6090799003|24021099003|7072599006|461199028|10035399007|440099028|3412199025|19111999003|40105399003;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?eW5pSDFMVmJ5TVFXTVluc3FjVHFHNVJBWmh6bzdxNHUrcktnUm9wRVhwZHRM?=
- =?utf-8?B?bTliSHMzaE1MMG9BR3BoTkg0RnZwV3dFTGNnbEVvMXdyOEZBYkFWZm9MV2Jq?=
- =?utf-8?B?MjhjdCtEMmVpUDdFS3dDaTk4SUwvUm5nOTNON2V1RmNRSmtRdURCdVh2UUU3?=
- =?utf-8?B?NWhZdzVCckxTYWp4ZE5rZUNsSmVHcVV2cUJKSlZ4Vkl3cnBNbUFhWk0rUDZa?=
- =?utf-8?B?cVZTallNK1ZISVVQUUZna1dZbXNqK3Q4a1JqR1A0ZWVHbE5yY0NBbS8wNEVu?=
- =?utf-8?B?V1ViRS9YcmpMWVBVMzczaWFQc2pLQzB5UThJeWl5elFOVklFbzJWa0dka1dJ?=
- =?utf-8?B?NGRad2VMUnRDUkVzVWZKOWxic1FmV3VnR2F4cmx4UU1zejR3bWtzQjhHcElu?=
- =?utf-8?B?U3ZkSzAyRGpZMktlZTNWNkNzYVFvWFlSZHpDTUdGbUVReWFTY00zaVEyZnVO?=
- =?utf-8?B?ODZ3RzIzTUhxL3pDdTVmVGphcWlaLzIvaHArdVJGWjI1WUZCbWFmSWRBajM5?=
- =?utf-8?B?TWJqNlVWcGlRYjF5RUp3ZGdUSUpIc3F5ZmduNmNyK0s0UGxhdld0VnVDK3NG?=
- =?utf-8?B?QkxGS1MxeFRSQXM3RWY0NndTSlJaaVl2M1dQSmxQNFNQSmNaNUtBMUF1UXJh?=
- =?utf-8?B?VzQ2SmZ4NFFBOEgyZ0JUdzBEbXIxMWRVYU5BZTJKeUxqYit5bXhadTJBY2Zk?=
- =?utf-8?B?a3ZZaEd6Ukk1cjZlcnMyaHNKQk10eUdzNHBVM0grUG96VlVIVUlEcDZHZjlD?=
- =?utf-8?B?NzlSbXpwRXc4ZUI0MmY0a0ZiWFdVaytVV0hxSzNCNjM0ZlVrdUdaTGk2bVds?=
- =?utf-8?B?b1NXMWZ1bVdSNldvTW9SZEM3TGE1YnRXdXpXWmNqZG1HYW1rK01mb0d5Nkt5?=
- =?utf-8?B?NWlRVzhXVjNySGdqM0VyQk5tSEJyMVU5Z0tOMENQR3g1RjhJQlQyYzZtb3lP?=
- =?utf-8?B?ZmM0bTcxMS8wMERjZzM0ZG9CQzdIMTUxbFo4ejdoaGI3T3JLTUpoZ1ZUN3hX?=
- =?utf-8?B?WmhLcWVZWnlDMmU1OEdRZzhoQ1I1bVNuZld0ZVZxMmVuNnlOU1dTVXFpMC9E?=
- =?utf-8?B?VTdhM1pveFVrYUNCcURYWXBreHJLNURLWGlVSDBmL0R6KzNoK0Y5UTBhZ2xR?=
- =?utf-8?B?Z0IreTlWUGJsVExDQk9hSG53RThwd2owaUQ2eHpDRVRyRm81MXdEdWhYRHFF?=
- =?utf-8?B?K25YakMwTjFNN3I2NCtMN2dndGF6MFNWczZEYVlRQ0JiUm1xL3A0amJxSXJM?=
- =?utf-8?B?b3lwMDZaTHNRTUoyVXNTVmdTRXExWi9vRS9TTEpKYzBRbmVjSlZIRnIzNEly?=
- =?utf-8?B?citCaldGeitiTml1ZGJDM2tWaVdVN05mVnQwMStraDQzNUZId0w2R0txazVu?=
- =?utf-8?B?b0p0b2tybHBzVHZhSHpqR2N6ZFU4VmNPbnJLdXNnSzV1YVlrQU5JZnBPMFR3?=
- =?utf-8?B?Mi8zWHJNOXhRUzA2YWFCMUE1am9ETEgzbUl5RnVrOURvMDlwWVBpdGxIVWRa?=
- =?utf-8?Q?EOWV+kkqhcaK67ikN3JLhcwez0z?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SEprQnBLeEE3V1pBcnBHZHNERUR3czlZRUc5RE0yWWpSRUZQVGNwQmQ4UE1F?=
- =?utf-8?B?NWI1SjFQOCt6RXRNemI4M2FGWW5OZHVUTFNaSWZZM1FyTFR2S0drSnI2VlY3?=
- =?utf-8?B?d0xNVTVCN0F4b2xMWWlWUTRiem02UU5vYWhEVmowaWdJVUhiSGwzK3JHUEwy?=
- =?utf-8?B?TWhjN1BRU3JkeGFVd1F6UEtMWXQ0cWpVV0F0VU8yTjlSekh0WmM0azJmMFRY?=
- =?utf-8?B?NXpzS2UvY3JQVWV2dnBYRVFFcVEycjBYZzBnbnF3eE92MVVlaGE3aEdpUjJs?=
- =?utf-8?B?UGJNMGZqSm5nekE3elRBNC96a29yQnl4M2U5cDR1aE1TaUpYaFJKTkJ2cGx3?=
- =?utf-8?B?Y3dXb3dzaXNUVHM5RllxMVVhelJrWVk0L3VWWjkvZjhpdVh5NEwwZ0diWjVa?=
- =?utf-8?B?UzFzRVA1RU5Zb3RBYmw2UFNHOWtwcHF6d2NIcUhPSG9VTDNWTldvamRYUDVk?=
- =?utf-8?B?YkR2L2xnYnlIcEJSSThOTFlkcmJYa1JJbiswaVZhVzFEQXBZUktEUmdqSCsy?=
- =?utf-8?B?RFpnZmxnZzZXeVhjSGhiRGhJZHFzVWd3am9MRFdOQS9SYmoxYlZWUVZWSmQ4?=
- =?utf-8?B?dUliUEpMdFdraU9HOXY3L2ZiQlZlUmI4MGsvK1NtQXRzM3V0eGRzOWF5dXY2?=
- =?utf-8?B?SmpIdFhzbGphMmNGa0NyVmMveXdPZER0V0hNeWdWQjZYSXhWVVhzVUxjb1lM?=
- =?utf-8?B?WTdCV2JDLzlJSE93UWdMQ3dFaXozbFdMYjEwQlAxV1hvM092azFrdFdmRGpO?=
- =?utf-8?B?UU9OOURZaGNRU3B0bGJ3aCtUbVhwbVNVMWxVNDJDZmQzQ1l0YUJ2MEtNQ0VI?=
- =?utf-8?B?eWtrQURkbjFYRS84R2NjMnMwZDdTemRRQmhJTG9vcS94TWsyU0dnOTNGdWx3?=
- =?utf-8?B?Z3dYWS8wb3pkY2V2MUJrNlFRcmRTQW5CNnhhUHNOem5XZTNWazZBMmRZSytD?=
- =?utf-8?B?eXVCNnFwQlhLRmJqV205bjUySlJpSEJ6M3VFYkltK3A3N1Y1eU1lLzVMaUZk?=
- =?utf-8?B?SEkzOXdVVEhIVTMwOXl2UTV1cFFrT0FOTmNVZ3dqS0VmaVFabWRQbGNQQ2dP?=
- =?utf-8?B?Sk5XQ2o5dGZkVUJxQXB6cS9yMGxYMzNIZ1NiVVBlRENLMStsYUtyMU5LZ2ts?=
- =?utf-8?B?bC9VenZmeTkzdHZjcFRJU1RiQ1RhVCtuZi9KM1BRZzh3Y0VrVWQ3S0I5bmxs?=
- =?utf-8?B?OWw2U255OEpjNkZLN0t2VkhzSXgvelU1eDFFQVlSaGRHZ2g5TTVwRDFFMCtZ?=
- =?utf-8?B?VXdwOVJsQnZwRFRZa2xXNjlEUkMvTjF5OFJCc3N5SzFQTk5TNW52ZWZFRTZ3?=
- =?utf-8?B?TUdwNnY4a0VOSXlML0hsajlNZjJhckpsUzJOU085TnhDbDBIY3ZjdlhwZE52?=
- =?utf-8?B?ZVc3VEVCWWt1dWNoQjNEdVlweWdPbHJUUmdNeFk0T3F3MDd6U2Z3QnhuKzZr?=
- =?utf-8?B?Y2k5Tm8xbjkxLzByL3ZQZTUva1haaWtpajRyZXFoSjJsQk41M0tORmtMd1RS?=
- =?utf-8?B?d0F3VmRnV2xtY29leTJZeUl2M1RmRjlQS1F3bE9KbUFFempBblZQR2E1TVpi?=
- =?utf-8?B?NDU4THNyaVp2MU1iYTBIRlpRUWhBZEpObkRRdDdHWW5NbG1aUWlGa0Vub1ht?=
- =?utf-8?B?S3hrbzBpYU81WHlCZWRyQlpkOWpzeERuWEpLSjl1V2JvM3NQM0c4alJWOUY0?=
- =?utf-8?B?aVJwMnlkYVd5VUhjYW1ZWEdkb3JaWnVUWVhjRmtPcm1STDI3MGJydkNnTlRS?=
- =?utf-8?B?UEMyZFplTUpsaUh1VEo2QTdPMVhNZkVVNlpzS1pWVWhHWVlWQXpKakIwOThN?=
- =?utf-8?B?ZWp4Q3JmaFBUczNxcG16OXh3VEhLVXIxODNsYkU5WWJjbXkxT3dVdnZ4aERU?=
- =?utf-8?B?V0M3d1BLOTFQb1BDYWlJZEdGSkc2ZVVZMDB1REc2NXJ3eDdLY043dTBqb2Zy?=
- =?utf-8?Q?75HaVC7lnQ19IXr3uz75vCQeQW8Q53X3?=
-X-OriginatorOrg: sct-15-20-9412-6-msonline-outlook-af14e.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 37ac3b7c-7b8e-4872-ad1f-08dea34f6468
-X-MS-Exchange-CrossTenant-AuthSource: LV5PR01MB994148.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Apr 2026 04:50:51.8331 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR01MB7270
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Sun, 10 May 2026 20:10:46 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -145,40 +86,159 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, 2026-04-22 at 19:32 +0800, Ian Chen wrote:
-> > WireGuard over Shadowsocks-2022
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D
-> >=20
-> > TL;DR: Too much crypto + deployment challenges.
-> >=20
-> > Shadowsocks is a good solution against censor, but it strips 40
-> > more
-> > bytes from MTU and AEADs data twice: XChaCha20-Poly1305 of
-> > Shadowsocks +
-> > ChaCha20-Poly1305 of WireGuard burning twice as much carbon
-> > credits.
-> > Performance matters: e.g. Mullvad introduces LWO claiming
-> > performance
-> > improvement over Shadowsocks.
->=20
-> I developed swgp-go around the same time I wrote the spec for
-> Shadowsocks 2022. At the time, I intentionally left replay protection
-> out of swgp-go, because I thought WireGuard wouldn't need it.
->=20
-> Thanks to your work, I now understand that this assumption was wrong!
-> So I added it into swgp-go:
-> https://github.com/database64128/swgp-go/commit/207a055ab0a1058579f299fc1=
-021cc64c95b21db
->=20
-> The new "zero-overhead-2026" and "paranoid-2026" modes provide replay
-> protection for handshake packets. Replayed packets are dropped by
-> checking the nonce and an encrypted unix epoch timestamp, similar to
-> how Shadowsocks 2022's TCP construction does it.
->=20
-> This won't address the "DoSer" scenario, but should provide enough
-> protection against censors without knowledge of the OBFSK.
+Currently StdNetBind opens its IPv4 and IPv6 sockets on the unspecified
+address (0.0.0.0 and [::]). Embedders that want the WireGuard listener
+restricted to a specific local address — for example an Android
+application that wants its inbound peers to reach it only over Wi-Fi
+and never over the cellular interface, or a host with multiple
+interfaces where listening on a single one is preferable for routing
+or security reasons — currently have to reimplement Bind from scratch
+just to substitute a different bind address, losing the recvmmsg /
+sendmmsg / GSO optimizations along the way.
 
-I sent the previous email a few days ago, and it never showed up on the
-mailing list archive, probably due to all that PGP signing stuff I
-didn't turn off. Let's see if this one works.
+Add a NewStdNetBindWithBindHost(host4, host6 string) constructor that
+records optional per-family bind hosts on the StdNetBind. Open() passes
+them through to listenNet, which now uses net.JoinHostPort instead of
+the hardcoded ":port" wildcard. Empty strings preserve the existing
+any-address behavior, so NewStdNetBind() is unchanged for existing
+callers.
+
+Tests verify that an explicit loopback host pins both v4 and v6
+listeners to loopback, and that the default constructor still binds to
+the unspecified address.
+
+Signed-off-by: Mukul Sabharwal <mjsabby@gmail.com>
+---
+ conn/bind_std.go      | 35 ++++++++++++++++++++++++++++----
+ conn/bind_std_test.go | 46 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 77 insertions(+), 4 deletions(-)
+
+diff --git a/conn/bind_std.go b/conn/bind_std.go
+index f5c8816..9291b4b 100644
+--- a/conn/bind_std.go
++++ b/conn/bind_std.go
+@@ -46,10 +46,37 @@ type StdNetBind struct {
+ 
+ 	blackhole4 bool
+ 	blackhole6 bool
++
++	// Optional bind hosts for the IPv4 and IPv6 listeners. An empty
++	// string preserves the historical behavior of binding to the
++	// unspecified address (0.0.0.0 / [::]). These are read in Open()
++	// under mu and not mutated thereafter.
++	bindHost4 string
++	bindHost6 string
+ }
+ 
+ func NewStdNetBind() Bind {
++	return newStdNetBind("", "")
++}
++
++// NewStdNetBindWithBindHost returns a StdNetBind whose IPv4 / IPv6 listeners
++// bind to the supplied hosts instead of the unspecified address. An empty
++// string for either argument preserves the default any-address behavior for
++// that family. This is useful on hosts with multiple addresses where the
++// caller wants the WireGuard listener pinned to one of them — e.g. an
++// Android app that wants its inbound peers to reach it only over Wi-Fi
++// and never over the cellular interface.
++//
++// The hosts must parse as literal IP addresses (no DNS lookups are
++// performed). They are not validated until Open() is called.
++func NewStdNetBindWithBindHost(host4, host6 string) Bind {
++	return newStdNetBind(host4, host6)
++}
++
++func newStdNetBind(host4, host6 string) Bind {
+ 	return &StdNetBind{
++		bindHost4: host4,
++		bindHost6: host6,
+ 		udpAddrPool: sync.Pool{
+ 			New: func() any {
+ 				return &net.UDPAddr{
+@@ -119,8 +146,8 @@ func (e *StdNetEndpoint) DstToString() string {
+ 	return e.AddrPort.String()
+ }
+ 
+-func listenNet(network string, port int) (*net.UDPConn, int, error) {
+-	conn, err := listenConfig().ListenPacket(context.Background(), network, ":"+strconv.Itoa(port))
++func listenNet(network, host string, port int) (*net.UDPConn, int, error) {
++	conn, err := listenConfig().ListenPacket(context.Background(), network, net.JoinHostPort(host, strconv.Itoa(port)))
+ 	if err != nil {
+ 		return nil, 0, err
+ 	}
+@@ -156,13 +183,13 @@ again:
+ 	var v4pc *ipv4.PacketConn
+ 	var v6pc *ipv6.PacketConn
+ 
+-	v4conn, port, err = listenNet("udp4", port)
++	v4conn, port, err = listenNet("udp4", s.bindHost4, port)
+ 	if err != nil && !errors.Is(err, syscall.EAFNOSUPPORT) {
+ 		return nil, 0, err
+ 	}
+ 
+ 	// Listen on the same port as we're using for ipv4.
+-	v6conn, port, err = listenNet("udp6", port)
++	v6conn, port, err = listenNet("udp6", s.bindHost6, port)
+ 	if uport == 0 && errors.Is(err, syscall.EADDRINUSE) && tries < 100 {
+ 		v4conn.Close()
+ 		tries++
+diff --git a/conn/bind_std_test.go b/conn/bind_std_test.go
+index 34a3c9a..e5d6650 100644
+--- a/conn/bind_std_test.go
++++ b/conn/bind_std_test.go
+@@ -27,6 +27,52 @@ func TestStdNetBindReceiveFuncAfterClose(t *testing.T) {
+ 	}
+ }
+ 
++func TestStdNetBindWithBindHost(t *testing.T) {
++	bind := NewStdNetBindWithBindHost("127.0.0.1", "::1").(*StdNetBind)
++	if _, _, err := bind.Open(0); err != nil {
++		t.Fatal(err)
++	}
++	defer bind.Close()
++	if bind.ipv4 == nil {
++		t.Fatal("ipv4 listener not opened")
++	}
++	la4, ok := bind.ipv4.LocalAddr().(*net.UDPAddr)
++	if !ok {
++		t.Fatalf("ipv4 LocalAddr is not *net.UDPAddr: %T", bind.ipv4.LocalAddr())
++	}
++	if !la4.IP.IsLoopback() {
++		t.Errorf("ipv4 listener bound to %v, want loopback", la4.IP)
++	}
++	if bind.ipv6 != nil {
++		la6, ok := bind.ipv6.LocalAddr().(*net.UDPAddr)
++		if !ok {
++			t.Fatalf("ipv6 LocalAddr is not *net.UDPAddr: %T", bind.ipv6.LocalAddr())
++		}
++		if !la6.IP.IsLoopback() {
++			t.Errorf("ipv6 listener bound to %v, want loopback", la6.IP)
++		}
++	}
++}
++
++func TestStdNetBindDefaultBindHost(t *testing.T) {
++	// Empty host strings must preserve the historical wildcard behavior.
++	bind := NewStdNetBind().(*StdNetBind)
++	if _, _, err := bind.Open(0); err != nil {
++		t.Fatal(err)
++	}
++	defer bind.Close()
++	if bind.ipv4 == nil {
++		t.Fatal("ipv4 listener not opened")
++	}
++	la4, ok := bind.ipv4.LocalAddr().(*net.UDPAddr)
++	if !ok {
++		t.Fatalf("ipv4 LocalAddr is not *net.UDPAddr: %T", bind.ipv4.LocalAddr())
++	}
++	if !la4.IP.IsUnspecified() {
++		t.Errorf("ipv4 listener bound to %v, want unspecified", la4.IP)
++	}
++}
++
+ func mockSetGSOSize(control *[]byte, gsoSize uint16) {
+ 	*control = (*control)[:cap(*control)]
+ 	binary.LittleEndian.PutUint16(*control, gsoSize)
+-- 
+2.53.0
+
