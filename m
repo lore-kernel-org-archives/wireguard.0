@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ADF9CD4840
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 10 May 2026 20:10:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AA1ACD37AC
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 11 May 2026 06:42:33 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id d8d4fc50;
-	Sun, 10 May 2026 20:10:52 +0000 (UTC)
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com
- [2607:f8b0:4864:20::42e])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 00bba382
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id af38b74e;
+	Mon, 11 May 2026 06:42:31 +0000 (UTC)
+Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com
+ [209.85.221.176])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 2704102f
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 10 May 2026 19:58:21 +0000 (UTC)
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-8353c9f24d2so1805893b3a.3
- for <wireguard@lists.zx2c4.com>; Sun, 10 May 2026 12:58:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778443099; x=1779047899; darn=lists.zx2c4.com;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=S7wJFKucUX3d/+ADYmhzufx79kwTNxWL7CF9uiOkzC8=;
- b=jag6QE0F3nziKYktcjXq3qBqw+eXd7/s4bQvlKgTZwdoj3/oJlUdyfBRe9g7OjQA9p
- fFrH64COniPfoPrWNdo8JB+WO6z6fonyYgcgyWzAlBXCXPClDwaKnr89XayQh9PkgZ+D
- fS/JcrkA2sPuReQ5/0T85m2fEVyPSnuh2jmlnNyrfiqbcxnsxOfgQDcSyMXCSjQzl94X
- BcPYihyXbGvCoczEUMP23sBJz+6AnIy5HqxYS6u3V/PeRYE/ud+akKv3rkqugagoMkpk
- gYHzl0ttRJAbPJHLZjvyEknSCj/EJUjJdZZozV9g1ZBGOJgjcUXEYKyKr1g1AI9UrjUX
- bQpQ==
+ Mon, 11 May 2026 06:42:29 +0000 (UTC)
+Received: by mail-vk1-f176.google.com with SMTP id
+ 71dfb90a1353d-57512a429d1so2747258e0c.3
+ for <wireguard@lists.zx2c4.com>; Sun, 10 May 2026 23:42:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778443099; x=1779047899;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1778481748; x=1779086548;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=S7wJFKucUX3d/+ADYmhzufx79kwTNxWL7CF9uiOkzC8=;
- b=lTS6N5KsUy1XVBxd7TyGEB762KwgnSQchL0owvJ0vEiMPVUOTFixodXStgiQlTBKe0
- P0jrdewVj2zPZer/kRq0BeKZYjEQb/VUzyfqWJ6nj7tsLZbZhYxGv78jIaQlbU36hLRT
- u0pRSQxWoY746UIupPWoFKtM1w/Z5FP4kK3/A/Cu6p1V3jVLyn8XrKXNgh6qkVxO49Cy
- CUIdLFCpIh0ZZ/1R1LkyHzS7f9Uy19BvbtsmepXQI0NxZfxUDZu0npPVy7tkdprhBPHz
- JNRSL6jQ9DtOtjFml9KRLrZu/v773FvLkX0imcIh/pCzWttKtfL22oqIZZZv1dTL3TyM
- gJYw==
-X-Gm-Message-State: AOJu0YyjoJTk/cLEwPMNDCy9m9afZjgQSIk5rB7xTogenw/t06aH3HN2
- LdmUmJ1z5dQ7HWMsN95/l6ZYWFFG73uba//A3gClBtKZwnneUen0qtU5TEeSZw==
-X-Gm-Gg: Acq92OEAo6Y4wYgJhx7m1IeBs55zlpuIrz4yKXn7t+ranTKs2S3W1jj5jmOtFnqVapS
- SGN4fCJQoRLpJdSSeq5qenLPRvjYS8AaiqyJYquWSKA/eF7DXc5DInTvhe/rQWW1wfBBKSKKjzK
- NaH8MWEE+g+IaR6bQHo6c8wow81RvCmoaQDdiTCFS+oTUHPZ8t8k6vl5NCK1E4+ZgcLhP7vCc+5
- xp5FfhkBr0gowOZcLCBsYG4/1+zinEDmEixhI1TG4jkPUxmLkZ9eFAT1B4Qel/qAIDlic3jOedH
- PD8qb04fNzZsiIE6DfMPit5EdgHbHR7DzWLuIywdsQSnujsuXPcEc5uCQVEDQPjqCqACwyKuEIX
- rP9U+va07CW84oUov0ekTQ+PrHzFt0d32V7tykMqZiEEMK+kqzB82fP48rW2+xJwA4sknePic1i
- ERHQwdfS8HzeiC3+AXHW3mGvDRONHApWkov1W177mt2nOUInRw59UFt6v8+nhg89IqYiz2z0ZEA
- myP2sStxKBS
-X-Received: by 2002:a05:6a00:3016:b0:837:e9cc:d46e with SMTP id
- d2e1a72fcca58-83a5c2b8a09mr19600997b3a.21.1778443099084; 
- Sun, 10 May 2026 12:58:19 -0700 (PDT)
-Received: from llm.sabharwals.net ([2601:600:9180:73af:642:1aff:fe98:f167])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8396563f11csm22656860b3a.3.2026.05.10.12.58.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 10 May 2026 12:58:18 -0700 (PDT)
-From: Mukul Sabharwal <mjsabby@gmail.com>
-To: wireguard@lists.zx2c4.com
-Cc: Jason@zx2c4.com,
-	Mukul Sabharwal <mjsabby@gmail.com>
-Subject: [PATCH wireguard-go] conn: allow StdNetBind to bind to specific host
- addresses
-Date: Sun, 10 May 2026 19:58:10 +0000
-Message-ID: <20260510195810.192447-1-mjsabby@gmail.com>
-X-Mailer: git-send-email 2.53.0
+ bh=nmM7uPcTxOtt/CXqxfbtSzgj1ys1bMpqCcKcPX8L8Aw=;
+ b=Wmda2jK3k2ztYKz6SiaABAzpt9w8v/XzqsBgzf1a9ZwuzlToq8OAfki1cuU8oy3nkC
+ V9cMAkHZBQ21GQYVOGcvBelGQcpYq0SfjliTp+G1tqqVL+zWZcjJipXpV8hn3pFMmRv8
+ JOxrYL4zbPpZQuyJAhqU9UgOtOnpRzXgYvoTpqt10XXcNxfFRItEPoc7J8JZQ6hw52ln
+ G3CTjNz0Oij+AO4OlyxC+INj19TIM0zSLb1peQKWxAxq+BcJqpK9DIIzxNDyKaMZYtFH
+ NMjfafjMiriQeRDdWNII8VOY54tHUUT9rz5+/IcoZOND/spHxnXmP7iVrCnYGQf9bcX8
+ XSYw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9C2bTgO7K2mXxLzIefF2gwmAE09oYv9zPYMiVw/KHWZshiKxK5LH62y7OwvbtC8iYtRcoNk7K2Axk=@lists.zx2c4.com
+X-Gm-Message-State: AOJu0YzAQFwDV3pUPJ9r5EoQFHj0L2CW5BpOGJZVwJWJg0OLRD3g/M9y
+ m3ZHXC5flTcwXJVHW4gq79Gp4KTkDUUTTNGd//FNJ3EhiAp18AQXANbzNXpyS5z1
+X-Gm-Gg: Acq92OFU9xS7tjcenTmRhkMlK6kczVEOhK5EHhU/qunZqbJ75BIV/kvBPXAjtGwC9Fh
+ qbWz+0TRbjAwK0wwmXOGYJXYXfaOCU2B6HbRkmm+cJtUDUqL0MnApX6CeREOtIIWV/6lUe0USKh
+ +i0y8rnWVaiW15hGmkNzFvGp3kUUXwvwYOPdOiv2wH5PXoDmeP2bL+PdPs9JmOqJYnoZ3CwvX+9
+ fvjtGpdSxN8RrcW3mQx3kFiXVuW1duDpUmN0NpKDGPOvHuHaijfB/ysKLMz5G+PRuI7nTmPxZhl
+ Hif7N4JD+6Td5UxofqUdN08nebSiA4XImV38hdazvDSkXft7pPAWKknBrnFJSdxTAXm6rpBc6fS
+ ulg/Kse4gybpoJeMxDkxdXRDeBmdQ38ABXIbBIMqGH96C3ixk/6E8Rd66pvSy9VT+w3R9Fjrwwo
+ C9uPjIMpq3r+WAJxXY8UfaNItEFuTOArhrVRhxzhGZgwGFpUaav0e56UYj+uUM
+X-Received: by 2002:a05:6122:660e:b0:56f:6b46:28be with SMTP id
+ 71dfb90a1353d-57559520fccmr13501635e0c.8.1778481747685; 
+ Sun, 10 May 2026 23:42:27 -0700 (PDT)
+Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com.
+ [209.85.217.47]) by smtp.gmail.com with ESMTPSA id
+ 71dfb90a1353d-574a6ef4012sm19524929e0c.18.2026.05.10.23.42.26
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 10 May 2026 23:42:27 -0700 (PDT)
+Received: by mail-vs1-f47.google.com with SMTP id
+ ada2fe7eead31-6312af106e3so2231632137.0
+ for <wireguard@lists.zx2c4.com>; Sun, 10 May 2026 23:42:26 -0700 (PDT)
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/ofZbQC4hXsHzhsl4+fMkWFUSXO604HfbjH2rp/dfXWIzue4plCXrbkNBCXtZKK7EHSMrGCpFj3Wc=@lists.zx2c4.com
+X-Received: by 2002:a05:6102:2ac7:b0:633:c6c4:b32c with SMTP id
+ ada2fe7eead31-633c6c4b990mr1428757137.15.1778481746411; Sun, 10 May 2026
+ 23:42:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Mailman-Approved-At: Sun, 10 May 2026 20:10:46 +0000
+References: <202605100125.l4JVHppO-lkp@intel.com>
+In-Reply-To: <202605100125.l4JVHppO-lkp@intel.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Mon, 11 May 2026 08:42:13 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdXPeUnjN__PvY+HQg+cSxKe-RLnyT-A5KGe=4cmjnUNbg@mail.gmail.com>
+X-Gm-Features: AVHnY4LhC2w7Nls0eAOnAROXGmHfJhM8ihUdL8l1JwrVFRMxvNzDPSpVspNG9hQ
+Message-ID: <CAMuHMdXPeUnjN__PvY+HQg+cSxKe-RLnyT-A5KGe=4cmjnUNbg@mail.gmail.com>
+Subject: Re: crypto/ahash.c:1073:1: warning: the frame size of 1040 bytes is
+ larger than 1024 bytes
+To: kernel test robot <lkp@intel.com>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>, oe-kbuild-all@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, linux-mips@vger.kernel.org, 
+ linuxppc-dev <linuxppc-dev@lists.ozlabs.org>, wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -86,159 +87,61 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Currently StdNetBind opens its IPv4 and IPv6 sockets on the unspecified
-address (0.0.0.0 and [::]). Embedders that want the WireGuard listener
-restricted to a specific local address — for example an Android
-application that wants its inbound peers to reach it only over Wi-Fi
-and never over the cellular interface, or a host with multiple
-interfaces where listening on a single one is preferable for routing
-or security reasons — currently have to reimplement Bind from scratch
-just to substitute a different bind address, losing the recvmmsg /
-sendmmsg / GSO optimizations along the way.
+On Sat, 9 May 2026 at 19:07, kernel test robot <lkp@intel.com> wrote:
+> FYI, the error/warning still remains.
+>
+> tree:   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git master
+> head:   ec89572766744e844df24c27d31c97b4c00f4e07
+> commit: 9d9b193ed73a65ec47cf1fd39925b09da8216461 crypto: hash - Increase HASH_MAX_DESCSIZE for hmac(sha3-224-s390)
+> date:   9 months ago
+> config: mips-eyeq5_defconfig (https://download.01.org/0day-ci/archive/20260510/202605100125.l4JVHppO-lkp@intel.com/config)
+> compiler: mips64-linux-gcc (GCC) 15.2.0
+> reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260510/202605100125.l4JVHppO-lkp@intel.com/reproduce)
+>
+> If you fix the issue in a separate patch/commit (i.e. not just a new version of
+> the same patch/commit), kindly add following tags
+> | Fixes: 9d9b193ed73a ("crypto: hash - Increase HASH_MAX_DESCSIZE for hmac(sha3-224-s390)")
+> | Reported-by: kernel test robot <lkp@intel.com>
+> | Closes: https://lore.kernel.org/oe-kbuild-all/202605100125.l4JVHppO-lkp@intel.com/
+>
+> All warnings (new ones prefixed by >>):
+>
+>    crypto/ahash.c: In function 'crypto_hash_digest':
+> >> crypto/ahash.c:1073:1: warning: the frame size of 1040 bytes is larger than 1024 bytes [-Wframe-larger-than=]
+>     1073 | }
+>          | ^
 
-Add a NewStdNetBindWithBindHost(host4, host6 string) constructor that
-records optional per-family bind hosts on the StdNetBind. Open() passes
-them through to listenNet, which now uses net.JoinHostPort instead of
-the hardcoded ":port" wildcard. Empty strings preserve the existing
-any-address behavior, so NewStdNetBind() is unchanged for existing
-callers.
+This is one of the few defconfigs that still use CONFIG_FRAME_WARN=1024.
+The default value for 32-bit systems was lifted from 1024 to 1280 in
+commit 32115734c0ed8b46 ("Increase the default 32-bit build frame size
+warning limit to 1280 bytes") in v6.18, so perhaps the downgrade to
+1024 should be dropped from the following defconfigs:
 
-Tests verify that an explicit loopback host pins both v4 and v6
-listeners to loopback, and that the default constructor still binds to
-the unspecified address.
+$ git grep CONFIG_FRAME_WARN=1024
+arch/mips/configs/eyeq5_defconfig:CONFIG_FRAME_WARN=1024
+arch/mips/configs/eyeq6_defconfig:CONFIG_FRAME_WARN=1024
+arch/mips/configs/eyeq6lplus_defconfig:CONFIG_FRAME_WARN=1024
+arch/mips/configs/lemote2f_defconfig:CONFIG_FRAME_WARN=1024
+arch/mips/configs/loongson2k_defconfig:CONFIG_FRAME_WARN=1024
+arch/powerpc/configs/fsl-emb-nonhw.config:CONFIG_FRAME_WARN=1024
+tools/testing/selftests/wireguard/qemu/arch/arm.config:CONFIG_FRAME_WARN=1024
+tools/testing/selftests/wireguard/qemu/arch/armeb.config:CONFIG_FRAME_WARN=1024
+tools/testing/selftests/wireguard/qemu/arch/i686.config:CONFIG_FRAME_WARN=1024
+tools/testing/selftests/wireguard/qemu/arch/m68k.config:CONFIG_FRAME_WARN=1024
+tools/testing/selftests/wireguard/qemu/arch/mips.config:CONFIG_FRAME_WARN=1024
+tools/testing/selftests/wireguard/qemu/arch/mipsel.config:CONFIG_FRAME_WARN=1024
+tools/testing/selftests/wireguard/qemu/arch/powerpc.config:CONFIG_FRAME_WARN=1024
 
-Signed-off-by: Mukul Sabharwal <mjsabby@gmail.com>
----
- conn/bind_std.go      | 35 ++++++++++++++++++++++++++++----
- conn/bind_std_test.go | 46 +++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 77 insertions(+), 4 deletions(-)
+I am not sure about the wireguard selftests: they might use the lower
+value deliberately for testing?
 
-diff --git a/conn/bind_std.go b/conn/bind_std.go
-index f5c8816..9291b4b 100644
---- a/conn/bind_std.go
-+++ b/conn/bind_std.go
-@@ -46,10 +46,37 @@ type StdNetBind struct {
- 
- 	blackhole4 bool
- 	blackhole6 bool
-+
-+	// Optional bind hosts for the IPv4 and IPv6 listeners. An empty
-+	// string preserves the historical behavior of binding to the
-+	// unspecified address (0.0.0.0 / [::]). These are read in Open()
-+	// under mu and not mutated thereafter.
-+	bindHost4 string
-+	bindHost6 string
- }
- 
- func NewStdNetBind() Bind {
-+	return newStdNetBind("", "")
-+}
-+
-+// NewStdNetBindWithBindHost returns a StdNetBind whose IPv4 / IPv6 listeners
-+// bind to the supplied hosts instead of the unspecified address. An empty
-+// string for either argument preserves the default any-address behavior for
-+// that family. This is useful on hosts with multiple addresses where the
-+// caller wants the WireGuard listener pinned to one of them — e.g. an
-+// Android app that wants its inbound peers to reach it only over Wi-Fi
-+// and never over the cellular interface.
-+//
-+// The hosts must parse as literal IP addresses (no DNS lookups are
-+// performed). They are not validated until Open() is called.
-+func NewStdNetBindWithBindHost(host4, host6 string) Bind {
-+	return newStdNetBind(host4, host6)
-+}
-+
-+func newStdNetBind(host4, host6 string) Bind {
- 	return &StdNetBind{
-+		bindHost4: host4,
-+		bindHost6: host6,
- 		udpAddrPool: sync.Pool{
- 			New: func() any {
- 				return &net.UDPAddr{
-@@ -119,8 +146,8 @@ func (e *StdNetEndpoint) DstToString() string {
- 	return e.AddrPort.String()
- }
- 
--func listenNet(network string, port int) (*net.UDPConn, int, error) {
--	conn, err := listenConfig().ListenPacket(context.Background(), network, ":"+strconv.Itoa(port))
-+func listenNet(network, host string, port int) (*net.UDPConn, int, error) {
-+	conn, err := listenConfig().ListenPacket(context.Background(), network, net.JoinHostPort(host, strconv.Itoa(port)))
- 	if err != nil {
- 		return nil, 0, err
- 	}
-@@ -156,13 +183,13 @@ again:
- 	var v4pc *ipv4.PacketConn
- 	var v6pc *ipv6.PacketConn
- 
--	v4conn, port, err = listenNet("udp4", port)
-+	v4conn, port, err = listenNet("udp4", s.bindHost4, port)
- 	if err != nil && !errors.Is(err, syscall.EAFNOSUPPORT) {
- 		return nil, 0, err
- 	}
- 
- 	// Listen on the same port as we're using for ipv4.
--	v6conn, port, err = listenNet("udp6", port)
-+	v6conn, port, err = listenNet("udp6", s.bindHost6, port)
- 	if uport == 0 && errors.Is(err, syscall.EADDRINUSE) && tries < 100 {
- 		v4conn.Close()
- 		tries++
-diff --git a/conn/bind_std_test.go b/conn/bind_std_test.go
-index 34a3c9a..e5d6650 100644
---- a/conn/bind_std_test.go
-+++ b/conn/bind_std_test.go
-@@ -27,6 +27,52 @@ func TestStdNetBindReceiveFuncAfterClose(t *testing.T) {
- 	}
- }
- 
-+func TestStdNetBindWithBindHost(t *testing.T) {
-+	bind := NewStdNetBindWithBindHost("127.0.0.1", "::1").(*StdNetBind)
-+	if _, _, err := bind.Open(0); err != nil {
-+		t.Fatal(err)
-+	}
-+	defer bind.Close()
-+	if bind.ipv4 == nil {
-+		t.Fatal("ipv4 listener not opened")
-+	}
-+	la4, ok := bind.ipv4.LocalAddr().(*net.UDPAddr)
-+	if !ok {
-+		t.Fatalf("ipv4 LocalAddr is not *net.UDPAddr: %T", bind.ipv4.LocalAddr())
-+	}
-+	if !la4.IP.IsLoopback() {
-+		t.Errorf("ipv4 listener bound to %v, want loopback", la4.IP)
-+	}
-+	if bind.ipv6 != nil {
-+		la6, ok := bind.ipv6.LocalAddr().(*net.UDPAddr)
-+		if !ok {
-+			t.Fatalf("ipv6 LocalAddr is not *net.UDPAddr: %T", bind.ipv6.LocalAddr())
-+		}
-+		if !la6.IP.IsLoopback() {
-+			t.Errorf("ipv6 listener bound to %v, want loopback", la6.IP)
-+		}
-+	}
-+}
-+
-+func TestStdNetBindDefaultBindHost(t *testing.T) {
-+	// Empty host strings must preserve the historical wildcard behavior.
-+	bind := NewStdNetBind().(*StdNetBind)
-+	if _, _, err := bind.Open(0); err != nil {
-+		t.Fatal(err)
-+	}
-+	defer bind.Close()
-+	if bind.ipv4 == nil {
-+		t.Fatal("ipv4 listener not opened")
-+	}
-+	la4, ok := bind.ipv4.LocalAddr().(*net.UDPAddr)
-+	if !ok {
-+		t.Fatalf("ipv4 LocalAddr is not *net.UDPAddr: %T", bind.ipv4.LocalAddr())
-+	}
-+	if !la4.IP.IsUnspecified() {
-+		t.Errorf("ipv4 listener bound to %v, want unspecified", la4.IP)
-+	}
-+}
-+
- func mockSetGSOSize(control *[]byte, gsoSize uint16) {
- 	*control = (*control)[:cap(*control)]
- 	binary.LittleEndian.PutUint16(*control, gsoSize)
+Gr{oetje,eeting}s,
+
+                        Geert
+
 -- 
-2.53.0
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
 
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
