@@ -4,49 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1FBDCD4F3C
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 May 2026 12:02:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7A4DCD4F5E
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 May 2026 20:27:36 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id e060b2a5;
-	Wed, 20 May 2026 12:02:13 +0000 (UTC)
-Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id c4ca0a24
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id eff15a26;
+	Wed, 20 May 2026 20:27:34 +0000 (UTC)
+Received: from mail-24429.protonmail.ch (mail-24429.protonmail.ch
+ [109.224.244.29])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id fdabad35
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 20 May 2026 12:02:04 +0000 (UTC)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 29A5860126;
- Tue, 19 May 2026 14:54:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FA54C2BCB3;
- Tue, 19 May 2026 14:54:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1779202491;
- bh=UC51TFFAdYAAEu3Hn1AG/aOnKPwgH/g/o3sh2GAq0HA=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=eonNaHjgLxe9B7jJYmeAsLPwIsWasueEug+6sELaPW6zhqCBLKCVV0eXFoe5YqR/1
- S8bKD+SEITM0ZovBZW83+t7ypM3/0bjK1YzUjckPvv6g5Kdkmpcd6F2rAwUS7oEgNw
- 0kq4U3FeqHKd2W/uPZnkkMGekIuuSoakXy+iDUcby8YgheVKxHyrVDAzj2DEu552s9
- NYwahujt0vth4USrNPOpkPip6bcEeKyVlm1Lo7eE96penUWhmF8uZW0o+BdWceb0sn
- V9q+MgwaQynubQNmFwKwcPDI8qJpxB5heitif+1RJfxLJS2ZJ3mpkvmuu2wVKeWzqw
- riPzTDUCCAeuw==
-Message-ID: <eb236109-1284-43ad-bd0f-1a39765fa30f@kernel.org>
-Date: Tue, 19 May 2026 16:54:31 +0200
+ Wed, 20 May 2026 20:27:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+ s=protonmail; t=1779308851; x=1779568051;
+ bh=P00KB6FT3UJdToAKg9ueEcL69DCGcY2lx/fzs6yjrZI=;
+ h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+ Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+ b=kOALnfbijjrCphzkguo1+bkzbtmcFAsVrvY2Op30yX+vn4NEP6MC935r3TEZSQ0rN
+ abI+VuDdRSpPZm7IW8sMRAQypwyx4r07EOfRYzait0e8KzW0tqUac5ujnbgg436Krz
+ n/zLUWmSesJm0M8hNt8gTd6LUa+3Rfl+Kl/TQ2TA0rlMJJptIqVEz0vBCr1Dph6UuD
+ SPls40uHOAmNmCDm/7qT+GI92eEjF0vDfdiEYL/LHZccVJ19HiUCRABIUHAfH1C38j
+ dv/AME61ABpdSjbri5v7iFLeGZCRCZAqDopucRPzkyFuSR+HH6TwrncMY5yqv6aEQI
+ esu9pKp58Z2zQ==
+Date: Wed, 20 May 2026 20:27:26 +0000
+To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+From: Douglas Silva <doug.hs@proton.me>
+Subject: Add instructions to verify android APK to wireguard.com
+Message-ID: <abgBz1nmM6LD-0bMqUc6gO14UGFdLMad4y7VHlyOMSnK2vUHOeqEc6P1OzkS0lbIhCLtuSXeNxIX72wTxB8LPy-pdl-cH_G70aO7MwUFTOU=@proton.me>
+Feedback-ID: 47597204:user:proton
+X-Pm-Message-ID: 6892f1831557e012aaca5ef443aa86a6b41eb385
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: crypto/ahash.c:1073:1: warning: the frame size of 1040 bytes is
- larger than 1024 bytes
-To: Geert Uytterhoeven <geert@linux-m68k.org>,
- kernel test robot <lkp@intel.com>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>, oe-kbuild-all@lists.linux.dev,
- linux-kernel@vger.kernel.org, linux-mips@vger.kernel.org,
- linuxppc-dev <linuxppc-dev@lists.ozlabs.org>, wireguard@lists.zx2c4.com
-References: <202605100125.l4JVHppO-lkp@intel.com>
- <CAMuHMdXPeUnjN__PvY+HQg+cSxKe-RLnyT-A5KGe=4cmjnUNbg@mail.gmail.com>
-Content-Language: fr-FR
-From: "Christophe Leroy (CS GROUP)" <chleroy@kernel.org>
-In-Reply-To: <CAMuHMdXPeUnjN__PvY+HQg+cSxKe-RLnyT-A5KGe=4cmjnUNbg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -61,69 +50,12 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+The instructions were posted on the mailing list [1] in 2023, but it's stil=
+l not available on the site.
 
+Assuming they're still relevant, I think it's a good idea to put them on th=
+e installation page [2]. Even a link to that mailing list message would hel=
+p.
 
-Le 11/05/2026 à 08:42, Geert Uytterhoeven a écrit :
-> On Sat, 9 May 2026 at 19:07, kernel test robot <lkp@intel.com> wrote:
->> FYI, the error/warning still remains.
->>
->> tree:   https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgit.kernel.org%2Fpub%2Fscm%2Flinux%2Fkernel%2Fgit%2Ftorvalds%2Flinux.git&data=05%7C02%7Cchristophe.leroy2%40cs-soprasteria.com%7Cb57c2e1952ea48b306d508deaf28809f%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C639140785686768547%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=MBIlFF0TKur9ZxxdvLflUjFXN8BiEIWx%2FW2eO2rQteM%3D&reserved=0 master
->> head:   ec89572766744e844df24c27d31c97b4c00f4e07
->> commit: 9d9b193ed73a65ec47cf1fd39925b09da8216461 crypto: hash - Increase HASH_MAX_DESCSIZE for hmac(sha3-224-s390)
->> date:   9 months ago
->> config: mips-eyeq5_defconfig (https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fdownload.01.org%2F0day-ci%2Farchive%2F20260510%2F202605100125.l4JVHppO-lkp%40intel.com%2Fconfig&data=05%7C02%7Cchristophe.leroy2%40cs-soprasteria.com%7Cb57c2e1952ea48b306d508deaf28809f%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C639140785686802803%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=9mLXlRz5JrVhRQ0Ft4c3tQJGrDtlSSmYmd7vZ4pneYc%3D&reserved=0)
->> compiler: mips64-linux-gcc (GCC) 15.2.0
->> reproduce (this is a W=1 build): (https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fdownload.01.org%2F0day-ci%2Farchive%2F20260510%2F202605100125.l4JVHppO-lkp%40intel.com%2Freproduce&data=05%7C02%7Cchristophe.leroy2%40cs-soprasteria.com%7Cb57c2e1952ea48b306d508deaf28809f%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C639140785686823501%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=NNAWk0DHq2gD1%2FToE%2FXk75Mz3sKpppwVkpkDG6amzD0%3D&reserved=0)
->>
->> If you fix the issue in a separate patch/commit (i.e. not just a new version of
->> the same patch/commit), kindly add following tags
->> | Fixes: 9d9b193ed73a ("crypto: hash - Increase HASH_MAX_DESCSIZE for hmac(sha3-224-s390)")
->> | Reported-by: kernel test robot <lkp@intel.com>
->> | Closes: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Foe-kbuild-all%2F202605100125.l4JVHppO-lkp%40intel.com%2F&data=05%7C02%7Cchristophe.leroy2%40cs-soprasteria.com%7Cb57c2e1952ea48b306d508deaf28809f%7C8b87af7d86474dc78df45f69a2011bb5%7C0%7C0%7C639140785686842796%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=2M0BnhyxISt3rrzxPXkX4p%2Ba1bIVz%2FhjwSNokIVueuE%3D&reserved=0
->>
->> All warnings (new ones prefixed by >>):
->>
->>     crypto/ahash.c: In function 'crypto_hash_digest':
->>>> crypto/ahash.c:1073:1: warning: the frame size of 1040 bytes is larger than 1024 bytes [-Wframe-larger-than=]
->>      1073 | }
->>           | ^
-> 
-> This is one of the few defconfigs that still use CONFIG_FRAME_WARN=1024.
-> The default value for 32-bit systems was lifted from 1024 to 1280 in
-> commit 32115734c0ed8b46 ("Increase the default 32-bit build frame size
-> warning limit to 1280 bytes") in v6.18, so perhaps the downgrade to
-> 1024 should be dropped from the following defconfigs:
-> 
-> $ git grep CONFIG_FRAME_WARN=1024
-> arch/mips/configs/eyeq5_defconfig:CONFIG_FRAME_WARN=1024
-> arch/mips/configs/eyeq6_defconfig:CONFIG_FRAME_WARN=1024
-> arch/mips/configs/eyeq6lplus_defconfig:CONFIG_FRAME_WARN=1024
-> arch/mips/configs/lemote2f_defconfig:CONFIG_FRAME_WARN=1024
-> arch/mips/configs/loongson2k_defconfig:CONFIG_FRAME_WARN=1024
-> arch/powerpc/configs/fsl-emb-nonhw.config:CONFIG_FRAME_WARN=1024
-
-I agree for that one, lets drop the downgrade, don't know why it was 
-added at the first place as it was the default, most likely someone 
-didn't use make savedefconfig
-
-So feel from to drop that in a treewide cleanup with my Acked-by: 
-Christophe Leroy (CS GROUP) <chleroy@kernel.org>
-
-
-
-> tools/testing/selftests/wireguard/qemu/arch/arm.config:CONFIG_FRAME_WARN=1024
-> tools/testing/selftests/wireguard/qemu/arch/armeb.config:CONFIG_FRAME_WARN=1024
-> tools/testing/selftests/wireguard/qemu/arch/i686.config:CONFIG_FRAME_WARN=1024
-> tools/testing/selftests/wireguard/qemu/arch/m68k.config:CONFIG_FRAME_WARN=1024
-> tools/testing/selftests/wireguard/qemu/arch/mips.config:CONFIG_FRAME_WARN=1024
-> tools/testing/selftests/wireguard/qemu/arch/mipsel.config:CONFIG_FRAME_WARN=1024
-> tools/testing/selftests/wireguard/qemu/arch/powerpc.config:CONFIG_FRAME_WARN=1024
-> 
-> I am not sure about the wireguard selftests: they might use the lower
-> value deliberately for testing?
-> 
-> Gr{oetje,eeting}s,
-> 
->                          Geert
-> 
-
+[1] https://lists.zx2c4.com/pipermail/wireguard/2023-May/008057.html
+[2] https://www.wireguard.com/install/#android-play-store-direct-apk-file
