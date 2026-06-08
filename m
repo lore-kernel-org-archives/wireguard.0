@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 283EFCA5FCE
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 06:56:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6796CA5FCE
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 06:57:14 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 2d38fd76;
-	Mon, 5 Oct 2026 06:56:00 +0000 (UTC)
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com
- [2a00:1450:4864:20::42d])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id d9c04cd5
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id a536a2ad;
+	Mon, 5 Oct 2026 06:56:03 +0000 (UTC)
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com
+ [2a00:1450:4864:20::436])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id d4f9052f
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 8 Jun 2026 00:33:22 +0000 (UTC)
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-45ef6565cfdso1640642f8f.0
- for <wireguard@lists.zx2c4.com>; Sun, 07 Jun 2026 17:33:22 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Mon, 8 Jun 2026 00:33:23 +0000 (UTC)
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-45fe59255beso1795286f8f.1
+ for <wireguard@lists.zx2c4.com>; Sun, 07 Jun 2026 17:33:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780878802; x=1781483602; darn=lists.zx2c4.com;
+ d=gmail.com; s=20251104; t=1780878803; x=1781483603; darn=lists.zx2c4.com;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XVhAV0jeLDIesyRfK3czdCVypMekywhIWN/lMQ3dBDM=;
- b=ADnWSqjuoskCx23Ap0G3xXzsIRNbyyMxpvdBBOwFSCLzR/1QUx7KLU31iCc9egaj7s
- Q2vALBh+OlIczauFDRqPjjQJxvqNHnYpfh6M0vuHMeliSpFO6pkzjH+kuTG4N9HHlft3
- dHjWd4C6XiERcAbkr54rXD6D3elU1T5kXlc9qjf630gURsQytpIQv55cbBehK58gYZ1d
- SOQVsuHv9b/1g2xjxsOCLzK8FUAC5nLBZTFIJscBGBMSxF47PPRw3UPU1ZaWigEsIwEq
- 2+OQvkr6HOTIk4l3+dYA1m5ukuoHahH+KAoElXPucH5ZFzcOTH96BGPI5Gz3dVvK+yjg
- uYlg==
+ bh=kHVIIcBEecJ36xkvRIpu1xJVb7BfbaLZ6hqzWpzMV5E=;
+ b=EzLn+rhPfOWV9bWyCn46Yvt68j1C2BWMBBPsLkTYrc9IoY50EWjr4w2yzR526PhmMl
+ RTUL7W57HZv4pGL59rd5bkGftHsy7Wj4rpybVASaG4srQOblLWw9sfcxZkpCL1cj21fU
+ yD9wRcDY4CVlm5VKFxVM4p77+qG5ISeZWsRe4XM4ANKXU9yUNtFYA98PVkEqU3agHjKD
+ x66PN6VOG8ovbrbQAuDScngYwXlqpGQALbuJ8yS13D4IOttrWuTgrPCZKuDojiTqE01w
+ BX8VZBSb356ClEJIN2YKPjcfVWfg1H1lN94T5clP8v9C1l/TVVI7iB68niDJp2ZKH+0b
+ r//g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780878802; x=1781483602;
+ d=1e100.net; s=20251104; t=1780878803; x=1781483603;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=XVhAV0jeLDIesyRfK3czdCVypMekywhIWN/lMQ3dBDM=;
- b=lDOHUfvxK/Qd9FcswWJRsKMpeLaK6F/988CGCg65VigDTvsTPCa34keIz8zGR3CUwl
- UM3YLLRoJHHuvecmNHyJAWj4b2XbQ5pLUWp0IIq/lJ/faMAxeIr1Iz9yrZtt2sn4hQqR
- rqSZwfGiKbEi11zXgX02M9JysLiu9xhuruKf5Z5OV01JpdqgPDCZubWyB+VLi4rLbxg8
- LTrrF9tYsGdibgqv/QNGbxyUGQa5CNiLUaq4xMhHcP8VTllRsWJRYU2e0mo4bYC5Rclm
- z+j9K5gokW4kktjqEWq5upZ3J7eDVAkgHqce+zP+8kwKabaD3KL7PiJAc5qriIZ5V8kA
- nlow==
-X-Gm-Message-State: AOJu0Yx6Ew+e134qIxc0CuUuiCq8pg8TXIfVE8Gk59gwXx7dkGG74aTn
- iqYNx+P4ICY5EGOHPIsQCgq8anjE4n3mDcfHKn7RBe6d66AcgZZGb3XJx4gC4htzpj8=
-X-Gm-Gg: Acq92OFl0yql04dUuZbuTHqEnWb9TXIjInCRcAMgTtY2R2PbKSLTUN2FCYWmdGStUay
- HtsXMZM/g4yHjGto3BFcTKJ19o4JaQ2yDX/OMEz8fOr6btOmWMCJGVF9jO4cA69BQwX1kfDH+Qc
- Ggm3n7p79puiS6TFGBfU2Os9EBUDSgl5LZCTDHJqyO9q1Or0km8YBfTkvvOGloVE+0KiqqpkmP5
- cVI/8YNHvmU1B5gkXWYf0dOcftexLHw7tqcZ1UYC5kwVX76d23E8VqJ6XYzWwRQIxMjFonkPUkW
- rEMYBL4kLM35RIziOQebhWs1pRw2K5LWM5t1hsqXNdGgwNtA9H3DFWtoFnbDVNlPxhbvZOCgEqC
- KqB9UzZbJQ89tmOOJBpGqJJk7BrOeqxodqpar8cZ2SUG8fGMikrk4HHYDzArEpSiGF3rccuae1s
- y+P3IqptTbT0xW
-X-Received: by 2002:a5d:4e46:0:b0:43d:6244:f8b with SMTP id
- ffacd0b85a97d-46030505f34mr16194931f8f.13.1780878801970; 
- Sun, 07 Jun 2026 17:33:21 -0700 (PDT)
+ bh=kHVIIcBEecJ36xkvRIpu1xJVb7BfbaLZ6hqzWpzMV5E=;
+ b=oV5TLAOVVRRrEKhNObokr7DDDQNv7fhkt6YwZ4dqVuCzeSCbLrdQ2FNuZ6malY8Pqw
+ BntDDlA+g5FdYkQ1MaaddxLnq8E/+b0kL6ISNQT1vQom5b1qMheiT+EByDR0hXZ9fQ9G
+ GHuQFU25vLUe8K8OUKMm5Gm7EuaujIrquAfjtLy+6vXFs6IGl4gvF36PsXWRHe3nI7Wq
+ Gltljtkh2GTbPQc20VQW06mfRrr9DHU6J1ur+oO7bkI9Eh9AgnnspnuMaWo4M3BK0Gq5
+ L4osTAgBmg/OWVrzfrmOEbWALI1IwFEu0saS0UVXwfBf51fLzHaxTDwiXz+AvEjTFja4
+ eDpw==
+X-Gm-Message-State: AOJu0YxRMaUqfaLOySZ+qkAXWeV7F0jSVF4DYaLfOBRA48rR9ASHKjMk
+ mTCWrj/FEfzkNL1/ZevI+Cco9fySlScq8OtGg2pPD4TLwAu3hleIoHrlzGJfR6CeJSI=
+X-Gm-Gg: Acq92OEyCv059+HHga38qtphntgD+LHPLj9/YfYtcrRcKxb1gy5zrJOVFEbXZoDNXKD
+ lgmvHoAeAAiWOF79pbxt+XIshbytssnedyghmO2QfGFb6vLwM7CtkC4EGjHx04iFLS6H61XX5Do
+ g5oJmcc5vrjCPl4wLxvYFZKoKpnXuGAbON9WesV+/mADJ1VACq93tKQXa+6sfy2CpIHOPvlhh09
+ Lh89LIWR/lSVcZOpp35GRK3GAFMxf8qkOKF476Q/tD7dw4TRw+7uLKoPs6TCq0eRh2s7q0JTXSf
+ 0XMhX7qI9iI6tknotgUZkN57sYDApdofMEB/gO3BSnxkUFe3CtMBT2/A8Fw71QTDkyz/ctwgYsH
+ lFIBhKpUtVuUVDukvjfNy37CHRKM3MjlUblVve02G0HKQ/LeWDQSiUCpAIfJuQXAC4pm9LDlfFb
+ e565VLp3oLIagi
+X-Received: by 2002:a5d:6684:0:b0:45f:f142:d571 with SMTP id
+ ffacd0b85a97d-460302e453bmr14538784f8f.13.1780878803107; 
+ Sun, 07 Jun 2026 17:33:23 -0700 (PDT)
 Received: from akaWolf-arm ([2a10:1fc0:3::318:6a20])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f368e9fsm46252261f8f.37.2026.06.07.17.33.20
+ ffacd0b85a97d-4601f368e9fsm46252261f8f.37.2026.06.07.17.33.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 07 Jun 2026 17:33:21 -0700 (PDT)
+ Sun, 07 Jun 2026 17:33:22 -0700 (PDT)
 From: Artjom Vejsel <akawolf0@gmail.com>
 To: wireguard@lists.zx2c4.com
 Cc: Jason@zx2c4.com,
 	Artjom Vejsel <akawolf0@gmail.com>
-Subject: [PATCH wireguard-go 2/3] conn: reset udpAddrPool slice length before
- copy
-Date: Mon,  8 Jun 2026 03:33:06 +0300
-Message-ID: <20260608003307.2598372-3-akawolf0@gmail.com>
+Subject: [PATCH wireguard-go 3/3] conn: propagate ancillary data to coalesced
+ split frames
+Date: Mon,  8 Jun 2026 03:33:07 +0300
+Message-ID: <20260608003307.2598372-4-akawolf0@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260608003307.2598372-1-akawolf0@gmail.com>
 References: <20260608003307.2598372-1-akawolf0@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Mon, 05 Oct 2026 06:55:46 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -86,53 +87,49 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-The pooled net.UDPAddr is allocated once with IP = make([]byte, 16) and
-reused indiscriminately for both IPv4 and IPv6 sends. The current code
-copies the destination address first and then truncates the slice to
-the desired length, which works in isolation but corrupts the address
-on pool reuse:
+splitCoalescedMessages divides a single coalesced read into individual
+frames by copying Buffers[0][start:end], setting N, and propagating
+Addr to each child slot, but it does not propagate the control buffer
+(OOB) or its length (NN). The parent buffer holds the cmsg returned by
+recvmmsg for the entire coalesced datagram, including the PKTINFO that
+identifies the destination address of the original packet. The child
+slots retain whatever control content was left over from a previous
+recv, with NN == 0 for unused slots and stale data for reused ones.
 
-  1. v4 send: copy(ua.IP, as4[:]) writes 4 bytes, then
-     ua.IP = ua.IP[:4] truncates the slice.
-  2. ua is returned to the pool with len(IP) == 4.
-  3. v6 send: copy(ua.IP, as16[:]) copies only min(len(dst), len(src))
-     == 4 bytes (the slice header still says len == 4), then
-     ua.IP = ua.IP[:16] re-extends the slice over the stale tail.
+receiveIP then calls getSrcFromControl(msg.OOB[:msg.NN], ep) on each
+emitted message. Because NN is zero for every split frame except the
+first (which still aliases the parent's storage), StdNetEndpoint.src
+is never populated for the rest, and setSrcControl on the
+corresponding send writes empty control bytes. The kernel falls back
+to route-based source selection, defeating the sticky source address
+mechanism whenever UDP_GRO coalesces packets — which is the common
+case on Linux 5.12+.
 
-The result is an outgoing IPv6 datagram with the upper 4 bytes of the
-intended destination address followed by 12 stale bytes from prior
-sends. tcpdump shows truncated destinations like 2001:db8:: instead of
-2001:db8::aaa, and either drops the packet or routes it to a wrong
-peer.
-
-Resize the slice before copy so the destination is written into the
-full address space and any stale bytes are overwritten.
+Copy the parent's control buffer and length into each split child. The
+n == i case is skipped because the destination slot is the parent
+itself and the slices already alias.
 
 Signed-off-by: Artjom Vejsel <akawolf0@gmail.com>
 ---
- conn/bind_std.go | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ conn/bind_std.go | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/conn/bind_std.go b/conn/bind_std.go
-index c88ed4e..72f3047 100644
+index 72f3047..88c0ce3 100644
 --- a/conn/bind_std.go
 +++ b/conn/bind_std.go
-@@ -368,13 +368,13 @@ func (s *StdNetBind) Send(bufs [][]byte, endpoint Endpoint) error {
- 	ua := s.udpAddrPool.Get().(*net.UDPAddr)
- 	defer s.udpAddrPool.Put(ua)
- 	if is6 {
-+		ua.IP = ua.IP[:16]
- 		as16 := endpoint.DstIP().As16()
- 		copy(ua.IP, as16[:])
--		ua.IP = ua.IP[:16]
- 	} else {
-+		ua.IP = ua.IP[:4]
- 		as4 := endpoint.DstIP().As4()
- 		copy(ua.IP, as4[:])
--		ua.IP = ua.IP[:4]
- 	}
- 	ua.Port = int(endpoint.(*StdNetEndpoint).Port())
- 	var (
+@@ -528,6 +528,11 @@ func splitCoalescedMessages(msgs []ipv6.Message, firstMsgAt int, getGSO getGSOFu
+ 			copied := copy(msgs[n].Buffers[0], msg.Buffers[0][start:end])
+ 			msgs[n].N = copied
+ 			msgs[n].Addr = msg.Addr
++			if n != i {
++				oobCopied := copy(msgs[n].OOB[:cap(msgs[n].OOB)], msg.OOB[:msg.NN])
++				msgs[n].OOB = msgs[n].OOB[:oobCopied]
++				msgs[n].NN = oobCopied
++			}
+ 			start = end
+ 			end += gsoSize
+ 			if end > msg.N {
 -- 
 2.54.0
 
