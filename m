@@ -4,51 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C38DCD6E55
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  1 Jun 2026 14:34:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD011CD8C9D
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  8 Jun 2026 13:36:29 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id c1e97a53;
-	Mon, 1 Jun 2026 14:33:39 +0000 (UTC)
-Received: from mail-oo1-f80.google.com (mail-oo1-f80.google.com
- [209.85.161.80])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id c68837b7
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 372441ab;
+	Mon, 8 Jun 2026 13:36:28 +0000 (UTC)
+Received: from smtp-out2.suse.de (smtp-out2.suse.de
+ [2a07:de40:b251:101:10:150:64:2])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 0b913d66
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 1 Jun 2026 14:33:33 +0000 (UTC)
-Received: by mail-oo1-f80.google.com with SMTP id
- 006d021491bc7-69d92a86e3bso10740716eaf.1
- for <wireguard@lists.zx2c4.com>; Mon, 01 Jun 2026 07:33:33 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780324412; x=1780929212;
- h=to:from:subject:message-id:date:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=/EPzY9y+i2FcltGH4jmZUHKU6LHLG85QdDxKqek6CXU=;
- b=pQw4MUsT8jNS91MQDvzlG/qX7pKvSwbJ7Ridx9FaFGwIZ6ztRH2oRE0SBQzb6ez8o0
- GDMgnbGh4FuJ9KzlN3ZKmB2BzpkBgXilS2GUyOInHMeYRFqmTE9IGvQPtzW/NY4+beeo
- upjtNNUQX3U4v2Gt450aRP6Hqgzw95E/QuyYWQJhTlwhbZWBqmuZK3+lpsygedY/yuT2
- 6njlQMYNrXvY+2SLZNa6AAAlgXuWUWkRlOSEunna1/RpT/nFDp3JGIZa06OND6q/aPPr
- a/mBtTqLVJmZQSYZFOfA9didhoNIhFIHI8inej+R0/CAxJN6tXcqX8MBeT7HTf4dNbWk
- LiRQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+J8K+PudwV/GjfLZz4CwlMAdtHcHswRa0LI55Zu3MCSFghLgYbr/ftH5m6gTrg1zHsA08HtstTU2I=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0Yx7xYDQroFus8SUv2Rg5LMv+xC2Vm2L9Gqn2M/fPNxxDyx9ACTF
- P/ZU36wNTps++4xWcpcKqdh8FaIRAq1Dc0Z5Dj7YjAOloBvzHw/GSHr6rWW4WWSioS6TKa3vmR0
- SKik7yYOvT0pHIyH+JANU8OiRK8/d0MHA4Snhy3yUpOlomqY9J/pH2Yd3rqI=
+ for <wireguard@lists.zx2c4.com>; Mon, 8 Jun 2026 13:36:21 +0000 (UTC)
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 0CB1E66FD3;
+ Mon,  8 Jun 2026 13:36:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+ t=1780925781; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=lGdUCmEKeE5LE4P9qQJ1QzkY1tkWxF02AJQjnr/iq2s=;
+ b=t4Mz0gW1nRliEeYYtkH5Q056ANkSHXKFlUz0utZxECDlIHyUApJPrWC/KUV9TKwgdh2sFt
+ 2pJotAA16EW/UnEl7cHyKUxadbO4QOIls5kVHgQXObKwL2IPn1BxHqbLcendtmOH8/zNwu
+ rgPOWgKyr4ZCrxlNZNf19eLth7+dj+c=
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.com header.s=susede1 header.b=t4Mz0gW1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+ t=1780925781; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=lGdUCmEKeE5LE4P9qQJ1QzkY1tkWxF02AJQjnr/iq2s=;
+ b=t4Mz0gW1nRliEeYYtkH5Q056ANkSHXKFlUz0utZxECDlIHyUApJPrWC/KUV9TKwgdh2sFt
+ 2pJotAA16EW/UnEl7cHyKUxadbO4QOIls5kVHgQXObKwL2IPn1BxHqbLcendtmOH8/zNwu
+ rgPOWgKyr4ZCrxlNZNf19eLth7+dj+c=
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E37CE779A7;
+ Mon,  8 Jun 2026 13:36:20 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 0eYWNlTFJmpZBgAAD6G6ig
+ (envelope-from <rfrohl@suse.com>); Mon, 08 Jun 2026 13:36:20 +0000
+From: Robert Frohl <rfrohl@suse.com>
+To: wireguard@lists.zx2c4.com
+Cc: Robert Frohl <rfrohl@suse.com>
+Subject: [PATCH] Revert "dns-hatchet: apply resolv.conf's selinux context to
+ new resolv.conf"
+Date: Mon,  8 Jun 2026 15:36:10 +0200
+Message-ID: <20260608133610.108416-1-rfrohl@suse.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-X-Received: by 2002:a4a:e915:0:b0:685:3561:8926 with SMTP id
- 006d021491bc7-69e103afeb8mr5574685eaf.45.1780324411350; Mon, 01 Jun 2026
- 07:33:31 -0700 (PDT)
-Date: Mon, 01 Jun 2026 07:33:31 -0700
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <6a1d983b.b111c304.35cd64.0028.GAE@google.com>
-Subject: [syzbot] [wireguard?] KCSAN: data-race in wg_socket_send_skb_to_peer
- / wg_socket_send_skb_to_peer (9)
-From: syzbot <syzbot+9ca7674fa7521a3f1bc2@syzkaller.appspotmail.com>
-To: Jason@zx2c4.com, andrew+netdev@lunn.ch, davem@davemloft.net, 
- edumazet@google.com, kuba@kernel.org, linux-kernel@vger.kernel.org, 
- netdev@vger.kernel.org, pabeni@redhat.com, syzkaller-bugs@googlegroups.com, 
- wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 0CB1E66FD3
+X-Spamd-Result: default: False [-2.99 / 50.00]; BAYES_HAM(-2.98)[99.91%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.com:s=susede1];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ MIME_TRACE(0.00)[0:+]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ TO_DN_SOME(0.00)[];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ FROM_HAS_DN(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:dkim,suse.com:email,suse.com:mid,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ RCVD_TLS_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCPT_COUNT_TWO(0.00)[2]; DKIM_SIGNED(0.00)[suse.com:s=susede1];
+ DKIM_TRACE(0.00)[suse.com:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -63,80 +90,43 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
+This reverts commit 2ce4680bd34f371aacd3c09673c3c907274321cd.
 
-syzbot found the following issue on:
+selinux does not allow every domain to set file contexts and will raise
+relabelto/relabelfrom AVCs and block these changes if a domain tries to update
+the selinux context.
 
-HEAD commit:    9215e74f228f Merge tag 'block-7.1-20260529' of git://git.k..
-git tree:       upstream
-console output: https://syzkaller.appspot.com/x/log.txt?x=10465ef2580000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=f571f22917457cd8
-dashboard link: https://syzkaller.appspot.com/bug?extid=9ca7674fa7521a3f1bc2
-compiler:       Debian clang version 21.1.8 (++20251221033036+2078da43e25a-1~exp1~20251221153213.50), Debian LLD 21.1.8
+It is better to ignore selinux and leave the proper labeling to the
+selinux policy, which can add proper file transitions for the right
+context.
 
-Unfortunately, I don't have any reproducer for this issue yet.
+This also allows for a cleaner change in the selinux policy, because
+otherwise it will need infrastructure to hide the relabel AVCs as well.
 
-Downloadable assets:
-disk image: https://storage.googleapis.com/syzbot-assets/1ddf3069118d/disk-9215e74f.raw.xz
-vmlinux: https://storage.googleapis.com/syzbot-assets/0913e4ffbdb8/vmlinux-9215e74f.xz
-kernel image: https://storage.googleapis.com/syzbot-assets/3fe3943ae796/bzImage-9215e74f.xz
+For reference please see the selinux policy PR:
+  https://github.com/fedora-selinux/selinux-policy/pull/3030
 
-IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+9ca7674fa7521a3f1bc2@syzkaller.appspotmail.com
-
-==================================================================
-BUG: KCSAN: data-race in wg_socket_send_skb_to_peer / wg_socket_send_skb_to_peer
-
-read-write to 0xffff88811af99028 of 8 bytes by task 310 on cpu 1:
- wg_socket_send_skb_to_peer+0xe8/0x130 drivers/net/wireguard/socket.c:182
- wg_socket_send_buffer_to_peer+0xf1/0x120 drivers/net/wireguard/socket.c:199
- wg_packet_send_handshake_initiation drivers/net/wireguard/send.c:40 [inline]
- wg_packet_handshake_send_worker+0x10d/0x160 drivers/net/wireguard/send.c:51
- process_one_work kernel/workqueue.c:3314 [inline]
- process_scheduled_works+0x4f0/0x9c0 kernel/workqueue.c:3397
- worker_thread+0x58a/0x780 kernel/workqueue.c:3478
- kthread+0x22a/0x280 kernel/kthread.c:436
- ret_from_fork+0x146/0x330 arch/x86/kernel/process.c:158
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
-
-read-write to 0xffff88811af99028 of 8 bytes by task 15360 on cpu 0:
- wg_socket_send_skb_to_peer+0xe8/0x130 drivers/net/wireguard/socket.c:182
- wg_packet_create_data_done drivers/net/wireguard/send.c:251 [inline]
- wg_packet_tx_worker+0x12d/0x330 drivers/net/wireguard/send.c:276
- process_one_work kernel/workqueue.c:3314 [inline]
- process_scheduled_works+0x4f0/0x9c0 kernel/workqueue.c:3397
- worker_thread+0x58a/0x780 kernel/workqueue.c:3478
- kthread+0x22a/0x280 kernel/kthread.c:436
- ret_from_fork+0x146/0x330 arch/x86/kernel/process.c:158
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
-
-value changed: 0x0000000000000a2c -> 0x0000000000000ac0
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 0 UID: 0 PID: 15360 Comm: kworker/0:2 Tainted: G        W           syzkaller #0 PREEMPT(lazy) 
-Tainted: [W]=WARN
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/18/2026
-Workqueue: wg-crypt-wg2 wg_packet_tx_worker
-==================================================================
-
-
+Signed-off-by: Robert Frohl <rfrohl@suse.com>
 ---
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
+ contrib/dns-hatchet/hatchet.bash | 2 --
+ 1 file changed, 2 deletions(-)
 
-syzbot will keep track of this issue. See:
-https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
+diff --git a/contrib/dns-hatchet/hatchet.bash b/contrib/dns-hatchet/hatchet.bash
+index bc4d090..6f167cc 100644
+--- a/contrib/dns-hatchet/hatchet.bash
++++ b/contrib/dns-hatchet/hatchet.bash
+@@ -20,11 +20,9 @@ set_dns() {
+ 		[[ ${#DNS_SEARCH[@]} -eq 0 ]] || printf 'search %s\n' "${DNS_SEARCH[*]}"
+ 		} | unshare -m --propagation shared bash -c "$(cat <<-_EOF
+ 			set -e
+-			context="\$(stat -c %C /etc/resolv.conf 2>/dev/null)" || unset context
+ 			mount --make-private /dev/shm
+ 			mount -t tmpfs none /dev/shm
+ 			cat > /dev/shm/resolv.conf
+-			[[ -z \$context || \$context == "?" ]] || chcon "\$context" /dev/shm/resolv.conf 2>/dev/null || true
+ 			mount -o remount,ro /dev/shm
+ 			mount -o bind,ro /dev/shm/resolv.conf /etc/resolv.conf
+ 		_EOF
+-- 
+2.53.0
 
-If the report is already addressed, let syzbot know by replying with:
-#syz fix: exact-commit-title
-
-If you want to overwrite report's subsystems, reply with:
-#syz set subsystems: new-subsystem
-(See the list of subsystem names on the web dashboard)
-
-If the report is a duplicate of another one, reply with:
-#syz dup: exact-subject-of-another-report
-
-If you want to undo deduplication, reply with:
-#syz undup
