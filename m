@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22093CA5FCE
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 06:55:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 283EFCA5FCE
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 06:56:01 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 32f376ae;
-	Mon, 5 Oct 2026 06:55:58 +0000 (UTC)
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com
- [2a00:1450:4864:20::32d])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id cb632338
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 2d38fd76;
+	Mon, 5 Oct 2026 06:56:00 +0000 (UTC)
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com
+ [2a00:1450:4864:20::42d])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id d9c04cd5
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 8 Jun 2026 00:33:21 +0000 (UTC)
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-490acbb0f89so23627875e9.0
- for <wireguard@lists.zx2c4.com>; Sun, 07 Jun 2026 17:33:21 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Mon, 8 Jun 2026 00:33:22 +0000 (UTC)
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-45ef6565cfdso1640642f8f.0
+ for <wireguard@lists.zx2c4.com>; Sun, 07 Jun 2026 17:33:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780878800; x=1781483600; darn=lists.zx2c4.com;
+ d=gmail.com; s=20251104; t=1780878802; x=1781483602; darn=lists.zx2c4.com;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=G7800XX0/jd3oHhl/vxf3RLaE2dN1LF3q0H5SjsvGhk=;
- b=JAbLTrYPo+/tYZPMFH+Ao5m8ccBA8SzWkTZagGVD2VLdXRT7L3pB6m7PT0+6ykuhHV
- DBPkKyqncbJhG7ikWayZrYbjzYzg3pl+BODsy1L64XrD68Y3RRU4mVezSysbUJcYL8id
- MRq//CpXEZwoHuMsrl4CP6b5cifcA8DapmzBJ/FhlZcPpIEvrH4CLJiIEG9LJ1/weKrO
- MkEOn5u223mJDrRLc+lwCkFwyffUzlFVQFpobiZaIndANoKUZcs+Av6anvsk/6ktM4+Z
- 3H+RksGKl7QXXzFZPYV+MOxZN+9Vc9B8Z0VvDvyhXGbXVuft0f1Ne9wwcArG+GmX3In1
- IvfQ==
+ bh=XVhAV0jeLDIesyRfK3czdCVypMekywhIWN/lMQ3dBDM=;
+ b=ADnWSqjuoskCx23Ap0G3xXzsIRNbyyMxpvdBBOwFSCLzR/1QUx7KLU31iCc9egaj7s
+ Q2vALBh+OlIczauFDRqPjjQJxvqNHnYpfh6M0vuHMeliSpFO6pkzjH+kuTG4N9HHlft3
+ dHjWd4C6XiERcAbkr54rXD6D3elU1T5kXlc9qjf630gURsQytpIQv55cbBehK58gYZ1d
+ SOQVsuHv9b/1g2xjxsOCLzK8FUAC5nLBZTFIJscBGBMSxF47PPRw3UPU1ZaWigEsIwEq
+ 2+OQvkr6HOTIk4l3+dYA1m5ukuoHahH+KAoElXPucH5ZFzcOTH96BGPI5Gz3dVvK+yjg
+ uYlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780878800; x=1781483600;
+ d=1e100.net; s=20251104; t=1780878802; x=1781483602;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=G7800XX0/jd3oHhl/vxf3RLaE2dN1LF3q0H5SjsvGhk=;
- b=LmrkWDXKh4qe8gLPFl/2ej+prq1d+vfPPJvM+QXaOq8g52IX4tphxJvc89vQSAVe2d
- ozQ1oUY2GNiCOWB13crfjS7TAPPNmmYY5rnKFpjRLmkAS2RZEiTDc31K41+EBRpBiYn6
- ICI7KGD9BcUOTYHoxXOHAo3u18AC0sx37jZC7j2QI0At8I/52M2Z3v24NGSsKKqoxldG
- i+jgKdR85ug49OTY2HZidnFfNhj+LkpVo2qgVOlIxcDaR/C42IVC5tPh/h34LO42b+ew
- AyIfKaCB7SFMnmS7aD1WSCOu0dWiacy+hKs5z6FzGyAqMZ7J+FXdaVLTpzYXeXdh2Hwg
- 6stA==
-X-Gm-Message-State: AOJu0YxwqBTh2cG7L++qt/QwXbv4eNhRUHdhP/yhCVQOqKXTF0sAZRac
- xj3AjOOsULfoXyXw/lj7S7N8+oRNdBCu7IO/9qGwykcr4sCnQih/Ic8CYlxQbPMiZH8=
-X-Gm-Gg: Acq92OEpbQXEh3CS19dt5ItfdvPOJaCwV0e6MhgEho+NQN5Fqt4dZzpm5y+tN6KMJab
- I3Ap91IJmJPOqDLnm7pHxVlbBlwOWk1PqQXIljIh+kUbXKd7fqsGsNtsD37xtZ1GpqYLic4GHQn
- ChxRQVTnIwp6J+0xZDmWIrqYj4ABJyA+uXBvAh8Q/jbU7H+2yyphGCLXfpXIluXrXoOIY4QvqF9
- yBZbAarDMlOmXJnxChil5TFpgnSoYNVqSEPMG1BNdmMYTNmL+fyZMGc9ReH26bQmJIySJD36h6i
- uKy9R6vlGNBLvMDM9+BPT/1de1xK6+1OgosWseyztxqPidGjCz8hiP8Ap9K/zUCfYqPo1bfAKTf
- nRpYU3zjjDnlyMVtaoHulYlpu9xbvHzsM9RNDnbu6fycPzRTzUsdL83wlJjb5KUulPg62p6LfHv
- YQ0JNNYudYvtAR7eoQydHon5w=
-X-Received: by 2002:a05:600c:4e55:b0:490:601f:d775 with SMTP id
- 5b1f17b1804b1-490c259a232mr226758405e9.5.1780878800465; 
- Sun, 07 Jun 2026 17:33:20 -0700 (PDT)
+ bh=XVhAV0jeLDIesyRfK3czdCVypMekywhIWN/lMQ3dBDM=;
+ b=lDOHUfvxK/Qd9FcswWJRsKMpeLaK6F/988CGCg65VigDTvsTPCa34keIz8zGR3CUwl
+ UM3YLLRoJHHuvecmNHyJAWj4b2XbQ5pLUWp0IIq/lJ/faMAxeIr1Iz9yrZtt2sn4hQqR
+ rqSZwfGiKbEi11zXgX02M9JysLiu9xhuruKf5Z5OV01JpdqgPDCZubWyB+VLi4rLbxg8
+ LTrrF9tYsGdibgqv/QNGbxyUGQa5CNiLUaq4xMhHcP8VTllRsWJRYU2e0mo4bYC5Rclm
+ z+j9K5gokW4kktjqEWq5upZ3J7eDVAkgHqce+zP+8kwKabaD3KL7PiJAc5qriIZ5V8kA
+ nlow==
+X-Gm-Message-State: AOJu0Yx6Ew+e134qIxc0CuUuiCq8pg8TXIfVE8Gk59gwXx7dkGG74aTn
+ iqYNx+P4ICY5EGOHPIsQCgq8anjE4n3mDcfHKn7RBe6d66AcgZZGb3XJx4gC4htzpj8=
+X-Gm-Gg: Acq92OFl0yql04dUuZbuTHqEnWb9TXIjInCRcAMgTtY2R2PbKSLTUN2FCYWmdGStUay
+ HtsXMZM/g4yHjGto3BFcTKJ19o4JaQ2yDX/OMEz8fOr6btOmWMCJGVF9jO4cA69BQwX1kfDH+Qc
+ Ggm3n7p79puiS6TFGBfU2Os9EBUDSgl5LZCTDHJqyO9q1Or0km8YBfTkvvOGloVE+0KiqqpkmP5
+ cVI/8YNHvmU1B5gkXWYf0dOcftexLHw7tqcZ1UYC5kwVX76d23E8VqJ6XYzWwRQIxMjFonkPUkW
+ rEMYBL4kLM35RIziOQebhWs1pRw2K5LWM5t1hsqXNdGgwNtA9H3DFWtoFnbDVNlPxhbvZOCgEqC
+ KqB9UzZbJQ89tmOOJBpGqJJk7BrOeqxodqpar8cZ2SUG8fGMikrk4HHYDzArEpSiGF3rccuae1s
+ y+P3IqptTbT0xW
+X-Received: by 2002:a5d:4e46:0:b0:43d:6244:f8b with SMTP id
+ ffacd0b85a97d-46030505f34mr16194931f8f.13.1780878801970; 
+ Sun, 07 Jun 2026 17:33:21 -0700 (PDT)
 Received: from akaWolf-arm ([2a10:1fc0:3::318:6a20])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f368e9fsm46252261f8f.37.2026.06.07.17.33.19
+ ffacd0b85a97d-4601f368e9fsm46252261f8f.37.2026.06.07.17.33.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 07 Jun 2026 17:33:20 -0700 (PDT)
+ Sun, 07 Jun 2026 17:33:21 -0700 (PDT)
 From: Artjom Vejsel <akawolf0@gmail.com>
 To: wireguard@lists.zx2c4.com
 Cc: Jason@zx2c4.com,
 	Artjom Vejsel <akawolf0@gmail.com>
-Subject: [PATCH wireguard-go 1/3] conn: enable IP_PKTINFO ancillary data on
- PacketConn
-Date: Mon,  8 Jun 2026 03:33:05 +0300
-Message-ID: <20260608003307.2598372-2-akawolf0@gmail.com>
+Subject: [PATCH wireguard-go 2/3] conn: reset udpAddrPool slice length before
+ copy
+Date: Mon,  8 Jun 2026 03:33:06 +0300
+Message-ID: <20260608003307.2598372-3-akawolf0@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260608003307.2598372-1-akawolf0@gmail.com>
 References: <20260608003307.2598372-1-akawolf0@gmail.com>
@@ -86,53 +86,53 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-The IPV6_RECVPKTINFO/IP_PKTINFO setsockopts are set during socket
-creation via the ListenConfig control function. However, x/net/ipv4 and
-x/net/ipv6 PacketConn instances maintain their own internal control
-message option tracking (rawOpt), which is consulted during recvmmsg
-unpacking. Without calling SetControlMessage(FlagDst|FlagInterface,
-true), the PacketConn does not advertise these flags to the unpack
-path, and the resulting Message.NN remains zero on every read.
+The pooled net.UDPAddr is allocated once with IP = make([]byte, 16) and
+reused indiscriminately for both IPv4 and IPv6 sends. The current code
+copies the destination address first and then truncates the slice to
+the desired length, which works in isolation but corrupts the address
+on pool reuse:
 
-Because Message.NN is zero, getSrcFromControl never finds a PKTINFO
-cmsg, StdNetEndpoint.src is never populated, and setSrcControl writes
-empty control bytes on send. The kernel then selects the outgoing
-source address by route lookup (RFC 6724) rather than honoring the
-destination address of the incoming packet. The sticky source address
-behavior is silently broken on hosts with multiple addresses on the
-listening interface.
+  1. v4 send: copy(ua.IP, as4[:]) writes 4 bytes, then
+     ua.IP = ua.IP[:4] truncates the slice.
+  2. ua is returned to the pool with len(IP) == 4.
+  3. v6 send: copy(ua.IP, as16[:]) copies only min(len(dst), len(src))
+     == 4 bytes (the slice header still says len == 4), then
+     ua.IP = ua.IP[:16] re-extends the slice over the stale tail.
 
-Reproduced with a userspace bind on a Linux interface holding two
-global IPv6 addresses, where the route preferred source differs from
-the address the peer initiated the handshake on: the server responded
-from the route-preferred address, the peer rejected the response, and
-the session never established.
+The result is an outgoing IPv6 datagram with the upper 4 bytes of the
+intended destination address followed by 12 stale bytes from prior
+sends. tcpdump shows truncated destinations like 2001:db8:: instead of
+2001:db8::aaa, and either drops the packet or routes it to a wrong
+peer.
+
+Resize the slice before copy so the destination is written into the
+full address space and any stale bytes are overwritten.
 
 Signed-off-by: Artjom Vejsel <akawolf0@gmail.com>
 ---
- conn/bind_std.go | 2 ++
- 1 file changed, 2 insertions(+)
+ conn/bind_std.go | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/conn/bind_std.go b/conn/bind_std.go
-index f5c8816..c88ed4e 100644
+index c88ed4e..72f3047 100644
 --- a/conn/bind_std.go
 +++ b/conn/bind_std.go
-@@ -177,6 +177,7 @@ again:
- 		s.ipv4TxOffload, s.ipv4RxOffload = supportsUDPOffload(v4conn)
- 		if runtime.GOOS == "linux" || runtime.GOOS == "android" {
- 			v4pc = ipv4.NewPacketConn(v4conn)
-+			_ = v4pc.SetControlMessage(ipv4.FlagDst|ipv4.FlagInterface, true)
- 			s.ipv4PC = v4pc
- 		}
- 		fns = append(fns, s.makeReceiveIPv4(v4pc, v4conn, s.ipv4RxOffload))
-@@ -186,6 +187,7 @@ again:
- 		s.ipv6TxOffload, s.ipv6RxOffload = supportsUDPOffload(v6conn)
- 		if runtime.GOOS == "linux" || runtime.GOOS == "android" {
- 			v6pc = ipv6.NewPacketConn(v6conn)
-+			_ = v6pc.SetControlMessage(ipv6.FlagDst|ipv6.FlagInterface, true)
- 			s.ipv6PC = v6pc
- 		}
- 		fns = append(fns, s.makeReceiveIPv6(v6pc, v6conn, s.ipv6RxOffload))
+@@ -368,13 +368,13 @@ func (s *StdNetBind) Send(bufs [][]byte, endpoint Endpoint) error {
+ 	ua := s.udpAddrPool.Get().(*net.UDPAddr)
+ 	defer s.udpAddrPool.Put(ua)
+ 	if is6 {
++		ua.IP = ua.IP[:16]
+ 		as16 := endpoint.DstIP().As16()
+ 		copy(ua.IP, as16[:])
+-		ua.IP = ua.IP[:16]
+ 	} else {
++		ua.IP = ua.IP[:4]
+ 		as4 := endpoint.DstIP().As4()
+ 		copy(ua.IP, as4[:])
+-		ua.IP = ua.IP[:4]
+ 	}
+ 	ua.Port = int(endpoint.(*StdNetEndpoint).Port())
+ 	var (
 -- 
 2.54.0
 
