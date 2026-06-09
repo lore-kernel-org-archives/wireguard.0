@@ -4,71 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6796CA5FCE
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 06:57:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A71A0CA5FE2
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 07:00:25 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id a536a2ad;
-	Mon, 5 Oct 2026 06:56:03 +0000 (UTC)
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com
- [2a00:1450:4864:20::436])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id d4f9052f
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id a8c6b7c8;
+	Mon, 5 Oct 2026 06:56:05 +0000 (UTC)
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com
+ [2a00:1450:4864:20::430])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 9f1296f7
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 8 Jun 2026 00:33:23 +0000 (UTC)
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-45fe59255beso1795286f8f.1
- for <wireguard@lists.zx2c4.com>; Sun, 07 Jun 2026 17:33:23 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Tue, 9 Jun 2026 22:01:51 +0000 (UTC)
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-45eea68dd6fso3241972f8f.2
+ for <wireguard@lists.zx2c4.com>; Tue, 09 Jun 2026 15:01:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780878803; x=1781483603; darn=lists.zx2c4.com;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kHVIIcBEecJ36xkvRIpu1xJVb7BfbaLZ6hqzWpzMV5E=;
- b=EzLn+rhPfOWV9bWyCn46Yvt68j1C2BWMBBPsLkTYrc9IoY50EWjr4w2yzR526PhmMl
- RTUL7W57HZv4pGL59rd5bkGftHsy7Wj4rpybVASaG4srQOblLWw9sfcxZkpCL1cj21fU
- yD9wRcDY4CVlm5VKFxVM4p77+qG5ISeZWsRe4XM4ANKXU9yUNtFYA98PVkEqU3agHjKD
- x66PN6VOG8ovbrbQAuDScngYwXlqpGQALbuJ8yS13D4IOttrWuTgrPCZKuDojiTqE01w
- BX8VZBSb356ClEJIN2YKPjcfVWfg1H1lN94T5clP8v9C1l/TVVI7iB68niDJp2ZKH+0b
- r//g==
+ d=gmail.com; s=20251104; t=1781042511; x=1781647311; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=4NXNT6GX4lYRy9eecNMpJTgAlXoMReTDAmcvsHVIiNU=;
+ b=VaE7H4zEvXHA3ToesdJJoSYFnM1KnQbIHXEnqgv3hOsYz/CP0baE98px1wjhsHnK7C
+ 9daQtD5vROLHfeh7NDCkSFy1seXXfcNRBPAUMe3+rjtddc0KYITGJ8y0mT6OVwX5aT8R
+ lGxkYYB10U/mVBNqVexdRmSBcQq0yf9pRoK6V0Owg7f7awYIg67I53Y63baDVtPxXQ48
+ RZ78jZK/Cixv1cBV5KPuDBRSYYmVGgCoq9MEO4GVaXSWK/eXvxdl9OlJM+mvbsru7WXl
+ fQcdnoFpkNtOi/hMVRkC47MG75krfs8t5IBua3wnF2HLgxYmTNK5JQjNCzcvtZckdK9X
+ g8ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780878803; x=1781483603;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=kHVIIcBEecJ36xkvRIpu1xJVb7BfbaLZ6hqzWpzMV5E=;
- b=oV5TLAOVVRRrEKhNObokr7DDDQNv7fhkt6YwZ4dqVuCzeSCbLrdQ2FNuZ6malY8Pqw
- BntDDlA+g5FdYkQ1MaaddxLnq8E/+b0kL6ISNQT1vQom5b1qMheiT+EByDR0hXZ9fQ9G
- GHuQFU25vLUe8K8OUKMm5Gm7EuaujIrquAfjtLy+6vXFs6IGl4gvF36PsXWRHe3nI7Wq
- Gltljtkh2GTbPQc20VQW06mfRrr9DHU6J1ur+oO7bkI9Eh9AgnnspnuMaWo4M3BK0Gq5
- L4osTAgBmg/OWVrzfrmOEbWALI1IwFEu0saS0UVXwfBf51fLzHaxTDwiXz+AvEjTFja4
- eDpw==
-X-Gm-Message-State: AOJu0YxRMaUqfaLOySZ+qkAXWeV7F0jSVF4DYaLfOBRA48rR9ASHKjMk
- mTCWrj/FEfzkNL1/ZevI+Cco9fySlScq8OtGg2pPD4TLwAu3hleIoHrlzGJfR6CeJSI=
-X-Gm-Gg: Acq92OEyCv059+HHga38qtphntgD+LHPLj9/YfYtcrRcKxb1gy5zrJOVFEbXZoDNXKD
- lgmvHoAeAAiWOF79pbxt+XIshbytssnedyghmO2QfGFb6vLwM7CtkC4EGjHx04iFLS6H61XX5Do
- g5oJmcc5vrjCPl4wLxvYFZKoKpnXuGAbON9WesV+/mADJ1VACq93tKQXa+6sfy2CpIHOPvlhh09
- Lh89LIWR/lSVcZOpp35GRK3GAFMxf8qkOKF476Q/tD7dw4TRw+7uLKoPs6TCq0eRh2s7q0JTXSf
- 0XMhX7qI9iI6tknotgUZkN57sYDApdofMEB/gO3BSnxkUFe3CtMBT2/A8Fw71QTDkyz/ctwgYsH
- lFIBhKpUtVuUVDukvjfNy37CHRKM3MjlUblVve02G0HKQ/LeWDQSiUCpAIfJuQXAC4pm9LDlfFb
- e565VLp3oLIagi
-X-Received: by 2002:a5d:6684:0:b0:45f:f142:d571 with SMTP id
- ffacd0b85a97d-460302e453bmr14538784f8f.13.1780878803107; 
- Sun, 07 Jun 2026 17:33:23 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1781042511; x=1781647311;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4NXNT6GX4lYRy9eecNMpJTgAlXoMReTDAmcvsHVIiNU=;
+ b=BmTr6NjpbgiX0QUekQ7Job3YjnG3Ez3tu+JipUDJdjxdTsAYmu1Q0RK3lXbGarwX+H
+ MZ8vMTC+x4SZ4NJp34b2Kk2GJTJ2dWOFmYcEf8degsvrz6wx7Xr2QxP5Ll4GZw02wvia
+ 7ozGC+L/0UrIs8BQsJm4n+1yVhhcPJa+LIIGm1wO+MtZ9Z9BJXsey8N6mo3ILDftlftu
+ Dy7PGKE8nm538qaKsAttBGPszwWXjONA6BrC2HlUEq+XFhAryFwCob766orwdIClvQG+
+ QI3JVWoDnzVvVh8BYnruULieR8T/62d/jz7V6wakDe9iDFutQbAOuwWtNMM71vf+/3Bl
+ 8VrA==
+X-Gm-Message-State: AOJu0YzfC6MirQWGwbnDaBxYqQNL6SMc0wMSUXfC6mDoayqHXSuekdQD
+ FFUujC10neF6Ceqah4F6AoaoMdKSCwGRJMquiHGP4PVmgq/pMYwFhfg1t1oCJQU7
+X-Gm-Gg: Acq92OGFZUuVFSGj6vANyenuSCMi+CYfPblGRMCdYtCD6B9uOfGdD3NRKg2z1kNpzUK
+ Su8HVWCb0N5tC4RTmlpCC1wL++yqRyqWIHkM+ZptT3BDcTBEafKwjuf6zTUpmAcruwSiuWVc+zq
+ OeGHUtHU2Ev3HOuKerBt9CAFP1T3YnYy/R6IyDKukXhkFjaxy9cx5TwZJ3x2uRnuhTlknLKGLWH
+ ugK/uYanwPGZjW0sfERitHINH1cQNntMiAwVEAymnFHfzH3N2GlMPFzYtg+KHrZ2Ri0KxSWCJfs
+ LNTWcr43PE2PaP7WvEzacvBA9PeokrDBPD0CSnJmvZlabRLHU/oonUtnzttS87AEYNWeED963ky
+ VoucBPgTSKckliyIyVcwOgspc6SkuIipT9qBEHiZHJnUDqLKQLDW7+hpSpZDgjYv6U56zxxS+8I
+ uh+l3FhPpL6Unr
+X-Received: by 2002:a05:6000:c01:b0:45e:ed10:8dff with SMTP id
+ ffacd0b85a97d-4603050f573mr26243458f8f.24.1781042509287; 
+ Tue, 09 Jun 2026 15:01:49 -0700 (PDT)
 Received: from akaWolf-arm ([2a10:1fc0:3::318:6a20])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f368e9fsm46252261f8f.37.2026.06.07.17.33.22
+ ffacd0b85a97d-4602cda3651sm54422367f8f.32.2026.06.09.15.01.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 07 Jun 2026 17:33:22 -0700 (PDT)
+ Tue, 09 Jun 2026 15:01:48 -0700 (PDT)
 From: Artjom Vejsel <akawolf0@gmail.com>
 To: wireguard@lists.zx2c4.com
-Cc: Jason@zx2c4.com,
-	Artjom Vejsel <akawolf0@gmail.com>
-Subject: [PATCH wireguard-go 3/3] conn: propagate ancillary data to coalesced
- split frames
-Date: Mon,  8 Jun 2026 03:33:07 +0300
-Message-ID: <20260608003307.2598372-4-akawolf0@gmail.com>
+Cc: Jason@zx2c4.com
+Subject: [PATCH wireguard-go 0/3] conn: fix sticky source address on multi-IP
+ hosts
+Date: Wed, 10 Jun 2026 01:01:35 +0300
+Message-ID: <20260609220138.4160252-1-akawolf0@gmail.com>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260608003307.2598372-1-akawolf0@gmail.com>
-References: <20260608003307.2598372-1-akawolf0@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -87,49 +83,66 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-splitCoalescedMessages divides a single coalesced read into individual
-frames by copying Buffers[0][start:end], setting N, and propagating
-Addr to each child slot, but it does not propagate the control buffer
-(OOB) or its length (NN). The parent buffer holds the cmsg returned by
-recvmmsg for the entire coalesced datagram, including the PKTINFO that
-identifies the destination address of the original packet. The child
-slots retain whatever control content was left over from a previous
-recv, with NN == 0 for unused slots and stale data for reused ones.
+Three independent bugs in conn/bind_std.go cause the sticky source
+address feature to silently fail on hosts with multiple addresses on
+the listening interface. With UDP_GRO enabled (Linux 5.12+) the
+brokenness compounds: even after fixing PKTINFO delivery on the
+PacketConn, coalesced reads drop the cmsg on every frame past the
+first.
 
-receiveIP then calls getSrcFromControl(msg.OOB[:msg.NN], ep) on each
-emitted message. Because NN is zero for every split frame except the
-first (which still aliases the parent's storage), StdNetEndpoint.src
-is never populated for the rest, and setSrcControl on the
-corresponding send writes empty control bytes. The kernel falls back
-to route-based source selection, defeating the sticky source address
-mechanism whenever UDP_GRO coalesces packets — which is the common
-case on Linux 5.12+.
+Symptom on a real-world setup: a Linux box with a static 2001:db8::100
+and a DHCPv6-assigned 2001:db8::943 on enp1s0, where the default
+route's preferred source is ::943. A peer initiates a handshake to
+[::100]:port; the server responds from ::943; the peer rejects the
+response because the source IP does not match its configured endpoint;
+the session never establishes. The user has to install a route hack
+(ip -6 route ... src ::100) as a workaround.
 
-Copy the parent's control buffer and length into each split child. The
-n == i case is skipped because the destination slot is the parent
-itself and the slices already alias.
+After this series, the kernel's PKTINFO ancillary data correctly
+threads through the PacketConn, recvmmsg/UDP_GRO split path, and back
+into the outgoing sendmsg cmsg, so the response is emitted from the
+address the peer reached, regardless of route source preference.
 
-Signed-off-by: Artjom Vejsel <akawolf0@gmail.com>
----
- conn/bind_std.go | 5 +++++
- 1 file changed, 5 insertions(+)
+Reproduction via netns, verified end-to-end:
 
-diff --git a/conn/bind_std.go b/conn/bind_std.go
-index 72f3047..88c0ce3 100644
---- a/conn/bind_std.go
-+++ b/conn/bind_std.go
-@@ -528,6 +528,11 @@ func splitCoalescedMessages(msgs []ipv6.Message, firstMsgAt int, getGSO getGSOFu
- 			copied := copy(msgs[n].Buffers[0], msg.Buffers[0][start:end])
- 			msgs[n].N = copied
- 			msgs[n].Addr = msg.Addr
-+			if n != i {
-+				oobCopied := copy(msgs[n].OOB[:cap(msgs[n].OOB)], msg.OOB[:msg.NN])
-+				msgs[n].OOB = msgs[n].OOB[:oobCopied]
-+				msgs[n].NN = oobCopied
-+			}
- 			start = end
- 			end += gsoSize
- 			if end > msg.N {
+  sudo ip netns add srvns && sudo ip netns add cltns
+  sudo ip link add veth-srv type veth peer name veth-srvNS
+  sudo ip link add veth-clt type veth peer name veth-cltNS
+  sudo ip link set veth-srvNS netns srvns
+  sudo ip link set veth-cltNS netns cltns
+  sudo ip link add br-test type bridge
+  sudo ip link set veth-srv master br-test
+  sudo ip link set veth-clt master br-test
+  sudo ip link set veth-srv up
+  sudo ip link set veth-clt up
+  sudo ip link set br-test up
+  sudo ip netns exec srvns ip link set veth-srvNS up
+  sudo ip netns exec srvns ip -6 addr add fd00:1::100/64 dev veth-srvNS
+  sudo ip netns exec srvns ip -6 addr add fd00:1::943/64 dev veth-srvNS
+  sudo ip netns exec cltns ip link set veth-cltNS up
+  sudo ip netns exec cltns ip -6 addr add fd00:1::1/64 dev veth-cltNS
+  sleep 3                                     # wait for DAD
+  sudo ip netns exec srvns ip -6 route get fd00:1::1
+  # confirms: src fd00:1::943 (the preferred source from /64)
+
+Run wireguard-go in each netns with the client's Endpoint set to
+[fd00:1::100]:port. Before the series, tcpdump -i br-test shows the
+handshake response from ::943 and the client immediately roams its
+endpoint to ::943. After the series, the response is from ::100 and
+the client's endpoint stays as configured.
+
+Each patch is independent and reviewable on its own:
+
+  1/3 enables PKTINFO delivery on the receive path so ep.src actually
+      gets populated;
+  2/3 fixes a slice-length pool-reuse bug in Send() that truncates the
+      destination address after v4/v6 transitions;
+  3/3 restores PKTINFO on each frame produced by splitCoalescedMessages
+      so UDP_GRO offload no longer defeats the fix from 1/3.
+
+ conn/bind_std.go | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
 -- 
 2.54.0
 
