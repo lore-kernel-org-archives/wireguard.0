@@ -4,78 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD011CD8C9D
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  8 Jun 2026 13:36:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECF85CD98CF
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 12 Jun 2026 17:04:57 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 372441ab;
-	Mon, 8 Jun 2026 13:36:28 +0000 (UTC)
-Received: from smtp-out2.suse.de (smtp-out2.suse.de
- [2a07:de40:b251:101:10:150:64:2])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 0b913d66
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id c552bb37;
+	Fri, 12 Jun 2026 17:04:56 +0000 (UTC)
+Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 6d6a8b8b
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 8 Jun 2026 13:36:21 +0000 (UTC)
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 0CB1E66FD3;
- Mon,  8 Jun 2026 13:36:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1780925781; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=lGdUCmEKeE5LE4P9qQJ1QzkY1tkWxF02AJQjnr/iq2s=;
- b=t4Mz0gW1nRliEeYYtkH5Q056ANkSHXKFlUz0utZxECDlIHyUApJPrWC/KUV9TKwgdh2sFt
- 2pJotAA16EW/UnEl7cHyKUxadbO4QOIls5kVHgQXObKwL2IPn1BxHqbLcendtmOH8/zNwu
- rgPOWgKyr4ZCrxlNZNf19eLth7+dj+c=
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.com header.s=susede1 header.b=t4Mz0gW1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1780925781; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=lGdUCmEKeE5LE4P9qQJ1QzkY1tkWxF02AJQjnr/iq2s=;
- b=t4Mz0gW1nRliEeYYtkH5Q056ANkSHXKFlUz0utZxECDlIHyUApJPrWC/KUV9TKwgdh2sFt
- 2pJotAA16EW/UnEl7cHyKUxadbO4QOIls5kVHgQXObKwL2IPn1BxHqbLcendtmOH8/zNwu
- rgPOWgKyr4ZCrxlNZNf19eLth7+dj+c=
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E37CE779A7;
- Mon,  8 Jun 2026 13:36:20 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 0eYWNlTFJmpZBgAAD6G6ig
- (envelope-from <rfrohl@suse.com>); Mon, 08 Jun 2026 13:36:20 +0000
-From: Robert Frohl <rfrohl@suse.com>
-To: wireguard@lists.zx2c4.com
-Cc: Robert Frohl <rfrohl@suse.com>
-Subject: [PATCH] Revert "dns-hatchet: apply resolv.conf's selinux context to
- new resolv.conf"
-Date: Mon,  8 Jun 2026 15:36:10 +0200
-Message-ID: <20260608133610.108416-1-rfrohl@suse.com>
-X-Mailer: git-send-email 2.53.0
+ for <wireguard@lists.zx2c4.com>;
+ Fri, 12 Jun 2026 17:04:53 +0000 (UTC)
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id A9B05601E1;
+ Fri, 12 Jun 2026 17:04:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F15B1F000E9;
+ Fri, 12 Jun 2026 17:04:50 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; dkim=pass (1024-bit key,
+ unprotected) header.d=zx2c4.com header.i=@zx2c4.com header.a=rsa-sha256
+ header.s=20210105 header.b=VNID4pV4
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1781283890;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=H/xTHWGyytj0Wxk8h7O66xTkTiDPvX943AH0jZq6AfQ=;
+ b=VNID4pV4x1Hj0CDhn2IUn2atbl5IHTISL88phB6kF0uAktdFyOClfnrvEhEKazofHyXLB7
+ 9oIQz5LUIXvhWBm9ePAEC8LF51vVsS5wt2xoCjqMUZLmZwlCwzraEFmQQo0LxeC6G45NT1
+ S1xIFedc48uxG7Dy7aZWulDpl4TSj5Q=
+Received: by mail.zx2c4.com (OpenSMTPD) with ESMTPSA id 480ffa8e
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Fri, 12 Jun 2026 17:04:50 +0000 (UTC)
+Date: Fri, 12 Jun 2026 19:04:47 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Robert Frohl <rfrohl@suse.com>
+Cc: wireguard@lists.zx2c4.com
+Subject: Re: [PATCH] Revert "dns-hatchet: apply resolv.conf's selinux context
+ to new resolv.conf"
+Message-ID: <aiw8L3XwjibHS2_-@zx2c4.com>
+References: <20260608133610.108416-1-rfrohl@suse.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 0CB1E66FD3
-X-Spamd-Result: default: False [-2.99 / 50.00]; BAYES_HAM(-2.98)[99.91%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.com:s=susede1];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- MIME_TRACE(0.00)[0:+]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- TO_DN_SOME(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- FROM_HAS_DN(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:dkim,suse.com:email,suse.com:mid,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
- RCVD_TLS_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCPT_COUNT_TWO(0.00)[2]; DKIM_SIGNED(0.00)[suse.com:s=susede1];
- DKIM_TRACE(0.00)[suse.com:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260608133610.108416-1-rfrohl@suse.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -90,43 +60,18 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This reverts commit 2ce4680bd34f371aacd3c09673c3c907274321cd.
+On Mon, Jun 08, 2026 at 03:36:10PM +0200, Robert Frohl wrote:
+> This reverts commit 2ce4680bd34f371aacd3c09673c3c907274321cd.
+> 
+> selinux does not allow every domain to set file contexts and will raise
+> relabelto/relabelfrom AVCs and block these changes if a domain tries to update
+> the selinux context.
+> 
+> It is better to ignore selinux and leave the proper labeling to the
+> selinux policy, which can add proper file transitions for the right
+> context.
 
-selinux does not allow every domain to set file contexts and will raise
-relabelto/relabelfrom AVCs and block these changes if a domain tries to update
-the selinux context.
+Does any existent selinux policy have anything to handle this? Or is this
+purely speculative/future-facing?
 
-It is better to ignore selinux and leave the proper labeling to the
-selinux policy, which can add proper file transitions for the right
-context.
-
-This also allows for a cleaner change in the selinux policy, because
-otherwise it will need infrastructure to hide the relabel AVCs as well.
-
-For reference please see the selinux policy PR:
-  https://github.com/fedora-selinux/selinux-policy/pull/3030
-
-Signed-off-by: Robert Frohl <rfrohl@suse.com>
----
- contrib/dns-hatchet/hatchet.bash | 2 --
- 1 file changed, 2 deletions(-)
-
-diff --git a/contrib/dns-hatchet/hatchet.bash b/contrib/dns-hatchet/hatchet.bash
-index bc4d090..6f167cc 100644
---- a/contrib/dns-hatchet/hatchet.bash
-+++ b/contrib/dns-hatchet/hatchet.bash
-@@ -20,11 +20,9 @@ set_dns() {
- 		[[ ${#DNS_SEARCH[@]} -eq 0 ]] || printf 'search %s\n' "${DNS_SEARCH[*]}"
- 		} | unshare -m --propagation shared bash -c "$(cat <<-_EOF
- 			set -e
--			context="\$(stat -c %C /etc/resolv.conf 2>/dev/null)" || unset context
- 			mount --make-private /dev/shm
- 			mount -t tmpfs none /dev/shm
- 			cat > /dev/shm/resolv.conf
--			[[ -z \$context || \$context == "?" ]] || chcon "\$context" /dev/shm/resolv.conf 2>/dev/null || true
- 			mount -o remount,ro /dev/shm
- 			mount -o bind,ro /dev/shm/resolv.conf /etc/resolv.conf
- 		_EOF
--- 
-2.53.0
-
+Also, wondering if any distros are still shipping the hatchet.
