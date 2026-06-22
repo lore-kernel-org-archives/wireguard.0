@@ -4,81 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21486CA5FFF
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 09:24:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F17FCCA5FFD
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 09:24:45 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 86970299;
-	Mon, 5 Oct 2026 06:56:43 +0000 (UTC)
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com
- [2a00:1450:4864:20::32f])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 7cd3cb95
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 851faf76;
+	Mon, 5 Oct 2026 06:59:45 +0000 (UTC)
+Received: from sendmail.purelymail.com (sendmail.purelymail.com
+ [34.202.193.197])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id cc49a99a
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sat, 3 Oct 2026 20:41:29 +0000 (UTC)
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4a1682bff3cso3460645e9.1
- for <wireguard@lists.zx2c4.com>; Sat, 03 Oct 2026 13:41:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791060089; x=1791664889; darn=lists.zx2c4.com;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=E6OYkIaqPnUxrvuUCIn54MgF/0vP3bL77kQ5vHowhhU=;
- b=nSEiC/oZnwvTx2cws9CahkrBVOBNMe/PHpr9aNiWOIk919HOQtyG/9YS3mTrMyRGEY
- os9b+OVR+jFic2J5IWlZ+gJmosKEb/LNa2/W3jkbnnatcdiJd7VxZTwtAcghneoL9Sq/
- PPxDX9yDRsb7n6JM5Dpguoq63VfN7n+KgvyUIyDdHRr5fx3fzsgxa1mc4GOyJ7I1aKx9
- NQdSPLsZBgbIz89xvObK5qm2jT+MSKFclxErndnkrdANLLN1Zw8I0xhfxhxVdSELkUM8
- 03gnrqUklqPPc2yb6xvEx7cBmIfiSPV26mM4EgrBsxNfIf/r5A7Y7aqy8UfYLh3w6/3h
- RagQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791060089; x=1791664889;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=E6OYkIaqPnUxrvuUCIn54MgF/0vP3bL77kQ5vHowhhU=;
- b=x23nkIFDccFEAAcaFFs4KhvONS5m5dNnlVn9wmVshnTPiDJ0bGyApMNiAJo6swJv5L
- WkVOhZ9PRPSfJa/Fynp2Mn/RqdBme2VKiykwijQpp3FHHXTTO82uKiEcHB1K3HJ6XzyP
- dPreGp0S13HdiZXl2GJwlvh6ALw17ipFs4gIF0TK93qHqy9Pfe70RRm3IB0FRqXcBuwB
- 5Sj1KqTtt44W8k5sgFI+4al5DPmzSBQ6VlNiewsDUDO7D7OilBtTAD+dnANTqwVcj3Qj
- 6dq8Pr1e8FEIWIP3PnwwCq291SQwC3lSp0Ssc+sNbS91Au6EA8kZusFit2LnFGmJXDAH
- WSIA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxePu47SNVPu/lgKAbtzYMuYQF7Jd2zubYe/Q0Y5OHEklsAunhqNUl0KZgECcjFDKz7Pdix02lRT4o=@lists.zx2c4.com
-X-Gm-Message-State: AFuF++l93znloAeUmbqlNqB82w8HFWqkU9n4WWXx6PWLoUDpNqqeonOB
- pFnm/Pn8/t/myZmN+AatLg0XPjn2B4X/fdz13ns3RYxVPryrzBOWeNnE
-X-Gm-Gg: AYBFou0BsB7pKZzwdY96ahbKM1XZa9K9J9rtnuKWNX9Y4DLJ/+v+BQ3JCAFxvlj8+T1
- L8FcEYnK1KeIMV/Mf6OHRU6cVBA847FgkSi64H0B15CvEHvqFPPVE7h5ItaWlh5wu8FTUSFfLrV
- dQQkz7rubmjXKlRPQCbj+mlUnKr/xu1R037N0l4YS773gdcs5kOhNR/Awe0eMsEwUPbFpQ4D3Tc
- maMjjJq9/qtPHDGgSTnuDnOjPPwytpFgRTXTVWXCqew7LYQlVkZ0t5X417CcvZ0SoJ95K1EuxVW
- oOH+7GlulcUz0lRVzy7D7DKCWp/3BegmCgiGBKsf4G1HknY9eayFK+jU5Inetr3bU4kuT3vrknA
- 9oAX4LtF0JjT8fwz/dpdUJOTTGZrzRkdm/LhSvrxJd8kLfMeDz4G0sQsf2jHaxZelPAVf5DEH4X
- TJoQyj2WS0PMeW2Tjt2GXr5pnv3qkBkuY5+oZH3EDWkVL2EJvzuRjd+/UCfxX7LemghFpMaHuiG
- oQ=
-X-Received: by 2002:a05:600c:6212:b0:49d:15b9:2a2a with SMTP id
- 5b1f17b1804b1-4a1680e9466mr44010265e9.10.1791060088970; 
- Sat, 03 Oct 2026 13:41:28 -0700 (PDT)
-Received: from Mac ([188.163.8.107]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a027741586sm197124835e9.14.2026.10.03.13.41.28
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 03 Oct 2026 13:41:28 -0700 (PDT)
-From: Andrii Pasichnyk <apasichnik9@gmail.com>
-To: "Jason A . Donenfeld" <Jason@zx2c4.com>, netdev@vger.kernel.org,
- wireguard@lists.zx2c4.com
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
- "David S . Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@kernel.org>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, linux-kernel@vger.kernel.org,
- netdev-bot+sinfo@kernel.org
-Subject: Re: [PATCH net] wireguard: peer: free packets left on the per-peer
- queues on removal
-Date: Sat,  3 Oct 2026 23:41:27 +0300
-Message-ID: <20261003204127.15139-1-apasichnik9@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <179105878022.1402591.10615903497956533993@kernel.org>
-References: <20261003201625.4572-1-apasichnik9@gmail.com>
- <179105878022.1402591.10615903497956533993@kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Mailman-Approved-At: Mon, 05 Oct 2026 06:55:46 +0000
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 22 Jun 2026 19:34:54 +0000 (UTC)
+DKIM-Signature: a=rsa-sha256;
+ b=T6m/C7En0hnNaKXDbFC9xFrB0WCEmrxA+Aj7cdIDRL9ulAFh2bJjlgHuR5ElSOLQfFc+m5XYzQiIEbhaR1PJapiZNyWPzU5b55QKScHdvYY3FbBzgZ3YKEqHAWqcAQC9Hp7ZpK+AIRSDCL3AMnWSPxcdky1oeLDxUd6d1q1vtcUZhSvFdf/JvrKWWayrRkTLeiKQUC1SKXGzgmw38u+eQ8ur3GfeIudFwdkZ4YloheucB6zT+gmDn2gG275UYNyO1/4BwP8XgkTBuMfot5vww0H//JEdtdrM2VDqPn6FuCz/c4cNLU2vT70DvHINY4axKwdiq2z9wZMY4Ak7UNUPtw==;
+ s=purelymail1; d=rcpassos.me; v=1;
+ bh=VQKtJkkEsax0s8nQV8C6c5S66vPEhwny0vyW6W7sYEo=;
+ h=Received:Date:Subject:From:To; 
+DKIM-Signature: a=rsa-sha256;
+ b=nU3CWbKXFX0sXVdNteVleVU7L5fQur84nLtF4o8NVWE5yX2t1NT8R16nWP7MBaryuDNmNQvYD0fPSl9LxE+0ow+pxrvITymzKRIYxzMLwv3/+mgpEMREtY2VLmi+LbKnCwCoe7z+ydN8sHPJYyAswxp0sdNGXp/Lda5qkgF+wf8+PRaRFddmth76oKW7BTszEILTfGcI29NHDyCLkcU9f0a9CrMMx+XaGvOzi4fD43vSrly8JytzhTXFOO7zORV9Tges4XYb2wnsF6lllFfn/bkOylPlsqQmVXBtGTjQGhi2ua5aKG4yyKP1vd1TcMyf8Fj6cZ7+aE+pvtRoWWb/5Q==;
+ s=purelymail1; d=purelymail.com; v=1;
+ bh=VQKtJkkEsax0s8nQV8C6c5S66vPEhwny0vyW6W7sYEo=;
+ h=Feedback-ID:Received:Date:Subject:From:To; 
+Feedback-ID: 45355:7809:null:purelymail
+X-Pm-Original-To: wireguard@lists.zx2c4.com
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -1158097400; 
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+ Mon, 22 Jun 2026 19:34:30 +0000 (UTC)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 22 Jun 2026 16:34:33 -0300
+Message-Id: <DJFTVX3FE7OD.2O8GTO84798T@rcpassos.me>
+Subject: Re: [syzbot] [wireguard?] KCSAN: data-race in
+ wg_socket_send_skb_to_peer / wg_socket_send_skb_to_peer (9)
+From: "Rafael Passos" <rafael@rcpassos.me>
+To: <Jason@zx2c4.com>, <andrew+netdev@lunn.ch>, <davem@davemloft.net>,
+ <edumazet@google.com>, <kuba@kernel.org>, <linux-kernel@vger.kernel.org>,
+ <netdev@vger.kernel.org>, <pabeni@redhat.com>,
+ <syzkaller-bugs@googlegroups.com>, <wireguard@lists.zx2c4.com>, "syzbot"
+ <syzbot+9ca7674fa7521a3f1bc2@syzkaller.appspotmail.com>
+X-Mailer: aerc 0.21.0
+References: <6a1d983b.b111c304.35cd64.0028.GAE@google.com>
+In-Reply-To: <6a1d983b.b111c304.35cd64.0028.GAE@google.com>
+X-Mailman-Approved-At: Mon, 05 Oct 2026 06:59:44 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -93,20 +61,85 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Sat, 3 Oct 2026 20:19:40 +0000 netdev-bot wrote:
-> - How the issue was discovered, e.g. hit in production, hit during
-> development, syzbot report, manual code inspection, LLM or static
-> analysis tool scan.
+Hi,
 
-It was found by an LLM-assisted review of the peer removal path, while
-I was working on a WireGuard change for single-CPU systems; it was not
-hit in production. I then checked the mechanism by hand against
-__napi_poll() and the WireGuard history, and confirmed it with a stress
-test in the WireGuard selftest VM: remove a peer while a UDP flood keeps
-its receive queue busy, re-add it, repeat, then run the selftest's
-created/destroyed object check. Unpatched net-next leaked a peer and its
-keypair 5 times in 2140 removals; with the patch, 0 times in another
-2140.
+I started investigating this KCSAN warning by syzbot, and would like to
+ask a few questions.
 
+On Mon Jun 1, 2026 at 11:33 AM -03, syzbot wrote:
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> BUG: KCSAN: data-race in wg_socket_send_skb_to_peer / wg_socket_send_skb_=
+to_peer
+>
+> read-write to 0xffff88811af99028 of 8 bytes by task 310 on cpu 1:
+>  wg_socket_send_skb_to_peer+0xe8/0x130 drivers/net/wireguard/socket.c:182
+>  wg_socket_send_buffer_to_peer+0xf1/0x120 drivers/net/wireguard/socket.c:=
+199
+>  wg_packet_send_handshake_initiation drivers/net/wireguard/send.c:40 [inl=
+ine]
+>  wg_packet_handshake_send_worker+0x10d/0x160 drivers/net/wireguard/send.c=
+:51
+>  process_one_work kernel/workqueue.c:3314 [inline]
+>  process_scheduled_works+0x4f0/0x9c0 kernel/workqueue.c:3397
+>  worker_thread+0x58a/0x780 kernel/workqueue.c:3478
+>  kthread+0x22a/0x280 kernel/kthread.c:436
+>  ret_from_fork+0x146/0x330 arch/x86/kernel/process.c:158
+>  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+>
+> read-write to 0xffff88811af99028 of 8 bytes by task 15360 on cpu 0:
+>  wg_socket_send_skb_to_peer+0xe8/0x130 drivers/net/wireguard/socket.c:182
+>  wg_packet_create_data_done drivers/net/wireguard/send.c:251 [inline]
+>  wg_packet_tx_worker+0x12d/0x330 drivers/net/wireguard/send.c:276
+>  process_one_work kernel/workqueue.c:3314 [inline]
+>  process_scheduled_works+0x4f0/0x9c0 kernel/workqueue.c:3397
+>  worker_thread+0x58a/0x780 kernel/workqueue.c:3478
+>  kthread+0x22a/0x280 kernel/kthread.c:436
+>  ret_from_fork+0x146/0x330 arch/x86/kernel/process.c:158
+>  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+>
+> value changed: 0x0000000000000a2c -> 0x0000000000000ac0
+>
+> Reported by Kernel Concurrency Sanitizer on:
+> CPU: 0 UID: 0 PID: 15360 Comm: kworker/0:2 Tainted: G        W           =
+syzkaller #0 PREEMPT(lazy)=20
+> Tainted: [W]=3DWARN
+> Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS G=
+oogle 04/18/2026
+> Workqueue: wg-crypt-wg2 wg_packet_tx_worker
+
+I tracked the change to this counter increment in `wg_socket_send_skb_to_pe=
+er`
+
++++ b/drivers/net/wireguard/socket.c
+@@ -179,7 +179,8 @@ int wg_socket_send_skb_to_peer(struct wg_peer *peer, st=
+ruct sk_buff *skb, u8 ds)
+ 	else
+ 		dev_kfree_skb(skb);
+ 	if (likely(!ret))
+->		peer->tx_bytes +=3D skb_len;  <- protected by a read_lock_bh only
+ 	read_unlock_bh(&peer->endpoint_lock);
+
+It is protected by the read-part of a rwlock.
+However, if the stack trace makes sense, this `wg_socket_send_skb_to_peer`
+is being called after a handshake (wg_packet_send_handshake_initiation) and
+a send worker call (wg_packet_tx_worker).
+
+Does this make sense ? Are such calls possible to really hapen outside of f=
+uzzing ?
+
+Out of curiosity, I changed `tx_bytes` and `rx_bytes` from u64 to atomic64_=
+t
+in peer.h, and also the r/w ops in netlink.c, receive.c and socket.c files.
+I ran the wireguard kselftest suite with and without this patch, and it
+worked fine. Iperf results seem sine (on amd64).
+I'm not sure if this should be the solution, or if this is even a real issu=
+e in the first place.
+
+Any comments ?
+
+Eager to learn.
 Thanks,
-Andrii
+
+Rafael Passos
