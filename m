@@ -4,73 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 622B2CA5FFD
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 07:26:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D29CDCA5FFC
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 07:32:09 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 64432bd5;
-	Mon, 5 Oct 2026 06:56:18 +0000 (UTC)
-Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com
- [2607:f8b0:4864:20::112e])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 3e5b53e5
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 58e40ba0;
+	Mon, 5 Oct 2026 06:56:20 +0000 (UTC)
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 6952ae38
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 24 Jun 2026 12:30:27 +0000 (UTC)
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-7ff05e5d009so8478557b3.1
- for <wireguard@lists.zx2c4.com>; Wed, 24 Jun 2026 05:30:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782304226; x=1782909026; darn=lists.zx2c4.com;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=+8k9TIVBzrtkJ+5AdlIoIq3eU8KFjMxgcsnRy+gI+28=;
- b=I2TGYsM9jR9/I9c8ogTJJX6N/C4Oc6/+ZaQCRa15TmlCu3lwKRiypbOH4myLWb+yba
- McPFAVEPWkLyfQNMf4Q8z1uQJK9+HOsmx2SuB3RRoFmaZlGgJKYdMpe1biOVYor9DbwX
- VsOL/U2RXeezrZnwXmHFMUOHRevX28nL17JBDWHrB+hWfZV9XPZ+BbjH/4y+/GX3+neD
- 61k+W6r4qiPQtjdYyQANTMLqy62tLtymevbr8BoLijT+NqxlByG9wcGNaPkm3QB521AB
- HLI3EvMwk3SsW/GBZ7UvmAEgVI8ROgXqM4F1FwdqfS6tNJUllFm2SBpcWlsSO2efJL/Z
- Pg3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782304226; x=1782909026;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+8k9TIVBzrtkJ+5AdlIoIq3eU8KFjMxgcsnRy+gI+28=;
- b=LuYWSuusI7na36yWJeVdQpf56avZXUoTJ1e7HrJJz4fbEFalM5ClOLajnN8RpGG8xn
- /GyH1H3uR1D+GHwmgZT5XCTUWP7Oa3K3ftkmucXn2kA5DT05eFjb5y7gdpM9YlZ/mOTK
- DM5OBSxwZN7WKQh06wJ4M8vbh2d/MyAQ5gCvHbs2FXxuxERm0tcF1WXjDUTgc1A7ItuU
- yieL2+83scJCgFJlc724ET5crmb0tIf7fu5H8t04/g9vLaaeA2j3VRN1cpS8YXQeF+6v
- RjbIl8RqnnvtgwPn9a8GMnzDR6IyDVo4VsBgAktDx51sePnVz7nt43cdR/qeuECKbaRu
- h1pQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+Ronq004aOaexdBGbYgrEBJOUB65wnT7HYuFbNdGtJ0asDDtbKl/MS7ObrWnJ6Wghit0fxxOwhFgC/k=@lists.zx2c4.com
-X-Gm-Message-State: AOJu0Yzb77oPbqtW0ii5+SCa5Hu0N00jItysvaexNLLIF+70TaJfqPox
- kXpd/SbHAGwmc2kCvGk+jnhDSTQMdHpR32wDxfXI2ECok/TrIsAdiDB3
-X-Gm-Gg: AfdE7clODf8/bUbip/pQ0qFvF+NB1jGmJOYqExe6LilEe00F4dx00DeRPjXGDU/44NU
- AUIyhlFTM5W32vKWn+2wbUW1mzFuEIj/aQT4edVuKPKjFP0vLXBbv3p21TEaBDyIECWlcgZShAd
- ksYIvCRl2LytXWQ2mbKjPs7KY9rgKY8bmP4bhKIpZBtGXdj4U2Sch37F7IGgcmuk6ceSHLUCaSk
- DYyUbnIuP1ZJa+UeWqPXeKm6joJpRGArl78vDG425mRie+NiOULLDMaw2F3S/aF9bXgNkZAQKo+
- c2uI8KNjweqgig+tG25fl7/I2H4GsBWsRckgsjqAsuPYtbzY9A4O/Gu68t+Cs8ddMYsmcTXw7Nk
- 55bcOfNyYD5avgGEdnIACNhcPHwLOnzXDVB39aBoMdypLrqcihaacbw0xun3ek6h1bl7CpUnUUU
- JRKFocoB3CgMrIMl73BpDpP3TsFQ==
-X-Received: by 2002:a05:690c:c4f7:b0:7dc:c477:9e98 with SMTP id
- 00721157ae682-806c3a1a9ddmr62727187b3.31.1782304225501; 
- Wed, 24 Jun 2026 05:30:25 -0700 (PDT)
-Received: from Dev-Null-MSI ([2a0d:3344:52ac:a808:98a4:4381:be45:536f])
- by smtp.gmail.com with ESMTPSA id
- 00721157ae682-8025c96fdb3sm57601677b3.1.2026.06.24.05.30.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Jun 2026 05:30:25 -0700 (PDT)
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
-To: Jason@zx2c4.com
-Cc: shuah@kernel.org, wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org,
- Yousef Alhouseen <alhouseenyousef@gmail.com>
-Subject: [PATCH] selftests: wireguard: avoid extglob in netns CPU count
-Date: Wed, 24 Jun 2026 14:30:09 +0200
-Message-ID: <20260624123009.7008-1-alhouseenyousef@gmail.com>
-X-Mailer: git-send-email 2.54.0
+ Sun, 28 Jun 2026 21:02:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+ s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+ References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+ Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+ Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+ bh=UdPVrGBsfiuqpekwBYy0Es3XVPiPzRaFs+oHp2F9b7E=; b=DP3DyreI+7yUlA/LxYAXw/5+Ka
+ U/DI5iIEnr2wYYd20XmdK/lgC8rSXxhEgY03rTeHC5TA1b9aq/9akJGhiXCzS86TEA6pnXsq3zyLW
+ BY9RusdBe82e1w+9VdFFh5fQRQV45zTF/TraxXInApku/4SMj9JYQtb19Hz2CZBKhY/Y=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+ (envelope-from <andrew@lunn.ch>)
+ id 1wdwdh-009eJ8-6m; Sun, 28 Jun 2026 23:02:05 +0200
+Date: Sun, 28 Jun 2026 23:02:05 +0200
+From: Andrew Lunn <andrew@lunn.ch>
+To: Rafael Passos <rafael@rcpassos.me>
+Cc: Jason@zx2c4.com, andrew+netdev@lunn.ch, davem@davemloft.net,
+ edumazet@google.com, kuba@kernel.org, linux-kernel@vger.kernel.org,
+ netdev@vger.kernel.org, pabeni@redhat.com,
+ syzbot+9ca7674fa7521a3f1bc2@syzkaller.appspotmail.com,
+ syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
+Subject: Re: [PATCH] Wireguard: Fix data-race in rx/tx counter
+Message-ID: <aa423184-7465-4bc9-aff4-d3d671beb3c6@lunn.ch>
+References: <DJFTVX3FE7OD.2O8GTO84798T@rcpassos.me>
+ <20260628203823.144789-1-rafael@rcpassos.me>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260628203823.144789-1-rafael@rcpassos.me>
 X-Mailman-Approved-At: Mon, 05 Oct 2026 06:55:46 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -86,36 +56,38 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-netns.sh enables extglob before using cpu+([0-9]) to count CPUs, but
-bash -n parses the whole script without executing that shopt command. This
-makes syntax checks fail even though the script is intended for bash.
+On Sun, Jun 28, 2026 at 05:38:23PM -0300, Rafael Passos wrote:
+> fixes data-race in {rx/tx}_bytes counter for wireguard connection.
+> these values were incremented inside a read_lock_bh block, but write
+> protections were missing. making them atomic was the simplest way out.
+> This was found by syzbot with kcsan.
+> 
+> Reported-by: syzbot+9ca7674fa7521a3f1bc2@syzkaller.appspotmail.com
+> Link: https://syzkaller.appspot.com/bug?extid=9ca7674fa7521a3f1bc2
+> Signed-off-by: Rafael Passos <rafael@rcpassos.me>
+> ---
+> 
+> Hi,
+> 
+> I am posting this patch to better ilustrate the discussion.
+> If this is a non-issue, its fine.
+> As I mentioned in the previous email, this issue was reported by syzbot,
+> but I was not able to reproduce it.
+> I am also aware atomic calls may introduce extra cost on older arm cpus.
 
-Use the ordinary cpu[0-9]* glob instead. It matches the same CPU directory
-names without requiring extglob, and lets bash validate the script syntax.
+Atomics are expensive in general, especially on high CPU count
+systems. 
 
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
----
- tools/testing/selftests/wireguard/netns.sh | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+Statistic counters tend to be very asymmetric in usage. They are
+incremented frequently, maybe per packet, but reported very
+infrequently, maybe every minute when an SNMP agent reads them. So the
+solution to statistic counters should reflect this. Increment should
+be very cheap, reporting them can be expensive.
 
-diff --git a/tools/testing/selftests/wireguard/netns.sh b/tools/testing/selftests/wireguard/netns.sh
-index a8f550aec..98b423494 100755
---- a/tools/testing/selftests/wireguard/netns.sh
-+++ b/tools/testing/selftests/wireguard/netns.sh
-@@ -22,12 +22,11 @@
- # interfaces in $ns1 and $ns2. See https://www.wireguard.com/netns/ for further
- # details on how this is accomplished.
- set -e
--shopt -s extglob
- 
- exec 3>&1
- export LANG=C
- export WG_HIDE_KEYS=never
--NPROC=( /sys/devices/system/cpu/cpu+([0-9]) ); NPROC=${#NPROC[@]}
-+NPROC=( /sys/devices/system/cpu/cpu[0-9]* ); NPROC=${#NPROC[@]}
- netns0="wg-test-$$-0"
- netns1="wg-test-$$-1"
- netns2="wg-test-$$-2"
--- 
-2.54.0
+There are a few different solutions. Per CPU counters is
+one. u64_stats_sync.h may help.
 
+Please take a look at other drivers doing statistics. This is a solved
+problem, you just need to copy bits of code from somewhere else.
+
+      Andrew
