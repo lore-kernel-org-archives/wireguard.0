@@ -4,74 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32BAFCA6005
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2404DCA5FFF
 	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 11:15:41 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 3f9fd0cd;
-	Mon, 5 Oct 2026 07:00:05 +0000 (UTC)
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com
- [2a00:1450:4864:20::32a])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 1b755145
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id f7e71310;
+	Mon, 5 Oct 2026 07:00:08 +0000 (UTC)
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com
+ [2a00:1450:4864:20::42e])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id bd0e826a
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 10 Jul 2026 13:22:54 +0000 (UTC)
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-493ba701891so7866395e9.3
- for <wireguard@lists.zx2c4.com>; Fri, 10 Jul 2026 06:22:54 -0700 (PDT)
+ Fri, 10 Jul 2026 13:22:56 +0000 (UTC)
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-4720d22c94aso899921f8f.1
+ for <wireguard@lists.zx2c4.com>; Fri, 10 Jul 2026 06:22:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783689774; x=1784294574; darn=lists.zx2c4.com;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=KEvhk9JhPECp6rbYe65oHR2gR/OkwhAGeQaOtCX+ELQ=;
- b=ewsyzwPJ4zN8flXJEyOv346R04s9uW2PWUFSQLoAwmexARcYfc4cRJIiXC6y18vQd1
- yHm1FuxVrWK9V6VJbicXHRCDLPzchRJpYBXuY1pPN/nQ9khQUKYXvvpyNGNCXrl2G0R3
- hN01h/1BGVJRBkw2WiHvCq0j1J5swtJDa8eNqKrOuaDTtIgV5a0zmqWE9AvDGxZSL7wa
- 5LRiTnuG7lk2r6xMZ+oKeEehVxFH/VKGWXvCIGdV05l8hwxJIqBwPgEV0bpDHgpXF43l
- Qo3uD16xz0tCYRe7tpNDRDaeGTSWEtVMCSB5A+FII9N7hrfz6WuLVyMlXEWhDCcL7T2F
- e3WA==
+ d=gmail.com; s=20251104; t=1783689776; x=1784294576; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=e8DbLy3F3I4hbA4JWkUsvbW3rOvsY6jvkMfCBMbRMYM=;
+ b=hslbjLudKmwApViTC2C2uTQH/reylSBeoV+C39im2aaWkxhNKwvgkMqNEbVtXiEd2S
+ HMKa/AgrUnm1L1dnoLN5clzauoR6w5KV2M4b9nbT+pGMD9dMnqDlF1byvARj2Im8A56Q
+ IHlhJORAPC+kgUDLoAdsXLRsMiidaBltlwghXZt3V0C7rjULwAR7+K7SFYFpTE66rRrY
+ BZoIF3h3+46JDnDs8nsWZaf8clkSvzyaWs1qiRK4av7Hw/A7gGCh64AbqHEBRIA5/vVp
+ 99VDinUMj+/CWAw9rS+qV5jZSnBbIg8JYAeLg+G4VGJmlUpSKq0N8LxyKoHX6M33/tIK
+ Eqbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783689774; x=1784294574;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=KEvhk9JhPECp6rbYe65oHR2gR/OkwhAGeQaOtCX+ELQ=;
- b=VmRI6oXxpExLMpJRJvSPIDypNgUj7CH7NHhLTsepe2ncE/h6soxT7fUd2yDv6bzYHs
- FpbsZQbN7bzDmrO9U1+3rgYN/ttAVekVElT1BoA/b2J9J/YzLm8B0fY3yq88Kz7WOmvX
- /p8cMgRbGfiEw2LJ2Vn9iOAo49v2p3pKuUGLIQWO0LBLXY1NSo8plLDXlvyi0gpov6y0
- n1YlkWKX3ItWl0uEwBTXtFGRpdzfTu/tVTArBIdn7XZaG9gKEU99kW9FkEzvCYcb/bZx
- U5u6/FU/+rwCFfsdg5R6vnZ3k9RVirgRb63MXcYKha71QCstPJvjYMv+UBxqJ8jAKKAH
- Ubuw==
-X-Gm-Message-State: AOJu0YxHkk22oZyTjaQCHF3zOxmO0SIBnvLmw3ZSHgQ2jwThqdOe/e5f
- 8Flgc/I1mKYrCspnWpn55FmI/zyXS/Tr1MmG6Kv894db0xB/YIkz+tAd
-X-Gm-Gg: AfdE7ckCCtoj00o2JYqaeqYDdiFxI/xiHzrakF9c5ZMi7oDIoaD3dNvvjBCQ69BeLEg
- 1xVlvq2rL/0nbYwWYo/Ri6PexDcGzkirfR1o0PxzWu/rqYnQAyTZWS9Rh/dZq6GrCR3jr/wCHDC
- bBRQtEHt9N6T+2GrgqeQvzKM66ZM5IffApMR1AMV7n3Hra2kbjh8ucBLrvAsQLOmr4CvpDGRKHI
- oxDAO8g9CKLyxRFDXzUfctTqux9TgSdaOWpYb5CvT4CQ0hJ8Np7PYRWT7xRdi0rtQzYqWfDkbXn
- 7x3cMAlimq295yHe0PFUWOVFoE9MISBcsK/AN3/FWg+tGQGXWLrkY1t0YVvT8Pv/74E3F47FImm
- 89XCTFajtj4AzCyUUltnpz8by3UCzzmx2G8o2em8gYwcq15akKhnfVWSnUcBX/fjFEX1jdaeaL3
- r3K1uD/csvoLmSdC5Uvo1HNpQaE+9FbgE2BkaGJ4SsSJktDv+k0g==
-X-Received: by 2002:a05:600c:c8a:b0:493:c3f9:65a2 with SMTP id
- 5b1f17b1804b1-493e688cf81mr122166675e9.5.1783689774165; 
- Fri, 10 Jul 2026 06:22:54 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783689776; x=1784294576;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=e8DbLy3F3I4hbA4JWkUsvbW3rOvsY6jvkMfCBMbRMYM=;
+ b=b1ChgenJwclANzs6P1y4bHpTwllQ/G75vAEoVqV72ozlCyGbmlj+WmFO0QUvmfdswl
+ +BEll2G6hezdsfgQ5XiZ5yADeGUbF29iRe5Nf0yP89sbc1pyVPsW6zU3avdFz+unjXIv
+ tLJePMf/PorlzJCNgoDFwgyyHqy/RFeQNBfXIUtUU9eaL6MQelZKrhVzXmtlWhCMBgkY
+ GCVtdEj9yZqNlxq+q9+5FxskPEjoQXSefluV6hN5MSzAWMUw/KHuEUSsFTMezwBZTolC
+ gJ52+DElwOAuDRV01pUr+y2xwMR0Q0Pmmha/xxtmKx0q6W5UyhTrwXGQT76kyRmgFg+U
+ JYwQ==
+X-Gm-Message-State: AOJu0YyPzhL8CUuw2nQ8X+zCr+PyWw+L+awxhwipjdC8MwfN5EzzVHES
+ yQdiVAga2yryoG8lMiu/LWsJJi8sUtTKqsK0X3DkSi8U/g3ggVotzuOE
+X-Gm-Gg: AfdE7cmGQirvBWi2NPLGTWEg1GdfsqTxSodEFiettGlTfenY9mu1HM2/T0U1XvLB0j1
+ 0dPWGZ08bwCC8Iq79db5oFQMS208Yp/nyGxCZjkOL600Ky9H8PeyX+bxW31NoFxr3Yg1FvWqv6H
+ LGNMLgCmfn8TF9djFVcRYN2TWsPbtMKfNRQLtssxHGYD5seWWdupSOEpbExokHRPz3fSkzDpMXg
+ 8qjh7+GuwqNn9AfSW+u/KPQWSyhmgmX7/ze8ad3IWLKhTi1P7j8UCJhUBSGRIHmFvO1lNB57Uke
+ fFJoLe+gVLCMBhFOWPqdyMQQ43iwyo6eNgK9HuWW8SCQYmHAi6Z93Zrr3Uqg507YbJ5E0J20Jvx
+ 3g+oaQDtPGZ+IyG4Rrl1rj9FO6UO2xxspRKP0UsBejxEOCFjrp8/QVYQvU1Ub0jXAuGhYsHR7Oa
+ p/tqyIiZQxOVxEG7hGKUkaJ69fkvz9ZcS4mmNtwN6TxuI/HMTnxQ==
+X-Received: by 2002:a5d:5e91:0:b0:475:f0d1:eb59 with SMTP id
+ ffacd0b85a97d-47df07b5eb1mr13554188f8f.52.1783689775495; 
+ Fri, 10 Jul 2026 06:22:55 -0700 (PDT)
 Received: from localhost.localdomain ([79.118.195.86])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47aa039bcdasm62653868f8f.21.2026.07.10.06.22.53
+ ffacd0b85a97d-47aa039bcdasm62653868f8f.21.2026.07.10.06.22.54
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 10 Jul 2026 06:22:53 -0700 (PDT)
+ Fri, 10 Jul 2026 06:22:54 -0700 (PDT)
 From: Razvan Cremenescu <razvan.cremenescu@gmail.com>
 To: "Jason A . Donenfeld" <Jason@zx2c4.com>
 Cc: wireguard@lists.zx2c4.com, Razvan Cremenescu <razvan.cremenescu@gmail.com>
-Subject: [PATCH wireguard-apple 6/7] macOS: support multiple simultaneous
- tunnels in the menu bar UI
-Date: Fri, 10 Jul 2026 16:22:38 +0300
-Message-ID: <20260710132242.39814-7-razvan.cremenescu@gmail.com>
+Subject: [PATCH wireguard-apple 7/7] Add opt-in split DNS support
+Date: Fri, 10 Jul 2026 16:22:39 +0300
+Message-ID: <20260710132242.39814-8-razvan.cremenescu@gmail.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260710132242.39814-1-razvan.cremenescu@gmail.com>
 References: <20260710132242.39814-1-razvan.cremenescu@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Mon, 05 Oct 2026 06:59:44 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -88,320 +85,474 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Now that TunnelsManager no longer serializes tunnel activation on
-macOS, generalize the menu bar UI from tracking a single current
-tunnel to tracking every tunnel in operation:
+When a tunnel lists DNS search domains (the non-IP entries of the
+wg-quick DNS= line), the tunnel's DNS servers have so far always been
+installed as the system-wide resolver (match domains [""]) while the
+search domains only served for completing short names. With multiple
+simultaneous tunnels this makes concurrently active tunnels fight over
+system DNS, and there was no way to use a tunnel's DNS only for the
+internal domains behind that tunnel.
 
-- TunnelsTracker publishes the list of non-inactive tunnels instead of
-  a single currentTunnel slot.
-- StatusMenu keeps the existing presentation when zero or one tunnel
-  is in operation. With more than one, the status line shows the
-  number of tunnels and the Deactivate item becomes Deactivate All,
-  which deactivates every tunnel in operation, including tunnels that
-  are still activating or restarting.
-- StatusItemController shows the active icon when all tunnels in
-  operation are active, and the progress animation while any of them
-  is transitioning.
-- AppDelegate's quit and App Store update alerts enumerate all active
-  tunnels rather than just one; the App Store alert asks to disable
-  on-demand only for the tunnels that actually have it enabled.
+Add a per-tunnel Split DNS toggle, stored in the provider
+configuration alongside the existing keys so the wg-quick config text
+remains untouched and portable. When enabled and the tunnel has search
+domains, the DNS servers are installed with the search domains as
+match domains, so only queries for those domains go through the
+tunnel; everything else stays on the system resolver. The default
+remains the current match-everything behavior, so existing full-tunnel
+setups keep their leak-free DNS.
+
+The toggle is exposed as a checkbox in the macOS tunnel editor and as
+a switch in the iOS tunnel editor, and toggling it restarts an active
+tunnel the same way a configuration edit does.
 
 Signed-off-by: Razvan Cremenescu <razvan.cremenescu@gmail.com>
 ---
- .../Base.lproj/Localizable.strings            |  5 +++
- .../WireGuardApp/UI/macOS/AppDelegate.swift   | 31 ++++++++++++++-----
- .../UI/macOS/StatusItemController.swift       | 14 +++------
- .../WireGuardApp/UI/macOS/StatusMenu.swift    | 25 +++++++++++----
- .../UI/macOS/TunnelsTracker.swift             | 31 +++++++++----------
- 5 files changed, 68 insertions(+), 38 deletions(-)
+ .../NETunnelProviderProtocol+Extension.swift  | 26 +++++++++++++
+ .../Base.lproj/Localizable.strings            |  6 +++
+ .../WireGuardApp/Tunnel/TunnelsManager.swift  | 17 +++++++-
+ .../TunnelEditTableViewController.swift       | 39 ++++++++++++++++++-
+ .../TunnelEditViewController.swift            | 21 +++++++++-
+ .../PacketTunnelSettingsGenerator.swift       | 12 +++++-
+ Sources/WireGuardKit/WireGuardAdapter.swift   | 13 ++++++-
+ .../PacketTunnelProvider.swift                |  2 +-
+ 8 files changed, 125 insertions(+), 11 deletions(-)
 
-diff --git a/Sources/WireGuardApp/Base.lproj/Localizable.strings b/Sources/WireGuardApp/Base.lproj/Localizable.strings
-index f181953..2e23a91 100644
---- a/Sources/WireGuardApp/Base.lproj/Localizable.strings
-+++ b/Sources/WireGuardApp/Base.lproj/Localizable.strings
-@@ -64,6 +64,7 @@
- "macToggleStatusButtonActivate" = "Activate";
- "macToggleStatusButtonActivating" = "Activating…";
- "macToggleStatusButtonDeactivate" = "Deactivate";
-+"macToggleStatusButtonDeactivateAll" = "Deactivate All";
- "macToggleStatusButtonDeactivating" = "Deactivating…";
- "macToggleStatusButtonReasserting" = "Reactivating…";
- "macToggleStatusButtonRestarting" = "Restarting…";
-@@ -369,6 +370,7 @@
- // Mac status display
+diff --git a/Sources/Shared/Model/NETunnelProviderProtocol+Extension.swift b/Sources/Shared/Model/NETunnelProviderProtocol+Extension.swift
+index 0a303f4..8f56434 100644
+--- a/Sources/Shared/Model/NETunnelProviderProtocol+Extension.swift
++++ b/Sources/Shared/Model/NETunnelProviderProtocol+Extension.swift
+@@ -12,6 +12,21 @@ enum PacketTunnelProviderError: String, Error {
+ }
  
- "macStatus (%@)" = "Status: %@";
-+"macStatusMultipleTunnels (%d)" = "%d tunnels";
- 
- // Mac editing config
- 
-@@ -419,6 +421,7 @@
- "macConfirmAndQuitAlertMessage" = "Do you want to close the tunnels manager or quit WireGuard entirely?";
- "macConfirmAndQuitAlertInfo" = "If you close the tunnels manager, WireGuard will continue to be available from the menu bar icon.";
- "macConfirmAndQuitInfoWithActiveTunnel (%@)" = "If you close the tunnels manager, WireGuard will continue to be available from the menu bar icon.\n\nNote that if you quit WireGuard entirely the currently active tunnel ('%@') will still remain active until you deactivate it from this application or through the Network panel in System Preferences.";
-+"macConfirmAndQuitInfoWithMultipleActiveTunnels (%@)" = "If you close the tunnels manager, WireGuard will continue to be available from the menu bar icon.\n\nNote that if you quit WireGuard entirely the currently active tunnels ('%@') will still remain active until you deactivate them from this application or through the Network panel in System Preferences.";
- "macConfirmAndQuitAlertQuitWireGuard" = "Quit WireGuard";
- "macConfirmAndQuitAlertCloseWindow" = "Close Tunnels Manager";
- 
-@@ -448,6 +451,8 @@
- "macAppStoreUpdatingAlertMessage" = "App Store would like to update WireGuard";
- "macAppStoreUpdatingAlertInfoWithOnDemand (%@)" = "Please disable on-demand for tunnel ‘%@’, deactivate it, and then continue updating in App Store.";
- "macAppStoreUpdatingAlertInfoWithoutOnDemand (%@)" = "Please deactivate tunnel ‘%@’ and then continue updating in App Store.";
-+"macAppStoreUpdatingAlertInfoWithOnDemandMultiple (%@)" = "Please disable on-demand for tunnels ‘%@’, deactivate all active tunnels, and then continue updating in App Store.";
-+"macAppStoreUpdatingAlertInfoWithoutOnDemandMultiple (%@)" = "Please deactivate tunnels ‘%@’ and then continue updating in App Store.";
- 
- // Donation
- 
-diff --git a/Sources/WireGuardApp/UI/macOS/AppDelegate.swift b/Sources/WireGuardApp/UI/macOS/AppDelegate.swift
-index 1dda3e6..b9c3a53 100644
---- a/Sources/WireGuardApp/UI/macOS/AppDelegate.swift
-+++ b/Sources/WireGuardApp/UI/macOS/AppDelegate.swift
-@@ -65,11 +65,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
-         }
-     }
- 
-+    private var activeTunnels: [TunnelContainer] {
-+        return tunnelsTracker?.tunnelsInOperation.filter { $0.status == .active || $0.status == .activating } ?? []
+ extension NETunnelProviderProtocol {
++    private static let splitDNSKey = "SplitDNS"
++
++    /// When enabled, the tunnel's DNS servers are used only for the tunnel's
++    /// DNS search domains rather than for all queries on the system.
++    var isSplitDNSEnabled: Bool {
++        get {
++            return providerConfiguration?[Self.splitDNSKey] as? Bool ?? false
++        }
++        set {
++            var configuration = providerConfiguration ?? [:]
++            configuration[Self.splitDNSKey] = newValue
++            providerConfiguration = configuration
++        }
 +    }
 +
-     @objc func confirmAndQuit() {
-         let alert = NSAlert()
-         alert.messageText = tr("macConfirmAndQuitAlertMessage")
--        if let currentTunnel = tunnelsTracker?.currentTunnel, currentTunnel.status == .active || currentTunnel.status == .activating {
--            alert.informativeText = tr(format: "macConfirmAndQuitInfoWithActiveTunnel (%@)", currentTunnel.name)
-+        let activeTunnels = self.activeTunnels
-+        if activeTunnels.count == 1 {
-+            alert.informativeText = tr(format: "macConfirmAndQuitInfoWithActiveTunnel (%@)", activeTunnels[0].name)
-+        } else if activeTunnels.count > 1 {
-+            alert.informativeText = tr(format: "macConfirmAndQuitInfoWithMultipleActiveTunnels (%@)", activeTunnels.map { $0.name }.joined(separator: ", "))
-         } else {
-             alert.informativeText = tr("macConfirmAndQuitAlertInfo")
-         }
-@@ -99,7 +106,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
-             return
-         }
-         registerLoginItem(shouldLaunchAtLogin: false)
--        guard let currentTunnel = tunnelsTracker?.currentTunnel, currentTunnel.status == .active || currentTunnel.status == .activating else {
-+        guard !activeTunnels.isEmpty else {
-             NSApp.terminate(nil)
-             return
-         }
-@@ -119,7 +126,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
-     }
+     convenience init?(tunnelConfiguration: TunnelConfiguration, previouslyFrom old: NEVPNProtocol? = nil) {
+         self.init()
  
-     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
--        guard let currentTunnel = tunnelsTracker?.currentTunnel, currentTunnel.status == .active || currentTunnel.status == .activating else {
-+        let activeTunnels = self.activeTunnels
-+        guard !activeTunnels.isEmpty else {
-             return .terminateNow
-         }
-         guard let appleEvent = NSAppleEventManager.shared().currentAppleEvent else {
-@@ -130,10 +138,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
-         }
-         let alert = NSAlert()
-         alert.messageText = tr("macAppStoreUpdatingAlertMessage")
--        if currentTunnel.isActivateOnDemandEnabled {
--            alert.informativeText = tr(format: "macAppStoreUpdatingAlertInfoWithOnDemand (%@)", currentTunnel.name)
-+        let onDemandTunnels = activeTunnels.filter { $0.isActivateOnDemandEnabled }
-+        if activeTunnels.count == 1 {
-+            if onDemandTunnels.isEmpty {
-+                alert.informativeText = tr(format: "macAppStoreUpdatingAlertInfoWithoutOnDemand (%@)", activeTunnels[0].name)
-+            } else {
-+                alert.informativeText = tr(format: "macAppStoreUpdatingAlertInfoWithOnDemand (%@)", activeTunnels[0].name)
+@@ -25,6 +40,9 @@ extension NETunnelProviderProtocol {
+         #if os(macOS)
+         providerConfiguration = ["UID": getuid()]
+         #endif
++        if let old = old as? NETunnelProviderProtocol, old.isSplitDNSEnabled {
++            isSplitDNSEnabled = true
++        }
+ 
+         let endpoints = tunnelConfiguration.peers.compactMap { $0.endpoint }
+         if endpoints.count == 1 {
+@@ -64,6 +82,7 @@ extension NETunnelProviderProtocol {
+          * around so that .mobileconfig files are easier.
+          */
+         if let oldConfig = providerConfiguration?["WgQuickConfig"] as? String {
++            let wasSplitDNSEnabled = isSplitDNSEnabled
+             #if os(macOS)
+             providerConfiguration = ["UID": getuid()]
+             #elseif os(iOS)
+@@ -71,6 +90,9 @@ extension NETunnelProviderProtocol {
+             #else
+             #error("Unimplemented")
+             #endif
++            if wasSplitDNSEnabled {
++                isSplitDNSEnabled = true
 +            }
-         } else {
--            alert.informativeText = tr(format: "macAppStoreUpdatingAlertInfoWithoutOnDemand (%@)", currentTunnel.name)
-+            if onDemandTunnels.isEmpty {
-+                alert.informativeText = tr(format: "macAppStoreUpdatingAlertInfoWithoutOnDemandMultiple (%@)", activeTunnels.map { $0.name }.joined(separator: ", "))
-+            } else {
-+                alert.informativeText = tr(format: "macAppStoreUpdatingAlertInfoWithOnDemandMultiple (%@)", onDemandTunnels.map { $0.name }.joined(separator: ", "))
+             guard passwordReference == nil else { return true }
+             wg_log(.info, message: "Migrating tunnel configuration '\(name)'")
+             passwordReference = Keychain.makeReference(containing: oldConfig, called: name)
+@@ -78,7 +100,11 @@ extension NETunnelProviderProtocol {
+         }
+         #if os(macOS)
+         if passwordReference != nil && providerConfiguration?["UID"] == nil && verifyConfigurationReference() {
++            let wasSplitDNSEnabled = isSplitDNSEnabled
+             providerConfiguration = ["UID": getuid()]
++            if wasSplitDNSEnabled {
++                isSplitDNSEnabled = true
 +            }
+             return true
          }
-         NSApp.activate(ignoringOtherApps: true)
-         if let manageWindow = manageTunnelsWindowObject {
-diff --git a/Sources/WireGuardApp/UI/macOS/StatusItemController.swift b/Sources/WireGuardApp/UI/macOS/StatusItemController.swift
-index 3088574..e4ff7a5 100644
---- a/Sources/WireGuardApp/UI/macOS/StatusItemController.swift
-+++ b/Sources/WireGuardApp/UI/macOS/StatusItemController.swift
-@@ -4,7 +4,7 @@
- import Cocoa
+         #elseif os(iOS)
+diff --git a/Sources/WireGuardApp/Base.lproj/Localizable.strings b/Sources/WireGuardApp/Base.lproj/Localizable.strings
+index 2e23a91..cacb316 100644
+--- a/Sources/WireGuardApp/Base.lproj/Localizable.strings
++++ b/Sources/WireGuardApp/Base.lproj/Localizable.strings
+@@ -97,6 +97,12 @@
+ "tunnelPeerLastHandshakeTime" = "Latest handshake";
+ "tunnelPeerExcludePrivateIPs" = "Exclude private IPs";
  
- class StatusItemController {
--    var currentTunnel: TunnelContainer? {
-+    var tunnelsInOperation: [TunnelContainer] = [] {
-         didSet {
-             updateStatusItemImage()
-         }
-@@ -27,20 +27,16 @@ class StatusItemController {
-     }
- 
-     func updateStatusItemImage() {
--        guard let currentTunnel = currentTunnel else {
-+        guard !tunnelsInOperation.isEmpty else {
-             stopActivatingAnimation()
-             statusItem.button?.image = statusBarImageWhenInactive
-             return
-         }
--        switch currentTunnel.status {
--        case .inactive:
--            stopActivatingAnimation()
--            statusItem.button?.image = statusBarImageWhenInactive
--        case .active:
-+        if tunnelsInOperation.contains(where: { $0.status != .active }) {
-+            startActivatingAnimation()
-+        } else {
-             stopActivatingAnimation()
-             statusItem.button?.image = statusBarImageWhenActive
--        case .activating, .waiting, .reasserting, .restarting, .deactivating:
--            startActivatingAnimation()
-         }
-     }
- 
-diff --git a/Sources/WireGuardApp/UI/macOS/StatusMenu.swift b/Sources/WireGuardApp/UI/macOS/StatusMenu.swift
-index 45d2283..9ebdca2 100644
---- a/Sources/WireGuardApp/UI/macOS/StatusMenu.swift
-+++ b/Sources/WireGuardApp/UI/macOS/StatusMenu.swift
-@@ -23,9 +23,9 @@ class StatusMenu: NSMenu {
-     private var numberOfTunnelMenuItems = 0
-     private var tunnelsPresentationStyle = StatusMenuTunnelsPresentationStyle.inline
- 
--    var currentTunnel: TunnelContainer? {
-+    var tunnelsInOperation: [TunnelContainer] = [] {
-         didSet {
--            updateStatusMenuItems(with: currentTunnel)
-+            updateStatusMenuItems()
-         }
-     }
-     weak var windowDelegate: StatusMenuWindowDelegate?
-@@ -73,15 +73,27 @@ class StatusMenu: NSMenu {
-         self.deactivateMenuItem = deactivateMenuItem
-     }
- 
--    func updateStatusMenuItems(with tunnel: TunnelContainer?) {
-+    func updateStatusMenuItems() {
-         guard let statusMenuItem = statusMenuItem, let networksMenuItem = networksMenuItem, let deactivateMenuItem = deactivateMenuItem else { return }
--        guard let tunnel = tunnel else {
-+        guard !tunnelsInOperation.isEmpty else {
-             statusMenuItem.title = tr(format: "macStatus (%@)", tr("tunnelStatusInactive"))
-             networksMenuItem.title = ""
-             networksMenuItem.isHidden = true
-+            deactivateMenuItem.title = tr("macToggleStatusButtonDeactivate")
-             deactivateMenuItem.isHidden = true
-             return
-         }
++"tunnelSectionTitleSplitDNS" = "DNS";
++"tunnelEditSplitDNS" = "Split DNS";
++"tunnelEditSplitDNSTooltip" = "Use the tunnel's DNS servers only for the tunnel's DNS search domains, instead of for all queries on the system.";
++"alertSplitDNSRequiresSearchDomainsTitle" = "Split DNS requires DNS servers and search domains";
++"alertSplitDNSRequiresSearchDomainsMessage" = "To use split DNS, list both the DNS servers and the domains to route through them in the tunnel's DNS entry, e.g.: 'DNS = 10.0.0.53, corp.example.com'";
 +
-+        guard tunnelsInOperation.count == 1 else {
-+            statusMenuItem.title = tr(format: "macStatus (%@)", tr(format: "macStatusMultipleTunnels (%d)", tunnelsInOperation.count))
-+            networksMenuItem.title = ""
-+            networksMenuItem.isHidden = true
-+            deactivateMenuItem.title = tr("macToggleStatusButtonDeactivateAll")
-+            deactivateMenuItem.isHidden = !tunnelsInOperation.contains { $0.status == .active }
+ "tunnelSectionTitleOnDemand" = "On-Demand Activation";
+ 
+ "tunnelOnDemandCellular" = "Cellular";
+diff --git a/Sources/WireGuardApp/Tunnel/TunnelsManager.swift b/Sources/WireGuardApp/Tunnel/TunnelsManager.swift
+index 63e1847..18829fe 100644
+--- a/Sources/WireGuardApp/Tunnel/TunnelsManager.swift
++++ b/Sources/WireGuardApp/Tunnel/TunnelsManager.swift
+@@ -119,7 +119,7 @@ class TunnelsManager {
+         }
+     }
+ 
+-    func add(tunnelConfiguration: TunnelConfiguration, onDemandOption: ActivateOnDemandOption = .off, completionHandler: @escaping (Result<TunnelContainer, TunnelsManagerError>) -> Void) {
++    func add(tunnelConfiguration: TunnelConfiguration, onDemandOption: ActivateOnDemandOption = .off, isSplitDNSEnabled: Bool = false, completionHandler: @escaping (Result<TunnelContainer, TunnelsManagerError>) -> Void) {
+         let tunnelName = tunnelConfiguration.name ?? ""
+         if tunnelName.isEmpty {
+             completionHandler(.failure(TunnelsManagerError.tunnelNameEmpty))
+@@ -133,6 +133,7 @@ class TunnelsManager {
+ 
+         let tunnelProviderManager = NETunnelProviderManager()
+         tunnelProviderManager.setTunnelConfiguration(tunnelConfiguration)
++        (tunnelProviderManager.protocolConfiguration as? NETunnelProviderProtocol)?.isSplitDNSEnabled = isSplitDNSEnabled
+         tunnelProviderManager.isEnabled = true
+ 
+         onDemandOption.apply(on: tunnelProviderManager)
+@@ -210,6 +211,7 @@ class TunnelsManager {
+ 
+     func modify(tunnel: TunnelContainer, tunnelConfiguration: TunnelConfiguration,
+                 onDemandOption: ActivateOnDemandOption,
++                isSplitDNSEnabled: Bool? = nil,
+                 shouldEnsureOnDemandEnabled: Bool = false,
+                 completionHandler: @escaping (TunnelsManagerError?) -> Void) {
+         let tunnelName = tunnelConfiguration.name ?? ""
+@@ -224,7 +226,8 @@ class TunnelsManager {
+         if isIntroducingOnDemandRules && tunnel.status != .inactive && tunnel.status != .deactivating {
+             tunnel.onDeactivated = { [weak self] in
+                 self?.modify(tunnel: tunnel, tunnelConfiguration: tunnelConfiguration,
+-                             onDemandOption: onDemandOption, shouldEnsureOnDemandEnabled: true,
++                             onDemandOption: onDemandOption, isSplitDNSEnabled: isSplitDNSEnabled,
++                             shouldEnsureOnDemandEnabled: true,
+                              completionHandler: completionHandler)
+             }
+             self.startDeactivation(of: tunnel)
+@@ -248,6 +251,12 @@ class TunnelsManager {
+             tunnelProviderManager.setTunnelConfiguration(tunnelConfiguration)
+             isTunnelConfigurationChanged = true
+         }
++        if let isSplitDNSEnabled = isSplitDNSEnabled,
++           let proto = tunnelProviderManager.protocolConfiguration as? NETunnelProviderProtocol,
++           proto.isSplitDNSEnabled != isSplitDNSEnabled {
++            proto.isSplitDNSEnabled = isSplitDNSEnabled
++            isTunnelConfigurationChanged = true
++        }
+         tunnelProviderManager.isEnabled = true
+ 
+         let isActivatingOnDemand = !tunnelProviderManager.isOnDemandEnabled && shouldEnsureOnDemandEnabled
+@@ -637,6 +646,10 @@ class TunnelContainer: NSObject {
+         return ActivateOnDemandOption(from: tunnelProvider)
+     }
+ 
++    var isSplitDNSEnabled: Bool {
++        return (tunnelProvider.protocolConfiguration as? NETunnelProviderProtocol)?.isSplitDNSEnabled ?? false
++    }
++
+     #if os(macOS)
+     var isTunnelAvailableToUser: Bool {
+         return (tunnelProvider.protocolConfiguration as? NETunnelProviderProtocol)?.providerConfiguration?["UID"] as? uid_t == getuid()
+diff --git a/Sources/WireGuardApp/UI/iOS/ViewController/TunnelEditTableViewController.swift b/Sources/WireGuardApp/UI/iOS/ViewController/TunnelEditTableViewController.swift
+index dfb35c6..e79686f 100644
+--- a/Sources/WireGuardApp/UI/iOS/ViewController/TunnelEditTableViewController.swift
++++ b/Sources/WireGuardApp/UI/iOS/ViewController/TunnelEditTableViewController.swift
+@@ -13,12 +13,14 @@ class TunnelEditTableViewController: UITableViewController {
+         case interface
+         case peer(_ peer: TunnelViewModel.PeerData)
+         case addPeer
++        case splitDNS
+         case onDemand
+ 
+         static func == (lhs: Section, rhs: Section) -> Bool {
+             switch (lhs, rhs) {
+             case (.interface, .interface),
+                  (.addPeer, .addPeer),
++                 (.splitDNS, .splitDNS),
+                  (.onDemand, .onDemand):
+                 return true
+             case let (.peer(peerA), .peer(peerB)):
+@@ -53,6 +55,7 @@ class TunnelEditTableViewController: UITableViewController {
+     let tunnel: TunnelContainer?
+     let tunnelViewModel: TunnelViewModel
+     var onDemandViewModel: ActivateOnDemandViewModel
++    private var isSplitDNSEnabled: Bool
+     private var sections = [Section]()
+ 
+     // Use this initializer to edit an existing tunnel.
+@@ -61,6 +64,7 @@ class TunnelEditTableViewController: UITableViewController {
+         self.tunnel = tunnel
+         tunnelViewModel = TunnelViewModel(tunnelConfiguration: tunnel.tunnelConfiguration)
+         onDemandViewModel = ActivateOnDemandViewModel(tunnel: tunnel)
++        isSplitDNSEnabled = tunnel.isSplitDNSEnabled
+         super.init(style: .grouped)
+         loadSections()
+     }
+@@ -71,6 +75,7 @@ class TunnelEditTableViewController: UITableViewController {
+         tunnel = nil
+         tunnelViewModel = TunnelViewModel(tunnelConfiguration: nil)
+         onDemandViewModel = ActivateOnDemandViewModel()
++        isSplitDNSEnabled = false
+         super.init(style: .grouped)
+         loadSections()
+     }
+@@ -100,6 +105,7 @@ class TunnelEditTableViewController: UITableViewController {
+         interfaceFieldsBySection.forEach { _ in sections.append(.interface) }
+         tunnelViewModel.peersData.forEach { sections.append(.peer($0)) }
+         sections.append(.addPeer)
++        sections.append(.splitDNS)
+         sections.append(.onDemand)
+     }
+ 
+@@ -113,10 +119,14 @@ class TunnelEditTableViewController: UITableViewController {
+             ErrorPresenter.showErrorAlert(title: alertTitle, message: errorMessage, from: self)
+             tableView.reloadData() // Highlight erroring fields
+         case .saved(let tunnelConfiguration):
++            if isSplitDNSEnabled && (tunnelConfiguration.interface.dns.isEmpty || tunnelConfiguration.interface.dnsSearch.filter({ !$0.isEmpty }).isEmpty) {
++                ErrorPresenter.showErrorAlert(title: tr("alertSplitDNSRequiresSearchDomainsTitle"), message: tr("alertSplitDNSRequiresSearchDomainsMessage"), from: self)
++                return
++            }
+             let onDemandOption = onDemandViewModel.toOnDemandOption()
+             if let tunnel = tunnel {
+                 // We're modifying an existing tunnel
+-                tunnelsManager.modify(tunnel: tunnel, tunnelConfiguration: tunnelConfiguration, onDemandOption: onDemandOption) { [weak self] error in
++                tunnelsManager.modify(tunnel: tunnel, tunnelConfiguration: tunnelConfiguration, onDemandOption: onDemandOption, isSplitDNSEnabled: isSplitDNSEnabled) { [weak self] error in
+                     if let error = error {
+                         ErrorPresenter.showErrorAlert(error: error, from: self)
+                     } else {
+@@ -126,7 +136,7 @@ class TunnelEditTableViewController: UITableViewController {
+                 }
+             } else {
+                 // We're adding a new tunnel
+-                tunnelsManager.add(tunnelConfiguration: tunnelConfiguration, onDemandOption: onDemandOption) { [weak self] result in
++                tunnelsManager.add(tunnelConfiguration: tunnelConfiguration, onDemandOption: onDemandOption, isSplitDNSEnabled: isSplitDNSEnabled) { [weak self] result in
+                     switch result {
+                     case .failure(let error):
+                         ErrorPresenter.showErrorAlert(error: error, from: self)
+@@ -161,6 +171,8 @@ extension TunnelEditTableViewController {
+             return peerFieldsToShow.count
+         case .addPeer:
+             return 1
++        case .splitDNS:
++            return 1
+         case .onDemand:
+             if onDemandViewModel.isWiFiInterfaceEnabled {
+                 return 3
+@@ -178,11 +190,22 @@ extension TunnelEditTableViewController {
+             return tr("tunnelSectionTitlePeer")
+         case .addPeer:
+             return nil
++        case .splitDNS:
++            return tr("tunnelSectionTitleSplitDNS")
+         case .onDemand:
+             return tr("tunnelSectionTitleOnDemand")
+         }
+     }
+ 
++    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
++        switch sections[section] {
++        case .splitDNS:
++            return tr("tunnelEditSplitDNSTooltip")
++        default:
++            return nil
++        }
++    }
++
+     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+         switch sections[indexPath.section] {
+         case .interface:
+@@ -191,6 +214,8 @@ extension TunnelEditTableViewController {
+             return peerCell(for: tableView, at: indexPath, with: peerData)
+         case .addPeer:
+             return addPeerCell(for: tableView, at: indexPath)
++        case .splitDNS:
++            return splitDNSCell(for: tableView, at: indexPath)
+         case .onDemand:
+             return onDemandCell(for: tableView, at: indexPath)
+         }
+@@ -423,6 +448,16 @@ extension TunnelEditTableViewController {
+         return cell
+     }
+ 
++    private func splitDNSCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
++        let cell: SwitchCell = tableView.dequeueReusableCell(for: indexPath)
++        cell.message = tr("tunnelEditSplitDNS")
++        cell.isOn = isSplitDNSEnabled
++        cell.onSwitchToggled = { [weak self] isOn in
++            self?.isSplitDNSEnabled = isOn
++        }
++        return cell
++    }
++
+     private func onDemandCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+         let field = onDemandFields[indexPath.row]
+         if indexPath.row < 2 {
+diff --git a/Sources/WireGuardApp/UI/macOS/ViewController/TunnelEditViewController.swift b/Sources/WireGuardApp/UI/macOS/ViewController/TunnelEditViewController.swift
+index 851498a..8065bdc 100644
+--- a/Sources/WireGuardApp/UI/macOS/ViewController/TunnelEditViewController.swift
++++ b/Sources/WireGuardApp/UI/macOS/ViewController/TunnelEditViewController.swift
+@@ -60,6 +60,15 @@ class TunnelEditViewController: NSViewController {
+         return checkbox
+     }()
+ 
++    let splitDNSCheckbox: NSButton = {
++        let checkbox = NSButton()
++        checkbox.title = tr("tunnelEditSplitDNS")
++        checkbox.toolTip = tr("tunnelEditSplitDNSTooltip")
++        checkbox.setButtonType(.switch)
++        checkbox.state = .off
++        return checkbox
++    }()
++
+     let discardButton: NSButton = {
+         let button = NSButton()
+         button.title = tr("macEditDiscard")
+@@ -106,6 +115,7 @@ class TunnelEditViewController: NSViewController {
+             // Editing an existing tunnel
+             let tunnelConfiguration = tunnel.tunnelConfiguration!
+             nameRow.value = tunnel.name
++            splitDNSCheckbox.state = tunnel.isSplitDNSEnabled ? .on : .off
+             textView.string = tunnelConfiguration.asWgQuickConfig()
+             publicKeyRow.value = tunnelConfiguration.interface.privateKey.publicKey.base64Key
+             textView.privateKeyString = tunnelConfiguration.interface.privateKey.base64Key
+@@ -163,6 +173,7 @@ class TunnelEditViewController: NSViewController {
+ 
+         let buttonRowStackView = NSStackView()
+         buttonRowStackView.setViews([discardButton, saveButton], in: .trailing)
++        buttonRowStackView.addView(splitDNSCheckbox, in: .leading)
+         buttonRowStackView.addView(excludePrivateIPsCheckbox, in: .leading)
+         buttonRowStackView.orientation = .horizontal
+         buttonRowStackView.spacing = internalSpacing
+@@ -229,11 +240,17 @@ class TunnelEditViewController: NSViewController {
+             }
+         }
+ 
++        let isSplitDNSEnabled = splitDNSCheckbox.state == .on
++        if isSplitDNSEnabled && (tunnelConfiguration.interface.dns.isEmpty || tunnelConfiguration.interface.dnsSearch.filter({ !$0.isEmpty }).isEmpty) {
++            ErrorPresenter.showErrorAlert(title: tr("alertSplitDNSRequiresSearchDomainsTitle"), message: tr("alertSplitDNSRequiresSearchDomainsMessage"), from: self)
 +            return
 +        }
 +
-+        let tunnel = tunnelsInOperation[0]
-         var statusText: String
+         setUserInteractionEnabled(false)
  
-         switch tunnel.status {
-@@ -115,6 +127,7 @@ class StatusMenu: NSMenu {
+         if let tunnel = tunnel {
+             // We're modifying an existing tunnel
+-            tunnelsManager.modify(tunnel: tunnel, tunnelConfiguration: tunnelConfiguration, onDemandOption: onDemandOption) { [weak self] error in
++            tunnelsManager.modify(tunnel: tunnel, tunnelConfiguration: tunnelConfiguration, onDemandOption: onDemandOption, isSplitDNSEnabled: isSplitDNSEnabled) { [weak self] error in
+                 guard let self = self else { return }
+                 self.setUserInteractionEnabled(true)
+                 if let error = error {
+@@ -245,7 +262,7 @@ class TunnelEditViewController: NSViewController {
              }
-             networksMenuItem.isHidden = false
+         } else {
+             // We're creating a new tunnel
+-            self.tunnelsManager.add(tunnelConfiguration: tunnelConfiguration, onDemandOption: onDemandOption) { [weak self] result in
++            self.tunnelsManager.add(tunnelConfiguration: tunnelConfiguration, onDemandOption: onDemandOption, isSplitDNSEnabled: isSplitDNSEnabled) { [weak self] result in
+                 guard let self = self else { return }
+                 self.setUserInteractionEnabled(true)
+                 switch result {
+diff --git a/Sources/WireGuardKit/PacketTunnelSettingsGenerator.swift b/Sources/WireGuardKit/PacketTunnelSettingsGenerator.swift
+index 3658956..36c0e06 100644
+--- a/Sources/WireGuardKit/PacketTunnelSettingsGenerator.swift
++++ b/Sources/WireGuardKit/PacketTunnelSettingsGenerator.swift
+@@ -15,10 +15,12 @@ typealias EndpointResolutionResult = Result<(Endpoint, Endpoint), DNSResolutionE
+ class PacketTunnelSettingsGenerator {
+     let tunnelConfiguration: TunnelConfiguration
+     let resolvedEndpoints: [Endpoint?]
++    let isSplitDNSEnabled: Bool
+ 
+-    init(tunnelConfiguration: TunnelConfiguration, resolvedEndpoints: [Endpoint?]) {
++    init(tunnelConfiguration: TunnelConfiguration, resolvedEndpoints: [Endpoint?], isSplitDNSEnabled: Bool = false) {
+         self.tunnelConfiguration = tunnelConfiguration
+         self.resolvedEndpoints = resolvedEndpoints
++        self.isSplitDNSEnabled = isSplitDNSEnabled
+     }
+ 
+     func endpointUapiConfiguration() -> (String, [EndpointResolutionResult?]) {
+@@ -88,7 +90,13 @@ class PacketTunnelSettingsGenerator {
+             let dnsSettings = NEDNSSettings(servers: dnsServerStrings)
+             dnsSettings.searchDomains = tunnelConfiguration.interface.dnsSearch
+             if !tunnelConfiguration.interface.dns.isEmpty {
+-                dnsSettings.matchDomains = [""] // All DNS queries must first go through the tunnel's DNS
++                let splitDNSMatchDomains = isSplitDNSEnabled ? tunnelConfiguration.interface.dnsSearch.filter { !$0.isEmpty } : []
++                if !splitDNSMatchDomains.isEmpty {
++                    // Use the tunnel's DNS only for the tunnel's search domains
++                    dnsSettings.matchDomains = splitDNSMatchDomains
++                } else {
++                    dnsSettings.matchDomains = [""] // All DNS queries must first go through the tunnel's DNS
++                }
+             }
+             networkSettings.dnsSettings = dnsSettings
          }
-+        deactivateMenuItem.title = tr("macToggleStatusButtonDeactivate")
-         deactivateMenuItem.isHidden = tunnel.status != .active
+diff --git a/Sources/WireGuardKit/WireGuardAdapter.swift b/Sources/WireGuardKit/WireGuardAdapter.swift
+index ba49ec7..82728e4 100644
+--- a/Sources/WireGuardKit/WireGuardAdapter.swift
++++ b/Sources/WireGuardKit/WireGuardAdapter.swift
+@@ -56,6 +56,10 @@ public class WireGuardAdapter {
+     /// Adapter state.
+     private var state: State = .stopped
+ 
++    /// Whether the tunnel's DNS servers should be used only for the tunnel's
++    /// DNS search domains rather than for all queries on the system.
++    private var isSplitDNSEnabled = false
++
+     /// Tunnel device file descriptors claimed by the adapters in this process.
+     /// When multiple tunnels run in a single extension process, each adapter
+     /// must attach to its own utun device rather than to the first one found.
+@@ -265,14 +269,18 @@ public class WireGuardAdapter {
+     /// Start the tunnel tunnel.
+     /// - Parameters:
+     ///   - tunnelConfiguration: tunnel configuration.
++    ///   - isSplitDNSEnabled: use the tunnel's DNS servers only for the
++    ///     tunnel's DNS search domains rather than for all queries.
+     ///   - completionHandler: completion handler.
+-    public func start(tunnelConfiguration: TunnelConfiguration, completionHandler: @escaping (WireGuardAdapterError?) -> Void) {
++    public func start(tunnelConfiguration: TunnelConfiguration, isSplitDNSEnabled: Bool = false, completionHandler: @escaping (WireGuardAdapterError?) -> Void) {
+         workQueue.async {
+             guard case .stopped = self.state else {
+                 completionHandler(.invalidState)
+                 return
+             }
+ 
++            self.isSplitDNSEnabled = isSplitDNSEnabled
++
+             let networkMonitor = NWPathMonitor()
+             networkMonitor.pathUpdateHandler = { [weak self] path in
+                 self?.didReceivePathUpdate(path: path)
+@@ -486,7 +494,8 @@ public class WireGuardAdapter {
+     private func makeSettingsGenerator(with tunnelConfiguration: TunnelConfiguration) throws -> PacketTunnelSettingsGenerator {
+         return PacketTunnelSettingsGenerator(
+             tunnelConfiguration: tunnelConfiguration,
+-            resolvedEndpoints: try self.resolvePeers(for: tunnelConfiguration)
++            resolvedEndpoints: try self.resolvePeers(for: tunnelConfiguration),
++            isSplitDNSEnabled: isSplitDNSEnabled
+         )
      }
  
-@@ -137,8 +150,8 @@ class StatusMenu: NSMenu {
-     }
- 
-     @objc func deactivateClicked() {
--        if let currentTunnel = currentTunnel {
--            tunnelsManager.startDeactivation(of: currentTunnel)
-+        for tunnel in tunnelsInOperation {
-+            tunnelsManager.startDeactivation(of: tunnel)
+diff --git a/Sources/WireGuardNetworkExtension/PacketTunnelProvider.swift b/Sources/WireGuardNetworkExtension/PacketTunnelProvider.swift
+index fe09026..ac8050c 100644
+--- a/Sources/WireGuardNetworkExtension/PacketTunnelProvider.swift
++++ b/Sources/WireGuardNetworkExtension/PacketTunnelProvider.swift
+@@ -68,7 +68,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
          }
-     }
  
-diff --git a/Sources/WireGuardApp/UI/macOS/TunnelsTracker.swift b/Sources/WireGuardApp/UI/macOS/TunnelsTracker.swift
-index 0ab59ee..ab8b478 100644
---- a/Sources/WireGuardApp/UI/macOS/TunnelsTracker.swift
-+++ b/Sources/WireGuardApp/UI/macOS/TunnelsTracker.swift
-@@ -12,28 +12,28 @@ class TunnelsTracker {
+         // Start the tunnel
+-        adapter.start(tunnelConfiguration: tunnelConfiguration) { adapterError in
++        adapter.start(tunnelConfiguration: tunnelConfiguration, isSplitDNSEnabled: tunnelProviderProtocol.isSplitDNSEnabled) { adapterError in
+             guard let adapterError = adapterError else {
+                 let interfaceName = self.adapter.interfaceName ?? "unknown"
  
-     weak var statusMenu: StatusMenu? {
-         didSet {
--            statusMenu?.currentTunnel = currentTunnel
-+            statusMenu?.tunnelsInOperation = tunnelsInOperation
-         }
-     }
-     weak var statusItemController: StatusItemController? {
-         didSet {
--            statusItemController?.currentTunnel = currentTunnel
-+            statusItemController?.tunnelsInOperation = tunnelsInOperation
-         }
-     }
-     weak var manageTunnelsRootVC: ManageTunnelsRootViewController?
- 
-     private var tunnelsManager: TunnelsManager
-     private var tunnelStatusObservers = [AnyObject]()
--    private(set) var currentTunnel: TunnelContainer? {
-+    private(set) var tunnelsInOperation: [TunnelContainer] {
-         didSet {
--            statusMenu?.currentTunnel = currentTunnel
--            statusItemController?.currentTunnel = currentTunnel
-+            statusMenu?.tunnelsInOperation = tunnelsInOperation
-+            statusItemController?.tunnelsInOperation = tunnelsInOperation
-         }
-     }
- 
-     init(tunnelsManager: TunnelsManager) {
-         self.tunnelsManager = tunnelsManager
--        currentTunnel = tunnelsManager.tunnelInOperation()
-+        tunnelsInOperation = tunnelsManager.tunnelsInOperation()
- 
-         for index in 0 ..< tunnelsManager.numberOfTunnels() {
-             let tunnel = tunnelsManager.tunnel(at: index)
-@@ -46,15 +46,11 @@ class TunnelsTracker {
-     }
- 
-     func observeStatus(of tunnel: TunnelContainer) -> AnyObject {
--        return tunnel.observe(\.status) { [weak self] tunnel, _ in
-+        return tunnel.observe(\.status) { [weak self] _, _ in
-             guard let self = self else { return }
--            if tunnel.status == .deactivating || tunnel.status == .inactive {
--                if self.currentTunnel == tunnel {
--                    self.currentTunnel = self.tunnelsManager.tunnelInOperation()
--                }
--            } else {
--                self.currentTunnel = tunnel
--            }
-+            // Always reassign, so that observers get to update their
-+            // presentation even when the set of tunnels doesn't change.
-+            self.tunnelsInOperation = self.tunnelsManager.tunnelsInOperation()
-         }
-     }
- }
-@@ -62,8 +58,8 @@ class TunnelsTracker {
- extension TunnelsTracker: TunnelsManagerListDelegate {
-     func tunnelAdded(at index: Int) {
-         let tunnel = tunnelsManager.tunnel(at: index)
--        if tunnel.status != .deactivating && tunnel.status != .inactive {
--            self.currentTunnel = tunnel
-+        if tunnel.status != .inactive {
-+            tunnelsInOperation = tunnelsManager.tunnelsInOperation()
-         }
-         let statusObservationToken = observeStatus(of: tunnel)
-         tunnelStatusObservers.insert(statusObservationToken, at: index)
-@@ -86,6 +82,9 @@ extension TunnelsTracker: TunnelsManagerListDelegate {
- 
-     func tunnelRemoved(at index: Int, tunnel: TunnelContainer) {
-         tunnelStatusObservers.remove(at: index)
-+        if tunnelsInOperation.contains(tunnel) {
-+            tunnelsInOperation = tunnelsManager.tunnelsInOperation()
-+        }
- 
-         statusMenu?.removeTunnelMenuItem(at: index)
-         manageTunnelsRootVC?.tunnelsListVC?.tunnelRemoved(at: index)
 -- 
 2.50.1 (Apple Git-155)
 
