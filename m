@@ -4,51 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91663CA5FCE
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 09:24:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DFADCA5FFF
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 09:24:49 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 0919dd73;
-	Mon, 5 Oct 2026 06:59:49 +0000 (UTC)
-Received: from sendmail.purelymail.com (sendmail.purelymail.com
- [34.202.193.197])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 44fad5b5
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id a3a52a8b;
+	Mon, 5 Oct 2026 06:59:51 +0000 (UTC)
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com
+ [2a00:1450:4864:20::429])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 3d527d18
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 29 Jun 2026 12:59:29 +0000 (UTC)
-Authentication-Results: purelymail.com; auth=pass
-DKIM-Signature: a=rsa-sha256;
- b=WNdUmxUNjSIFknvfTJ0w5wTRP9R0jFn/wzrIGwbmMaukZVK3ih7w2yozFrKJj7Qkxr0DAG1sDDIpj9sWyu3u7QY47EemI0kk9AK+q2JG/Yr1wpl0Id5r3FJN6C1qlEPnprbi5dax3EWftVC3J+4Jrhgn8ln522ZEIitzfVE+D8+eHizV7dL0G95s+Lhrm8xTNpNmdv2nsJ2FfW+ssKxzemPsN/IerApwUfMa+V5P4QmUNTWaQL9YS7/aaMSdQPYuZbi3GL05Ncepk2Bq4Hhp8oONUAlx+Pp1vAMnNc50D7HACz7Ja4yl/XnhOCFd2yz+gkuanL9hLEWY4Ka92M5Nbg==;
- s=purelymail2; d=rcpassos.me; v=1;
- bh=OAabJhZJpwdljO6/DOk3RokqXfpzgC+NtYOZUkORDt0=;
- h=Received:From:To:Subject:Date; 
-DKIM-Signature: a=rsa-sha256;
- b=GyEMib7GxlAfbmEixXiJ+7ATVUeMTInm2mJGrzGh7uS98PRodaLZ9H8Kua3hvuhn1z5Ccqd2uEVvD0FuKLY3AwVU7McoFmHenF2gNFamgvMrVgAA/EbvvH3SFUs/LE7oE/5yUmKmJ87adLhu3oHOEceBpOetVIa9gHYvcHIFq4giAg7RU3MOnGeqpUzlHqf6a/gqxpMO4+vZ3Kv3Z0BV7eMnX8TgBni3KLDqIibfQ3zWXEtVmHkvjloIiIuj+vwX942zuvMSFmwpDGJRhoWTU5Ds3JtmJ39cOdaQhWpXVt09Vi7PCtT7+bwA02M3UQenZqkux5t2ZZ4FI5EAdtFlFw==;
- s=purelymail2; d=purelymail.com; v=1;
- bh=OAabJhZJpwdljO6/DOk3RokqXfpzgC+NtYOZUkORDt0=;
- h=Feedback-ID:Received:From:To:Subject:Date; 
-Feedback-ID: 45355:7809:null:purelymail
-X-Pm-Original-To: wireguard@lists.zx2c4.com
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 647000529; 
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
- Mon, 29 Jun 2026 12:59:01 +0000 (UTC)
-From: Rafael Passos <rafael@rcpassos.me>
-To: andrew+netdev@lunn.ch,
-	tytso@mit.edu
-Cc: rafael@rcpassos.me, Jason@zx2c4.com, andrew@lunn.ch, davem@davemloft.net,
- edumazet@google.com, kuba@kernel.org, linux-kernel@vger.kernel.org,
- netdev@vger.kernel.org, pabeni@redhat.com,
- syzbot+9ca7674fa7521a3f1bc2@syzkaller.appspotmail.com,
- syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
-Subject: [PATCH v2] Wireguard: Fix data-race in rx/tx counter
-Date: Mon, 29 Jun 2026 09:59:13 -0300
-Message-ID: <20260629125913.2354450-1-rafael@rcpassos.me>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <DJL786MPR9HO.BWHI3U37PDVM@rcpassos.me>
-References: <DJL786MPR9HO.BWHI3U37PDVM@rcpassos.me>
+ Fri, 10 Jul 2026 13:22:47 +0000 (UTC)
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-4798bea72f9so517634f8f.1
+ for <wireguard@lists.zx2c4.com>; Fri, 10 Jul 2026 06:22:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1783689767; x=1784294567; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=MPIJhsciSIqDNS4Oiv+KPTQy/5AyXThtoKOaID9/NH0=;
+ b=EoeoVky5r+0uaSRZjnx7kjchH0A+v5drSICLBEonInCaEYs66+RJVMvwwr9voH/mBx
+ qclgVWiIx80rYZVp0kZA2tb0aLsXnMNSrgzoTVPUNV3LEna61td7iFd70p7SK7wN81FW
+ nv1Oc9h3nh9DtFcseuVVreqRBIiFztMiqiHAKBhJ46beIlUsnFoKg0wmJp/aXwyqIn0l
+ PRrkU+u1eU7hoKZCH439jnPoFNgRrgIVBbeFvwmwNVvbjMemQX2lyHugKW7XSUxHrGuD
+ YAgFe6brNeph4jfV0JFoqdVRjFBW14QNu6RQXgWXJvEfKmXtx8ZJVzi5mjBc+29Tn+i8
+ MRaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783689767; x=1784294567;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=MPIJhsciSIqDNS4Oiv+KPTQy/5AyXThtoKOaID9/NH0=;
+ b=CWLhH8RLaZFiHSGnsf7v6lQx3R+YOO757MqRKq85wAsboGOcWVKEwfYDKptNqQUAUK
+ i0ptFqXMUJ+6GxxZhoDTJUB/JYtn9+28xwQLt3PrYeuncLtkmxxENu2EM6vzLStK68ch
+ hqa9Ehct1tUa2Rr8BUHH/QHhRrM357zMvdan+ooqh1yvsVopg+GzUYm7C+shbmTQ/Qbk
+ DYmMV0OJYAqn/fobyxz9KENZmIyDijK60f7lcg/76yl9SaK5HOtwjyQGDEcXGPIG5m6d
+ XWVN42NUsszCZhFKk7Fog15SVbQjWj49gdSMQJJhVvEhGiO9y/EcgA8ThPXPsZAHU/RA
+ 4Fiw==
+X-Gm-Message-State: AOJu0YybXXOdCnRi/ytV7etqyAdyhFDL/9fn/cxIOVLT376ZwcyfQiPY
+ 4YjvXN93c+IlAHIBnFQaW80OwZRbiDI+u9Srl2AbAzg3973lUzoA4Fk+5vWWueQ/
+X-Gm-Gg: AfdE7cmXu9+HUAIF0vYXPFxnXMFnGBQlB/p96vYbCo/uUWpeaaVKq5fz95ORsIHt4qs
+ YSFNyEjwArnewdvpZ4jsZVNiGI8p5b0ev6ZKP08v7SQJLExuzde7TiUqdcFXYALA4GLLLXuu/rD
+ tnmKc2zEg6vIz6X92AmvI6xsd3AOmui+fyBWI8V/gvrwr7YK0Is/i6PepW8c6um5mxUw4yo7EH6
+ YA7y3LTEdfYhxZcR86BSS/CZ2HKwQbj/ay6sQdES+xBgajhw5V7AuXnxAOJYRe/6yyU3SQ1XLW7
+ +hwnBUcUzNY6bJTLBwbJeJWdo/DBNVx5jIhNmcFvr6C3kG0wsP7Vvry+E4Y7TN+rpEe1ZnJTm6U
+ b2YkZcHi2UK+RdOCsEE6acvsBeQaK6OwxVBPOVANpWI/pZZsq3Pu5WhQE7Z6mHSDh8I7C/cH8j+
+ z1Wg/uBz7ELYOzJFPXHTL9bQqgOK4QFSQp74AF+lQ2GD/U66w2DQ==
+X-Received: by 2002:a05:6000:385:b0:470:13e1:9904 with SMTP id
+ ffacd0b85a97d-47df07238e7mr13142010f8f.14.1783689766827; 
+ Fri, 10 Jul 2026 06:22:46 -0700 (PDT)
+Received: from localhost.localdomain ([79.118.195.86])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47aa039bcdasm62653868f8f.21.2026.07.10.06.22.45
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 10 Jul 2026 06:22:46 -0700 (PDT)
+From: Razvan Cremenescu <razvan.cremenescu@gmail.com>
+To: "Jason A . Donenfeld" <Jason@zx2c4.com>
+Cc: wireguard@lists.zx2c4.com, Razvan Cremenescu <razvan.cremenescu@gmail.com>
+Subject: [PATCH wireguard-apple 0/7] macOS: support multiple simultaneous
+ tunnels
+Date: Fri, 10 Jul 2026 16:22:32 +0300
+Message-ID: <20260710132242.39814-1-razvan.cremenescu@gmail.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
-Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Mon, 05 Oct 2026 06:59:44 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -64,178 +83,71 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Fix data-race in {rx/tx}_bytes counter for wireguard connection.
-These values were incremented inside a read_lock_bh block, without
-exclusive write protection.
-Using per-cpu counters guarantees consistency, and move overhead only to
-the read part: the least frequent operation.
+macOS, unlike iOS, is able to run multiple packet tunnel provider
+sessions at the same time. The app has so far serialized activation on
+both platforms: activating one tunnel deactivates the tunnel already
+in operation. On iOS that mirrors an OS restriction, but on macOS it
+is purely app policy, and macOS users routinely need several disjoint
+split tunnels up at once.
 
-Signed-off-by: Rafael Passos <rafael@rcpassos.me>
----
-As we discussed in the thread, keeping this counters accurate might not
-be worth this extra memory cost of per-cpu counter.
-It was great reading and learning about it. I think this would have been
-a good patch :)
+Simply lifting the policy is not enough, though. When two sessions run
+in one extension process, each WireGuardAdapter locates its tunnel
+device by taking the first utun control socket in the process, so the
+second tunnel attaches to the first tunnel's device and passes no
+traffic. This looks like the same failure reported on this list back
+in July 2021 ("Running multiple tunnels simultaneously on macOS"),
+where two tunnels both reached Connected but only one passed traffic.
+Patch 3 fixes the device attachment; patches 4-6 then lift the
+single-tunnel policy on macOS while keeping iOS behavior exactly as it
+is today.
 
-When looking around drivers/net, I found a few u64_stats uses without
-per-cpu. I will do some digging to understand the reasoning behind it,
-compared to the original "bare u64 counters" in wireguard.
+The first two patches are independent fixes that the series happens to
+need: a build fix for the strict module verifier in current Xcode, and
+a fix for an explicit deactivation losing against a pending restart.
 
-Thanks,
-Rafael Passos
+The last patch adds an opt-in per-tunnel split DNS toggle. With
+several tunnels up simultaneously, tunnels that install their DNS
+servers as the system-wide resolver fight over it; the toggle lets a
+tunnel's DNS servers be used only for the tunnel's DNS search domains
+(the non-IP entries of the DNS= line). A related DNSMatchDomains
+approach was posted to this list in April 2024; this variant keeps the
+wg-quick config text untouched and portable and gates the behavior on
+an explicit per-tunnel opt-in, so existing full-tunnel setups keep
+their leak-free match-everything DNS by default.
 
- drivers/net/wireguard/netlink.c | 22 ++++++++++++++++++++--
- drivers/net/wireguard/peer.c    |  7 ++++++-
- drivers/net/wireguard/peer.h    |  7 ++++++-
- drivers/net/wireguard/receive.c |  9 ++++++++-
- drivers/net/wireguard/socket.c  |  9 +++++++--
- 5 files changed, 47 insertions(+), 7 deletions(-)
+Tested on macOS 26 with Xcode 26: multiple concurrent tunnels passing
+traffic simultaneously on disjoint AllowedIPs, deactivating one tunnel
+leaving the others up, and DNS resolution verified with and without
+DNS= entries as well as with split DNS enabled. Every patch in the
+series builds for both macOS and iOS.
 
-diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlin=
-k.c
-index 1da7e98d0d50..f5978a8c2ca3 100644
---- a/drivers/net/wireguard/netlink.c
-+++ b/drivers/net/wireguard/netlink.c
-@@ -105,13 +105,31 @@ get_peer(struct wg_peer *peer, struct sk_buff *skb, s=
-truct dump_ctx *ctx)
- =09=09if (fail)
- =09=09=09goto err;
-=20
-+=09=09// read per-cpu counters for peer rx/tx_bytes
-+=09=09u64 total_rx_bytes =3D 0, total_tx_bytes =3D 0;
-+=09=09u64 rx_bytes =3D 0, tx_bytes =3D 0;
-+=09=09struct wg_peer_stats *pcpu_ptr;
-+=09=09unsigned int cpu, start;
-+
-+=09=09for_each_possible_cpu(cpu) {
-+=09=09=09pcpu_ptr =3D per_cpu_ptr(peer->pcpu_stats, cpu);
-+=09=09=09do {
-+=09=09=09=09start =3D u64_stats_fetch_begin(&pcpu_ptr->syncp);
-+=09=09=09=09rx_bytes =3D u64_stats_read(&pcpu_ptr->rx_bytes);
-+=09=09=09=09tx_bytes =3D u64_stats_read(&pcpu_ptr->tx_bytes);
-+=09=09=09} while (u64_stats_fetch_retry(&pcpu_ptr->syncp, start));
-+
-+=09=09=09total_rx_bytes +=3D rx_bytes;
-+=09=09=09total_tx_bytes +=3D tx_bytes;
-+=09=09}
-+
- =09=09if (nla_put(skb, WGPEER_A_LAST_HANDSHAKE_TIME,
- =09=09=09    sizeof(last_handshake), &last_handshake) ||
- =09=09    nla_put_u16(skb, WGPEER_A_PERSISTENT_KEEPALIVE_INTERVAL,
- =09=09=09=09peer->persistent_keepalive_interval) ||
--=09=09    nla_put_u64_64bit(skb, WGPEER_A_TX_BYTES, peer->tx_bytes,
-+=09=09    nla_put_u64_64bit(skb, WGPEER_A_TX_BYTES, total_tx_bytes,
- =09=09=09=09      WGPEER_A_UNSPEC) ||
--=09=09    nla_put_u64_64bit(skb, WGPEER_A_RX_BYTES, peer->rx_bytes,
-+=09=09    nla_put_u64_64bit(skb, WGPEER_A_RX_BYTES, total_rx_bytes,
- =09=09=09=09      WGPEER_A_UNSPEC) ||
- =09=09    nla_put_u32(skb, WGPEER_A_PROTOCOL_VERSION, 1))
- =09=09=09goto err;
-diff --git a/drivers/net/wireguard/peer.c b/drivers/net/wireguard/peer.c
-index 1cb502a932e0..a37aa31f132a 100644
---- a/drivers/net/wireguard/peer.c
-+++ b/drivers/net/wireguard/peer.c
-@@ -36,6 +36,10 @@ struct wg_peer *wg_peer_create(struct wg_device *wg,
- =09if (unlikely(dst_cache_init(&peer->endpoint_cache, GFP_KERNEL)))
- =09=09goto err;
-=20
-+=09peer->pcpu_stats =3D alloc_percpu(struct wg_peer_stats);
-+=09if (unlikely(!peer->pcpu_stats))
-+=09=09goto err;
-+
- =09peer->device =3D wg;
- =09wg_noise_handshake_init(&peer->handshake, &wg->static_identity,
- =09=09=09=09public_key, preshared_key, peer);
-@@ -189,7 +193,8 @@ static void rcu_release(struct rcu_head *rcu)
-=20
- =09dst_cache_destroy(&peer->endpoint_cache);
- =09WARN_ON(wg_prev_queue_peek(&peer->tx_queue) || wg_prev_queue_peek(&peer=
-->rx_queue));
--
-+
-+=09free_percpu(peer->pcpu_stats);
- =09/* The final zeroing takes care of clearing any remaining handshake key
- =09 * material and other potentially sensitive information.
- =09 */
-diff --git a/drivers/net/wireguard/peer.h b/drivers/net/wireguard/peer.h
-index 718fb42bdac7..e01781724aa1 100644
---- a/drivers/net/wireguard/peer.h
-+++ b/drivers/net/wireguard/peer.h
-@@ -34,6 +34,11 @@ struct endpoint {
- =09};
- };
-=20
-+struct wg_peer_stats {
-+=09u64_stats_t rx_bytes, tx_bytes;
-+=09struct u64_stats_sync syncp;
-+};
-+
- struct wg_peer {
- =09struct wg_device *device;
- =09struct prev_queue tx_queue, rx_queue;
-@@ -49,7 +54,7 @@ struct wg_peer {
- =09struct work_struct transmit_handshake_work, clear_peer_work, transmit_p=
-acket_work;
- =09struct cookie latest_cookie;
- =09struct hlist_node pubkey_hash;
--=09u64 rx_bytes, tx_bytes;
-+=09struct wg_peer_stats __percpu *pcpu_stats;
- =09struct timer_list timer_retransmit_handshake, timer_send_keepalive;
- =09struct timer_list timer_new_handshake, timer_zero_key_material;
- =09struct timer_list timer_persistent_keepalive;
-diff --git a/drivers/net/wireguard/receive.c b/drivers/net/wireguard/receiv=
-e.c
-index eb8851113654..d799370122b5 100644
---- a/drivers/net/wireguard/receive.c
-+++ b/drivers/net/wireguard/receive.c
-@@ -19,8 +19,15 @@
- /* Must be called with bh disabled. */
- static void update_rx_stats(struct wg_peer *peer, size_t len)
- {
-+=09struct wg_peer_stats *pcpu_ptr;
-+
- =09dev_sw_netstats_rx_add(peer->device->dev, len);
--=09peer->rx_bytes +=3D len;
-+
-+=09pcpu_ptr =3D this_cpu_ptr(peer->pcpu_stats);
-+
-+=09u64_stats_update_begin(&pcpu_ptr->syncp);
-+=09u64_stats_add(&pcpu_ptr->rx_bytes, len);
-+=09u64_stats_update_end(&pcpu_ptr->syncp);
- }
-=20
- #define SKB_TYPE_LE32(skb) (((struct message_header *)(skb)->data)->type)
-diff --git a/drivers/net/wireguard/socket.c b/drivers/net/wireguard/socket.=
-c
-index 0028ef17dc71..685ae6a0fb2c 100644
---- a/drivers/net/wireguard/socket.c
-+++ b/drivers/net/wireguard/socket.c
-@@ -166,6 +166,7 @@ static int send6(struct wg_device *wg, struct sk_buff *=
-skb,
-=20
- int wg_socket_send_skb_to_peer(struct wg_peer *peer, struct sk_buff *skb, =
-u8 ds)
- {
-+=09struct wg_peer_stats *pcpu_ptr;
- =09size_t skb_len =3D skb->len;
- =09int ret =3D -EAFNOSUPPORT;
-=20
-@@ -178,8 +179,12 @@ int wg_socket_send_skb_to_peer(struct wg_peer *peer, s=
-truct sk_buff *skb, u8 ds)
- =09=09=09    &peer->endpoint_cache);
- =09else
- =09=09dev_kfree_skb(skb);
--=09if (likely(!ret))
--=09=09peer->tx_bytes +=3D skb_len;
-+=09if (likely(!ret)) {
-+=09=09pcpu_ptr =3D this_cpu_ptr(peer->pcpu_stats);
-+=09=09u64_stats_update_begin(&pcpu_ptr->syncp);
-+=09=09u64_stats_add(&pcpu_ptr->tx_bytes, skb_len);
-+=09=09u64_stats_update_end(&pcpu_ptr->syncp);
-+=09}
- =09read_unlock_bh(&peer->endpoint_lock);
-=20
- =09return ret;
---=20
-2.53.0
+I'm happy to keep looking after this area of the codebase, and to help
+more broadly with wireguard-apple maintenance if that would be useful.
+
+Razvan Cremenescu (7):
+  WireGuardKitC: include sys/types.h for BSD type definitions
+  TunnelsManager: drop the restart intent when deactivation is requested
+  WireGuardKit: attach each adapter to its own utun device
+  TunnelsManager: restrict single-tunnel activation policy to iOS
+  PacketTunnelProvider: only exit on stop of last tunnel in the process
+  macOS: support multiple simultaneous tunnels in the menu bar UI
+  Add opt-in split DNS support
+
+ .../NETunnelProviderProtocol+Extension.swift  |  26 ++++
+ .../Base.lproj/Localizable.strings            |  11 ++
+ .../WireGuardApp/Tunnel/TunnelsManager.swift  |  43 +++++-
+ .../TunnelEditTableViewController.swift       |  39 +++++-
+ .../WireGuardApp/UI/macOS/AppDelegate.swift   |  31 ++++-
+ .../UI/macOS/StatusItemController.swift       |  14 +-
+ .../WireGuardApp/UI/macOS/StatusMenu.swift    |  25 +++-
+ .../UI/macOS/TunnelsTracker.swift             |  31 +++--
+ .../TunnelEditViewController.swift            |  21 ++-
+ .../PacketTunnelSettingsGenerator.swift       |  12 +-
+ Sources/WireGuardKit/WireGuardAdapter.swift   | 123 ++++++++++++++++--
+ Sources/WireGuardKitC/WireGuardKitC.h         |   2 +
+ .../PacketTunnelProvider.swift                |  52 +++++++-
+ 13 files changed, 373 insertions(+), 57 deletions(-)
+
+-- 
+2.50.1 (Apple Git-155)
 
