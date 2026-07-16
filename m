@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E199CA5FFD
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 08:16:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85D7BCA5FFC
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 08:16:37 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 6097cdc1;
-	Mon, 5 Oct 2026 06:56:28 +0000 (UTC)
-Received: from mail-24424.protonmail.ch (mail-24424.protonmail.ch
- [109.224.244.24])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 29c7c995
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 03e905fd;
+	Mon, 5 Oct 2026 06:56:26 +0000 (UTC)
+Received: from mail-43167.protonmail.ch (mail-43167.protonmail.ch
+ [185.70.43.167])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id e41e2e5c
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 22 Jul 2026 09:38:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
- s=protonmail; t=1784713087; x=1784972287;
- bh=EQ+Mr3p1i9ZU/C8tNVSejNjDGk/e5MGdVh6yLSAZqqQ=;
+ Thu, 16 Jul 2026 21:40:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+ s=protonmail3; t=1784238017; x=1784497217;
+ bh=IoBiPP9ms3dVWyNvMB5wWI47xOQ8iciDzNvIVAQ5C5I=;
  h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
  Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
- b=WEG3uiFwUaA22HLxy9WCPeLu3yHzKelqewOJ8axtXKGrX9bEfXqIXIL0M+lOPx1Qm
- 5j4SGD8mNCCe01sEhbkzuXpMcBbGrrF2RhPYGklJ3Yz1N+2RojC6QyrWHCzYKD8KKA
- nFRN5Kw5guKXpABpHYHDu3fAAlwr9d9/UDinANeHjKYcxtSHNF1B1tgfBxu2ttCn+W
- 6n5LOy1nlHXIL0kxY5viKL43eJmxXE+4o+PGlHrG5BdNpZukb59zcsNLzjoXViz3nt
- 7moshcZy+wNZdK63R08/NLph8r8w/Nj/Dsv2vqc3BW0sQdIGtA0oG9iHJ10ZDOTH5l
- DjqchQLDtqkgg==
-Date: Wed, 22 Jul 2026 09:38:05 +0000
+ b=XyLNSyzt5PAplvzpetFCvBAkYUFbAuPyAIRwO8R5b5f1I/VjNc54XoaFf74S98REb
+ 51FDNyxTiNw9n98NDP9DimNxdAkDsxGeZr2q/2vgPdtIbML2PPsI7y8arladj/p6EV
+ 8AVM1d2o5K+CsZtTFAWHUSHQMox6fJKn00oFdO5HPqO5K5JHOOWiczrqql9enX4zzB
+ quzNnHbexnpoKgaVDf/mmMhSiw33ogSO6MqeLdOCnXiSxWDfw9P4Mm+66cIxpdMcaC
+ QJ0swmpqW71zs34L9yYYjk0hosYIe3hgDVctlfs4VYDpzu2fNxuPVkyKhv6H+SMsfr
+ h/8MkvCMech6g==
+Date: Thu, 16 Jul 2026 21:40:12 +0000
 To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-From: Markus Pischinger <makupi@proton.me>
-Subject: wireguard-go: Windows winrio receive exits on ICMP unreachable
-Message-ID: <0YrBtS_pOagP-VBw5XRdiFC02Z7p9ZHF0803NKsVMkSV8ghWy-Qr5Xi3CUBALADA1tm7OkoQgpRtdCLwqw9EeK5xpOXyp83wiSctBFYuWug=@proton.me>
-Feedback-ID: 210736943:user:proton
-X-Pm-Message-ID: 6686ebd76e41be49edfe76f9ed3c0f06936eab1a
+From: Gawen Arab <gawenr@protonmail.com>
+Subject: macOS: what was Apple bug 32073323 behind the exit(0) in stopTunnel?
+Message-ID: <y2EVlgMSkCGydcCZhMSiXxemgpMF-lwsDM7fYzsBk_X6m5Xn6vQ5AOAKUT3VDK4mG9yDJiF57_v24-32oipCvXbqLmD2sMhc2-gusoC5M3U=@protonmail.com>
+Feedback-ID: 2762778:user:proton
+X-Pm-Message-ID: 75b21e0cc8873899dfe47412a4dca21688fc981d
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -51,38 +51,32 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hey everyone,
+Hi,
+I've been hacking on the macOS app to let more than one tunnel be up at the=
+ same time, and I hit the exit(0) at the end of stopTunnel() in PacketTunne=
+lProvider.swift, with the comment pointing at Apple bug 32073323 (dup'd as =
+47526107). The radar isn't public so I can't see the original symptom.
 
-I've noticed an issue with the wireguard-go Windows implementation, specifi=
-cally winrio and its handling of ICMP errors.=C2=A0
-The default behaviour for Go is to disable SIO_UDP_CONNRESET [1] and SIO_UD=
-P_NETRESET [2], but since the winrio implementation creates the socket dire=
-ctly via WSASocket rather than going through Go's net package, those flags =
-are never disabled.
-This results in ICMP unreachable being received as an error, and bind_windo=
-ws.go just wraps it as windows.Errno [3], which is a non-temporary error. S=
-o in=C2=A0RoutineReceiveIncoming [4], if it receives this error, it just re=
-turns, leaving the receive path of wireguard-go broken, while the rest stil=
-l runs as if nothing happened. In this state wireguard-go will continuously=
- try to initiate a handshake every 5 seconds, and even if the peer answers,=
- it will never receive the response.=C2=A0
+From git, 394a0cb ("proper fix for 32073323") swapped out an older workarou=
+nd that held the tunnel in .deactivating for a few seconds; the comment the=
+re said that reactivating inside that window got the new tunnel torn down b=
+y the system about 25 seconds later. Was that the whole of it, or was there=
+ more to the bug?
 
+The reason I care: exit(0) gets in the way of multiple tunnels. macOS puts =
+all of an app's packet-tunnel providers in a single extension process, so e=
+xit(0) on one stopTunnel kills the others too. On 26.5.1 I can no longer re=
+produce the ~25s auto-kill even with exit(0) removed - stop a tunnel, start=
+ it again a few seconds later, it stays up. So I'm wondering whether the ha=
+ck can be dropped on recent macOS, or at least gated to the versions that s=
+till need it.
 
-This is fixed by disabling both SIO_UDP_CONNRESET and=C2=A0SIO_UDP_NETRESET=
-,=C2=A0similar to how Go does it in src/net/fd_windows.go [5].
-
-I can provide a patch if necessary, but I wanted to verify that there isn't=
- a reason those flags aren't disabled.
+While I'm here: does anyone know if the one-process-for-all-providers behav=
+iour can be avoided, i.e. one process per tunnel? Or a way to tear a single=
+ tunnel down without taking the whole extension process with it? Stopping o=
+ne tunnel currently drops every other active tunnel, which is the main thin=
+g blocking this.
 
 Thanks,
-Markus Pischinger
-
-
-[1]=C2=A0https://github.com/golang/go/issues/5834
-[2]=C2=A0https://github.com/golang/go/issues/68614
-[3]=C2=A0https://github.com/WireGuard/wireguard-go/blob/ecfc5a8d54462e18e13=
-c72173e2623d16d8e25a0/conn/bind_windows.go#L410-L412
-[4]=C2=A0https://github.com/WireGuard/wireguard-go/blob/ecfc5a8d54462e18e13=
-c72173e2623d16d8e25a0/device/receive.go#L116-L118
-[5]=C2=A0https://go.googlesource.com/go/+/be79f939834898d38a7827ed6ebd52182=
-3ac3499/src/net/fd_windows.go#60
+=E2=80=94 Gawen Arab
+http://gawen.me/
