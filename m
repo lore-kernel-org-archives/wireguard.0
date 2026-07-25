@@ -4,73 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 968F8CA6002
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 11:15:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA849CA6003
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 11:15:46 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 4aaac8c4;
-	Mon, 5 Oct 2026 07:00:25 +0000 (UTC)
-Received: from mail.posixcafe.org (mail.posixcafe.org [45.76.19.58])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id a2e83d11
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 3ef4b212;
+	Mon, 5 Oct 2026 07:00:18 +0000 (UTC)
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com
+ [2a00:1450:4864:20::42b])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id e24a2e96
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 4 Aug 2026 21:08:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posixcafe.org;
- s=20200506; t=1785877684;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:autocrypt:autocrypt;
- bh=hd2+nQP7M4BzPf8J4BIM7fWDL165VKGQSOn/bPBUmWg=;
- b=i2BkRFSvuyy/BCzkGV2ujc12s/gU12Vm6bOM8GMkSe+7TSHDaJOl49AAmHU4Gk0fZYd+W0
- BpwGLFseIsZvbeJgub63tq1RRDHGAxY4grFLOJsaP7yaEbKzVFCObKNERGD/pcXOQuKpqf
- HPJbEXOIGr8Qb8Rpxn6hKvTKByHbTEU=
-Received: from [192.168.168.98] (173-26-212-115.client.mchsi.com
- [173.26.212.115])
- by mail.posixcafe.org (OpenSMTPD) with ESMTPSA id 9fdb4ab3
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 4 Aug 2026 16:08:04 -0500 (CDT)
-Message-ID: <0ab57e49-8904-4e4b-bc3a-38e10b214ab3@posixcafe.org>
-Date: Tue, 4 Aug 2026 16:08:07 -0500
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 25 Jul 2026 21:39:21 +0000 (UTC)
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-47640541585so911493f8f.1
+ for <wireguard@lists.zx2c4.com>; Sat, 25 Jul 2026 14:39:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785015561; x=1785620361; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=0LHdCMVshoJPDdj4jRprhs0nqzL/c/TvlElJONknoCA=;
+ b=rhRpBSH9+uuw+fFVMRqb7leC0lNoWYNIgsSrx3rE8pO0w/Sr4B1AGxaF+rAi0zwJqd
+ B+JTJUHnH/gTaOpeUqVptSr72Pvxc38NZ0kXBJiM8//F3Z8keMbPHEKhnfVvGexeGdqI
+ y0TcdzBN6S87BuSiA6gbr1L3C7LpZFTtfp1HWsZ5P0Iv4pX4Lxgx8R5Otm0PAmfiB3Fg
+ itrcrGFDsyjP7tC/JcwRu+dZf46ZKo3kIxN45h6RuS1FysuhLt4++Ol8hQemq287Y3TS
+ ROGiMyGqBIc5uxkJgh07zCDUNF6BvyxHzElexzeLZicYbbbbsXz0Oc421yFVZZaiebLt
+ /nyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785015561; x=1785620361;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=0LHdCMVshoJPDdj4jRprhs0nqzL/c/TvlElJONknoCA=;
+ b=dTLeGzmzzolnjiOf9DdgzT4z1327aripeI6633qKvLhq6LJiDe2IYop3TLhE+ban0L
+ jPibDJMrC4Ml6TFaNI6i0HXiscyNLhee/pIeGWZLjjmWXoDGMYQnnjCtJ363dGYEcfJS
+ 9xRgg4ICD4ojL5h+ocgWTh3CO7jQdPOAwNvB1PeqI3RjO5K3h+7HOb/MkOzwCS+TVNoy
+ irJPrAofyj36AFm1XuWVpetAfOGPv7cCQtDmwFGv57ZdylmtukyA9E6PuyuWL8cn7aOg
+ RK72/x4FkhY+wbq0wgzug/E+kKmTH8UWZaHZ9ocen2YncL+2DihrrVbpXtQtLoqip+wv
+ KccQ==
+X-Gm-Message-State: AOJu0YzdF9ofnRe5Ao1K4EOE2J7/8QfFClW435PWxR04GP77y70iGBDf
+ XFTzHXGxNb6llxNdiqz9h3WyZ8COeBFaNh4YwrU0wBRRepSK1WZLAAfZJ0z+LbCx
+X-Gm-Gg: AR+sD12GbRBiYKSJjr+M9mtloO/AtmNcoz+cbaGs65u2JuCmZsv89Vx+GqEwHMU1b+E
+ VUpJtqe1tKxhuSPAPjdJhk4F5MeV3T0k2CU6ArRrvwLspbGypovv4Odd6lR9sdFG5VLECVcvb8e
+ CaM0Yzr19Q57ZET2K6HTmPelNWRSItFx36e+7W/QVuHkaXtMksIA31EOGBeexSaZub22Wl+GYR+
+ 4q5RO7V+oJvgfjdSL4jAWcvWsEhRc2/Ffdlw4pjUmuhbUHfc7rZTj1Z8y0mQ4bbgFvJJS+XMF88
+ 9D9N832AJELUqqV7yuOMg880ABWmXQYd9FDEAeqkzkeyelxBB2wlwSr/KpebakbCGxvxGbmcz9M
+ o9ev6Pv9I4tLya2/tFdOZJ/TH3hWgoU2mv7jnhwmRQmvRJOVyU4jzra9ZIcFiIEvm/tNN+Kbwqb
+ K48tXkxcr+9hC7fUCfE6eg3dgNEkA9wwzjpKFI7FA=
+X-Received: by 2002:a5d:5f45:0:b0:47f:9260:4bc9 with SMTP id
+ ffacd0b85a97d-47f9feb51fcmr4485279f8f.29.1785015561003; 
+ Sat, 25 Jul 2026 14:39:21 -0700 (PDT)
+Received: from localhost.localdomain ([79.118.195.86])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f85b9a5c4sm34770208f8f.8.2026.07.25.14.39.19
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sat, 25 Jul 2026 14:39:20 -0700 (PDT)
+From: Razvan Cremenescu <razvan.cremenescu@gmail.com>
+To: "Jason A . Donenfeld" <Jason@zx2c4.com>
+Cc: wireguard@lists.zx2c4.com, Razvan Cremenescu <razvan.cremenescu@gmail.com>
+Subject: [PATCH wireguard-apple 1/2] macOS: activate the app before showing a
+ modal alert without a window
+Date: Sun, 26 Jul 2026 00:39:17 +0300
+Message-ID: <20260725213918.45422-1-razvan.cremenescu@gmail.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: wireguard@lists.zx2c4.com
-From: Jacob Moody <moody@posixcafe.org>
-Subject: Implementation for the 9front operating system
-Autocrypt: addr=moody@posixcafe.org; keydata=
- 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
- kA7wyn9tHMM41bDH8w==
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Mon, 05 Oct 2026 06:59:44 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -86,25 +83,35 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-All,
+WireGuard runs as a menu bar accessory app. When an error alert has no
+source window to attach to as a sheet - e.g. an activation failure
+while the Manage Tunnels window is closed - it falls back to
+NSAlert.runModal(). Shown while the app is inactive, the modal window
+comes up behind everything with no way to reach it, and the modal loop
+freezes the whole app until it is dismissed. Activate the app first so
+the alert is actually visible.
 
-I've been working on an implementation of wireguard for 9front.
-I am starting to get to the point where I feel like the implementation is getting
-pretty close, and its in a good spot to review before I do some tighter integration into 9front.
+Signed-off-by: Razvan Cremenescu <razvan.cremenescu@gmail.com>
+---
+ Sources/WireGuardApp/UI/macOS/ErrorPresenter.swift | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-I know in the past I've seen some desire from the wg community to ensure that code using the wireguard
-name at least be somewhat decent. So I wanted to share it here and get feedback if people felt inclined.
-
-Grab the code from your choice of git hosts:
-	git://shithub.us/moody/wg
-	https://github.com/majiru/wg
-
-I am happy to answer any questions regarding plan 9/9front specifics.
-
-One note is that there's some stubs right now, the dynamic runtime addition
-and subtraction of peers, and likewise the condition under which we send
-cookie's is not implemented, that's pending the more tighter integration.
-
-Thanks,
-moody
+diff --git a/Sources/WireGuardApp/UI/macOS/ErrorPresenter.swift b/Sources/WireGuardApp/UI/macOS/ErrorPresenter.swift
+index dbab027..b3884ff 100644
+--- a/Sources/WireGuardApp/UI/macOS/ErrorPresenter.swift
++++ b/Sources/WireGuardApp/UI/macOS/ErrorPresenter.swift
+@@ -16,6 +16,11 @@ class ErrorPresenter: ErrorPresenterProtocol {
+                 onDismissal?()
+             }
+         } else {
++            // WireGuard runs as a menu bar (accessory) app, which is usually
++            // not the active app. A modal alert shown while inactive comes up
++            // behind other windows with no way to reach it, freezing the app
++            // until it is dismissed. Activate first so the alert is visible.
++            NSApp.activate(ignoringOtherApps: true)
+             alert.runModal()
+             onDismissal?()
+         }
+-- 
+2.50.1 (Apple Git-155)
 
