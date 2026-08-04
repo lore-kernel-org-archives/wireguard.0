@@ -4,41 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AC1BC43458
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 29 Jun 2026 02:34:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E053DC55822
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  4 Aug 2026 20:25:50 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 5d4e24d6;
-	Mon, 29 Jun 2026 02:34:37 +0000 (UTC)
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id fac477ef
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 29 Jun 2026 02:34:34 +0000 (UTC)
-Received: from macsyma.thunk.org (pool-173-48-111-178.bstnma.fios.verizon.net
- [173.48.111.178]) (authenticated bits=0)
- (User authenticated as tytso@ATHENA.MIT.EDU)
- by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 65T2YHMF021906
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 28 Jun 2026 22:34:18 -0400
-Received: by macsyma.thunk.org (Postfix, from userid 15806)
- id 157EB7C1B88; Sun, 28 Jun 2026 22:34:17 -0400 (EDT)
-Date: Sun, 28 Jun 2026 22:34:17 -0400
-From: "Theodore Tso" <tytso@mit.edu>
-To: Andrew Lunn <andrew@lunn.ch>
-Cc: Rafael Passos <rafael@rcpassos.me>, Jason@zx2c4.com, andrew+netdev@lunn.ch,
- davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
- linux-kernel@vger.kernel.org, netdev@vger.kernel.org, pabeni@redhat.com,
- syzbot+9ca7674fa7521a3f1bc2@syzkaller.appspotmail.com,
- syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
-Subject: Re: [PATCH] Wireguard: Fix data-race in rx/tx counter
-Message-ID: <akHY4UEa1ab2PF-j@mit.edu>
-References: <DJFTVX3FE7OD.2O8GTO84798T@rcpassos.me>
- <20260628203823.144789-1-rafael@rcpassos.me>
- <aa423184-7465-4bc9-aff4-d3d671beb3c6@lunn.ch>
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 6da04ddd;
+	Tue, 4 Aug 2026 20:25:48 +0000 (UTC)
+Received: from mail-pl1-x648.google.com (mail-pl1-x648.google.com
+ [2607:f8b0:4864:20::648])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 84912c41
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Tue, 4 Aug 2026 20:25:46 +0000 (UTC)
+Received: by mail-pl1-x648.google.com with SMTP id
+ d9443c01a7336-2cca5e0a0c9so4125685ad.1
+ for <wireguard@lists.zx2c4.com>; Tue, 04 Aug 2026 13:25:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20251104; t=1785875144; x=1786479944; darn=lists.zx2c4.com;
+ h=content-type:to:from:subject:date:message-id:mime-version:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=SgsItllBGKiNAcaARs96DHfshb5flEAqOXCXQ83IDIQ=;
+ b=RQyjCclniHimtmGSZGTEiRUnvqoycsd0lJPd7ya+5EGnzYR6VuJWf318skuVACQxrR
+ dRJNAxwWDTwSOSGy+BYNpjy7Ef+TLHjk/F8muoGeDqSjyxK8x4HAyXgStuD+R4VIpLKy
+ 6vTHPsUhnj8xN6jECPCJu30uDsM9RFUFqsFXdUvu3gBd6yQa0+XY+WODuuHudr+eKplX
+ eLsN2WTRVt4QgU4PJynFEco/zEnxBvCg/z00892j9dixJP3nKoDOM8QcX2bYGEtsG2Qy
+ BC6OVzElEJYkjEIB/UOUngm1pXBbscfW63zVyrQgAlOc0Q/bY3q2ETqrsNmwu6KyfH4l
+ vwgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785875144; x=1786479944;
+ h=content-type:to:from:subject:date:message-id:mime-version
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=SgsItllBGKiNAcaARs96DHfshb5flEAqOXCXQ83IDIQ=;
+ b=OpVndog9GtnhhSF3XFlGc5DMGTuisEWplNd7vi3xkNeBOMEmUd8RUGo2SHgL+SHWlG
+ VMcSu62JZpY/cp21g+XgOaoFbLX504eLZQPhb/YDC+/UqY13JJFbcnydnE7MwW6Tc8oI
+ hwRg1a+eWSks4kCJMvipPyNNamC3zxN6HJN/gpCffg5eIL1m6S0QIWmoqoYesWdC6XgK
+ R30re2mwthSJ8r4cGJh9y1H2DGhTs3WgxW3/gl8Wk3LMcxNsHSFUL7saJQqLkMnC2BIA
+ IzSZK41tZYgSS6ZH4xvSsV+kCoyaA+4P4QvIybuG43meK/l1yPnJQu3r+4KTWVzAPEyB
+ IbLQ==
+X-Gm-Message-State: AOJu0Yy1Y+GoYcQWhOQEztsEs8IiI8WebE9shOmyb43J9Jx56Zpnm5U0
+ i+lgAT7BmPJ2LTu2xCMA68xenofrzIpcsDCzEWvtYEP2Rtn9wwQWxp5dzXTenYc9qMnaJh2bjNA
+ moJIERVu/vN77poEzJmx4M+qPIsAjC/Hdeov6lTDg+22j9X6YGRi+CEpnr5f0d7xKoWnXZdbwoO
+ bOsB0RlpquavenrSf/Gmnn0pOzJy+LDuM61uU=
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aa423184-7465-4bc9-aff4-d3d671beb3c6@lunn.ch>
+X-Received: from dldz12-n1.prod.google.com
+ ([2002:a05:701b:418c:10b0:13c:e6ee:25aa])
+ (user=dkess job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a17:90a:da83:b0:38d:e0c4:c955
+ with SMTP id 98e67ed59e1d1-3903c5d84b2mr1206999a91.15.1785875144135; Tue, 04
+ Aug 2026 13:25:44 -0700 (PDT)
+Message-ID: <18c8b3fb4a12af86.3130302e3131342e35302e3736.4ad1.0000sendgmr@google.com>
+Date: Tue, 04 Aug 2026 20:25:44 +0000
+Subject: wireguard-windows library version number
+From: <dkess@google.com>
+To: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -53,26 +71,12 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Sun, Jun 28, 2026 at 11:02:05PM -0500, Andrew Lunn wrote:
-> On Sun, Jun 28, 2026 at 05:38:23PM -0300, Rafael Passos wrote:
-> > fixes data-race in {rx/tx}_bytes counter for wireguard connection.
-> > these values were incremented inside a read_lock_bh block, but write
-> > protections were missing. making them atomic was the simplest way out.
-> > This was found by syzbot with kcsan.
-> 
-> Atomics are expensive in general, especially on high CPU count
-> systems. 
-> 
-> Statistic counters tend to be very asymmetric in usage. They are
-> incremented frequently, maybe per packet, but reported very
-> infrequently, maybe every minute when an SNMP agent reads them.
+Hi,
 
-One of the reasons why kcsan and syzbot can be quite noisy is that a
-human being needs to *think* and consider whether or not this is
-actually important.  (One of the reasons why I'm not all that worried
-about our new AI overlords taking over the world.  :-) Consider what
-is the worst that might happen if the tx/rx_bytes counter might not be
-completely accurate?  Is it worth the performance penalty of using
-atomics (or the memory overhead of per-CPU counters)?
+I noticed that wireguard-windows is on version 1.1. But Godoc doesn't  
+recognize this version because it's not semver:  
+https://pkg.go.dev/golang.zx2c4.com/wireguard/windows?tab=versions
 
-	    	       		   - Ted
+Would it be possible to get the version bumped to 1.1.0?
+
+-Daniel
