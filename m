@@ -4,45 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34BF3CA5FF0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14279CA5FCE
 	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 08:16:40 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 803778b6;
-	Mon, 5 Oct 2026 06:56:30 +0000 (UTC)
-Received: from mx01.forststack.de (mx01.forststack.de [5.75.209.129])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 89c30191
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 855cb1c0;
+	Mon, 5 Oct 2026 06:56:32 +0000 (UTC)
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com
+ [2607:f8b0:4864:20::102d])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id a298688b
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sat, 8 Aug 2026 19:39:51 +0000 (UTC)
-Received: from mail.forststack.de (cks-4-agent [178.105.72.158] (AS24940
- Hetzner Online GmbH, DE))
- (using TLSv1.3 with cipher TLS13_AES_256_GCM_SHA384)
- by mx01.forststack.de (Stalwart SMTP) with ESMTPS id 47AED6A51000044;
- Sat, 8 Aug 2026 19:39:50 +0000
-DKIM-Signature: v=1; a=ed25519-sha256; s=s2026ed; d=moo.gl; c=relaxed/relaxed;
- r=y; 
- h=MIME-Version:Message-ID:Date:Subject:Cc:To:From:Organization
- :Content-Type:In-Reply-To:References:List-Id; t=1786217989; x=1787081989; bh=6
- PDR2fOF6T6C/1qR66ziuOnk8ZqAGV2C9G0He67ci6c=; b=29iS6dze4eeNxl5dDt7FTvtd4S/X
- BCYqrfK1Tfccs4BSZ6prNFFHycOBVgb4q8CUula+92Uqp2K3UpblD3G1AQ==;
-DKIM-Signature: v=1; a=rsa-sha256; s=s2026; d=moo.gl; c=relaxed/relaxed; r=y; 
- h=MIME-Version:Message-ID:Date:Subject:Cc:To:From:Organization
- :Content-Type:In-Reply-To:References:List-Id; t=1786217989; x=1787081989; bh=6
- PDR2fOF6T6C/1qR66ziuOnk8ZqAGV2C9G0He67ci6c=; b=l5wg0A3u2ICOP7B18Tq5i7YlHg3F
- UVhlZ8e78XL9iE4nQMWMKi5oBXT3kBQa+GpC+0BFTrZuJSDFtUtxeWPXDZE6+rDdCEhoSrZPbjN
- tWnzsQhnjDSFo+QU3vP/ck/fyBR/7drRPH9dUjrrXoHJ4XSu+tJUdiY52/4xZg0i8SYxRqewVU5
- LhLBXCcAoneUGT0RG8z9dHjxQSdfWNWV9CmhbHmDQsvtwElqlBg9b6ln6ktYg4iZR28IIb5ydMR
- wv25m5Btm2iv5HolhOX4MuoCJjghBsSsGGCwpueNniBdaVg31eUT9kwMv/plfngHqa++hG0a4jP
- 7I5spemk3Q1JRQ==;
-From: Tim Foerster <github@moo.gl>
-To: wireguard@lists.zx2c4.com
-Cc: Tim Foerster <github@moo.gl>
-Subject: [PATCH] tun/netstack: do not panic when closing with a packet in
- flight
-Date: Sat,  8 Aug 2026 21:39:42 +0200
-Message-ID: <2e89ef5723ca0cc0c73da31d57b74649040f18d0.1786216842.git.github@moo.gl>
-X-Mailer: git-send-email 2.55.0
+ for <wireguard@lists.zx2c4.com>;
+ Fri, 14 Aug 2026 08:15:35 +0000 (UTC)
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-38125cebfdaso1005997a91.1
+ for <wireguard@lists.zx2c4.com>; Fri, 14 Aug 2026 01:15:34 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786695333; cv=none;
+ d=google.com; s=arc-20260327;
+ b=l9Z2WupfhO4Lan6NQ/do6909qyim4f5Wo2MRFWDadPHLkB1yGTlbTGQ6NBfYxmGPwS
+ k5WNACk0c2GRFf8duiOnw1QZCBwWFfeCzFdoRkJmmrOFbZIJ8COldkvJxeUK+KyX089J
+ 9K2ATF52t4vIBCx3iiDorPKelw0he83j0SbTokL5QIGZlDedH3xYvKT/DEAFnA5gg3Cx
+ z5LkIhoruFpGfIzotME310j/wtAA+S44R7w09Fn2/RP+COdLORzCEe0S6BdPt2Tx1AdN
+ c3qQEl4k3nQ5I/1YQmUZyFGMpRmsunUQch+suQsMU9t/sq2dEbSuL6YRx2IyH/q6qNyk
+ 7pJw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :mime-version:dkim-signature;
+ bh=4piT0BRA1tazGlVIB3YJfMJzj+odq/lY60bIt+WRT2c=;
+ fh=1CsOgAxkj0tSFTO0bRovl0wQS24+EZdEApJbdc/Xo54=;
+ b=XhJDCnO6yoU2pswrPCuqO45UpY5sTM7ckGxewMrK4MymBIxxoMtjBq2ay9tz0cLSj3
+ EtG1NLbCLOP6k9mbu6O+we2iOHxYvinjL3ARFWEra5L5yL5qaZKaaHlX9uRycphMhDbR
+ GvQWG4gXcg5SHdspg+BpkMoHGy4hLLFZA5fvDd6PwSRpuKn36aW6s+Myypf4TAdVPIC5
+ 8dutnyBhjYs5GOrM/0tPX/OceVHq1Wajwp6WEJEzo+0+StbdcKfpn1Wa3zIBeu2bFbq4
+ rtjjIPwwS4tYQx86X0lDGYWFqpb2e9MynDtuCYLD4UAX1dzAfh0RGQEvFdpsx3dlCiSk
+ AkyQ==; darn=lists.zx2c4.com
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1786695333; x=1787300133; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:content-type:to:subject:message-id:date
+ :from:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=4piT0BRA1tazGlVIB3YJfMJzj+odq/lY60bIt+WRT2c=;
+ b=GtNDQSrRN6bf3oYNGhJpEbsGUKLoQi2Rcsvdz4DOtIXh9gW6ijwBYgAFIKIry7SeAh
+ KxgkgPNyjQxymDn3l+QBXattbG+IazIeaAAhTEUCIKshLdA/rxSLh3siZ/tfT97B1psT
+ p/laxujsKR6lM4iRn6hONQd22DEPR+0nkNnQFTvLaH/1dWhuj3ZSFVffMx0BiqDnl8tp
+ iC+xuosWz5jzFwzXxSZ6AfxZ7Mlfr4KHS/Td7G7GvxxzzS65OW9AIzOdipjmChTHzG/D
+ htELc4eZ20Fpafnhjn5h1BaqamOx5IJGkycXGXFEsvVOeSiS3/jtonqY/M50iUiek/3c
+ 0QYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786695333; x=1787300133;
+ h=content-transfer-encoding:content-type:to:subject:message-id:date
+ :from:mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=4piT0BRA1tazGlVIB3YJfMJzj+odq/lY60bIt+WRT2c=;
+ b=iTXlQ5v+HIBHCv0BqmxImXE1pi2W11trmO7t3YtPZ89MjHqQrsUxdGImpBWTeEX9pB
+ fvTvfDDFs5uoSKowVjh3KwEAAc+242VxvyeapC33KyjONOjLhkkNunWlO2e2Vazkqje/
+ Kn9NAsCMoWyYD8RLN5f+T1Zy8a2KX968m/b6svmANqGzmr/JHvDBaNqrM8/u3/BjLsTN
+ oqpfOkfEV6uf04Y+zcyXIHNrI0nb+nGH4q+Cnoe/HhC3JIYu0JWivsvx4bUvkTkmRs1v
+ /ZtBlMj+CBxnpxy7X8tfsH5qQ6KkM3crXz6TtlFPDhQNwmZMNZiL8mZWT7SDg7n9Nef1
+ tnYw==
+X-Gm-Message-State: AOJu0YyO2ps7k9r39Ljil9Cm/kmesBNzq4fJldr8R9x96IHYlZVVl7JI
+ xplYV8DtawxKrnMpvFqqGyEVI0gO+AePO3/jUe1k7A7+SDj0EEuZ1+Lk+4zolIAg0xAEHPDDu81
+ jTX2zhYiybkuVkfCMAqLp/m5Od3WzVItd3CgS4ckoxA==
+X-Gm-Gg: AR+sD12pZmIAg8BC/ksvvafkmn5oYdNQan2cXmIE9hRm2IPe4uXcO5xjBk+u/DZkCi9
+ rPSI+Qmq6SqO4tXQvTyufxVCCUeln1TlFxbxHG+a46B2eZhwoKy1KUgjrcUfNgZ+9cXRjMypk7H
+ td/TaX+N1x1DdDt7T1uQOpsEmWF/fagRuVUgiAtziXReE48gh79iWRAWs0syFMBfNjpZr4Cml5G
+ MqqxnBQxs1npPqzr6tAaECm2XnwNQ3mRjMyh9+bJGaLpze6bcsFoxeLWUu1FjiSXWfSiPQ8W7fy
+ 946m+i+KkiWu/E5e2iDC1AmU12EDsmUCnDFVBViT9Qd4
+X-Received: by 2002:a17:90b:48ce:b0:390:b41a:b92b with SMTP id
+ 98e67ed59e1d1-3933b6d05c3mr5003093a91.4.1786695333150; Fri, 14 Aug 2026
+ 01:15:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: grog <grogdor@gmail.com>
+Date: Fri, 14 Aug 2026 02:15:21 -0600
+X-Gm-Features: AUfX_mwA5u4Fu19jZOg-tKgxXODXlBkNpOFOzl6QtD4NS5ThJYkGUyQ0t6VNkFM
+Message-ID: <CADk5WnNyF_Kk7e4GZuO5LepG1JzMPZ-_6s4nvFdftvQih-YgYA@mail.gmail.com>
+Subject: [PATCH] wg-quick: darwin: debounce networksetup DNS calls to prevent
+ cascade storms
+To: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Mailman-Approved-At: Mon, 05 Oct 2026 06:55:46 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -58,177 +98,55 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Close() closes incomingPacket while WriteNotify() may still be parked
-on a send to it. RemoveNotify() beforehand narrows the window but
-cannot close it: a WriteNotify() that is already past ep.Read() holds a
-packet, and when it loses the race the process dies with "send on
-closed channel" on a goroutine owned by gvisor, which the caller cannot
-recover. The packet that loses is typically one the stack generates by
-itself, such as an RST for a refused connection, so the window is not
-avoidable from outside the package.
+When a WireGuard interface with a DNS directive is brought up on
+macOS, wg-quick launches a monitor_daemon that listens to routing
+changes via `route -n monitor`. Upon any routing change, it
+unconditionally invokes `networksetup` to reapply the DNS settings.
 
-Instead of closing incomingPacket, signal shutdown on a dedicated
-closing channel that WriteNotify() and Read() select on. This releases
-a pending send instead of turning it into a panic, and Read() still
-returns os.ErrClosed. Close() is additionally wrapped in a sync.Once,
-matching the other tun implementations, so that closing twice no longer
-panics with "close of closed channel".
+However, invoking `networksetup` commits to SCPreferences, which
+forces configd to broadcast kSCDynamicStoreDomainSetup. Native network
+daemons (such as airportd) intercept this and rebuild their network
+interfaces, temporarily locking the networking driver. This
+reconfiguration triggers another kernel routing change event, which
+the monitor_daemon catches, causing an endless cascade storm that
+spikes airportd to 100% CPU.
 
-Signed-off-by: Tim Foerster <github@moo.gl>
+While not a strict, unbounded infinite loop (the storm eventually
+dampens out due to macOS `configd` event coalescing and the `sleep 2`
+throttle in the `wg-quick` monitor), it causes intense cascade
+storms=E2=80=94in our traces, this resulted in `airportd` accumulating **13=
++
+hours of total CPU time over a 5.5-day uptime**, and exacerbated Wi-Fi
+flapping by constantly locking the network driver during interface
+rebuilds.
+
+This patch adds a debounce check in `set_dns()` to verify if the DNS
+is already correctly set before invoking `networksetup`, breaking the
+feedback loop.
+
 ---
- tun/netstack/tun.go      | 41 ++++++++++++++++++----------
- tun/netstack/tun_test.go | 59 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 85 insertions(+), 15 deletions(-)
- create mode 100644 tun/netstack/tun_test.go
+ src/wg-quick/darwin.bash | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/tun/netstack/tun.go b/tun/netstack/tun.go
-index a7aec9e..df12c3c 100644
---- a/tun/netstack/tun.go
-+++ b/tun/netstack/tun.go
-@@ -19,6 +19,7 @@ import (
- 	"regexp"
- 	"strconv"
- 	"strings"
-+	"sync"
- 	"syscall"
- 	"time"
- 
-@@ -45,6 +46,8 @@ type netTun struct {
- 	events         chan tun.Event
- 	notifyHandle   *channel.NotificationHandle
- 	incomingPacket chan *buffer.View
-+	closeOnce      sync.Once
-+	closing        chan struct{}
- 	mtu            int
- 	dnsServers     []netip.Addr
- 	hasV4, hasV6   bool
-@@ -63,6 +66,7 @@ func CreateNetTUN(localAddresses, dnsServers []netip.Addr, mtu int) (tun.Device,
- 		stack:          stack.New(opts),
- 		events:         make(chan tun.Event, 10),
- 		incomingPacket: make(chan *buffer.View),
-+		closing:        make(chan struct{}),
- 		dnsServers:     dnsServers,
- 		mtu:            mtu,
- 	}
-@@ -121,8 +125,10 @@ func (tun *netTun) Events() <-chan tun.Event {
- }
- 
- func (tun *netTun) Read(buf [][]byte, sizes []int, offset int) (int, error) {
--	view, ok := <-tun.incomingPacket
--	if !ok {
-+	var view *buffer.View
-+	select {
-+	case view = <-tun.incomingPacket:
-+	case <-tun.closing:
- 		return 0, os.ErrClosed
- 	}
- 
-@@ -163,22 +169,27 @@ func (tun *netTun) WriteNotify() {
- 	view := pkt.ToView()
- 	pkt.DecRef()
- 
--	tun.incomingPacket <- view
-+	select {
-+	case tun.incomingPacket <- view:
-+	case <-tun.closing:
-+	}
- }
- 
- func (tun *netTun) Close() error {
--	tun.stack.RemoveNIC(1)
--	tun.stack.Close()
--	tun.ep.RemoveNotify(tun.notifyHandle)
--	tun.ep.Close()
--
--	if tun.events != nil {
--		close(tun.events)
--	}
--
--	if tun.incomingPacket != nil {
--		close(tun.incomingPacket)
--	}
-+	tun.closeOnce.Do(func() {
-+		// Unblock any WriteNotify parked on a send, and any pending Read.
-+		// incomingPacket is never closed, as WriteNotify may be mid-send.
-+		close(tun.closing)
+diff --git a/src/wg-quick/darwin.bash b/src/wg-quick/darwin.bash
+index fa74edd..446f13c 100755
+--- a/src/wg-quick/darwin.bash
++++ b/src/wg-quick/darwin.bash
+@@ -296,6 +296,12 @@ set_endpoint_direct_route() {
+ set_dns() {
+  collect_new_service_dns
+  local service response
+  for service in "${!SERVICE_DNS[@]}"; do
 +
-+		tun.stack.RemoveNIC(1)
-+		tun.stack.Close()
-+		tun.ep.RemoveNotify(tun.notifyHandle)
-+		tun.ep.Close()
++ local current_dns=3D"$(networksetup -getdnsservers "$service" 2>/dev/null=
+)"
++ local target_dns=3D"${DNS[*]}"
++ if [[ "${current_dns//$'\n'/ }" =3D=3D "$target_dns" ]]; then
++ continue
++ fi
 +
-+		if tun.events != nil {
-+			close(tun.events)
-+		}
-+	})
- 
- 	return nil
- }
-diff --git a/tun/netstack/tun_test.go b/tun/netstack/tun_test.go
-new file mode 100644
-index 0000000..fd8afe0
---- /dev/null
-+++ b/tun/netstack/tun_test.go
-@@ -0,0 +1,59 @@
-+/* SPDX-License-Identifier: MIT
-+ *
-+ * Copyright (C) 2017-2025 WireGuard LLC. All Rights Reserved.
-+ */
-+
-+package netstack
-+
-+import (
-+	"net/netip"
-+	"os"
-+	"testing"
-+	"time"
-+
-+	"gvisor.dev/gvisor/pkg/buffer"
-+	"gvisor.dev/gvisor/pkg/tcpip/stack"
-+)
-+
-+// TestClose checks that Close releases a WriteNotify parked on a send, is
-+// idempotent, and leaves Read returning os.ErrClosed.
-+func TestClose(t *testing.T) {
-+	dev, _, err := CreateNetTUN([]netip.Addr{netip.MustParseAddr("192.168.241.1")}, nil, 1280)
-+	if err != nil {
-+		t.Fatal(err)
-+	}
-+	tun := dev.(*netTun)
-+
-+	// Nobody reads the device, so WriteNotify parks on the unbuffered send.
-+	done := make(chan struct{})
-+	go func() {
-+		defer close(done)
-+		// The contents are never parsed, only handed to WriteNotify.
-+		pkt := stack.NewPacketBuffer(stack.PacketBufferOptions{
-+			Payload: buffer.MakeWithData([]byte{0}),
-+		})
-+		defer pkt.DecRef()
-+		var pkts stack.PacketBufferList
-+		pkts.PushBack(pkt)
-+		tun.ep.WritePackets(pkts)
-+	}()
-+	time.Sleep(100 * time.Millisecond)
-+
-+	if err := dev.Close(); err != nil {
-+		t.Fatalf("Close: %v", err)
-+	}
-+	select {
-+	case <-done:
-+	case <-time.After(time.Second):
-+		t.Fatal("WriteNotify still blocked after Close")
-+	}
-+
-+	if err := dev.Close(); err != nil {
-+		t.Fatalf("second Close: %v", err)
-+	}
-+
-+	bufs := [][]byte{make([]byte, 1500)}
-+	if _, err := dev.Read(bufs, make([]int, 1), 0); err != os.ErrClosed {
-+		t.Fatalf("Read after Close: got %v, want os.ErrClosed", err)
-+	}
-+}
--- 
-2.55.0
-
+  while read -r response; do
+  [[ $response =3D=3D *Error* ]] && echo "$response" >&2
+  done < <(
+--=20
+2.39.2
