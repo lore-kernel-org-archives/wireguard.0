@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE241CA600A
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 11:15:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89CD5CA600C
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 11:15:59 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id ed692c1a;
-	Mon, 5 Oct 2026 07:00:35 +0000 (UTC)
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com
- [2a00:1450:4864:20::429])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 5a343c3d
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 336de90e;
+	Mon, 5 Oct 2026 07:00:37 +0000 (UTC)
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com
+ [2a00:1450:4864:20::435])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id be6e2b8e
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 31 Aug 2026 07:15:47 +0000 (UTC)
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-47fd4531020so1855120f8f.3
- for <wireguard@lists.zx2c4.com>; Mon, 31 Aug 2026 00:15:47 -0700 (PDT)
+ Mon, 31 Aug 2026 07:15:48 +0000 (UTC)
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-482fc3327fdso1364525f8f.2
+ for <wireguard@lists.zx2c4.com>; Mon, 31 Aug 2026 00:15:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788160547; x=1788765347; darn=lists.zx2c4.com;
+ d=gmail.com; s=20251104; t=1788160548; x=1788765348; darn=lists.zx2c4.com;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=cVx7h9itXB1zXN+d/HBlBz4+s1HpQEy8V546HmMKyYw=;
- b=VnIigHZShUI+1WNvr77fbi6lCx16pja9bAg8Cwecl13YAgcYZo1QTtJnM6qnyvbBx6
- uuUJRaJSivdA2GcUx5GYT8cuR4vUrt6ZyINKNhcujVkEAwHMF5alsnaBhEypVgBvJiWr
- TKpej85ShQq3+eBrOwo7Vge2Sdt+1r+DUldyss96p1rY2atsng74jtGqNCAWESWrZQSZ
- YqFmqqeZhcta1TaIFxkPBPMVFKpVjP0X7xTVLMHKSX9jf6Z1DuQkMn2fYnIdb6uFokZO
- W32O9C93uIwqfPB29y5cdWO/1V4pCynPY/ygaw6yyRRaejLhUR3MsGJFHuDdnJEkxUHf
- eTkA==
+ bh=+2JeTnA/dAs2wr2jW+iYqpZ6huku8khR5II7eemIcWs=;
+ b=argByVYxTsyfDIfOMtMZzQWxL5fmFENgVq8HV6RN3i4sfdfz4KxXDkdIs7HtwBQW2/
+ T8HZ2jQ+vztlNS21Q47phfR1fvbhnPIhORAiwx8uS3wEm3xIVt2pnxxyHtOn/Gd2snZn
+ 4s2pRkF7OhkTsZs403oGyo8kGSkv5NMZPAkxUy2v4kwOIiorNFRfy2p3QVOL7pLEIzBR
+ cT9Ntl59UGNwQCm+TaJFFAcaenzrhtAsPIqrAGKtJODjFpCjrnTwF8As2wtTk8feFyaB
+ rua8rsXMPBoIV1kuu5tApHcsLiyOyLKyVHoeAndeyD4BAo60z5Wioo5EEfekBtdrsPKs
+ smUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788160547; x=1788765347;
+ d=1e100.net; s=20251104; t=1788160548; x=1788765348;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=cVx7h9itXB1zXN+d/HBlBz4+s1HpQEy8V546HmMKyYw=;
- b=nVmFTXfCo2eAlTfVlGZl2xw2ZcJTXWBXnaQsxosaXIG4/M5tmHYlbOEwEdSQnRor+O
- uSzkPw+RQldssF63Q1Qjvs++lNGyasDf1I6refrc2KI6+4iCAriSIrzTnc+LF5ZU7OmM
- +3GsjFRK3gekopgbcYKciKl2Ji7rs4ZhK8hQwluViXPLVH53zLRoPa2mIkmswS2R8qFi
- zbw7DCCezsTFh3aDGNzxw6BHEkVh5H0f2gNXSoij4mcaMyOketxml1XFoa80ATFwF1TM
- lTN/p1ZQypJrHH4RAcYwUncr2A/lq3X6lDWY6jkWJXzIf8nbrATMhaFZS+yELsgk13De
- qPcg==
-X-Gm-Message-State: AFuF++lgOuJ3aeWAIfBEl7CnAOv/HRq+0XBggR3NEekB7dR1NG54zLwl
- e4AX2UF9wT/SQywkovd5klvJ/PbEUFtVQGn0qaDunJ+N90bxKmncOBPA
-X-Gm-Gg: AYBFou2zjGbZSb46HlfhgU0pVyqM2H+UPlmR493Mu+8Bq+19XtH1Kz4HnhoIHQabpVA
- a4+2Y9K7pR09zLyKxWN15ZGZOntkF+alTeB8ixa5Pwy8oSpy9rzX46i0Bod767Q8kB0Hrfv6G3M
- 6ctPeBDjn/bRIRPhayA3nVURY0IMwhpg7A9yc5qxlDuiH32mE9z18dP/Gd+vORMLu1dzy/NPOwS
- gfbg3qhnmveyNYPjIjn44A+8a8V3G1XO1WoMbmwtHqkbmXRnmhc+K1pqYszI5eg8O7SgiB+6VhS
- wYrJl2sFnbJQjQfl9y+f8JdzXwVteutQwclXsE8IN6pTLNJuuExCkEs5P9WSABdw/Qdk0+lDXz/
- 3cKlVR27SqVj71tAaaJki+bUFRqtoRk7HvrGuTrcbBwZGoXKnnj9T7HJ0tTQlp4tp4j9unL/ypi
- 4GDjUFSGm1c7vHjYDqEHY2xrtYnuQd8fKS779Nl+K5yz1antZXtqJs65mpBPhNvtJJAiAEIllil
- 8HvQTDel0603TCacAb5LDsYAQ==
-X-Received: by 2002:a05:6000:46ca:b0:482:e707:f5e8 with SMTP id
- ffacd0b85a97d-482f79b04d6mr27399005f8f.10.1788160546715; 
- Mon, 31 Aug 2026 00:15:46 -0700 (PDT)
+ bh=+2JeTnA/dAs2wr2jW+iYqpZ6huku8khR5II7eemIcWs=;
+ b=KQR6vpkyDwMWCPmTAwsVwnN0DnWxSbmZDrYQ3pXntVsw8k/+VuJM8ahDZJc7RQAmXM
+ P9vCwIo+4lN6Lc6Lxi0gw9G2h0qWrmZtBTbZxl7Ehs3Hv4b6yTjkdlNigkKeFoDQKbhN
+ xO9gKrj9V0DkH5z0nHPXUdXaOC0LLmOxHXWoCgmqBz4Mc2jrTPs7sPE923/a4qLqLa5u
+ Kjo/E/HMTjlqJ7rlKp61ZwRd0jQbiMF9rO9ByCjQyNKT/N1k3RN9m0B3v0DkbCvk8iQv
+ HBU1RUjF4hIDJGnzxS7Wls5NOTG/rtCntQci425nBjJMKBOJNeRiFB3fA04o/QSgOo+z
+ Y+7g==
+X-Gm-Message-State: AFuF++lnhxB5zx8gmUeekk095OqXDH/765JGbCe4gvH6Z62dQImDuIKQ
+ MGhlMaCreQvFFQ86sIZvDdT425ZyySzgGXVBG+OU8lj9TJCD19cp03FK
+X-Gm-Gg: AYBFou1uPqJ0J+JB2EC0yzUFtNfnY0Pu4zosjyBTjuWUDVfO/GTZMfVvvIxefJCdv58
+ LPUo7ldnLsOSRsQOk83eHesa29a9CU9b7eEhzIQIQcV52ieWoMlp/ynAK7Zrgh7vJLv4BGlc9yH
+ BPp5LqGOBTI1ARIYoFLxsOkk1fDXziUaC+gsswSLeqC9z4xSQeW9tV8yGBB5fY9UvlC5/LoxVQE
+ 6nY5y644HS0fydq+eRkUW8+r8fe2eyceE6dDxb0ShW/1kWepJCzcf7mrOhFSs0yVwFUylTQ5Ek9
+ Egl0wUQ/3WvKr3g5H8r3vm7o19DOrkL1Q3ElfhAxkTZHOSdNQ+57JDW7p4VTr0YG5MbNzVb1ueG
+ sOc0In6XrQd/9srcvNoPjI/DIxCdGXaIa2rUIBrUt0w7x1dPJfY0VhtoYxRN46mMRRvJNDzwcK1
+ BtZd0XpxqUvFp0CRLIekgGfypjE1KFBthNSsKSZ3uPBbhyOpKjPEHYht7u1i2sdD36Z0U6Rw4L6
+ C1zAYhGwbp2mP9dvu4haL/s5/5BNuytNGs=
+X-Received: by 2002:a05:6000:288c:b0:484:3bb9:25ca with SMTP id
+ ffacd0b85a97d-4843bb92758mr7670629f8f.12.1788160547942; 
+ Mon, 31 Aug 2026 00:15:47 -0700 (PDT)
 Received: from localhost.localdomain ([79.118.195.86])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482fbab3f3asm21026885f8f.3.2026.08.31.00.15.45
+ ffacd0b85a97d-482fbab3f3asm21026885f8f.3.2026.08.31.00.15.46
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 31 Aug 2026 00:15:46 -0700 (PDT)
+ Mon, 31 Aug 2026 00:15:47 -0700 (PDT)
 From: Razvan Cremenescu <razvan.cremenescu@gmail.com>
 To: "Jason A . Donenfeld" <Jason@zx2c4.com>
 Cc: wireguard@lists.zx2c4.com, Razvan Cremenescu <razvan.cremenescu@gmail.com>
-Subject: [RESEND PATCH wireguard-apple 04/10] TunnelsManager: restrict
- single-tunnel activation policy to iOS
-Date: Mon, 31 Aug 2026 10:15:31 +0300
-Message-ID: <20260831071537.12966-5-razvan.cremenescu@gmail.com>
+Subject: [RESEND PATCH wireguard-apple 05/10] PacketTunnelProvider: only exit
+ on stop of last tunnel in the process
+Date: Mon, 31 Aug 2026 10:15:32 +0300
+Message-ID: <20260831071537.12966-6-razvan.cremenescu@gmail.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260831071537.12966-1-razvan.cremenescu@gmail.com>
 References: <20260831071537.12966-1-razvan.cremenescu@gmail.com>
@@ -87,95 +87,110 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On iOS the OS allows only one active VPN configuration at a time, so
-activating a tunnel first parks it in the .waiting state, deactivates
-the tunnel currently in operation, and completes the activation once
-the latter is fully down.
+stopTunnel() works around Apple bug 32073323 by calling exit(0) on
+macOS. If the OS runs multiple simultaneous tunnel sessions in a
+single extension process, exiting on the first stop would tear down
+the remaining sessions too.
 
-On macOS there is no such OS-level restriction: each tunnel is its own
-NETunnelProviderManager session and multiple sessions can be active
-simultaneously. Make the deactivate-then-activate handoff iOS-only, so
-that on macOS activating a tunnel no longer tears down the tunnels
-already in operation.
-
-Also add tunnelsInOperation(), returning every non-inactive tunnel,
-for use by the macOS UI. On multi-user systems the tunnels list
-deliberately retains other users' tunnels; those are excluded, since
-they are not this user's to display or deactivate.
+Keep a process-wide count of tunnels and only exit once the last one
+is being stopped. The count covers the whole duration of a start
+attempt - the adapter can spend seconds in DNS resolution and
+interface setup - so that a tunnel stopping meanwhile doesn't consider
+itself the last one in the process and kill a concurrent activation;
+the failure paths of startTunnel() remove the tunnel from the count
+again. When each session runs in its own process, the count is always
+0 or 1 and the behavior is unchanged.
 
 Signed-off-by: Razvan Cremenescu <razvan.cremenescu@gmail.com>
 ---
- .../WireGuardApp/Tunnel/TunnelsManager.swift  | 21 +++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ .../PacketTunnelProvider.swift                | 50 ++++++++++++++++++-
+ 1 file changed, 49 insertions(+), 1 deletion(-)
 
-diff --git a/Sources/WireGuardApp/Tunnel/TunnelsManager.swift b/Sources/WireGuardApp/Tunnel/TunnelsManager.swift
-index 365094e..63e1847 100644
---- a/Sources/WireGuardApp/Tunnel/TunnelsManager.swift
-+++ b/Sources/WireGuardApp/Tunnel/TunnelsManager.swift
-@@ -24,7 +24,9 @@ class TunnelsManager {
-     weak var tunnelsListDelegate: TunnelsManagerListDelegate?
-     weak var activationDelegate: TunnelsManagerActivationDelegate?
-     private var statusObservationToken: NotificationToken?
-+    #if os(iOS)
-     private var waiteeObservationToken: NSKeyValueObservation?
-+    #endif
-     private var configurationsObservationToken: NotificationToken?
+diff --git a/Sources/WireGuardNetworkExtension/PacketTunnelProvider.swift b/Sources/WireGuardNetworkExtension/PacketTunnelProvider.swift
+index 913b7e6..fe09026 100644
+--- a/Sources/WireGuardNetworkExtension/PacketTunnelProvider.swift
++++ b/Sources/WireGuardNetworkExtension/PacketTunnelProvider.swift
+@@ -7,6 +7,38 @@ import os
  
-     init(tunnelProviders: [NETunnelProviderManager]) {
-@@ -428,6 +430,16 @@ class TunnelsManager {
-         return tunnels.first { $0.status != .inactive }
-     }
+ class PacketTunnelProvider: NEPacketTunnelProvider {
  
-+    func tunnelsInOperation() -> [TunnelContainer] {
-+        #if os(macOS)
-+        // On multi-user systems the tunnels list retains other users'
-+        // tunnels; those are not this user's to display or deactivate.
-+        return tunnels.filter { $0.status != .inactive && $0.isTunnelAvailableToUser }
-+        #else
-+        return tunnels.filter { $0.status != .inactive }
-+        #endif
++    #if os(macOS)
++    // Number of tunnels starting or started in this process, used to ensure
++    // the exit(0) hack in stopTunnel() doesn't tear down other tunnels in
++    // case the OS runs multiple simultaneous tunnels in a single extension
++    // process. Tunnels are counted for the entire duration of the start
++    // attempt, so that another tunnel stopping meanwhile doesn't consider
++    // itself the last one in the process.
++    private static var startedTunnelCount = 0
++    private static let startedTunnelCountLock = NSLock()
++    private var hasStartedTunnel = false
++
++    private func registerStartedTunnel() {
++        PacketTunnelProvider.startedTunnelCountLock.lock()
++        PacketTunnelProvider.startedTunnelCount += 1
++        hasStartedTunnel = true
++        PacketTunnelProvider.startedTunnelCountLock.unlock()
 +    }
 +
-     func startActivation(of tunnel: TunnelContainer) {
-         guard tunnels.contains(tunnel) else { return } // Ensure it's not deleted
-         guard tunnel.status == .inactive else {
-@@ -435,6 +447,12 @@ class TunnelsManager {
-             return
-         }
- 
-+        #if os(iOS)
-+        // In iOS, the OS allows only one VPN configuration to be active at a
-+        // time, so bring down the tunnel in operation and queue this tunnel
-+        // for activation once the former is fully deactivated. In macOS,
-+        // multiple tunnels can be active simultaneously, so we activate the
-+        // tunnel right away.
-         if let alreadyWaitingTunnel = tunnels.first(where: { $0.status == .waiting }) {
-             alreadyWaitingTunnel.status = .inactive
-         }
-@@ -458,6 +476,7 @@ class TunnelsManager {
-             }
-             return
-         }
-+        #endif
- 
-         #if targetEnvironment(simulator)
-         tunnel.status = .active
-@@ -489,6 +508,7 @@ class TunnelsManager {
-         tunnels.forEach { $0.refreshStatus() }
-     }
- 
-+    #if os(iOS)
-     private func activateWaitingTunnelOnDeactivation(of tunnel: TunnelContainer) {
-         waiteeObservationToken = tunnel.observe(\.status) { [weak self] tunnel, _ in
-             guard let self = self else { return }
-@@ -500,6 +520,7 @@ class TunnelsManager {
-             }
-         }
-     }
++    // Returns true if this was the last starting or started tunnel in the
++    // process, i.e. the process is free to exit.
++    @discardableResult
++    private func unregisterStartedTunnel() -> Bool {
++        PacketTunnelProvider.startedTunnelCountLock.lock()
++        defer { PacketTunnelProvider.startedTunnelCountLock.unlock() }
++        if hasStartedTunnel {
++            hasStartedTunnel = false
++            PacketTunnelProvider.startedTunnelCount -= 1
++        }
++        return PacketTunnelProvider.startedTunnelCount == 0
++    }
 +    #endif
++
+     private lazy var adapter: WireGuardAdapter = {
+         return WireGuardAdapter(with: self) { logLevel, message in
+             wg_log(logLevel.osLogLevel, message: message)
+@@ -21,9 +53,16 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
  
-     private func startObservingTunnelStatuses() {
-         statusObservationToken = NotificationCenter.default.observe(name: .NEVPNStatusDidChange, object: nil, queue: OperationQueue.main) { [weak self] statusChangeNotification in
+         wg_log(.info, message: "Starting tunnel from the " + (activationAttemptId == nil ? "OS directly, rather than the app" : "app"))
+ 
++        #if os(macOS)
++        registerStartedTunnel()
++        #endif
++
+         guard let tunnelProviderProtocol = self.protocolConfiguration as? NETunnelProviderProtocol,
+               let tunnelConfiguration = tunnelProviderProtocol.asTunnelConfiguration() else {
+             errorNotifier.notify(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
++            #if os(macOS)
++            unregisterStartedTunnel()
++            #endif
+             completionHandler(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
+             return
+         }
+@@ -39,6 +78,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
+                 return
+             }
+ 
++            #if os(macOS)
++            self.unregisterStartedTunnel()
++            #endif
++
+             switch adapterError {
+             case .cannotLocateTunnelFileDescriptor:
+                 wg_log(.error, staticMessage: "Starting tunnel failed: could not determine file descriptor")
+@@ -84,7 +127,12 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
+             // HACK: This is a filthy hack to work around Apple bug 32073323 (dup'd by us as 47526107).
+             // Remove it when they finally fix this upstream and the fix has been rolled out to
+             // sufficient quantities of users.
+-            exit(0)
++            // Since multiple tunnels may be active simultaneously, only exit
++            // once the last starting or started tunnel in this process is
++            // being stopped.
++            if self.unregisterStartedTunnel() {
++                exit(0)
++            }
+             #endif
+         }
+     }
 -- 
 2.50.1 (Apple Git-155)
 
