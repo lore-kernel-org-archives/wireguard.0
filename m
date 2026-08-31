@@ -4,75 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C9C2CA5FCE
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 11:35:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1FB1CA6002
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 11:35:56 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 7f496797;
-	Mon, 5 Oct 2026 07:00:40 +0000 (UTC)
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com
- [2a00:1450:4864:20::335])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 13a094ae
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id a0054f05;
+	Mon, 5 Oct 2026 07:00:42 +0000 (UTC)
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com
+ [2a00:1450:4864:20::435])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 446599dd
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 31 Aug 2026 07:15:51 +0000 (UTC)
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-49557167508so32864925e9.1
- for <wireguard@lists.zx2c4.com>; Mon, 31 Aug 2026 00:15:51 -0700 (PDT)
+ Mon, 31 Aug 2026 07:15:56 +0000 (UTC)
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-482dbe4d247so817570f8f.2
+ for <wireguard@lists.zx2c4.com>; Mon, 31 Aug 2026 00:15:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788160551; x=1788765351; darn=lists.zx2c4.com;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=KEvhk9JhPECp6rbYe65oHR2gR/OkwhAGeQaOtCX+ELQ=;
- b=CQBU6fXnvWpl1pms/ldMBdyEdm18/R+1eKl+YnQJKMe5EXT+3jl4X1DPN0bd2KK6Lm
- 8eXaBGIP2u5X4FbeIUuxK6Bpsucgop4/+HrjdUGY0T3iaXG2PKSZLhPlMSkO3tTqhZXB
- cbPHsmzwePAcptIqtq0fDrN7NOYeiG4pQpybGBd7lAq1MRBCnrAiKQ2N0vizwI5UlsBf
- r0ShkRIFw+4+TwM3erpctHBLcW+0OX5wJtQz1SKdMl71xm4qQDEtibSruMXLjag4anqm
- DAVHMl+qdYYStBiW1Y7/R1J1kUom6/A5gOJiBV2yiNerdWPGF0Xl9DLUm9h69sKuuyej
- QR6w==
+ d=gmail.com; s=20251104; t=1788160556; x=1788765356; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=L5hJjz0M4NFJeRM7s/RWtJCvLUCft79O18Vd2TvhSAk=;
+ b=WaXajINxUNm9A8R1feduhINWLad6u7zn6LOQ5sINmJeorlPvc4owV1zzEStjFm8iBl
+ xwqSJ/6s7R1ZE1AhAb5gYKNFrfo1MDRqJh/cujTHobzNujRYoWcUhjyODI02Yj5NnBJW
+ MqvkAvvIJXe+x2EDoXtWijDFMIm9xwKkmlSBdOhvOzwlv30uWszQKrOUr8jpLi5SZjLx
+ iJl4LDZu21iqPZOo3UldxWGW4D+f+1rgRRsAs4BeJ457dFqStisrVlap7QyFDHtI9CwB
+ 9sFrXZwfz7NgrHOIDfIs0l0wpUKllC97Kw7mOVcvbkx6goK4fitz7URTah6xJrTy+qNo
+ 4Ftw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788160551; x=1788765351;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=KEvhk9JhPECp6rbYe65oHR2gR/OkwhAGeQaOtCX+ELQ=;
- b=Cz8hHRyD6PgbnDDvqRYBcCfX0/DRxmz+N2RWF5+kEv0wMmtXMc8e2qxLYZlO43LMd6
- F7LN2bEf7k9wXIIfEtNLvyqw/Q4ZlRL0uA/jmNgOUOS7huljgdKiNyDpw6p7A8+HH5Ju
- qvp+i0Ker3CtV/ZNAL341npZTz9D5L+hywIQJtQfEgYedMLE8J5uEEgwaYgTYlHCLSiE
- t6c+xQxetwIpE9C0bgOJmulphQznEzRaRl9pmBvljEQ8EkxFWt3bZn9KNM0u7VN4IzPJ
- oUm5bBeq/Jck+edAOnhrfhp2slIBGl569Ooj1sJQwzR/ARkTz/6W5t/B8zhIFjmuTTNW
- diXw==
-X-Gm-Message-State: AFuF++mHxbkhZaZSOmxTZdmXbOvseAET+z3JeHVg5wuRLg+rTe90nAK+
- //gIpLpnROmxtQbq6G69eoUVxE7NwTXBtNP6485iViYofzRdyAdhXEhLQBXPew==
-X-Gm-Gg: AR+sD11ZJ5PKn7HncIgWV8fSQ57FVIgF9n2kjJbC4f71qLG4wH6VVyp7EuG1EShxZf7
- AetUYhhDuoj49L4mzHVKZ3L7Abw54iL/bwTnzwhgjIQWcsTVDKuU620QuGXDYVj/ZBAuOtmT4SE
- yW116LvAYYSuRyMCohLYBsoEUYPX3jq3faVrgyXJlbBw4X0cAiHQ1mbpEq46C9XJAGVCU60s5gR
- GZcTO0/m/goNc/GkpfIfAoTJVT9/uE9KjAEm1hIZX/dkxwpWOhK3HeK3s5QCV6qwp6kZFMphhgA
- rRs78oneoJfSbfp8CBa11c/FgYH36UBEC41YkBt4UVI7vvOBkOxGPx6JmfVJj6bg9ByNxaVAyXb
- r+v3dcOZYiHYH5HtghVU0yxB/9Wx3zFk+Oa2eFt8/09c4sJzLVYnwiKmCRqbqOFgi9Uof0dScQt
- jCDNRvKWrYMiX4uN4UV1CzjQ50WM+GyPhRBGAbdn0Q6XaQOU0zJVdsJa/3A3c1Lo8nvfoaRaHlf
- EvdS7yy3XRevYiw6FVwc6csIA==
-X-Received: by 2002:a05:600c:c172:b0:499:dbba:9859 with SMTP id
- 5b1f17b1804b1-49cd948532emr22961595e9.5.1788160550117; 
- Mon, 31 Aug 2026 00:15:50 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1788160556; x=1788765356;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=L5hJjz0M4NFJeRM7s/RWtJCvLUCft79O18Vd2TvhSAk=;
+ b=jutHChI/41GOPLU8C1ZBuSVWJni2LUxhLtfhZaDZXxdLpbJ+0efi9o3pKqPtaACpBg
+ Pw7+Y+XFG3lBUitOVSyRkasjTSdnOof6V4lRumdtNGNCo33lHsN8GD6Mp1FcJJ952gBD
+ 5ljmY2vONEVfWboHS5c2q76w6h46lsdvSmndv5ZT/H91u4NS4W3k4krne2JOspilZBZ7
+ gYRIy6x4f8xksX1fT6U6+iaj5ycxDR9WcdoD9qA3RAkIlsoMLjajggM0KnknFR3ETsNU
+ oLTlDfNgCP2hMNc3dQXv+st3fRZUenfLTRkur1yFC0dsOA7OyZI41cv1O00Ok/SLUcGF
+ nxlQ==
+X-Gm-Message-State: AFuF++nHUxRd2ocCMPsujHlcRTxDzh992nXpzZhOs5O0QzKeKZI3HY/J
+ oKMiarxtVjh5haumeQDxsZydpNb2KSrUsndLa/hwZH+wAjKZsMwMpF7e
+X-Gm-Gg: AYBFou1A51YH/Q0c3QVxUb20id7YlP+1a5IvSjeMQwCR8BaSBSk5PukLzVbhRHwyEKc
+ 7p3yfuL6p0dG2HYvs8zepq+SCtHzbS7uHG1fVjggVc7eOruTZAtgf1BJHZwGYcOz9TF+0emNmM+
+ chuV5XT66nZBMsSUEiIveOdFhmUpfG+/kCb4jcvHfjmLIMHGZOvZXzfNBavBN++wt76iVsTppWZ
+ Yg5IreY4T8l8eYTGHN0gQnnG0F24U3AcGNO3Y2PXnROwtPXGngoCfIeep9Z+BqVhdNtCNu9I3dK
+ aKkal7T2ZtF5Ns/k6NziBgxlOaDOMLJWz00loZcxYN5lLmhPxflgMZlRcocB9CSL1OxLzI4XIqY
+ r63ulkbPeY8G35SE0lI4Ixk8XgITl2ldYXX1QC8VlFSv60sjEmklZQcy8uA2a10M0oo0jqW3kf0
+ TPcuSpay+wnDo1BDUUXRYl90wY8z5LOlCh67EFF87f/OOoqV7aSFBVddW6MSZ4wZd0Drg+eSrSa
+ M/YoM/BIoWw7F48jspYRMPK3nuK8pmXDF0=
+X-Received: by 2002:a05:6000:41d5:b0:47f:6f9e:1e82 with SMTP id
+ ffacd0b85a97d-4843efb0d56mr1894260f8f.9.1788160556056; 
+ Mon, 31 Aug 2026 00:15:56 -0700 (PDT)
 Received: from localhost.localdomain ([79.118.195.86])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482fbab3f3asm21026885f8f.3.2026.08.31.00.15.48
+ ffacd0b85a97d-482fbab3f3asm21026885f8f.3.2026.08.31.00.15.54
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 31 Aug 2026 00:15:48 -0700 (PDT)
+ Mon, 31 Aug 2026 00:15:55 -0700 (PDT)
 From: Razvan Cremenescu <razvan.cremenescu@gmail.com>
 To: "Jason A . Donenfeld" <Jason@zx2c4.com>
 Cc: wireguard@lists.zx2c4.com, Razvan Cremenescu <razvan.cremenescu@gmail.com>
-Subject: [RESEND PATCH wireguard-apple 06/10] macOS: support multiple
- simultaneous tunnels in the menu bar UI
-Date: Mon, 31 Aug 2026 10:15:33 +0300
-Message-ID: <20260831071537.12966-7-razvan.cremenescu@gmail.com>
+Subject: [RESEND PATCH wireguard-apple 10/10] macOS: reset peer endpoints
+ after a network change
+Date: Mon, 31 Aug 2026 10:15:37 +0300
+Message-ID: <20260831071537.12966-11-razvan.cremenescu@gmail.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260831071537.12966-1-razvan.cremenescu@gmail.com>
 References: <20260831071537.12966-1-razvan.cremenescu@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Mon, 05 Oct 2026 06:59:44 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -89,320 +87,185 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Now that TunnelsManager no longer serializes tunnel activation on
-macOS, generalize the menu bar UI from tracking a single current
-tunnel to tracking every tunnel in operation:
+On iOS a network change sets the peer endpoints again before bumping
+the sockets, but on macOS the path update handler only bumps the
+sockets, leaving whatever endpoint each peer currently has. That breaks
+tunnels across a network change in two ways.
 
-- TunnelsTracker publishes the list of non-inactive tunnels instead of
-  a single currentTunnel slot.
-- StatusMenu keeps the existing presentation when zero or one tunnel
-  is in operation. With more than one, the status line shows the
-  number of tunnels and the Deactivate item becomes Deactivate All,
-  which deactivates every tunnel in operation, including tunnels that
-  are still activating or restarting.
-- StatusItemController shows the active icon when all tunnels in
-  operation are active, and the progress animation while any of them
-  is transitioning.
-- AppDelegate's quit and App Store update alerts enumerate all active
-  tunnels rather than just one; the App Store alert asks to disable
-  on-demand only for the tunnels that actually have it enabled.
+A peer configured with a hostname keeps the address the hostname
+resolved to on the previous network, so a dynamic DNS record that moved,
+or a name that resolves differently per network, is never picked up.
+
+Worse, a peer that roamed keeps the roamed address. A server reached at
+an address that only exists on one network - its address inside another
+tunnel, or on the LAN it is hosted on - leaves the peer pinned to that
+address once the machine moves, and every handshake then fails with 'no
+route to host' until the tunnel is deactivated and activated again.
+
+Set the endpoints of all peers again after a network change,
+re-resolving the ones configured with a hostname. Resolution failures
+keep the address the hostname last resolved to, so a network without
+working DNS does not tear the endpoints down.
+
+The work is delayed and coalesced, since a single network change
+produces a burst of path updates and resolution blocks the queue. Peers
+configured with a literal address need no resolution at all.
 
 Signed-off-by: Razvan Cremenescu <razvan.cremenescu@gmail.com>
 ---
- .../Base.lproj/Localizable.strings            |  5 +++
- .../WireGuardApp/UI/macOS/AppDelegate.swift   | 31 ++++++++++++++-----
- .../UI/macOS/StatusItemController.swift       | 14 +++------
- .../WireGuardApp/UI/macOS/StatusMenu.swift    | 25 +++++++++++----
- .../UI/macOS/TunnelsTracker.swift             | 31 +++++++++----------
- 5 files changed, 68 insertions(+), 38 deletions(-)
+ .../PacketTunnelSettingsGenerator.swift       | 47 +++++++++++++++-
+ Sources/WireGuardKit/WireGuardAdapter.swift   | 53 +++++++++++++++++++
+ 2 files changed, 99 insertions(+), 1 deletion(-)
 
-diff --git a/Sources/WireGuardApp/Base.lproj/Localizable.strings b/Sources/WireGuardApp/Base.lproj/Localizable.strings
-index f181953..2e23a91 100644
---- a/Sources/WireGuardApp/Base.lproj/Localizable.strings
-+++ b/Sources/WireGuardApp/Base.lproj/Localizable.strings
-@@ -64,6 +64,7 @@
- "macToggleStatusButtonActivate" = "Activate";
- "macToggleStatusButtonActivating" = "Activating…";
- "macToggleStatusButtonDeactivate" = "Deactivate";
-+"macToggleStatusButtonDeactivateAll" = "Deactivate All";
- "macToggleStatusButtonDeactivating" = "Deactivating…";
- "macToggleStatusButtonReasserting" = "Reactivating…";
- "macToggleStatusButtonRestarting" = "Restarting…";
-@@ -369,6 +370,7 @@
- // Mac status display
+diff --git a/Sources/WireGuardKit/PacketTunnelSettingsGenerator.swift b/Sources/WireGuardKit/PacketTunnelSettingsGenerator.swift
+index 36c0e06..3a8453d 100644
+--- a/Sources/WireGuardKit/PacketTunnelSettingsGenerator.swift
++++ b/Sources/WireGuardKit/PacketTunnelSettingsGenerator.swift
+@@ -14,7 +14,7 @@ typealias EndpointResolutionResult = Result<(Endpoint, Endpoint), DNSResolutionE
  
- "macStatus (%@)" = "Status: %@";
-+"macStatusMultipleTunnels (%d)" = "%d tunnels";
+ class PacketTunnelSettingsGenerator {
+     let tunnelConfiguration: TunnelConfiguration
+-    let resolvedEndpoints: [Endpoint?]
++    private(set) var resolvedEndpoints: [Endpoint?]
+     let isSplitDNSEnabled: Bool
  
- // Mac editing config
- 
-@@ -419,6 +421,7 @@
- "macConfirmAndQuitAlertMessage" = "Do you want to close the tunnels manager or quit WireGuard entirely?";
- "macConfirmAndQuitAlertInfo" = "If you close the tunnels manager, WireGuard will continue to be available from the menu bar icon.";
- "macConfirmAndQuitInfoWithActiveTunnel (%@)" = "If you close the tunnels manager, WireGuard will continue to be available from the menu bar icon.\n\nNote that if you quit WireGuard entirely the currently active tunnel ('%@') will still remain active until you deactivate it from this application or through the Network panel in System Preferences.";
-+"macConfirmAndQuitInfoWithMultipleActiveTunnels (%@)" = "If you close the tunnels manager, WireGuard will continue to be available from the menu bar icon.\n\nNote that if you quit WireGuard entirely the currently active tunnels ('%@') will still remain active until you deactivate them from this application or through the Network panel in System Preferences.";
- "macConfirmAndQuitAlertQuitWireGuard" = "Quit WireGuard";
- "macConfirmAndQuitAlertCloseWindow" = "Close Tunnels Manager";
- 
-@@ -448,6 +451,8 @@
- "macAppStoreUpdatingAlertMessage" = "App Store would like to update WireGuard";
- "macAppStoreUpdatingAlertInfoWithOnDemand (%@)" = "Please disable on-demand for tunnel ‘%@’, deactivate it, and then continue updating in App Store.";
- "macAppStoreUpdatingAlertInfoWithoutOnDemand (%@)" = "Please deactivate tunnel ‘%@’ and then continue updating in App Store.";
-+"macAppStoreUpdatingAlertInfoWithOnDemandMultiple (%@)" = "Please disable on-demand for tunnels ‘%@’, deactivate all active tunnels, and then continue updating in App Store.";
-+"macAppStoreUpdatingAlertInfoWithoutOnDemandMultiple (%@)" = "Please deactivate tunnels ‘%@’ and then continue updating in App Store.";
- 
- // Donation
- 
-diff --git a/Sources/WireGuardApp/UI/macOS/AppDelegate.swift b/Sources/WireGuardApp/UI/macOS/AppDelegate.swift
-index 1dda3e6..b9c3a53 100644
---- a/Sources/WireGuardApp/UI/macOS/AppDelegate.swift
-+++ b/Sources/WireGuardApp/UI/macOS/AppDelegate.swift
-@@ -65,11 +65,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
-         }
+     init(tunnelConfiguration: TunnelConfiguration, resolvedEndpoints: [Endpoint?], isSplitDNSEnabled: Bool = false) {
+@@ -181,6 +181,51 @@ class PacketTunnelSettingsGenerator {
+         return (ipv4IncludedRoutes, ipv6IncludedRoutes)
      }
  
-+    private var activeTunnels: [TunnelContainer] {
-+        return tunnelsTracker?.tunnelsInOperation.filter { $0.status == .active || $0.status == .activating } ?? []
++    /// Return a UAPI configuration setting the endpoint of every peer,
++    /// re-resolving the peers that were configured with a hostname.
++    ///
++    /// The endpoints are set unconditionally, which is what makes this useful
++    /// after a network change: besides picking up a hostname that now resolves
++    /// elsewhere, it resets peers whose endpoint the backend has roamed to an
++    /// address that was only reachable on the previous network.
++    ///
++    /// The initial resolution replaces a configured hostname with the address
++    /// it resolved to, so the hostname is only available from the tunnel
++    /// configuration itself.
++    func endpointUapiConfigurationAfterNetworkChange() -> (String, [EndpointResolutionResult?]) {
++        let configuredEndpoints = tunnelConfiguration.peers.map { $0.endpoint }
++        // Resolution is skipped altogether when every endpoint is an address.
++        let results = DNSResolver.resolveSync(endpoints: configuredEndpoints)
++        assert(results.count == tunnelConfiguration.peers.count)
++        assert(resolvedEndpoints.count == tunnelConfiguration.peers.count)
++
++        var wgSettings = ""
++        var resolutionResults = [EndpointResolutionResult?]()
++
++        for (index, peer) in tunnelConfiguration.peers.enumerated() {
++            if let configuredEndpoint = configuredEndpoints[index], !configuredEndpoint.hasHostAsIPAddress() {
++                switch results[index] {
++                case .success(let resolvedEndpoint)?:
++                    resolutionResults.append(.success((configuredEndpoint, resolvedEndpoint)))
++                    resolvedEndpoints[index] = resolvedEndpoint
++                case .failure(let error)?:
++                    // Keep the address the hostname last resolved to.
++                    resolutionResults.append(.failure(error))
++                case nil:
++                    resolutionResults.append(nil)
++                }
++            } else {
++                resolutionResults.append(nil)
++            }
++
++            guard let endpoint = resolvedEndpoints[index] else { continue }
++            wgSettings.append("public_key=\(peer.publicKey.hexKey)\n")
++            wgSettings.append("endpoint=\(endpoint.stringRepresentation)\n")
++        }
++
++        return (wgSettings, resolutionResults)
 +    }
 +
-     @objc func confirmAndQuit() {
-         let alert = NSAlert()
-         alert.messageText = tr("macConfirmAndQuitAlertMessage")
--        if let currentTunnel = tunnelsTracker?.currentTunnel, currentTunnel.status == .active || currentTunnel.status == .activating {
--            alert.informativeText = tr(format: "macConfirmAndQuitInfoWithActiveTunnel (%@)", currentTunnel.name)
-+        let activeTunnels = self.activeTunnels
-+        if activeTunnels.count == 1 {
-+            alert.informativeText = tr(format: "macConfirmAndQuitInfoWithActiveTunnel (%@)", activeTunnels[0].name)
-+        } else if activeTunnels.count > 1 {
-+            alert.informativeText = tr(format: "macConfirmAndQuitInfoWithMultipleActiveTunnels (%@)", activeTunnels.map { $0.name }.joined(separator: ", "))
-         } else {
-             alert.informativeText = tr("macConfirmAndQuitAlertInfo")
-         }
-@@ -99,7 +106,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
-             return
-         }
-         registerLoginItem(shouldLaunchAtLogin: false)
--        guard let currentTunnel = tunnelsTracker?.currentTunnel, currentTunnel.status == .active || currentTunnel.status == .activating else {
-+        guard !activeTunnels.isEmpty else {
-             NSApp.terminate(nil)
-             return
-         }
-@@ -119,7 +126,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
-     }
+     private class func reresolveEndpoint(endpoint: Endpoint) -> EndpointResolutionResult {
+         return Result { (endpoint, try endpoint.withReresolvedIP()) }
+             .mapError { error -> DNSResolutionError in
+diff --git a/Sources/WireGuardKit/WireGuardAdapter.swift b/Sources/WireGuardKit/WireGuardAdapter.swift
+index 82728e4..b0864b3 100644
+--- a/Sources/WireGuardKit/WireGuardAdapter.swift
++++ b/Sources/WireGuardKit/WireGuardAdapter.swift
+@@ -60,6 +60,15 @@ public class WireGuardAdapter {
+     /// DNS search domains rather than for all queries on the system.
+     private var isSplitDNSEnabled = false
  
-     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
--        guard let currentTunnel = tunnelsTracker?.currentTunnel, currentTunnel.status == .active || currentTunnel.status == .activating else {
-+        let activeTunnels = self.activeTunnels
-+        guard !activeTunnels.isEmpty else {
-             return .terminateNow
-         }
-         guard let appleEvent = NSAppleEventManager.shared().currentAppleEvent else {
-@@ -130,10 +138,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
-         }
-         let alert = NSAlert()
-         alert.messageText = tr("macAppStoreUpdatingAlertMessage")
--        if currentTunnel.isActivateOnDemandEnabled {
--            alert.informativeText = tr(format: "macAppStoreUpdatingAlertInfoWithOnDemand (%@)", currentTunnel.name)
-+        let onDemandTunnels = activeTunnels.filter { $0.isActivateOnDemandEnabled }
-+        if activeTunnels.count == 1 {
-+            if onDemandTunnels.isEmpty {
-+                alert.informativeText = tr(format: "macAppStoreUpdatingAlertInfoWithoutOnDemand (%@)", activeTunnels[0].name)
-+            } else {
-+                alert.informativeText = tr(format: "macAppStoreUpdatingAlertInfoWithOnDemand (%@)", activeTunnels[0].name)
-+            }
-         } else {
--            alert.informativeText = tr(format: "macAppStoreUpdatingAlertInfoWithoutOnDemand (%@)", currentTunnel.name)
-+            if onDemandTunnels.isEmpty {
-+                alert.informativeText = tr(format: "macAppStoreUpdatingAlertInfoWithoutOnDemandMultiple (%@)", activeTunnels.map { $0.name }.joined(separator: ", "))
-+            } else {
-+                alert.informativeText = tr(format: "macAppStoreUpdatingAlertInfoWithOnDemandMultiple (%@)", onDemandTunnels.map { $0.name }.joined(separator: ", "))
-+            }
-         }
-         NSApp.activate(ignoringOtherApps: true)
-         if let manageWindow = manageTunnelsWindowObject {
-diff --git a/Sources/WireGuardApp/UI/macOS/StatusItemController.swift b/Sources/WireGuardApp/UI/macOS/StatusItemController.swift
-index 3088574..e4ff7a5 100644
---- a/Sources/WireGuardApp/UI/macOS/StatusItemController.swift
-+++ b/Sources/WireGuardApp/UI/macOS/StatusItemController.swift
-@@ -4,7 +4,7 @@
- import Cocoa
- 
- class StatusItemController {
--    var currentTunnel: TunnelContainer? {
-+    var tunnelsInOperation: [TunnelContainer] = [] {
-         didSet {
-             updateStatusItemImage()
-         }
-@@ -27,20 +27,16 @@ class StatusItemController {
-     }
- 
-     func updateStatusItemImage() {
--        guard let currentTunnel = currentTunnel else {
-+        guard !tunnelsInOperation.isEmpty else {
-             stopActivatingAnimation()
-             statusItem.button?.image = statusBarImageWhenInactive
-             return
-         }
--        switch currentTunnel.status {
--        case .inactive:
--            stopActivatingAnimation()
--            statusItem.button?.image = statusBarImageWhenInactive
--        case .active:
-+        if tunnelsInOperation.contains(where: { $0.status != .active }) {
-+            startActivatingAnimation()
-+        } else {
-             stopActivatingAnimation()
-             statusItem.button?.image = statusBarImageWhenActive
--        case .activating, .waiting, .reasserting, .restarting, .deactivating:
--            startActivatingAnimation()
-         }
-     }
- 
-diff --git a/Sources/WireGuardApp/UI/macOS/StatusMenu.swift b/Sources/WireGuardApp/UI/macOS/StatusMenu.swift
-index 45d2283..9ebdca2 100644
---- a/Sources/WireGuardApp/UI/macOS/StatusMenu.swift
-+++ b/Sources/WireGuardApp/UI/macOS/StatusMenu.swift
-@@ -23,9 +23,9 @@ class StatusMenu: NSMenu {
-     private var numberOfTunnelMenuItems = 0
-     private var tunnelsPresentationStyle = StatusMenuTunnelsPresentationStyle.inline
- 
--    var currentTunnel: TunnelContainer? {
-+    var tunnelsInOperation: [TunnelContainer] = [] {
-         didSet {
--            updateStatusMenuItems(with: currentTunnel)
-+            updateStatusMenuItems()
-         }
-     }
-     weak var windowDelegate: StatusMenuWindowDelegate?
-@@ -73,15 +73,27 @@ class StatusMenu: NSMenu {
-         self.deactivateMenuItem = deactivateMenuItem
-     }
- 
--    func updateStatusMenuItems(with tunnel: TunnelContainer?) {
-+    func updateStatusMenuItems() {
-         guard let statusMenuItem = statusMenuItem, let networksMenuItem = networksMenuItem, let deactivateMenuItem = deactivateMenuItem else { return }
--        guard let tunnel = tunnel else {
-+        guard !tunnelsInOperation.isEmpty else {
-             statusMenuItem.title = tr(format: "macStatus (%@)", tr("tunnelStatusInactive"))
-             networksMenuItem.title = ""
-             networksMenuItem.isHidden = true
-+            deactivateMenuItem.title = tr("macToggleStatusButtonDeactivate")
-             deactivateMenuItem.isHidden = true
-             return
-         }
++    #if os(macOS)
++    /// Pending endpoint reset after a network change.
++    private var endpointResetWorkItem: DispatchWorkItem?
 +
-+        guard tunnelsInOperation.count == 1 else {
-+            statusMenuItem.title = tr(format: "macStatus (%@)", tr(format: "macStatusMultipleTunnels (%d)", tunnelsInOperation.count))
-+            networksMenuItem.title = ""
-+            networksMenuItem.isHidden = true
-+            deactivateMenuItem.title = tr("macToggleStatusButtonDeactivateAll")
-+            deactivateMenuItem.isHidden = !tunnelsInOperation.contains { $0.status == .active }
-+            return
++    /// Delay before resetting endpoints after a network change, so that a
++    /// burst of path updates results in a single reset.
++    private static let endpointResetDelay: DispatchTimeInterval = .seconds(2)
++    #endif
++
+     /// Tunnel device file descriptors claimed by the adapters in this process.
+     /// When multiple tunnels run in a single extension process, each adapter
+     /// must attach to its own utun device rather than to the first one found.
+@@ -328,6 +337,11 @@ public class WireGuardAdapter {
+             self.networkMonitor?.cancel()
+             self.networkMonitor = nil
+ 
++            #if os(macOS)
++            self.endpointResetWorkItem?.cancel()
++            self.endpointResetWorkItem = nil
++            #endif
++
+             self.releaseTunnelFileDescriptor()
+             self.state = .stopped
+ 
+@@ -518,12 +532,51 @@ public class WireGuardAdapter {
+ 
+     /// Helper method used by network path monitor.
+     /// - Parameter path: new network path
++    #if os(macOS)
++    /// Schedule resetting the peer endpoints to their configured addresses,
++    /// re-resolving the ones configured with a hostname.
++    ///
++    /// Unlike iOS, macOS leaves the endpoints alone across a network change.
++    /// A peer keeps whatever endpoint it has, which is a problem in two ways:
++    /// a hostname that resolves elsewhere on the new network is never picked
++    /// up, and a peer that roamed to an address reachable only on the previous
++    /// network - a server reached at its internal address, say - keeps being
++    /// sent to that address, so the tunnel never handshakes again.
++    ///
++    /// The work is delayed and coalesced, since a single network change
++    /// produces a burst of path updates and resolution blocks the queue.
++    private func scheduleEndpointReset() {
++        endpointResetWorkItem?.cancel()
++
++        let workItem = DispatchWorkItem { [weak self] in
++            guard let self = self else { return }
++            guard case .started(let handle, let settingsGenerator) = self.state else { return }
++
++            let (wgConfig, resolutionResults) = settingsGenerator.endpointUapiConfigurationAfterNetworkChange()
++            self.logEndpointResolutionResults(resolutionResults)
++
++            guard !wgConfig.isEmpty else { return }
++
++            self.logHandler(.verbose, "Resetting peer endpoints after network change")
++            wgSetConfig(handle, wgConfig)
++            wgBumpSockets(handle)
 +        }
 +
-+        let tunnel = tunnelsInOperation[0]
-         var statusText: String
++        endpointResetWorkItem = workItem
++        workQueue.asyncAfter(deadline: .now() + Self.endpointResetDelay, execute: workItem)
++    }
++    #endif
++
+     private func didReceivePathUpdate(path: Network.NWPath) {
+         self.logHandler(.verbose, "Network change detected with \(path.status) route and interface order \(path.availableInterfaces)")
  
-         switch tunnel.status {
-@@ -115,6 +127,7 @@ class StatusMenu: NSMenu {
-             }
-             networksMenuItem.isHidden = false
+         #if os(macOS)
+         if case .started(let handle, _) = self.state {
+             wgBumpSockets(handle)
++
++            if path.status.isSatisfiable {
++                self.scheduleEndpointReset()
++            }
          }
-+        deactivateMenuItem.title = tr("macToggleStatusButtonDeactivate")
-         deactivateMenuItem.isHidden = tunnel.status != .active
-     }
- 
-@@ -137,8 +150,8 @@ class StatusMenu: NSMenu {
-     }
- 
-     @objc func deactivateClicked() {
--        if let currentTunnel = currentTunnel {
--            tunnelsManager.startDeactivation(of: currentTunnel)
-+        for tunnel in tunnelsInOperation {
-+            tunnelsManager.startDeactivation(of: tunnel)
-         }
-     }
- 
-diff --git a/Sources/WireGuardApp/UI/macOS/TunnelsTracker.swift b/Sources/WireGuardApp/UI/macOS/TunnelsTracker.swift
-index 0ab59ee..ab8b478 100644
---- a/Sources/WireGuardApp/UI/macOS/TunnelsTracker.swift
-+++ b/Sources/WireGuardApp/UI/macOS/TunnelsTracker.swift
-@@ -12,28 +12,28 @@ class TunnelsTracker {
- 
-     weak var statusMenu: StatusMenu? {
-         didSet {
--            statusMenu?.currentTunnel = currentTunnel
-+            statusMenu?.tunnelsInOperation = tunnelsInOperation
-         }
-     }
-     weak var statusItemController: StatusItemController? {
-         didSet {
--            statusItemController?.currentTunnel = currentTunnel
-+            statusItemController?.tunnelsInOperation = tunnelsInOperation
-         }
-     }
-     weak var manageTunnelsRootVC: ManageTunnelsRootViewController?
- 
-     private var tunnelsManager: TunnelsManager
-     private var tunnelStatusObservers = [AnyObject]()
--    private(set) var currentTunnel: TunnelContainer? {
-+    private(set) var tunnelsInOperation: [TunnelContainer] {
-         didSet {
--            statusMenu?.currentTunnel = currentTunnel
--            statusItemController?.currentTunnel = currentTunnel
-+            statusMenu?.tunnelsInOperation = tunnelsInOperation
-+            statusItemController?.tunnelsInOperation = tunnelsInOperation
-         }
-     }
- 
-     init(tunnelsManager: TunnelsManager) {
-         self.tunnelsManager = tunnelsManager
--        currentTunnel = tunnelsManager.tunnelInOperation()
-+        tunnelsInOperation = tunnelsManager.tunnelsInOperation()
- 
-         for index in 0 ..< tunnelsManager.numberOfTunnels() {
-             let tunnel = tunnelsManager.tunnel(at: index)
-@@ -46,15 +46,11 @@ class TunnelsTracker {
-     }
- 
-     func observeStatus(of tunnel: TunnelContainer) -> AnyObject {
--        return tunnel.observe(\.status) { [weak self] tunnel, _ in
-+        return tunnel.observe(\.status) { [weak self] _, _ in
-             guard let self = self else { return }
--            if tunnel.status == .deactivating || tunnel.status == .inactive {
--                if self.currentTunnel == tunnel {
--                    self.currentTunnel = self.tunnelsManager.tunnelInOperation()
--                }
--            } else {
--                self.currentTunnel = tunnel
--            }
-+            // Always reassign, so that observers get to update their
-+            // presentation even when the set of tunnels doesn't change.
-+            self.tunnelsInOperation = self.tunnelsManager.tunnelsInOperation()
-         }
-     }
- }
-@@ -62,8 +58,8 @@ class TunnelsTracker {
- extension TunnelsTracker: TunnelsManagerListDelegate {
-     func tunnelAdded(at index: Int) {
-         let tunnel = tunnelsManager.tunnel(at: index)
--        if tunnel.status != .deactivating && tunnel.status != .inactive {
--            self.currentTunnel = tunnel
-+        if tunnel.status != .inactive {
-+            tunnelsInOperation = tunnelsManager.tunnelsInOperation()
-         }
-         let statusObservationToken = observeStatus(of: tunnel)
-         tunnelStatusObservers.insert(statusObservationToken, at: index)
-@@ -86,6 +82,9 @@ extension TunnelsTracker: TunnelsManagerListDelegate {
- 
-     func tunnelRemoved(at index: Int, tunnel: TunnelContainer) {
-         tunnelStatusObservers.remove(at: index)
-+        if tunnelsInOperation.contains(tunnel) {
-+            tunnelsInOperation = tunnelsManager.tunnelsInOperation()
-+        }
- 
-         statusMenu?.removeTunnelMenuItem(at: index)
-         manageTunnelsRootVC?.tunnelsListVC?.tunnelRemoved(at: index)
+         #elseif os(iOS)
+         switch self.state {
 -- 
 2.50.1 (Apple Git-155)
 
