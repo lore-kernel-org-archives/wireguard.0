@@ -4,74 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1FB1CA6002
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 11:35:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB001CA5FF0
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 11:39:04 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id a0054f05;
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 253c888f;
 	Mon, 5 Oct 2026 07:00:42 +0000 (UTC)
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com
- [2a00:1450:4864:20::435])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 446599dd
+Received: from mail.w14.tutanota.de (mail.w14.tutanota.de [185.205.69.214])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 8d0daa62
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 31 Aug 2026 07:15:56 +0000 (UTC)
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-482dbe4d247so817570f8f.2
- for <wireguard@lists.zx2c4.com>; Mon, 31 Aug 2026 00:15:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1788160556; x=1788765356; darn=lists.zx2c4.com;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=L5hJjz0M4NFJeRM7s/RWtJCvLUCft79O18Vd2TvhSAk=;
- b=WaXajINxUNm9A8R1feduhINWLad6u7zn6LOQ5sINmJeorlPvc4owV1zzEStjFm8iBl
- xwqSJ/6s7R1ZE1AhAb5gYKNFrfo1MDRqJh/cujTHobzNujRYoWcUhjyODI02Yj5NnBJW
- MqvkAvvIJXe+x2EDoXtWijDFMIm9xwKkmlSBdOhvOzwlv30uWszQKrOUr8jpLi5SZjLx
- iJl4LDZu21iqPZOo3UldxWGW4D+f+1rgRRsAs4BeJ457dFqStisrVlap7QyFDHtI9CwB
- 9sFrXZwfz7NgrHOIDfIs0l0wpUKllC97Kw7mOVcvbkx6goK4fitz7URTah6xJrTy+qNo
- 4Ftw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788160556; x=1788765356;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=L5hJjz0M4NFJeRM7s/RWtJCvLUCft79O18Vd2TvhSAk=;
- b=jutHChI/41GOPLU8C1ZBuSVWJni2LUxhLtfhZaDZXxdLpbJ+0efi9o3pKqPtaACpBg
- Pw7+Y+XFG3lBUitOVSyRkasjTSdnOof6V4lRumdtNGNCo33lHsN8GD6Mp1FcJJ952gBD
- 5ljmY2vONEVfWboHS5c2q76w6h46lsdvSmndv5ZT/H91u4NS4W3k4krne2JOspilZBZ7
- gYRIy6x4f8xksX1fT6U6+iaj5ycxDR9WcdoD9qA3RAkIlsoMLjajggM0KnknFR3ETsNU
- oLTlDfNgCP2hMNc3dQXv+st3fRZUenfLTRkur1yFC0dsOA7OyZI41cv1O00Ok/SLUcGF
- nxlQ==
-X-Gm-Message-State: AFuF++nHUxRd2ocCMPsujHlcRTxDzh992nXpzZhOs5O0QzKeKZI3HY/J
- oKMiarxtVjh5haumeQDxsZydpNb2KSrUsndLa/hwZH+wAjKZsMwMpF7e
-X-Gm-Gg: AYBFou1A51YH/Q0c3QVxUb20id7YlP+1a5IvSjeMQwCR8BaSBSk5PukLzVbhRHwyEKc
- 7p3yfuL6p0dG2HYvs8zepq+SCtHzbS7uHG1fVjggVc7eOruTZAtgf1BJHZwGYcOz9TF+0emNmM+
- chuV5XT66nZBMsSUEiIveOdFhmUpfG+/kCb4jcvHfjmLIMHGZOvZXzfNBavBN++wt76iVsTppWZ
- Yg5IreY4T8l8eYTGHN0gQnnG0F24U3AcGNO3Y2PXnROwtPXGngoCfIeep9Z+BqVhdNtCNu9I3dK
- aKkal7T2ZtF5Ns/k6NziBgxlOaDOMLJWz00loZcxYN5lLmhPxflgMZlRcocB9CSL1OxLzI4XIqY
- r63ulkbPeY8G35SE0lI4Ixk8XgITl2ldYXX1QC8VlFSv60sjEmklZQcy8uA2a10M0oo0jqW3kf0
- TPcuSpay+wnDo1BDUUXRYl90wY8z5LOlCh67EFF87f/OOoqV7aSFBVddW6MSZ4wZd0Drg+eSrSa
- M/YoM/BIoWw7F48jspYRMPK3nuK8pmXDF0=
-X-Received: by 2002:a05:6000:41d5:b0:47f:6f9e:1e82 with SMTP id
- ffacd0b85a97d-4843efb0d56mr1894260f8f.9.1788160556056; 
- Mon, 31 Aug 2026 00:15:56 -0700 (PDT)
-Received: from localhost.localdomain ([79.118.195.86])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482fbab3f3asm21026885f8f.3.2026.08.31.00.15.54
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 31 Aug 2026 00:15:55 -0700 (PDT)
-From: Razvan Cremenescu <razvan.cremenescu@gmail.com>
-To: "Jason A . Donenfeld" <Jason@zx2c4.com>
-Cc: wireguard@lists.zx2c4.com, Razvan Cremenescu <razvan.cremenescu@gmail.com>
-Subject: [RESEND PATCH wireguard-apple 10/10] macOS: reset peer endpoints
- after a network change
-Date: Mon, 31 Aug 2026 10:15:37 +0300
-Message-ID: <20260831071537.12966-11-razvan.cremenescu@gmail.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260831071537.12966-1-razvan.cremenescu@gmail.com>
-References: <20260831071537.12966-1-razvan.cremenescu@gmail.com>
+ Mon, 31 Aug 2026 10:24:16 +0000 (UTC)
+Received: from tutadb.w10.tutanota.de (w10.api.tuta.com [IPv6:fd:ac::d:10])
+ by mail.w14.tutanota.de (Postfix) with ESMTP id 99C1417B03FF9
+ for <wireguard@lists.zx2c4.com>; Mon, 31 Aug 2026 12:24:16 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1788171855; 
+ s=s1; d=well-founded.dev;
+ h=From:From:To:To:Subject:Subject:Content-Description:Content-ID:Content-Type:Content-Type:Content-Transfer-Encoding:Content-Transfer-Encoding:Cc:Cc:Date:Date:In-Reply-To:In-Reply-To:MIME-Version:MIME-Version:Message-ID:Message-ID:Reply-To:References:References:Sender;
+ bh=3a/1tLM258+XX6sFATstRDA/BXsqthctD9Jmbcf7QLk=;
+ b=OW6XnJ73rMHhix5m/I8qylskUIhn+n7eSE+Ef+6jHLS9yNU7JFjmZ2yGTlvJHoKj
+ smfnlH1jlkwXeE8bnVuAQagSCarq9EcmKGvk3lmXDELY4MXnTOFLufZiqCOh7lPjmQC
+ npY1alQOXViJavLNAqaN8+3kQoXBbM7RcCAkpl3OgKeLyIshWudNGnmXFoU3IKvWkZQ
+ 4URHP1QhmECB1/yTI0JLGYiD9ALvLARlRBrLtL6lW+KKR0SzC/yPujH+WWA59g5sBLE
+ BAcVgVx91ll8px6Gfn4B7KvQ06RXNeAvumld+rMB6kNJoUKh6oEaGL+61lXxMXIb8+D
+ MSSEXJbNYA==
+Date: Mon, 31 Aug 2026 12:24:15 +0200 (CEST)
+From: Ramses <ramses@well-founded.dev>
+To: "Jason A. Donenfeld" <jason@zx2c4.com>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
+ "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>, Martin KaFai Lau <kafai@fb.com>,
+ Wireguard <wireguard@lists.zx2c4.com>, Netdev <netdev@vger.kernel.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Message-ID: <P0MLDmd--F-9@well-founded.dev>
+In-Reply-To: <apT0H7qIwFW-JCLn@zx2c4.com>
+References: <20260827-wg-tstamp-v1-1-4acfebb855ef@well-founded.dev>
+ <apT0H7qIwFW-JCLn@zx2c4.com>
+Subject: Re: [PATCH net] wireguard: queueing: preserve tstamp_type in
+ wg_reset_packet()
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Feedback-ID: 0163e381fa67fa966160938ffa017803050e57578bb1735d37cd25d20463a96a9bb3a550250bbc5eaa94bfdfd8cf3defcf1aa43859ae980630826bb8230f264e7f:TurnOnPrivacy!:tutamail
 X-Mailman-Approved-At: Mon, 05 Oct 2026 06:59:44 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -87,185 +61,66 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On iOS a network change sets the peer endpoints again before bumping
-the sockets, but on macOS the path update handler only bumps the
-sockets, leaving whatever endpoint each peer currently has. That breaks
-tunnels across a network change in two ways.
+Aug 31, 2026, 05:25 by Jason@zx2c4.com:
 
-A peer configured with a hostname keeps the address the hostname
-resolved to on the previous network, so a dynamic DNS record that moved,
-or a name that resolves differently per network, is never picked up.
+> Hi Ramses,
+>
+> On Thu, Aug 27, 2026 at 01:52:56PM +0200, Ramses de Norre via B4 Relay wrote:
+>
+>> From: Ramses de Norre <ramses@well-founded.dev>
+>>
+>> Sending traffic through a wireguard tunnel on a host using the fq
+>> qdisc fills the log with:
+>>
+>>  fq: likely mono tstamp with tstamp_type 0
+>>
+>> An skb carries a timestamp in skb->tstamp and, separately, a
+>> skb->tstamp_type field recording which clock that timestamp came from.
+>> The two have to agree.
+>>
+>> When wireguard encapsulates a packet it calls wg_reset_packet(), which
+>> clears the fields that must not leak from the inner packet into the
+>> tunnel packet. It does so in two steps:
+>>
+>>  skb_scrub_packet(skb, true);
+>>  memset(&skb->headers, 0, sizeof(skb->headers));
+>>
+>> skb_scrub_packet() deliberately keeps skb->tstamp when it holds a
+>> monotonic timestamp: that value is the time the packet is scheduled to
+>> be sent, and the qdisc still needs it. The memset then zeroes
+>> skb->tstamp_type, because that field sits inside the headers group
+>> while skb->tstamp does not. The packet therefore leaves wireguard
+>> carrying a monotonic timestamp labelled as a realtime one.
+>>
+>> Nothing noticed until commit c4f796c4f16b ("net_sched: sch_fq: convert
+>> skb->tstamp if not monotonic"): fq used to assume every timestamp was
+>> monotonic. It now consults tstamp_type, spots the mismatch, warns, and
+>> falls back to treating the value as monotonic. Pacing still ends up
+>> correct, so the log spam is the actual problem.
+>>
+>> Save tstamp_type before the memset and restore it when encapsulating,
+>> next to the hash fields that are already carried over this way. When
+>> decapsulating it stays zeroed, which is right: an incoming packet's
+>> timestamp is a realtime receive timestamp.
+>>
+>> Fixes: de799101519a ("net: Add skb_clear_tstamp() to keep the mono delivery_time")
+>> Signed-off-by: Ramses de Norre <ramses@well-founded.dev>
+>>
+>
+> Thanks for this. I've queued this up in the wireguard tree.
+>
+> One thing I'm wondering is whether your Fixes: line is correct. Would
+> c4f796c4f16b be a better candidate than de799101519a? Or maybe even
+> 4d25ca2d6801 is best?
+>
+> Jason
+>
+Hi Jason
 
-Worse, a peer that roamed keeps the roamed address. A server reached at
-an address that only exists on one network - its address inside another
-tunnel, or on the LAN it is hosted on - leaves the peer pinned to that
-address once the machine moves, and every handshake then fails with 'no
-route to host' until the tunnel is deactivated and activated again.
+I think you are right, but I think d98d58a00261 is actually the commit that introduced the issue then (but no warnings were logged yet at that point).
+The patch doesn't apply cleanly to that version though, I think it only applies starting from 6.11 because of a rename, so we can't backport all the way back. It's probably fine though, since the warnings weren't being logged yet at that point.
+Do you want me to send an updated patch, or will you just fix this up in your tree?
 
-Set the endpoints of all peers again after a network change,
-re-resolving the ones configured with a hostname. Resolution failures
-keep the address the hostname last resolved to, so a network without
-working DNS does not tear the endpoints down.
-
-The work is delayed and coalesced, since a single network change
-produces a burst of path updates and resolution blocks the queue. Peers
-configured with a literal address need no resolution at all.
-
-Signed-off-by: Razvan Cremenescu <razvan.cremenescu@gmail.com>
----
- .../PacketTunnelSettingsGenerator.swift       | 47 +++++++++++++++-
- Sources/WireGuardKit/WireGuardAdapter.swift   | 53 +++++++++++++++++++
- 2 files changed, 99 insertions(+), 1 deletion(-)
-
-diff --git a/Sources/WireGuardKit/PacketTunnelSettingsGenerator.swift b/Sources/WireGuardKit/PacketTunnelSettingsGenerator.swift
-index 36c0e06..3a8453d 100644
---- a/Sources/WireGuardKit/PacketTunnelSettingsGenerator.swift
-+++ b/Sources/WireGuardKit/PacketTunnelSettingsGenerator.swift
-@@ -14,7 +14,7 @@ typealias EndpointResolutionResult = Result<(Endpoint, Endpoint), DNSResolutionE
- 
- class PacketTunnelSettingsGenerator {
-     let tunnelConfiguration: TunnelConfiguration
--    let resolvedEndpoints: [Endpoint?]
-+    private(set) var resolvedEndpoints: [Endpoint?]
-     let isSplitDNSEnabled: Bool
- 
-     init(tunnelConfiguration: TunnelConfiguration, resolvedEndpoints: [Endpoint?], isSplitDNSEnabled: Bool = false) {
-@@ -181,6 +181,51 @@ class PacketTunnelSettingsGenerator {
-         return (ipv4IncludedRoutes, ipv6IncludedRoutes)
-     }
- 
-+    /// Return a UAPI configuration setting the endpoint of every peer,
-+    /// re-resolving the peers that were configured with a hostname.
-+    ///
-+    /// The endpoints are set unconditionally, which is what makes this useful
-+    /// after a network change: besides picking up a hostname that now resolves
-+    /// elsewhere, it resets peers whose endpoint the backend has roamed to an
-+    /// address that was only reachable on the previous network.
-+    ///
-+    /// The initial resolution replaces a configured hostname with the address
-+    /// it resolved to, so the hostname is only available from the tunnel
-+    /// configuration itself.
-+    func endpointUapiConfigurationAfterNetworkChange() -> (String, [EndpointResolutionResult?]) {
-+        let configuredEndpoints = tunnelConfiguration.peers.map { $0.endpoint }
-+        // Resolution is skipped altogether when every endpoint is an address.
-+        let results = DNSResolver.resolveSync(endpoints: configuredEndpoints)
-+        assert(results.count == tunnelConfiguration.peers.count)
-+        assert(resolvedEndpoints.count == tunnelConfiguration.peers.count)
-+
-+        var wgSettings = ""
-+        var resolutionResults = [EndpointResolutionResult?]()
-+
-+        for (index, peer) in tunnelConfiguration.peers.enumerated() {
-+            if let configuredEndpoint = configuredEndpoints[index], !configuredEndpoint.hasHostAsIPAddress() {
-+                switch results[index] {
-+                case .success(let resolvedEndpoint)?:
-+                    resolutionResults.append(.success((configuredEndpoint, resolvedEndpoint)))
-+                    resolvedEndpoints[index] = resolvedEndpoint
-+                case .failure(let error)?:
-+                    // Keep the address the hostname last resolved to.
-+                    resolutionResults.append(.failure(error))
-+                case nil:
-+                    resolutionResults.append(nil)
-+                }
-+            } else {
-+                resolutionResults.append(nil)
-+            }
-+
-+            guard let endpoint = resolvedEndpoints[index] else { continue }
-+            wgSettings.append("public_key=\(peer.publicKey.hexKey)\n")
-+            wgSettings.append("endpoint=\(endpoint.stringRepresentation)\n")
-+        }
-+
-+        return (wgSettings, resolutionResults)
-+    }
-+
-     private class func reresolveEndpoint(endpoint: Endpoint) -> EndpointResolutionResult {
-         return Result { (endpoint, try endpoint.withReresolvedIP()) }
-             .mapError { error -> DNSResolutionError in
-diff --git a/Sources/WireGuardKit/WireGuardAdapter.swift b/Sources/WireGuardKit/WireGuardAdapter.swift
-index 82728e4..b0864b3 100644
---- a/Sources/WireGuardKit/WireGuardAdapter.swift
-+++ b/Sources/WireGuardKit/WireGuardAdapter.swift
-@@ -60,6 +60,15 @@ public class WireGuardAdapter {
-     /// DNS search domains rather than for all queries on the system.
-     private var isSplitDNSEnabled = false
- 
-+    #if os(macOS)
-+    /// Pending endpoint reset after a network change.
-+    private var endpointResetWorkItem: DispatchWorkItem?
-+
-+    /// Delay before resetting endpoints after a network change, so that a
-+    /// burst of path updates results in a single reset.
-+    private static let endpointResetDelay: DispatchTimeInterval = .seconds(2)
-+    #endif
-+
-     /// Tunnel device file descriptors claimed by the adapters in this process.
-     /// When multiple tunnels run in a single extension process, each adapter
-     /// must attach to its own utun device rather than to the first one found.
-@@ -328,6 +337,11 @@ public class WireGuardAdapter {
-             self.networkMonitor?.cancel()
-             self.networkMonitor = nil
- 
-+            #if os(macOS)
-+            self.endpointResetWorkItem?.cancel()
-+            self.endpointResetWorkItem = nil
-+            #endif
-+
-             self.releaseTunnelFileDescriptor()
-             self.state = .stopped
- 
-@@ -518,12 +532,51 @@ public class WireGuardAdapter {
- 
-     /// Helper method used by network path monitor.
-     /// - Parameter path: new network path
-+    #if os(macOS)
-+    /// Schedule resetting the peer endpoints to their configured addresses,
-+    /// re-resolving the ones configured with a hostname.
-+    ///
-+    /// Unlike iOS, macOS leaves the endpoints alone across a network change.
-+    /// A peer keeps whatever endpoint it has, which is a problem in two ways:
-+    /// a hostname that resolves elsewhere on the new network is never picked
-+    /// up, and a peer that roamed to an address reachable only on the previous
-+    /// network - a server reached at its internal address, say - keeps being
-+    /// sent to that address, so the tunnel never handshakes again.
-+    ///
-+    /// The work is delayed and coalesced, since a single network change
-+    /// produces a burst of path updates and resolution blocks the queue.
-+    private func scheduleEndpointReset() {
-+        endpointResetWorkItem?.cancel()
-+
-+        let workItem = DispatchWorkItem { [weak self] in
-+            guard let self = self else { return }
-+            guard case .started(let handle, let settingsGenerator) = self.state else { return }
-+
-+            let (wgConfig, resolutionResults) = settingsGenerator.endpointUapiConfigurationAfterNetworkChange()
-+            self.logEndpointResolutionResults(resolutionResults)
-+
-+            guard !wgConfig.isEmpty else { return }
-+
-+            self.logHandler(.verbose, "Resetting peer endpoints after network change")
-+            wgSetConfig(handle, wgConfig)
-+            wgBumpSockets(handle)
-+        }
-+
-+        endpointResetWorkItem = workItem
-+        workQueue.asyncAfter(deadline: .now() + Self.endpointResetDelay, execute: workItem)
-+    }
-+    #endif
-+
-     private func didReceivePathUpdate(path: Network.NWPath) {
-         self.logHandler(.verbose, "Network change detected with \(path.status) route and interface order \(path.availableInterfaces)")
- 
-         #if os(macOS)
-         if case .started(let handle, _) = self.state {
-             wgBumpSockets(handle)
-+
-+            if path.status.isSatisfiable {
-+                self.scheduleEndpointReset()
-+            }
-         }
-         #elseif os(iOS)
-         switch self.state {
--- 
-2.50.1 (Apple Git-155)
+Thanks,
+Ramses
 
