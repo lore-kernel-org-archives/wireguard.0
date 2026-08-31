@@ -4,34 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 003F8C61DC6
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 27 Aug 2026 13:36:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A2D3C61DD3
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 31 Aug 2026 03:25:42 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id b4a98a1d;
-	Thu, 27 Aug 2026 13:35:52 +0000 (UTC)
-Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 65123cdf
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 458ac8b8;
+	Mon, 31 Aug 2026 03:25:40 +0000 (UTC)
+Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 8bb33f38
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 27 Aug 2026 13:35:48 +0000 (UTC)
+ Mon, 31 Aug 2026 03:25:32 +0000 (UTC)
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 3BB3A40693;
- Thu, 27 Aug 2026 13:35:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10D3E1F00ACA;
- Thu, 27 Aug 2026 13:35:40 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 38DC760120;
+ Mon, 31 Aug 2026 03:25:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A92581F000E9;
+ Mon, 31 Aug 2026 03:25:29 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; dkim=pass (1024-bit key,
+ unprotected) header.d=zx2c4.com header.i=@zx2c4.com header.a=rsa-sha256
+ header.s=20210105 header.b=lQjT3/OM
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1787837739;
+ t=1788146728;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=yuRBr7NNsy1QcjiJOCE3QJ91c/zgrK86l/zJYhNe9Sg=;
- b=mr+M29FgzvxVykz3RmfI15QjTH+ctTJTkVyxyzBHjuGH3Fw6BG5o+/Cwc//j7NDkQPDItw
- HuJzfEpcz3cibyvNX5pbvdxo8MK4mv4b4KfNUU4J7Vvl3k08X97M+Ys9SMzVE/zoUDbdPr
- KjsvHJU1IgHPXiElHRu4GbjOFjJKqdE=
-Received: by mail.zx2c4.com (OpenSMTPD) with ESMTPSA id 65acf2cf
+ bh=zKdZAmn445qhRZS0uBj1MCk1GVoADURg/5nlTEd0BLA=;
+ b=lQjT3/OMWfWDv8gCGmA/N+ykEVDspz9O/ynOIboDnKKeyxfvtj+3xMeA9vntKgcdiGqF2Z
+ FFTxC0+aqs/QKcYEyYloI1EcfTsgfpu5RIG2k2tUROfWL68bY/u5VXLQBt9+xIP9vNT0/6
+ uoW+58rDkA+0IngiguWFA3CaOsSrD6A=
+Received: by mail.zx2c4.com (OpenSMTPD) with ESMTPSA id 3f46e57b
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Thu, 27 Aug 2026 13:35:39 +0000 (UTC)
-Date: Thu, 27 Aug 2026 15:35:33 +0200
+ Mon, 31 Aug 2026 03:25:27 +0000 (UTC)
+Date: Sun, 30 Aug 2026 21:25:19 -0600
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 To: ramses@well-founded.dev
 Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
@@ -42,7 +45,7 @@ Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
  netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 Subject: Re: [PATCH net] wireguard: queueing: preserve tstamp_type in
  wg_reset_packet()
-Message-ID: <apA9JU3TAXdSNYJi@zx2c4.com>
+Message-ID: <apT0H7qIwFW-JCLn@zx2c4.com>
 References: <20260827-wg-tstamp-v1-1-4acfebb855ef@well-founded.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -61,6 +64,8 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
+
+Hi Ramses,
 
 On Thu, Aug 27, 2026 at 01:52:56PM +0200, Ramses de Norre via B4 Relay wrote:
 > From: Ramses de Norre <ramses@well-founded.dev>
@@ -101,31 +106,11 @@ On Thu, Aug 27, 2026 at 01:52:56PM +0200, Ramses de Norre via B4 Relay wrote:
 > 
 > Fixes: de799101519a ("net: Add skb_clear_tstamp() to keep the mono delivery_time")
 > Signed-off-by: Ramses de Norre <ramses@well-founded.dev>
-> ---
->  drivers/net/wireguard/queueing.h | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/drivers/net/wireguard/queueing.h b/drivers/net/wireguard/queueing.h
-> index 79b6d70de236b..663b19b783953 100644
-> --- a/drivers/net/wireguard/queueing.h
-> +++ b/drivers/net/wireguard/queueing.h
-> @@ -78,12 +78,14 @@ static inline void wg_reset_packet(struct sk_buff *skb, bool encapsulating)
->  	u8 l4_hash = skb->l4_hash;
->  	u8 sw_hash = skb->sw_hash;
->  	u32 hash = skb->hash;
-> +	u8 tstamp_type = skb->tstamp_type;
->  	skb_scrub_packet(skb, true);
->  	memset(&skb->headers, 0, sizeof(skb->headers));
->  	if (encapsulating) {
->  		skb->l4_hash = l4_hash;
->  		skb->sw_hash = sw_hash;
->  		skb->hash = hash;
-> +		skb->tstamp_type = tstamp_type;
->  	}
->  	skb->queue_mapping = 0;
->  	skb->nohdr = 0;
+ 
+Thanks for this. I've queued this up in the wireguard tree.
 
-Seems reasonable to me. I'll put this through the paces testing and
-queue it up when I'm back at my laptop on Monday.
+One thing I'm wondering is whether your Fixes: line is correct. Would
+c4f796c4f16b be a better candidate than de799101519a? Or maybe even
+4d25ca2d6801 is best?
 
 Jason
