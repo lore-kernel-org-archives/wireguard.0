@@ -4,71 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2236CA5FCE
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 08:16:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F2CDCA5FCE
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 08:18:50 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 6de8431a;
-	Mon, 5 Oct 2026 06:56:34 +0000 (UTC)
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com
- [2607:f8b0:4864:20::1032])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 91af906c
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id bd680224;
+	Mon, 5 Oct 2026 06:56:35 +0000 (UTC)
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com
+ [2607:f8b0:4864:20::232])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 7a99a2d8
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Sun, 16 Aug 2026 18:25:17 +0000 (UTC)
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-38e3efab7e0so1741789a91.0
- for <wireguard@lists.zx2c4.com>; Sun, 16 Aug 2026 11:25:16 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Wed, 2 Sep 2026 15:11:36 +0000 (UTC)
+Received: by mail-oi1-x232.google.com with SMTP id
+ 5614622812f47-4b3a61bdf22so586049b6e.3
+ for <wireguard@lists.zx2c4.com>; Wed, 02 Sep 2026 08:11:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=kurochan.org; s=gmail1; t=1786904715; x=1787509515; darn=lists.zx2c4.com;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=XTPU1VqAVtuBCyeVkcpv4g82zHQQIQ3cB22P17vpz/w=;
- b=ft8EryJhouX0sJwcL6XvGVwRSrHuamwoybI7ZlmU+9DBTrePvJ5ZlPORIu3OCw3JJ0
- 9Z1/+M6JNQnpUqgOHTXgGzFxTNSWPtecMmGGC2Mepb4i0JALXUvUyKFqXHmSJHzmBqog
- oeUOz5ndqpv6g9HmGk9kpIjuDHWAVUTCKmtDHH0wOfK9lhSU6CXc+jU69x8ZEOm9Z72/
- xY6eTvMMPi6+HiZx6dJHPlX12nnp0HbbMdfQrrJHiZVVHk0yhhwoCWU5AKMfvZALwSAb
- 6k6cfPrQ3XmuxaTDSfqNFhYKI/Dv7WfkgfZq20XIrt0mBdWq8MwsN0RMmSS4dmmg5RBS
- MjBQ==
+ d=cloudflare.com; s=google09082023; t=1788361895; x=1788966695;
+ darn=lists.zx2c4.com; 
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=6d93cyMkw6EMFToYvRlpelXx7oHrvV3y/wNVC9ldZm0=;
+ b=Of38BgmPpsc25aV2UGUneC3RclQRQiQX6j5L+jTbkhcOHGhKwXifmSW0Y/xJQu+oke
+ y59nqPK04unu6JY8f3JSfNE4pNVSLfL2DocfVa49Vnkkj0K94WKMPUTTWpdGtMVhVr4q
+ 5fQhfj9xGv+w0J4No7XFat1TiTQUfEambeWosnR5l2vyH8dqCeFRkRhRMFV33XVnHhVX
+ wZQURt5DMrok5GOMU1Y6O2s/G3A58vVHOExDEQWyUTq5ytLxVdbrpwLxlUuKPFe5FLQc
+ F1cVpsfxE+tVMtkAHizf47hvnhyFYJXw8vsVjxDckwK1gAgvY03DY9OlIThrGXCMKPX8
+ suYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786904715; x=1787509515;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=XTPU1VqAVtuBCyeVkcpv4g82zHQQIQ3cB22P17vpz/w=;
- b=NAN2fy8zH64dXskXglGg/OFHl+BzlHazX/VetkrQzV1cPpiRupOdpewEJI+ARz4Hsd
- K46QNZv/SjmEbqo+5w4J616W5UEtV6zPSO7c/iwBeddoYWuCVhOO1jWh89qFWWnDNmIJ
- 6op6wki1+4w4DS29WUMnNFvGqHL1P+85m34BwzIXmWi4iiGUZLqK0RamRBZpxaLbHzac
- ubxEOgCZOg5O3m1NCUzoNwVczxWWzKmfZvZy4BrSxUmz8KpTMNUT0eQ8RXusM5FKoaNG
- dJwWX94ljx2VdoynzMbNXBhpvoaXDwdI9AdvMKq/WVf8UrLKAd0cJmHPb7GQ8vVXF9Xp
- W6NA==
-X-Gm-Message-State: AOJu0Yxv4ONAkSih5J+o3wCXCAFnBi0VLPeX3sA6oo17gP60xSz1nH6/
- 80RYAl1Od7L66xHFt5RG9HV4q6o56CcrYneiHx63LLOMQpreQwdskh+IbEc1Sm+PmOCHu8dL1+M
- s2t8=
-X-Gm-Gg: AR+sD13gr58hrjWRf2Hx298evB1VTByei0+bHW0hk9VOkQeWQH/2a+XKbgWnctRzP1o
- 2hXqbDi5+dJEY3mVOBtdQl6Hm0OCkjB80LofJ2pkinhztAJSTQV6odllvCUacVYrRhqvPcT1zx9
- iJfGSyoHKHQ1kgvku0zAR+17jbagqBtuIcskkZqVEkaQzMAFCHi5eqQHQwr3GuWGXEqHfh1B8nl
- Zi/MtoLa9pI2GbLjOnMOqAEO/mwwZw8laNlOnUjZSvpP9pJWD/3w+J5/KzDeAy6WtwGSG/MIU1w
- x5wL4eiJLzYUmsuT386D6cjrxcxGfWGGBx2ffwJV5RZWfd42WWZqVmjjdftdDL41/Ggj7eXflnU
- EnwlZM/4CK7sXi/AkXSY+Obomqw0+h0+ndyInkzFEV+zIKjfmx05AkdKEetAik06v6IKbTIgunn
- J7i7F5TXocW/y92yXzXLhEtSmnuHWGrCjSLjiL7YBR8QZnD4ibua67OB4+OkdNKoTCfwTKWskGU
- Qm9dRPiEG5TAKdgAOnDDMjJoMTw3YvCr+5yx5+KXiBkAQ==
-X-Received: by 2002:a17:90b:2e87:b0:38e:6d55:b1a6 with SMTP id
- 98e67ed59e1d1-3933af038ccmr16162183a91.3.1786904715236; 
- Sun, 16 Aug 2026 11:25:15 -0700 (PDT)
-Received: from CA-20036284 (124-144-108-156.rev.home.ne.jp. [124.144.108.156])
+ d=1e100.net; s=20251104; t=1788361895; x=1788966695;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=6d93cyMkw6EMFToYvRlpelXx7oHrvV3y/wNVC9ldZm0=;
+ b=O5sgw7J8nlk6EnXSFS1oz3599cYIwE1P+fDxXokKAyvAtwoQqEzpfKucLqQUcKYLz1
+ QeL4z+lZtPzT9afrdtVYEWoi2pXUs1TJ1TKwwoYZ8szDNHUylAOSCiASYjEnDAulP8F2
+ i8m6vuP5cq+xauyegJ4+Apv5k/MRUyoP7HfXD96BseLorhp+EAh0HWq8Jz6V90Tcueb4
+ knIp1BQnUkH8lblpnvEIx6Y81nEdPSCL0dra9Za62S94osK1ANnh+OKWME1nKYW6E7si
+ R4GAVe0R0t/3zqNCT7jmVNi2UK5xo+Sc98jVTlPqH/h5IAC//z6jXpLKzqSF2D5bcJOY
+ aRkQ==
+X-Gm-Message-State: AFuF++migsGCAhRlX4UZUg9gWj1LtyhjMkPqXZMqLepC1jLTX8nENaOf
+ TUEddC4IOqxrMuKQS5U2muwMSbJHp/0tTQpU8lCAD5dBJ89fO05eZRGkAGsjCdWqk8Y=
+X-Gm-Gg: AR+sD13ERSTWtPjJuI5lfNbZij5N89KxIDNwUj5U8U7RQn22xOrynG7Ngt7i2Y61asQ
+ m8kY4JpZO51T41EUBQC/RyIU+47hJq4QFbWVZvhck/7mWpebZZFU2fSltk8WUkK3c2LNVDdJgiX
+ LsvB1uUlYipIuZ5YOvNv2e87R+LN9cx0J/ckjEk8CW0xz51rAzwmj1f85nt8nmFnljNEW4wf4os
+ MdKasrQPDuiKiMFDDaNYet0j9QCcvZQ6ocGkqp6C2+/qUBE4ccxAdkUelX7cao6a9RwPLvSUWzj
+ IE7Bzfunk1zR86VlreolT8AC7WelFannPS2Oi3bSOt/CEdlDaDMUKoBEiDk1zmdpWqQBZibjheI
+ 93vzrOHsXojoSXzznEYx3MeO9jzoE9fg37QmIL+s/C6uoYC8VV4Rjywu00ZSQwZ9I1kWpOIwDdj
+ x6tL2ZoabYj+5MlSb4w/Pd2aPYtPuI6dWguX4N1rTeGrmfn8SNBA==
+X-Received: by 2002:a05:6808:1982:b0:4ae:f5be:fe29 with SMTP id
+ 5614622812f47-4b6bc45eb12mr4432026b6e.5.1788361894525; 
+ Wed, 02 Sep 2026 08:11:34 -0700 (PDT)
+Received: from [127.0.1.1] ([2a09:bac6:bf21:2e28::499:53])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-39531ee7d46sm2112357a91.16.2026.08.16.11.25.13
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 16 Aug 2026 11:25:14 -0700 (PDT)
-From: kuro@kurochan.org
-To: wireguard@lists.zx2c4.com
-Cc: kurochan <kuro@kurochan.org>
-Subject: [PATCH] device: use GOMAXPROCS for worker count
-Date: Mon, 17 Aug 2026 03:25:00 +0900
-Message-ID: <20260816182500.23926-1-kuro@kurochan.org>
-X-Mailer: git-send-email 2.55.0
+ 5614622812f47-4b698a38f62sm2044063b6e.7.2026.09.02.08.11.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 02 Sep 2026 08:11:32 -0700 (PDT)
+From: Chris J Arges <carges@cloudflare.com>
+Date: Wed, 02 Sep 2026 10:11:25 -0500
+Subject: [PATCH net] wireguard: wait for per-peer crypto during removal
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260902-fix-wg-peer-removal-v1-1-7a0190f5cdb1@cloudflare.com>
+X-B4-Tracking: v=1; b=H4sIAJw8mGoC/yWM0Q6CMBAEf4Xcs5dcqTGBXzE+YFnwDBZyrWhC+
+ HerPs5mZzZKMEWittrIsGrSORZwh4rCrYsjWPvCVEt9kkYcD/rm18gLYGx4zGs38dEPwTfSi3e
+ OirkYyu1XPVNEpst/TM/rHSF/e7TvH90glU58AAAA
+X-Change-ID: 20260901-fix-wg-peer-removal-43fc390d0311
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, 
+ Andrew Lunn <andrew+netdev@lunn.ch>, 
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>
+Cc: wireguard@lists.zx2c4.com, netdev@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, kernel-team@cloudflare.com, 
+ Chris J Arges <carges@cloudflare.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openssh-sha256; t=1788361892; l=5927;
+ i=carges@cloudflare.com; h=from:subject:message-id;
+ bh=gasmKhY5QdVetN3HDkPDfGtkZpKw5F4W6g75o0Q/i88=;
+ b=U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgaxY1IIT5oTohBZJmhnVgJo2HsM7Sv
+ 9I0LdJCgpeGX6gAAAAGcGF0YXR0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5AAAA
+ QKpZG43U/VRAV+Prr2sW0jg3cNIEuCbnlX7R7/cMb4Ldr5itEqZVxNPbqMC463wRbQvSqRslVYr
+ rxLj1VgRkpgE=
+X-Developer-Key: i=carges@cloudflare.com; a=openssh;
+ fpr=SHA256:Cun99EBiH0EV7wvmfTBF9eDrld2NJx+aD4ScWZ45Q5M
 X-Mailman-Approved-At: Mon, 05 Oct 2026 06:55:46 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -84,53 +102,147 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-From: kurochan <kuro@kurochan.org>
+Calling peer_remove_after_dead() currently flushes device-wide packet
+crypto and handshake workqueues while holding RTNL. This is problematic as
+unrelated peers can continue adding work onto those queues blocking other
+tasks that want to take the RTNL lock.
 
-Use runtime.GOMAXPROCS(0) instead of runtime.NumCPU() when starting
-encryption, decryption, and handshake workers. This makes the worker
-pools follow the runtime's effective parallelism.
+Instead, this patch proposes tracking pending crypto handoffs for each
+peer using a counter. After marking the peer dead, synchronize_net()
+prevents new submissions; wait for pending crypto workers to schedule TX
+work or RX NAPI. Then flush only the peer's transmit packet and handshake
+work.
 
-Go 1.25 introduced automatic GOMAXPROCS adjustment based on cgroup CPU
-limits and other runtime constraints. However, this module declares
-go 1.23.1, so the compatibility defaults are:
+This scopes teardown synchronization to the removed peer and prevents
+unrelated peers from extending the RTNL hold time.
 
-    containermaxprocs=0
-    updatemaxprocs=0
-
-As a result, cgroup-based adjustment is not enabled by default for
-this module when built with a newer Go toolchain. Using GOMAXPROCS
-still allows the configured parallelism to be reflected in the worker
-count, and keeps the worker lifecycle ready for future cgroup-aware
-runtime defaults.
-
-Signed-off-by: kurochan <kuro@kurochan.org>
+Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
+Signed-off-by: Chris J Arges <carges@cloudflare.com>
 ---
- device/device.go | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/wireguard/peer.c     | 30 ++++++++++++++++--------------
+ drivers/net/wireguard/peer.h     |  1 +
+ drivers/net/wireguard/queueing.h |  6 ++++++
+ 3 files changed, 23 insertions(+), 14 deletions(-)
 
-diff --git a/device/device.go b/device/device.go
-index 6854ed8..7d9d910 100644
---- a/device/device.go
-+++ b/device/device.go
-@@ -308,10 +308,13 @@ func NewDevice(tunDevice tun.Device, bind conn.Bind, logger *Logger) *Device {
+diff --git a/drivers/net/wireguard/peer.c b/drivers/net/wireguard/peer.c
+index 1cb502a932e0..f7a9c437b5b8 100644
+--- a/drivers/net/wireguard/peer.c
++++ b/drivers/net/wireguard/peer.c
+@@ -14,6 +14,7 @@
+ #include <linux/lockdep.h>
+ #include <linux/rcupdate.h>
+ #include <linux/list.h>
++#include <linux/wait_bit.h>
  
- 	// start workers
+ static struct kmem_cache *peer_cache;
+ static atomic64_t peer_counter = ATOMIC64_INIT(0);
+@@ -49,6 +50,8 @@ struct wg_peer *wg_peer_create(struct wg_device *wg,
+ 	INIT_WORK(&peer->transmit_packet_work, wg_packet_tx_worker);
+ 	wg_prev_queue_init(&peer->tx_queue);
+ 	wg_prev_queue_init(&peer->rx_queue);
++	/* Keep this above zero until teardown prevents new packet handoffs. */
++	atomic_set(&peer->packet_crypt_pending, 1);
+ 	rwlock_init(&peer->endpoint_lock);
+ 	kref_init(&peer->refcount);
+ 	skb_queue_head_init(&peer->staged_packet_queue);
+@@ -105,28 +108,27 @@ static void peer_remove_after_dead(struct wg_peer *peer)
+ 	 */
+ 	wg_timers_stop(peer);
  
--	cpus := runtime.NumCPU()
-+	workers := runtime.GOMAXPROCS(0)
-+	if workers < 2 {
-+		workers = 2
-+	}
- 	device.state.stopping.Wait()
--	device.queue.encryption.wg.Add(cpus) // One for each RoutineHandshake
--	for i := 0; i < cpus; i++ {
-+	device.queue.encryption.wg.Add(workers) // One for each RoutineHandshake
-+	for i := 0; i < workers; i++ {
- 		go device.RoutineEncryption(i + 1)
- 		go device.RoutineDecryption(i + 1)
- 		go device.RoutineHandshake(i + 1)
+-	/* The transition between packet encryption/decryption queues isn't
+-	 * guarded by is_dead, but each reference's life is strictly bounded by
+-	 * two generations: once for parallel crypto and once for serial
+-	 * ingestion, so we can simply flush twice, and be sure that we no
+-	 * longer have references inside these queues.
++	/* Lookup removal and is_dead prevent new packets from entering the
++	 * parallel crypto queues after synchronize_net() waits for pre-existing
++	 * submission paths. Drop the initial count and wait for existing packets
++	 * to finish scheduling their serial TX work or RX NAPI processing.
+ 	 */
++	atomic_dec(&peer->packet_crypt_pending);
++	wait_var_event(&peer->packet_crypt_pending,
++		       !atomic_read_acquire(&peer->packet_crypt_pending));
++
++	flush_work(&peer->transmit_packet_work);
+ 
+-	/* a) For encrypt/decrypt. */
+-	flush_workqueue(peer->device->packet_crypt_wq);
+-	/* b.1) For send (but not receive, since that's napi). */
+-	flush_workqueue(peer->device->packet_crypt_wq);
+-	/* b.2.1) For receive (but not send, since that's wq). */
+ 	napi_disable(&peer->napi);
+-	/* b.2.1) It's now safe to remove the napi struct, which must be done
++	/* It's now safe to remove the napi struct, which must be done
+ 	 * here from process context.
+ 	 */
+ 	netif_napi_del(&peer->napi);
+ 
+-	/* Ensure any workstructs we own (like transmit_handshake_work or
+-	 * clear_peer_work) no longer are in use.
++	/* clear_peer_work was flushed by wg_timers_stop(). Ensure the remaining
++	 * peer-owned handshake work is no longer in use.
+ 	 */
+-	flush_workqueue(peer->device->handshake_send_wq);
++	flush_work(&peer->transmit_handshake_work);
+ 
+ 	/* After the above flushes, a peer might still be active in a few
+ 	 * different contexts: 1) from xmit(), before hitting is_dead and
+diff --git a/drivers/net/wireguard/peer.h b/drivers/net/wireguard/peer.h
+index 718fb42bdac7..64412c67f413 100644
+--- a/drivers/net/wireguard/peer.h
++++ b/drivers/net/wireguard/peer.h
+@@ -37,6 +37,7 @@ struct endpoint {
+ struct wg_peer {
+ 	struct wg_device *device;
+ 	struct prev_queue tx_queue, rx_queue;
++	atomic_t packet_crypt_pending;
+ 	struct sk_buff_head staged_packet_queue;
+ 	int serial_work_cpu;
+ 	bool is_dead;
+diff --git a/drivers/net/wireguard/queueing.h b/drivers/net/wireguard/queueing.h
+index 79b6d70de236..fdd34f0f15a6 100644
+--- a/drivers/net/wireguard/queueing.h
++++ b/drivers/net/wireguard/queueing.h
+@@ -11,6 +11,7 @@
+ #include <linux/skbuff.h>
+ #include <linux/ip.h>
+ #include <linux/ipv6.h>
++#include <linux/wait_bit.h>
+ #include <net/ip_tunnels.h>
+ 
+ struct wg_device;
+@@ -161,6 +162,7 @@ static inline int wg_queue_enqueue_per_device_and_peer(
+ 	 */
+ 	if (unlikely(!wg_prev_queue_enqueue(peer_queue, skb)))
+ 		return -ENOSPC;
++	atomic_inc(&PACKET_PEER(skb)->packet_crypt_pending);
+ 
+ 	/* Then we queue it up in the device queue, which consumes the
+ 	 * packet as soon as it can.
+@@ -182,6 +184,8 @@ static inline void wg_queue_enqueue_per_peer_tx(struct sk_buff *skb, enum packet
+ 	atomic_set_release(&PACKET_CB(skb)->state, state);
+ 	queue_work_on(wg_cpumask_choose_online(&peer->serial_work_cpu, peer->internal_id),
+ 		      peer->device->packet_crypt_wq, &peer->transmit_packet_work);
++	if (atomic_dec_and_test(&peer->packet_crypt_pending))
++		wake_up_var(&peer->packet_crypt_pending);
+ 	wg_peer_put(peer);
+ }
+ 
+@@ -194,6 +198,8 @@ static inline void wg_queue_enqueue_per_peer_rx(struct sk_buff *skb, enum packet
+ 
+ 	atomic_set_release(&PACKET_CB(skb)->state, state);
+ 	napi_schedule(&peer->napi);
++	if (atomic_dec_and_test(&peer->packet_crypt_pending))
++		wake_up_var(&peer->packet_crypt_pending);
+ 	wg_peer_put(peer);
+ }
+ 
 
-base-commit: 8eb8581c3460a654ad0926891e7e5f4df75f01a2
--- 
-2.55.0
+---
+base-commit: 70f3995830d3f1e79faa14eb0605914f778feca9
+change-id: 20260901-fix-wg-peer-removal-43fc390d0311
+
+Best regards,
+--  
+Chris J Arges <carges@cloudflare.com>
 
