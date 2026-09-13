@@ -4,71 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F2CDCA5FCE
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 08:18:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF347CA5FF0
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 08:23:30 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id bd680224;
-	Mon, 5 Oct 2026 06:56:35 +0000 (UTC)
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com
- [2607:f8b0:4864:20::232])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 7a99a2d8
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 9cd9fd60;
+	Mon, 5 Oct 2026 06:56:36 +0000 (UTC)
+Received: from mail-qk2-x10.google.com (mail-qk2-x10.google.com
+ [2607:f8b0:4864:34::10])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 532f7671
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 2 Sep 2026 15:11:36 +0000 (UTC)
-Received: by mail-oi1-x232.google.com with SMTP id
- 5614622812f47-4b3a61bdf22so586049b6e.3
- for <wireguard@lists.zx2c4.com>; Wed, 02 Sep 2026 08:11:36 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 13 Sep 2026 12:19:24 +0000 (UTC)
+Received: by mail-qk2-x10.google.com with SMTP id
+ af79cd13be357-93910ca6023so114075085a.2
+ for <wireguard@lists.zx2c4.com>; Sun, 13 Sep 2026 05:19:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cloudflare.com; s=google09082023; t=1788361895; x=1788966695;
+ d=cloudflare.com; s=google09082023; t=1789301963; x=1789906763;
  darn=lists.zx2c4.com; 
  h=cc:to:message-id:content-transfer-encoding:content-type
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=6d93cyMkw6EMFToYvRlpelXx7oHrvV3y/wNVC9ldZm0=;
- b=Of38BgmPpsc25aV2UGUneC3RclQRQiQX6j5L+jTbkhcOHGhKwXifmSW0Y/xJQu+oke
- y59nqPK04unu6JY8f3JSfNE4pNVSLfL2DocfVa49Vnkkj0K94WKMPUTTWpdGtMVhVr4q
- 5fQhfj9xGv+w0J4No7XFat1TiTQUfEambeWosnR5l2vyH8dqCeFRkRhRMFV33XVnHhVX
- wZQURt5DMrok5GOMU1Y6O2s/G3A58vVHOExDEQWyUTq5ytLxVdbrpwLxlUuKPFe5FLQc
- F1cVpsfxE+tVMtkAHizf47hvnhyFYJXw8vsVjxDckwK1gAgvY03DY9OlIThrGXCMKPX8
- suYA==
+ bh=+GpzslklB0pVWyYTdVsp+3/DknIsG3Ufx16e03zY+aY=;
+ b=elCqkFQTb5o+o3fRfQWmV4tp8CPax85XU2s2zeffONr39J37O5oeNhL++qh5igXK2l
+ 9GNVQXDs1x03pqat4TYcUkuKGRwopnDTZUf7YuK6wA385dgXIl029W2hNvXJfdCXW7SC
+ eeb+3kc2aQvF+4c8RcI37pm3TXo/SmwrRYP2scB7sPEgPogIN7O9rsn2u54y/ylW9wSC
+ LcnPObI4tlvkOoXX28d9XmaEmzqxM30QQ8zHJCdkl2kvPBD3AJh8E1+82anxhjRPKvYY
+ jFoWwQC7mLw/6jyI5Ptt4gSM5jL4uLl01XBkFO+DvXtMC72BUghRWP751YGxBciDCT+d
+ ZWSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1788361895; x=1788966695;
+ d=1e100.net; s=20251104; t=1789301963; x=1789906763;
  h=cc:to:message-id:content-transfer-encoding:content-type
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=6d93cyMkw6EMFToYvRlpelXx7oHrvV3y/wNVC9ldZm0=;
- b=O5sgw7J8nlk6EnXSFS1oz3599cYIwE1P+fDxXokKAyvAtwoQqEzpfKucLqQUcKYLz1
- QeL4z+lZtPzT9afrdtVYEWoi2pXUs1TJ1TKwwoYZ8szDNHUylAOSCiASYjEnDAulP8F2
- i8m6vuP5cq+xauyegJ4+Apv5k/MRUyoP7HfXD96BseLorhp+EAh0HWq8Jz6V90Tcueb4
- knIp1BQnUkH8lblpnvEIx6Y81nEdPSCL0dra9Za62S94osK1ANnh+OKWME1nKYW6E7si
- R4GAVe0R0t/3zqNCT7jmVNi2UK5xo+Sc98jVTlPqH/h5IAC//z6jXpLKzqSF2D5bcJOY
- aRkQ==
-X-Gm-Message-State: AFuF++migsGCAhRlX4UZUg9gWj1LtyhjMkPqXZMqLepC1jLTX8nENaOf
- TUEddC4IOqxrMuKQS5U2muwMSbJHp/0tTQpU8lCAD5dBJ89fO05eZRGkAGsjCdWqk8Y=
-X-Gm-Gg: AR+sD13ERSTWtPjJuI5lfNbZij5N89KxIDNwUj5U8U7RQn22xOrynG7Ngt7i2Y61asQ
- m8kY4JpZO51T41EUBQC/RyIU+47hJq4QFbWVZvhck/7mWpebZZFU2fSltk8WUkK3c2LNVDdJgiX
- LsvB1uUlYipIuZ5YOvNv2e87R+LN9cx0J/ckjEk8CW0xz51rAzwmj1f85nt8nmFnljNEW4wf4os
- MdKasrQPDuiKiMFDDaNYet0j9QCcvZQ6ocGkqp6C2+/qUBE4ccxAdkUelX7cao6a9RwPLvSUWzj
- IE7Bzfunk1zR86VlreolT8AC7WelFannPS2Oi3bSOt/CEdlDaDMUKoBEiDk1zmdpWqQBZibjheI
- 93vzrOHsXojoSXzznEYx3MeO9jzoE9fg37QmIL+s/C6uoYC8VV4Rjywu00ZSQwZ9I1kWpOIwDdj
- x6tL2ZoabYj+5MlSb4w/Pd2aPYtPuI6dWguX4N1rTeGrmfn8SNBA==
-X-Received: by 2002:a05:6808:1982:b0:4ae:f5be:fe29 with SMTP id
- 5614622812f47-4b6bc45eb12mr4432026b6e.5.1788361894525; 
- Wed, 02 Sep 2026 08:11:34 -0700 (PDT)
-Received: from [127.0.1.1] ([2a09:bac6:bf21:2e28::499:53])
+ bh=+GpzslklB0pVWyYTdVsp+3/DknIsG3Ufx16e03zY+aY=;
+ b=HUK7/A17oAAwGfRZUKTtYNiQbRSGLEsGuobkDU7whmxWMxsbX46B3YKKbVeXbwN+XQ
+ wfpu0ZDNsIwCns+cL542c9CAOH1cLrKj+eBbqK1x1I9j/yfysGoDORUE37yJpM/g6TiP
+ NHfrlWrGlDhJl0P+euWa7ZuE99/P4thpRiO4dWfamrgB2HTDYEQRt6lrLjslwWb2yXH5
+ BNYcdY+6IZ+WICjMZfrc1hp2U0Fq7R+XIW900Zgovjg32W7UakdsoQGz0GekRt1PPkJn
+ uHjmFu2TzqqY5BF4kAuXCQoTM+8lpvSp38Xtci+oE5qQrvmeLvNkEtfmS0Axe1TbSIZL
+ QBXg==
+X-Gm-Message-State: AFuF++k8b+exkADxQP72ncYwejlEVizyaifUkY3o4awbjxUqOD8Y/iyr
+ aMahBh9Rrod+dLms/9DpHCdt45QHpxMH3zRLlZ1lrzwgQ2xR8MWHxW5uSPPx+8W4BAE=
+X-Gm-Gg: AYBFou0q+0eujUzIUh/32q0vV1FfscARbCy629zy4bfWjrlaHii1KWjEr5z6afSkaeX
+ VP46qnAmzwy+EijiPm38kd5GClxlEhrZPXSutWNvbY+lMNBo4KykxkjXVDCe/Mth/eVI496F4Sg
+ INUNfF2YQFT7k/F1hOzgB04XXOxI12N1DZ7VHnqOddgB2KY0d4Bbr0Hsby4g8YcfH1D5LVEP0oz
+ DJuNoG/9EUhBVEJu6y60kdeA+pWO+vVY3p30yc4U+G1ZvdY1yB7bTJe5eelHDwrCxgDoMWArq0V
+ rwNabKlwllTmG9R5sLMJvPvmN6WUYHz+jtArV6bsdBbw+QiyHaQ4qWNSNqNe67izeDPC8+8ZhV2
+ 9BHLZ30QqEMS8eBzJTM6U2xx997tYadsw2WwaGLjfrkLYiQnMnN1qibkYg2mPvKyHoPLGblbIbK
+ 35Z2s3J7KdkwrBnoN9beBPAOZqo4CjDfHfc2MpZM5Yj/1wkTuIQI4RrgmMlzVvE3lztx538IA=
+X-Received: by 2002:a05:620a:6cc4:b0:939:c3e6:86d6 with SMTP id
+ af79cd13be357-939ea2bff16mr1780801385a.48.1789301957825; 
+ Sun, 13 Sep 2026 05:19:17 -0700 (PDT)
+Received: from [127.0.1.1] ([2a09:bac6:7971:31eb::4f9:58])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-4b698a38f62sm2044063b6e.7.2026.09.02.08.11.32
+ af79cd13be357-939e811cffdsm723852285a.46.2026.09.13.05.19.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 02 Sep 2026 08:11:32 -0700 (PDT)
+ Sun, 13 Sep 2026 05:19:17 -0700 (PDT)
 From: Chris J Arges <carges@cloudflare.com>
-Date: Wed, 02 Sep 2026 10:11:25 -0500
-Subject: [PATCH net] wireguard: wait for per-peer crypto during removal
+Date: Sun, 13 Sep 2026 07:19:08 -0500
+Subject: [PATCH net v2] wireguard: wait for per-peer crypto during removal
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260902-fix-wg-peer-removal-v1-1-7a0190f5cdb1@cloudflare.com>
-X-B4-Tracking: v=1; b=H4sIAJw8mGoC/yWM0Q6CMBAEf4Xcs5dcqTGBXzE+YFnwDBZyrWhC+
- HerPs5mZzZKMEWittrIsGrSORZwh4rCrYsjWPvCVEt9kkYcD/rm18gLYGx4zGs38dEPwTfSi3e
- OirkYyu1XPVNEpst/TM/rHSF/e7TvH90glU58AAAA
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260913-fix-wg-peer-removal-v2-1-0cade985245a@cloudflare.com>
+X-B4-Tracking: v=1; b=H4sIALuUpmoC/22NzQ6CMBCEX4Xs2TXd4k/w5HsYDqVdpAYoaaFqC
+ O9uQY8eZ/LNfDME9pYDXLIZPEcbrOtTkLsMdKP6O6M1KYMU8iQKQVjbFz7vODB79Ny5qFo85LX
+ OC2FETgRpOXhO2PZ6g55HKL9lmKoH63H9W7HGhtH59+aOtME/jfyriYSEZyWoEPVRm4quunWTq
+ Vvlea9dB+WyLB8gX7jJ0gAAAA==
 X-Change-ID: 20260901-fix-wg-peer-removal-43fc390d0311
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>, 
  Andrew Lunn <andrew+netdev@lunn.ch>, 
@@ -78,13 +80,13 @@ Cc: wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
  linux-kernel@vger.kernel.org, kernel-team@cloudflare.com, 
  Chris J Arges <carges@cloudflare.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openssh-sha256; t=1788361892; l=5927;
+X-Developer-Signature: v=1; a=openssh-sha256; t=1789301951; l=6772;
  i=carges@cloudflare.com; h=from:subject:message-id;
- bh=gasmKhY5QdVetN3HDkPDfGtkZpKw5F4W6g75o0Q/i88=;
+ bh=sSR6Vyh+nxnd03+vCWI09lOpb+G3BwthTFIyLv/Q4I8=;
  b=U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgaxY1IIT5oTohBZJmhnVgJo2HsM7Sv
  9I0LdJCgpeGX6gAAAAGcGF0YXR0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5AAAA
- QKpZG43U/VRAV+Prr2sW0jg3cNIEuCbnlX7R7/cMb4Ldr5itEqZVxNPbqMC463wRbQvSqRslVYr
- rxLj1VgRkpgE=
+ QMSxQ1nmKbDBAMNq6D5B6PGnLJ2lrD+9lnFAtOS1bJq274mAcUH1SHHe1z/u1REI1cGduj/fdWJ
+ +cAliKfksggY=
 X-Developer-Key: i=carges@cloudflare.com; a=openssh;
  fpr=SHA256:Cun99EBiH0EV7wvmfTBF9eDrld2NJx+aD4ScWZ45Q5M
 X-Mailman-Approved-At: Mon, 05 Oct 2026 06:55:46 +0000
@@ -104,14 +106,14 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 Calling peer_remove_after_dead() currently flushes device-wide packet
 crypto and handshake workqueues while holding RTNL. This is problematic as
-unrelated peers can continue adding work onto those queues blocking other
+unrelated peers can continue adding work to those queues, blocking other
 tasks that want to take the RTNL lock.
 
-Instead, this patch proposes tracking pending crypto handoffs for each
-peer using a counter. After marking the peer dead, synchronize_net()
-prevents new submissions; wait for pending crypto workers to schedule TX
-work or RX NAPI. Then flush only the peer's transmit packet and handshake
-work.
+Instead, this patch tracks pending crypto handoffs for each peer using a
+counter. After marking the peer dead, synchronize_net() prevents new
+submissions. Next, wait for pending crypto workers to schedule TX work and
+for RX NAPI to drain the peer's RX queue. Then flush only the peer's TX
+packet and handshake work.
 
 This scopes teardown synchronization to the removed peer and prevents
 unrelated peers from extending the RTNL hold time.
@@ -119,13 +121,28 @@ unrelated peers from extending the RTNL hold time.
 Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
 Signed-off-by: Chris J Arges <carges@cloudflare.com>
 ---
+Changes in v2:
+- wait for RX packets to drain from peer’s NAPI queue
+- Link to v1: https://patch.msgid.link/20260902-fix-wg-peer-removal-v1-1-7a0190f5cdb1@cloudflare.com
+
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Andrew Lunn <andrew+netdev@lunn.ch>
+To: "David S. Miller" <davem@davemloft.net>
+To: Eric Dumazet <edumazet@google.com>
+To: Jakub Kicinski <kuba@kernel.org>
+To: Paolo Abeni <pabeni@redhat.com>
+Cc: wireguard@lists.zx2c4.com
+Cc: netdev@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+---
  drivers/net/wireguard/peer.c     | 30 ++++++++++++++++--------------
  drivers/net/wireguard/peer.h     |  1 +
- drivers/net/wireguard/queueing.h |  6 ++++++
- 3 files changed, 23 insertions(+), 14 deletions(-)
+ drivers/net/wireguard/queueing.h |  4 ++++
+ drivers/net/wireguard/receive.c  |  4 +++-
+ 4 files changed, 24 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/net/wireguard/peer.c b/drivers/net/wireguard/peer.c
-index 1cb502a932e0..f7a9c437b5b8 100644
+index 1cb502a932e0..34842b33b28a 100644
 --- a/drivers/net/wireguard/peer.c
 +++ b/drivers/net/wireguard/peer.c
 @@ -14,6 +14,7 @@
@@ -156,8 +173,8 @@ index 1cb502a932e0..f7a9c437b5b8 100644
 -	 * longer have references inside these queues.
 +	/* Lookup removal and is_dead prevent new packets from entering the
 +	 * parallel crypto queues after synchronize_net() waits for pre-existing
-+	 * submission paths. Drop the initial count and wait for existing packets
-+	 * to finish scheduling their serial TX work or RX NAPI processing.
++	 * submission paths. Drop the initial count and wait for existing TX
++	 * packets to schedule their serial work and RX packets to leave rx_queue.
  	 */
 +	atomic_dec(&peer->packet_crypt_pending);
 +	wait_var_event(&peer->packet_crypt_pending,
@@ -200,7 +217,7 @@ index 718fb42bdac7..64412c67f413 100644
  	int serial_work_cpu;
  	bool is_dead;
 diff --git a/drivers/net/wireguard/queueing.h b/drivers/net/wireguard/queueing.h
-index 79b6d70de236..fdd34f0f15a6 100644
+index 79b6d70de236..5ce57565c8ff 100644
 --- a/drivers/net/wireguard/queueing.h
 +++ b/drivers/net/wireguard/queueing.h
 @@ -11,6 +11,7 @@
@@ -228,15 +245,23 @@ index 79b6d70de236..fdd34f0f15a6 100644
  	wg_peer_put(peer);
  }
  
-@@ -194,6 +198,8 @@ static inline void wg_queue_enqueue_per_peer_rx(struct sk_buff *skb, enum packet
+diff --git a/drivers/net/wireguard/receive.c b/drivers/net/wireguard/receive.c
+index 824bbefce61c..bb35e3205491 100644
+--- a/drivers/net/wireguard/receive.c
++++ b/drivers/net/wireguard/receive.c
+@@ -476,9 +476,11 @@ int wg_packet_rx_poll(struct napi_struct *napi, int budget)
  
- 	atomic_set_release(&PACKET_CB(skb)->state, state);
- 	napi_schedule(&peer->napi);
-+	if (atomic_dec_and_test(&peer->packet_crypt_pending))
-+		wake_up_var(&peer->packet_crypt_pending);
- 	wg_peer_put(peer);
- }
+ next:
+ 		wg_noise_keypair_put(keypair, false);
+-		wg_peer_put(peer);
+ 		if (unlikely(free))
+ 			dev_kfree_skb(skb);
++		if (atomic_dec_and_test(&peer->packet_crypt_pending))
++			wake_up_var(&peer->packet_crypt_pending);
++		wg_peer_put(peer);
  
+ 		if (++work_done >= budget)
+ 			break;
 
 ---
 base-commit: 70f3995830d3f1e79faa14eb0605914f778feca9
