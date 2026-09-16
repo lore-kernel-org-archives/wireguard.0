@@ -4,53 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A57E0C88E77
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 15 Sep 2026 21:33:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44FB8C88E77
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Sep 2026 09:26:33 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 0619a1f2;
-	Tue, 15 Sep 2026 21:33:47 +0000 (UTC)
-Received: from mail-oi2-f0.google.com (mail-oi2-f0.google.com [74.125.231.192])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 72e573ee
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 1a004298;
+	Wed, 16 Sep 2026 09:26:32 +0000 (UTC)
+Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 76497abb
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 15 Sep 2026 21:33:44 +0000 (UTC)
-Received: by mail-oi2-f0.google.com with SMTP id
- 5614622812f47-4a4492f5cd1so825678b6e.1
- for <wireguard@lists.zx2c4.com>; Tue, 15 Sep 2026 14:33:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789508023; x=1790112823;
- h=content-transfer-encoding:content-type:to:from:subject:message-id
- :date:mime-version:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=2sS1ijsvVV0SDkEUN/Ki5tflNB8j3+HYujKSndllF1k=;
- b=fJD8VylPMo+50WQUwLRyu/YrhNnEkdZQT3BBbOSULH92TPFQSEn8lsAQ7t3a6tvVd2
- CUngWKsIwnCWcf4f9SjqmxKmZZcjxA35WrNe7Kva+Rvdd/tzHjuHI2bM4TvHhFxXbMm5
- cPLpT2yfGM8zAbfemxBSzI0tkSHtxCuNRibLQFcofGZjeKzjGhRxA4rfXJMJSoifnQWi
- WbtU1+i2QOUip0AF0v6ep36eqzyGEvUkOoVmb3hEw3Bz7hlWU6VaPRX5G6NRAi7rBDW1
- jdcMCDz0Sxs25mcs2FBEwPBwwwy+VPXK9e1Ffp3GrmI+q5TaK4HygL6PA1U1bQZPIENB
- f+WA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwIy680Db+i388tPu1t9XnaQGBG8IwBG+lsNkS3mLsldDyyb7Mm38AHdrT6jus4M0kQY2A3M+XUGQc=@lists.zx2c4.com
-X-Gm-Message-State: AFuF++kHsf9qJmjwPM35IlDkxfnFhdUBYs8HSyJxm7qx06Hc9VwTXp4D
- r/7c6tZy0sfJm4R4r1nJu+/oMo7C8Y2iKi7k69GeTxCDaTcfQTipJpznbYaHooRuIJJ2lZIKqL8
- peKv9E0N7VqGYPWasP5DNAzAmVhSUXZAQ2XgF4ro+1VwNTz8d+gbCZ5k5zxk=
+ Wed, 16 Sep 2026 09:26:25 +0000 (UTC)
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id 9D6796053E;
+ Wed, 16 Sep 2026 09:26:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55F041F000FF;
+ Wed, 16 Sep 2026 09:26:23 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; dkim=pass (1024-bit key,
+ unprotected) header.d=zx2c4.com header.i=@zx2c4.com header.a=rsa-sha256
+ header.s=20210105 header.b=Y1/NzFiF
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1789550782;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=PtlHtwIG4pv+W9xhPsusT4EJ1S00TAe8zhG6Y8xxYWk=;
+ b=Y1/NzFiFpPTZ6x6FibTU62lW3TlgiKgNv/JHKtD1grj11j8QK77dhETrucfNT4r/+wejZC
+ TIRRHB4G1gFUOVPLxhwVFWlKE0zjw51zWO9pewZkF+SD8vCJn3QQYvmT/dsr4htwaTpPwR
+ KWxdBa5kfjN2nYsBkO2MeObIKs5d6FM=
+Received: by mail.zx2c4.com (OpenSMTPD) with ESMTPSA id 9dcbb453
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Wed, 16 Sep 2026 09:26:22 +0000 (UTC)
+Date: Wed, 16 Sep 2026 11:26:19 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Ramses <ramses@well-founded.dev>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
+ "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Martin KaFai Lau <kafai@fb.com>, Wireguard <wireguard@lists.zx2c4.com>,
+ Netdev <netdev@vger.kernel.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH net] wireguard: queueing: preserve tstamp_type in
+ wg_reset_packet()
+Message-ID: <aqpgu23iotZeyGgv@zx2c4.com>
+References: <20260827-wg-tstamp-v1-1-4acfebb855ef@well-founded.dev>
+ <apT0H7qIwFW-JCLn@zx2c4.com> <P0MLDmd--F-9@well-founded.dev>
 MIME-Version: 1.0
-X-Received: by 2002:a05:6808:1409:b0:4c3:ebb:6405 with SMTP id
- 5614622812f47-4ca4c282440mr226899b6e.32.1789508023539; Tue, 15 Sep 2026
- 14:33:43 -0700 (PDT)
-Date: Tue, 15 Sep 2026 14:33:43 -0700
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <6aa9b9b7.f81106d8.2ab401.006f.GAE@google.com>
-Subject: [syzbot] [wireguard?] BUG: workqueue lockup in
- wg_packet_decrypt_worker
-From: syzbot <syzbot+d0d2f1a65f45b319d25d@syzkaller.appspotmail.com>
-To: Jason@zx2c4.com, andrew+netdev@lunn.ch, davem@davemloft.net, 
- edumazet@google.com, kuba@kernel.org, linux-kernel@vger.kernel.org, 
- netdev@vger.kernel.org, pabeni@redhat.com, syzkaller-bugs@googlegroups.com, 
- wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <P0MLDmd--F-9@well-founded.dev>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -65,304 +67,67 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
+On Mon, Aug 31, 2026 at 12:24:15PM +0200, Ramses wrote:
+> Aug 31, 2026, 05:25 by Jason@zx2c4.com:
+> 
+> > Hi Ramses,
+> >
+> > On Thu, Aug 27, 2026 at 01:52:56PM +0200, Ramses de Norre via B4 Relay wrote:
+> >
+> >> From: Ramses de Norre <ramses@well-founded.dev>
+> >>
+> >> Sending traffic through a wireguard tunnel on a host using the fq
+> >> qdisc fills the log with:
+> >>
+> >>  fq: likely mono tstamp with tstamp_type 0
+> >>
+> >> An skb carries a timestamp in skb->tstamp and, separately, a
+> >> skb->tstamp_type field recording which clock that timestamp came from.
+> >> The two have to agree.
+> >>
+> >> When wireguard encapsulates a packet it calls wg_reset_packet(), which
+> >> clears the fields that must not leak from the inner packet into the
+> >> tunnel packet. It does so in two steps:
+> >>
+> >>  skb_scrub_packet(skb, true);
+> >>  memset(&skb->headers, 0, sizeof(skb->headers));
+> >>
+> >> skb_scrub_packet() deliberately keeps skb->tstamp when it holds a
+> >> monotonic timestamp: that value is the time the packet is scheduled to
+> >> be sent, and the qdisc still needs it. The memset then zeroes
+> >> skb->tstamp_type, because that field sits inside the headers group
+> >> while skb->tstamp does not. The packet therefore leaves wireguard
+> >> carrying a monotonic timestamp labelled as a realtime one.
+> >>
+> >> Nothing noticed until commit c4f796c4f16b ("net_sched: sch_fq: convert
+> >> skb->tstamp if not monotonic"): fq used to assume every timestamp was
+> >> monotonic. It now consults tstamp_type, spots the mismatch, warns, and
+> >> falls back to treating the value as monotonic. Pacing still ends up
+> >> correct, so the log spam is the actual problem.
+> >>
+> >> Save tstamp_type before the memset and restore it when encapsulating,
+> >> next to the hash fields that are already carried over this way. When
+> >> decapsulating it stays zeroed, which is right: an incoming packet's
+> >> timestamp is a realtime receive timestamp.
+> >>
+> >> Fixes: de799101519a ("net: Add skb_clear_tstamp() to keep the mono delivery_time")
+> >> Signed-off-by: Ramses de Norre <ramses@well-founded.dev>
+> >>
+> >
+> > Thanks for this. I've queued this up in the wireguard tree.
+> >
+> > One thing I'm wondering is whether your Fixes: line is correct. Would
+> > c4f796c4f16b be a better candidate than de799101519a? Or maybe even
+> > 4d25ca2d6801 is best?
+> >
+> > Jason
+> >
+> Hi Jason
+> 
+> I think you are right, but I think d98d58a00261 is actually the commit that introduced the issue then (but no warnings were logged yet at that point).
+> The patch doesn't apply cleanly to that version though, I think it only applies starting from 6.11 because of a rename, so we can't backport all the way back. It's probably fine though, since the warnings weren't being logged yet at that point.
+> Do you want me to send an updated patch, or will you just fix this up in your tree?
 
-syzbot found the following issue on:
+I'll fix it in my tree to be:
+   Fixes: d98d58a00261 ("net: Set skb->mono_delivery_time and clear it after sch_handle_ingress()")
 
-HEAD commit:    5445d6419962 arm64: Don't read GMID_EL1 when MTE is disable=
-d
-git tree:       git://git.kernel.org/pub/scm/linux/kernel/git/arm64/linux.g=
-it for-kernelci
-console output: https://syzkaller.appspot.com/x/log.txt?x=3D1114c2d1580000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=3D56ed23170c168d4=
-c
-dashboard link: https://syzkaller.appspot.com/bug?extid=3Dd0d2f1a65f45b319d=
-25d
-compiler:       Debian clang version 22.1.8 (++20260613092233+e80beda6e255-=
-1~exp1~20260613092250.77), Debian LLD 22.1.8
-userspace arch: arm64
-
-Unfortunately, I don't have any reproducer for this issue yet.
-
-Downloadable assets:
-disk image: https://storage.googleapis.com/syzbot-assets/e8b70e3bd109/disk-=
-5445d641.raw.xz
-vmlinux: https://storage.googleapis.com/syzbot-assets/e5227e56ac93/vmlinux-=
-5445d641.xz
-kernel image: https://storage.googleapis.com/syzbot-assets/54905f78be59/Ima=
-ge-5445d641.gz.xz
-
-IMPORTANT: if you fix the issue, please add the following tag to the commit=
-:
-Reported-by: syzbot+d0d2f1a65f45b319d25d@syzkaller.appspotmail.com
-
-BUG: workqueue lockup - pool cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 stuck f=
-or 45s!
-Showing busy workqueues and worker pools:
-workqueue events: flags=3D0x100
-  pwq 2: cpus=3D0 node=3D0 flags=3D0x0 nice=3D0 active=3D6 refcnt=3D7
-    pending: vmstat_shepherd, 2*psi_avgs_work, 3*ovs_dp_masks_rebalance
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D18 refcnt=3D19
-    pending: 2*psi_avgs_work, 3*ovs_dp_masks_rebalance, xfrm_state_gc_task,=
- psi_avgs_work, delayed_vfree_work, 8*nsim_dev_hwstats_traffic_work, psi_av=
-gs_work, free_obj_work
-workqueue events_unbound: flags=3D0x2
-  pwq 8: cpus=3D0-1 flags=3D0x6 nice=3D0 active=3D20 refcnt=3D21
-    in-flight: 3055:cfg80211_wiphy_work for 75s cfg80211_wiphy_work ,54:nsi=
-m_dev_trap_report_work for 6s ,431:cfg80211_wiphy_work for 73s cfg80211_wip=
-hy_work ,348:cfg80211_wiphy_work for 91s cfg80211_wiphy_work ,1617:cfg80211=
-_wiphy_work for 76s cfg80211_wiphy_work ,12:cfg80211_wiphy_work for 93s cfg=
-80211_wiphy_work ,1777:nsim_dev_trap_report_work for 11s ,40:cfg80211_wiphy=
-_work for 92s cfg80211_wiphy_work ,3203:nsim_dev_trap_report_work for 1s
-    pending: nsim_dev_trap_report_work, toggle_allocation_gate, 2*nsim_dev_=
-trap_report_work, cfg80211_wiphy_work
-  pwq 8: cpus=3D0-1 flags=3D0x6 nice=3D0 active=3D7 refcnt=3D8
-    in-flight: 13:linkwatch_event for 95s ,3020:cfg80211_wiphy_work for 89s=
- cfg80211_wiphy_work ,3157:cfg80211_wiphy_work for 60s cfg80211_wiphy_work
-    pending: 2*nsim_dev_trap_report_work
-workqueue events_power_efficient: flags=3D0x82
-  pwq 8: cpus=3D0-1 flags=3D0x6 nice=3D0 active=3D6 refcnt=3D7
-    in-flight: 1756:neigh_periodic_work for 6s ,284:reg_check_chans_work fo=
-r 75s
-    pending: neigh_periodic_work, wg_ratelimiter_gc_entries, 2*neigh_manage=
-d_work
-  pwq 8: cpus=3D0-1 flags=3D0x6 nice=3D0 active=3D1 refcnt=3D2
-    pending: gc_worker
-workqueue events_dfl_long: flags=3D0x2
-  pwq 8: cpus=3D0-1 flags=3D0x6 nice=3D0 active=3D6 refcnt=3D7
-    pending: 6*defense_work_handler
-workqueue mm_percpu_wq: flags=3D0x108
-  pwq 2: cpus=3D0 node=3D0 flags=3D0x0 nice=3D0 active=3D1 refcnt=3D2
-    pending: vmstat_update
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D1 refcnt=3D2
-    pending: vmstat_update
-workqueue ipv6_addrconf: flags=3D0x6000a
-  pwq 8: cpus=3D0-1 flags=3D0x6 nice=3D0 active=3D1 refcnt=3D9
-    in-flight: 59:addrconf_verify_work for 78s
-    inactive: 5*addrconf_verify_work
-workqueue bat_events: flags=3D0x6000a
-  pwq 8: cpus=3D0-1 flags=3D0x6 nice=3D0 active=3D1 refcnt=3D45 MAYDAY
-    in-flight: 2855(RESCUER):batadv_tt_purge for 18s
-    inactive: batadv_tt_purge, batadv_mcast_mla_update, batadv_tt_purge, ba=
-tadv_dat_purge, batadv_bla_periodic_work, batadv_dat_purge, 2*batadv_bla_pe=
-riodic_work, batadv_dat_purge, batadv_mcast_mla_update, batadv_bla_periodic=
-_work, batadv_dat_purge, 2*batadv_mcast_mla_update, 2*batadv_iv_send_outsta=
-nding_bat_ogm_packet, batadv_purge_orig, 3*batadv_iv_send_outstanding_bat_o=
-gm_packet, 2*batadv_purge_orig, 5*batadv_iv_send_outstanding_bat_ogm_packet=
-, batadv_purge_orig, batadv_iv_send_outstanding_bat_ogm_packet, batadv_mcas=
-t_mla_update, 4*batadv_iv_send_outstanding_bat_ogm_packet, batadv_purge_ori=
-g, batadv_bla_periodic_work, batadv_dat_purge, 2*batadv_tt_purge
-workqueue wg-kex-wg0: flags=3D0x124
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D1 refcnt=3D2
-    pending: wg_packet_handshake_receive_worker
-workqueue wg-kex-wg0: flags=3D0x6
-  pwq 8: cpus=3D0-1 flags=3D0x6 nice=3D0 active=3D1 refcnt=3D2
-    pending: wg_packet_handshake_send_worker
-workqueue wg-crypt-wg0: flags=3D0x128
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D2 refcnt=3D3
-    pending: wg_packet_encrypt_worker, wg_packet_tx_worker
-workqueue wg-kex-wg1: flags=3D0x124
-  pwq 2: cpus=3D0 node=3D0 flags=3D0x0 nice=3D0 active=3D2 refcnt=3D3
-    in-flight: 10:wg_packet_handshake_receive_worker for 46s
-    pending: wg_packet_handshake_receive_worker
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D1 refcnt=3D2
-    pending: wg_packet_handshake_receive_worker
-workqueue wg-kex-wg1: flags=3D0x6
-  pwq 8: cpus=3D0-1 flags=3D0x6 nice=3D0 active=3D1 refcnt=3D2
-    pending: wg_packet_handshake_send_worker
-workqueue wg-crypt-wg1: flags=3D0x128
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D3 refcnt=3D4
-    pending: wg_packet_encrypt_worker, wg_packet_tx_worker, wg_packet_decry=
-pt_worker
-workqueue wg-kex-wg0: flags=3D0x6
-  pwq 8: cpus=3D0-1 flags=3D0x6 nice=3D0 active=3D1 refcnt=3D2
-    in-flight: 3495:wg_packet_handshake_send_worker for 4s
-workqueue wg-crypt-wg0: flags=3D0x128
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D2 refcnt=3D3
-    pending: wg_packet_tx_worker, wg_packet_encrypt_worker
-workqueue wg-kex-wg2: flags=3D0x124
-  pwq 2: cpus=3D0 node=3D0 flags=3D0x0 nice=3D0 active=3D1 refcnt=3D2
-    in-flight: 4477:wg_packet_handshake_receive_worker for 12s
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D1 refcnt=3D2
-    pending: wg_packet_handshake_receive_worker
-workqueue wg-kex-wg2: flags=3D0x6
-  pwq 8: cpus=3D0-1 flags=3D0x6 nice=3D0 active=3D2 refcnt=3D3
-    pending: 2*wg_packet_handshake_send_worker
-workqueue wg-crypt-wg2: flags=3D0x128
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D3 refcnt=3D4
-    pending: wg_packet_encrypt_worker, wg_packet_decrypt_worker, wg_packet_=
-tx_worker
-workqueue wg-crypt-wg1: flags=3D0x128
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D2 refcnt=3D3
-    pending: wg_packet_encrypt_worker, wg_packet_tx_worker
-workqueue wg-kex-wg2: flags=3D0x124
-  pwq 2: cpus=3D0 node=3D0 flags=3D0x0 nice=3D0 active=3D1 refcnt=3D2
-    in-flight: 9:wg_packet_handshake_receive_worker for 20s
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D1 refcnt=3D2
-    pending: wg_packet_handshake_receive_worker
-workqueue wg-crypt-wg2: flags=3D0x128
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D4 refcnt=3D5
-    in-flight: 4889:wg_packet_decrypt_worker for 45s
-    pending: wg_packet_tx_worker, wg_packet_encrypt_worker, wg_packet_decry=
-pt_worker
-workqueue hci0: flags=3D0x20012
-  pwq 9: cpus=3D0-1 node=3D0 flags=3D0x4 nice=3D-20 active=3D1 refcnt=3D4
-    in-flight: 4723:hci_cmd_sync_work for 84s
-workqueue wg-kex-wg0: flags=3D0x124
-  pwq 2: cpus=3D0 node=3D0 flags=3D0x0 nice=3D0 active=3D1 refcnt=3D2
-    pending: wg_packet_handshake_receive_worker
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D1 refcnt=3D2
-    pending: wg_packet_handshake_receive_worker
-workqueue wg-crypt-wg0: flags=3D0x128
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D3 refcnt=3D4
-    in-flight: 24:wg_packet_tx_worker for 45s
-    pending: wg_packet_encrypt_worker, wg_packet_tx_worker
-workqueue wg-kex-wg1: flags=3D0x124
-  pwq 2: cpus=3D0 node=3D0 flags=3D0x0 nice=3D0 active=3D1 refcnt=3D2
-    in-flight: 4799:wg_packet_handshake_receive_worker for 17s
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D1 refcnt=3D2
-    pending: wg_packet_handshake_receive_worker
-workqueue wg-crypt-wg1: flags=3D0x128
-  pwq 2: cpus=3D0 node=3D0 flags=3D0x0 nice=3D0 active=3D1 refcnt=3D2
-    pending: wg_packet_encrypt_worker
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D3 refcnt=3D4
-    pending: wg_packet_encrypt_worker, wg_packet_tx_worker, wg_packet_decry=
-pt_worker
-workqueue wg-kex-wg2: flags=3D0x124
-  pwq 2: cpus=3D0 node=3D0 flags=3D0x0 nice=3D0 active=3D1 refcnt=3D2
-    pending: wg_packet_handshake_receive_worker
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D1 refcnt=3D2
-    pending: wg_packet_handshake_receive_worker
-workqueue wg-kex-wg2: flags=3D0x6
-  pwq 8: cpus=3D0-1 flags=3D0x6 nice=3D0 active=3D2 refcnt=3D3
-    pending: 2*wg_packet_handshake_send_worker
-workqueue wg-crypt-wg2: flags=3D0x128
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D3 refcnt=3D4
-    pending: wg_packet_decrypt_worker, wg_packet_encrypt_worker, wg_packet_=
-tx_worker
-workqueue hci3: flags=3D0x20012
-  pwq 9: cpus=3D0-1 node=3D0 flags=3D0x4 nice=3D-20 active=3D1 refcnt=3D4
-    in-flight: 4726:hci_cmd_sync_work for 78s
-workqueue wg-kex-wg0: flags=3D0x124
-  pwq 2: cpus=3D0 node=3D0 flags=3D0x0 nice=3D0 active=3D1 refcnt=3D2
-    in-flight: 4840:wg_packet_handshake_receive_worker for 11s
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D1 refcnt=3D2
-    pending: wg_packet_handshake_receive_worker
-workqueue wg-crypt-wg0: flags=3D0x128
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D2 refcnt=3D3
-    pending: wg_packet_tx_worker, wg_packet_encrypt_worker
-workqueue wg-kex-wg1: flags=3D0x124
-  pwq 2: cpus=3D0 node=3D0 flags=3D0x0 nice=3D0 active=3D1 refcnt=3D2
-    in-flight: 4806:wg_packet_handshake_receive_worker for 19s
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D1 refcnt=3D2
-    pending: wg_packet_handshake_receive_worker
-workqueue wg-crypt-wg1: flags=3D0x128
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D3 refcnt=3D4
-    pending: wg_packet_encrypt_worker, wg_packet_tx_worker, wg_packet_decry=
-pt_worker
-workqueue wg-kex-wg2: flags=3D0x124
-  pwq 2: cpus=3D0 node=3D0 flags=3D0x0 nice=3D0 active=3D1 refcnt=3D2
-    in-flight: 4827:wg_packet_handshake_receive_worker for 6s
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D1 refcnt=3D2
-    pending: wg_packet_handshake_receive_worker
-workqueue wg-kex-wg2: flags=3D0x6
-  pwq 8: cpus=3D0-1 flags=3D0x6 nice=3D0 active=3D1 refcnt=3D2
-    pending: wg_packet_handshake_send_worker
-workqueue wg-crypt-wg2: flags=3D0x128
-  pwq 2: cpus=3D0 node=3D0 flags=3D0x0 nice=3D0 active=3D1 refcnt=3D2
-    pending: wg_packet_decrypt_worker
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D3 refcnt=3D4
-    pending: wg_packet_decrypt_worker, wg_packet_encrypt_worker, wg_packet_=
-tx_worker
-workqueue wg-kex-wg0: flags=3D0x124
-  pwq 2: cpus=3D0 node=3D0 flags=3D0x0 nice=3D0 active=3D1 refcnt=3D2
-    pending: wg_packet_handshake_receive_worker
-workqueue wg-kex-wg0: flags=3D0x6
-  pwq 8: cpus=3D0-1 flags=3D0x6 nice=3D0 active=3D1 refcnt=3D2
-    pending: wg_packet_handshake_send_worker
-workqueue wg-crypt-wg0: flags=3D0x128
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D2 refcnt=3D3
-    pending: wg_packet_encrypt_worker, wg_packet_tx_worker
-workqueue wg-crypt-wg1: flags=3D0x128
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D3 refcnt=3D4
-    pending: wg_packet_encrypt_worker, wg_packet_tx_worker, wg_packet_decry=
-pt_worker
-workqueue wg-kex-wg2: flags=3D0x124
-  pwq 2: cpus=3D0 node=3D0 flags=3D0x0 nice=3D0 active=3D1 refcnt=3D2
-    in-flight: 1159:wg_packet_handshake_receive_worker for 23s
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D1 refcnt=3D2
-    pending: wg_packet_handshake_receive_worker
-workqueue wg-crypt-wg2: flags=3D0x128
-  pwq 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 active=3D3 refcnt=3D4
-    pending: wg_packet_tx_worker, wg_packet_decrypt_worker, wg_packet_encry=
-pt_worker
-pool 2: cpus=3D0 node=3D0 flags=3D0x0 nice=3D0 hung=3D6s workers=3D10 idle:=
- 4820 4807
-pool 6: cpus=3D1 node=3D0 flags=3D0x0 nice=3D0 hung=3D45s workers=3D8 idle:=
- 5732 5459 26 4798 868 5730
-pool 8: cpus=3D0-1 flags=3D0x6 nice=3D0 hung=3D1s workers=3D17 manager: 652=
-9
-pool 9: cpus=3D0-1 node=3D0 flags=3D0x4 nice=3D-20 hung=3D0s workers=3D8 id=
-le: 4721 4713 4718 4717 50 4720
-Showing backtraces of busy workers in stalled worker pools:
-pool 6:
-task:kworker/1:4     state:R  running task     stack:0     pid:4889  tgid:4=
-889  ppid:2      task_flags:0x4208060 flags:0x00000010
-Workqueue: wg-crypt-wg2 wg_packet_decrypt_worker
-Call trace:
- __switch_to+0x2b4/0x6e4 arch/arm64/kernel/process.c:775 (T)
- context_switch kernel/sched/core.c:5520 [inline]
- __schedule+0x1370/0x2d80 kernel/sched/core.c:7270
- preempt_schedule_common+0xd4/0x190 kernel/sched/core.c:7449
- preempt_schedule kernel/sched/core.c:7473 [inline]
- class_preempt_destructor include/linux/preempt.h:500 [inline]
- try_to_wake_up+0x5f8/0xdc4 kernel/sched/core.c:4432
- wake_up_process+0x18/0x24 kernel/sched/core.c:4557
- process_one_work kernel/workqueue.c:3355 [inline]
- process_scheduled_works+0x744/0x1250 kernel/workqueue.c:3470
- worker_thread+0x798/0xbd0 kernel/workqueue.c:3551
- kthread+0x304/0x3d4 kernel/kthread.c:436
- ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:838
-pool 6:
-task:kworker/1:0     state:R  running task     stack:0     pid:24    tgid:2=
-4    ppid:2      task_flags:0x4208060 flags:0x00000010
-Workqueue: wg-crypt-wg0 wg_packet_tx_worker
-Call trace:
- __switch_to+0x2b4/0x6e4 arch/arm64/kernel/process.c:775 (T)
- context_switch kernel/sched/core.c:5520 [inline]
- __schedule+0x1370/0x2d80 kernel/sched/core.c:7270
- preempt_schedule_common+0xd4/0x190 kernel/sched/core.c:7449
- preempt_schedule+0x60/0x78 kernel/sched/core.c:7473
- __local_bh_enable_ip+0x20c/0x35c kernel/softirq.c:480
- local_bh_enable include/linux/bottom_half.h:33 [inline]
- rcu_read_unlock_bh include/linux/rcupdate.h:923 [inline]
- keep_key_fresh drivers/net/wireguard/send.c:135 [inline]
- wg_packet_create_data_done drivers/net/wireguard/send.c:259 [inline]
- wg_packet_tx_worker+0x520/0x75c drivers/net/wireguard/send.c:276
- process_one_work kernel/workqueue.c:3387 [inline]
- process_scheduled_works+0x91c/0x1250 kernel/workqueue.c:3470
- worker_thread+0x798/0xbd0 kernel/workqueue.c:3551
- kthread+0x304/0x3d4 kernel/kthread.c:436
- ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:838
-
-
----
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
-
-syzbot will keep track of this issue. See:
-https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
-
-If the report is already addressed, let syzbot know by replying with:
-#syz fix: exact-commit-title
-
-If you want to overwrite report's subsystems, reply with:
-#syz set subsystems: new-subsystem
-(See the list of subsystem names on the web dashboard)
-
-If the report is a duplicate of another one, reply with:
-#syz dup: exact-subject-of-another-report
-
-If you want to undo deduplication, reply with:
-#syz undup
