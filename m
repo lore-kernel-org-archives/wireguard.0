@@ -4,55 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44FB8C88E77
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Sep 2026 09:26:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06EC9C88E7F
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Sep 2026 10:06:23 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 1a004298;
-	Wed, 16 Sep 2026 09:26:32 +0000 (UTC)
-Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 76497abb
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 3aa25a4b;
+	Wed, 16 Sep 2026 10:06:21 +0000 (UTC)
+Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 5e7420d3
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 Sep 2026 09:26:25 +0000 (UTC)
+ Wed, 16 Sep 2026 10:06:15 +0000 (UTC)
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 9D6796053E;
- Wed, 16 Sep 2026 09:26:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55F041F000FF;
- Wed, 16 Sep 2026 09:26:23 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 9B01340269;
+ Wed, 16 Sep 2026 10:06:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC481F00898;
+ Wed, 16 Sep 2026 10:06:12 +0000 (UTC)
 Authentication-Results: smtp.kernel.org; dkim=pass (1024-bit key,
  unprotected) header.d=zx2c4.com header.i=@zx2c4.com header.a=rsa-sha256
- header.s=20210105 header.b=Y1/NzFiF
+ header.s=20210105 header.b=Po3LTUmU
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1789550782;
+ t=1789553171;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=PtlHtwIG4pv+W9xhPsusT4EJ1S00TAe8zhG6Y8xxYWk=;
- b=Y1/NzFiFpPTZ6x6FibTU62lW3TlgiKgNv/JHKtD1grj11j8QK77dhETrucfNT4r/+wejZC
- TIRRHB4G1gFUOVPLxhwVFWlKE0zjw51zWO9pewZkF+SD8vCJn3QQYvmT/dsr4htwaTpPwR
- KWxdBa5kfjN2nYsBkO2MeObIKs5d6FM=
-Received: by mail.zx2c4.com (OpenSMTPD) with ESMTPSA id 9dcbb453
+ bh=Go5E6lD1KeMfcE8aX4HmH/gHqP8C5vaRKCTOcDpjaFg=;
+ b=Po3LTUmUaFfLerU6FjjaUNjVt+OjpwrTdpMc0Ox9osT8JhSrCJ7phGr1vyfQ8ZqTwR9Yhq
+ G1veJbbdlFw3ryuNkpWiVG1Tef7wYxqAiJaGMm1bsbbakyVkGslTKVV3AEWVUpErhwacO6
+ 8lxlclShXDXdHWmZ30iH5VcOkdBKtqs=
+Received: by mail.zx2c4.com (OpenSMTPD) with ESMTPSA id 035d4129
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Wed, 16 Sep 2026 09:26:22 +0000 (UTC)
-Date: Wed, 16 Sep 2026 11:26:19 +0200
+ Wed, 16 Sep 2026 10:06:10 +0000 (UTC)
+Date: Wed, 16 Sep 2026 12:06:08 +0200
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Ramses <ramses@well-founded.dev>
+To: Chris J Arges <carges@cloudflare.com>
 Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
  "David S. Miller" <davem@davemloft.net>,
  Eric Dumazet <edumazet@google.com>,
  Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Martin KaFai Lau <kafai@fb.com>, Wireguard <wireguard@lists.zx2c4.com>,
- Netdev <netdev@vger.kernel.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH net] wireguard: queueing: preserve tstamp_type in
- wg_reset_packet()
-Message-ID: <aqpgu23iotZeyGgv@zx2c4.com>
-References: <20260827-wg-tstamp-v1-1-4acfebb855ef@well-founded.dev>
- <apT0H7qIwFW-JCLn@zx2c4.com> <P0MLDmd--F-9@well-founded.dev>
+ wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org, kernel-team@cloudflare.com
+Subject: Re: [PATCH net v2] wireguard: wait for per-peer crypto during removal
+Message-ID: <aqpqEIy_h0DIywRy@zx2c4.com>
+References: <20260913-fix-wg-peer-removal-v2-1-0cade985245a@cloudflare.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <P0MLDmd--F-9@well-founded.dev>
+In-Reply-To: <20260913-fix-wg-peer-removal-v2-1-0cade985245a@cloudflare.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -67,67 +64,57 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, Aug 31, 2026 at 12:24:15PM +0200, Ramses wrote:
-> Aug 31, 2026, 05:25 by Jason@zx2c4.com:
+On Sun, Sep 13, 2026 at 07:19:08AM -0500, Chris J Arges wrote:
+> Calling peer_remove_after_dead() currently flushes device-wide packet
+> crypto and handshake workqueues while holding RTNL. This is problematic as
+> unrelated peers can continue adding work to those queues, blocking other
+> tasks that want to take the RTNL lock.
 > 
-> > Hi Ramses,
-> >
-> > On Thu, Aug 27, 2026 at 01:52:56PM +0200, Ramses de Norre via B4 Relay wrote:
-> >
-> >> From: Ramses de Norre <ramses@well-founded.dev>
-> >>
-> >> Sending traffic through a wireguard tunnel on a host using the fq
-> >> qdisc fills the log with:
-> >>
-> >>  fq: likely mono tstamp with tstamp_type 0
-> >>
-> >> An skb carries a timestamp in skb->tstamp and, separately, a
-> >> skb->tstamp_type field recording which clock that timestamp came from.
-> >> The two have to agree.
-> >>
-> >> When wireguard encapsulates a packet it calls wg_reset_packet(), which
-> >> clears the fields that must not leak from the inner packet into the
-> >> tunnel packet. It does so in two steps:
-> >>
-> >>  skb_scrub_packet(skb, true);
-> >>  memset(&skb->headers, 0, sizeof(skb->headers));
-> >>
-> >> skb_scrub_packet() deliberately keeps skb->tstamp when it holds a
-> >> monotonic timestamp: that value is the time the packet is scheduled to
-> >> be sent, and the qdisc still needs it. The memset then zeroes
-> >> skb->tstamp_type, because that field sits inside the headers group
-> >> while skb->tstamp does not. The packet therefore leaves wireguard
-> >> carrying a monotonic timestamp labelled as a realtime one.
-> >>
-> >> Nothing noticed until commit c4f796c4f16b ("net_sched: sch_fq: convert
-> >> skb->tstamp if not monotonic"): fq used to assume every timestamp was
-> >> monotonic. It now consults tstamp_type, spots the mismatch, warns, and
-> >> falls back to treating the value as monotonic. Pacing still ends up
-> >> correct, so the log spam is the actual problem.
-> >>
-> >> Save tstamp_type before the memset and restore it when encapsulating,
-> >> next to the hash fields that are already carried over this way. When
-> >> decapsulating it stays zeroed, which is right: an incoming packet's
-> >> timestamp is a realtime receive timestamp.
-> >>
-> >> Fixes: de799101519a ("net: Add skb_clear_tstamp() to keep the mono delivery_time")
-> >> Signed-off-by: Ramses de Norre <ramses@well-founded.dev>
-> >>
-> >
-> > Thanks for this. I've queued this up in the wireguard tree.
-> >
-> > One thing I'm wondering is whether your Fixes: line is correct. Would
-> > c4f796c4f16b be a better candidate than de799101519a? Or maybe even
-> > 4d25ca2d6801 is best?
-> >
-> > Jason
-> >
-> Hi Jason
+> Instead, this patch tracks pending crypto handoffs for each peer using a
+> counter. After marking the peer dead, synchronize_net() prevents new
+> submissions. Next, wait for pending crypto workers to schedule TX work and
+> for RX NAPI to drain the peer's RX queue. Then flush only the peer's TX
+> packet and handshake work.
 > 
-> I think you are right, but I think d98d58a00261 is actually the commit that introduced the issue then (but no warnings were logged yet at that point).
-> The patch doesn't apply cleanly to that version though, I think it only applies starting from 6.11 because of a rename, so we can't backport all the way back. It's probably fine though, since the warnings weren't being logged yet at that point.
-> Do you want me to send an updated patch, or will you just fix this up in your tree?
+> This scopes teardown synchronization to the removed peer and prevents
+> unrelated peers from extending the RTNL hold time.
+>  struct wg_device;
+> @@ -161,6 +162,7 @@ static inline int wg_queue_enqueue_per_device_and_peer(
+>  	 */
+>  	if (unlikely(!wg_prev_queue_enqueue(peer_queue, skb)))
+>  		return -ENOSPC;
+> +	atomic_inc(&PACKET_PEER(skb)->packet_crypt_pending);
+>  
+>  	/* Then we queue it up in the device queue, which consumes the
+>  	 * packet as soon as it can.
+> @@ -182,6 +184,8 @@ static inline void wg_queue_enqueue_per_peer_tx(struct sk_buff *skb, enum packet
+>  	atomic_set_release(&PACKET_CB(skb)->state, state);
+>  	queue_work_on(wg_cpumask_choose_online(&peer->serial_work_cpu, peer->internal_id),
+>  		      peer->device->packet_crypt_wq, &peer->transmit_packet_work);
+> +	if (atomic_dec_and_test(&peer->packet_crypt_pending))
+> +		wake_up_var(&peer->packet_crypt_pending);
+>  	wg_peer_put(peer);
+>  }
+>  
+> diff --git a/drivers/net/wireguard/receive.c b/drivers/net/wireguard/receive.c
+> index 824bbefce61c..bb35e3205491 100644
+> --- a/drivers/net/wireguard/receive.c
+> +++ b/drivers/net/wireguard/receive.c
+> @@ -476,9 +476,11 @@ int wg_packet_rx_poll(struct napi_struct *napi, int budget)
+>  
+>  next:
+>  		wg_noise_keypair_put(keypair, false);
+> -		wg_peer_put(peer);
+>  		if (unlikely(free))
+>  			dev_kfree_skb(skb);
+> +		if (atomic_dec_and_test(&peer->packet_crypt_pending))
+> +			wake_up_var(&peer->packet_crypt_pending);
+> +		wg_peer_put(peer);
 
-I'll fix it in my tree to be:
-   Fixes: d98d58a00261 ("net: Set skb->mono_delivery_time and clear it after sch_handle_ingress()")
+This adds two atomic updates to a per-peer counter for every RX packet
+and TX batch. That could introduce contention across crypto workers. I
+suppose it'd be good to see some measurements in if this changes
+anything. Certainly it should change _something_. Question is by how
+much.
 
+Jason
