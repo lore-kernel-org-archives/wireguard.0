@@ -4,82 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37397CA5FF0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13410CA5FCE
 	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 08:48:02 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 0ab7a076;
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 6cb8db90;
 	Mon, 5 Oct 2026 06:56:37 +0000 (UTC)
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com
- [2607:f8b0:4864:20::32f])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 84bdfa3a
+Received: from mail.ilvokhin.com (mail.ilvokhin.com [178.62.254.231])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 454975d8
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 Sep 2026 16:40:28 +0000 (UTC)
-Received: by mail-ot1-x32f.google.com with SMTP id
- 46e09a7af769-7f4df360cc9so1969884a34.1
- for <wireguard@lists.zx2c4.com>; Wed, 16 Sep 2026 09:40:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cloudflare.com; s=google09082023; t=1789576827; x=1790181627;
- darn=lists.zx2c4.com; 
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=SjnTPR/EGL67/pMd+T2zbAYFe3UJ3Z05Gc3GQfpLaVg=;
- b=GMgRdS1lheC++YUsAA6xB8NBWrXC8qAbrQ731dRnJmM0B7MB3dDGef//tN8aef2PPm
- 6pT0RInCeFu7dhl+6YXBjwNun+sCYnG765kTd+bCOXm8FuVmvlmGO9Y0r2DzEGqeUp7L
- IfTwoQ15TKlxaTRkNRxzVpMuxUb6H8R9svRBNqchYxfD31c0mBMLBkY1alNHWxTwvlc1
- t5CF+xteXhur4fTi6puCLKdWKLv9ugZ2OyEFtTeOJCvKjojdw1tQFBg5l4VtrruPzH7b
- YAuBTLs05NUgqE/LcvSwAScoBDubg9n5CzoCbDt9MsLIcPLdtaGMg96CO/WRiAK1J/GV
- XMOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789576827; x=1790181627;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=SjnTPR/EGL67/pMd+T2zbAYFe3UJ3Z05Gc3GQfpLaVg=;
- b=2xWFijo/1f0D9/qkSh5OUsfQnb4HUH0l4zdRkeFAfIs0kgtkIgG2Jb0+o1efc/HW6A
- Hb4nEMaf6TyHw0eKa+i5c3wy7UW1SXwSLRY6Dlm6nMPBslovdalI43bgXOvAe4RUXC4u
- 1Zs5nnqxOvNj7/74UvUbTm+VKGZC9eY70xNeHTvupnuYySJM9I6e9ytMIwZW4qdlppbQ
- M2kjTKforngqf09WTFkvSKijGZtwuk76PbQehce1QSsE4cqFjQLzBqmZ214SrQhSG2Za
- SHwA27mdFkH885L21oMoV7jM5uoJLVeLZWYFeWRIGHUBmpX6Fta1YtiAFh2lSG6zIAmr
- npAA==
-X-Forwarded-Encrypted: i=1;
- AKwUvByXmWtphTNJsL+zMLvdbY0Jam+MtKL/71iKl4BLvzOM1mpUcyg2tj2TXc+0pA7fHUAoFTx9fDH3eak=@lists.zx2c4.com
-X-Gm-Message-State: AFuF++m17Q7TLMhBY6+jPpyn2p6k8FgCjyX6tdZJL+hvA0eUKMXrGLXk
- ir0F+Wqdri5YGOBgY/eIB7T+zGH3Dg7v76EHOtAHQ9uP4sH0F5KNN5eGzER4mXkaDRI=
-X-Gm-Gg: AYBFou1YyLaktOY6JJO0On6hYMgPTopSi4QIUDF8WCyUOzwYXrUtqnd15rbqwGsSMgB
- L++bQsaFkqopMYwZ79iDtyb75fwjFHBFDPGIPMr+js3pjuLGc5kssxHDHMHpTeSa37s8f2upyy3
- StlYTq6TdLxTXLhPxc1ciZ4t1bakmvSSt23TxKg6pC7I8v2xqpTp9/K0FBXCrcULHluqvzRzhCS
- gQ8sj3XdQMLpOq2ofyfWRYeEa6QLRDDEa5xx8hbtq5To4kEJ50ar7ycZYxflSPOtu+v43pdFV/f
- rEc0EqmeGD7M9AgOEWWoU9C29W+L/7CBxZ89FjCb62Ks9sJCNcJlq/AvvliTUw9ORIIsGJEIPJJ
- hPq/l9cvRvOI2bJII4TCdH0CwOXx96jG8m+PtI0Ijji3S+9CnXIHu2J7nV9GZUxoCKrzmqTWetp
- VzAdnnOaS9SJJWbi9dWbJDWPkjzxujYFewpjxRQMrBuhe91u7Q2li107uf92PZ+w==
-X-Received: by 2002:a05:6830:67e4:b0:807:50d:7f3a with SMTP id
- 46e09a7af769-80c4e7f7ba1mr199721a34.30.1789576826716; 
- Wed, 16 Sep 2026 09:40:26 -0700 (PDT)
-Received: from 20HS2G4 ([2a09:bac6:bf21:96::f:339])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-80c46dbe483sm255445a34.20.2026.09.16.09.40.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Sep 2026 09:40:26 -0700 (PDT)
-Date: Wed, 16 Sep 2026 11:40:24 -0500
-From: Chris Arges <carges@cloudflare.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
- "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel-team@cloudflare.com
-Subject: Re: [PATCH net v2] wireguard: wait for per-peer crypto during removal
-Message-ID: <aqrGeOpbu_u-CBes@20HS2G4>
-References: <20260913-fix-wg-peer-removal-v2-1-0cade985245a@cloudflare.com>
- <aqpqEIy_h0DIywRy@zx2c4.com>
+ Fri, 18 Sep 2026 17:36:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ilvokhin.com;
+ s=mail; t=1789752997;
+ bh=NRYMUswHU9EXVk5ENJbdXnGb5bZgB4OZRzXtIPt1Kg0=;
+ h=From:To:Cc:Subject:Date;
+ b=IxaeZGdkTqtmlWZGTbMcQl/CJmYbq9lGxKB4u9RDicFm2aHMZcWn0VYrebkGqh3TC
+ MXXDHqB0s0aABSPKWcl7Gf8ZR0lXu7sc+jBqsRynhQQKzA30B1uJbVomq0RWzdQBRq
+ ZgrI/3RSZPYlHTNbMH3BVJrWXl2xFv+nQMF0L4h8=
+Received: from localhost.localdomain (shell.ilvokhin.com [138.68.190.75])
+ (Authenticated sender: d@ilvokhin.com)
+ by mail.ilvokhin.com (Postfix) with ESMTPSA id E748EEC28A;
+ Fri, 18 Sep 2026 17:36:36 +0000 (UTC)
+From: Dmitry Ilvokhin <d@ilvokhin.com>
+To: "Jason A . Donenfeld" <Jason@zx2c4.com>
+Cc: wireguard@lists.zx2c4.com,
+	Dmitry Ilvokhin <d@ilvokhin.com>
+Subject: [PATCH] wg-quick: darwin: fix set_dns() and del_dns() race
+Date: Fri, 18 Sep 2026 17:36:16 +0000
+Message-ID: <20260918173616.358826-1-d@ilvokhin.com>
+X-Mailer: git-send-email 2.55.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aqpqEIy_h0DIywRy@zx2c4.com>
+Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Mon, 05 Oct 2026 06:55:46 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -95,64 +50,34 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 2026-09-16 12:06:08, Jason A. Donenfeld wrote:
-> On Sun, Sep 13, 2026 at 07:19:08AM -0500, Chris J Arges wrote:
-> > Calling peer_remove_after_dead() currently flushes device-wide packet
-> > crypto and handshake workqueues while holding RTNL. This is problematic as
-> > unrelated peers can continue adding work to those queues, blocking other
-> > tasks that want to take the RTNL lock.
-> > 
-> > Instead, this patch tracks pending crypto handoffs for each peer using a
-> > counter. After marking the peer dead, synchronize_net() prevents new
-> > submissions. Next, wait for pending crypto workers to schedule TX work and
-> > for RX NAPI to drain the peer's RX queue. Then flush only the peer's TX
-> > packet and handshake work.
-> > 
-> > This scopes teardown synchronization to the removed peer and prevents
-> > unrelated peers from extending the RTNL hold time.
-> >  struct wg_device;
-> > @@ -161,6 +162,7 @@ static inline int wg_queue_enqueue_per_device_and_peer(
-> >  	 */
-> >  	if (unlikely(!wg_prev_queue_enqueue(peer_queue, skb)))
-> >  		return -ENOSPC;
-> > +	atomic_inc(&PACKET_PEER(skb)->packet_crypt_pending);
-> >  
-> >  	/* Then we queue it up in the device queue, which consumes the
-> >  	 * packet as soon as it can.
-> > @@ -182,6 +184,8 @@ static inline void wg_queue_enqueue_per_peer_tx(struct sk_buff *skb, enum packet
-> >  	atomic_set_release(&PACKET_CB(skb)->state, state);
-> >  	queue_work_on(wg_cpumask_choose_online(&peer->serial_work_cpu, peer->internal_id),
-> >  		      peer->device->packet_crypt_wq, &peer->transmit_packet_work);
-> > +	if (atomic_dec_and_test(&peer->packet_crypt_pending))
-> > +		wake_up_var(&peer->packet_crypt_pending);
-> >  	wg_peer_put(peer);
-> >  }
-> >  
-> > diff --git a/drivers/net/wireguard/receive.c b/drivers/net/wireguard/receive.c
-> > index 824bbefce61c..bb35e3205491 100644
-> > --- a/drivers/net/wireguard/receive.c
-> > +++ b/drivers/net/wireguard/receive.c
-> > @@ -476,9 +476,11 @@ int wg_packet_rx_poll(struct napi_struct *napi, int budget)
-> >  
-> >  next:
-> >  		wg_noise_keypair_put(keypair, false);
-> > -		wg_peer_put(peer);
-> >  		if (unlikely(free))
-> >  			dev_kfree_skb(skb);
-> > +		if (atomic_dec_and_test(&peer->packet_crypt_pending))
-> > +			wake_up_var(&peer->packet_crypt_pending);
-> > +		wg_peer_put(peer);
-> 
-> This adds two atomic updates to a per-peer counter for every RX packet
-> and TX batch. That could introduce contention across crypto workers. I
-> suppose it'd be good to see some measurements in if this changes
-> anything. Certainly it should change _something_. Question is by how
-> much.
-> 
-> Jason
+The monitor deamon restores the DNS servers by running del_dns() from
+its INT, TERM and EXIT trap. Every route event also schedules an ALRM 2
+seconds later, and the ALRM trap runs set_dns().
 
-Thanks, I'll get some numbers here and share. We're testing this on some
-production machines now. In addition I'll get numbers from my synthetic testing
-and report back.
+If ALRM arrives during cleanup, set_dns() can run in the middle of
+del_dns(), and the DNS servers may not be restored after the WireGuard
+interface is removed.
 
---chris
+Ignore ALRM in cleanup signal handler to avoid this race.
+
+Signed-off-by: Dmitry Ilvokhin <d@ilvokhin.com>
+---
+ src/wg-quick/darwin.bash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/wg-quick/darwin.bash b/src/wg-quick/darwin.bash
+index 0179afb..20a21ce 100755
+--- a/src/wg-quick/darwin.bash
++++ b/src/wg-quick/darwin.bash
+@@ -323,7 +323,7 @@ del_dns() {
+ 
+ monitor_daemon() {
+ 	echo "[+] Backgrounding route monitor" >&2
+-	(trap 'del_routes; del_dns; exit 0' INT TERM EXIT
++	(trap 'trap "" ALRM; del_routes; del_dns; exit 0' INT TERM EXIT
+ 	exec >/dev/null 2>&1
+ 	exec 19< <(exec route -n monitor)
+ 	local event bpid=$BASHPID mpid=$!
+-- 
+2.54.0 (Apple Git-157)
+
