@@ -4,50 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9538FC982ED
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 21 Sep 2026 12:33:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DE31C982ED
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 21 Sep 2026 22:29:47 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id fa94c3a1;
-	Mon, 21 Sep 2026 12:33:44 +0000 (UTC)
-Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
- [209.85.210.72])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id d7b37113
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 6eb8ccd4;
+	Mon, 21 Sep 2026 22:29:45 +0000 (UTC)
+Received: from cross.elm.relay.mailchannels.net
+ (cross.elm.relay.mailchannels.net [23.83.212.46])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 3ae1d754
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 21 Sep 2026 12:33:38 +0000 (UTC)
-Received: by mail-ot1-f72.google.com with SMTP id
- 46e09a7af769-7f8931a803cso2890442a34.0
- for <wireguard@lists.zx2c4.com>; Mon, 21 Sep 2026 05:33:38 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789994017; x=1790598817;
- h=content-type:to:from:subject:message-id:date:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=SrWCKhmhwPKk2RRpke7Ort9NY2I0LwsCKnerl92C5Ak=;
- b=zULQCR+Bslu1fGW+IhfETKyWVFfc1ErPaxtNYNvNwAdfMEvfW35GbexlhyXg8ClvX6
- Eec2yJ0QNOTOubcGghtwQFlJP57IFgWgNiTFfKqEY1IrqqaZdwa6GuX1tk2pUw7LVhWC
- dACQ2ggKgf8gakGv0zJcyjdDiEs/LTpZMP9txguFZSWtzWg8N9rZtLnxrwTe7o5DVqPP
- s6/SH9d1aDJ1aQVGclPlEte2fUUuJQwZwcSQJ0R0KfMzXEoaUh/mSQ9W2cWEGCHZ5tI8
- 4e84jdmMQrqv4WtVBeguC4JavRP9CGPYzHjJxk+ixa60leQ7B2XuRWW8q9lF8ISVdMjm
- o4kA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxKcIhiWmfKw7D18DeuFW9UhKPJrJxBZsWJc55NgmuE5IR0bH6swDZE/IRD4mPxsRdvyb6b/xFhEO8=@lists.zx2c4.com
-X-Gm-Message-State: AFuF++n5pv42Fu9Pwa+C3EpuwgmtXtzLSZ6NmfvPmjMNECLmFEWMCL32
- 3rc01byqxvxc94Lqfu61JTDBfz4ebWFLg4i5Mt2MzA4HtOdPXempycvJ7dt3TsDvFNGd5bU+hOa
- 07jjsJkUOtQe7EuP+uh8lRHWGEh6ty9NmDv2kzD+8FvZ6lQG/z73kvqc+r14=
-MIME-Version: 1.0
-X-Received: by 2002:a05:6820:859a:20b0:6cd:3fdc:a93d with SMTP id
- 006d021491bc7-6cd3fecc4afmr4491628eaf.90.1789994017290; Mon, 21 Sep 2026
- 05:33:37 -0700 (PDT)
-Date: Mon, 21 Sep 2026 05:33:37 -0700
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <6ab12421.3179f8cd.1e36b2.001f.GAE@google.com>
-Subject: [syzbot] Monthly wireguard report (Sep 2026)
-From: syzbot <syzbot+list3508dff347594ebfd49c@syzkaller.appspotmail.com>
-To: Jason@zx2c4.com, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
- syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
+ Mon, 21 Sep 2026 22:29:38 +0000 (UTC)
+X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+ by relay.mailchannels.net (Postfix) with ESMTP id 26EE540147A;
+ Mon, 21 Sep 2026 22:29:35 +0000 (UTC)
+Received: from cpanel-007-fra.hostingww.com
+ (100-100-245-87.trex-nlb.outbound.svc.cluster.local [100.100.245.87])
+ (Authenticated sender: instrampxe0y3a)
+ by relay.mailchannels.net (Postfix) with ESMTPA id 642564020F7
+ for <wireguard@lists.zx2c4.com>; Mon, 21 Sep 2026 22:29:30 +0000 (UTC)
+X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
+X-MC-Relay: Neutral
+X-MC-Copy: stored-urls
+X-MailChannels-SenderId: instrampxe0y3a|x-authuser|calestyo@scientia.org
+X-MailChannels-Auth-Id: instrampxe0y3a
+X-Share-Whispering: 4e3b339f5e35da49_1790029774934_158542460
+X-MC-Loop-Signature: 1790029774934:3726599572
+X-MC-Ingress-Time: 1790029774934
+Received: from cpanel-007-fra.hostingww.com (cpanel-007-fra.hostingww.com
+ [3.69.87.180]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+ by 100.100.245.87 (trex/8.0.2); Mon, 21 Sep 2026 22:29:34 +0000
+Received: from p5090fc37.dip0.t-ipconnect.de ([80.144.252.55]:61011
+ helo=heisenberg.fritz.box)
+ by cpanel-007-fra.hostingww.com with esmtpsa (TLS1.3) tls
+ TLS_AES_256_GCM_SHA384 (Exim 4.100)
+ (envelope-from <calestyo@scientia.org>) id 1x8mVt-00000006Fpk-0R2u
+ for wireguard@lists.zx2c4.com; Mon, 21 Sep 2026 22:29:28 +0000
+Message-ID: <a3bedeb141086893ad0b4d4cc418e9ca2585cbfb.camel@scientia.org>
+Subject: bug: wg-quick fails to set up working connection
+From: Christoph Anton Mitterer <calestyo@scientia.org>
+To: wireguard@lists.zx2c4.com
+Date: Tue, 22 Sep 2026 00:29:27 +0200
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2-10+b1 
+MIME-Version: 1.0
+X-AuthUser: calestyo@scientia.org
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -62,34 +65,79 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello wireguard maintainers/developers,
+Hey.
 
-This is a 31-day syzbot report for the wireguard subsystem.
-All related reports/information can be found at:
-https://syzkaller.appspot.com/upstream/s/wireguard
 
-During the period, 1 new issues were detected and 0 were fixed.
-In total, 5 issues are still open and 21 have already been fixed.
+When taking a config provided for example via eduVPN:
+[Interface]
+PrivateKey =3D ***
+MTU =3D 1320
+Address =3D 10.153.38.15/24,2001:4ca0:4fff:2:3::f/96
+DNS =3D
+10.156.33.53,129.187.5.1,2001:4ca0::53:1,2001:4ca0::53:2,lmu.de,uni-
+muenchen.de,mwn.de
 
-Some of the still happening issues:
+[Peer]
+PublicKey =3D ***
+PresharedKey =3D ***
+AllowedIPs =3D
+10.0.0.0/8,85.208.24.0/22,129.187.0.0/16,131.159.0.0/16,132.199.106.6/3
+1,138.244.0.0/15,138.246.0.0/16,141.39.128.0/18,141.39.240.0/20,141.40.
+0.0/16,141.84.0.0/16,172.16.0.0/12,192.54.42.0/24,192.55.197.0/24,192.6
+8.211.0/24,192.68.212.0/24,192.168.0.0/16,193.174.96.0/23,194.94.155.22
+4/28,2001:4ca0::/29,2a09:80c0::/29
+Endpoint =3D eduvpn-n13.srv.lrz.de:51820
 
-Ref Crashes Repro Title
-<1> 9       Yes   BUG: workqueue lockup in wg_packet_decrypt_worker
-                  https://syzkaller.appspot.com/bug?extid=d0d2f1a65f45b319d25d
-<2> 3       No    BUG: soft lockup in wg_packet_decrypt_worker
-                  https://syzkaller.appspot.com/bug?extid=27a6e390f71f14f4fecf
-<3> 20      Yes   INFO: rcu detected stall in wg_packet_handshake_receive_worker (3)
-                  https://syzkaller.appspot.com/bug?extid=48f45f6dd79ca20c3283
 
----
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
 
-To disable reminders for individual bugs, reply with the following command:
-#syz set <Ref> no-reminders
+starting it via:
+# wg-quick up ./wg.conf
+[#] ip link add dev wg type wireguard
+[#] wg addconf wg /dev/fd/63
+[#] ip -4 address add 10.153.38.15/24 dev wg
+[#] ip -6 address add 2001:4ca0:4fff:2:3::f/96 dev wg
+[#] ip link set mtu 1320 up dev wg
+[#] resolvconf -a tun.wg -m 0 -x
+[#] ip -4 route add 132.199.106.6/31 dev wg
+[#] ip -6 route add 2a09:80c0::/29 dev wg
+[#] ip -6 route add 2001:4ca0::/29 dev wg
+[#] ip -4 route add 194.94.155.224/28 dev wg
+[#] ip -4 route add 192.68.212.0/24 dev wg
+[#] ip -4 route add 192.68.211.0/24 dev wg
+[#] ip -4 route add 192.55.197.0/24 dev wg
+[#] ip -4 route add 192.54.42.0/24 dev wg
+[#] ip -4 route add 193.174.96.0/23 dev wg
+[#] ip -4 route add 85.208.24.0/22 dev wg
+[#] ip -4 route add 141.39.240.0/20 dev wg
+[#] ip -4 route add 141.39.128.0/18 dev wg
+[#] ip -4 route add 192.168.0.0/16 dev wg
+[#] ip -4 route add 141.84.0.0/16 dev wg
+[#] ip -4 route add 141.40.0.0/16 dev wg
+[#] ip -4 route add 138.246.0.0/16 dev wg
+[#] ip -4 route add 131.159.0.0/16 dev wg
+[#] ip -4 route add 129.187.0.0/16 dev wg
+[#] ip -4 route add 138.244.0.0/15 dev wg
+[#] ip -4 route add 172.16.0.0/12 dev wg
+[#] ip -4 route add 10.0.0.0/8 dev wg
 
-To change bug's subsystems, reply with:
-#syz set <Ref> subsystems: new-subsystem
+leads to a dead connection.
 
-You may send multiple commands in a single email message.
+The reason apparently being often the endpoint named in provided WG
+configs is part of the AllowedIPs and thus nothing actually goes
+through.
+
+eduvpn-n13.srv.lrz.de.	273	IN	A	129.187.7.162
+eduvpn-n13.srv.lrz.de.	273	IN	AAAA	2001:4ca0:0:123::81bb:7a2
+
+If I  manually subtract the two endpoint IPs from the AllowedIPs, the
+very same config gives a working connection.
+
+
+Given that the Endpoints are allowed to use hostnames and thus things
+like round robin DNS, it doesn't feel as if the configs should be
+provided already excluding the (current) endpoint IP, but rather that
+it should be wg-quick who does this somehow.
+
+
+Cheers,
+Chris.
