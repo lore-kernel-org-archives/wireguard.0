@@ -4,38 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A629CA5FFC
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 09:24:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 454C6CA5FCE
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 09:24:44 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id c56e5afa;
-	Mon, 5 Oct 2026 06:56:41 +0000 (UTC)
-Received: from mail-10697.protonmail.ch (mail-10697.protonmail.ch
- [79.135.106.97])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 2137b965
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id e5b78de9;
+	Mon, 5 Oct 2026 06:56:42 +0000 (UTC)
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com
+ [2a00:1450:4864:20::334])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 812d9931
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 30 Sep 2026 17:04:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
- s=protonmail3; t=1790787885; x=1791047085;
- bh=p1DkH3l6rDzJO4wYWViKjwTOkX8tD+jZPSQ/HL8ziTo=;
- h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
- Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
- b=F3Pwa2MIDU9CbC/jrGysEkk3+YuYQI7GCcDggGDhs4lGPs1rb/TN2eltMagoREi0P
- 4pXPDLLj2IFHFpMvUJ7Z7fRu/buRrOVx/6BZ+AQMH8I31hDSLRZRtXOF4QfAzqGc6n
- b9wrRoUeMv3fICierloAoR/sebnf/H3hhA/yy5jLAwks+/eXAjVBUdOvNZBnPDiXQy
- wmtdGJokzAFgxkDrJ+otWVc2RJJZ+4n7d3Tj2XmHqVLNflQhYs2wSXrNggCC5eL18i
- jZaxuaYo7+PntiT93MiJLBZmlPU6u45qdO8op3x6eQWYiBPT2FdM18HsiNTcT9iI8m
- swJVGp6qOtrLg==
-Date: Wed, 30 Sep 2026 17:04:42 +0000
-To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-From: "frank.martino1" <frank.martino1@protonmail.com>
-Subject: wg-quick fails with RTNETLINK: Invalid argument
-Message-ID: <fJAqhQFnI1Mw3nbgZZmCgA99Pdg7wdkUNp9n8MGFPCb0sJQxcDPkAvF3XemLHS7DsEDCS2dg5DiwpXvxN-SIVyVUY7Q3SUK_Ecbj-bi4Qjk=@protonmail.com>
-Feedback-ID: 182524978:user:proton
-X-Pm-Message-ID: b4bba09a919ff9142bd883e4c299fac784378221
+ for <wireguard@lists.zx2c4.com>; Sat, 3 Oct 2026 20:16:33 +0000 (UTC)
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4a1635f7c89so7231315e9.2
+ for <wireguard@lists.zx2c4.com>; Sat, 03 Oct 2026 13:16:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1791058593; x=1791663393; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=xSJHmcS6fdALBnPJ5e4ZZCDQp3UfYu5aUPElGXfZW+Q=;
+ b=MTrjzwNtjpI/ndwPeq+LYCi9kBgQOK/9pfFeKtpQChTLSv5alx+iN83DLKeDO+0LkH
+ /8Y5ZCwkYrrFg/FDcmKTZdKkDzD+ypglCzWe/CRbaIf/moqlS2DbbgJBsEhdcd644oAS
+ rHyXIpDoCPyyEkSAwZEmKlIKnqu4j/dvhiEiut7FL363tAQd+WApHVRpF5JfZVp8X66C
+ NpUhZWBGOazNxKZtHhmzpmhSzJQ0ekij/vP7vnzCcwxJPolyqOzBoH30iHjplOUwihPn
+ SHvHSvX4GFQu1gZIzfsh48yIf83Df9I3s5kk+UsIe50rMUGVJi4ipfV776AwEMoj5rYn
+ G7TQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1791058593; x=1791663393;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=xSJHmcS6fdALBnPJ5e4ZZCDQp3UfYu5aUPElGXfZW+Q=;
+ b=XRelLTaxHf+QBeRkTSN2dE7Wsw1HmoP87eTmwBjQLBCqW581I4Izb2LA+ja2TLIk8j
+ cNEyo4uEi638GHHHcfXCuwJi6NevK1QZ2uFV4wuHuTdpRZWOFB6Jrb5W2sdjqxUPnfz9
+ 8UJTfa/oNftpSMznqr0qbXrkGQPY4zwFzYcnFCZjCtaO8VtVhgVo8mAR8/C6hpinsSbH
+ 8OqUn2YV31vr2ccbMBUlVBRWy+kMW82ycDBJ8B8coQBQ9RiEqFtItkRWCiECBjJyp62l
+ nkXQxFJdnCcG34rx8bETTj6IxwRJmDvkWzNg6H1BJDH+SR4kfWpc2lDaXw45AO1TD/FK
+ k3ZQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzT0lO2rGpF9TirHWBdTSvJ+EEmQIuoTSaLmAleJSQroemE3q5laVNWYE0Y6jquKAOID/h9bYCus1g=@lists.zx2c4.com
+X-Gm-Message-State: AFuF++m8EKDkoBrS2/T7vzJ917RQVr1ZZScFvMzScF1l7jzKk9ow4hVG
+ R0shPPA4gI4SzhRrNu0Hwx4gf/4E8Rlh6VpPX7gQQEpI6n4IknNJedbQ
+X-Gm-Gg: AYBFou0jUq4QXO1eU8tN+yHJplyjrYtwqPMKUMYnSYLvuAnadcgG2w113C0em9D+OC8
+ o0B14y1DOSyI05N470eANZbZTw6xIcikwIe82NnYS3Uzjz5wwb1fOOLDu7qQj6ciHhvot2rYquZ
+ 0BAmVAcNJmQVjaIsqRXPpjXxZwJSWMe58LQ36jw8wxp4QETppdxXq60vo6l60SLpsBUsRustiWc
+ /E05FF6VBTcmp4SyuBOS/1V2c5YADRJ6PD7ncNU0CwCIs1OX3/G8Nir3IuWzKrSvlTh33KAQb80
+ nDIuXuqrOkDkf6Azn4yOSDZJficQZr6Cxj/W2Olp8Zo+iPHXvIsXBAU+GtOqvTHfOMDJ5q5hl2S
+ CJvuric2A3u8L5qRT3T56nz7htEdHX+OzUQdgXteazJwPBFa9IEao6s7ScIaRK/hiMJ+tboH30N
+ 0kdgP9s8vZxB+UwvAzzrBut/6FRkPBWb9hX/7DJLj1eAbq89DBk9jqAPWp7zPsCgQXTpWPMnzGp
+ pE=
+X-Received: by 2002:a05:600c:c1d7:10b0:4a0:4f6:3dc5 with SMTP id
+ 5b1f17b1804b1-4a1680dd4f4mr34160075e9.7.1791058592594; 
+ Sat, 03 Oct 2026 13:16:32 -0700 (PDT)
+Received: from Mac ([188.163.8.107]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a16d6295f9sm51579145e9.14.2026.10.03.13.16.31
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sat, 03 Oct 2026 13:16:32 -0700 (PDT)
+From: Andrii Pasichnyk <apasichnik9@gmail.com>
+To: "Jason A . Donenfeld" <Jason@zx2c4.com>, netdev@vger.kernel.org,
+ wireguard@lists.zx2c4.com
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
+ "David S . Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@kernel.org>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>, linux-kernel@vger.kernel.org,
+ Andrii Pasichnyk <apasichnik9@gmail.com>
+Subject: [PATCH net] wireguard: peer: free packets left on the per-peer queues
+ on removal
+Date: Sat,  3 Oct 2026 23:16:25 +0300
+Message-ID: <20261003201625.4572-1-apasichnik9@gmail.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Mon, 05 Oct 2026 06:55:46 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -51,86 +89,73 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+peer_remove_after_dead() flushes the crypt workqueue and then disables
+the peer's NAPI. Once a disable is pending, __napi_poll() completes the
+instance after the poll returns even if it used its whole budget, so a
+peer removed while more than one budget of decrypted packets waits on
+rx_queue keeps the rest there. Each entry holds a keypair and a peer
+reference, so the peer is never released; the WARN_ON in rcu_release()
+that checks for leftovers is never reached either.
 
+Free whatever is left on both per-peer queues once nothing can feed them
+any more: receive entries are single packets, transmit entries lists.
 
-### Description of the Bug
-When switching WireGuard servers using `wg-quick` on a configuration file t=
-hat specifies `Table =3D off`, the initialization fails during the IP addre=
-ss assignment phase, throwing the following error:
-`RTNETLINK answers: Invalid argument`
+Reproduced with the WireGuard selftest VM (x86 KVM, 1 vCPU, net-next):
+remove a peer while a UDP flood keeps its receive queue busy, re-add it,
+repeat, then run the selftest's created/destroyed object check. Over
+2140 removals the unpatched kernel leaked a peer and its keypair 5
+times ("wg0: Peer 27: merely created"); with this patch, 0 times in
+another 2140.
 
-### Steps to Reproduce
+Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
+Assisted-by: LLM
+Signed-off-by: Andrii Pasichnyk <apasichnik9@gmail.com>
+---
+ drivers/net/wireguard/peer.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-1. Create two WireGuard configuration files (`serverA.conf` and `serverB.co=
-nf`) with `Table =3D off` and different `Endpoint` IPs.
-2. Connect to the first server: `sudo wg-quick up serverA`
-3. Implement manual host routes to the endpoint via your physical gateway.
-4. Switch to the second server in a single sequence:
-=C2=A0 =C2=A0```bash
-=C2=A0 =C2=A0sudo wg-quick down serverA && sudo wg-quick up serverB
-=C2=A0 =C2=A0```
-5. Observe the `RTNETLINK answers: Invalid argument` failure printing out d=
-uring the execution trace of `serverB`.
+diff --git a/drivers/net/wireguard/peer.c b/drivers/net/wireguard/peer.c
+index 1cb502a..3e08898 100644
+--- a/drivers/net/wireguard/peer.c
++++ b/drivers/net/wireguard/peer.c
+@@ -91,6 +91,25 @@ static void peer_make_dead(struct wg_peer *peer)
+ 	/* The caller must now synchronize_net() for this to take effect. */
+ }
+ 
++/* Each queue entry holds a keypair and a peer reference. Transmit entries
++ * are lists of packets, receive entries single packets.
++ */
++static void peer_purge_queue(struct wg_peer *peer, struct prev_queue *queue,
++			     bool lists)
++{
++	struct sk_buff *first;
++
++	while ((first = wg_prev_queue_peek(queue)) != NULL) {
++		wg_prev_queue_drop_peeked(queue);
++		wg_noise_keypair_put(PACKET_CB(first)->keypair, false);
++		wg_peer_put(peer);
++		if (lists)
++			kfree_skb_list(first);
++		else
++			dev_kfree_skb(first);
++	}
++}
++
+ static void peer_remove_after_dead(struct wg_peer *peer)
+ {
+ 	WARN_ON(!peer->is_dead);
+@@ -122,6 +141,11 @@ static void peer_remove_after_dead(struct wg_peer *peer)
+ 	 * here from process context.
+ 	 */
+ 	netif_napi_del(&peer->napi);
++	/* A NAPI being disabled completes after at most one more poll, which
++	 * may leave packets on rx_queue that still hold references.
++	 */
++	peer_purge_queue(peer, &peer->rx_queue, false);
++	peer_purge_queue(peer, &peer->tx_queue, true);
+ 
+ 	/* Ensure any workstructs we own (like transmit_handshake_work or
+ 	 * clear_peer_work) no longer are in use.
+-- 
+2.53.0
 
-### Expected Behavior
-
-`wg-quick` should cleanly tear down all interface states from the previous =
-execution, allowing the kernel network namespace to settle so that the newl=
-y spawned interface can bind its IP address and configuration parameters su=
-ccessfully on the first attempt.
-
-### Actual Behavior / Execution Trace
-
-The script wrapper executes its hardcoded command sequence:
-1. `ip link add wg0 type wireguard`
-2. `wg setconf wg0 /dev/fd/63`
-3. `ip -4 address add <ip>/32 dev wg0` =C2=A0<-- **CRASHES HERE with EINVAL=
-**
-
-### Root Cause Analysis
-
-This bug is a timing and state synchronization race condition between `ipro=
-ute2`, the `wireguard` kernel module, and Netfilter:
-
-1. **Asynchronous Deletion Delay:** When `wg-quick down` deletes the virtua=
-l device link, the namespace unregistration and hook flushes happen asynchr=
-onously in the background.
-2. **Socket Cache Pollution:** Because `wg-quick up` instantly creates a ne=
-w interface container (`add_if`) and populates keys/endpoints (`set_config`=
-), the module instantiates UDP sockets while the background cleanup is stil=
-l running. The new socket structure inherits a dirty socket destination cac=
-he (`sk_dst_cache`) pointing to the *old* server IP.
-3. **Netlink Veto:** When `wg-quick` subsequently tries to execute `ip addr=
-ess add`, the Netlink engine evaluates the active routing layout, detects a=
-n structural paradox (a new interface instance whose sockets are tied to an=
- un-flushed legacy routing table index), and rejects the address assignment=
- with `EINVAL`.
-4. **Cascading Deadlock:** The failed state causes the kernel to loop hands=
-hake traffic destined for the old server into `OUT=3Dwg0`, deadlocking loca=
-l socket queues and freezing local DNS proxies.
-
-### Environment & Configuration
-
-* **OS / Kernel:** Linux Kernel (Stateful tracking via `nf_conntrack` enabl=
-ed)
-* **Tools:** `wg-quick` from `wireguard-tools`
-* **Relevant Config Snippet:**
-=C2=A0 ```ini
-=C2=A0 [Interface]
-=C2=A0 Address =3D 10.67.57.124/32
-=C2=A0 Table =3D off
-=C2=A0 ```
-
-### Workaround / Possible Fix
-
-The failure can be avoided entirely by performing an explicit, native proto=
-col routing flush **prior** to initializing the new interface container. Ad=
-ding the following block to the teardown sequence clears the routing indice=
-s from live memory, ensuring Netlink encounters a pristine workspace:
-
-```bash
-# Force the kernel to drop sticky server routing mappings before regenerati=
-ng the link
-sudo ip route flush dev <physical_interface> proto boot
-sudo ip route flush cache
-```
