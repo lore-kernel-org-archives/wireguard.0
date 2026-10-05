@@ -4,47 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21DCDCA5FF0
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 20:46:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2AD8CA5FF5
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 21:21:59 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id c2cee03c;
-	Mon, 5 Oct 2026 20:43:58 +0000 (UTC)
-Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 6f6f3edb
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 8e487997;
+	Mon, 5 Oct 2026 21:18:47 +0000 (UTC)
+Received: from sea.source.kernel.org (sea.source.kernel.org
+ [2600:3c0a:e001:78e:0:1991:8:25])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 584d6d29
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 5 Oct 2026 20:43:55 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Mon, 5 Oct 2026 21:18:40 +0000 (UTC)
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id DE5544043D;
- Mon,  5 Oct 2026 20:43:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EDEC1F000FF;
- Mon,  5 Oct 2026 20:43:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1791233033;
- bh=Z9zRtXHe/J1k/4/9wAeq1n+PwAt+ioXmV3zyjSNrjDw=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Y53ZuGJBaY2SKB9U6jzz7C6rF6M3kGmXPB2xsId75Kf20cj+NLE3Gi0DUMisvJIEE
- 2fmfYaRwJ6H+UV7NywcxHqtFZkAutQQrejEHMa0ZSAwHHlkaMLyiHLxVCay4aZ0Y3B
- U672VvrxaloWdYA0uLnx0s4Eh+ijy6roHWALGcfigSN3VxHn3PEpVfE9YfNxCFxCpi
- bCAAw6zzFK+mMfMMtsrOTxL9EM0ihGEpmyFEMJAJItrlJgfNbGGQUA7tgJ8VbDcn5/
- fh5l1QOYtM1zsvqJr93vy1sNnvPET+tRX1kRpAYyrBAxbZ9p14SKM3sput2geeRMR8
- J/GXSdRtSM3DA==
-From: netdev-bot+sinfo@kernel.org
-To: =?utf-8?q?J=C3=A9r=C3=A9my?= Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, wireguard@lists.zx2c4.com,
- netdev@vger.kernel.org, Andrew Lunn <andrew+netdev@lunn.ch>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@kernel.org>,
+ by sea.source.kernel.org (Postfix) with ESMTP id 3207042B70;
+ Mon,  5 Oct 2026 21:18:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0767B1F000FF;
+ Mon,  5 Oct 2026 21:18:37 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; dkim=pass (1024-bit key,
+ unprotected) header.d=zx2c4.com header.i=@zx2c4.com header.a=rsa-sha256
+ header.s=20210105 header.b=EYeFbHym
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1791235116;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ArXPZwkOS21svTqyVFuDaFFdnY9qfU5vfWtScr/h5DQ=;
+ b=EYeFbHymVSJkadjsLFpufo37mu0pzdItcuzxYQSucZfWL3N4HCOGN+/Rx5ZANWm8cmtZwO
+ scY1MxjrSOus2i0osYjaZHf7hE94krpdUm3jwnBcK7iMGzw/703W5soEUcZGz4nbqO/75n
+ VNJwL+yAI3OzCgdtSAyuPuvMFupqf9Q=
+Received: by mail.zx2c4.com (OpenSMTPD) with ESMTPSA id 7b51b2b2
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Mon, 5 Oct 2026 21:18:35 +0000 (UTC)
+Date: Mon, 5 Oct 2026 23:18:33 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: =?utf-8?B?SsOpcsOpbXk=?= Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Cc: wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
+ Andrew Lunn <andrew+netdev@lunn.ch>,
+ "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@kernel.org>,
  Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
  linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Subject: Re: [PATCH net] wireguard: noise: reject responses for replaced
  initiations
-Date: Mon, 05 Oct 2026 20:43:52 +0000
-Message-ID: <179123303279.1402591.1890335379434041073@kernel.org>
-In-Reply-To: <20261005203555.3552816-2-Jeremy.Jean@oss.cyber.gouv.fr>
+Message-ID: <asQUKTOiEn6GB5sy@zx2c4.com>
 References: <20261005203555.3552816-2-Jeremy.Jean@oss.cyber.gouv.fr>
-Auto-Submitted: auto-generated
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20261005203555.3552816-2-Jeremy.Jean@oss.cyber.gouv.fr>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -59,24 +67,161 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi!
+Hi,
 
-This is an automated message. This series looks like a fix, but its
-commit messages seem to be missing some information:
+On Mon, Oct 05, 2026 at 08:35:55PM +0000, Jérémy Jean wrote:
+> WireGuard can accept an old handshake response after starting a new
+> handshake. This reinstalls old keys and resets transport counters and
+> replay state, enabling nonce reuse, replay and packet forgery. This
+> breaks confidentiality and integrity guarantees.
+> 
+> Compare ephemeral secrets under the write lock to reject responses for
+> replaced initiations.
+> 
+> Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
+> Cc: stable@vger.kernel.org
+> Assisted-by: LLM
+> Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+> ---
+>  drivers/net/wireguard/noise.c | 8 +++++---
+>  1 file changed, 5 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/net/wireguard/noise.c b/drivers/net/wireguard/noise.c
+> index 9c0a09bf6c95..88cc9acc7dc7 100644
+> --- a/drivers/net/wireguard/noise.c
+> +++ b/drivers/net/wireguard/noise.c
+> @@ -784,10 +784,12 @@ wg_noise_handshake_consume_response(struct message_handshake_response *src,
+>  
+>  	/* Success! Copy everything to peer */
+>  	down_write(&handshake->lock);
+> -	/* It's important to check that the state is still the same, while we
+> -	 * have an exclusive lock.
+> +	/* Check that this is still the initiation we authenticated against,
+> +	 * while we have an exclusive lock.
+>  	 */
+> -	if (handshake->state != state) {
+> +	if (handshake->state != state ||
+> +	    crypto_memneq(handshake->ephemeral_private, ephemeral_private,
+> +			  NOISE_PUBLIC_KEY_LEN)) {
+>  		up_write(&handshake->lock);
+>  		goto fail;
+>  	}
 
- - How the issue was discovered, e.g. hit in production, hit during
-   development, syzbot report, manual code inspection, LLM or static
-   analysis tool scan.
+Could you describe the flow that you think causes a bug? Trying
+to recreate your mental model. Something like this?
 
- - Whether the issue was actually triggered, or is only theoretical
-   (e.g. found by code inspection). If it was triggered please include
-   the symptoms, like the stack trace or error messages.
+== thread 1 ==
 
-Please do not repost the series just to address the above. Instead,
-reply to this email with the missing information, so that reviewers
-can take it into account. If the series needs another revision for
-other reasons, please include the information in the commit messages
-then.
+	down_read(&handshake->lock);
+	state = handshake->state;
+	memcpy(hash, handshake->hash, NOISE_HASH_LEN);
+	memcpy(chaining_key, handshake->chaining_key, NOISE_HASH_LEN);
+	memcpy(ephemeral_private, handshake->ephemeral_private,
+	       NOISE_PUBLIC_KEY_LEN);
+	memcpy(preshared_key, handshake->preshared_key,
+	       NOISE_SYMMETRIC_KEY_LEN);
+	up_read(&handshake->lock);
 
-The evaluation is done by an LLM so it may be wrong, if you think
-that is the case please reply and explain.
+	if (state != HANDSHAKE_CREATED_INITIATION)
+		goto fail;
+
+	/* e */
+	message_ephemeral(e, src->unencrypted_ephemeral, chaining_key, hash);
+
+	/* ee */
+	if (!mix_dh(chaining_key, NULL, ephemeral_private, e))
+		goto fail;
+
+	/* se */
+	if (!mix_dh(chaining_key, NULL, wg->static_identity.static_private, e))
+		goto fail;
+
+	/* psk */
+	mix_psk(chaining_key, hash, key, preshared_key);
+
+	/* {} */
+	if (!message_decrypt(NULL, src->encrypted_nothing,
+			     sizeof(src->encrypted_nothing), key, hash))
+		goto fail;
+
+== thread 2 ==
+
+	down_read(&handshake->static_identity->lock);
+	down_write(&handshake->lock);
+
+	if (unlikely(!handshake->static_identity->has_identity))
+		goto out;
+
+	dst->header.type = cpu_to_le32(MESSAGE_HANDSHAKE_INITIATION);
+
+	handshake_init(handshake->chaining_key, handshake->hash,
+		       handshake->remote_static);
+
+	/* e */
+	curve25519_generate_secret(handshake->ephemeral_private);
+	if (!curve25519_generate_public(dst->unencrypted_ephemeral,
+					handshake->ephemeral_private))
+		goto out;
+	message_ephemeral(dst->unencrypted_ephemeral,
+			  dst->unencrypted_ephemeral, handshake->chaining_key,
+			  handshake->hash);
+
+	/* es */
+	if (!mix_dh(handshake->chaining_key, key, handshake->ephemeral_private,
+		    handshake->remote_static))
+		goto out;
+
+	/* s */
+	message_encrypt(dst->encrypted_static,
+			handshake->static_identity->static_public,
+			NOISE_PUBLIC_KEY_LEN, key, handshake->hash);
+
+	/* ss */
+	if (!mix_precomputed_dh(handshake->chaining_key, key,
+				handshake->precomputed_static_static))
+		goto out;
+
+	/* {t} */
+	tai64n_now(timestamp);
+	message_encrypt(dst->encrypted_timestamp, timestamp,
+			NOISE_TIMESTAMP_LEN, key, handshake->hash);
+
+	dst->sender_index = wg_index_hashtable_insert(
+		handshake->entry.peer->device->index_hashtable,
+		&handshake->entry);
+
+	handshake->state = HANDSHAKE_CREATED_INITIATION;
+	ret = true;
+
+out:
+	up_write(&handshake->lock);
+	up_read(&handshake->static_identity->lock);
+
+== thread 1 ==
+
+	down_write(&handshake->lock);
+	/* It's important to check that the state is still the same, while we
+	 * have an exclusive lock.
+	 */
+	if (handshake->state != state) {
+		up_write(&handshake->lock);
+		goto fail;
+	}
+	memcpy(handshake->remote_ephemeral, e, NOISE_PUBLIC_KEY_LEN);
+	memcpy(handshake->hash, hash, NOISE_HASH_LEN);
+	memcpy(handshake->chaining_key, chaining_key, NOISE_HASH_LEN);
+	handshake->remote_index = src->sender_index;
+	handshake->state = HANDSHAKE_CONSUMED_RESPONSE;
+	up_write(&handshake->lock);
+	ret_peer = peer;
+	goto out;
+
+And now begin_session is called on the older completed handshake rather
+than the half-completed newer handshake?
+
+Or did you see some other flow?
+
+Let me know.
+
+Thanks,
+Jason
