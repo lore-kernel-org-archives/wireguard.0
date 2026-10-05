@@ -4,45 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6EF4CA6001
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 12:51:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21DCDCA5FF0
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 20:46:40 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 8573134c;
-	Mon, 5 Oct 2026 12:23:16 +0000 (UTC)
-Received: from mail-4325.protonmail.ch (mail-4325.protonmail.ch [185.70.43.25])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 524c5b24
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id c2cee03c;
+	Mon, 5 Oct 2026 20:43:58 +0000 (UTC)
+Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 6f6f3edb
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 5 Oct 2026 12:23:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
- s=protonmail2; t=1791202993; x=1791462193;
- bh=rlThywjyebgmdMMYOSCOBBh7IXfkT7Zoqqpj3w6jndQ=;
- h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
- Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
- Message-ID:BIMI-Selector;
- b=bsgJA6SevpwZyXaw6aD3GYAyc96l+YEr+WC7k8Y5hh/5cZ/LuP8kunSgmfYhD05N0
- MiUPTu+7tIP45oyhYsOlFsQYEmJC999nLUR3n8dYFl0oDNKUtgLc5aLZ9gXPP8akDh
- VOBIk360XTugIWj0vuBJqXzgSjN9+xTxz0tMiR5+iw6BJal2/czgyYK3Wi6fbULw/W
- efXH+qkfNaz2PNv+VXw3yIqMfuI47QPL8IGkm3ckXowwUTl1MbdzzWGnERCZXdgHkZ
- OjcSBhFUK0uYnV94OJq1rys3qogU0XrhvJYAdXdP4BFpUuDs40cUzc2oZosBpIvGgE
- 6fiJ4lUo0cu+g==
-Date: Mon, 05 Oct 2026 12:23:08 +0000
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-From: quantumvoid0 <quantumvoid0@proton.me>
-Cc: netdev-bot+sashiko@kernel.org, wireguard@lists.zx2c4.com,
- netdev@vger.kernel.org, kuba@kernel.org
-Subject: Re: [PATCH] wireguard: allowedips: prevent stack overflow without
- DEBUG
-Message-ID: <J3FhBqGm5xM550mTZHy9x-YSafy3ThxZgEkM-QOIfVTyC21TBnH0l6Mnmt5Suar61dhuBpv9QLNns4zdDIvaDK_Uvs54MF1uW4n09XAmVro=@proton.me>
-In-Reply-To: <CAHmME9qod-kW93qUPE14ABA3sKnoGjtxwpa2m-fXh1PwKXSOJg@mail.gmail.com>
-References: <TaZxFNfdnpo-3szeC-LoWZBxj-6XGhXkdEqnQi6yyaOHXp8cw4Xtksw07sYrIpludwvJQrukFoCGw3r9rXDcInkdB5QD2EswKPNsXMU3qMQ=@proton.me>
- <179117435281.434549.17747961185403870914@kernel.org>
- <9NzB3VmT-7cBBfdx9sREmRkFb_gOAmI78VheKlX2Mdiqjl3B3N0OCZ5DT8C1SpEJuM5O3TzLltSpGh9ptxni28Lnq4ATz8u86R-f-jdcKPE=@proton.me>
- <CAHmME9qod-kW93qUPE14ABA3sKnoGjtxwpa2m-fXh1PwKXSOJg@mail.gmail.com>
-Feedback-ID: 175132216:user:proton
-X-Pm-Message-ID: 5cfc955f16f15cf58728799d9121e0660cd3b84f
+ for <wireguard@lists.zx2c4.com>; Mon, 5 Oct 2026 20:43:55 +0000 (UTC)
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by sea.source.kernel.org (Postfix) with ESMTP id DE5544043D;
+ Mon,  5 Oct 2026 20:43:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EDEC1F000FF;
+ Mon,  5 Oct 2026 20:43:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1791233033;
+ bh=Z9zRtXHe/J1k/4/9wAeq1n+PwAt+ioXmV3zyjSNrjDw=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=Y53ZuGJBaY2SKB9U6jzz7C6rF6M3kGmXPB2xsId75Kf20cj+NLE3Gi0DUMisvJIEE
+ 2fmfYaRwJ6H+UV7NywcxHqtFZkAutQQrejEHMa0ZSAwHHlkaMLyiHLxVCay4aZ0Y3B
+ U672VvrxaloWdYA0uLnx0s4Eh+ijy6roHWALGcfigSN3VxHn3PEpVfE9YfNxCFxCpi
+ bCAAw6zzFK+mMfMMtsrOTxL9EM0ihGEpmyFEMJAJItrlJgfNbGGQUA7tgJ8VbDcn5/
+ fh5l1QOYtM1zsvqJr93vy1sNnvPET+tRX1kRpAYyrBAxbZ9p14SKM3sput2geeRMR8
+ J/GXSdRtSM3DA==
+From: netdev-bot+sinfo@kernel.org
+To: =?utf-8?q?J=C3=A9r=C3=A9my?= Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, wireguard@lists.zx2c4.com,
+ netdev@vger.kernel.org, Andrew Lunn <andrew+netdev@lunn.ch>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@kernel.org>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH net] wireguard: noise: reject responses for replaced
+ initiations
+Date: Mon, 05 Oct 2026 20:43:52 +0000
+Message-ID: <179123303279.1402591.1890335379434041073@kernel.org>
+In-Reply-To: <20261005203555.3552816-2-Jeremy.Jean@oss.cyber.gouv.fr>
+References: <20261005203555.3552816-2-Jeremy.Jean@oss.cyber.gouv.fr>
+Auto-Submitted: auto-generated
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -57,17 +59,24 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Understood, thanks for explaining. Ill drop this.
+Hi!
 
-quantumvoid0
+This is an automated message. This series looks like a fix, but its
+commit messages seem to be missing some information:
 
-On Monday, October 5th, 2026 at 12:19 PM, Jason A. Donenfeld <Jason@zx2c4.c=
-om> wrote:
+ - How the issue was discovered, e.g. hit in production, hit during
+   development, syzbot report, manual code inspection, LLM or static
+   analysis tool scan.
 
-> This is not reachable. The DEBUG is there because the point of the
-> selftests is to reach it, but not for this to run in production. I
-> coded it this way intentionally. I don't want to remove the DEBUG
-> test.
->=20
-> Jason
-> 
+ - Whether the issue was actually triggered, or is only theoretical
+   (e.g. found by code inspection). If it was triggered please include
+   the symptoms, like the stack trace or error messages.
+
+Please do not repost the series just to address the above. Instead,
+reply to this email with the missing information, so that reviewers
+can take it into account. If the series needs another revision for
+other reasons, please include the information in the commit messages
+then.
+
+The evaluation is done by an LLM so it may be wrong, if you think
+that is the case please reply and explain.
