@@ -4,55 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2AD8CA5FF5
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 21:21:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D77AECA5FF0
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2026 21:42:07 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 8e487997;
-	Mon, 5 Oct 2026 21:18:47 +0000 (UTC)
-Received: from sea.source.kernel.org (sea.source.kernel.org
- [2600:3c0a:e001:78e:0:1991:8:25])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 584d6d29
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id fe316907;
+	Mon, 5 Oct 2026 21:27:55 +0000 (UTC)
+Received: from mailcow.ringerl.de (mailcow.ringerl.de [91.237.88.114])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id e324a407
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 5 Oct 2026 21:18:40 +0000 (UTC)
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 3207042B70;
- Mon,  5 Oct 2026 21:18:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0767B1F000FF;
- Mon,  5 Oct 2026 21:18:37 +0000 (UTC)
-Authentication-Results: smtp.kernel.org; dkim=pass (1024-bit key,
- unprotected) header.d=zx2c4.com header.i=@zx2c4.com header.a=rsa-sha256
- header.s=20210105 header.b=EYeFbHym
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1791235116;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ArXPZwkOS21svTqyVFuDaFFdnY9qfU5vfWtScr/h5DQ=;
- b=EYeFbHymVSJkadjsLFpufo37mu0pzdItcuzxYQSucZfWL3N4HCOGN+/Rx5ZANWm8cmtZwO
- scY1MxjrSOus2i0osYjaZHf7hE94krpdUm3jwnBcK7iMGzw/703W5soEUcZGz4nbqO/75n
- VNJwL+yAI3OzCgdtSAyuPuvMFupqf9Q=
-Received: by mail.zx2c4.com (OpenSMTPD) with ESMTPSA id 7b51b2b2
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Mon, 5 Oct 2026 21:18:35 +0000 (UTC)
-Date: Mon, 5 Oct 2026 23:18:33 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: =?utf-8?B?SsOpcsOpbXk=?= Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Cc: wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- Andrew Lunn <andrew+netdev@lunn.ch>,
- "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@kernel.org>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH net] wireguard: noise: reject responses for replaced
- initiations
-Message-ID: <asQUKTOiEn6GB5sy@zx2c4.com>
-References: <20261005203555.3552816-2-Jeremy.Jean@oss.cyber.gouv.fr>
+ for <wireguard@lists.zx2c4.com>; Mon, 5 Oct 2026 13:52:05 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon)
+ with ESMTPA id B9694164014
+ for <wireguard@lists.zx2c4.com>; Mon, 05 Oct 2026 15:52:04 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kilian-ries.de;
+ s=dkim; t=1791208324;
+ h=from:subject:date:message-id:to:mime-version:content-type:
+ content-transfer-encoding; bh=oDTBXIui2tUmYXlb+ikIgTeS10n7mHs8o1N+8qShmiM=;
+ b=YTWYnRGLA21fys8p4W/985QqU3v7FU/NDXvWWlg+WVgBjYGP08JLPTNfVad8IQWG+toLK4
+ Kxp2IctfxfwTW5+pzHhbLhEJxgb82CE6eSbd8Z1fKMcQeZ4nQq+zbU3olDIhhk/5OPI0aH
+ /b6GP9vxAc05GgKLLm7/RJTTnrCDiWuGDuGe6DQDYKTHTa41sLT8bmkQ+xKLMEQ26pSKJi
+ lRuXq8wI5Oe0YjMuM3HRwAtTNGwFEOj7SAFL5JZHVDT/FnNhDPbEFVxAhDts0vGO+dBRFV
+ mRh554gGMSK8ee/yqtoEIl1yGTkfXYYYyxExBK5cWE8YdoDxEx7JQD/LuRdo9g==
+From: "Kilian Ries" <mail@kilian-ries.de>
+To: wireguard@lists.zx2c4.com
+User-Agent: SOGoMail 5.12.11
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261005203555.3552816-2-Jeremy.Jean@oss.cyber.gouv.fr>
+Date: Mon, 05 Oct 2026 15:52:04 +0200
+Subject: [PATCH wireguard-apple] =?utf-8?q?Keychain=3A?= use data protection 
+ keychain on macOS
+Message-ID: <e591acc2-e451-c000-7d85-25d99de77e2f@kilian-ries.de>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Last-TLS-Session-Version: None
+X-Mailman-Approved-At: Mon, 05 Oct 2026 21:27:54 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -67,161 +51,235 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+On macOS, tunnel configurations are stored in the file-based login
+keychain, with an access list that names the app and the network
+extension. On a Mac enrolled through account-driven enrollment, apps
+installed by MDM keep their data on a separate "Managed Data" volume.
+There is no login keychain for those apps, so SecItemAdd tries to creat=
+e
+one, and the sandbox refuses:
 
-On Mon, Oct 05, 2026 at 08:35:55PM +0000, Jérémy Jean wrote:
-> WireGuard can accept an old handshake response after starting a new
-> handshake. This reinstalls old keys and resets transport counters and
-> replay state, enabling nonce reuse, replay and packet forgery. This
-> breaks confidentiality and integrity guarantees.
-> 
-> Compare ephemeral secrets under the write lock to reject responses for
-> replaced initiations.
-> 
-> Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
-> Cc: stable@vger.kernel.org
-> Assisted-by: LLM
-> Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-> ---
->  drivers/net/wireguard/noise.c | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/net/wireguard/noise.c b/drivers/net/wireguard/noise.c
-> index 9c0a09bf6c95..88cc9acc7dc7 100644
-> --- a/drivers/net/wireguard/noise.c
-> +++ b/drivers/net/wireguard/noise.c
-> @@ -784,10 +784,12 @@ wg_noise_handshake_consume_response(struct message_handshake_response *src,
->  
->  	/* Success! Copy everything to peer */
->  	down_write(&handshake->lock);
-> -	/* It's important to check that the state is still the same, while we
-> -	 * have an exclusive lock.
-> +	/* Check that this is still the initiation we authenticated against,
-> +	 * while we have an exclusive lock.
->  	 */
-> -	if (handshake->state != state) {
-> +	if (handshake->state != state ||
-> +	    crypto_memneq(handshake->ephemeral_private, ephemeral_private,
-> +			  NOISE_PUBLIC_KEY_LEN)) {
->  		up_write(&handshake->lock);
->  		goto fail;
->  	}
+  authd: Sandbox denied authorizing right 'system.keychain.create.login=
+kc' by client '/Applications/WireGuard.app'
+  WireGuard: Unable to add config to keychain: -60005
+  WireGuard: Add: Saving configuration failed: Error Domain=3DNEVPNErro=
+rDomain Code=3D1 "Missing protocol or protocol has invalid type"
 
-Could you describe the flow that you think causes a bug? Trying
-to recreate your mental model. Something like this?
+In that state no tunnel can be added or imported.
 
-== thread 1 ==
+Store new items in the data protection keychain instead, in the app
+group that the app and the network extension already share, as on iOS.
+The access list is not needed there, because the shared access group
+grants the network extension access.
 
-	down_read(&handshake->lock);
-	state = handshake->state;
-	memcpy(hash, handshake->hash, NOISE_HASH_LEN);
-	memcpy(chaining_key, handshake->chaining_key, NOISE_HASH_LEN);
-	memcpy(ephemeral_private, handshake->ephemeral_private,
-	       NOISE_PUBLIC_KEY_LEN);
-	memcpy(preshared_key, handshake->preshared_key,
-	       NOISE_SYMMETRIC_KEY_LEN);
-	up_read(&handshake->lock);
+Items created by earlier versions stay in the file-based keychain.
+Reading, verifying and deleting a reference try the data protection
+keychain first and then the file-based one, so existing tunnels keep
+working. An existing tunnel moves to the data protection keychain the
+next time it is saved.
 
-	if (state != HANDSHAKE_CREATED_INITIATION)
-		goto fail;
+Signed-off-by: Kilian Ries <mail@kilian-ries.de>
+---
 
-	/* e */
-	message_ephemeral(e, src->unencrypted_ephemeral, chaining_key, hash);
+Notes:
+    Seen on macOS 27.0.1 with WireGuard 1.0.16 from the App Store, on a=
+ Mac
+    enrolled in Apple Business Manager through account-driven device
+    enrollment. Apps installed there by MDM show a Personas entry in
+    "pluginkit -mAvvv", and their containers live on the "Managed Data"
+    APFS volume.
+   =20
+    Type-checked for macOS 12 and iOS 15. Not tested at runtime yet, si=
+nce
+    that needs a build signed for the app group.
 
-	/* ee */
-	if (!mix_dh(chaining_key, NULL, ephemeral_private, e))
-		goto fail;
+ Sources/Shared/Keychain.swift | 96 +++++++++++++++++++----------------
+ 1 file changed, 51 insertions(+), 45 deletions(-)
 
-	/* se */
-	if (!mix_dh(chaining_key, NULL, wg->static_identity.static_private, e))
-		goto fail;
+diff --git a/Sources/Shared/Keychain.swift b/Sources/Shared/Keychain.sw=
+ift
+index 2e0e7f0..c99ea85 100644
+--- a/Sources/Shared/Keychain.swift
++++ b/Sources/Shared/Keychain.swift
+@@ -7,9 +7,8 @@ import Security
+ class Keychain {
+     static func openReference(called ref: Data) -> String? {
+         var result: CFTypeRef?
+-        let ret =3D SecItemCopyMatching([kSecValuePersistentRef: ref,
+-                                        kSecReturnData: true] as CFDic=
+tionary,
+-                                       &result)
++        let ret =3D firstSuccess([kSecValuePersistentRef: ref,
++                                kSecReturnData: true]) { SecItemCopyMa=
+tching($0, &result) }
+         if ret !=3D errSecSuccess || result =3D=3D nil {
+             wg=5Flog(.error, message: "Unable to open config from keyc=
+hain: \(ret)")
+             return nil
+@@ -19,7 +18,6 @@ class Keychain {
+     }
+=20
+     static func makeReference(containing value: String, called name: S=
+tring, previouslyReferencedBy oldRef: Data? =3D nil) -> Data? {
+-        var ret: OSStatus
+         guard var bundleIdentifier =3D Bundle.main.bundleIdentifier el=
+se {
+             wg=5Flog(.error, staticMessage: "Unable to determine bundl=
+e identifier")
+             return nil
+@@ -40,38 +38,16 @@ class Keychain {
+         items[kSecAttrAccessGroup] =3D FileManager.appGroupId
+         items[kSecAttrAccessible] =3D kSecAttrAccessibleAfterFirstUnlo=
+ck
+         #elseif os(macOS)
++        items[kSecUseDataProtectionKeychain] =3D true
++        items[kSecAttrAccessGroup] =3D FileManager.appGroupId
+         items[kSecAttrSynchronizable] =3D false
+         items[kSecAttrAccessible] =3D kSecAttrAccessibleAfterFirstUnlo=
+ckThisDeviceOnly
+-
+-        guard let extensionPath =3D Bundle.main.builtInPlugInsURL?.app=
+endingPathComponent("WireGuardNetworkExtension.appex", isDirectory: tru=
+e).path else {
+-            wg=5Flog(.error, staticMessage: "Unable to determine app e=
+xtension path")
+-            return nil
+-        }
+-        var extensionApp: SecTrustedApplication?
+-        var mainApp: SecTrustedApplication?
+-        ret =3D SecTrustedApplicationCreateFromPath(extensionPath, &ex=
+tensionApp)
+-        if ret !=3D kOSReturnSuccess || extensionApp =3D=3D nil {
+-            wg=5Flog(.error, message: "Unable to create keychain exten=
+sion trusted application object: \(ret)")
+-            return nil
+-        }
+-        ret =3D SecTrustedApplicationCreateFromPath(nil, &mainApp)
+-        if ret !=3D errSecSuccess || mainApp =3D=3D nil {
+-            wg=5Flog(.error, message: "Unable to create keychain local=
+ trusted application object: \(ret)")
+-            return nil
+-        }
+-        var access: SecAccess?
+-        ret =3D SecAccessCreate(itemLabel as CFString, [extensionApp!,=
+ mainApp!] as CFArray, &access)
+-        if ret !=3D errSecSuccess || access =3D=3D nil {
+-            wg=5Flog(.error, message: "Unable to create keychain ACL o=
+bject: \(ret)")
+-            return nil
+-        }
+-        items[kSecAttrAccess] =3D access!
+         #else
+         #error("Unimplemented")
+         #endif
+=20
+         var ref: CFTypeRef?
+-        ret =3D SecItemAdd(items as CFDictionary, &ref)
++        let ret =3D SecItemAdd(items as CFDictionary, &ref)
+         if ret !=3D errSecSuccess || ref =3D=3D nil {
+             wg=5Flog(.error, message: "Unable to add config to keychai=
+n: \(ret)")
+             return nil
+@@ -83,32 +59,62 @@ class Keychain {
+     }
+=20
+     static func deleteReference(called ref: Data) {
+-        let ret =3D SecItemDelete([kSecValuePersistentRef: ref] as CFD=
+ictionary)
++        let ret =3D firstSuccess([kSecValuePersistentRef: ref]) { SecI=
+temDelete($0) }
+         if ret !=3D errSecSuccess {
+             wg=5Flog(.error, message: "Unable to delete config from ke=
+ychain: \(ret)")
+         }
+     }
+=20
+     static func deleteReferences(except whitelist: Set<Data>) {
+-        var result: CFTypeRef?
+-        let ret =3D SecItemCopyMatching([kSecClass: kSecClassGenericPa=
+ssword,
+-                                       kSecAttrService: Bundle.main.bu=
+ndleIdentifier as Any,
+-                                       kSecMatchLimit: kSecMatchLimitA=
+ll,
+-                                       kSecReturnPersistentRef: true] =
+as CFDictionary,
+-                                      &result)
+-        if ret !=3D errSecSuccess || result =3D=3D nil {
+-            return
+-        }
+-        guard let items =3D result as? [Data] else { return }
+-        for item in items {
+-            if !whitelist.contains(item) {
+-                deleteReference(called: item)
++        for query in keychainQueries([kSecClass: kSecClassGenericPassw=
+ord,
++                                      kSecAttrService: Bundle.main.bun=
+dleIdentifier as Any,
++                                      kSecMatchLimit: kSecMatchLimitAl=
+l,
++                                      kSecReturnPersistentRef: true]) =
+{
++            var result: CFTypeRef?
++            let ret =3D SecItemCopyMatching(query, &result)
++            if ret !=3D errSecSuccess || result =3D=3D nil {
++                continue
++            }
++            guard let items =3D result as? [Data] else { continue }
++            for item in items {
++                if !whitelist.contains(item) {
++                    deleteReference(called: item)
++                }
+             }
+         }
+     }
+=20
+     static func verifyReference(called ref: Data) -> Bool {
+-        return SecItemCopyMatching([kSecValuePersistentRef: ref] as CF=
+Dictionary,
+-                                   nil) !=3D errSecItemNotFound
++        return firstSuccess([kSecValuePersistentRef: ref]) { SecItemCo=
+pyMatching($0, nil) } !=3D errSecItemNotFound
++    }
++
++    /* On macOS, new items go into the data protection keychain. Items=
+ created by
++     * earlier versions live in the file-based login keychain, which d=
+oes not exist
++     * for apps whose data the system keeps on a separate volume, such=
+ as apps
++     * installed by MDM. So every lookup tries the data protection key=
+chain first
++     * and then the file-based one.
++     */
++    private static func keychainQueries(=5F query: [CFString: Any]) ->=
+ [CFDictionary] {
++        #if os(macOS)
++        var dataProtectionQuery =3D query
++        dataProtectionQuery[kSecUseDataProtectionKeychain] =3D true
++        return [dataProtectionQuery as CFDictionary, query as CFDictio=
+nary]
++        #else
++        return [query as CFDictionary]
++        #endif
++    }
++
++    private static func firstSuccess(=5F query: [CFString: Any], =5F o=
+peration: (CFDictionary) -> OSStatus) -> OSStatus {
++        var ret =3D errSecItemNotFound
++        for query in keychainQueries(query) {
++            let status =3D operation(query)
++            if status =3D=3D errSecSuccess {
++                return status
++            }
++            if status !=3D errSecItemNotFound && status !=3D errSecNoS=
+uchKeychain {
++                ret =3D status
++            }
++        }
++        return ret
+     }
+ }
+--=20
+2.54.0 (Apple Git-157)
 
-	/* psk */
-	mix_psk(chaining_key, hash, key, preshared_key);
-
-	/* {} */
-	if (!message_decrypt(NULL, src->encrypted_nothing,
-			     sizeof(src->encrypted_nothing), key, hash))
-		goto fail;
-
-== thread 2 ==
-
-	down_read(&handshake->static_identity->lock);
-	down_write(&handshake->lock);
-
-	if (unlikely(!handshake->static_identity->has_identity))
-		goto out;
-
-	dst->header.type = cpu_to_le32(MESSAGE_HANDSHAKE_INITIATION);
-
-	handshake_init(handshake->chaining_key, handshake->hash,
-		       handshake->remote_static);
-
-	/* e */
-	curve25519_generate_secret(handshake->ephemeral_private);
-	if (!curve25519_generate_public(dst->unencrypted_ephemeral,
-					handshake->ephemeral_private))
-		goto out;
-	message_ephemeral(dst->unencrypted_ephemeral,
-			  dst->unencrypted_ephemeral, handshake->chaining_key,
-			  handshake->hash);
-
-	/* es */
-	if (!mix_dh(handshake->chaining_key, key, handshake->ephemeral_private,
-		    handshake->remote_static))
-		goto out;
-
-	/* s */
-	message_encrypt(dst->encrypted_static,
-			handshake->static_identity->static_public,
-			NOISE_PUBLIC_KEY_LEN, key, handshake->hash);
-
-	/* ss */
-	if (!mix_precomputed_dh(handshake->chaining_key, key,
-				handshake->precomputed_static_static))
-		goto out;
-
-	/* {t} */
-	tai64n_now(timestamp);
-	message_encrypt(dst->encrypted_timestamp, timestamp,
-			NOISE_TIMESTAMP_LEN, key, handshake->hash);
-
-	dst->sender_index = wg_index_hashtable_insert(
-		handshake->entry.peer->device->index_hashtable,
-		&handshake->entry);
-
-	handshake->state = HANDSHAKE_CREATED_INITIATION;
-	ret = true;
-
-out:
-	up_write(&handshake->lock);
-	up_read(&handshake->static_identity->lock);
-
-== thread 1 ==
-
-	down_write(&handshake->lock);
-	/* It's important to check that the state is still the same, while we
-	 * have an exclusive lock.
-	 */
-	if (handshake->state != state) {
-		up_write(&handshake->lock);
-		goto fail;
-	}
-	memcpy(handshake->remote_ephemeral, e, NOISE_PUBLIC_KEY_LEN);
-	memcpy(handshake->hash, hash, NOISE_HASH_LEN);
-	memcpy(handshake->chaining_key, chaining_key, NOISE_HASH_LEN);
-	handshake->remote_index = src->sender_index;
-	handshake->state = HANDSHAKE_CONSUMED_RESPONSE;
-	up_write(&handshake->lock);
-	ret_peer = peer;
-	goto out;
-
-And now begin_session is called on the older completed handshake rather
-than the half-completed newer handshake?
-
-Or did you see some other flow?
-
-Let me know.
-
-Thanks,
-Jason
