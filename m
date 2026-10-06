@@ -4,66 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88BA0CA5FFC
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  6 Oct 2026 15:19:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B72D7CA5FED
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  6 Oct 2026 15:40:57 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 57b64318;
-	Tue, 6 Oct 2026 15:19:20 +0000 (UTC)
-Received: from sea.source.kernel.org (sea.source.kernel.org
- [2600:3c0a:e001:78e:0:1991:8:25])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id f6d48bca
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 7953b029;
+	Tue, 6 Oct 2026 15:40:55 +0000 (UTC)
+Received: from mail.philomathiclife.com (mail.philomathiclife.com
+ [174.136.97.10])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 4928d1aa
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 6 Oct 2026 15:19:18 +0000 (UTC)
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id B0FA0429DF
- for <wireguard@lists.zx2c4.com>; Tue,  6 Oct 2026 15:19:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ED291F0089D
- for <wireguard@lists.zx2c4.com>; Tue,  6 Oct 2026 15:19:16 +0000 (UTC)
-Authentication-Results: smtp.kernel.org; dkim=pass (1024-bit key,
- unprotected) header.d=zx2c4.com header.i=@zx2c4.com header.a=rsa-sha256
- header.s=20210105 header.b=T4rRGkfl
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1791299952;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Weov/P+/p0SLpGeOdCKZ0hPSh/5P6GsNL1zHwTxrXD8=;
- b=T4rRGkflwwu37nc3SE56s5aXMFNq1Sd7iW4cWzK2tAYnvPhnH1j40GDZVnFwwLI0KGvv7Q
- PJughyNC8CBlfidR36wp9qFjdnU3/WaR95BTCQDoYMMnXMRA5salV54V8Qa9XyGuA6nCfq
- k1qsihynzbgngPpUsholmOlL4gFI33U=
-Received: by mail.zx2c4.com (OpenSMTPD) with ESMTPSA id 63623e0a
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 6 Oct 2026 15:19:12 +0000 (UTC)
-Received: by mail-ej1-f52.google.com with SMTP id
- a640c23a62f3a-c315729ad50so101397366b.0
- for <wireguard@lists.zx2c4.com>; Tue, 06 Oct 2026 08:19:12 -0700 (PDT)
-X-Gm-Message-State: AFuF++lP7Qf3VqOvl4GXtx/JW6SQ+SB1VC6C/K4WfLnafq+IN3u5q+cC
- 6bQ2EFob7Bw2YswbEtzq1vC5GMaaZ5a3jUVs95MltJCveaHqSiOe9zWDuTSLy7KMM91a72HQVDt
- l+77L4o0PW052xwWjltkN99Pn+gWqvZQ=
-X-Received: by 2002:a17:907:9303:b0:c2d:be57:f73a with SMTP id
- a640c23a62f3a-c3169fcb966mr205695166b.13.1791299950007; Tue, 06 Oct 2026
- 08:19:10 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Tue, 6 Oct 2026 15:40:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=20260811;
+ t=1791301240; x=1791387640; bh=R86rn4cHnZH1LGWa1iuSkN8tKZqILVmPw+PzjFu
+ x4kY=; h=in-reply-to:from:references:cc:to:subject:date;
+ d=philomathiclife.com; b=Lb2LWEqoDD9lDn/ikOnKKTCeEnHTJMoz5yn6IqezzRm8X
+ 0N+ik4uA8aW0jWHeXgKP0j3KWi41CINebu7zfG9jlpWvDJLd23JqDPqsLAZnwYQ95sC2t0
+ TMo9Bg8h8q4rfJRyZepAoM+0Te0pUThX6limi3mz3hgrNugVE6UKvpsQ2VQ88Rc8kk46qJ
+ Zse131c9xTYSaf1HeCd5pVYYENiOVNWyw/rXz7QCaPlW0nI7nhR4R7IeisRP67zdV78TfE
+ Sa7G8CtS35Uk1DUiVW6V0B2BI5FQQzqFoSayQhXNhPz7+VTjH+nd1PahDNw2kcaSXVd4Bk
+ gTUtpuDSsmWF26npQ==
+Received: from laptop.philomathiclife.com (<unknown> [2601:283:4e00:fdd4::2])
+ by philomathiclife.com (OpenSMTPD) with ESMTPSA id 98a0f427
+ (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO); 
+ Tue, 6 Oct 2026 09:40:40 -0600 (MDT)
+Message-ID: <e1255116-a94f-45a6-9450-f873c0c69ac4@philomathiclife.com>
+Date: Tue, 6 Oct 2026 09:40:34 -0600
 MIME-Version: 1.0
-References: <20261005203555.3552816-2-Jeremy.Jean@oss.cyber.gouv.fr>
- <asQUKTOiEn6GB5sy@zx2c4.com> <asSo7kefA3IQFpQp@zx2c4.com>
- <fbeae2e157e335504157b6a6683fb505@oss.cyber.gouv.fr>
-In-Reply-To: <fbeae2e157e335504157b6a6683fb505@oss.cyber.gouv.fr>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 6 Oct 2026 17:18:58 +0200
-X-Gmail-Original-Message-ID: <CAHmME9pgEFwtj2sCvJTcYHSo1P8PG5Kq3d69Qse6FZ2NbN9=mw@mail.gmail.com>
-X-Gm-Features: AclHuK-mqDh7kqqib3p4GuIAljgLgEirJ4KIrhrG3xAzndDfPZnbYHtxqYInJtE
-Message-ID: <CAHmME9pgEFwtj2sCvJTcYHSo1P8PG5Kq3d69Qse6FZ2NbN9=mw@mail.gmail.com>
-Subject: Re: [PATCH net] wireguard: noise: reject responses for replaced
- initiations
-To: =?UTF-8?B?SsOpcsOpbXkgSmVhbg==?= <jeremy.jean@oss.cyber.gouv.fr>
-Cc: wireguard@lists.zx2c4.com, netdev@vger.kernel.org, 
- Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, 
- Eric Dumazet <edumazet@kernel.org>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, 
- linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: OpenBSD collaboration/peer-review request
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: wireguard@lists.zx2c4.com
+References: <188dc861-f452-4830-9b47-e51c15faf41d@philomathiclife.com>
+ <CAHmME9pKeQK46EKALjX7NgH3Qc_HTWw6aZi_crRe7Tf6WDHR4w@mail.gmail.com>
+Content-Language: en-US
+From: Zack Newman <zack@philomathiclife.com>
+In-Reply-To: <CAHmME9pKeQK46EKALjX7NgH3Qc_HTWw6aZi_crRe7Tf6WDHR4w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -78,24 +54,32 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi J=C3=A9r=C3=A9my,
+On 10/6/26 5:28 AM, Jason A. Donenfeld wrote:
+> Hi Zack,
+> 
+> Of course I'd be happy to work on this. Do you (or someone else) want
+> to jump on a video call and we can share screens and you can show me
+> the stuff you think I should be looking at?
+> 
+> Jason
 
-On Tue, Oct 6, 2026 at 2:40=E2=80=AFPM J=C3=A9r=C3=A9my Jean
-<jeremy.jean@oss.cyber.gouv.fr> wrote:
-> Thanks for your quick reply. Sorry that I could not answer in time.
-> Your analysis is indeed the scenario that I had in mind, yet, the
-> second thread does not really have to block, I'd say it can just
-> be slow?
+Hi Jason,
 
-That's right.
+Unfortunately it appears the devs aren't interested in continued 
+collaboration or even using the Linux implementation as a rough guide. I 
+was told privately to just "go use Linux" by Theo in his typical Theo 
+way; and that's in fact what I've decided to do for my machines that are 
+reliant on WireGuard since I demand reliability, compatibility, and 
+security for something as important as a VPN.
 
-> As for real world feasibility and impacts, I must admit that
-> I have no idea.
+I'm sorry I can't be of more help. I'm not sure how this affects the 
+status of wireguard-openbsd. The WireGuard implementation in OpenBSD is 
+certainly active, but the wireguard-openbsd repo itself is quite a bit 
+different than what is actually in the kernel. Over the last five years 
+there have been issues with WireGuard in particular with its mbuf 
+handling. I wish the devs would have continued their collaboration, but 
+such is life.
 
-I've been unable to synthetically reproduce this -- even with adding
-sleeps and additional synchronization primitives to the code to force
-it. But it does seem like a real issue in theory. So thanks for the
-patch. I'll add some detail to the commit message, and get this
-upstream and backported and such.
+Anyway, feel free to disregard my request; and thank you for your time.
 
-Jason
+Zack
