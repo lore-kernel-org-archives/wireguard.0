@@ -2,82 +2,118 @@ Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E257B606A31A
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Oct 2026 05:28:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0668606A31A
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Oct 2026 05:28:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=permerror header.d=gmail.com header.i=@gmail.com header.a=rsa-sha1 header.s=20251104 header.b=rDioTWgz
+	dkim=pass (1024-bit key, unprotected) header.d=arconsult.hu header.i=@arconsult.hu header.a=rsa-sha256 header.s=selector1 header.b=jUAN9ABW
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id f8489716;
-	Mon, 26 Oct 2026 05:28:41 +0000 (UTC)
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com
- [2607:f8b0:4864:20::632])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 168925e9
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id c00ea99d;
+	Mon, 26 Oct 2026 05:28:43 +0000 (UTC)
+Received: from DB3PR0202CU003.outbound.protection.outlook.com
+ (mail-northeuropeazon11020111.outbound.protection.outlook.com
+ [52.101.84.111])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 84753315
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 11 Oct 2026 10:23:31 +0000 (UTC)
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2e81738d24eso8759855ad.1
- for <wireguard@lists.zx2c4.com>; Sun, 11 Oct 2026 03:23:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1791714208; x=1792319008; darn=lists.zx2c4.com;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=/pPRjimeEtxmh2P3t5S8/c4gUxkBAEeUK/IaL4NUFWU=;
- b=rDioTWgzhpsqe0U/PQN5lOqIENAbtxxdh7hjH9P6brItibjPRaomLuRKAtEwmVXA6X
- 9avp4OmDVyO6TeKNxdyAbrYS0KC87PIxHaStLL+fXecdrjkcizzlE9DYqIPQQeaY+yeH
- FaQsQ813qwsTkU/eiUDhO1Ffd4jr/0Msp2R+BeMFlBLRVfir+2RVUqwTLPoCoOV8NzDY
- tLbbG3sWZGz6+Me81ChSXAZE5J1vypKvBqHJz+PeWtNJZeyzD3co9KyOL9Vcg6VfQ0HG
- O95rKH9Qgb9MkrCLv0KS5LlwNhhixeLeDXbgmy6oVF/YigyTVOa+E4JT+y8xDkwapq0V
- Rujw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1791714208; x=1792319008;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=/pPRjimeEtxmh2P3t5S8/c4gUxkBAEeUK/IaL4NUFWU=;
- b=rZ7OEF5kwjwrwXgibY42+fGiJz8+UZWDDcN2x9OuKesBzThE21NFtHxgiNcgcaMogb
- fgjBZ1L9YUscbbPIwEL9m9TUjMnPTerQqzCOa3HwZKYaOkixa1jx3Q8b7DOE14j2w/1x
- Ub5vmjsHPxc4L4myvCJrZxhjjPHklRkC7peiI1Lch6OWxfiqRE8p6LCeIFIYQUbVUr02
- euVjyDhuUDHQX/dVMfEd5nQySgE4Qlk8cz02+SeaG8i9DQg62UX2jyz+bG89zfIUP15B
- Lu+Pt69MZjXyLa23wWgx2zZQUaZDWrjZzk9eTMA13X6WL8Kv9tZjOYQJ2rkUcXCRnSQi
- 602g==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzF1bf7obzguUthx8kwYwq1ugp4u0QWK95MvT6B7qudBQOOXbsyaj5C4NbxHbO3gj10ZA5eLt9ojXA=@lists.zx2c4.com
-X-Gm-Message-State: AFq9FYL+RaJAwwCpV3WsAIRLKiHB1aauGt2M88DtbKj/QUuYQfqvPwDA
- oza4dHtqjy5fWtAVlfy2FmRfb5Nz/iyYFmaTJM3IyaSQX/lGmL1MWsJc
-X-Gm-Gg: AYBFou0jJAi2QBTzgayLQpaAR6n724kzcZnvsQRjh+IOmpcnQz+BJ4+9PIb6Qk1Q0NG
- 38ymtVGulptKVKcVP/VLYwu0tNeWEJh1GVdWhV7lx7UHSuUvR70+oNI1Pt0/Dc39qkurfUSi+23
- 4djfc1v+OsUtue/ptrn/qVoQtveYjjg1AKU8/kvEXk1adXQx6QFgCnIXKUPigl1cmZR0QCaGnBP
- CwDlV5/5nmT7gSiDYTopf6E2PXHyhAXVOYeOrMrDDpTJI75pGTdCtputCXoAmFYfYfeW28EQzKR
- tzhU+nXoCZV9ZcuuogVAehjvkhcyIwOf/q2zS+LL2ztPcj+3EMgXM72C1pVhV3Mgccq0PxfWOsr
- NzpYFBMn4QD/VQw9MnGgNYcjN4Cm1sUirnFt1b3Rw/iXb/8Fsf7N9s3f0XghVGIlG+DJ+KExCbJ
- iBskxXMlqSQ5fH879D578ZQZZdXONIWP8qkqjfLZbbsG2gKulHASXFEHBe6VinCHiu8RWC8KSsj
- tel4Y0uGio=
-X-Received: by 2002:a17:902:f78c:b0:2e5:98d7:821e with SMTP id
- d9443c01a7336-2e8428207f8mr61319815ad.7.1791714208455; 
- Sun, 11 Oct 2026 03:23:28 -0700 (PDT)
-Received: from thangnn-ASUS.. ([2a09:bac5:d45a:16c8::245:79])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2e8422e1643sm31643955ad.70.2026.10.11.03.23.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 11 Oct 2026 03:23:27 -0700 (PDT)
-From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
-To: "Jason A . Donenfeld" <Jason@zx2c4.com>,
- "David S . Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com,
- netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
- Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
- syzbot+de9701a2cad597c14d34@syzkaller.appspotmail.com
-Subject: [PATCH net] wireguard: mark racy persistent_keepalive_interval
- accesses
-Date: Sun, 11 Oct 2026 17:23:22 +0700
-Message-ID: <20261011102322.355167-1-ngocthang2710.1999@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ Sun, 11 Oct 2026 10:47:41 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=rtqLHQJ7tvoXEN78gpgNMR4NkUpZp+8VycFpoOyaFaSUqiJx8PDSPCf6SbQXfiOAtb6FJ+rY5vkbthAW7rDAiDsr0LBQQe/wM3NTyHjTB4HYyl2CXEkW8PVYmb+g88SY4RRVKMQHOu1SS/tMbfPrj90PYZ07ev1BM7bYsobWWlDDK3+Q4BiKE/+wFyG7iQZHQd4KSRVkeFs8OgyyCPX1gPQ4KJ4ylBpd8zRMzNpHvf16CJt8vUN6dl1Bl3iuN1qbtaa8g5nrzqCeS4xW0nmWFPkQP3EzEJOL5Dwlh9MJVK6x1kMaWVBljDL2zTiWzUAafUhbL0TDfOBSIzAFIZajsQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=F77JZlp3uP+gwC3VsCz4GIaXstZ8DInNuqlslP9rUfM=;
+ b=OB2JR4GfEl5dOiribelyDFLjwx8m4ttblukiOwbczf9OW6JlTEET0oh43bPRYgpIGpSfy5qBL3+IeITskFrmxszrOI3r1AtF2fUhTqpnZ3cwNSeIUfkb1Pzk5rWKQoz5noEKLEqCkkkL475n50T3/qZw+C684htymj20XxCUHUH0k7QOgnwKClo5Jxti8nEqV0zX8KpLU7o2cLWJzZig8Oa+DPZvdLp5sQomXe3ur/1sDqigvf/jp9g7P7lfI3ipiAWZMq74gowrVuBD8etkwa/K4hcs2uLpRz8xWdtSYLHBbKYhkvU2pUjyI818J5rZ8wNu94qmnilfuvtBxF5pug==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=arconsult.hu; dmarc=pass action=none header.from=arconsult.hu;
+ dkim=pass header.d=arconsult.hu; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arconsult.hu;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=F77JZlp3uP+gwC3VsCz4GIaXstZ8DInNuqlslP9rUfM=;
+ b=jUAN9ABWSce1W8pBgv3GLI36AZVMvPjGi4DWgMzX8wdDlkHVwmMglWAsrijFI/FovZhyZPO0zJXs9akCzoPkBpe/CnhbuV44Hx07C6uIVxeie2hL0d0B54Lspxu+V10IBDHHFU0UgBgLmgLyvNOJcbSraPCuDEYpdwNgHGUikyk=
+Received: from AM8PR06MB7441.eurprd06.prod.outlook.com (2603:10a6:20b:366::19)
+ by AM9PR06MB8268.eurprd06.prod.outlook.com (2603:10a6:20b:433::15)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.20; Sun, 11 Oct
+ 2026 10:47:38 +0000
+Received: from AM8PR06MB7441.eurprd06.prod.outlook.com
+ ([fe80::cf48:340e:38cf:ee20]) by AM8PR06MB7441.eurprd06.prod.outlook.com
+ ([fe80::cf48:340e:38cf:ee20%4]) with mapi id 15.21.0496.015; Sun, 11 Oct 2026
+ 10:47:38 +0000
+From: =?iso-8859-2?Q?Ard=F3_P=E9ter?= <peter.ardo@arconsult.hu>
+To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Subject: [wireguard] Reproducible wireguard-go OOM crash on ARMv7 under high
+ UDP receive load
+Thread-Topic: [wireguard] Reproducible wireguard-go OOM crash on ARMv7 under
+ high UDP receive load
+Thread-Index: AQHdWWz67cwYaX8SbUeDP6y1c8kYmQ==
+Date: Sun, 11 Oct 2026 10:47:38 +0000
+Message-ID: <AM8PR06MB7441F518B81827084BA8B810E6902@AM8PR06MB7441.eurprd06.prod.outlook.com>
+Accept-Language: hu-HU, en-US
+Content-Language: hu-HU
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: 
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=arconsult.hu;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AM8PR06MB7441:EE_|AM9PR06MB8268:EE_
+x-ms-office365-filtering-correlation-id: 1dd96c86-de97-4a3b-d496-08df27851162
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|376014|366016|23010399003|38070700021|56012099006|11063799006|261009223027099003|260925021911599003|260925021311599003|260925022911599003|10067099003|18002099003|6133799003;
+x-microsoft-antispam-message-info: LtnScy6uJps3Y8b+OlHGA9vZlPnraFmTp+hK27haTJtF4qfwmC3j2+V9hPYXMvfgFS97Bbfr6xCLOkMeeV+NjqgzSEkNKs6/asPvSbOQDR+OL0/JsHJTdwzMf8AuxgyhB6tOXr0xekmHRq9YUh6as3JqA87PfCQ9A2KOei2MzQv6il0G2C/BJR4m2mfYNxFLmLdY7psMyFZnsk60nZmJGlwbCBmFLgPn1YlKz7tY4rjDLH8Fx/0f413OW+NRptDXPyCvpTSzPZFXJ9BbH1gqRxDGYL641/bykvp+MYY/jf8qHztdxPKrYR1UYai04tCLgCMnZoU6OLlcOr/GUMpcv2qQs4ARHLJ0n14igcruVJwZyTqPh2PbWohNBlJ2GiTUEso0KGQT8b+tgmHkD2+vFTaRo2ag+fwBnMu2aDg+rUF9oCHqLBuO3IWPWjoZGef5Ti4SRjNs3ePHvDx6eH55Sdf+eiWpEB7re0nYZ1oqEzdPHW+L/LLWqdze03VA9yIoEeXq+Lh64YkSgxc+0kzgErGC0JIMZymyAs2uHl/Y3yINSmDjZxcoJCN+ZLNF7BIU1ep72q+gc9xxoR2cNOzgwh4l7DeXXjtGYrbGA4Unh38fHSuC5M8zQT62PVr4ukDzhkEkwS/049+OxRaGXcgp7qAPQ/jqYzkB+goT/54r/a7N4xSkkPHIyqmHnfr48ENTx/GSUNrQkHw30Y6Y4tLzXg==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM8PR06MB7441.eurprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(38070700021)(56012099006)(11063799006)(261009223027099003)(260925021911599003)(260925021311599003)(260925022911599003)(10067099003)(18002099003)(6133799003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-2?Q?kKkkZrMvRHlJIfGWtY/r8NllBIeOqOvOsvkGeeX0WP4DEpeWFRN9G1c6YG?=
+ =?iso-8859-2?Q?DcCQJQFqv2sboO8sxI5BvHtsyC9RGREQN/ekFHK0ByZ4sChf4I6r2I8zrI?=
+ =?iso-8859-2?Q?bI4LtXi3y1ZnaDYKmu3IZFtp/wcZ9zBiegMFAbzOJ8caMVLo7rdLj1l1PP?=
+ =?iso-8859-2?Q?GGyi2cOl06S5jpxa0kEaBCHrJBHy7undRDJbkrYEzeDEIXqQ5qIVabImu9?=
+ =?iso-8859-2?Q?GLTO9p+eKjCa+sMVfjy6+shNsfUQpvJOhI74FpK1szd5woo2g9mdbg2j6R?=
+ =?iso-8859-2?Q?3cjPrA2IcYhj7j92WVvajO2K2zb3Rz5nlt2ZAXOPAK81I6R9KBFgIofVVA?=
+ =?iso-8859-2?Q?FfbWQC2mEDLrlm2S83mhShnCK1tsYXaf6LzvizLuaqt3uHNcOkAJE6/neZ?=
+ =?iso-8859-2?Q?wREXcRaM4DswxCRJUCCPtnS6GYUcGyBADzCcwbPZX3e20cxs3dcRXFybJV?=
+ =?iso-8859-2?Q?3NBVC+qIDhA1XfN6fJvimagn4MluTaGenFlWUAWnKmdB3sGO/W3mve/smx?=
+ =?iso-8859-2?Q?oJb7XreXf9ImF+rYJN758nuu7GBWJhgZbWM3wmogDBu7ZQR6eC4IB977RG?=
+ =?iso-8859-2?Q?XrA+8lN5ozICFLG9ApGVeWma4YX/99yeTEMxKqlg4MLbifLXIWMsCFF4v0?=
+ =?iso-8859-2?Q?jI8043Aa8QCn4AVIMDLWt3RNuiFmM6J4NiuXb2IULN25DevpfQgiNXiS1k?=
+ =?iso-8859-2?Q?9SiMUU8w4fdrYxX9955935Nfmt2lJX4mF9EHyrK0UfSy5TIo2rcBsKw0SY?=
+ =?iso-8859-2?Q?hUYUWC3Ihh6o2LXx/AXISoa1Q6MOmvhmoCBrr56qcpZD4osEQix0vrBmxz?=
+ =?iso-8859-2?Q?Yf8YShsKPZ1m2yLCcunK6E7P7oNhtFtJH2un0KQOs7IKIrOxU4AET3qqQM?=
+ =?iso-8859-2?Q?z2EMYL1FLd91pNxUjzbJ7tnEFcALeYzTHr4M2MqagFP0iXVk5CUwGyRot9?=
+ =?iso-8859-2?Q?8L6HJtpuLyi494Cp9GSlcNoh6wvnHRiYFDqK4P400TEo8M0PSkrjwi7YiB?=
+ =?iso-8859-2?Q?/9X2wvOEp4nklOc6VmF05kPut0U02FS8klX2m7aDTMQ1Qzl2RJ9oZ29Rvr?=
+ =?iso-8859-2?Q?dxP5NsX8r+uVDpLb4idV6Vnmzh8LT1iQmD8OfneuQxg52RcLz0D7l7aspb?=
+ =?iso-8859-2?Q?qZ6vjxL80mxzyEn2JPR9KFwEY2oNQYNxiSwIHSPfHDV4MNiN+R2z2I99ee?=
+ =?iso-8859-2?Q?J7gmOsv0kvpryabMLjARzsHKt2XOt1X848a3mDUtRd76021qz5Jm2bJv2e?=
+ =?iso-8859-2?Q?Hcs2V2+DMwLSHJc5jxxHJ/gbBiYUpbJrudRSwHu+/HJj6eh6QQYyCcCYyv?=
+ =?iso-8859-2?Q?0q31vD0Uq9ak1cKvqoXtl32NQtkFqUFQ/npW5AHTmCY8SWRtYv6VktKY9M?=
+ =?iso-8859-2?Q?RzwPB5of1cBkoY+ckxBwKTXUnViPsrtATpEmJRVEynm7I/gigDW8l0wBLp?=
+ =?iso-8859-2?Q?lHqrD7ULHQvfvVQpyjHQeCHL6e/GnWzRyk6V/Nv3fucVg4yBLkSR/D5eIP?=
+ =?iso-8859-2?Q?RcdJyvk0JRyRVCOtpI8sg1866XckDBI4W1yY2YCzGQagnRrTYFjTbwHjCw?=
+ =?iso-8859-2?Q?+HpmOzX2etdxRhtwyRqKBIysu0hBiun0Fb8ZLJkLnqGka3UPunBZVzHwjp?=
+ =?iso-8859-2?Q?66irFKjoYWD3/8E6oF3sva83R3pMdp0R3eZnk7xEGRRWLYel3fOAm40sU4?=
+ =?iso-8859-2?Q?rxpFNFkB590ZLVH6kiRLM8gN5y62hRZxJV8Q+YjiOxWFsCQjtRjrVOhegh?=
+ =?iso-8859-2?Q?iCYAyiYOvfJRO1sx+0JadicYJx78sct3Ajyl+thpkrw7iojAzbDx3V/Yb0?=
+ =?iso-8859-2?Q?837rUNa7/Q=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-2"
+Content-Transfer-Encoding: quoted-printable
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: arconsult.hu
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM8PR06MB7441.eurprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1dd96c86-de97-4a3b-d496-08df27851162
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Oct 2026 10:47:38.5288 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: c4eb2d6c-a4b9-411e-a3b7-54ffbdc5a429
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: wLim6RTBVc3y76/1s1RKsQS6iBMs8/e66z+XeDkmSGCds7gATfAHLjDHgKLEIQKIO/b6GfvpJ+FpNGWK4E2INw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR06MB8268
 X-Mailman-Approved-At: Mon, 26 Oct 2026 05:28:33 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -89,84 +125,157 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
-X-Spam-Status: No, score=-13.6 required=3.0 tests=BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-wg_set_device_doit() updates peer->persistent_keepalive_interval under
-device_update_lock, while the RX/TX paths read it locklessly in
-wg_timers_any_authenticated_packet_traversal() and in the persistent
-keepalive timer. KCSAN reports the race:
+Hello,
 
-  BUG: KCSAN: data-race in set_peer / wg_timers_any_authenticated_packet_traversal
+I would like to report a reproducible out-of-memory crash in wireguard-go o=
+n a 32-bit ARM Synology NAS.
 
-  write to ... by task 3648 on cpu 1:
-   set_peer+0x...  drivers/net/wireguard/netlink.c:457
-   wg_set_device_doit+0x...
-  read to ... by task 3652 on cpu 0:
-   wg_timers_any_authenticated_packet_traversal+0x...  timers.c:217
-   wg_packet_consume_data_done+0x...
-   wg_packet_rx_poll+0x...
+ENVIRONMENT
 
-The race is benign, but the reader also loads the field twice, so the
-zero check and the timer expiry computation can see different values.
-Load it once with READ_ONCE() and mark the writer and the other
-lockless reader accordingly.
+Device: Synology DS416j NAS
+OS: Synology DSM 7.2.1 (build 69057)
+Kernel: Linux 3.10.108
+Architecture: ARMv7 (32-bit)
+Physical RAM: 512 MB
+Swap: 2 GB
+WireGuard implementation: wireguard-go (userspace, no kernel module)
+Go compiler: 1.25.3
+Remote endpoint: Debian 12 VPS
 
-Reported-by: syzbot+de9701a2cad597c14d34@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=de9701a2cad597c14d34
-Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
-Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
----
- drivers/net/wireguard/netlink.c | 3 ++-
- drivers/net/wireguard/timers.c  | 8 +++++---
- 2 files changed, 7 insertions(+), 4 deletions(-)
+TESTED WIREGUARD-GO REVISIONS
 
-diff --git a/drivers/net/wireguard/netlink.c b/drivers/net/wireguard/netlink.c
-index 1da7e98d0d50..fafe2900c92b 100644
---- a/drivers/net/wireguard/netlink.c
-+++ b/drivers/net/wireguard/netlink.c
-@@ -454,7 +454,8 @@ static int set_peer(struct wg_device *wg, struct nlattr **attrs)
- 			persistent_keepalive_interval &&
- 			netif_running(wg->dev);
- 
--		peer->persistent_keepalive_interval = persistent_keepalive_interval;
-+		WRITE_ONCE(peer->persistent_keepalive_interval,
-+			   persistent_keepalive_interval);
- 		if (send_keepalive)
- 			wg_packet_send_keepalive(peer);
- 	}
-diff --git a/drivers/net/wireguard/timers.c b/drivers/net/wireguard/timers.c
-index 4016a3065602..c4697e8522b3 100644
---- a/drivers/net/wireguard/timers.c
-+++ b/drivers/net/wireguard/timers.c
-@@ -140,7 +140,7 @@ static void wg_expired_send_persistent_keepalive(struct timer_list *timer)
- 	struct wg_peer *peer = timer_container_of(peer, timer,
- 						  timer_persistent_keepalive);
- 
--	if (likely(peer->persistent_keepalive_interval))
-+	if (likely(READ_ONCE(peer->persistent_keepalive_interval)))
- 		wg_packet_send_keepalive(peer);
- }
- 
-@@ -214,9 +214,11 @@ void wg_timers_session_derived(struct wg_peer *peer)
-  */
- void wg_timers_any_authenticated_packet_traversal(struct wg_peer *peer)
- {
--	if (peer->persistent_keepalive_interval)
-+	u16 interval = READ_ONCE(peer->persistent_keepalive_interval);
-+
-+	if (interval)
- 		mod_peer_timer(peer, &peer->timer_persistent_keepalive,
--			jiffies + peer->persistent_keepalive_interval * HZ);
-+			jiffies + interval * HZ);
- }
- 
- void wg_timers_init(struct wg_peer *peer)
--- 
-2.43.0
+The problem was reproduced with two independently compiled ARMv7 binaries:
 
+1. May 2025 revision:
+   ecfc5a8d54462e18e13c72173e2623d16d8e25a0
+
+2. October 2026 revision:
+   2631ce99a06f27120d581611cf125d68bc6aa565
+
+Both binaries exhibit the same fatal out-of-memory failure under high incom=
+ing UDP traffic.
+
+The October 2026 binary was cross-compiled using:
+
+CGO_ENABLED=3D0 GOOS=3Dlinux GOARCH=3Darm GOARM=3D7
+
+An Entware-provided wireguard-go binary is also installed on the NAS, but i=
+t was not tested for this specific failure.
+
+STEPS TO REPRODUCE
+
+The Synology NAS establishes a WireGuard tunnel to a Debian 12 VPS.
+
+On the NAS, run:
+
+iperf3 -c 10.0.1.1 -u -b 200M -t 20 -R
+
+This generates UDP traffic from the VPS toward the NAS through the WireGuar=
+d tunnel.
+
+The wireguard-go process consistently crashes after approximately 7 seconds=
+.
+
+The problem was reproduced multiple times.
+
+OBSERVED MEMORY CONSUMPTION
+
+Before the test:
+
+VmRSS: approximately 4 MB
+VmSize: approximately 523 MB
+Threads: 10
+
+During the test, memory consumption increases rapidly:
+
+VmRSS    VmSize
+13 MB    524 MB
+35 MB    524 MB
+49 MB    613 MB
+71 MB    941 MB
+92 MB    1202 MB
+116 MB   1551 MB
+131 MB   1763 MB
+
+Shortly afterward, wireguard-go terminates.
+
+FATAL ERROR
+
+The Go runtime reports:
+
+runtime: out of memory: cannot allocate 4194304-byte block (2100297728 in u=
+se)
+fatal error: out of memory
+
+The process exits with code 2, and its WireGuard network interface disappea=
+rs.
+
+The kernel log did not show an OOM-killer event.
+
+The NAS also had available physical memory and swap space. A separate memor=
+y check showed approximately 233 MB of available RAM and 1660 MB of free sw=
+ap.
+
+The process resource limits (Max address space, Max data size, and Max resi=
+dent set) were unlimited.
+
+The Linux memory overcommit settings were:
+
+vm.overcommit_memory =3D 0
+vm.overcommit_ratio =3D 50
+
+ADDITIONAL TESTS
+
+- TCP, VPS to NAS: approximately 173 Mbps, completed without crashing.
+- UDP, NAS to VPS, 80 Mbps: approximately 79.7 Mbps received, with 0.13% pa=
+cket loss.
+- UDP, VPS to NAS, 200 Mbps: reproducible wireguard-go crash after approxim=
+ately 7 seconds.
+- WG_DISABLE_OFFLOAD=3D1: did not prevent the crash.
+- Other wireguard-go instances running on the same NAS remained operational=
+.
+
+The crash occurs specifically during sustained high-rate incoming UDP traff=
+ic in our tests.
+
+POSSIBLE CAUSE
+
+The Go runtime reports approximately 2 GB of memory in use when allocation =
+fails.
+
+Given the 32-bit ARM architecture, this appears consistent with virtual add=
+ress space exhaustion.
+
+However, the underlying reason for the rapid memory growth is unclear. It m=
+ay involve packet buffering or memory allocation behavior when incoming tra=
+ffic exceeds the processing capacity of the device.
+
+We have not established whether this is a memory leak or temporary memory a=
+ccumulation under overload.
+
+QUESTIONS
+
+1. Is this a known limitation of wireguard-go on 32-bit ARM systems?
+2. Could incoming UDP packet buffering cause excessive memory allocation wh=
+en the device cannot process packets quickly enough?
+3. Would it be possible to limit memory consumption or drop excess packets =
+instead of terminating the WireGuard process?
+4. Is there a recommended workaround for memory-constrained 32-bit ARM devi=
+ces?
+
+This is potentially important for production use, since a traffic burst cou=
+ld terminate the WireGuard tunnel and leave the NAS disconnected.
+
+Thank you for your work on WireGuard and for looking into this issue.
+
+Best regards,
+
+P=E9ter Ard=F3
+Arconsult Kft.
