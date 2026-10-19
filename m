@@ -2,49 +2,49 @@ Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1317E606A31A
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Oct 2026 06:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A3C2606A31A
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Oct 2026 06:16:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=E+0jHHxC
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=A6X3d117
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 5cd904b6;
-	Mon, 26 Oct 2026 05:28:54 +0000 (UTC)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 329ef7a9;
+	Mon, 26 Oct 2026 05:28:55 +0000 (UTC)
 Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [170.10.133.124])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 687846fd
+ (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 64acad7c
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Oct 2026 14:50:09 +0000 (UTC)
+ Mon, 19 Oct 2026 15:36:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792421408;
+ s=mimecast20190719; t=1792424166;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=E40CoioShs+1rbppNo7iCsptx7U564WAd9P7W0mSqC0=;
- b=E+0jHHxC0yGWvRj1WiXuLSQA4b5GY033qu+h+UvoKl/2i1b3f0V8BGJAPqFXwVycZzGXgC
- sYGNbwQhJhQSR3LYMHSrZxHqPTeKeQhtRxYKXWgsBJ/sZLt4xxMwE1b47UThqxBfAIrA87
- kpfOjRhbZrNZYCRQ5XCE8yv8FGGD+s4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=P/5dqfj7vTG/lINlWEYXcU+uCyfa82tRccYJR49wXCs=;
+ b=A6X3d117whShrfPmMAG+qlvrNNVAR5ccqHRSoIydHAPmdXILxdAxciD7ltZYB54NFd01sw
+ 2IuJSIGeZ4l6mZyjiLcAifhKr129biY9o9ZAFwRm+dFA5ip7RQLVy8Kgbu6ZKGOyvf/21z
+ Wut8VG39WOs4QSwhK7cTei39AwcS4HA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-104-l1yfSCO-OUGdlKJe0-0bRw-1; Mon,
- 19 Oct 2026 14:50:03 +0000
-X-MC-Unique: l1yfSCO-OUGdlKJe0-0bRw-1
-X-Mimecast-MFC-AGG-ID: l1yfSCO-OUGdlKJe0-0bRw_1792421401
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-119-18dsTZefNZGqODH-NofnOQ-1; Mon,
+ 19 Oct 2026 15:36:02 +0000
+X-MC-Unique: 18dsTZefNZGqODH-NofnOQ-1
+X-Mimecast-MFC-AGG-ID: 18dsTZefNZGqODH-NofnOQ_1792424160
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 357B2180067E; Mon, 19 Oct 2026 14:50:00 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 383941955F29; Mon, 19 Oct 2026 15:36:00 +0000 (UTC)
 Received: from onestero-thinkpadp1gen7.tpbc.csb
  (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with SMTP
- id 8C86630000E7; Mon, 19 Oct 2026 14:49:56 +0000 (UTC)
+ id 4839230000E3; Mon, 19 Oct 2026 15:35:55 +0000 (UTC)
 Received: by onestero-thinkpadp1gen7.tpbc.csb (nbSMTP-1.00) for uid 13628
- oleg@redhat.com; Mon, 19 Oct 2026 16:49:59 +0200 (CEST)
-Date: Mon, 19 Oct 2026 16:49:55 +0200
+ oleg@redhat.com; Mon, 19 Oct 2026 17:35:59 +0200 (CEST)
+Date: Mon, 19 Oct 2026 17:35:54 +0200
 From: Oleg Nesterov <oleg@redhat.com>
 To: Joel Granados <joel.granados@kernel.org>,
  Allison Henderson <achender@kernel.org>
@@ -55,14 +55,14 @@ Cc: kernel test robot <yi1.lai@intel.com>, oe-lkp@lists.linux.dev,
  wireguard@lists.zx2c4.com, rds-devel@oss.oracle.com
 Subject: Re: [linus:master] [sysctl]  8d75c338f0:
  BUG:KASAN:slab-use-after-free_in_touch_wq_lockdep_map
-Message-ID: <atYuE1xnVYe0BDG4@redhat.com>
+Message-ID: <atY42k00k0Waj6o4@redhat.com>
 References: <202610190310.9737b2e3-lkp@intel.com> <atYB0bm9eEXp8A2g@redhat.com>
- <atYW0K3t57puHeLW@hobbes>
+ <atYW0K3t57puHeLW@hobbes> <atYuE1xnVYe0BDG4@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <atYW0K3t57puHeLW@hobbes>
+In-Reply-To: <atYuE1xnVYe0BDG4@redhat.com>
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-X-Mimecast-MFC-PROC-ID: G1UgXggEHamGK4j_l14TysHu1_wbeo8f07mK8wq60nU_1792421401
+X-Mimecast-MFC-PROC-ID: rW4-cArthbMPNeS3Vh06M0vdt5BSzv5uwY8yDiwsY1E_1792424160
 X-Mimecast-Originator: redhat.com
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
@@ -79,68 +79,142 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/19, Joel Granados wrote:
+On 10/19, Oleg Nesterov wrote:
 >
-> On Mon, Oct 19, 2026 at 01:41:05PM +0200, Oleg Nesterov wrote:
-> > On 10/19, kernel test robot wrote:
-> > >
-> > >
-> > > Hello,
-> > >
-> > > kernel test robot noticed "BUG:KASAN:slab-use-after-free_in_touch_wq_lockdep_map" on:
-> > >
-> > > commit: 8d75c338f0bcecaa6c9af67f86c176b67b6acf3e ("sysctl: remove CONFIG_PROC_SYSCTL, it just mirrors CONFIG_SYSCTL") https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git master
-> >
-> > I don't think that commit could cause such a problem. Please re-check.
-> >
-> > Oleg.
+> But. rds_init() can also fail even if CONFIG_SYSCTL=y, after
+> rds_sysctl_init(), so to me this looks like a bug in net/rds/.
 >
-> That commit might not be the one that introduces the UAF, but it might
-> be the one that exposes it?
 >
-> You have CONFIG_SYSCTL=n & CONFIG_RDS=y & CONFIG_RDS_RDMA=y.
-> Therefore rds_sysctl_init() returns -ENOMEM  and rds_ib_sysctl_init
-> returns -ENOMEM.
->
-> If rds_ib_sysctl_init is called after a failed rds_sysctl_init, then
-> rds_ib_sysctl_init would call a flush_workqueue on a rds_wq that has
-> already been freed by the failed rds_sysctl_init. Right?
->
-> Please let me know if I missed anything.
+> In any case, I guess net/rds/ init paths should not fail if
+> CONFIG_SYSCTL=n ?
 
-I think you are right...
+So I think that something like the uncompiled/untested patch below makes
+sense anyway even if doesn't fix all the potential problems with rds_wq.
 
-rds_init() does
-
-	rds_threads_init()
-		rds_wq = create_singlethread_workqueue("krdsd");
-
-	rds_sysctl_init()
-		fails due to CONFIG_SYSCTL=n
-
-	out_threads:
-		destroy_workqueue(rds_wq);
-
-After that any access to rds_wq is wrong.
-
-If rds_rdma_init() runs after that, rds_ib_init() will call
-rds_ib_unregister_client() -> flush_workqueue(rds_wq).
-
-And this will equally happen before the blamed commit 8d75c338f0bc,
-just you need CONFIG_PROC_SYSCTL=n instead of CONFIG_SYSCTL=n.
-
-
-But. rds_init() can also fail even if CONFIG_SYSCTL=y, after
-rds_sysctl_init(), so to me this looks like a bug in net/rds/.
-
-
-In any case, I guess net/rds/ init paths should not fail if
-CONFIG_SYSCTL=n ?
+What do you think?
 
 Oleg.
+---
+
+diff --git a/net/rds/ib_sysctl.c b/net/rds/ib_sysctl.c
+index 2af678e71e3c..bccdb5c4df1d 100644
+--- a/net/rds/ib_sysctl.c
++++ b/net/rds/ib_sysctl.c
+@@ -36,19 +36,10 @@
+ 
+ #include "ib.h"
+ 
+-static struct ctl_table_header *rds_ib_sysctl_hdr;
+-
+ unsigned long rds_ib_sysctl_max_send_wr = RDS_IB_DEFAULT_SEND_WR;
+ unsigned long rds_ib_sysctl_max_recv_wr = RDS_IB_DEFAULT_RECV_WR;
+ unsigned long rds_ib_sysctl_max_recv_allocation = (128 * 1024 * 1024) / RDS_FRAG_SIZE;
+-static unsigned long rds_ib_sysctl_max_wr_min = 1;
+-/* hardware will fail CQ creation long before this */
+-static unsigned long rds_ib_sysctl_max_wr_max = (u32)~0;
+-
+ unsigned long rds_ib_sysctl_max_unsig_wrs = 16;
+-static unsigned long rds_ib_sysctl_max_unsig_wr_min = 1;
+-static unsigned long rds_ib_sysctl_max_unsig_wr_max = 64;
+-
+ /*
+  * This sysctl does nothing.
+  *
+@@ -61,6 +52,14 @@ static unsigned long rds_ib_sysctl_max_unsig_wr_max = 64;
+  */
+ unsigned int rds_ib_sysctl_flow_control = 0;
+ 
++#ifdef CONFIG_SYSCTL
++static unsigned long rds_ib_sysctl_max_wr_min = 1;
++/* hardware will fail CQ creation long before this */
++static unsigned long rds_ib_sysctl_max_wr_max = (u32)~0;
++
++static unsigned long rds_ib_sysctl_max_unsig_wr_min = 1;
++static unsigned long rds_ib_sysctl_max_unsig_wr_max = 64;
++
+ static struct ctl_table rds_ib_sysctl_table[] = {
+ 	{
+ 		.procname       = "max_send_wr",
+@@ -105,6 +104,8 @@ static struct ctl_table rds_ib_sysctl_table[] = {
+ 	},
+ };
+ 
++static struct ctl_table_header *rds_ib_sysctl_hdr;
++
+ void rds_ib_sysctl_exit(void)
+ {
+ 	if (rds_ib_sysctl_hdr)
+@@ -118,3 +119,15 @@ int rds_ib_sysctl_init(void)
+ 		return -ENOMEM;
+ 	return 0;
+ }
++
++#else
++
++void rds_ib_sysctl_exit(void)
++{
++}
++
++int rds_ib_sysctl_init(void)
++{
++	return 0;
++}
++#endif
+diff --git a/net/rds/sysctl.c b/net/rds/sysctl.c
+index 025f518a4349..a0673a41633a 100644
+--- a/net/rds/sysctl.c
++++ b/net/rds/sysctl.c
+@@ -36,11 +36,6 @@
+ 
+ #include "rds.h"
+ 
+-static struct ctl_table_header *rds_sysctl_reg_table;
+-
+-static unsigned long rds_sysctl_reconnect_min = 1;
+-static unsigned long rds_sysctl_reconnect_max = ~0UL;
+-
+ unsigned long rds_sysctl_reconnect_min_jiffies;
+ unsigned long rds_sysctl_reconnect_max_jiffies = HZ;
+ 
+@@ -49,6 +44,10 @@ unsigned int  rds_sysctl_max_unacked_bytes = (16 << 20);
+ 
+ unsigned int rds_sysctl_ping_enable = 1;
+ 
++#ifdef CONFIG_SYSCTL
++static unsigned long rds_sysctl_reconnect_min = 1;
++static unsigned long rds_sysctl_reconnect_max = ~0UL;
++
+ static struct ctl_table rds_sysctl_rds_table[] = {
+ 	{
+ 		.procname       = "reconnect_min_delay_ms",
+@@ -91,6 +90,8 @@ static struct ctl_table rds_sysctl_rds_table[] = {
+ 	},
+ };
+ 
++static struct ctl_table_header *rds_sysctl_reg_table;
++
+ void rds_sysctl_exit(void)
+ {
+ 	unregister_net_sysctl_table(rds_sysctl_reg_table);
+@@ -107,3 +108,15 @@ int rds_sysctl_init(void)
+ 		return -ENOMEM;
+ 	return 0;
+ }
++
++#else
++
++void rds_sysctl_exit(void)
++{
++}
++
++int rds_sysctl_init(void)
++{
++	return 0;
++}
++#endif
 
