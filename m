@@ -2,61 +2,44 @@ Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9DF1606A31A
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Oct 2026 06:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21628606A31D
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Oct 2026 06:16:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=RGNWwACk
+	dkim=pass (1024-bit key, unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=k8WEWSz8
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id e34abac4;
-	Mon, 26 Oct 2026 05:28:45 +0000 (UTC)
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 1e1d63b3
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id a68337b3;
+	Mon, 26 Oct 2026 05:28:47 +0000 (UTC)
+Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.3])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 1ad44f22
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Oct 2026 01:46:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1792374410; x=1823910410;
- h=date:from:to:cc:subject:message-id:mime-version;
- bh=ckzKS7iuX7W5E8c0lmSt7bjM0+s1Xs9r99Ub8ETvmss=;
- b=RGNWwACk1Qc1A6PnxTU8sX4Wx+P/tCKmwA2qsocqxP32QVdNs+eWA8k5
- UfcGblqMqajSkfufTKTMyVB6wCP6OZPDlre8uBxb7OkMLt3NoDC2ZvsP5
- QiBL0wHz/MTnrRTNNZ2hiqMYmNPJ0Hau8PmfMsYYnwTZ3yPoXCIbgMWsA
- 7rjFHPALtohhgAB4QQdPHSgceVHVjtHEX8gk/ypqYxseEvCSOu621zUYw
- pmPTzMpQ66byJlYDA4tJokPAWgKBfl7SG2dURUy8Uy4ccCpkq1TrrZJGA
- 4Kc/qYTy83CmQ+UoJyKf6L95+3wBgFY08TY2FLw1Mj7ttUnwzElzgBeWy w==;
-X-CSE-ConnectionGUID: rfeCurBtSnyb9uPGcOp7YQ==
-X-CSE-MsgGUID: iStug+deSV6JswqpGmLR8w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11939"; a="1064641"
-X-IronPort-AV: E=Sophos;i="6.27,166,1787036400"; 
-   d="scan'208";a="1064641"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Oct 2026 18:46:48 -0700
-X-CSE-ConnectionGUID: 1O9VSXP9RLSIdBWQeoBOkg==
-X-CSE-MsgGUID: 53HnK4lFQLyLzufCtY6bjw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,166,1787036400"; 
-   d="scan'208";a="2300209"
-Received: from ly-workstation.sh.intel.com (HELO ly-workstation)
- ([10.239.182.64])
- by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Oct 2026 18:46:43 -0700
-Date: Mon, 19 Oct 2026 09:46:38 +0800
-From: kernel test robot <yi1.lai@intel.com>
-To: Oleg Nesterov <oleg@redhat.com>
-Cc: oe-lkp@lists.linux.dev, lkp@intel.com, linux-kernel@vger.kernel.org,
- Joel Granados <joel.granados@kernel.org>,
- linux-m68k@lists.linux-m68k.org, linux-s390@vger.kernel.org,
- linux-fsdevel@vger.kernel.org, netdev@vger.kernel.org,
- wireguard@lists.zx2c4.com, yi1.lai@intel.com, achender@kernel.org
-Subject: [linus:master] [sysctl]  8d75c338f0:
- BUG:KASAN:slab-use-after-free_in_touch_wq_lockdep_map
-Message-ID: <202610190310.9737b2e3-lkp@intel.com>
+ Mon, 19 Oct 2026 06:40:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=From:To:Subject:Date:Message-ID:Content-Type:
+ MIME-Version; bh=ouIRLFDyuaoVKWuNkHHSxNTL0+gpWtWOu+dvUhZxpMk=;
+ b=k8WEWSz8Z3iUdELYLxpgq9l6ndC0gwd4mqzvldhu0tR8eqjN/z91SwhtoRPnie
+ 9elFKZnSmpaW4dKGVIRihQyNgW+5ZJZmO962pTDsCbyrOK+n0QynEYkzkH5QsWkg
+ NpNBaZcf2nBkqWCWgmM5GXV8UhmkUvSsTVTP9fGiJt2QY=
+Received: from DESKTOP-HSGK5SH.lan (unknown [])
+ by gzga-smtp-mtada-g1-2 (Coremail) with SMTP id
+ _____wDnXwdKu9VqNrmpAw--.50440S2; 
+ Mon, 19 Oct 2026 14:40:10 +0800 (CST)
+From: stonege01@163.com
+To: wireguard@lists.zx2c4.com
+Subject: wireguard-nt 1.1: 0xD1 in PubkeyHashtableLookup (double evaluation of
+ PubkeyBucket)
+Date: Mon, 19 Oct 2026 14:39:48 +0800
+Message-ID: <179239198873.5912.10597979367322198780@163.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+X-CM-TRANSID: _____wDnXwdKu9VqNrmpAw--.50440S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW3Ww4DXw43CF13KrWDAF4fZrb_yoW7WF43pr
+ W5GFZ8Crs5JFyrur4vvry8AryrC395Aa13u34UJw1qyFs8Cr1Fqryrt3y7Wa9rZrZ5CanF
+ qr4DAa1qvFs5CaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRS38rUUUUU=
+X-CM-SenderInfo: xvwr0vljhqiqqrwthudrp/xtbC5AsRtWrVu0uFygAA3L
 X-Mailman-Approved-At: Mon, 26 Oct 2026 05:28:33 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -68,197 +51,155 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
-X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,UNPARSEABLE_RELAY autolearn=no autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+Hi,
 
+I would like to report a 0xD1 in wireguard.sys 1.1.0.0 (wireguard-nt 1.1,
+tag fef7bc4) and a root cause I believe is in PubkeyHashtableLookup().
 
-Hello,
+Two crash dumps from the same machine (10 days apart) show the same
+instruction and the same arguments, so this is deterministic code and not
+random memory corruption.
 
-kernel test robot noticed "BUG:KASAN:slab-use-after-free_in_touch_wq_lockdep_map" on:
+=3D=3D Environment =3D=3D
+- Windows 11 Pro 26200 (10.0.26200.9168), x64, 8 logical CPUs
+- wireguard.sys 1.1.0.0, timestamp Thu May 7 04:35:56 2026 (0x69FBA62C),
+  checksum 0x887D0, PDB stripped (CodeView signature zero)
+- loaded through the embeddable wireguard.dll 1.1
+- the application is a WireGuard-based mesh VPN that frequently removes and
+  re-adds peers to force an immediate handshake after an endpoint change
+  (updating the endpoint does not reset the handshake retransmit timer).
+  Traffic is continuous while this happens. Any application that removes
+  peers while handshakes are in flight could hit the same race.
 
-commit: 8d75c338f0bcecaa6c9af67f86c176b67b6acf3e ("sysctl: remove CONFIG_PROC_SYSCTL, it just mirrors CONFIG_SYSCTL") https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git master
+=3D=3D Crashes =3D=3D
+Both are DRIVER_IRQL_NOT_LESS_OR_EQUAL (0xD1):
 
-[test failed on linux-next/master b810335a0699d1810683796b0e3ffe8827ddfe6c]
+  2026-10-09 17:26:09 +08:00
+    0xD1 (0xfffffffffffffea8, 0x0000000000000002,
+          0x0000000000000000, 0xfffff8039ce1f8d3)
+    wireguard base 0xfffff8039ce00000 -> offset 0x1f8d3
 
-in testcase: boot
+  2026-10-19 09:10:30 +08:00
+    0xD1 (0xfffffffffffffea8, 0x0000000000000002,
+          0x0000000000000000, 0xfffff801669df8d3)
+    wireguard base 0xfffff801669c0000 -> offset 0x1f8d3
 
-config: x86_64-randconfig-2300-20261014
-compiler: gcc-14
-test machine: qemu-system-x86_64 -enable-kvm -cpu Haswell-noTSX,enforce -smp 4 -m 16G
+Arg1 =3D -0x158, Arg2 =3D 2 (DISPATCH_LEVEL), Arg3 =3D 0 (read).
 
-(please refer to attached dmesg/kmsg for entire log/backtrace)
+=3D=3D Crash site =3D=3D
+!analyze -v:
 
+  FAULTING_IP:
+  wireguard+1f8d3
+  fffff801`669df8d3 483b0411  cmp rax,qword ptr [rcx+rdx]
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <yi1.lai@intel.com>
-| Closes: https://lore.kernel.org/oe-lkp/202610190310.9737b2e3-lkp@intel.com
+Surrounding code (inlined memcmp):
 
+  wireguard+0x1f8d0  488b01      mov rax,[rcx]
+  wireguard+0x1f8d3  483b0411    cmp rax,[rcx+rdx]
+  ...
 
-[   35.688893][    T1] BUG: KASAN: slab-use-after-free in touch_wq_lockdep_map (workqueue.c:4031 (discriminator 1))
-[   35.688893][    T1] Read of size 8 at addr ffff8881259a2968 by task swapper/0/1
-[   35.688893][    T1]
-[   35.688893][    T1] CPU: 1 UID: 0 PID: 1 Comm: swapper/0 Not tainted 7.2.0-rc2-00010-g8d75c338f0bc #1 PREEMPT
-[   35.688893][    T1] Call Trace:
-[   35.688893][    T1]  <TASK>
-[   35.688893][    T1]  dump_stack_lvl (dump_stack.c:94 dump_stack.c:120)
-[   35.688893][    T1]  ? touch_wq_lockdep_map (workqueue.c:4031 (discriminator 1))
-[   35.688893][    T1]  print_address_description+0x51/0x300
-[   35.688893][    T1]  ? rcu_is_watching (rcu/tree.c:753 (discriminator 3))
-[   35.688893][    T1]  ? touch_wq_lockdep_map (workqueue.c:4031 (discriminator 1))
-[   35.688893][    T1]  print_report (kasan/report.c:482)
-[   35.688893][    T1]  ? kmem_cache_debug_flags (slab.h:503)
-[   35.688893][    T1]  ? fixup_red_left (slub.c:250)
-[   35.688893][    T1]  ? touch_wq_lockdep_map (workqueue.c:4031 (discriminator 1))
-[   35.688893][    T1]  kasan_report (kasan/report.c:595)
-[   35.688893][    T1]  ? touch_wq_lockdep_map (workqueue.c:4031 (discriminator 1))
-[   35.688893][    T1]  touch_wq_lockdep_map (workqueue.c:4031 (discriminator 1))
-[   35.688893][    T1]  __flush_workqueue (workqueue.c:4079)
-[   35.688893][    T1]  ? xa_load (xarray.c:1621)
-[   35.688893][    T1]  ? tracer_preempt_on (trace/trace_irqsoff.c:686 (discriminator 1))
-[   35.688893][    T1]  ? preempt_count_sub (sched/core.c:6019)
-[   35.688893][    T1]  ? rcu_is_watching (rcu/tree.c:753 (discriminator 3))
-[   35.688893][    T1]  ? preempt_count_sub (sched/core.c:6019)
-[   35.688893][    T1]  ? touch_wq_lockdep_map (workqueue.c:4043)
-[   35.688893][    T1]  ? __up_write (locking/rwsem.c:1422 (discriminator 4))
-[   35.688893][    T1]  rds_ib_init (rds/ib.c:618)
-[   35.688893][    T1]  rds_rdma_init (rds/rdma_transport.c:300)
-[   35.688893][    T1]  ? rds_init (af_rds.c:?)
-[   35.688893][    T1]  ? __raw_spin_unlock_irqrestore (linux/spinlock_api_smp.h:179 (discriminator 4))
-[   35.688893][    T1]  ? add_device_randomness (linux/spinlock.h:408 char/random.c:936)
-[   35.688893][    T1]  ? random_get_entropy (x86/include/asm/timex.h:11)
-[   35.688893][    T1]  ? sctp_diag_init (diag.c:?)
-[   35.688893][    T1]  ? rds_init (rds/af_rds.c:977)
-[   35.688893][    T1]  ? rcu_is_watching (rcu/tree.c:753 (discriminator 3))
-[   35.688893][    T1]  ? rds_init (af_rds.c:?)
-[   35.688893][    T1]  do_one_initcall (main.c:1347)
-[   35.688893][    T1]  ? trace_initcall_finish_cb (main.c:1289 (discriminator 1))
-[   35.688893][    T1]  ? __kmalloc_noprof (slub.c:5363 slub.c:5387)
-[   35.688893][    T1]  ? do_initcalls (linux/slab.h:973 linux/slab.h:1290 main.c:1418)
-[   35.688893][    T1]  do_initcalls (main.c:1409 (discriminator 1) main.c:1425 (discriminator 1))
-[   35.688893][    T1]  kernel_init_freeable (main.c:1445 main.c:1658)
-[   35.688893][    T1]  ? rest_init (main.c:717)
-[   35.688893][    T1]  kernel_init (main.c:1548)
-[   35.688893][    T1]  ? rest_init (main.c:717)
-[   35.688893][    T1]  ret_from_fork (x86/kernel/process.c:158)
-[   35.688893][    T1]  ? exit_thread (x86/kernel/process.c:138)
-[   35.688893][    T1]  ? __switch_to (x86/kernel/process_64.c:674)
-[   35.688893][    T1]  ? rest_init (main.c:717)
-[   35.688893][    T1]  ret_from_fork_asm (x86/entry/entry_64.S:245)
-[   35.688893][    T1]  </TASK>
-[   35.688893][    T1]
-[   35.688893][    T1] Allocated by task 1 on cpu 1 at 35.661878s:
-[   35.688893][    T1]  stack_trace_save (stacktrace.c:122 (discriminator 1))
-[   35.688893][    T1]  kasan_save_stack (kasan/common.c:57)
-[   35.688893][    T1]  kasan_save_track (kasan/common.c:78)
-[   35.688893][    T1]  __kasan_kmalloc (kasan/common.c:415)
-[   35.688893][    T1]  __kmalloc_noprof (linux/kasan.h:263 slub.c:5362 slub.c:5387)
-[   35.688893][    T1]  __alloc_workqueue (workqueue.c:5827)
-[   35.688893][    T1]  alloc_workqueue_va (workqueue.c:5946)
-[   35.688893][    T1]  alloc_workqueue_noprof (workqueue.c:5962)
-[   35.688893][    T1]  rds_threads_init (rds/threads.c:259 (discriminator 2))
-[   35.688893][    T1]  rds_init (rds/af_rds.c:961)
-[   35.688893][    T1]  do_one_initcall (main.c:1347)
-[   35.688893][    T1]  do_initcalls (main.c:1409 (discriminator 1) main.c:1425 (discriminator 1))
-[   35.688893][    T1]  kernel_init_freeable (main.c:1445 main.c:1658)
-[   35.688893][    T1]  kernel_init (main.c:1548)
-[   35.688893][    T1]  ret_from_fork (x86/kernel/process.c:158)
-[   35.688893][    T1]  ret_from_fork_asm (x86/entry/entry_64.S:245)
-[   35.688893][    T1]
-[   35.688893][    T1] Freed by task 0 on cpu 3 at 35.674112s:
-[   35.688893][    T1]  stack_trace_save (stacktrace.c:122 (discriminator 1))
-[   35.688893][    T1]  kasan_save_stack (kasan/common.c:57)
-[   35.688893][    T1]  kasan_save_track (kasan/common.c:78)
-[   35.688893][    T1]  kasan_save_free_info (kasan/generic.c:584)
-[   35.688893][    T1]  __kasan_slab_free (kasan/common.c:285)
-[   35.688893][    T1]  kfree (linux/kasan.h:235 slub.c:2705 slub.c:6405 slub.c:6720)
-[   35.688893][    T1]  rcu_do_batch (rcu/tree.c:2645)
-[   35.688893][    T1]  rcu_core (rcu/tree.c:2897)
-[   35.688893][    T1]  handle_softirqs (softirq.c:622)
-[   35.688893][    T1]  __irq_exit_rcu (softirq.c:496 softirq.c:735)
-[   35.688893][    T1]  irq_exit_rcu (softirq.c:752)
-[   35.688893][    T1]  sysvec_apic_timer_interrupt (x86/kernel/apic/apic.c:1062 (discriminator 35) x86/kernel/apic/apic.c:1062 (discriminator 35))
-[   35.688893][    T1]  asm_sysvec_apic_timer_interrupt (x86/include/asm/idtentry.h:546)
-[   35.688893][    T1]
-[   35.688893][    T1] Last potentially related work creation:
-[   35.688893][    T1]  stack_trace_save (stacktrace.c:122 (discriminator 1))
-[   35.688893][    T1]  kasan_save_stack (kasan/common.c:57)
-[   35.688893][    T1]  kasan_record_aux_stack (kasan/generic.c:556)
-[   35.688893][    T1]  __call_rcu_common+0xe6/0x480
-[   35.688893][    T1]  kthread_worker_fn (kthread.c:1025)
-[   35.688893][    T1]  kthread (kthread.c:436)
-[   35.688893][    T1]  ret_from_fork (x86/kernel/process.c:158)
-[   35.688893][    T1]  ret_from_fork_asm (x86/entry/entry_64.S:245)
-[   35.688893][    T1]
-[   35.688893][    T1] The buggy address belongs to the object at ffff8881259a2800
-[   35.688893][    T1]  which belongs to the cache kmalloc-1k of size 1024
-[   35.688893][    T1] The buggy address belongs to the object at ffff8881259a2800
-[   35.688893][    T1]  which belongs to the cache kmalloc-1k of size 1024
-[   35.688893][    T1] The buggy address belongs to the object at ffff8881259a2800
-[   35.688893][    T1]  which belongs to the cache kmalloc-1k of size 1024
-[   35.688893][    T1] The buggy address is located 360 bytes inside of
-[   35.688893][    T1]  freed 1024-byte region [ffff8881259a2800, ffff8881259a2c00)
-[   35.688893][    T1] The buggy address is located 360 bytes inside of
-[   35.688893][    T1]  freed 1024-byte region [ffff8881259a2800, ffff8881259a2c00)
-[   35.688893][    T1] The buggy address is located 360 bytes inside of
-[   35.688893][    T1]  freed 1024-byte region [ffff8881259a2800, ffff8881259a2c00)
-[   35.688893][    T1]
-[   35.688893][    T1] The buggy address belongs to the physical page:
-[   35.688893][    T1] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x1259a0
-[   35.688893][    T1] head: order:3 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-[   35.688893][    T1] flags: 0x4000000000000040(head|zone=2)
-[   35.688893][    T1] page_type: f5(slab)
-[   35.688893][    T1] raw: 4000000000000040 ffff888100042dc0 dead000000000100 dead000000000122
-[   35.688893][    T1] raw: 0000000000000000 0000000800100010 00000000f5000000 0000000000000000
-[   35.688893][    T1] head: 4000000000000040 ffff888100042dc0 dead000000000100 dead000000000122
-[   35.688893][    T1] head: 0000000000000000 0000000800100010 00000000f5000000 0000000000000000
-[   35.688893][    T1] head: 4000000000000003 ffffea0004966801 00000000ffffffff 00000000ffffffff
-[   35.688893][    T1] head: ffffffffffffffff 0000000000000000 00000000ffffffff 0000000000000008
-[   35.688893][    T1] page dumped because: kasan: bad access detected
-[   35.688893][    T1]
-[   35.688893][    T1] Memory state around the buggy address:
-[   35.688893][    T1]  ffff8881259a2800: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-[   35.688893][    T1]  ffff8881259a2880: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-[   35.688893][    T1] >ffff8881259a2900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-[   35.688893][    T1]                                                           ^
-[   35.688893][    T1]  ffff8881259a2980: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-[   35.688893][    T1]  ffff8881259a2a00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-[   35.688893][    T1] ==================================================================
-[   35.984299][    T1] Disabling lock debugging due to kernel taint
-[   35.987548][    T1] Oops: general protection fault, probably for non-canonical address 0xe0a07c0ec0000008: 0000 [#1] SMP KASAN
-[   35.988482][    T1] KASAN: maybe wild-memory-access in range [0x0504007600000040-0x0504007600000047]
-[   35.988482][    T1] CPU: 1 UID: 0 PID: 1 Comm: swapper/0 Tainted: G    B               7.2.0-rc2-00010-g8d75c338f0bc #1 PREEMPT
-[   35.988482][    T1] Tainted: [B]=BAD_PAGE
-[   35.988482][    T1] RIP: 0010:do_raw_spin_lock (locking/spinlock_debug.c:86 (discriminator 2) locking/spinlock_debug.c:115 (discriminator 2))
-[   35.988482][    T1] Code: 3b 58 81 49 8d 14 04 c7 02 f1 f1 f1 f1 c7 42 04 04 f3 f3 f3 65 48 8b 15 f0 53 f7 08 48 89 54 24 60 31 d2 48 89 fa 48 c1 ea 03 <8a> 14 02 48 89 f8 83 e0 07 83 c0 03 38 d0 7c 09 84 d2 74 05 e8 39
-All code
-========
-   0:	3b 58 81             	cmp    -0x7f(%rax),%ebx
-   3:	49 8d 14 04          	lea    (%r12,%rax,1),%rdx
-   7:	c7 02 f1 f1 f1 f1    	movl   $0xf1f1f1f1,(%rdx)
-   d:	c7 42 04 04 f3 f3 f3 	movl   $0xf3f3f304,0x4(%rdx)
-  14:	65 48 8b 15 f0 53 f7 	mov    %gs:0x8f753f0(%rip),%rdx        # 0x8f7540c
-  1b:	08 
-  1c:	48 89 54 24 60       	mov    %rdx,0x60(%rsp)
-  21:	31 d2                	xor    %edx,%edx
-  23:	48 89 fa             	mov    %rdi,%rdx
-  26:	48 c1 ea 03          	shr    $0x3,%rdx
-  2a:*	8a 14 02             	mov    (%rdx,%rax,1),%dl		<-- trapping instruction
-  2d:	48 89 f8             	mov    %rdi,%rax
-  30:	83 e0 07             	and    $0x7,%eax
+Raw stack return addresses (innermost first):
 
+  wireguard+0x1f8d3
+  wireguard+0x174a5
+  wireguard+0x15463
+  wireguard+0x18fdf
+  tcpip!UdpDeliverDatagrams
 
-The kernel config and materials to reproduce are available at:
-https://download.01.org/0day-ci/archive/20261019/202610190310.9737b2e3-lkp@intel.com
+0x174a5 is inside PubkeyHashtableLookup(). Disassembly there:
 
+  call siphash              ; first evaluation of PubkeyBucket()
+  mov  r9,[bucket]
+  test r9,r9
+  je   done                 ; first load is checked for NULL
+  call siphash              ; second evaluation of PubkeyBucket()
+  mov  rbx,[bucket]         ; second load is NOT checked
+  add  rbx,-5E0h            ; CONTAINING_RECORD(..., WG_PEER, PubkeyHash)
+  lea  rdx,[rbx+488h]       ; &peer->Handshake.RemoteStatic
+  mov  r8d,20h
+  call memcmp
 
+=3D=3D Root cause =3D=3D
+driver/peerlookup.c:
 
---
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+  HLIST_FOR_EACH_ENTRY_RCU (IterPeer, PubkeyBucket(Table, Pubkey), PubkeyHash)
 
+driver/containers.h:
+
+  #define HlistEntry(Ptr, Type, Member) CONTAINING_RECORD(Ptr, Type, Member)
+  #define HlistEntrySafe(Ptr, Type, Member) ((Ptr) ? HlistEntry(Ptr, Type, Me=
+mber) : NULL)
+  #define HLIST_FOR_EACH_ENTRY_RCU(Pos, Head, Member) \
+      for (Pos =3D HlistEntrySafe(RcuDereference(HlistFirstRcu(Head)), ...); =
+Pos; \
+           Pos =3D HlistEntrySafe(RcuDereference(HlistNextRcu(&(Pos)->Member)=
+), ...))
+
+HlistEntrySafe() evaluates Ptr twice. Here Ptr contains
+PubkeyBucket(Table, Pubkey), which calls Siphash() and indexes the table,
+so the complete bucket lookup (SipHash + bucket read) is evaluated twice.
+The first result is checked for NULL, the second is used unchecked.
+
+If a concurrent PeerRemove() empties the bucket between the two
+evaluations, the second read returns NULL,
+CONTAINING_RECORD(NULL, WG_PEER, PubkeyHash) becomes -0x5E0, and
+&peer->Handshake.RemoteStatic becomes -0x5E0 + 0x488 =3D -0x158.
+memcmp() then reads -0x158 at DISPATCH_LEVEL, which matches Arg1/Arg2/Arg3.
+
+Racing paths:
+  PubkeyHashtableLookup()
+    <- NoiseHandshakeConsumeInitiation() (receive.c:87, noise.c:644)
+    <- NoiseHandshakeConsumeResponse()   (receive.c:107, noise.c:740)
+  PubkeyHashtableRemove()
+    <- PeerRemove()
+    <- WG_IOCTL_PEER_REMOVE (ioctl.c)
+
+The lookup is RCU/lock-free and is not serialized against PeerRemove().
+Data packets use IndexHashtableLookup(), not the public-key table.
+
+The PDB is stripped (CodeView signature zero), so the offsets above come
+from the disassembly; 0x5E0 and 0x488 are consistent across both dumps and
+explain Arg1 exactly.
+
+=3D=3D Suggested fix =3D=3D
+Evaluate the bucket only once:
+
+  HLIST_HEAD *Bucket =3D PubkeyBucket(Table, Pubkey);
+  HLIST_FOR_EACH_ENTRY_RCU (IterPeer, Bucket, PubkeyHash) { ... }
+
+MSVC has no statement expressions, so a local variable at the call site is
+the simplest safe form. This keeps the lookup lock-free.
+
+=3D=3D Suggested API improvement (separate issue) =3D=3D
+Applications that need a forced re-handshake currently have to remove and
+re-add the peer, because SetConfiguration(endpoint=3D...) does not reset
+TimerRetransmitHandshake/TimerHandshakeAttempts. A
+WIREGUARD_PEER_FLAG_RESET (clear keypairs and handshake timers, keep the
+peer in PeerList/PeerHashtable/AllowedIPs) would allow forced re-handshake
+without touching the hash table, and would avoid this race class.
+
+=3D=3D Evidence =3D=3D
+I can provide on request:
+- both minidumps (~3.4 MB and ~3.6 MB),
+- full !analyze -v output,
+- disassembly of +0x174a5 and +0x1f8d3,
+- WER reports.
+
+The list may strip large attachments; please tell me where to send them
+and I will send them off-list, or provide a temporary link.
+
+I am happy to test a patched driver/DLL build on Windows 11 26200 with
+continuous traffic and repeated peer add/remove.
+
+Thanks,
+[your name]
 
