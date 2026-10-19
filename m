@@ -2,44 +2,42 @@ Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21628606A31D
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Oct 2026 06:16:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8EB606A31A
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Oct 2026 06:16:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=k8WEWSz8
+	dkim=pass (1024-bit key, unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=fcqNUmFu
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id a68337b3;
-	Mon, 26 Oct 2026 05:28:47 +0000 (UTC)
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.3])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 1ad44f22
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id ee118c0b;
+	Mon, 26 Oct 2026 05:28:50 +0000 (UTC)
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.2])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 9d5a7249
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Oct 2026 06:40:15 +0000 (UTC)
+ Mon, 19 Oct 2026 06:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=From:To:Subject:Date:Message-ID:Content-Type:
- MIME-Version; bh=ouIRLFDyuaoVKWuNkHHSxNTL0+gpWtWOu+dvUhZxpMk=;
- b=k8WEWSz8Z3iUdELYLxpgq9l6ndC0gwd4mqzvldhu0tR8eqjN/z91SwhtoRPnie
- 9elFKZnSmpaW4dKGVIRihQyNgW+5ZJZmO962pTDsCbyrOK+n0QynEYkzkH5QsWkg
- NpNBaZcf2nBkqWCWgmM5GXV8UhmkUvSsTVTP9fGiJt2QY=
-Received: from DESKTOP-HSGK5SH.lan (unknown [])
- by gzga-smtp-mtada-g1-2 (Coremail) with SMTP id
- _____wDnXwdKu9VqNrmpAw--.50440S2; 
- Mon, 19 Oct 2026 14:40:10 +0800 (CST)
-From: stonege01@163.com
+ s=s110527; h=Date:From:To:Subject:Content-Type:MIME-Version:
+ Message-ID; bh=33b28P46s3TUP5udg58W5+2kq8ieb1JCnt5s8DsBwcQ=; b=f
+ cqNUmFuHxKyXVuXmA3MnNdh4IqpnTfCAubLTWvu+pG73sJsEFJV35x8fyXd+CcmR
+ 6LO94LCanmexEK6TnYa/g/9Brdaw0aUQ4sBGQnuL+Rq+3XhAqO4Ayq8UPPS2qb0n
+ T9tj28ZHJ38gZ0wPIzE8YJZ3EAqrK15M5AgHABLSkk=
+Date: Mon, 19 Oct 2026 14:40:48 +0800 (CST)
+From: =?GBK?B?tqHo97rA?= <stonege01@163.com>
 To: wireguard@lists.zx2c4.com
-Subject: wireguard-nt 1.1: 0xD1 in PubkeyHashtableLookup (double evaluation of
- PubkeyBucket)
-Date: Mon, 19 Oct 2026 14:39:48 +0800
-Message-ID: <179239198873.5912.10597979367322198780@163.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: wireguard-nt 1.1: 0xD1 in PubkeyHashtableLookup (double evaluation
+ of PubkeyBucket)
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2023.4-cmXT build
+ 20260511(2e539873) Copyright (c) 2002-2026 www.mailtech.cn 163com
+X-NTES-SC: AL_Qu2SAP+SvUgv7imQYOkdnUwSheo5X8Kzvfsv24BXc+oEtSzu9QIgc0J7HGX888GmDAKpsDOQYT5u4f5XcZh1F3l5jxFrdWdNBtTzi9v3hQ==
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=GBK
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-X-CM-TRANSID: _____wDnXwdKu9VqNrmpAw--.50440S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW3Ww4DXw43CF13KrWDAF4fZrb_yoW7WF43pr
- W5GFZ8Crs5JFyrur4vvry8AryrC395Aa13u34UJw1qyFs8Cr1Fqryrt3y7Wa9rZrZ5CanF
- qr4DAa1qvFs5CaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRS38rUUUUU=
-X-CM-SenderInfo: xvwr0vljhqiqqrwthudrp/xtbC5AsRtWrVu0uFygAA3L
+Message-ID: <2b0776a.5874.1a152e43164.Coremail.stonege01@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: ZSgvCgBH_8txu9Vq+ahbAA--.184W
+X-CM-SenderInfo: xvwr0vljhqiqqrwthudrp/xtbC-xAbv2rVu3AddAAA3W
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 X-Mailman-Approved-At: Mon, 26 Oct 2026 05:28:33 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -54,152 +52,100 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,UNPARSEABLE_RELAY autolearn=no autolearn_force=no
-	version=4.0.1
+	SPF_PASS autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi,
-
-I would like to report a 0xD1 in wireguard.sys 1.1.0.0 (wireguard-nt 1.1,
-tag fef7bc4) and a root cause I believe is in PubkeyHashtableLookup().
-
-Two crash dumps from the same machine (10 days apart) show the same
-instruction and the same arguments, so this is deterministic code and not
-random memory corruption.
-
-=3D=3D Environment =3D=3D
-- Windows 11 Pro 26200 (10.0.26200.9168), x64, 8 logical CPUs
-- wireguard.sys 1.1.0.0, timestamp Thu May 7 04:35:56 2026 (0x69FBA62C),
-  checksum 0x887D0, PDB stripped (CodeView signature zero)
-- loaded through the embeddable wireguard.dll 1.1
-- the application is a WireGuard-based mesh VPN that frequently removes and
-  re-adds peers to force an immediate handshake after an endpoint change
-  (updating the endpoint does not reset the handshake retransmit timer).
-  Traffic is continuous while this happens. Any application that removes
-  peers while handshakes are in flight could hit the same race.
-
-=3D=3D Crashes =3D=3D
-Both are DRIVER_IRQL_NOT_LESS_OR_EQUAL (0xD1):
-
-  2026-10-09 17:26:09 +08:00
-    0xD1 (0xfffffffffffffea8, 0x0000000000000002,
-          0x0000000000000000, 0xfffff8039ce1f8d3)
-    wireguard base 0xfffff8039ce00000 -> offset 0x1f8d3
-
-  2026-10-19 09:10:30 +08:00
-    0xD1 (0xfffffffffffffea8, 0x0000000000000002,
-          0x0000000000000000, 0xfffff801669df8d3)
-    wireguard base 0xfffff801669c0000 -> offset 0x1f8d3
-
-Arg1 =3D -0x158, Arg2 =3D 2 (DISPATCH_LEVEL), Arg3 =3D 0 (read).
-
-=3D=3D Crash site =3D=3D
-!analyze -v:
-
-  FAULTING_IP:
-  wireguard+1f8d3
-  fffff801`669df8d3 483b0411  cmp rax,qword ptr [rcx+rdx]
-
-Surrounding code (inlined memcmp):
-
-  wireguard+0x1f8d0  488b01      mov rax,[rcx]
-  wireguard+0x1f8d3  483b0411    cmp rax,[rcx+rdx]
-  ...
-
-Raw stack return addresses (innermost first):
-
-  wireguard+0x1f8d3
-  wireguard+0x174a5
-  wireguard+0x15463
-  wireguard+0x18fdf
-  tcpip!UdpDeliverDatagrams
-
-0x174a5 is inside PubkeyHashtableLookup(). Disassembly there:
-
-  call siphash              ; first evaluation of PubkeyBucket()
-  mov  r9,[bucket]
-  test r9,r9
-  je   done                 ; first load is checked for NULL
-  call siphash              ; second evaluation of PubkeyBucket()
-  mov  rbx,[bucket]         ; second load is NOT checked
-  add  rbx,-5E0h            ; CONTAINING_RECORD(..., WG_PEER, PubkeyHash)
-  lea  rdx,[rbx+488h]       ; &peer->Handshake.RemoteStatic
-  mov  r8d,20h
-  call memcmp
-
-=3D=3D Root cause =3D=3D
-driver/peerlookup.c:
-
-  HLIST_FOR_EACH_ENTRY_RCU (IterPeer, PubkeyBucket(Table, Pubkey), PubkeyHash)
-
-driver/containers.h:
-
-  #define HlistEntry(Ptr, Type, Member) CONTAINING_RECORD(Ptr, Type, Member)
-  #define HlistEntrySafe(Ptr, Type, Member) ((Ptr) ? HlistEntry(Ptr, Type, Me=
-mber) : NULL)
-  #define HLIST_FOR_EACH_ENTRY_RCU(Pos, Head, Member) \
-      for (Pos =3D HlistEntrySafe(RcuDereference(HlistFirstRcu(Head)), ...); =
-Pos; \
-           Pos =3D HlistEntrySafe(RcuDereference(HlistNextRcu(&(Pos)->Member)=
-), ...))
-
-HlistEntrySafe() evaluates Ptr twice. Here Ptr contains
-PubkeyBucket(Table, Pubkey), which calls Siphash() and indexes the table,
-so the complete bucket lookup (SipHash + bucket read) is evaluated twice.
-The first result is checked for NULL, the second is used unchecked.
-
-If a concurrent PeerRemove() empties the bucket between the two
-evaluations, the second read returns NULL,
-CONTAINING_RECORD(NULL, WG_PEER, PubkeyHash) becomes -0x5E0, and
-&peer->Handshake.RemoteStatic becomes -0x5E0 + 0x488 =3D -0x158.
-memcmp() then reads -0x158 at DISPATCH_LEVEL, which matches Arg1/Arg2/Arg3.
-
-Racing paths:
-  PubkeyHashtableLookup()
-    <- NoiseHandshakeConsumeInitiation() (receive.c:87, noise.c:644)
-    <- NoiseHandshakeConsumeResponse()   (receive.c:107, noise.c:740)
-  PubkeyHashtableRemove()
-    <- PeerRemove()
-    <- WG_IOCTL_PEER_REMOVE (ioctl.c)
-
-The lookup is RCU/lock-free and is not serialized against PeerRemove().
-Data packets use IndexHashtableLookup(), not the public-key table.
-
-The PDB is stripped (CodeView signature zero), so the offsets above come
-from the disassembly; 0x5E0 and 0x488 are consistent across both dumps and
-explain Arg1 exactly.
-
-=3D=3D Suggested fix =3D=3D
-Evaluate the bucket only once:
-
-  HLIST_HEAD *Bucket =3D PubkeyBucket(Table, Pubkey);
-  HLIST_FOR_EACH_ENTRY_RCU (IterPeer, Bucket, PubkeyHash) { ... }
-
-MSVC has no statement expressions, so a local variable at the call site is
-the simplest safe form. This keeps the lookup lock-free.
-
-=3D=3D Suggested API improvement (separate issue) =3D=3D
-Applications that need a forced re-handshake currently have to remove and
-re-add the peer, because SetConfiguration(endpoint=3D...) does not reset
-TimerRetransmitHandshake/TimerHandshakeAttempts. A
-WIREGUARD_PEER_FLAG_RESET (clear keypairs and handshake timers, keep the
-peer in PeerList/PeerHashtable/AllowedIPs) would allow forced re-handshake
-without touching the hash table, and would avoid this race class.
-
-=3D=3D Evidence =3D=3D
-I can provide on request:
-- both minidumps (~3.4 MB and ~3.6 MB),
-- full !analyze -v output,
-- disassembly of +0x174a5 and +0x1f8d3,
-- WER reports.
-
-The list may strip large attachments; please tell me where to send them
-and I will send them off-list, or provide a temporary link.
-
-I am happy to test a patched driver/DLL build on Windows 11 26200 with
-continuous traffic and repeated peer add/remove.
-
-Thanks,
-[your name]
-
+SGksCgpJIHdvdWxkIGxpa2UgdG8gcmVwb3J0IGEgMHhEMSBpbiB3aXJlZ3VhcmQuc3lzIDEuMS4w
+LjAgKHdpcmVndWFyZC1udCAxLjEsCnRhZyBmZWY3YmM0KSBhbmQgYSByb290IGNhdXNlIEkgYmVs
+aWV2ZSBpcyBpbiBQdWJrZXlIYXNodGFibGVMb29rdXAoKS4KClR3byBjcmFzaCBkdW1wcyBmcm9t
+IHRoZSBzYW1lIG1hY2hpbmUgKDEwIGRheXMgYXBhcnQpIHNob3cgdGhlIHNhbWUKaW5zdHJ1Y3Rp
+b24gYW5kIHRoZSBzYW1lIGFyZ3VtZW50cywgc28gdGhpcyBpcyBkZXRlcm1pbmlzdGljIGNvZGUg
+YW5kIG5vdApyYW5kb20gbWVtb3J5IGNvcnJ1cHRpb24uCgo9PSBFbnZpcm9ubWVudCA9PQotIFdp
+bmRvd3MgMTEgUHJvIDI2MjAwICgxMC4wLjI2MjAwLjkxNjgpLCB4NjQsIDggbG9naWNhbCBDUFVz
+Ci0gd2lyZWd1YXJkLnN5cyAxLjEuMC4wLCB0aW1lc3RhbXAgVGh1IE1heSA3IDA0OjM1OjU2IDIw
+MjYgKDB4NjlGQkE2MkMpLAogIGNoZWNrc3VtIDB4ODg3RDAsIFBEQiBzdHJpcHBlZCAoQ29kZVZp
+ZXcgc2lnbmF0dXJlIHplcm8pCi0gbG9hZGVkIHRocm91Z2ggdGhlIGVtYmVkZGFibGUgd2lyZWd1
+YXJkLmRsbCAxLjEKLSB0aGUgYXBwbGljYXRpb24gaXMgYSBXaXJlR3VhcmQtYmFzZWQgbWVzaCBW
+UE4gdGhhdCBmcmVxdWVudGx5IHJlbW92ZXMgYW5kCiAgcmUtYWRkcyBwZWVycyB0byBmb3JjZSBh
+biBpbW1lZGlhdGUgaGFuZHNoYWtlIGFmdGVyIGFuIGVuZHBvaW50IGNoYW5nZQogICh1cGRhdGlu
+ZyB0aGUgZW5kcG9pbnQgZG9lcyBub3QgcmVzZXQgdGhlIGhhbmRzaGFrZSByZXRyYW5zbWl0IHRp
+bWVyKS4KICBUcmFmZmljIGlzIGNvbnRpbnVvdXMgd2hpbGUgdGhpcyBoYXBwZW5zLiBBbnkgYXBw
+bGljYXRpb24gdGhhdCByZW1vdmVzCiAgcGVlcnMgd2hpbGUgaGFuZHNoYWtlcyBhcmUgaW4gZmxp
+Z2h0IGNvdWxkIGhpdCB0aGUgc2FtZSByYWNlLgoKPT0gQ3Jhc2hlcyA9PQpCb3RoIGFyZSBEUklW
+RVJfSVJRTF9OT1RfTEVTU19PUl9FUVVBTCAoMHhEMSk6CgogIDIwMjYtMTAtMDkgMTc6MjY6MDkg
+KzA4OjAwCiAgICAweEQxICgweGZmZmZmZmZmZmZmZmZlYTgsIDB4MDAwMDAwMDAwMDAwMDAwMiwK
+ICAgICAgICAgIDB4MDAwMDAwMDAwMDAwMDAwMCwgMHhmZmZmZjgwMzljZTFmOGQzKQogICAgd2ly
+ZWd1YXJkIGJhc2UgMHhmZmZmZjgwMzljZTAwMDAwIC0+IG9mZnNldCAweDFmOGQzCgogIDIwMjYt
+MTAtMTkgMDk6MTA6MzAgKzA4OjAwCiAgICAweEQxICgweGZmZmZmZmZmZmZmZmZlYTgsIDB4MDAw
+MDAwMDAwMDAwMDAwMiwKICAgICAgICAgIDB4MDAwMDAwMDAwMDAwMDAwMCwgMHhmZmZmZjgwMTY2
+OWRmOGQzKQogICAgd2lyZWd1YXJkIGJhc2UgMHhmZmZmZjgwMTY2OWMwMDAwIC0+IG9mZnNldCAw
+eDFmOGQzCgpBcmcxID0gLTB4MTU4LCBBcmcyID0gMiAoRElTUEFUQ0hfTEVWRUwpLCBBcmczID0g
+MCAocmVhZCkuCgo9PSBDcmFzaCBzaXRlID09CiFhbmFseXplIC12OgoKICBGQVVMVElOR19JUDoK
+ICB3aXJlZ3VhcmQrMWY4ZDMKICBmZmZmZjgwMWA2NjlkZjhkMyA0ODNiMDQxMSAgY21wIHJheCxx
+d29yZCBwdHIgW3JjeCtyZHhdCgpTdXJyb3VuZGluZyBjb2RlIChpbmxpbmVkIG1lbWNtcCk6Cgog
+IHdpcmVndWFyZCsweDFmOGQwICA0ODhiMDEgICAgICBtb3YgcmF4LFtyY3hdCiAgd2lyZWd1YXJk
+KzB4MWY4ZDMgIDQ4M2IwNDExICAgIGNtcCByYXgsW3JjeCtyZHhdCiAgLi4uCgpSYXcgc3RhY2sg
+cmV0dXJuIGFkZHJlc3NlcyAoaW5uZXJtb3N0IGZpcnN0KToKCiAgd2lyZWd1YXJkKzB4MWY4ZDMK
+ICB3aXJlZ3VhcmQrMHgxNzRhNQogIHdpcmVndWFyZCsweDE1NDYzCiAgd2lyZWd1YXJkKzB4MThm
+ZGYKICB0Y3BpcCFVZHBEZWxpdmVyRGF0YWdyYW1zCgoweDE3NGE1IGlzIGluc2lkZSBQdWJrZXlI
+YXNodGFibGVMb29rdXAoKS4gRGlzYXNzZW1ibHkgdGhlcmU6CgogIGNhbGwgc2lwaGFzaCAgICAg
+ICAgICAgICAgOyBmaXJzdCBldmFsdWF0aW9uIG9mIFB1YmtleUJ1Y2tldCgpCiAgbW92ICByOSxb
+YnVja2V0XQogIHRlc3QgcjkscjkKICBqZSAgIGRvbmUgICAgICAgICAgICAgICAgIDsgZmlyc3Qg
+bG9hZCBpcyBjaGVja2VkIGZvciBOVUxMCiAgY2FsbCBzaXBoYXNoICAgICAgICAgICAgICA7IHNl
+Y29uZCBldmFsdWF0aW9uIG9mIFB1YmtleUJ1Y2tldCgpCiAgbW92ICByYngsW2J1Y2tldF0gICAg
+ICAgICA7IHNlY29uZCBsb2FkIGlzIE5PVCBjaGVja2VkCiAgYWRkICByYngsLTVFMGggICAgICAg
+ICAgICA7IENPTlRBSU5JTkdfUkVDT1JEKC4uLiwgV0dfUEVFUiwgUHVia2V5SGFzaCkKICBsZWEg
+IHJkeCxbcmJ4KzQ4OGhdICAgICAgIDsgJnBlZXItPkhhbmRzaGFrZS5SZW1vdGVTdGF0aWMKICBt
+b3YgIHI4ZCwyMGgKICBjYWxsIG1lbWNtcAoKPT0gUm9vdCBjYXVzZSA9PQpkcml2ZXIvcGVlcmxv
+b2t1cC5jOgoKICBITElTVF9GT1JfRUFDSF9FTlRSWV9SQ1UgKEl0ZXJQZWVyLCBQdWJrZXlCdWNr
+ZXQoVGFibGUsIFB1YmtleSksIFB1YmtleUhhc2gpCgpkcml2ZXIvY29udGFpbmVycy5oOgoKICAj
+ZGVmaW5lIEhsaXN0RW50cnkoUHRyLCBUeXBlLCBNZW1iZXIpIENPTlRBSU5JTkdfUkVDT1JEKFB0
+ciwgVHlwZSwgTWVtYmVyKQogICNkZWZpbmUgSGxpc3RFbnRyeVNhZmUoUHRyLCBUeXBlLCBNZW1i
+ZXIpICgoUHRyKSA/IEhsaXN0RW50cnkoUHRyLCBUeXBlLCBNZW1iZXIpIDogTlVMTCkKICAjZGVm
+aW5lIEhMSVNUX0ZPUl9FQUNIX0VOVFJZX1JDVShQb3MsIEhlYWQsIE1lbWJlcikgXAogICAgICBm
+b3IgKFBvcyA9IEhsaXN0RW50cnlTYWZlKFJjdURlcmVmZXJlbmNlKEhsaXN0Rmlyc3RSY3UoSGVh
+ZCkpLCAuLi4pOyBQb3M7IFwKICAgICAgICAgICBQb3MgPSBIbGlzdEVudHJ5U2FmZShSY3VEZXJl
+ZmVyZW5jZShIbGlzdE5leHRSY3UoJihQb3MpLT5NZW1iZXIpKSwgLi4uKSkKCkhsaXN0RW50cnlT
+YWZlKCkgZXZhbHVhdGVzIFB0ciB0d2ljZS4gSGVyZSBQdHIgY29udGFpbnMKUHVia2V5QnVja2V0
+KFRhYmxlLCBQdWJrZXkpLCB3aGljaCBjYWxscyBTaXBoYXNoKCkgYW5kIGluZGV4ZXMgdGhlIHRh
+YmxlLApzbyB0aGUgY29tcGxldGUgYnVja2V0IGxvb2t1cCAoU2lwSGFzaCArIGJ1Y2tldCByZWFk
+KSBpcyBldmFsdWF0ZWQgdHdpY2UuClRoZSBmaXJzdCByZXN1bHQgaXMgY2hlY2tlZCBmb3IgTlVM
+TCwgdGhlIHNlY29uZCBpcyB1c2VkIHVuY2hlY2tlZC4KCklmIGEgY29uY3VycmVudCBQZWVyUmVt
+b3ZlKCkgZW1wdGllcyB0aGUgYnVja2V0IGJldHdlZW4gdGhlIHR3bwpldmFsdWF0aW9ucywgdGhl
+IHNlY29uZCByZWFkIHJldHVybnMgTlVMTCwKQ09OVEFJTklOR19SRUNPUkQoTlVMTCwgV0dfUEVF
+UiwgUHVia2V5SGFzaCkgYmVjb21lcyAtMHg1RTAsIGFuZAomcGVlci0+SGFuZHNoYWtlLlJlbW90
+ZVN0YXRpYyBiZWNvbWVzIC0weDVFMCArIDB4NDg4ID0gLTB4MTU4LgptZW1jbXAoKSB0aGVuIHJl
+YWRzIC0weDE1OCBhdCBESVNQQVRDSF9MRVZFTCwgd2hpY2ggbWF0Y2hlcyBBcmcxL0FyZzIvQXJn
+My4KClJhY2luZyBwYXRoczoKICBQdWJrZXlIYXNodGFibGVMb29rdXAoKQogICAgPC0gTm9pc2VI
+YW5kc2hha2VDb25zdW1lSW5pdGlhdGlvbigpIChyZWNlaXZlLmM6ODcsIG5vaXNlLmM6NjQ0KQog
+ICAgPC0gTm9pc2VIYW5kc2hha2VDb25zdW1lUmVzcG9uc2UoKSAgIChyZWNlaXZlLmM6MTA3LCBu
+b2lzZS5jOjc0MCkKICBQdWJrZXlIYXNodGFibGVSZW1vdmUoKQogICAgPC0gUGVlclJlbW92ZSgp
+CiAgICA8LSBXR19JT0NUTF9QRUVSX1JFTU9WRSAoaW9jdGwuYykKClRoZSBsb29rdXAgaXMgUkNV
+L2xvY2stZnJlZSBhbmQgaXMgbm90IHNlcmlhbGl6ZWQgYWdhaW5zdCBQZWVyUmVtb3ZlKCkuCkRh
+dGEgcGFja2V0cyB1c2UgSW5kZXhIYXNodGFibGVMb29rdXAoKSwgbm90IHRoZSBwdWJsaWMta2V5
+IHRhYmxlLgoKVGhlIFBEQiBpcyBzdHJpcHBlZCAoQ29kZVZpZXcgc2lnbmF0dXJlIHplcm8pLCBz
+byB0aGUgb2Zmc2V0cyBhYm92ZSBjb21lCmZyb20gdGhlIGRpc2Fzc2VtYmx5OyAweDVFMCBhbmQg
+MHg0ODggYXJlIGNvbnNpc3RlbnQgYWNyb3NzIGJvdGggZHVtcHMgYW5kCmV4cGxhaW4gQXJnMSBl
+eGFjdGx5LgoKPT0gU3VnZ2VzdGVkIGZpeCA9PQpFdmFsdWF0ZSB0aGUgYnVja2V0IG9ubHkgb25j
+ZToKCiAgSExJU1RfSEVBRCAqQnVja2V0ID0gUHVia2V5QnVja2V0KFRhYmxlLCBQdWJrZXkpOwog
+IEhMSVNUX0ZPUl9FQUNIX0VOVFJZX1JDVSAoSXRlclBlZXIsIEJ1Y2tldCwgUHVia2V5SGFzaCkg
+eyAuLi4gfQoKTVNWQyBoYXMgbm8gc3RhdGVtZW50IGV4cHJlc3Npb25zLCBzbyBhIGxvY2FsIHZh
+cmlhYmxlIGF0IHRoZSBjYWxsIHNpdGUgaXMKdGhlIHNpbXBsZXN0IHNhZmUgZm9ybS4gVGhpcyBr
+ZWVwcyB0aGUgbG9va3VwIGxvY2stZnJlZS4KCj09IFN1Z2dlc3RlZCBBUEkgaW1wcm92ZW1lbnQg
+KHNlcGFyYXRlIGlzc3VlKSA9PQpBcHBsaWNhdGlvbnMgdGhhdCBuZWVkIGEgZm9yY2VkIHJlLWhh
+bmRzaGFrZSBjdXJyZW50bHkgaGF2ZSB0byByZW1vdmUgYW5kCnJlLWFkZCB0aGUgcGVlciwgYmVj
+YXVzZSBTZXRDb25maWd1cmF0aW9uKGVuZHBvaW50PS4uLikgZG9lcyBub3QgcmVzZXQKVGltZXJS
+ZXRyYW5zbWl0SGFuZHNoYWtlL1RpbWVySGFuZHNoYWtlQXR0ZW1wdHMuIEEKV0lSRUdVQVJEX1BF
+RVJfRkxBR19SRVNFVCAoY2xlYXIga2V5cGFpcnMgYW5kIGhhbmRzaGFrZSB0aW1lcnMsIGtlZXAg
+dGhlCnBlZXIgaW4gUGVlckxpc3QvUGVlckhhc2h0YWJsZS9BbGxvd2VkSVBzKSB3b3VsZCBhbGxv
+dyBmb3JjZWQgcmUtaGFuZHNoYWtlCndpdGhvdXQgdG91Y2hpbmcgdGhlIGhhc2ggdGFibGUsIGFu
+ZCB3b3VsZCBhdm9pZCB0aGlzIHJhY2UgY2xhc3MuCgo9PSBFdmlkZW5jZSA9PQpJIGNhbiBwcm92
+aWRlIG9uIHJlcXVlc3Q6Ci0gYm90aCBtaW5pZHVtcHMgKH4zLjQgTUIgYW5kIH4zLjYgTUIpLAot
+IGZ1bGwgIWFuYWx5emUgLXYgb3V0cHV0LAotIGRpc2Fzc2VtYmx5IG9mICsweDE3NGE1IGFuZCAr
+MHgxZjhkMywKLSBXRVIgcmVwb3J0cy4KClRoZSBsaXN0IG1heSBzdHJpcCBsYXJnZSBhdHRhY2ht
+ZW50czsgcGxlYXNlIHRlbGwgbWUgd2hlcmUgdG8gc2VuZCB0aGVtCmFuZCBJIHdpbGwgc2VuZCB0
+aGVtIG9mZi1saXN0LCBvciBwcm92aWRlIGEgdGVtcG9yYXJ5IGxpbmsuCgpJIGFtIGhhcHB5IHRv
+IHRlc3QgYSBwYXRjaGVkIGRyaXZlci9ETEwgYnVpbGQgb24gV2luZG93cyAxMSAyNjIwMCB3aXRo
+CmNvbnRpbnVvdXMgdHJhZmZpYyBhbmQgcmVwZWF0ZWQgcGVlciBhZGQvcmVtb3ZlLgoKVGhhbmtz
+LApEaW5nIFppaGFvCg==
