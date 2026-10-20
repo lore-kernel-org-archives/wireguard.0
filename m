@@ -1,127 +1,139 @@
-Return-Path: <wireguard-bounces@lists.zx2c4.com>
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABCD0CA9ED0
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 12 Oct 2026 19:15:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6CB606A31C
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 20 Oct 2026 13:16:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=E+jqSW/t
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 5ef5bab4;
-	Mon, 12 Oct 2026 19:15:08 +0000 (UTC)
-Received: from mail.posixcafe.org (mail.posixcafe.org [45.76.19.58])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 6f779cb6
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id c18be36b;
+	Tue, 20 Oct 2026 13:10:01 +0000 (UTC)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id c6736bcf
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 12 Oct 2026 19:15:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posixcafe.org;
- s=20200506; t=1791832464;
+ Tue, 20 Oct 2026 13:09:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792501797;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=bjNTDOhrYZ4yi5ml3ketfwRGrK2hq27gyZv6/91JfOI=;
- b=MzT0FxHxiGOKSxEmqP23BT3WS7K9xLgocDBcpMfNEjcHQI33q5yhz+oFHAj7i0UdgKnQ+C
- n66EBfjpGA0g/esmQ7JXDEw73MufyXorM2dJueGCRQQ9lr84w5PTxO029Ahm06cmXZWnqO
- LvE1RQkIPoc2X43bjrEgY4FOuESE2gU=
-Received: from [192.168.168.98] (173-26-212-115.client.mchsi.com
- [173.26.212.115])
- by mail.posixcafe.org (OpenSMTPD) with ESMTPSA id 8e086519
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 12 Oct 2026 14:14:24 -0500 (CDT)
-Message-ID: <e71fde9b-3e2d-4a1f-9f17-6e64b73103ad@posixcafe.org>
-Date: Mon, 12 Oct 2026 14:14:52 -0500
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=r7db5+BopgpcFDUxO3SJq0ATIR0htP6s/SGZniIH6PQ=;
+ b=E+jqSW/tFnyhl8oQW42X5FBHi8aFnsN+oKNEBakDpbjuemVOgapS0puoX8pZxnJM7dIYjW
+ 6NaGr5nH50J6e9xZ5JIT2aTL1d+7FFic9LQMaeqsDD/FGWUyvQUQa+Y4QMcdus9yQUV2No
+ rqs4dc3GOH9QEfkymWxUwMOXTmREiUw=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-300-GjRzZyDDNB-mlwpQ4uaVZg-1; Tue,
+ 20 Oct 2026 13:09:53 +0000
+X-MC-Unique: GjRzZyDDNB-mlwpQ4uaVZg-1
+X-Mimecast-MFC-AGG-ID: GjRzZyDDNB-mlwpQ4uaVZg_1792501791
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B2A641954B14; Tue, 20 Oct 2026 13:09:50 +0000 (UTC)
+Received: from onestero-thinkpadp1gen7.tpbc.csb
+ (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with SMTP
+ id 5CDEB362; Tue, 20 Oct 2026 13:09:47 +0000 (UTC)
+Received: by onestero-thinkpadp1gen7.tpbc.csb (nbSMTP-1.00) for uid 13628
+ oleg@redhat.com; Tue, 20 Oct 2026 15:09:50 +0200 (CEST)
+Date: Tue, 20 Oct 2026 15:09:46 +0200
+From: Oleg Nesterov <oleg@redhat.com>
+To: Allison Henderson <achender@kernel.org>
+Cc: Joel Granados <joel.granados@kernel.org>,
+ kernel test robot <yi1.lai@intel.com>, oe-lkp@lists.linux.dev,
+ lkp@intel.com, linux-kernel@vger.kernel.org,
+ linux-m68k@lists.linux-m68k.org, linux-s390@vger.kernel.org,
+ linux-fsdevel@vger.kernel.org, netdev@vger.kernel.org,
+ wireguard@lists.zx2c4.com, rds-devel@oss.oracle.com
+Subject: rds_wq UAF
+Message-ID: <atdoGiW_sHlWgOwt@redhat.com>
+References: <202610190310.9737b2e3-lkp@intel.com> <atYB0bm9eEXp8A2g@redhat.com>
+ <atYW0K3t57puHeLW@hobbes> <atYuE1xnVYe0BDG4@redhat.com>
+ <atY42k00k0Waj6o4@redhat.com>
+ <42964fa071bd8dcafd418c89be6d66856def4dc5.camel@kernel.org>
+X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Implementation for the 9front operating system
-From: Jacob Moody <moody@posixcafe.org>
-To: wireguard@lists.zx2c4.com
-References: <0ab57e49-8904-4e4b-bc3a-38e10b214ab3@posixcafe.org>
-Content-Language: en-US
-Autocrypt: addr=moody@posixcafe.org; keydata=
- xsDNBF9kFAYBDACq5sxitiy8Cyomv1vBVGd4QhI1wjq6HA9JXtxGMaz2J6gao3Bxg4EWD7dQ
- ow9/oEAtDmYImx2H54zWhqhk0R37Uo14CpoXIza+azhlHlJ6s81hgBoQBdv0hctNEW+vC6kY
- fuoKKaDaAsCzxqogLyh2ac8xJVFiyWFTfV3i1nw2NksKcwswkdksH+IkYY/apcs5WXTHp3k0
- hBvqocxM6uUuxZgrKRKUY6m/3W+MAtehq/TEK8pYTYAxGxG2DKioQ1+kW40ml0pNZGPXdhY7
- hsguq8Kr+2/GdfO8yRyo03Ne/oFz8Hhzk5NfZq1AGgnkFVthT1tb10GMDRMhfDGTei9qFLzc
- 3LbNEuD8hvQB0tbmnqmoJmnd2XkKqq/H8eF0zQNo+omleg8zWjSKp3L/pkLMSehPixeKP6bE
- 3AeBVU54N3e74gr8ID9AiInp9aUfq9ETsBtGwZl6eL3hsLIQenMyq5O+dAF9LOB3XLHRQDpc
- r6387c6V8jcktbY3mlp+sX0AEQEAAc0hSmFjb2IgTW9vZHkgPG1vb2R5QHBvc2l4Y2FmZS5v
- cmc+wsEOBBMBCAA4FiEEEFJxEKoR2F822a75BfNtD6eaX0MFAl9kFAYCGwMFCwkIBwIGFQoJ
- CAsCBBYCAwECHgECF4AACgkQBfNtD6eaX0NmUgv9Fd8q0LSj4pcW2TwBl9g1SQ30Gv3ZFkpt
- +SlPqmpjttp7YdUnWkUKA/PIVGae95Zw+AQ/LSxKcodBT2hkPl9HANiko/kvp5X8dkqsSePW
- gvIs6+ByShd0ySNzN+OBUfKUIyThTEOGgfdnlbdQ4zlWYoWZdy9qAwQTOQ2O2GH6AVofuXVi
- 2IlU9mBGV3H7tMbC7BRkOUQC0Uvxp9uHlpnRauen5Lji6fRgMzdbHmqvuK2I2hyHPWp3YEF9
- D6b2sw4Vb/dqlp+Olf/pYLuN768eH6TL+Ja1E5FWtGbC8Am9J9A3MI8ZHIb3zl8+BHRzVUiE
- KE1Ji76a/0NEhdrxJaOMAa0Fyt560Wg0sFvpM7FGrNq/BjOU41pt3p1EejOw5YrlQJFYaagj
- 4vB5HdZMJ6Q6SZejgtDg3DvErW6DaK1sHWOQ6/RB8hoq5FkGsBWmXnBvJ9swtXAu6fYy9aRq
- PhhMFPRfilfA5VUFK8OQ4Mf6e1n+0rxvf9+aW4UPOOBFMWwfzsDNBF9kFAYBDADktcxPTnT2
- jD69hNrFr8v0GEb2N2AwGSNBWzyVNkQR10vsCzQzCbmV89pgOr1SWAEAwCVIC9UboGOurJ9f
- tZ2MJ4xg7QPHu63cOFWwWuo5W+X8Q+VJdzZ0d9inyY81FD5gF2t932F6PMmCUPqMfA8HN4NF
- DuqjxUYwBv5Q9Qf1N0ctkL/gWNzKIHNe9EOsdqoTfwToovDe+gmAqIIbZpyzYHXgRqSwV1rN
- 7Ek0muK9OOePaH+YXYqpPKjLNGWDtKdiRUaAM8M0EQUezzwdNrSX4QpOQm4FjQQU+dgXchsg
- 60tFKRzT5fUoRLIRlHGOlN5swvsH4gZzlf+fsh6/UjR/zLzjqOtMMjAIh6j4+3kEY87g/8GP
- AntTg+WFdQECdgr56hJOYn6jWFQzvpfvS9IXyL3RqKMAv7V63hqDEInGHGtOyoz7bWgfCsjx
- 4pjfE+htsqifExnAvxXxezpqQShhS0caFyRa6gx9YId1WxXLMdwksnxtH6OG6uSZp/7+2qEA
- EQEAAcLA9gQYAQgAIBYhBBBScRCqEdhfNtmu+QXzbQ+nml9DBQJfZBQGAhsMAAoJEAXzbQ+n
- ml9DqjIL/3aOqLTDnp1ZqCX9l8CSszbF18A5hXGT5aRjANF5em7atz8/jaqA/u6OI2gSzAiY
- 3G5AOybpNIiGTLbXceo9aArtxJ3SBKFI/cQAWXEqnD0jMnOMtieu60fnyQzRSiCOhjsj5ndZ
- 5R0Q7U0Q+0b04jJ9gLGlKGk+OT/+wdFM3Q9iG4h4uyiymF+IiiY0bKHvlRh09dMWezrtnIMg
- KvHFYEew/UJJJ5rOX4qGLRSWGdgiOauZZD2PULmIyQbRyVyc0nXY6pfoDjTY7CXGklAhiN80
- Nd8uf65dNZbfmWmLU0QqZHqYSfUiY0vC+L7fbudraljJpWl4SjgIT54AeAsvOnNhdeno+vZR
- mZcSUZZGHVwadJeSFAxJ6lZSFljypc8PaZy2+7MhYDnAihho9/hGRHon+Ri+os/nLf8IAtJV
- ipUGqUp7AZDWArB+WZvjkt0Vto1fO9jgmmKSMLGLR4+GEQPlTgVT/OMheWxEhpARtwksMtiR
- kA7wyn9tHMM41bDH8w==
-In-Reply-To: <0ab57e49-8904-4e4b-bc3a-38e10b214ab3@posixcafe.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <42964fa071bd8dcafd418c89be6d66856def4dc5.camel@kernel.org>
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+X-Mimecast-MFC-PROC-ID: DaAWgr8gLGlzmEHv9Ps6ZZwm_T7mDIzXH9qUTzRaOrs_1792501791
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
-List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
- <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
 List-Archive: <http://lists.zx2c4.com/pipermail/wireguard/>
 List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
+X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
+	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
+	aws-us-west-2-korg-listserv-alma10-1
 
-On 8/4/26 16:08, Jacob Moody wrote:
-> All,
-> 
-> I've been working on an implementation of wireguard for 9front.
-> I am starting to get to the point where I feel like the implementation is getting
-> pretty close, and its in a good spot to review before I do some tighter integration into 9front.
-> 
-> I know in the past I've seen some desire from the wg community to ensure that code using the wireguard
-> name at least be somewhat decent. So I wanted to share it here and get feedback if people felt inclined.
-> 
-> Grab the code from your choice of git hosts:
-> 	git://shithub.us/moody/wg
-> 	https://github.com/majiru/wg
-> 
-> I am happy to answer any questions regarding plan 9/9front specifics.
-> 
-> One note is that there's some stubs right now, the dynamic runtime addition
-> and subtraction of peers, and likewise the condition under which we send
-> cookie's is not implemented, that's pending the more tighter integration.
-> 
-> Thanks,
-> moody
-> 
+(change subject)
 
-Just giving a bump to this, sorry I had sent two mails because I was not sure if the first got dropped with the
-moderation queue taking so long.
+On 10/19, Allison Henderson wrote:
+>
+> On Mon, 2026-10-19 at 17:35 +0200, Oleg Nesterov wrote:
+> > >
+> > > But. rds_init() can also fail even if CONFIG_SYSCTL=y, after
+> > > rds_sysctl_init(), so to me this looks like a bug in net/rds/.
+> > >
+>
+> Yes that's a separate bug, so I'll send a separate fix for that.
 
-It's totally fine if there's no interest, 9front is fairly niche, I just wanted to avoid a faux pas
-in shipping something without consulting the broader community.
+Let me try to summarize.
 
-With that said, after haven taken a break from this for a bit I plan to work on this a bit more and upstream it.
-If folks are interested but just need more time to look and would prefer that happen before I merge anything just LMK.
+If rds_init() fails after rds_threads_init() for any reason,
+rds_threads_exit() will destroy/free rds_wq.
 
-Thanks,
-moody
+If rds_rdma_init() is called after that, and rds_ib_init() fails
+after rds_ib_mr_init(), rds_ib_unregister_client() will try to
+flush the already freed rds_wq.
+
+But we have
+
+	module_init(rds_init);		// net/rds/af_rds.c
+	module_init(rds_rdma_init);	// net/rds/rdma_transport.c
+
+and IIUC the order of these initcalls is not defined. So if
+rds_rdma_init() -> rds_ib_init() is called before rds_init(), it
+can do flush_workqueue(rds_wq) when rds_wq == NULL on failure.
+
+With or without CONFIG_SYSCTL. Right?
+
+But it seems that rds_ib_init() doesn't need to flush rds_wq on failure,
+so how about the patch below? Of course, I have no idea if net/rds has
+more similar issues with rds_wq.
+
+Oleg.
+---
+
+diff --git a/net/rds/ib.c b/net/rds/ib.c
+index 786f39169bc1..cde2d1bfabbd 100644
+--- a/net/rds/ib.c
++++ b/net/rds/ib.c
+@@ -619,7 +619,7 @@ int rds_ib_init(void)
+ out_sysctl:
+ 	rds_ib_sysctl_exit();
+ out_ibreg:
+-	rds_ib_unregister_client();
++	ib_unregister_client(&rds_ib_client);
+ out_mr_exit:
+ 	rds_ib_mr_exit();
+ out:
+
