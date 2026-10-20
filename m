@@ -2,54 +2,54 @@ Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401FF606A31A
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Oct 2026 06:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5562B606A322
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Oct 2026 06:16:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XuNF1GbO
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MijKg5Pi
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id db921206;
-	Mon, 26 Oct 2026 05:28:56 +0000 (UTC)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id e3ddb49c;
+	Mon, 26 Oct 2026 05:28:58 +0000 (UTC)
 Received: from tor.source.kernel.org (tor.source.kernel.org
  [2600:3c04:e001:324:0:1991:8:25])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id af710a35
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 450e994d
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Oct 2026 19:53:01 +0000 (UTC)
+ Tue, 20 Oct 2026 07:55:27 +0000 (UTC)
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 38162600AA;
- Mon, 19 Oct 2026 19:53:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 592F91F000C4;
- Mon, 19 Oct 2026 19:52:59 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 3D6E860DA4;
+ Tue, 20 Oct 2026 07:55:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC1C1F000C4;
+ Tue, 20 Oct 2026 07:55:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1792439579;
- bh=/B8Sf2t/5DBguvLLrjlEO7Kkln0Oyn/55MT9a1pjZ1o=;
- h=Subject:From:To:Cc:Date:In-Reply-To:References;
- b=XuNF1GbOzd2BBEAJU6p1RypmvBu3/DMrL0b3wWdC+D++Poq0HXIRFWesrR1Oo8lL/
- mhtWvhuAYtWIocMai5rqtHzVncAteP+BI3w+hOW2hU6IBI6rvJPA15oR+4bdizjuTn
- dsf8kxRwLKdwlPv9l424Xna5CgBVMDCcZ1Jcc/qlP4AB/uOupNzjZvqcz7BE6QGBD7
- c7ltj0F3siFa6PMy6uq9tVAO//JSmGoFMld/h5nkyGLtrIXdadBY6yo0uZO+Vp3XbW
- h5+bZIQfi4A3lXHhXdvAJPgvsYBe0a+zHp1pPcLAaAFO9pB5lh38SAOIcLgJAfdjpA
- FaZxRbZ3iFzxw==
-Message-ID: <42964fa071bd8dcafd418c89be6d66856def4dc5.camel@kernel.org>
+ s=k20260515; t=1792482926;
+ bh=wiYcyYLmidZvaVJOjwXyMAgj6pRDKve8NH/1uX7Y5XE=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=MijKg5PiQSN4IeG87vq5Yt3/rVEOVOiaPlYoJcUIm++uXCodktoqH3rFHZJ3vXLg3
+ MbEvGyMVcu8ta0JQAZ/6/CyKJfnVs4NOL4EO+SuFnsyFAQfDFloIovKzTmVtFaywE7
+ 5MMyInA6heob1AvwY1YlJuSGSYD2epYDU9VT0CA8ur5h1stMY9++8Pt69cam5D5j34
+ iMie7hxbn7ltrvpnSMwsadaWIPXrdctRpqpTxvJSgyhCjtXz0Swx33L9AsJADIY7qi
+ ei8UsEfMAQ9C9tuXNadnmHWd63vc/UzaTHUiXU8zbmpRzPsHDUkiwnCjZDGuQVEOE7
+ 6TBQDsjEdSP2g==
+Date: Tue, 20 Oct 2026 09:55:20 +0200
+From: Joel Granados <joel.granados@kernel.org>
+To: Oleg Nesterov <oleg@redhat.com>
+Cc: Allison Henderson <achender@kernel.org>, 
+ kernel test robot <yi1.lai@intel.com>, oe-lkp@lists.linux.dev, lkp@intel.com, 
+ linux-kernel@vger.kernel.org, linux-m68k@lists.linux-m68k.org,
+ linux-s390@vger.kernel.org, 
+ linux-fsdevel@vger.kernel.org, netdev@vger.kernel.org,
+ wireguard@lists.zx2c4.com, rds-devel@oss.oracle.com
 Subject: Re: [linus:master] [sysctl]  8d75c338f0:
  BUG:KASAN:slab-use-after-free_in_touch_wq_lockdep_map
-From: Allison Henderson <achender@kernel.org>
-To: Oleg Nesterov <oleg@redhat.com>, Joel Granados <joel.granados@kernel.org>
-Cc: kernel test robot <yi1.lai@intel.com>, oe-lkp@lists.linux.dev, 
- lkp@intel.com, linux-kernel@vger.kernel.org,
- linux-m68k@lists.linux-m68k.org,  linux-s390@vger.kernel.org,
- linux-fsdevel@vger.kernel.org,  netdev@vger.kernel.org,
- wireguard@lists.zx2c4.com, rds-devel@oss.oracle.com
-Date: Mon, 19 Oct 2026 12:52:58 -0700
-In-Reply-To: <atY42k00k0Waj6o4@redhat.com>
-References: <202610190310.9737b2e3-lkp@intel.com>
- <atYB0bm9eEXp8A2g@redhat.com> <atYW0K3t57puHeLW@hobbes>
- <atYuE1xnVYe0BDG4@redhat.com> <atY42k00k0Waj6o4@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.3-0ubuntu1.1 
+Message-ID: <atcS-NKX1TpbklyR@hobbes>
+References: <202610190310.9737b2e3-lkp@intel.com> <atYB0bm9eEXp8A2g@redhat.com>
+ <atYW0K3t57puHeLW@hobbes> <atYuE1xnVYe0BDG4@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="a42qtuqnvg7yxrg6"
+Content-Disposition: inline
+In-Reply-To: <atYuE1xnVYe0BDG4@redhat.com>
 X-Mailman-Approved-At: Mon, 26 Oct 2026 05:28:33 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -63,184 +63,115 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
 	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Mon, 2026-10-19 at 17:35 +0200, Oleg Nesterov wrote:
-> On 10/19, Oleg Nesterov wrote:
 
-Hi Oleg, Joel,
+--a42qtuqnvg7yxrg6
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [linus:master] [sysctl]  8d75c338f0:
+ BUG:KASAN:slab-use-after-free_in_touch_wq_lockdep_map
+MIME-Version: 1.0
 
-Thanks for running this down.  Agreed we shouldn't just fail to init becaus=
-e
-sysctl is off.  Some comments below:
-
-
-> >=20
-> > But. rds_init() can also fail even if CONFIG_SYSCTL=3Dy, after
-> > rds_sysctl_init(), so to me this looks like a bug in net/rds/.
-> >=20
-Yes that's a separate bug, so I'll send a separate fix for that.
-
-> >=20
-> > In any case, I guess net/rds/ init paths should not fail if
-> > CONFIG_SYSCTL=3Dn ?
+On Mon, Oct 19, 2026 at 04:49:55PM +0200, Oleg Nesterov wrote:
+> On 10/19, Joel Granados wrote:
+> >
+> > On Mon, Oct 19, 2026 at 01:41:05PM +0200, Oleg Nesterov wrote:
+> > > On 10/19, kernel test robot wrote:
+> > > >
+> > > >
+> > > > Hello,
+> > > >
+> > > > kernel test robot noticed "BUG:KASAN:slab-use-after-free_in_touch_w=
+q_lockdep_map" on:
+> > > >
+> > > > commit: 8d75c338f0bcecaa6c9af67f86c176b67b6acf3e ("sysctl: remove C=
+ONFIG_PROC_SYSCTL, it just mirrors CONFIG_SYSCTL") https://git.kernel.org/c=
+git/linux/kernel/git/torvalds/linux.git master
+> > >
+> > > I don't think that commit could cause such a problem. Please re-check.
+> > >
+> > > Oleg.
+> >
+> > That commit might not be the one that introduces the UAF, but it might
+> > be the one that exposes it?
+> >
+> > You have CONFIG_SYSCTL=3Dn & CONFIG_RDS=3Dy & CONFIG_RDS_RDMA=3Dy.
+> > Therefore rds_sysctl_init() returns -ENOMEM  and rds_ib_sysctl_init
+> > returns -ENOMEM.
+> >
+> > If rds_ib_sysctl_init is called after a failed rds_sysctl_init, then
+> > rds_ib_sysctl_init would call a flush_workqueue on a rds_wq that has
+> > already been freed by the failed rds_sysctl_init. Right?
+> >
+> > Please let me know if I missed anything.
 >=20
-> So I think that something like the uncompiled/untested patch below makes
-> sense anyway even if doesn't fix all the potential problems with rds_wq.
+> I think you are right...
 >=20
-> What do you think?
+> rds_init() does
+>=20
+> 	rds_threads_init()
+> 		rds_wq =3D create_singlethread_workqueue("krdsd");
+>=20
+> 	rds_sysctl_init()
+> 		fails due to CONFIG_SYSCTL=3Dn
+>=20
+> 	out_threads:
+> 		destroy_workqueue(rds_wq);
+>=20
+> After that any access to rds_wq is wrong.
+>=20
+> If rds_rdma_init() runs after that, rds_ib_init() will call
+> rds_ib_unregister_client() -> flush_workqueue(rds_wq).
+>=20
+> And this will equally happen before the blamed commit 8d75c338f0bc,
+> just you need CONFIG_PROC_SYSCTL=3Dn instead of CONFIG_SYSCTL=3Dn.
+>=20
+>=20
+> But. rds_init() can also fail even if CONFIG_SYSCTL=3Dy, after
+> rds_sysctl_init(), so to me this looks like a bug in net/rds/.
+>=20
+>=20
+> In any case, I guess net/rds/ init paths should not fail if
+> CONFIG_SYSCTL=3Dn ?
+
+That is up to net/rds.=20
+
+The question is: do you have to fail if a sysctl registration fails? Or
+another way to ask it is: Can't it (net/rds or others) run while not
+being tuned or queried through sysctl?
+
+If the answer to these questions is that the sysctl path is necessary,
+then the failure is reasonable. But if they can work without the sysctl,
+the failure is an overreaction (IMO).
+
+Best
+
+
 >=20
 > Oleg.
-> ---
->=20
-> diff --git a/net/rds/ib_sysctl.c b/net/rds/ib_sysctl.c
-> index 2af678e71e3c..bccdb5c4df1d 100644
-> --- a/net/rds/ib_sysctl.c
-> +++ b/net/rds/ib_sysctl.c
-> @@ -36,19 +36,10 @@
-> =20
->  #include "ib.h"
-> =20
-> -static struct ctl_table_header *rds_ib_sysctl_hdr;
-> -
->  unsigned long rds_ib_sysctl_max_send_wr =3D RDS_IB_DEFAULT_SEND_WR;
->  unsigned long rds_ib_sysctl_max_recv_wr =3D RDS_IB_DEFAULT_RECV_WR;
->  unsigned long rds_ib_sysctl_max_recv_allocation =3D (128 * 1024 * 1024) =
-/ RDS_FRAG_SIZE;
-> -static unsigned long rds_ib_sysctl_max_wr_min =3D 1;
-> -/* hardware will fail CQ creation long before this */
-> -static unsigned long rds_ib_sysctl_max_wr_max =3D (u32)~0;
-> -
->  unsigned long rds_ib_sysctl_max_unsig_wrs =3D 16;
-> -static unsigned long rds_ib_sysctl_max_unsig_wr_min =3D 1;
-> -static unsigned long rds_ib_sysctl_max_unsig_wr_max =3D 64;
-> -
->  /*
->   * This sysctl does nothing.
->   *
-> @@ -61,6 +52,14 @@ static unsigned long rds_ib_sysctl_max_unsig_wr_max =
-=3D 64;
->   */
->  unsigned int rds_ib_sysctl_flow_control =3D 0;
-> =20
-> +#ifdef CONFIG_SYSCTL
-> +static unsigned long rds_ib_sysctl_max_wr_min =3D 1;
-> +/* hardware will fail CQ creation long before this */
-> +static unsigned long rds_ib_sysctl_max_wr_max =3D (u32)~0;
-> +
-> +static unsigned long rds_ib_sysctl_max_unsig_wr_min =3D 1;
-> +static unsigned long rds_ib_sysctl_max_unsig_wr_max =3D 64;
-> +
->  static struct ctl_table rds_ib_sysctl_table[] =3D {
->  	{
->  		.procname       =3D "max_send_wr",
-> @@ -105,6 +104,8 @@ static struct ctl_table rds_ib_sysctl_table[] =3D {
->  	},
->  };
-> =20
-> +static struct ctl_table_header *rds_ib_sysctl_hdr;
-> +
->  void rds_ib_sysctl_exit(void)
->  {
->  	if (rds_ib_sysctl_hdr)
-> @@ -118,3 +119,15 @@ int rds_ib_sysctl_init(void)
->  		return -ENOMEM;
->  	return 0;
->  }
-
-
-The real rds_sysctl_init() also does the runtime setup of
-rds_sysctl_reconnect_min_jiffies (msecs_to_jiffies(1)).  Without
-it, the reconnect back off is lost.
-
-Also, if register_net_sysctl_sz() returns NULL in rds_tcp_init_net(),
-it fails as an -ENOMEM.  So RDS/TCP would still fail to come up with
-CONFIG_SYSCTL=3Dn.  A simpler fix might be to just handle the NULL at the
-three call sites, e.g.:
-
-        rds_sysctl_reg_table =3D
-                register_net_sysctl(&init_net, "net/rds", rds_sysctl_rds_ta=
-ble);
-        if (!rds_sysctl_reg_table && IS_ENABLED(CONFIG_SYSCTL))
-                return -ENOMEM;
-
-And same for rds_ib_sysctl_init() and rds_tcp_init_net().  The exit
-paths are ok, since unregister_net_sysctl_table() is already a
-no-op stub when sysctl is off.
-
-Let me know if you want to respin or if you'd rather I send it.
-Either way is fine with me.
-
-Thanks
-Allison
-
-> +
-> +#else
-> +
-> +void rds_ib_sysctl_exit(void)
-> +{
-> +}
-> +
-> +int rds_ib_sysctl_init(void)
-> +{
-> +	return 0;
-> +}
-> +#endif
-> diff --git a/net/rds/sysctl.c b/net/rds/sysctl.c
-> index 025f518a4349..a0673a41633a 100644
-> --- a/net/rds/sysctl.c
-> +++ b/net/rds/sysctl.c
-> @@ -36,11 +36,6 @@
-> =20
->  #include "rds.h"
-> =20
-> -static struct ctl_table_header *rds_sysctl_reg_table;
-> -
-> -static unsigned long rds_sysctl_reconnect_min =3D 1;
-> -static unsigned long rds_sysctl_reconnect_max =3D ~0UL;
-> -
->  unsigned long rds_sysctl_reconnect_min_jiffies;
->  unsigned long rds_sysctl_reconnect_max_jiffies =3D HZ;
-> =20
-> @@ -49,6 +44,10 @@ unsigned int  rds_sysctl_max_unacked_bytes =3D (16 << =
-20);
-> =20
->  unsigned int rds_sysctl_ping_enable =3D 1;
-> =20
-> +#ifdef CONFIG_SYSCTL
-> +static unsigned long rds_sysctl_reconnect_min =3D 1;
-> +static unsigned long rds_sysctl_reconnect_max =3D ~0UL;
-> +
->  static struct ctl_table rds_sysctl_rds_table[] =3D {
->  	{
->  		.procname       =3D "reconnect_min_delay_ms",
-> @@ -91,6 +90,8 @@ static struct ctl_table rds_sysctl_rds_table[] =3D {
->  	},
->  };
-> =20
-> +static struct ctl_table_header *rds_sysctl_reg_table;
-> +
->  void rds_sysctl_exit(void)
->  {
->  	unregister_net_sysctl_table(rds_sysctl_reg_table);
-> @@ -107,3 +108,15 @@ int rds_sysctl_init(void)
->  		return -ENOMEM;
->  	return 0;
->  }
-> +
-> +#else
-> +
-> +void rds_sysctl_exit(void)
-> +{
-> +}
-> +
-> +int rds_sysctl_init(void)
-> +{
-> +	return 0;
-> +}
-> +#endif
 >=20
 
+--a42qtuqnvg7yxrg6
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQGzBAABCgAdFiEErkcJVyXmMSXOyyeQupfNUreWQU8FAmrXHlsACgkQupfNUreW
+QU912gv/eejjrtoxUgh51UagvsJXA0SMOI6Yaa+uIBcExUpCjVRcUBjhj2jT/GV9
+JRJK0zb9dOeEg4yIm/bzf4j3qYwBTqiRdVf5++8HB9yuqIx4w0NlVIbks9Q8YDQh
+QRXDBUAUoP6FxYb3jE1U49avWB37mPqj986qpNiwwqXq9nIRDKDf/9sPY/b2Vvyn
+RibI+hOi7hfCSUntOsrbN7NmOtV9e1FQtHZxCjHpdz51bQqn1S84/WJ0dDgy+RUT
+J1sLIQsUlmxKtJ78VYmaCPUJ+owrm3mFNvzmw2ERplHoA2JqT3r6lY1jP2G5Xi8y
+pRSKsCTfoRUgVrXh6yByuK/2ywuqzfTEneUTJ4F97bLgJClP+4FtYcUjnbZOvsrm
+l/VWLpeaTxFHDiDWu/rJ+K9YFs8JcsnTtmJqJ/pLJAW/IjvQ5sQsT6P+d04LgWQJ
+fRYc1/dcsViZ1Bz/LUpV4NWsMtqP70EPbjuvvPYA5GG5HRM1bj6x4hHL2e9gGsQ5
+vMczI+dC
+=OX/2
+-----END PGP SIGNATURE-----
+
+--a42qtuqnvg7yxrg6--
