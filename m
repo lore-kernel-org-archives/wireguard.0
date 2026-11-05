@@ -2,39 +2,51 @@ Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DFA8606A326
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  4 Nov 2026 11:22:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A00606D834
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  5 Nov 2026 14:14:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=ilvokhin.com header.i=@ilvokhin.com header.a=rsa-sha256 header.s=mail header.b=ruNRLjFr
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=d6UuvSRM
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 7dd703ec;
-	Wed, 4 Nov 2026 11:22:22 +0000 (UTC)
-Received: from mail.ilvokhin.com (mail.ilvokhin.com [178.62.254.231])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 6437ed82
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 297b8268;
+	Thu, 5 Nov 2026 14:14:47 +0000 (UTC)
+Received: from tor.source.kernel.org (tor.source.kernel.org
+ [2600:3c04:e001:324:0:1991:8:25])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 36e88476
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 4 Nov 2026 11:22:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ilvokhin.com;
- s=mail; t=1793791340;
- bh=NRYMUswHU9EXVk5ENJbdXnGb5bZgB4OZRzXtIPt1Kg0=;
- h=From:To:Cc:Subject:Date;
- b=ruNRLjFrv3R+NWp/e/Onf3wJITaYNSGVLeucPX/H3KIDz4y9BIU0kHzDVkyo+992w
- z6BKkXHAJSr6LAyazyM2BpFzwv8i2T2k9SZPOivd3Bk+PrsrgJEwsRzjEGpe5DdyzM
- 3ukB3nT7qUQR0QTW5Y94wODtd5lDx9ThscR9sAZM=
-Received: from localhost.localdomain (shell.ilvokhin.com [138.68.190.75])
- (Authenticated sender: d@ilvokhin.com)
- by mail.ilvokhin.com (Postfix) with ESMTPSA id 40E901015CC;
- Wed, 04 Nov 2026 11:22:20 +0000 (UTC)
-From: Dmitry Ilvokhin <d@ilvokhin.com>
-To: "Jason A . Donenfeld" <jason@zx2c4.com>
-Cc: wireguard@lists.zx2c4.com,
-	Dmitry Ilvokhin <d@ilvokhin.com>
-Subject: [PATCH RESEND] wg-quick: darwin: fix set_dns() and del_dns() race
-Date: Wed,  4 Nov 2026 11:22:08 +0000
-Message-ID: <20261104112208.46921-1-d@ilvokhin.com>
-X-Mailer: git-send-email 2.56.0
+ for <wireguard@lists.zx2c4.com>; Thu, 5 Nov 2026 14:14:45 +0000 (UTC)
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id 1FD3960C0A;
+ Thu,  5 Nov 2026 14:14:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3CB1F000C1;
+ Thu,  5 Nov 2026 14:14:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1793888083;
+ bh=PJRu7W6/Or1we5Gv3BgoLEtby0D0Y0UGgfjBHfRc5+k=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=d6UuvSRMxWeFneG33dT1c1heOT7SXHzFt9dpZq3uO5oWrn+IAIF8GVAz7TQl4hzeE
+ So3+Ri9fi4vrYaDxoNEJbZeYYu/rBuvxLoe97ETOldVXO0U9nzZHxXhXkm98b4hl/A
+ d0sScHVoPyWxt53RlmCS60uTWz9igRXlBVE544ndyy+R3vWy8YqCc9w1H1xxreVAQ5
+ jCrTYWMjMqjW0szaKMo0f2vF5BCIkeNJIh4tsOsYREaKAedvsQro9nB3A6iCG5D1HB
+ pnEIQQdjpSSQMvRPLX1wuQMsrqUffpLhkGWEJmf2fOI8VGk5oiKtTKaOHuIbIcpsmA
+ O97thb0HbTLPg==
+From: netdev-bot+sinfo@kernel.org
+To: Alexander Ildiyarov <alex@badcode.im>
+Cc: "Jason A . Donenfeld" <Jason@zx2c4.com>, wireguard@lists.zx2c4.com,
+ netdev@vger.kernel.org, Andrew Lunn <andrew+netdev@lunn.ch>,
+ "David S . Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@kernel.org>, 
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net 0/2] wireguard: memcg accounting and initiation race
+ fix
+Date: Thu, 05 Nov 2026 14:14:42 +0000
+Message-ID: <179388808273.488859.7701559647747958374@kernel.org>
+In-Reply-To: <20261105141006.95083-1-alex@badcode.im>
+References: <20261105141006.95083-1-alex@badcode.im>
+Auto-Submitted: auto-generated
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -45,41 +57,27 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The monitor deamon restores the DNS servers by running del_dns() from
-its INT, TERM and EXIT trap. Every route event also schedules an ALRM 2
-seconds later, and the ALRM trap runs set_dns().
+Hi!
 
-If ALRM arrives during cleanup, set_dns() can run in the middle of
-del_dns(), and the DNS servers may not be restored after the WireGuard
-interface is removed.
+This is an automated message. This series looks like a fix, but its
+commit messages seem to be missing some information:
 
-Ignore ALRM in cleanup signal handler to avoid this race.
+ - How the issue was discovered, e.g. hit in production, hit during
+   development, syzbot report, manual code inspection, LLM or static
+   analysis tool scan.
 
-Signed-off-by: Dmitry Ilvokhin <d@ilvokhin.com>
----
- src/wg-quick/darwin.bash | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Please do not repost the series just to address the above. Instead,
+reply to this email with the missing information, so that reviewers
+can take it into account. If the series needs another revision for
+other reasons, please include the information in the commit messages
+then.
 
-diff --git a/src/wg-quick/darwin.bash b/src/wg-quick/darwin.bash
-index 0179afb..20a21ce 100755
---- a/src/wg-quick/darwin.bash
-+++ b/src/wg-quick/darwin.bash
-@@ -323,7 +323,7 @@ del_dns() {
- 
- monitor_daemon() {
- 	echo "[+] Backgrounding route monitor" >&2
--	(trap 'del_routes; del_dns; exit 0' INT TERM EXIT
-+	(trap 'trap "" ALRM; del_routes; del_dns; exit 0' INT TERM EXIT
- 	exec >/dev/null 2>&1
- 	exec 19< <(exec route -n monitor)
- 	local event bpid=$BASHPID mpid=$!
--- 
-2.54.0 (Apple Git-157)
-
+The evaluation is done by an LLM so it may be wrong, if you think
+that is the case please reply and explain.
