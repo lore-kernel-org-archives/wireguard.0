@@ -2,48 +2,75 @@ Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E868D606A31C
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Nov 2026 18:22:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5872C606A327
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Nov 2026 18:49:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.a=rsa-sha256 header.s=mail header.b=io6hQch6
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=BuEHtDzx
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 572bfa54;
-	Tue, 10 Nov 2026 18:19:35 +0000 (UTC)
-Received: from forward504a.mail.yandex.net (forward504a.mail.yandex.net
- [37.230.174.44])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id a0705673
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id f84fd83a;
+	Tue, 10 Nov 2026 18:49:25 +0000 (UTC)
+Received: from mail-dl1-x122b.google.com (mail-dl1-x122b.google.com
+ [2607:f8b0:4864:20::122b])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id b426c524
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 10 Nov 2026 18:19:32 +0000 (UTC)
-Received: from mail-nwsmtp-smtp-production-main-65
- (mail-nwsmtp-smtp-production-main-65.yp-c.yandex.net)
- by forward504a.mail.yandex.net (postfix) with ESMTPS id 50958C0184;
- Tue, 10 Nov 2026 21:19:31 +0300 (MSK)
-Received: by mail-nwsmtp-smtp-production-main-65 with ESMTPSA id
- DJXb7GFia0U0-UuobqHqp; Tue, 10 Nov 2026 21:19:30 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
- t=1794334770; bh=VpKp3qfT9I2/4AIFnOHw2thJ8PJrOYzM5pM3X9hSNw4=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=io6hQch6nxz7t+B89tSpK4FHF7YCawH7TZJcvP2USlG6IPMNsETp8OIJYWzxb9KQK
- 2bWsz3AxDOhjRAJigmwP62k4ZioW0UNfDO1iHw/Ea+BQgOYbDQrPrWCFv1xL0odl3t
- WzFeAUXNNdFkrtKsAb3BNKdpMwExD1GAJoTpJlAM=
-Authentication-Results: mail-nwsmtp-smtp-production-main-65;
- dkim=pass header.i=@yandex.ru
-From: Roman Khromenok <roma55592@yandex.ru>
-To: "Jason A . Donenfeld" <Jason@zx2c4.com>
-Cc: wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- "David S . Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@kernel.org>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, Andrew Lunn <andrew+netdev@lunn.ch>,
- Shuah Khan <shuah@kernel.org>, linux-kselftest@vger.kernel.org
-Subject: Re: [PATCH wireguard] wireguard: device: allow userspace to enable
- IPv6 link-local addresses
-Date: Tue, 10 Nov 2026 20:19:10 +0200
-Message-ID: <20261110181910.2679973-1-roma55592@yandex.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <avNKp7OVA7d1X3fL@zx2c4.com>
-References: <avNKp7OVA7d1X3fL@zx2c4.com>
+ Tue, 10 Nov 2026 18:49:22 +0000 (UTC)
+Received: by mail-dl1-x122b.google.com with SMTP id
+ a92af1059eb24-1b3a05f8b5bso3534402c88.1
+ for <wireguard@lists.zx2c4.com>; Tue, 10 Nov 2026 10:49:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20260707; t=1794336561; x=1794941361; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=dtBB6VJ0vhsudtitif+Mm2Esb958z0jg7VuP7jdP6Fc=;
+ b=BuEHtDzx5/Y3bD7Axgg+r9Z5O9ZAL5kIEX1MCfcLObX6pEgMcqif8fCJSMVuoqxp+A
+ zhBRfAnL+/0asUKOpYqA6m8QWxUPNU6YoQNjnueIlq9ckin2Ne99YcqJnjmNWU00/he7
+ /b2xy8WiFba7qy7NRL/MTlkUK+KMxIM42YzMyafKpoJ/Z2rfbaghD+XV/9l2Kqa/D3Ad
+ Vqi3ChYSzGteGdNmCcD77Hrdq+DB6+tuWmCPdUFJ1mrwzN2Bxr0KkOkNdjZKOnUV7BTh
+ lYyBPhLxox6HRr9MA2cvHi7Tz5FCsNS1dUlbj97WI83vbvh/2fzcFUx3sk4WD+lv80SN
+ pH7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794336561; x=1794941361;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=dtBB6VJ0vhsudtitif+Mm2Esb958z0jg7VuP7jdP6Fc=;
+ b=zILsRjPIpSvhG72ADqqurn9BLj3biXTf76S6VwfDm+NblEM1EOo0fkYfRdkiO3ZHXm
+ wpjBN1jfJIQiSFDXA1L2THIvO162enRa5srtnx2sZQR5m5t788plnU8F00eoqdkBNFuS
+ 0toEmqCQPuC7AUpf8fo7eV558DLwT/YG8++z7OU5Ga39h0Q8Zs8gG72QnWy1ZYq7AMVU
+ fQ20ZoypN6qYIsQZI3czZXFs4r4q/ggE4DZaYvsKSWFSmcF2K8lZqo6sQJzYDb/2F1Sx
+ ibZyE9HUgL/xQwfm52zUn5KsWOnoAVwaGOKKzateop/BDLeA/LuUeNrIdy8fLbpLlmxe
+ 91HQ==
+X-Gm-Message-State: APuU4Z+qIzBFqiZeIRNNEf+dCbo5SM3XnDgBYRKGGmi4o4l1ld4Z/pQl
+ x0tGhCaG2xfsV84aTTatA59NRt2S32L8IwDTWp2LYTJyRaYnABX9x2kHAGYh7niW
+X-Gm-Gg: AYBFou3a1NSSiZVdU9Hv8xO3GUN9JpfMW714bxwBZIQ8W6wFw/e0/yiPSgmsGynrRRY
+ mcXCC9ga9ixaTomZ9YdV9B5x+cmSO2yw1uQ8Ok9KYpgBpqWnfE6UUHIYWKSsBtx0nFFC1Jp6mB/
+ rcKgrbVy1rx7FayX6IB5pgLEAKUUFEO0glOCK6QjX+ZyneASMhXH1vfUNWxB97bUwev+aynYyny
+ tYAj/FWqoznerkBUa/NgUepvxD0uvyk1CYiQqhgh/x+c3T2/ODcUmYRckEFVNxnJ0EgwxA/BLez
+ e7I9XJMADy8lSZnZYYcWRMhxEPTDYTfx7Me9L41LI8+jSetqpM9Fs5NdTMlBxIt2lwjLRsXKQJ3
+ caLeVgVCqZIhch8txLe7Pz7G0oDH1JK3bVbIE/Xgdw2q57KgWBvU2lwHQVWyKIeiRrgC5Q3VNDw
+ FrQuEJ3fLiVSbM9Qg0Nv1P56nLLHneMivxfSQxi/0MieiPcqJRzeV9DgezxDxuK7b9uNFKq4W3m
+ sPzaGbJayNOKQtsHD4rMNM6imDfOKEYDQpJntgeJrzlQxPI6aAL1YWcCTx8VMpzMtF0yzBX97wN
+ JsKd62Eb53OvLc2vvxyBwieqz7a6A8fOIbrf+MmAagBScHEgW7EIaLOOQJfTZSjgGb2B2Eavf/O
+ Bx+0bB4nUoyVKX8xPd1uFwdCBC+pJw2DVbno=
+X-Received: by 2002:a05:701b:2717:b0:14a:8cff:fbb8 with SMTP id
+ a92af1059eb24-1b3ba7b2f23mr2707848c88.28.1794336560442; 
+ Tue, 10 Nov 2026 10:49:20 -0800 (PST)
+Received: from fruitbat.pteropodidae.net (ip70-191-36-30.oc.oc.cox.net.
+ [70.191.36.30]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1b3b5b2ff3bsm10542880c88.11.2026.11.10.10.49.19
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 10 Nov 2026 10:49:19 -0800 (PST)
+From: Loren McQuade <loren.mcquade@gmail.com>
+To: wireguard@lists.zx2c4.com
+Cc: therealgraysky@proton.me
+Subject: Re: [PATCH 0/2] iOS 27 build and launch fixes
+Date: Tue, 10 Nov 2026 10:49:05 -0800
+Message-ID: <20261110184905.26402-1-loren.mcquade@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20261010160303.2853-1-loren.mcquade@gmail.com>
+References: <20261010160303.2853-1-loren.mcquade@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -57,28 +84,29 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,UNPARSEABLE_RELAY,USER_AGENT_GIT autolearn=no
-	autolearn_force=no version=4.0.1
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, Nov 10, 2026 at 04:47:35PM +0000, Jason A. Donenfeld wrote:
-> This is an old decision, but one I think I'm inclined to stick with. You
-> can't use WireGuard with LL generated addresses, because AllowedIPs
-> requires explicitly binding to public keys. So you wind up having to do
-> coordination between the chosen IP address and the distribution of keys.
+Hi,
 
-Thanks for the explanation, understood. Just to note, the use case I had
-in mind is one peer per interface with AllowedIPs ::/0, as commonly used
-for Babel/BIRD meshes, where no address/key coordination is needed.
+A friendly ping on this series. John Audia built it on top of master
+with the iOS 27 SDK, ran it on iOS 27.0.1, and replied with
 
-> That's the direction I'd like this to go in, not breaking the whole
-> allowedips model, which is what this moves toward. I hope that's
-> understandable.
+  Tested-by: John Audia <therealgraysky@proton.me>
 
-It is. I see the direction you prefer, so I'll drop this patch.
+https://lists.zx2c4.com/pipermail/wireguard/2026-October/009761.html
 
-Roman
+Without these two patches master doesn't build with the iOS 27 SDK, and
+once it builds the app is killed at launch, so anyone building from
+source for iOS 27 is stuck. Is there anything you'd like changed before
+the series can be applied? I'm happy to resend it as a v2 with the
+"wireguard-apple" tag in the subject and the Tested-by folded in, if
+that's easier.
+
+Thanks,
+Loren
