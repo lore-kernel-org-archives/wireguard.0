@@ -2,84 +2,88 @@ Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7FA606A31C
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Nov 2026 17:09:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E7660A2603
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Nov 2026 17:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.a=rsa-sha256 header.s=20210105 header.b=igskeO0d
+	dkim=pass (2048-bit key) header.d=cloudflare.com header.i=@cloudflare.com header.a=rsa-sha256 header.s=google09082023 header.b=ZPhHY/77
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id d6fba778;
-	Tue, 10 Nov 2026 16:57:35 +0000 (UTC)
-Received: from mail-dy1-x1367.google.com (mail-dy1-x1367.google.com
- [2607:f8b0:4864:20::1367])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 859277a1
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 9f9d7bad;
+	Tue, 10 Nov 2026 17:43:53 +0000 (UTC)
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com
+ [2607:f8b0:4864:20::333])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id c3b1dbd5
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 10 Nov 2026 16:57:33 +0000 (UTC)
-Received: by mail-dy1-x1367.google.com with SMTP id
- 5a478bee46e88-36f6295304dso3005872eec.1
- for <wireguard@lists.zx2c4.com>; Tue, 10 Nov 2026 08:57:32 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794329851; x=1794934651;
+ Tue, 10 Nov 2026 17:43:51 +0000 (UTC)
+Received: by mail-ot1-x333.google.com with SMTP id
+ 46e09a7af769-846566246e8so2083518a34.1
+ for <wireguard@lists.zx2c4.com>; Tue, 10 Nov 2026 09:43:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=cloudflare.com; s=google09082023; t=1794332629; x=1794937429;
+ darn=lists.zx2c4.com; 
  h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:dkim-signature
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=FSVjfbOy+6Li8/mrEmgfTAZk9pjE0e6I6pX2kMrymD0=;
- b=PEdopKpb7ZDbg1jnaWhXEKvmTcofNuHmROl1d+mHCDdcYVfuzYnjX65GYWVcVp8pgO
- psEoC1novLnSYpErrfS8E7oZZNLSKgDErfWtpzUg11lzI3+KyVJKDANh2UhP6pXpSBAL
- Q7LgxbVGluQJjLFc2OyrHuu3cnCx73bbZoFCgSdSovjCGJ2X6uGo2sB6G1GNci+nKfmI
- OuKC6iPbQX5akXTX/doQRlX/PwKXHzmA2TxPAPRD1x+30xRrqJyNHDA8pZAFQKnL46hN
- aD1RmidnwS9oRKCGGUbABsjn3+6TJ39/wicH75D6hoPS8noYSb9u13NOQ2RV0FZjxMTI
- +S7w==
-X-Gm-Message-State: APuU4Z/gNP/s5YE2VAu84lOUU3WciJNqgmaX+N3sDbq+SfTfaZxfJWL2
- 5gDhNUvJS5WbBEEflQjFBYNu9U0FfrmMImbhkHVV1HrIXPdEsWZjxoD3skfeTIlSl2QU5iaczO8
- YnJV6O/14F3QLv7SFKK/xA5ERK/K4kA8D2FE9uvXFng==
-X-Gm-Gg: AYBFou1DDNrsgQKGc6oUWZQ00jG6T9pY+WVwICchrdKt6BfkZiWrnoNp7UF10iVrqsF
- iXacI04dYwb8d0n5XRiyMv1Y0BTYRcBrymDNrVyIOxHP2IbKhaIQHMOL2Cdt175LY0IAO5LrPX5
- 7DK7azwPFOzoFY1sHPZo9YeDVBZC1mbnVlfHhBm2aMP/FqxPVXhR2zOHuJ+Gq7P10fRGF01ma3b
- EzlB7Hy9sREnXxBFF5S3xFVJmbEyXyH12w7N+jMXx+ZuZPjV/SF48bOvND3/OpdXsY2PQ2n3qXj
- jBrBHAGIt0yAMeortiIMyROW+Lzdp0/zyUPLzwGG+f9zXyxDQSH4OhXOfOr2SYCDfItRaaJK5YF
- odg==
-X-Received: by 2002:a05:693c:8357:b0:36e:c07a:426f with SMTP id
- 5a478bee46e88-37520218a2dmr3752045eec.39.1794329851138; 
- Tue, 10 Nov 2026 08:57:31 -0800 (PST)
-Received: from zx2c4.com (mail.zx2c4.com. [104.131.123.232])
- by smtp-relay.gmail.com with ESMTPS id
- 5a478bee46e88-3751fc3a433sm26539eec.9.2026.11.10.08.57.29
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=g1jb+6xFRaxfW+s+GrlDz4VHByKru/fEuJ86nW0oDnk=;
+ b=ZPhHY/77GyXIMgzT0kuP2ez4pEup8EhROa2dCmVwRrfEeBOxEuDhJKhNKEgj/rawj3
+ 1p/zZj+SK58f+X3zzGwwoMAjrAjSP/spEx72St/gd0dXJIWM2Oj1iLr4kwHQMpW8Fdi1
+ y1wPMAIBTRAj85Lt16NnrGPnYL5szFMk6YfUB1ctir3Vy+7NkH5BVm+cRUsU2jUgT09y
+ OZpR0o14U6Fm2jAVb/9SrwObcrfLI1nO1F11uLwJRMeSAuNWjsvSNxkvX7BnKJEoaRaT
+ oHP5dYecJIbUgTVxhp3rbMBcAMO4Ob2PKcwtQ7cDdZNhbGNKjHRnpbREWufZ71insCgW
+ +OTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1794332629; x=1794937429;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=g1jb+6xFRaxfW+s+GrlDz4VHByKru/fEuJ86nW0oDnk=;
+ b=A9fzfAe+cI4BEcwcWWiBy23AtY4Hq91JJcrt7I+De8alVod6dEtClt1nrW8SOP6+O/
+ ElnwKccJ+ZkC9cOxQRl8egNAKO/C+Yf3rS0I2MYYHHSdisTnObnJtcWFfj84uMpcjqrr
+ 32gmc2h+JaBtlDQxdL3VBC2xUiVCqM+vB7qrBpR7YfhWlclZus9xcHSRIBjtcrq9I00Q
+ X2lyI9firHg+hcLdecJLN8TmFdNm/akZcgX7OSB5yFZ99gUFO3ycUxdwc+DRyE4xoMIV
+ FuYsLX0CK7oyWYBYoFLrwa517umo1hv2EIifk3HEhriAWo382TWDBn9eO5B0byCPNKwX
+ 8yCg==
+X-Forwarded-Encrypted: i=1;
+ AL+hErEEQJMRarduuvdlzTTo71kmbOYOCafFkvdnoApmFCSn/uIks7YtBacdD0MKmU59LX+pdsCx5GzRD6w=@lists.zx2c4.com
+X-Gm-Message-State: APuU4Z92wi4tEdQRnLtZxiNBHjega/hZ/oqyTh8XTye/TIpo3tp78tvG
+ OjMYwbZcYctRNd5D8fiRLTwdJ/yDSEIElTBBpCWastIAJXmaP6++ZMQfH3DZebNi7zg=
+X-Gm-Gg: AYBFou0li7o/vwnpsZxyBV6KBJspgA/OSh/HM8cb/iXlFm6pNOZVEqHusxV2gLbhPjh
+ hsm7ktw4bPbo58SggMyoHWj0zeA9waj9VIp0N/lxf+fgdB3WdBKPaEU+KHGurFQcWH1kTuYD1ND
+ Rwot+3U3R7Hh3Y3Jc6jneAQcRJbffrri8jzzLsNmcm9XH+JmfJpXSkojQVtXrMzqaHOPi2n0h/E
+ vGe39dQnhppTBV8rKmjedNFgRGezkN6eu9bI4HArBbHwQXAdXhEWpYrT8pYO94rSEVnlNkphRXl
+ lVDx2fHXqVzzKwaKuahkxZvmp5yMg3frJD0v9cAqkK0tUc7LixuOqD2m1Nc9txzRfSSpxQxvRB2
+ cE5Q3vEXxjSo5sHKpuMn4UrdF7+cbXECH6ASuhE3vi0plHyyblrP16bbEVHah7r+DjphpvnEWuu
+ isnuJB2O0Cw3IsVk3dTT5hPOqPOWcTsKRc3L7w8EKs73Li0s409OqLGEk+w3X0ip6P5UbT9h+5J
+ hxc/qwx4ofR7LLzucqST0R2W+PuNh7yxlpmErN6HPaOxIUsYTRA15p85kjF7ODhdIu0eqMdErrk
+ Ipop0CmHwNcMxY+0Sp7PEwjBbU4no0Xg40Wi
+X-Received: by 2002:a05:6830:4429:b0:81c:9abc:974b with SMTP id
+ 46e09a7af769-860f01d5f35mr119441a34.17.1794332629456; 
+ Tue, 10 Nov 2026 09:43:49 -0800 (PST)
+Received: from 20HS2G4 ([2a09:bac6:bf21:15d7::22d:12a])
+ by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-860dcbfa983sm2478344a34.20.2026.11.10.09.43.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Nov 2026 08:57:31 -0800 (PST)
-X-Relaying-Domain: zx2c4.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1794329848;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=FSVjfbOy+6Li8/mrEmgfTAZk9pjE0e6I6pX2kMrymD0=;
- b=igskeO0dU3czlXFLU3ba5Ctyixi/3mpmhqAyoR0afH1i5cZtn9wxirqKTypweqxdarSCf0
- nm+3JYM7Npe+xc+vRZSGXIqiuK/nnDRDiONzihYmVdv+yteq6kdi3HIfWWkoB2UwyhP5tR
- ek4m/meE/BlTy3JjB9lznpSNB9RYcpU=
-Received: by mail.zx2c4.com (OpenSMTPD) with ESMTPSA id 919b48b2
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Tue, 10 Nov 2026 16:57:28 +0000 (UTC)
-Date: Tue, 10 Nov 2026 17:57:25 +0100
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Alexander Ildiyarov <alex@badcode.im>
-Cc: wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- Andrew Lunn <andrew+netdev@lunn.ch>,
- "David S . Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@kernel.org>,
+ Tue, 10 Nov 2026 09:43:48 -0800 (PST)
+Date: Tue, 10 Nov 2026 11:43:46 -0600
+From: Chris Arges <carges@cloudflare.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>, 
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
  Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH net 1/2] wireguard: account peer and allowedips
- allocations to memcg
-Message-ID: <avNM9dfdW1uULJUf@zx2c4.com>
-References: <20261105141006.95083-1-alex@badcode.im>
- <20261105141006.95083-2-alex@badcode.im>
+ wireguard@lists.zx2c4.com, 
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+ kernel-team@cloudflare.com
+Subject: Re: [PATCH net v2] wireguard: wait for per-peer crypto during removal
+Message-ID: <avNXVJX2YVU06T3B@20HS2G4>
+References: <20260913-fix-wg-peer-removal-v2-1-0cade985245a@cloudflare.com>
+ <aqpqEIy_h0DIywRy@zx2c4.com> <aq2jp8lXwSIqihaj@20HS2G4>
+ <avNHdEw2zHGyBe_U@zx2c4.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261105141006.95083-2-alex@badcode.im>
+In-Reply-To: <avNHdEw2zHGyBe_U@zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -90,36 +94,94 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
-X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
-	autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Nov 05, 2026 at 05:10:05PM +0300, Alexander Ildiyarov wrote:
-> Peers, allowed IP trie nodes, the per-peer dst_cache and the per-device
-> hashtables are all allocated in the context of the process that
-> configures the device over netlink, but none of these allocations are
-> charged to that process's memory cgroup: the wg_peer and allowedips_node
-> caches are created without SLAB_ACCOUNT, and the hashtables and
-> dst_cache use plain GFP_KERNEL.
+On 2026-11-10 17:33:56, Jason A. Donenfeld wrote:
+> On Fri, Sep 18, 2026 at 03:48:39PM -0500, Chris Arges wrote:
+> > On 2026-09-16 12:06:08, Jason A. Donenfeld wrote:
+> > > On Sun, Sep 13, 2026 at 07:19:08AM -0500, Chris J Arges wrote:
+> > > > Calling peer_remove_after_dead() currently flushes device-wide packet
+> > > > crypto and handshake workqueues while holding RTNL. This is problematic as
+> > > > unrelated peers can continue adding work to those queues, blocking other
+> > > > tasks that want to take the RTNL lock.
+> > > > 
+> > > > Instead, this patch tracks pending crypto handoffs for each peer using a
+> > > > counter. After marking the peer dead, synchronize_net() prevents new
+> > > > submissions. Next, wait for pending crypto workers to schedule TX work and
+> > > > for RX NAPI to drain the peer's RX queue. Then flush only the peer's TX
+> > > > packet and handshake work.
+> > > > 
+> > > > This scopes teardown synchronization to the removed peer and prevents
+> > > > unrelated peers from extending the RTNL hold time.
+> > > >  struct wg_device;
+> > > > @@ -161,6 +162,7 @@ static inline int wg_queue_enqueue_per_device_and_peer(
+> > > >  	 */
+> > > >  	if (unlikely(!wg_prev_queue_enqueue(peer_queue, skb)))
+> > > >  		return -ENOSPC;
+> > > > +	atomic_inc(&PACKET_PEER(skb)->packet_crypt_pending);
+> > > >  
+> > > >  	/* Then we queue it up in the device queue, which consumes the
+> > > >  	 * packet as soon as it can.
+> > > > @@ -182,6 +184,8 @@ static inline void wg_queue_enqueue_per_peer_tx(struct sk_buff *skb, enum packet
+> > > >  	atomic_set_release(&PACKET_CB(skb)->state, state);
+> > > >  	queue_work_on(wg_cpumask_choose_online(&peer->serial_work_cpu, peer->internal_id),
+> > > >  		      peer->device->packet_crypt_wq, &peer->transmit_packet_work);
+> > > > +	if (atomic_dec_and_test(&peer->packet_crypt_pending))
+> > > > +		wake_up_var(&peer->packet_crypt_pending);
+> > > >  	wg_peer_put(peer);
+> > > >  }
+> > > >  
+> > > > diff --git a/drivers/net/wireguard/receive.c b/drivers/net/wireguard/receive.c
+> > > > index 824bbefce61c..bb35e3205491 100644
+> > > > --- a/drivers/net/wireguard/receive.c
+> > > > +++ b/drivers/net/wireguard/receive.c
+> > > > @@ -476,9 +476,11 @@ int wg_packet_rx_poll(struct napi_struct *napi, int budget)
+> > > >  
+> > > >  next:
+> > > >  		wg_noise_keypair_put(keypair, false);
+> > > > -		wg_peer_put(peer);
+> > > >  		if (unlikely(free))
+> > > >  			dev_kfree_skb(skb);
+> > > > +		if (atomic_dec_and_test(&peer->packet_crypt_pending))
+> > > > +			wake_up_var(&peer->packet_crypt_pending);
+> > > > +		wg_peer_put(peer);
+> > > 
+> > > This adds two atomic updates to a per-peer counter for every RX packet
+> > > and TX batch. That could introduce contention across crypto workers. I
+> > > suppose it'd be good to see some measurements in if this changes
+> > > anything. Certainly it should change _something_. Question is by how
+> > > much.
+> > > 
+> > > Jason
+> > 
+> > Jason,
+> > 
+> > I benchmarked a wg peer on a 2 vCPU and 8 vCPU setup with 1200 byte
+> > UDP payloads. Goal was stressing the path where these atomics are getting
+> > incremented.
+> > - patched 2 vCPU test showed ~1-2% reduction in throughput
+> > - patched 8 vCPU test showed ~6% reduction in throughput (more contention)
+> > 
+> > My main goal is reducing the amount of time holding rtnl_lock when we remove a
+> > peer. In our systems we frequently get hangs due to workloads bringing up and
+> > tearing down wg peers. So perhaps I'll need to look into another approach
+> > where we're not introducing something like a counter into the hotpath.
 > 
-> The amount of memory is bounded only by MAX_PEERS_PER_DEVICE (2^20) per
-> device, with no limit on the number of devices or on the number of
-> allowed IPs per peer. Since WG_CMD_SET_DEVICE uses GENL_UNS_ADMIN_PERM,
-> any user who can create a user and network namespace can do this, and
-> thereby escape the memory limits of the cgroup it runs in.
+> Did you have any luck with other approaches? I'm still interested in
+> this.
 > 
-> For example, a process in a cgroup with memory.max=64M that adds 100000
-> peers with 20 /128 allowed IPs each grows Slab by ~790 MiB, yet the
-> cgroup's memory.current stays below 1 MiB and its memory limit is never
-> hit.
-> 
-> Fix this by creating the two caches with SLAB_ACCOUNT and using
-> GFP_KERNEL_ACCOUNT for the hashtables and the dst_cache. The keypair
-> allocations are left alone, as they happen from the handshake worker and
-> are bounded to three per peer.
- 
-I wasn't aware of this trick, I think mostly because most drivers don't
-use this. Does any other part of the networking stack do this? Is this a
-normal thing?
+> Thanks,
+> Jason
+
+Jason,
+
+Yes, I have another approach I'm working on that doesn't require a per-packet
+counter. I'll try to post something in the next week or so, this is still on my
+list.
+
+--chris
