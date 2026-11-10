@@ -2,83 +2,83 @@ Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0543606A325
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Nov 2026 16:50:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1557C606A320
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Nov 2026 17:09:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.a=rsa-sha256 header.s=20210105 header.b=IoRLkDg/
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.a=rsa-sha256 header.s=20210105 header.b=VU9PdmUJ
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id c8396d0a;
-	Tue, 10 Nov 2026 16:47:50 +0000 (UTC)
-Received: from mail-pg1-x567.google.com (mail-pg1-x567.google.com
- [2607:f8b0:4864:20::567])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id bb8dd095
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 946f62c2;
+	Tue, 10 Nov 2026 16:57:02 +0000 (UTC)
+Received: from mail-dl1-x1265.google.com (mail-dl1-x1265.google.com
+ [2607:f8b0:4864:20::1265])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 498612ed
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 10 Nov 2026 16:47:44 +0000 (UTC)
-Received: by mail-pg1-x567.google.com with SMTP id
- 41be03b00d2f7-cdd4dafdce9so921903a12.2
- for <wireguard@lists.zx2c4.com>; Tue, 10 Nov 2026 08:47:43 -0800 (PST)
+ Tue, 10 Nov 2026 16:56:59 +0000 (UTC)
+Received: by mail-dl1-x1265.google.com with SMTP id
+ a92af1059eb24-1b3beeaf6f9so51624c88.0
+ for <wireguard@lists.zx2c4.com>; Tue, 10 Nov 2026 08:56:59 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794329262; x=1794934062;
+ d=1e100.net; s=20260707; t=1794329817; x=1794934617;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:dkim-signature
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=nG9stXQkwLVFlp/SM6Lzv9KwcbHb+1wfgq3qgejLqIQ=;
- b=t50nkFqEMd6Mw2jhxMHzYyRucyrRM4pirJCmk0kkus9QYjQl2n2ZFriWDVt11tlM9f
- Qp0ecOD/3Xay4mutLUaD5hRDWvhKAWFDmcl/II55K56JMaDYolMgw/VFdGlxjYDy0Eil
- BXGOSHTEd0/HpS5JHwhLVRl1Y0uHHVj6CHYrJit6eFemwPT8HNJtBLGPSiZsNcZ9YHS3
- Zn9fX/QikAPcBAFBwJeCPMy9CxR0M7stXkXgn52EgkggYGNr7eXFSCh1PP010hukIt41
- szsDQaLywuz7b6+0RBRWrmmsqjZ9ycKqg0f5WEg8am+q0+0jlMEr3syFUDcFlT8vEeqI
- bnXw==
-X-Gm-Message-State: APuU4Z+21XAwRBoAVPEFP/Tmf7pdbfz13nwYGvTylY9ZbfP3n0+E4GgO
- h38PkgK7Xwhm1sAUIs7is5PYh01zJlW4gi8XoPWCrHQTkRZazRhK5wT49y7Ca5ubXHWtQGQ5LKO
- 5hgeBmM91IWcPTD7HxywJR48dRcRkRVbKhlkll2eb8rhmF2ptKfW7
-X-Gm-Gg: AYBFou0GRBizhEW6okgWr4NmG8AmCywoOvieylRThTLUH0o1+yfLoyvU/QkuZQGcgVc
- iIaa9n5dJseq/wy5HQ0AGHFlCZc1dPUtBsSge7maRhEshqJlkHXEHJY4eNpm1PFTuIw8qR4aYJi
- IhEohcna2qlM8CFaahDkTwDj0SihyWlaHZlQ/zua7caBw4vBylMeanTk6Lyabep4pRb7zpMeeDP
- uR9Y+AeKXE6LCBzKvLTkFlgx5GATYAYQVhAA1ApQr7mNdK9tK5B9WCbdF7JPMSvEukz06BPOKnj
- dsBFM5RzDqm3Qknag9oacAp0U4l3JOEGUo0Qnpgiu0geChXm4tSsTNLdczbu3WP5hRxJWJd4kFP
- Shg==
-X-Received: by 2002:a17:90b:2707:b0:3b0:9e2c:9b61 with SMTP id
- 98e67ed59e1d1-3b166cf6979mr3264778a91.35.1794329262291; 
- Tue, 10 Nov 2026 08:47:42 -0800 (PST)
+ bh=X+GudDoszaGkaaekdu1G8hSiYG4pS+4g5ZGa7GfDq60=;
+ b=pttQCO9DIBcDcJkSYUaVJRIRg9fcH2IXW9ZR1h/8sLqAGOq4bbKqOSk/L6hFTcYszP
+ QfS22PGU0qLn6RXkNGxqzeqruF7Z9Hzrlv/MaHOwdVVvtPE5TM/1Yox0H9etdVuJNQsc
+ 7x7mRGZEXKnqqlnCHY03V4yhA8Nut1WCES4VdTGFwXNJAQU55d9O0wGb9EUVILF2FXDH
+ wLstMxKEBHZQ/pIK8iYsbKId9o1anVRkRXzAXrt6hzaOi9PLVHGAvjSAi/dkn3K4OE7M
+ qLUCBt2szZ7BkbAuoNriWFx7pbj7dN+VkdWefzBom/NM7NIAiVse7ukqVVf0tELYvIbG
+ rAVw==
+X-Forwarded-Encrypted: i=1;
+ AL+hErEN099pGFGAvMXI+SJyJ24Txio6bNNVhVFC+SAsGVY9+fleaO9arBrC99yBOb7UrM3Rxp8/aAMDfe8=@lists.zx2c4.com
+X-Gm-Message-State: APuU4Z+xXA8Yu4dBhmqp1LuiKYaB+lA4wQWiZyxxOD4gR9KKtwrboRxG
+ dRefUXt2c1CkRRfTE6HGA0Lp3zCepv0K2pwritpU7m7+AoMIX2Fc9L0igm0RwmF4lLTJfkA89fW
+ jtbRvPy5nV7u4GHuhFdP2efgqpBlLcQo2cqXWi/A/1A==
+X-Gm-Gg: AYBFou1QiO036e7uLwQIpZO01j+wjMCuD1valFnrHaTm+Xxxj5wEHR00Votr3FRLo1v
+ b2usoOfb0bnRcyk28zjUmXCXLhrMATboZ/eYClFemL6DsKYdwfHaHI57m7nX6btQPBLL0yix59v
+ axQV+PoXJz+epozX1oY1SSiTmCco6n5JdkE59Y9lKoGhO97t+ytjnJZgUKD76mIKlX9w25gAdA1
+ xEFwLmAwO1AmHnrVn6iADAKZQMB+2wGNs1dPrDMsEUJLY001OIKmpGqzuSSVSAiWzJjIAseT9e6
+ cw05/fy34vZ7oZ3uLdcPfvbgTplCPPiakuL3JBIN8DBYb9T9iGFYzcM5ZRsZtNW/76TUE1AZe6A
+ qOA==
+X-Received: by 2002:a05:7022:e884:b0:14f:8d59:edcc with SMTP id
+ a92af1059eb24-1b3b605bbb6mr4811146c88.12.1794329817371; 
+ Tue, 10 Nov 2026 08:56:57 -0800 (PST)
 Received: from zx2c4.com (mail.zx2c4.com. [104.131.123.232])
  by smtp-relay.gmail.com with ESMTPS id
- 98e67ed59e1d1-3b1690d291dsm990689a91.4.2026.11.10.08.47.41
+ a92af1059eb24-1b3b5658ebdsm138363c88.13.2026.11.10.08.56.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Nov 2026 08:47:42 -0800 (PST)
+ Tue, 10 Nov 2026 08:56:57 -0800 (PST)
 X-Relaying-Domain: zx2c4.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1794329258;
+ t=1794329812;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=nG9stXQkwLVFlp/SM6Lzv9KwcbHb+1wfgq3qgejLqIQ=;
- b=IoRLkDg/XdQGCsYApczobF0xNyOZOVRsSpJaAeYcx8Z4QeSgHjqeionaAzNoKZGOOgM+oL
- LUN63e/LMgVxBdYJN+e5T0DV8vpyjFnXnv5/I8AeILJ1A8QyF5AC0xmKpQ2laIA3oeKy2D
- 2Wj2oRk0lyawSr8TLpuq0OlohsoH0do=
-Received: by mail.zx2c4.com (OpenSMTPD) with ESMTPSA id 6530d039
+ bh=X+GudDoszaGkaaekdu1G8hSiYG4pS+4g5ZGa7GfDq60=;
+ b=VU9PdmUJxykaWZZSvejhXpmGHLHwalpORgKW+eKYQ29RLeIlDVStYP7vi+u1iI4TbNdVwU
+ XayctaVpwOCL+9im7vUTfpqro7jTSU/D3r8GNKnLL1sIwGfCMHSKi7gzC+dhKalCJpYYhe
+ u3ie8uMBbRtzNiQfONjeUmnlYdAWslA=
+Received: by mail.zx2c4.com (OpenSMTPD) with ESMTPSA id bb134f9a
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Tue, 10 Nov 2026 16:47:37 +0000 (UTC)
-Date: Tue, 10 Nov 2026 17:47:35 +0100
+ Tue, 10 Nov 2026 16:56:52 +0000 (UTC)
+Date: Tue, 10 Nov 2026 17:56:49 +0100
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Roman Khromenok <roma55592@yandex.ru>
-Cc: wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- "David S . Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@kernel.org>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Andrew Lunn <andrew+netdev@lunn.ch>, Shuah Khan <shuah@kernel.org>,
- linux-kselftest@vger.kernel.org
-Subject: Re: [PATCH wireguard] wireguard: device: allow userspace to enable
- IPv6 link-local addresses
-Message-ID: <avNKp7OVA7d1X3fL@zx2c4.com>
-References: <20261022110039.270335-1-roma55592@yandex.ru>
+To: Jun Yang <juny24602@gmail.com>
+Cc: andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@kernel.org,
+ kuba@kernel.org, pabeni@redhat.com, wireguard@lists.zx2c4.com,
+ netdev@vger.kernel.org, Jun Yang <junvyyang@tencent.com>,
+ stable@kernel.org, TencentOS Corvus AI <corvus@tencent.com>
+Subject: Re: [PATCH net] wireguard: flush endpoint dst cache when a peer is
+ removed
+Message-ID: <avNM0VAw0fpqzpgv@zx2c4.com>
+References: <20261106081538.69465-1-juny24602@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20261022110039.270335-1-roma55592@yandex.ru>
+In-Reply-To: <20261106081538.69465-1-juny24602@gmail.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -89,48 +89,36 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
-X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
-	autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-11.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Oct 22, 2026 at 01:00:39PM +0200, Roman Khromenok wrote:
-> WireGuard interfaces do not get an IPv6 link-local address by default,
-> which wg_open() achieves by setting addr_gen_mode to
-> IN6_ADDR_GEN_MODE_NONE on every ndo_open. A side effect is that any mode
-> chosen by userspace, via sysctl or IFLA_INET6_ADDR_GEN_MODE, is silently
-> reset on the next down/up cycle. Users running routing protocols over
-> WireGuard, such as Babel or OSPFv3, need fe80::/64 addresses and today
-> have to set the mode again after every ifup, which network managers do
-> not expect to have to do. For example, systemd-networkd cannot honor
-> LinkLocalAddressing=ipv6 on WireGuard interfaces because of this.
-> 
-> Instead, set the default once, when the inet6_dev is created. That
-> happens on NETDEV_REGISTER, both when the device is created and every
-> time it is moved to another network namespace, since addrconf tears down
-> the inet6_dev on NETDEV_UNREGISTER. So register a netdevice notifier
-> with a priority just below addrconf's, so that it runs after the
-> inet6_dev exists. The default behavior is unchanged, but userspace can
-> now opt in and the setting persists across down/up.
-> 
-> An alternative approach using IFF_NO_ADDRCONF was proposed in [1], but
-> it removes the ability to have link-local addresses altogether, and it
-> was reverted because it broke the selftests.
-> 
-> Add a selftest checking that link-local addresses are off by default,
-> that they can be enabled and survive down/up, and that the default is
-> restored after moving the device to another namespace.
+On Fri, Nov 06, 2026 at 04:15:17PM +0800, Jun Yang wrote:
+> peer_make_dead() removes a peer from wg->peer_list, but a netlink device
+> dump can keep it alive through ctx->next_peer. If the WireGuard device
+> has moved to another network namespace, wg_netns_exit_rtnl() skips the
+> removed peer when flushing endpoint caches for the original namespace.
+> A cached IPv6 RTF_CACHE dst can then survive ip6_route_net_exit(), and
+> its later release from rcu_release() accesses the destroyed per-netns
+> dst counter.
 
-This is an old decision, but one I think I'm inclined to stick with. You
-can't use WireGuard with LL generated addresses, because AllowedIPs
-requires explicitly binding to public keys. So you wind up having to do
-coordination between the chosen IP address and the distribution of keys.
-The solution for Babel and the like is to add explicitly WireGuard
-support and use the neat mesh qualities of Babel for key distribution
-too. There has been some talk about implementing this for a long time.
-That's the direction I'd like this to go in, not breaking the whole
-allowedips model, which is what this moves toward. I hope that's
-understandable.
+Can you explain this better in your own words? I'd rather you do the
+work of interpreting the LLM-generated output and making it
+comprehensible. If you understand the bug, write up your understanding
+of it.
 
-Jason
+> Mark the peer dead and flush its endpoint cache under endpoint_lock.
+> Bypass the cache for dead peers in the send path so an in-flight sender
+> cannot repopulate it after the flush.
+> 
+> Fixes: 20ae1d6aa159 ("wireguard: device: reset peer src endpoint when netns exits")
+> Cc: stable@kernel.org
+> Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+> Signed-off-by: Jun Yang <junvyyang@tencent.com>
+> ---
+> A KASAN reproducer for this issue is available if requested.
+
+Yes, please.
