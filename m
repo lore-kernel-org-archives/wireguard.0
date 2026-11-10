@@ -2,102 +2,87 @@ Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129E360A6F6B
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Nov 2026 17:53:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E29F3606A31C
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Nov 2026 18:02:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.a=rsa-sha256 header.s=20261015.g header.b=enuBIIWh
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=yB93919K
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 44259fce;
-	Tue, 10 Nov 2026 17:49:19 +0000 (UTC)
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com
- [2a00:1450:4864:20::62e])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id ebd06acc
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id cb1b0c53;
+	Tue, 10 Nov 2026 18:00:43 +0000 (UTC)
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com
+ [2a00:1450:4864:20::630])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id de159474
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 10 Nov 2026 17:49:13 +0000 (UTC)
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-c49c32650adso161385866b.0
- for <wireguard@lists.zx2c4.com>; Tue, 10 Nov 2026 09:49:13 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794332953; cv=none;
- d=google.com; s=arc-20260327;
- b=Q0UsUzJQCLZDkqcBa9xjC3875OR2GnaivpsBKkwNNEuJtymJxJfl+iUtGLm6vgx5/3
- zK2M1BCjquO521VmdhVKk5jFWl3gD6FO9CqqzpN8dWEEglzcgfuls5mu4U3pFASlSLtX
- kGsM6uaJo51scSn7N/V3Lk3z7dTD6Sb8tqkhkVKj5Q7Rz9gVlz1xBUWqz2ygRPWR+QXL
- dxznAPEY8ziGAea+QfcnA5DghWGIEzBqn7umpDf61AqtusdTD9M1R69XNpq4f5Fx1kRf
- 4Nm4GcMPHWo+G2N9ZF7W1WXEwOjodqM13OVrhcMJ7rt10MdzDcbtjH2AXZ92kR8cWzkv
- y0ww==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=j6/vIY1+KYQxBreFtYkfvG0gVjy/kF+drhNwxzom6y4=;
- fh=idyCSe7dilMlteEwZZgn8eaIj+kzevlg6ZoJ2i+92+0=;
- b=smOBCAWqg/VsrtGJsoomcEsfoKvmzrgfqbaxrjvKoKAC/q8VwYADLFuCT6eTfirM09
- Vtch3QUdXOJYmV42VGmp/KUaHNvjdqCQh8DJfMIpDJXHE3fG8l+MU/C16Z2eB2VCE2Sw
- Qe8/wud7Ihmk60EFeKyptzzBXzkSYQSFTIzc293onIj1yECwYUcX1SqaClZ0O6a9PLiW
- NgtiQUAQBFGRL/zkKAyLwo7jfR7A2MnwtuqC2+B29oDhwThLJj62HoCLzU81dcvbWiHy
- f4XA/gX4xD0cKDqIND/kkx8evx/DDhK0L/G63+6Ga7hNhvMvpXk/uE/unda3HlfAGZzC
- 52Tw==; darn=lists.zx2c4.com
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ Tue, 10 Nov 2026 18:00:37 +0000 (UTC)
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-c4d427836e9so308081366b.1
+ for <wireguard@lists.zx2c4.com>; Tue, 10 Nov 2026 10:00:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=zx2c4.com; s=20261015.g; t=1794332953; x=1794937753; darn=lists.zx2c4.com;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ d=gmail.com; s=20260707; t=1794333637; x=1794938437; darn=lists.zx2c4.com;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=j6/vIY1+KYQxBreFtYkfvG0gVjy/kF+drhNwxzom6y4=;
- b=enuBIIWhg8O4+N/i7HKZaPWg5oJaXLpU6NnkbYlrRpBPoo80rWozF71TW7ArNfXfod
- gtUdQ1UvtuZjdtVbOrYH55unYAXAdd3xqegD6TFocSLyQrVTguQOHxxgSxSsRSZzEDKd
- ehWupG44Eew+tjEKikEM9J/FoKvH4GPTTq3rRtCNJVlMmGTauA26Jeb20P28neD9pBZp
- Opx/WIk+3oCCOEqZZISaTiXxyQWQlcLcVQ4LDuZOooB6XkzdyJWKAxw1dlzuWiQ7Yvxv
- jgy4dmAEFq06BwhT/larnT16oJOF6pjjKrmxLGbRkuWMGieljyZPjLQU/A+Mj7LjTUmi
- oqYQ==
+ bh=9LuItXp5s8cFtxPZ9H5FlDtsQK3I8Ay0nxSYFMAUyVk=;
+ b=yB93919KJzV3nYg2P9l5iJ4nCLAQvQd2Gvw1paTWLDph9kjW6pSJk8Q0by/Zyo9Pfv
+ e8HpJ8uU0sg+TSSMQMR5KdTzAhmsnEaCAEoNCsuLpPdT3gk6t1fjnN2yJPvXx3XR6LQP
+ vIH3BuOLsSZFVsMi9aEuo7PACP41gBj2GsdEUJ/nwtOSiuZ/dBqwrmu28xIFF9X+ESMP
+ 5Pd7jBNmZv3nH4ISrnzoztfTV0JnjQghwOKAUnqXPpmtXMcoaYqMXJPTXYgbM8OqqEvD
+ keY4U87Sx0UG0FP7eIqK9t9+uwvECmM83TsNuoAak3isehwsjs8s/4CJiRMtfeFnC8TG
+ 4Kqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794332953; x=1794937753;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
+ d=1e100.net; s=20260707; t=1794333637; x=1794938437;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=j6/vIY1+KYQxBreFtYkfvG0gVjy/kF+drhNwxzom6y4=;
- b=LJ8zlUKhjo5wMB8dWsPXtld9jhHyXxaRVF5zpPObTEl1LC6ZpfCn9uSHwEO8UNTtZi
- FcdPWa/hoHnDUIBfRe4YQhPK1Xo3ynW2BdOaVsGA1x0WOt/hQNzCjN2+hFRBQrJVxTuF
- qSnprdSezvnfF4ZFJwxiK67/71T3tWBH61nGDaWlYaDxoouUMUsI4GWHM8SanMVdk3Kn
- 4V5K5IjOyHAD7DmbORK1BqrEBnnprkOrMLYxYT2Dn4QkAORJHkw1sLWPVWaeSuNJMkGX
- QPsYJhB49irD19NAS+adQCW6UGN23V2AiI8XF9DuwjTM6+PhPoQKisDWHXvTRxCcOxuI
- dGOw==
-X-Gm-Message-State: APuU4Z8L0kQkdp7D6e+Z4H3NTMQYy/8o/CrRgRRcyghKkzXQMXAn1dDI
- eWKtX0d3SBRCtywmVcqxm0HUBLtRqBEWwvBxhb1C897j5DziDbaDFdRyPqiDZrNh5bmpYw2XQsK
- 6DZVV59mAofua9SstEF0LPWbNnEksBjKzW+rhfBgNYPDmgw==
-X-Gm-Gg: AYBFou3vtjqZKBaJ9vavzZXeSqaKW2mWZyRhiK6mOpSgMghf00VJyAipMZ4y895R1AD
- e7dHPdl9PWQ9zUenjHBoM5jx9tMq8ZoELBLTd+nWJjFjAoqMDeieBJ9y0Kpz0RES+6MKYOeY0uu
- 9C6Um9r0GwBkT74H/P3OsEkhA8i4JPPpRsLoApjlUXLsSMX/o69x9XmBoB1X3XZuDimkZ6CxEUk
- Saxbbkj0FuPVyJekNhp8ehqRMHn4iOupQy+cDx2DkidQwvG4SyJ5USED6Fr8GjgnZ9peITyCnFA
- I/BKK092SLCEXFO7G7LGbgJvhkKgDKaLZ4wLHpB1LRDEr6PSYrzNdW38XSgohw3UdS8PSZa8SVl
- /cv830iSULp0hahUjLfOl1nb3F+JoggHOKQaqEs6/JaIQ0c2nVWsK97c2GnfGSUMt1/7ACpofKP
- s69h1V/QPohctblCUVVmfPVNMgoYs0CgaMavW5LWU2K9JgcCnkvadc241l9n1WuHLpDi76fL1cu
- 0iB
-X-Received: by 2002:a17:907:3fa2:b0:c40:38b5:d784 with SMTP id
- a640c23a62f3a-c5049609f4fmr264194266b.22.1794332952982; Tue, 10 Nov 2026
- 09:49:12 -0800 (PST)
+ bh=9LuItXp5s8cFtxPZ9H5FlDtsQK3I8Ay0nxSYFMAUyVk=;
+ b=d7VJjj6aFRuM3vle6cXD7gwqpeGVucxzBhormRYkz2N907BCEmvAzJc15mQCUJEpBt
+ Xcvyt4BDukIOvj7Mozag4w9x7mapF1Z6z+Ejo7PCX6J12LaqJ+rpNB/OcZp0r871u7NM
+ aS7PHKjzcx8TAb5EWwcuDJvYIwV3emsanjZkwC6t+XhbGiX2IJYgfX5+1X52nHdIDVBG
+ fSzR6XBnrEQUiX2vaS8xfAgimgsq69dF/bwsqIWwmudftX6nJ7bCLHlpF5oMnEq43S0o
+ O0Y3Va6uWmderNN33P9X3JhWitc73rzVz/DWGAqQn8E1mvoP7UdAK/layW0+JCLm7wdy
+ b8Ng==
+X-Forwarded-Encrypted: i=1;
+ AL+hErFf4ZzyFY+Sb+rP6iOMWtd5VlT9Z1k+lUEoSC9YyEVn1hHNb2nBiAmQFdqtkKdCc72/SdLRHWKbDZc=@lists.zx2c4.com
+X-Gm-Message-State: APuU4Z8nbPGJW6uqpmg8M8AKiTAH5SOHO5kSZ2DPbUrG/P0ehc6HfjxI
+ z2JWCuym/eCTCRDVcwL9CPc9YDxaNj1ORc0nmJNJOYM10NaFExC7z3Gh
+X-Gm-Gg: AYBFou3A21mPfF6gNx2miu+P9yM/hsMW3DZqLKDRJugSJ6gqLoppJFM7LybmMcNQaAb
+ 3JBEzr9MH/YFHRAzIk1PNbG/bERsJQjDaXANiPzjjVrZwuUZQ8EeLvwHKmQ5Q44GOW5SHNq0fcW
+ 13nwAA6x9Lpf8sn85kU63UdTHynIRHvK5kuebWhHS4Zu4v7kS4D+8q4DwonDP5dUDoNLlY9Ttvb
+ LlsMn5CE6OV0q4AsbVSsB9eg9akbB/5Tj0WYdIdLnE6aT6Fa9h+cCWb+Wd1D2J68zc1Tt+kZrdP
+ cJM5uX/RK86dToZ7R2b1WHUyHo2h4IZ+1LgJ0Z3/YCgPWIipcj4fayYhjMaUzc87vCh0fjIKcC4
+ x5D7OLpF9SQzL9sal7LMZfLBQN4h6GuB86VKOCkYkrfTneaUjLZoezxjYR5u2e2L7ZyHPycN0ch
+ XdfEi1H8OP9lsbWA5wWZ2XyWbCDR0Vl64ID95hBJ7YAQbWh7H9puubF47jkwBzkUTJWPpKw3B5u
+ ePUTu2sYDYUfKCL+BEdkqliVP1dvU6YZdJNLqRchufsEEOKkmwRZ/R25To13wmNd08MlrgiTjEg
+ 4CHCpFqW7JF4okgH6mUGFzcmBCUHBvwkYBVwi7dj9D8sAhNU
+X-Received: by 2002:a17:906:830c:b0:c42:102f:15df with SMTP id
+ a640c23a62f3a-c504951eb29mr193190866b.8.1794333636284; 
+ Tue, 10 Nov 2026 10:00:36 -0800 (PST)
+Received: from Air-pasichndev ([188.163.8.107])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c504a59fd2csm141668066b.44.2026.11.10.10.00.35
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 10 Nov 2026 10:00:35 -0800 (PST)
+From: Andrii Pasichnyk <apasichnik9@gmail.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: netdev@vger.kernel.org, wireguard@lists.zx2c4.com,
+ Andrew Lunn <andrew+netdev@lunn.ch>,
+ "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@kernel.org>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net] wireguard: peer: free packets left on the per-peer
+ queues on removal
+Date: Tue, 10 Nov 2026 20:00:34 +0200
+Message-ID: <20261110180034.76136-1-apasichnik9@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <avNIS67grg_Qc5Vy@zx2c4.com>
+References: <20261003201625.4572-1-apasichnik9@gmail.com>
+ <avNIS67grg_Qc5Vy@zx2c4.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <116cec552f58748d434d4825c6c74f39266b265f.camel@infradead.org>
- <avNCdbpjxM752XSw@zx2c4.com>
- <89b5e08e2a48c33be4cf2d495266d04a2dcf406e.camel@infradead.org>
-In-Reply-To: <89b5e08e2a48c33be4cf2d495266d04a2dcf406e.camel@infradead.org>
-From: "Jason A. Donenfeld" <jason@zx2c4.com>
-Date: Tue, 10 Nov 2026 18:49:00 +0100
-X-Gm-Features: AclHuK_fmNqGYrX8aoD5zj-ji2pF_XvdH1TFaa_HSiH96TwcOL_EUaS0rm5SADg
-Message-ID: <CAHmME9pWbftSmnJgLawNmWxNHMEqC5evxWPW8TruYkBD18Q8nQ@mail.gmail.com>
-Subject: Re: [PATCH] wireguard: socket: fix sticky source address on p2p
-To: David Woodhouse <dwmw2@infradead.org>
-Cc: wireguard@lists.zx2c4.com, netdev@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Andrew Lunn <andrew+netdev@lunn.ch>, 
- "David S.Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@kernel.org>, 
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
- Antonio Quartulli <antonio@openvpn.net>, Ralf Lici <ralf@mandelbit.com>, 
- Sabrina Dubroca <sd@queasysnail.net>, openvpn-devel@lists.sourceforge.net
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -108,51 +93,95 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
-X-Spam-Status: No, score=-11.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS autolearn=unavailable autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, Nov 10, 2026 at 5:47=E2=80=AFPM David Woodhouse <dwmw2@infradead.or=
-g> wrote:
->
-> On Tue, 2026-11-10 at 17:12 +0100, Jason A. Donenfeld wrote:
-> >
-> > Hmm... How did you choose __ip_dev_find() over, say,
-> > inet_lookup_ifaddr_rcu(), which is structurally more similar to
-> > ipv6_chk_addr()?
->
-> __ip_dev_find() is what's exported to modules. It internally takes the
-> RCU lock and calls inet_lookup_ifaddr_rcu(). It also falls back to a
-> RT_TABLE_LOCAL lookup, which I think is the right thing here too.
+On Tue, Nov 10, 2026 at 05:37:31PM +0100, Jason A. Donenfeld wrote:
+> I'd be interested in seeing your adjustment to netns.sh so that I can
+> test this myself and validate various approaches. Do you have something
+> really minimal? Also, is this a test case that could be implemented
+> minimally enough that we could integrate this into netns.sh permanently?
 
-Okay, makes sense.
+Here is a minimal version. It relies on the created/destroyed object
+check netns.sh already does at the end:
 
-This simple patch reproduces the issue in the test suite (and confirms
-your fix):
-
-diff --git a/tools/testing/selftests/wireguard/netns.sh
-b/tools/testing/selftests/wireguard/netns.sh
-index a8f550aecb35..5dfecb4c6ef1 100755
+diff --git a/tools/testing/selftests/wireguard/netns.sh b/tools/testing/selftests/wireguard/netns.sh
+index a8f550aec..8303802c0 100755
 --- a/tools/testing/selftests/wireguard/netns.sh
 +++ b/tools/testing/selftests/wireguard/netns.sh
-@@ -474,7 +474,7 @@ n2 ping -W 1 -c 1 192.168.241.1
+@@ -207,6 +207,20 @@ n0 iptables -F INPUT
+ ip1 link set wg0 mtu $orig_mtu
+ ip2 link set wg0 mtu $orig_mtu
+ 
++# Remove a peer while a UDP flood keeps its receive queue busy, then re-add it;
++# packets left on the per-peer queues would keep it from being destroyed,
++# which the created/destroyed check at the end catches.
++for ((i = 0; i < 10; ++i)); do
++	n1 iperf3 -s -1 -B 192.168.241.1 &
++	pids=( $! ); waitiperf $netns1 $!
++	n2 iperf3 -Z -t 2 -b 0 -u -l 64 -P 4 -c 192.168.241.1 >/dev/null 2>&1 &
++	pids+=( $! ); sleep 1
++	n1 wg set wg0 peer "$pub2" remove
++	kill "${pids[@]}" 2>/dev/null || true; wait "${pids[@]}" || true
++	n1 wg set wg0 peer "$pub2" preshared-key <(echo "$psk") allowed-ips 192.168.241.2/32,fd00::2/128 endpoint 127.0.0.1:2
++	n1 ping -c 1 -W 1 192.168.241.2
++done
++
+ # Test using IPv4 that roaming works
+ ip0 -4 addr del 127.0.0.1/8 dev lo
+ ip0 -4 addr add 127.212.121.99/8 dev lo
+diff --git a/tools/testing/selftests/wireguard/qemu/kernel.config b/tools/testing/selftests/wireguard/qemu/kernel.config
+index 368fd9d60..c69a408a5 100644
+--- a/tools/testing/selftests/wireguard/qemu/kernel.config
++++ b/tools/testing/selftests/wireguard/qemu/kernel.config
+@@ -67,7 +67,7 @@ CONFIG_SYSCTL=y
+ CONFIG_SYSFS=y
+ CONFIG_TMPFS=y
+ CONFIG_CONSOLE_LOGLEVEL_DEFAULT=15
+-CONFIG_LOG_BUF_SHIFT=18
++CONFIG_LOG_BUF_SHIFT=20
+ CONFIG_PRINTK_TIME=y
+ CONFIG_BLK_DEV_INITRD=y
+ CONFIG_LEGACY_VSYSCALL_NONE=y
 
- # What happens if the inbound destination address belongs to a
-different interface as the default route?
- ip1 link add dummy0 type dummy
--ip1 addr add 10.50.0.1/24 dev dummy0
-+ip1 addr add 10.50.0.1 peer 10.50.0.2/32 dev dummy0
- ip1 link set dummy0 up
- ip2 route add 10.50.0.0/24 dev veth2
- n2 wg set wg0 peer "$pub1" endpoint 10.50.0.1:1
+Two details matter:
 
+- The ping after the re-add. Without it the re-added peer has no
+  session while the other side keeps using the old keypair, so nothing
+  flows until the next handshake and only the first removal happens
+  under load. My original reproducer had this flaw, so the "5 in 2140"
+  in the commit message undercounts: most of those removals were idle.
 
-So I'll add a followup commit adding this to netns.sh.
+- The log buffer. With message_cost=0 each removal under load logs up
+  to ~1000 "Packet has unallowed src IP" lines, which overflow the
+  default 256 KB buffer; the object check then reports false "merely
+  destroyed" errors and can miss real leaks. 1 MB is enough for 10
+  iterations. Without the kernel.config change, 2 iterations fit in the
+  default buffer, but caught the leak in only 2 of 6 runs.
 
-Thanks for fixing this! Applied to the wireguard repo.
+Results on net-next 66974df65a0b, x86 KVM:
 
+  unpatched, 1 vCPU:  failed in all 3 runs; 25-40% of loaded removals
+                      leak a peer and its keypair
+  unpatched, 2 vCPUs: failed (1 run)
+  unpatched, 4 vCPUs: passed (1 run)
+  patched, 1 and 4 vCPUs: passed; 0 leaks in 212 loaded removals,
+                      including a 200-iteration run
 
-Jason
+A leak shows as "Error: wg0: Peer N: merely created" plus a matching
+"Keypair M: merely created". One gotcha when switching NR_CPUS: the
+qemu Makefile does not regenerate the kernel .config, so delete
+build/<arch>/kernel/.config first.
+
+So yes, I think it can go into netns.sh permanently: 10 iterations add
+about 13 seconds and caught the bug on every 1-vCPU run of an unpatched
+kernel. I can send it as a separate patch, or fold it into a v2 of the
+fix, whichever you prefer.
+
+Thanks,
+Andrii
