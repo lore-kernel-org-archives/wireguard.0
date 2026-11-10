@@ -2,85 +2,80 @@ Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823FB606A323
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Nov 2026 16:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE87606A331
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Nov 2026 16:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.a=rsa-sha256 header.s=20210105 header.b=oMYGPlhN
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.a=rsa-sha256 header.s=20210105 header.b=LOJ3bbFD
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 8300c8e8;
-	Tue, 10 Nov 2026 16:20:37 +0000 (UTC)
-Received: from mail-qv1-xf65.google.com (mail-qv1-xf65.google.com
- [2607:f8b0:4864:20::f65])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id b040b758
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 67f4d147;
+	Tue, 10 Nov 2026 16:32:39 +0000 (UTC)
+Received: from mail-pg1-x565.google.com (mail-pg1-x565.google.com
+ [2607:f8b0:4864:20::565])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 3a2f77e3
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 10 Nov 2026 16:20:36 +0000 (UTC)
-Received: by mail-qv1-xf65.google.com with SMTP id
- 6a1803df08f44-91eb7d1478cso21773526d6.0
- for <wireguard@lists.zx2c4.com>; Tue, 10 Nov 2026 08:20:35 -0800 (PST)
+ Tue, 10 Nov 2026 16:32:33 +0000 (UTC)
+Received: by mail-pg1-x565.google.com with SMTP id
+ 41be03b00d2f7-cdb628232d2so1331145a12.0
+ for <wireguard@lists.zx2c4.com>; Tue, 10 Nov 2026 08:32:32 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794327635; x=1794932435;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:dkim-signature
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=Wn9pl2dWY0mvsidzC7ZDrdvAm0x6tULK0E6nQnzg3QE=;
- b=mQyAWReHsta+4Q1u2CRb8lrm4Pp9msAhkZ9b2Qdh3ZODs14J05LgHyOPpg45HZWx01
- MiCxhJU8NbYvKCjIkCl4yD9n0UILegnKW5+TOhH7/owTHHkSoovmlnp4CIF2JYSz2jEZ
- FH3AvRInVD9pid9+ebk5o2XT0o78qlbuHbqG7fOixJAxIC6x7/7jfhYg6FG8GTelzyGv
- +ZXJPKfHaWAQyHSHmZp7Ls8Ky00Y56kwA5VdCbXt1ZimWht91eiyLMHP2+LrDWHx+l6w
- LYTzxHLbYSqnFj/ke4jM7VeToUcaPFvgzLNLGfZNso+24f4RHBvQxYtjzt9tUK2kdfew
- JXHg==
-X-Forwarded-Encrypted: i=1;
- AL+hErHfKpBMOYhFNLsHqrT5xDJJxNnlroaXwX3Twngf6jIxIhkM3xKJiKBT1MGPGhIe+1V8UeeU4h5di/M=@lists.zx2c4.com
-X-Gm-Message-State: APuU4Z8TgTrVuYAly/S1YLJPtAuGM0TES1LMP+6kX5yq+scIy8ckrK50
- SUS+QCuZoaFjq98GEhk0i9akK+U2zmlmsTuOftwqiAgISnqAbPmeZBixwtQNVfLRLM2EZZSYP1v
- XsgBVD+vP3GrHF2wnrysOyxsMDZCOrdENvbDPbtoEhw==
-X-Gm-Gg: AYBFou2m+h4oCX7fpmfPBoywbbPrxOslcznZsgN2FhsdUmVRUKKm5tD8XO6V5jMT8jz
- h6Sl2+QhXeZjLR4Z5ldtaJHgqpzKii2Qcx2dInRv+hld9m+Jq+zYQX67LyZuutKQB62tzPZojdP
- QfmuYFGFN7f1xwxNHDEB7MEZzy3fAU1Erlyl9oMGE8SVcMjRrTyqZJyPyyjlihAajVPf3IwTd5w
- IiqGpp0QrhG9DRenaD94xSzwbTlrrq0XrNQg8Vsh2rgFLdWcl3Z6URLgRyYD4fF6Re7VMq7NLnH
- IVqTzMWiq9Akex3Rcm0FkGoiCRqHXxXVn0C9Vg1LxzUgegY1I8g2XSJJPX32uvkj0SEEVGmq21M
- YgA==
-X-Received: by 2002:a05:620a:26a1:b0:93f:1e3c:4a31 with SMTP id
- af79cd13be357-9479f337933mr473994085a.61.1794327634556; 
- Tue, 10 Nov 2026 08:20:34 -0800 (PST)
+ d=1e100.net; s=20260707; t=1794328351; x=1794933151;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:dkim-signature:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=MuNXC0IJk19PvOjYjcF2JgzsmYbOOaLTEu3Iw97zbKY=;
+ b=Mq+0Lk7H+JQedWzRf1iySh4c6zASay08KpLvB1VXBKqXX4jqPeSey4PjGL0nb/7uns
+ usC256ELYEUGj1OEXITQh2PgxdsO3r3DhcoECmowWETvxn4VklLA5D57jZz42hMqmLkh
+ zP/Atbm7qZxUJLqzBcvKw98NAWxpVfYn64U2CzM+4UtPgB0us7LbiQlC0lQ0rhLBqaFn
+ 2NC9g9GHiBZmiBhDjyrWBycfmLcUAoZQajhoi5D6ei2Mf+1wsFr6o1aPIQLSQXVoj7Xx
+ yGoXfEJiHgYHAkubIPFZexUfLq8R/FoCWavyvlViCTa3zzH1jNru40f0bW4Qyr4ZReXF
+ 6szA==
+X-Gm-Message-State: APuU4Z8UZ3JNWm8UTNepqN7W/OsPUgJy31SD3JvfSXid7ck1IciwWwZ9
+ tR5+5mqgQ2MrV2X90smMqei1+SQdA+MRtQsWd0VwPT7IjwPel1SBI1t3Se9xDSlr0B2bxhBocYN
+ 8ZtbPQYj2q9SNWevCdKW7a/4zDsNFmoJRCUthYzkOLg==
+X-Gm-Gg: AYBFou3KFsLfuPU7ve8W++JvvJRiMDrrt1913O+t3/xAbsuRqmNLPz6cH8ZT900FYfZ
+ wjWHfIfyaCrBF1ncs/Hu77imW51cn473+OripZpvWg5cLge5u7ORJHmyX9PC/+cwHCzisA3+3JV
+ MVyuJKGMXcd8/zA/L90Z3fqWV2zWAleBAA2me0/UOn0oFhhrTwuXp++OoI9gR+DjNOQM9PdNbLz
+ 8twcdyQUX8ttVai2MBqmPQ3usojiqxSCi+LlBdcdQHIJDGEHEXFtM17ylMXpItGLnCbxLxL4p1w
+ fkzgJwiBhij8fzaA9j0M6P0ilinUBlR+48kxnS/ItPtkwzgeIfj53keT8LxzL5m998KQm0WMI1k
+ GIg==
+X-Received: by 2002:a17:90b:2e87:b0:3ac:aa8d:19de with SMTP id
+ 98e67ed59e1d1-3b166ae7705mr3521491a91.3.1794328351231; 
+ Tue, 10 Nov 2026 08:32:31 -0800 (PST)
 Received: from zx2c4.com (mail.zx2c4.com. [104.131.123.232])
  by smtp-relay.gmail.com with ESMTPS id
- af79cd13be357-9479efb239csm35618885a.10.2026.11.10.08.20.34
+ 98e67ed59e1d1-3b16910d0acsm863446a91.4.2026.11.10.08.32.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Nov 2026 08:20:34 -0800 (PST)
+ Tue, 10 Nov 2026 08:32:31 -0800 (PST)
 X-Relaying-Domain: zx2c4.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1794327631;
+ t=1794328346;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Wn9pl2dWY0mvsidzC7ZDrdvAm0x6tULK0E6nQnzg3QE=;
- b=oMYGPlhN+9g4AeBDfpCGTBZvu9Avf73LXYnRU6qvPzJzuBsQ3shkH5vxk/jmMg8gWGzwbl
- iRS9Y/grD05nLAnzDqY6ePcGBUuSJekQMzyZ7RF8Z1y6YzzHA0AyatbgR2FGsdiWhRAshw
- xeD1NXhYrsxQ+z6vA0sPv74b16eUe6U=
-Received: by mail.zx2c4.com (OpenSMTPD) with ESMTPSA id cd041934
+ bh=MuNXC0IJk19PvOjYjcF2JgzsmYbOOaLTEu3Iw97zbKY=;
+ b=LOJ3bbFDctzKFIIJ/4q/BBjGKAdl6BMyuFRJu2yegjnFtW1Wlk5USfsy5gkK/vgo2IWCTh
+ M8JG73BEoEL6hor4RlFDa8GeQvm3H3yKM6cwRaMwSbmPntxN36060r6YAD0aCyxJ/+b6li
+ zXotUJHkgfLqTUIrg1Jisc4NPQTyBls=
+Received: by mail.zx2c4.com (OpenSMTPD) with ESMTPSA id dde93f26
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Tue, 10 Nov 2026 16:20:31 +0000 (UTC)
-Date: Tue, 10 Nov 2026 17:20:28 +0100
+ Tue, 10 Nov 2026 16:32:25 +0000 (UTC)
+Date: Tue, 10 Nov 2026 17:32:24 +0100
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
-Cc: "David S . Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Andrew Lunn <andrew+netdev@lunn.ch>, wireguard@lists.zx2c4.com,
- netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
- syzbot+de9701a2cad597c14d34@syzkaller.appspotmail.com
-Subject: Re: [PATCH net] wireguard: mark racy persistent_keepalive_interval
- accesses
-Message-ID: <avNETK_9e7sr-JSB@zx2c4.com>
-References: <20261011102322.355167-1-ngocthang2710.1999@gmail.com>
+To: =?utf-8?Q?Asbj=C3=B8rn_Sloth_T=C3=B8nnesen?= <ast@fiberby.net>
+Cc: wireguard@lists.zx2c4.com
+Subject: Re: [PATCH wireguard-tools v4 0/3] ipc: linux: kernel-side netdevice
+ filtering
+Message-ID: <avNHGIIOs5702an6@zx2c4.com>
+References: <20260312214405.589127-1-ast@fiberby.net>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20261011102322.355167-1-ngocthang2710.1999@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260312214405.589127-1-ast@fiberby.net>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -97,25 +92,22 @@ X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Sun, Oct 11, 2026 at 05:23:22PM +0700, Nguyen Ngoc Thang wrote:
-> wg_set_device_doit() updates peer->persistent_keepalive_interval under
-> device_update_lock, while the RX/TX paths read it locklessly in
-> wg_timers_any_authenticated_packet_traversal() and in the persistent
-> keepalive timer. KCSAN reports the race:
+On Thu, Mar 12, 2026 at 09:43:58PM +0000, Asbjørn Sloth Tønnesen wrote:
+> Move device filtering to the kernel, thereby reducing netlink traffic.
 > 
->   BUG: KCSAN: data-race in set_peer / wg_timers_any_authenticated_packet_traversal
+> The first patch request kernel-side filtering.
 > 
->   write to ... by task 3648 on cpu 1:
->    set_peer+0x...  drivers/net/wireguard/netlink.c:457
->    wg_set_device_doit+0x...
->   read to ... by task 3652 on cpu 0:
->    wg_timers_any_authenticated_packet_traversal+0x...  timers.c:217
->    wg_packet_consume_data_done+0x...
->    wg_packet_rx_poll+0x...
+> The second patch removes the old filtering code, as an
+> additional step, which breaks on earlier than Linux v4.6.
 > 
-> The race is benign, but the reader also loads the field twice, so the
-> zero check and the timer expiry computation can see different values.
-> Load it once with READ_ONCE() and mark the writer and the other
-> lockless reader accordingly.
- 
-Applied, thank you!
+> The third patch requests that the kernel doesn't include statistics
+> in netdevice dumps.
+> 
+> This bumps the minimum supported Linux kernel version to v4.6.
+
+Sorry for the delay. Applied with one small cleanup:
+https://git.zx2c4.com/wireguard-tools/commit/?id=522f583d5304f93f71a95b81870db5fe0a74cfd6
+
+Thank you for this!
+
+Jason
