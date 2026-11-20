@@ -2,79 +2,88 @@ Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D700606A33A
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 19 Nov 2026 16:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5282606A68B
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 20 Nov 2026 21:13:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=IurGkgoq
+	dkim=pass (2048-bit key, unprotected) header.d=wades-im.20260707.gappssmtp.com header.i=@wades-im.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=RPHwtpY3
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id ce8bd80a;
-	Thu, 19 Nov 2026 16:31:06 +0000 (UTC)
-Received: from mail-dl1-x122c.google.com (mail-dl1-x122c.google.com
- [2607:f8b0:4864:20::122c])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id df779682
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 4422ef1c;
+	Fri, 20 Nov 2026 21:13:10 +0000 (UTC)
+Received: from mail-yx1-xb131.google.com (mail-yx1-xb131.google.com
+ [2607:f8b0:4864:20::b131])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 81232bcc
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 19 Nov 2026 16:31:02 +0000 (UTC)
-Received: by mail-dl1-x122c.google.com with SMTP id
- a92af1059eb24-14394530ec6so3746821c88.1
- for <wireguard@lists.zx2c4.com>; Thu, 19 Nov 2026 08:31:01 -0800 (PST)
+ Fri, 20 Nov 2026 21:13:08 +0000 (UTC)
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-67db763cec7so1603320d50.1
+ for <wireguard@lists.zx2c4.com>; Fri, 20 Nov 2026 13:13:07 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795209186; cv=none;
+ d=google.com; s=arc-20260327;
+ b=HgVC7TfFjAEulS2LG0zlfj4iCvi2Nt4YVC6+GrEfmLZHCMBx7JcWmSIazVZdT9x6YR
+ 6h9WLlQNKDCgbKYFtIA6xAagsYPgqiWrHdrlwNPvtPgV/FQXUQtu3pkTFYXkwOVlLZ1V
+ hvZhfVAraNRFbh6yM/beuupCcoEk1lh8MsdY9yNYXZyIWpR8YBrWWfgbX06fEE2d1f+c
+ vilL+Wy1ELhJJjCafKPWBu2FAxW6ZWTGWwQLPEw1g6K+2s+Pmy+beESqB7u6Wp28JpIw
+ lmuwqgx/7goJcKe69KSDIFrImfo6CwO+bkvCX0O7avuF9CQMRMN8Zl1RvAhYTMqOk2RI
+ p6hA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=02KiKNZpF9Ct8tCZ/vhnx85VM+9ZtYctQDaudIWc7RE=;
+ fh=1CsOgAxkj0tSFTO0bRovl0wQS24+EZdEApJbdc/Xo54=;
+ b=aNBD8Qv7pmUBjYlQfnuDPWmkxOUxrMUSZJCrlZpah2KE8A5EbqvsqsWRFM1ugiYrJ/
+ iXEyxvGskvSl/pw1aij2M82b+ejdHPnOc0obRSAicFIJ/fcjLwdUnXaa2dmmuiOTpxIz
+ 1u+k1h5IUz5n2YgZhjs+IRofr1vsCbJ2i7kBVuHiL+bZm6zhzOprlttkLA3P5C+PkHtu
+ hRPmuRhb0MoEvT9fu9Iulo5qgtjy0Ob9Gn4O8hIDR1A1iP/ygwTiGEi4IcJapNXLjQTY
+ tWAVyXloWVcG5T98wmmXGwGgYiRRQXoJ7t4fjdQZ70Vlf7VV8iT7kIo2jtpcKkrBm9Ic
+ 1KNg==; darn=lists.zx2c4.com
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1795105860; x=1795710660; darn=lists.zx2c4.com;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=vCYJ0fH2n/KP3i8pDmKkJR4eFbCTpu42Qpe7NHI+Lws=;
- b=IurGkgoqMJXsGd2hnSEjeDebopCjjSndzFLyZ9WbwOADMGaIsy/O/ExWO5WSLgJwW7
- M52mhDNsGNRN7neB0RqwYE47rTPw+E4+7GdFyx8JtbiwulWRIcJSn9pmLY67HjOR5/4w
- Bh2dTYxsP/f10j7OF7uAmi9MZnAQD4cWq9m7QylZ7jgIu3dxnmcwKvn2rvv9Q9fzj6bc
- KdEHVXXlsUkuB6v6XiCh4eib11fIduGPEfd5SfrIJGNUTz+iHixy1OanxSNhbVtlVXm6
- /G1b5h1m7D3y95/yrNFVMVTxODZYePVWMH6GpjtYkmrQLKo5Y9XbzFZKoqQ7R6UcvGWg
- fXxQ==
+ d=wades-im.20260707.gappssmtp.com; s=20260707; t=1795209186; x=1795813986;
+ darn=lists.zx2c4.com; 
+ h=content-type:to:subject:message-id:date:from:mime-version:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=02KiKNZpF9Ct8tCZ/vhnx85VM+9ZtYctQDaudIWc7RE=;
+ b=RPHwtpY3MpNGzyGeHLiuyca8huz6VIlguKiqF0MxZJXRj20IbInc1Uqsr5dxk9192s
+ Nus4qan+vAQmE1SnC4I3jlVLVmvUqipiCgi6YtUxASL7XOKhyAIyv1P9OL5BCk1uYrU1
+ 6QTnac/l1HvNQyTCh67xzDzE9bR2/TTT4BGnng8BqOk/VweftBWaS4J7QTTzS3GUCcRW
+ D/owD2nb1S5rRCBlNlTZCge6Mi3h0I3ytuZRZcuG1iID7f7Jcgh8pJ7B1b1frPS65j/t
+ G8tx8DTsWpVnlkDqul59gMk3rEjPim0G9tsf5VdydFJp9EfIr4G3S0UwkUufqVbWS8ik
+ RyWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1795105860; x=1795710660;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=vCYJ0fH2n/KP3i8pDmKkJR4eFbCTpu42Qpe7NHI+Lws=;
- b=CHQp3Fp1y+RGV55pXMjcN/9LZqvBqpyDud7RNqkjPdQ2kRG5t+qgwi7tfMKBCoFE5O
- vKv4IcQZz6O6Z4d0xgK+WGyqS5ezZwxfb18lzKtD7/Nd+9XL4GFzyZI9S4lfdds9HY7k
- 7eMnBtTrIzYnRyy8NtRxbGeR2VkFtBal7M2oeCYZKJHFJREqLtR1lYmFfdQfpap7bjla
- Vump1bZUxubsZ6Udu/32LdRnC33bTZEC8IoGR/s11TSVOGtvJBBZxagn1Cnoe/ivzwux
- CWwRd+8odF36GuWnqebY53pOc+db0eKGXinfhTiaNCoQdN2zKxJeKgOYUYvwsVfYP2CY
- YXyQ==
-X-Gm-Message-State: APuU4Z+JygjrIjfXmjJlzcAHRbdcc6DkO2wzSofroHv+rva6AyC4Knci
- u75/bEjz/qmS+m1N1CogwPYfIHfKGSNRYS3CLKpMToBKOZpk/B1HyP9Ko7rdwDT9
-X-Gm-Gg: AYBFou2IVl7Z167lJtmI29/M2H9eoEUROqIfnt4/rGThPaGwxjq4OLgnct7SZSOfaXp
- 0ivoRPiq6/xUL9CcZ0SjTZMNcFuz4IvCeJUOVPG/ifH7MQn6saWmu6EKiPJtj2y4p5X/GTffnrj
- aV116XPg0O52xl1gOtRKKXZAIUhlynDAZP0fStj3xkwVhJzUPeE9BD7n467QFhwIvc+cEsksD8U
- pa8e+Xj3Q2Vokq2rXe4cr1+9UP3tI0iwiayM5zu13AsoZf6bUmO5776zN/JMO+KVwyLzEIymL1I
- SIalolycqbG8ZXwZHhuNQCRxv8pF+r6N/p5Wge2jE9696BbgAO5LK87ggbSmEGNZ2Aquvo/du0W
- bLmSipgXUEWQzcK+764PnugSO7NImYmO5mYNnK0XBbTxF+VMbNmYGL5J7y5WVUR86x76YdQzRbG
- DVjzG3VspS1x13qd+HKO50HvubNGXtCbPLUoFTkubSsYX8jpr/wlpe5jYln13ieFOiDKr5zf00p
- 7ZN21GAb778TPGc7m6k/G4L3vIgvk+CfCyvmjSgpw5iY9YdZZi5W3JT0NyobByhnQ5dCFXfBH5h
- uXOu5y544NXy5PVvdkCf6S6xMeq33wm4phoM6ymncilbl0Co+EIw+qc4s9rmmPFWp9ZBTX+SLvO
- 7EC6S+81zTekV9tuAzi+V5PR7XhMF+ORyGUzmFOyT
-X-Received: by 2002:a05:701b:240b:b0:1b2:40be:a929 with SMTP id
- a92af1059eb24-1b5568b38b3mr164343c88.14.1795105859865; 
- Thu, 19 Nov 2026 08:30:59 -0800 (PST)
-Received: from fruitbat.pteropodidae.net (ip70-191-36-30.oc.oc.cox.net.
- [70.191.36.30]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1b556847fdasm350643c88.13.2026.11.19.08.30.58
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Nov 2026 08:30:58 -0800 (PST)
-From: Loren McQuade <loren.mcquade@gmail.com>
-To: wireguard@lists.zx2c4.com
-Cc: therealgraysky@proton.me,
-	razvan.cremenescu@gmail.com
-Subject: Re: [PATCH 0/2] iOS 27 build and launch fixes
-Date: Thu, 19 Nov 2026 08:30:50 -0800
-Message-ID: <20261119163050.98697-1-loren.mcquade@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20261010160303.2853-1-loren.mcquade@gmail.com>
-References: <20261010160303.2853-1-loren.mcquade@gmail.com>
+ d=1e100.net; s=20260707; t=1795209186; x=1795813986;
+ h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=02KiKNZpF9Ct8tCZ/vhnx85VM+9ZtYctQDaudIWc7RE=;
+ b=0EQxFJv7v7333lu8pKkXLNkCaNWivCVQpSlwj3OBD0eGzan+4dTQqLfLP/ChmY2rbP
+ IKu/kYMg6sNhDe6T0curHfAbvk0P8o0SA1iqskISg9qBWPLz7FbffoHoPnyi4URX/U0T
+ TAtTt0x/4CRCLKQTYFn+mu4Zdbt+7JNA/lIhEjSS69vsoZLW7X4Nuo1MGoZGOy2iEMmi
+ kqJkhItn/2axcaingBF7/L16mpIcRNZOF5vpuh66ZYrwgAH+MC9jkRiQaAMBFZf2UmX0
+ 8vo6j3Ujet4iCmSDvCL3B20NPmjLFEMQDpGDFtSdgfgkYQc1wXG0Zx70Ezbboa3/OalD
+ NshA==
+X-Gm-Message-State: APuU4Z85A85pdgib2Ad9B1YMOP5quZCoNhT9nstLDfQVzT5zMHc6kyNB
+ t1hGG9X4Gtjp0Hlu3Zhy6qpwa5ZdN5noQ0cg+D+7g1LyqjF7G3mWC2+dos/ggV2+c6I/n423UiN
+ GcnoEzhsBiJEknOqLD5DKBXkoB+HphXKNywr1Ip8=
+X-Gm-Gg: AZFdTZdqXI1E8O6vMtYNwLvt4H1FJ3UoF9HBKNsKUIk99BqFEXpXIv2VaL8mAZC4jtE
+ yP2lwmkt4+VYWaG0ivGWL2vX9KaiNlWdkWfb3/GRQS6ok4saZuCu6eji1oil5a9UCuLEE+f1gzs
+ hx0xoxMK1iUuxl9AU3wQQAvz5Rl4osPEV61Sb1Y1HWheNFK7XwhGQrjmY18pxfMzM8TEaqoFEAv
+ DtLWddLerecJ3yeWx/Cm6vqujEhs99QjU22sJypGqkJYgZEM4Azl7LdFrwwgxpB74GBE/Vu5oBQ
+ 0wMX9oDcsJfWAscFVDdct7KcoeAdLRwmmAsOul6D5K/Vjz4axgaYPpbJDP0DLgV6xj/Oo9pFn+A
+ PoDdu7UQtMIXUeDxZ8IwWleABGBTHRaeXTbd4Xh98MpnCPnvE+SBqG6/08E+3yjB+NrPZAWrXqV
+ /hSSM3B1ytfuilLdQu5vP82s1hDuc=
+X-Received: by 2002:a05:690e:1698:b0:67d:ab75:a917 with SMTP id
+ 956f58d0204a3-67df445360bmr1513751d50.60.1795209186507; Fri, 20 Nov 2026
+ 13:13:06 -0800 (PST)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: Wade Simmons <wade@wades.im>
+Date: Fri, 20 Nov 2026 16:12:55 -0500
+X-Gm-Features: Aa3M54r_x6lgOC_SdMQxkK4wICzNJ8OmD5B7M3-mPjbkUYJe5nPZOoplcGYZGL4
+Message-ID: <CAF63tRqE-udLP+xH8hYJTtArUZM6wvZk2mTpY7X2xLLDeffuWg@mail.gmail.com>
+Subject: wireguard-windows: v1.1.1 Go checksum mismatch
+To: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -85,25 +94,38 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi,
+It appears that tag v1.1.1 was modified after proxy.golang.org cached
+it, causing Go checksum issues for anyone trying to reverify it from
+source:
 
-A note for whoever picks this up: patch 1/2 (WireGuardKitC: include
-sys/types.h) is the same change as 01/10 of Razvan Cremenescu's
-macOS series, which was posted first:
+- https://proxy.golang.org/golang.zx2c4.com/wireguard/windows/@v/v1.1.1.info
 
-https://lists.zx2c4.com/pipermail/wireguard/2026-August/009690.html
+This shows Hash "82d7a9cb9cdd34be5ba8c9a6d92a2fa0d2cd5846" which does
+not match the v1.1.1 tag in the repo, which now has hash
+"f0605c3e3dcc5ff801e19158fd6255378b99e17c".
 
-The diffs are identical, so whichever series is applied first, the
-other copy can be dropped. Patch 2/2 (adopting the UIScene lifecycle so
-the iOS app isn't killed at launch on iOS 27) doesn't overlap with his
-series or with Yoandy Isse's macOS series, and stands on its own.
+- https://git.zx2c4.com/wireguard-windows/tag/?h=v1.1.1
 
-Thanks,
-Loren
+Proof of issue:
+
+    $ GOPRIVATE=* go get golang.zx2c4.com/wireguard/windows@v1.1.1
+    $ rm go.sum
+    $ go get golang.zx2c4.com/wireguard/windows@v1.1.1
+    golang.zx2c4.com/wireguard/windows@v1.1.1: verifying module:
+checksum mismatch
+        downloaded: h1:nZZFWe0wrs77JWTXTL32wrmQQ28nQ6rOyB5aEKQvwjw=
+        sum.golang.org: h1:8/H97U1v1PNDNcBsMZgU3KFuND9MQdTsU2NOwmCXArE=
+
+    SECURITY ERROR
+    This download does NOT match the one reported by the checksum server.
+    The bits may have been replaced on the origin server, or an attacker may
+    have intercepted the download attempt.
+
+I think the only way to resolve this is to push a new tag, such as
+v1.1.2 and ensure the tag doesn't get recreated later.
